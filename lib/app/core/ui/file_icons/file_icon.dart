@@ -102,7 +102,7 @@ class FileTypeIcon extends StatelessWidget {
         lower == kWorkspaceEnvFileName ||
         (_isFolder && lower == '.cockpit')) {
       return Image.asset(
-        'assets/branding/cockpit_logo.png',
+        'assets/branding/gsh_logo.png',
         width: size,
         height: size,
       );

@@ -23,7 +23,7 @@ void main() {
       final families = availableFonts().map((o) => o.family).toList();
 
       expect(families, contains('JetBrains Mono'));
-      expect(families, contains('Space Grotesk'));
+      expect(families, contains('Montserrat'));
       expect(families, contains('Hanken Grotesk'));
     });
 

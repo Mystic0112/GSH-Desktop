@@ -191,7 +191,7 @@ class _Translations$core$bootstrapError$pt_BR extends Translations$core$bootstra
 	final TranslationsPtBr _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Falha ao inicializar o Cockpit';
+	@override String get title => 'Falha ao inicializar o GSH Desktop';
 	@override String get retry => 'Tentar novamente';
 }
 
@@ -206,7 +206,7 @@ class _Translations$core$macosNotifications$pt_BR extends Translations$core$maco
 	@override String get intro => 'As notificações estão desativadas nas configurações do sistema. Siga os passos abaixo para ativá-las:';
 	@override String get step1 => 'Abra as Configurações do Sistema no seu Mac.';
 	@override String get step2 => 'Acesse a seção Notificações na barra lateral esquerda.';
-	@override String get step3 => 'Encontre e selecione o aplicativo Cockpit na lista.';
+	@override String get step3 => 'Encontre e selecione o aplicativo GSH Desktop na lista.';
 	@override String get step4 => 'Ative a opção Permitir Notificações.';
 	@override String get tip => 'Dica: se o aplicativo não aparecer na lista, feche e reabra-o para acionar seu registro no sistema.';
 	@override String get gotIt => 'Entendi';
@@ -256,7 +256,7 @@ class _Translations$core$crash$pt_BR extends Translations$core$crash$en {
 
 	// Translations
 	@override String get title => 'Encerramento inesperado';
-	@override String get bannerTitle => 'O Cockpit fechou inesperadamente';
+	@override String get bannerTitle => 'O GSH Desktop fechou inesperadamente';
 	@override String get report => 'Reportar';
 	@override String get dismiss => 'Dispensar';
 	@override String crashMessage({required Object version}) => 'A sessão anterior (versão ${version}) terminou sem encerrar corretamente. Quer reportar? O log vai junto e você pode revisar tudo antes de enviar.';
@@ -323,8 +323,8 @@ class _Translations$cockpit$neovim$pt_BR extends Translations$cockpit$neovim$en 
 	final TranslationsPtBr _root; // ignore: unused_field
 
 	// Translations
-	@override String get unavailable => 'O Neovim não está disponível. Abrindo no Cockpit.';
-	@override String get openFailed => 'Não foi possível acessar o Neovim. Abrindo no Cockpit.';
+	@override String get unavailable => 'O Neovim não está disponível. Abrindo no GSH Desktop.';
+	@override String get openFailed => 'Não foi possível acessar o Neovim. Abrindo no GSH Desktop.';
 	@override String get unsavedTitle => 'Buffers não salvos no Neovim';
 	@override String get unsavedMessage => 'O Neovim tem buffers modificados. Fechar a aba e descartar essas alterações?';
 	@override String get closeAnyway => 'Fechar mesmo assim';
@@ -462,7 +462,7 @@ class _Translations$cockpit$welcomeView$pt_BR extends Translations$cockpit$welco
 	final TranslationsPtBr _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Bem-vindo ao Cockpit';
+	@override String get title => 'Bem-vindo ao GSH Desktop';
 	@override String get subtitle => 'Abra uma pasta ou conecte a um host remoto para começar.';
 	@override String get createWorkspace => 'Criar workspace';
 	@override String get openLocalFolder => 'Abrir pasta local';
@@ -927,12 +927,12 @@ class _Translations$cockpit$sshPrompts$pt_BR extends Translations$cockpit$sshPro
 
 	// Translations
 	@override String get unknownSshHostTitle => 'Host SSH desconhecido';
-	@override String neverConnected({required Object endpoint}) => 'O Cockpit nunca se conectou a ${endpoint} antes.';
+	@override String neverConnected({required Object endpoint}) => 'O GSH Desktop nunca se conectou a ${endpoint} antes.';
 	@override String get trustHint => 'Confie apenas se esta fingerprint corresponder ao servidor. Você pode verificar no servidor com:';
 	@override String get trust => 'Confiar';
 	@override String get sshKeyPassphraseTitle => 'Senha da chave SSH';
 	@override String unlockMessage({required Object keyPath, required Object connectionName}) => 'Desbloqueie ${keyPath} para conectar "${connectionName}".';
-	@override String get keptInMemoryHint => 'Mantida em memória até o Cockpit fechar. Para permitir que agentes usem esta conexão, ative "Salvar senha da chave" na conexão.';
+	@override String get keptInMemoryHint => 'Mantida em memória até o GSH Desktop fechar. Para permitir que agentes usem esta conexão, ative "Salvar senha da chave" na conexão.';
 	@override String get unlock => 'Desbloquear';
 }
 
@@ -945,7 +945,7 @@ class _Translations$cockpit$projectsRail$pt_BR extends Translations$cockpit$proj
 	// Translations
 	@override String get workspaces => 'Workspaces';
 	@override String get keepAwakeOn => 'Mantendo este computador acordado para acesso remoto. Clique para deixá-lo dormir de novo.';
-	@override String get keepAwakeOff => 'Manter este computador acordado para acesso remoto. Desliga sozinho quando o Cockpit reinicia.';
+	@override String get keepAwakeOff => 'Manter este computador acordado para acesso remoto. Desliga sozinho quando o GSH Desktop reinicia.';
 	@override String get keepAwakeBattery => 'Acordado na bateria. Isso consome a bateria.';
 	@override String get keepAwakeLid => 'Fechar a tampa do notebook continua colocando-o para dormir.';
 	@override String get newWorkspace => 'Novo workspace';
@@ -1019,7 +1019,7 @@ class _Translations$cockpit$topbar$pt_BR extends Translations$cockpit$topbar$en 
 	// Translations
 	@override String get collapseSidebar => 'Recolher barra lateral';
 	@override String get toggleFiles => 'Mostrar/ocultar arquivos';
-	@override String get filesUnavailable => 'Arquivos indisponíveis no Cockpit';
+	@override String get filesUnavailable => 'Arquivos indisponíveis no GSH Desktop';
 	@override String get hideKeyboard => 'Baixar teclado';
 	@override String get visualizeAgents => 'Visualizar agentes';
 }
@@ -1124,9 +1124,9 @@ class _Translations$cockpit$remoteHost$pt_BR extends Translations$cockpit$remote
 	@override String get identityEmpty => 'Nenhuma chave selecionada';
 	@override String get identityDialogTitle => 'Selecione a chave privada SSH';
 	@override String get errIdentity => 'Escolha a chave privada para autenticar.';
-	@override String errHostKeyUnknown({required Object host}) => 'O Cockpit ainda não confia em ${host}. Conecte de novo e confirme o fingerprint.';
+	@override String errHostKeyUnknown({required Object host}) => 'O GSH Desktop ainda não confia em ${host}. Conecte de novo e confirme o fingerprint.';
 	@override String errHostKeyChanged({required Object host}) => '${host} está apresentando uma chave SSH diferente da guardada. Se você não reinstalou essa máquina, pare e verifique — se reinstalou, remova a entrada antiga do ~/.ssh/known_hosts.';
-	@override String errHostBundleMissing({required Object host}) => '${host} é Windows mas não tem o Cockpit instalado. O servidor remoto é instalado a partir do bundle do Cockpit que já está naquela máquina — instale o Cockpit lá e tente de novo.';
+	@override String errHostBundleMissing({required Object host}) => '${host} é Windows mas não tem o GSH Desktop instalado. O servidor remoto é instalado a partir do bundle do GSH Desktop que já está naquela máquina — instale o GSH Desktop lá e tente de novo.';
 	@override String errHostUnknownOs({required Object host}) => 'Não foi possível identificar o sistema de ${host}. A conta pode ter shell restrito, ou nenhum shell.';
 	@override String get errIdentityPublic => 'Só a chave pública está aqui. Isso só funciona se a privada estiver no seu agente SSH; senão, escolha a privada (mesmo nome, sem .pub).';
 	@override String get errIdentityNotKey => 'Esse arquivo não parece uma chave privada.';
@@ -1155,7 +1155,7 @@ class _Translations$cockpit$documentWindow$pt_BR extends Translations$cockpit$do
 	final TranslationsPtBr _root; // ignore: unused_field
 
 	// Translations
-	@override String get mediaNotSupported => 'Áudio e vídeo abrem na janela principal do Cockpit.';
+	@override String get mediaNotSupported => 'Áudio e vídeo abrem na janela principal do GSH Desktop.';
 	@override String fileNotFound({required Object path}) => 'Arquivo não encontrado: ${path}';
 }
 
@@ -1166,7 +1166,7 @@ class _Translations$cockpit$gallery$pt_BR extends Translations$cockpit$gallery$e
 	final TranslationsPtBr _root; // ignore: unused_field
 
 	// Translations
-	@override String get intro => 'Documentos especiais do Cockpit para que você tenha o visual do que o agente de IA esteja fazendo.';
+	@override String get intro => 'Documentos especiais do GSH Desktop para que você tenha o visual do que o agente de IA esteja fazendo.';
 	@override String get createErrorTitle => 'Não foi possível criar o arquivo';
 	@override late final _Translations$cockpit$gallery$dbQuery$pt_BR dbQuery = _Translations$cockpit$gallery$dbQuery$pt_BR._(_root);
 	@override late final _Translations$cockpit$gallery$kanban$pt_BR kanban = _Translations$cockpit$gallery$kanban$pt_BR._(_root);
@@ -1218,7 +1218,7 @@ class _Translations$cockpit$layoutPreview$pt_BR extends Translations$cockpit$lay
 
 	// Translations
 	@override String get applyFailedTitle => 'Não foi possível aplicar o layout';
-	@override String get applyInCockpit => 'Aplicar no Cockpit';
+	@override String get applyInCockpit => 'Aplicar no GSH Desktop';
 	@override String get applyNewWorkspace => 'Abrir como novo workspace';
 	@override String applyTo({required Object workspace}) => 'Aplicar em ${workspace}';
 	@override String get autorunWorktree => 'autorun: worktree. Este layout também é aplicado sozinho quando você cria uma worktree do workspace onde ele está.';
@@ -1303,7 +1303,7 @@ class _Translations$cockpit$telemetry$pt_BR extends Translations$cockpit$telemet
 	@override String get byAgent => 'pelo agente';
 	@override String caseTabTitle({required Object type, required Object file}) => '${type} · ${file}';
 	@override String get srcApp => 'App';
-	@override String get chipApp => 'Cockpit';
+	@override String get chipApp => 'GSH Desktop';
 }
 
 // Path: cockpit.panelView
@@ -1376,9 +1376,9 @@ class _Translations$cockpit$agentGraph$pt_BR extends Translations$cockpit$agentG
 	@override String queued({required Object n}) => '${n} na fila';
 	@override String get agentName => 'Nome';
 	@override String get integration => 'Integração';
-	@override String get integrationHint => 'O Cockpit adiciona um servidor MCP chamado "cockpit" a este arquivo e salva um backup ao lado. Os outros servidores não são tocados.';
-	@override String integrationConsent({required Object app}) => 'Adicionar o servidor MCP do Cockpit ao config do ${app}';
-	@override String restartHint({required Object app}) => 'Reinicie o ${app} se ele já estava aberto, para carregar o servidor MCP do Cockpit; depois peça a ele para chamar wait_messages.';
+	@override String get integrationHint => 'O GSH Desktop adiciona um servidor MCP chamado "cockpit" a este arquivo e salva um backup ao lado. Os outros servidores não são tocados.';
+	@override String integrationConsent({required Object app}) => 'Adicionar o servidor MCP do GSH Desktop ao config do ${app}';
+	@override String restartHint({required Object app}) => 'Reinicie o ${app} se ele já estava aberto, para carregar o servidor MCP do GSH Desktop; depois peça a ele para chamar wait_messages.';
 	@override late final _Translations$cockpit$agentGraph$integrationError$pt_BR integrationError = _Translations$cockpit$agentGraph$integrationError$pt_BR._(_root);
 }
 
@@ -1443,7 +1443,7 @@ class _Translations$settings$remoteHosts$pt_BR extends Translations$settings$rem
 	@override String get statusOffline => 'Offline';
 	@override String get statusIdle => 'Não conectado';
 	@override String get helpTitle => 'Como funciona';
-	@override String get helpBody => 'O Cockpit conecta na sua máquina por SSH e fala com um servidor pequeno que roda os terminais, arquivos e git lá. O host precisa ter o Cockpit (desktop) ou o cockpit-server instalado e rodando, e a chave pública deste dispositivo adicionada no ~/.ssh/authorized_keys dele.';
+	@override String get helpBody => 'O GSH Desktop conecta na sua máquina por SSH e fala com um servidor pequeno que roda os terminais, arquivos e git lá. O host precisa ter o GSH Desktop (desktop) ou o cockpit-server instalado e rodando, e a chave pública deste dispositivo adicionada no ~/.ssh/authorized_keys dele.';
 }
 
 // Path: automation.error
@@ -1605,7 +1605,7 @@ class _Translations$cockpit$gallery$html$pt_BR extends Translations$cockpit$gall
 
 	// Translations
 	@override String get title => 'Visual HTML';
-	@override String get description => 'Uma página que o agente escreve e o Cockpit renderiza direto: mapa mental, diagrama, gráfico, o que precisar.';
+	@override String get description => 'Uma página que o agente escreve e o GSH Desktop renderiza direto: mapa mental, diagrama, gráfico, o que precisar.';
 }
 
 // Path: cockpit.gallery.tasks
@@ -1649,7 +1649,7 @@ class _Translations$cockpit$gallery$panel$pt_BR extends Translations$cockpit$gal
 
 	// Translations
 	@override String get title => 'Painel';
-	@override String get description => 'Uma página HTML com ponte para o app: os botões rodam comandos da CLI do Cockpit e do shell nesta máquina. Um playground para dashboards rápidos.';
+	@override String get description => 'Uma página HTML com ponte para o app: os botões rodam comandos da CLI do GSH Desktop e do shell nesta máquina. Um playground para dashboards rápidos.';
 }
 
 // Path: cockpit.notebook.format
@@ -1685,8 +1685,8 @@ class _Translations$cockpit$agentGraph$integrationError$pt_BR extends Translatio
 	final TranslationsPtBr _root; // ignore: unused_field
 
 	// Translations
-	@override String invalidConfig({required Object path}) => '${path} não é um JSON/TOML simples que o Cockpit consiga editar com segurança (comentários ou outro formato). Nada foi alterado.';
-	@override String cliMissing({required Object path}) => 'A CLI do Cockpit ainda não foi instalada (${path}). Reinicie o Cockpit e tente de novo.';
+	@override String invalidConfig({required Object path}) => '${path} não é um JSON/TOML simples que o GSH Desktop consiga editar com segurança (comentários ou outro formato). Nada foi alterado.';
+	@override String cliMissing({required Object path}) => 'A CLI do GSH Desktop ainda não foi instalada (${path}). Reinicie o GSH Desktop e tente de novo.';
 	@override String writeFailed({required Object detail}) => 'Não foi possível atualizar o config: ${detail}';
 }
 
@@ -1727,21 +1727,21 @@ class _Translations$settings$page$general$pt_BR extends Translations$settings$pa
 	// Translations
 	@override String get sectionEditor => 'Editor';
 	@override String get editorEngineTitle => 'Motor';
-	@override String get editorEngineCockpit => 'Cockpit (padrão)';
+	@override String get editorEngineCockpit => 'GSH Desktop (padrão)';
 	@override String get editorEngineNeovim => 'Neovim';
 	@override String get neovimChecking => 'Procurando o Neovim…';
 	@override String get neovimNotFound => 'O Neovim não foi encontrado na PATH do seu shell.';
 	@override String get neovimRefresh => 'Verificar novamente';
-	@override String get showCockpitTitle => 'Mostrar terminal do Cockpit';
+	@override String get showCockpitTitle => 'Mostrar terminal do GSH Desktop';
 	@override String get showCockpitDesc => 'Mantém um workspace sem pasta, só de terminal, fixado no topo da barra lateral. Desligar fecha seus terminais.';
 	@override String get launchAtStartupTitle => 'Iniciar ao ligar';
-	@override String get launchAtStartupDesc => 'Inicia o Cockpit automaticamente quando você faz login no computador.';
+	@override String get launchAtStartupDesc => 'Inicia o GSH Desktop automaticamente quando você faz login no computador.';
 	@override String get sectionUpdates => 'Atualizações';
 	@override String get checkUpdatesTitle => 'Verificar atualizações';
-	@override String get checkUpdatesDesc => 'Com que frequência o Cockpit deve procurar novas versões.';
+	@override String get checkUpdatesDesc => 'Com que frequência o GSH Desktop deve procurar novas versões.';
 	@override late final _Translations$settings$page$general$updateFrequency$pt_BR updateFrequency = _Translations$settings$page$general$updateFrequency$pt_BR._(_root);
 	@override String get developerModeTitle => 'Modo desenvolvedor';
-	@override String get developerModeDesc => 'Registra os erros e avisos do próprio Cockpit numa base separada da Telemetria (chip “Cockpit”) e liga as métricas de performance. Só serve a quem mantém o app.';
+	@override String get developerModeDesc => 'Registra os erros e avisos do próprio GSH Desktop numa base separada da Telemetria (chip “GSH Desktop”) e liga as métricas de performance. Só serve a quem mantém o app.';
 }
 
 // Path: settings.page.diagnostics
@@ -1773,23 +1773,23 @@ class _Translations$settings$page$storage$pt_BR extends Translations$settings$pa
 	// Translations
 	@override String get sectionTitle => 'Armazenamento';
 	@override String get locationTitle => 'Local de armazenamento';
-	@override String locationDesc({required Object root}) => 'O Cockpit guarda seus projetos, layouts e configurações aqui. Aponte para uma pasta sincronizada para fazer backup.\n${root}';
+	@override String locationDesc({required Object root}) => 'O GSH Desktop guarda seus projetos, layouts e configurações aqui. Aponte para uma pasta sincronizada para fazer backup.\n${root}';
 	@override String get useDefault => 'Usar padrão';
 	@override String get working => 'Trabalhando…';
 	@override String get change => 'Alterar…';
-	@override String get resetTitle => 'Redefinir o Cockpit';
+	@override String get resetTitle => 'Redefinir o GSH Desktop';
 	@override String get resetDesc => 'Exclui todos os dados locais — projetos, layouts, configurações e histórico do terminal — e volta ao local padrão.';
 	@override String get resetButton => 'Redefinir…';
 	@override String get resetConfirm => 'Redefinir';
-	@override String get resetDialogTitle => 'Redefinir o Cockpit?';
-	@override String get resetDialogContent => 'Isso exclui permanentemente todos os dados locais do Cockpit — projetos, layouts, configurações e histórico do terminal. Isso não pode ser desfeito. O Cockpit será fechado para você começar do zero.';
+	@override String get resetDialogTitle => 'Redefinir o GSH Desktop?';
+	@override String get resetDialogContent => 'Isso exclui permanentemente todos os dados locais do GSH Desktop — projetos, layouts, configurações e histórico do terminal. Isso não pode ser desfeito. O GSH Desktop será fechado para você começar do zero.';
 	@override String get restartRequiredTitle => 'Reinicialização necessária';
-	@override String restartChangeFolderMessage({required Object path}) => 'O Cockpit usará esta pasta a partir da próxima abertura:\n${path}';
-	@override String get restartUseDefaultMessage => 'O Cockpit usará o local padrão do sistema a partir da próxima abertura. Seus dados na pasta personalizada permanecem intactos.';
-	@override String get restartResetMessage => 'Todos os dados do Cockpit foram apagados. Reinicie para começar do zero.';
+	@override String restartChangeFolderMessage({required Object path}) => 'O GSH Desktop usará esta pasta a partir da próxima abertura:\n${path}';
+	@override String get restartUseDefaultMessage => 'O GSH Desktop usará o local padrão do sistema a partir da próxima abertura. Seus dados na pasta personalizada permanecem intactos.';
+	@override String get restartResetMessage => 'Todos os dados do GSH Desktop foram apagados. Reinicie para começar do zero.';
 	@override String get later => 'Mais tarde';
-	@override String get quitCockpit => 'Sair do Cockpit';
-	@override String get chooseFolderDialogTitle => 'Escolha uma pasta para os dados do Cockpit';
+	@override String get quitCockpit => 'Sair do GSH Desktop';
+	@override String get chooseFolderDialogTitle => 'Escolha uma pasta para os dados do GSH Desktop';
 }
 
 // Path: settings.page.terminal
@@ -1804,7 +1804,7 @@ class _Translations$settings$page$terminal$pt_BR extends Translations$settings$p
 	@override String get engineDesc => 'Usado por novas abas de terminal e buffers de saída de tasks. Abas abertas mantêm o motor atual.';
 	@override String get shellTitle => 'Shell';
 	@override String get shellDesc => 'Qual shell novas abas de terminal abrem. A seta ao lado do + ainda abre qualquer outro, só para aquela aba.';
-	@override String get noWslMessage => 'Nenhuma distro WSL encontrada. Instale uma (wsl.exe --install) e reinicie o Cockpit para vê-la listada aqui.';
+	@override String get noWslMessage => 'Nenhuma distro WSL encontrada. Instale uma (wsl.exe --install) e reinicie o GSH Desktop para vê-la listada aqui.';
 	@override String get sectionBehavior => 'Comportamento';
 	@override String get closeOnExitTitle => 'Fechar a aba quando o shell encerrar';
 	@override String get closeOnExitDesc => 'Quando um shell termina sozinho (exit, Ctrl-D), fecha a aba em vez de deixar um terminal morto.';
@@ -1886,7 +1886,7 @@ class _Translations$settings$page$notifications$pt_BR extends Translations$setti
 	@override String get enableTitle => 'Ativar notificações';
 	@override String get enableDesc => 'Avisar quando um agente terminar uma resposta e a janela não estiver em foco.';
 	@override String get systemPermissionTitle => 'Permissão do sistema';
-	@override String get grantedDesc => 'O Cockpit tem permissão para enviar notificações.';
+	@override String get grantedDesc => 'O GSH Desktop tem permissão para enviar notificações.';
 	@override String get notGrantedDesc => 'O macOS ainda não concedeu acesso a notificações.';
 	@override String get granted => 'Concedido';
 	@override String get requestPermission => 'Solicitar permissão';
@@ -1925,7 +1925,7 @@ class _Translations$settings$page$languages$pt_BR extends Translations$settings$
 	@override String get formatOnSaveTitle => 'Formatar ao salvar';
 	@override String get formatOnSaveDesc => 'Formata o arquivo automaticamente ao salvar (⌘S).';
 	@override String get sectionLanguageServers => 'SERVIDORES DE LINGUAGEM';
-	@override String get footerNote => 'Erros e formatação usam o language server de cada linguagem. O Cockpit não instala servidores — ele usa o que já está na sua máquina. ● responde · ○ não encontrado ou comando inválido (instale o servidor ou ajuste o comando).';
+	@override String get footerNote => 'Erros e formatação usam o language server de cada linguagem. O GSH Desktop não instala servidores — ele usa o que já está na sua máquina. ● responde · ○ não encontrado ou comando inválido (instale o servidor ou ajuste o comando).';
 	@override String get serverCommandLabel => 'Comando do language server';
 	@override String get formatterCommandLabel => 'Comando do formatador (opcional)';
 	@override String get formatterHint => 'Formatador externo com o placeholder %FILE%. Tem prioridade sobre o formatador do LSP quando definido.';
@@ -1959,7 +1959,7 @@ class _Translations$settings$page$automations$pt_BR extends Translations$setting
 	@override String get modelAutoRouted => 'Este harness escolhe o modelo automaticamente.';
 	@override String get modelAccountOnly => 'Só aparecem os modelos liberados na sua conta.';
 	@override String get generateFromSourceControl => 'Gerar pelo Controle de Versão';
-	@override String get generateFromSourceControlDescription => 'O Cockpit envia apenas o diff selecionado e os assuntos dos commits recentes. Padrões comuns de credenciais e arquivos sensíveis são redigidos antes de o harness rodar.';
+	@override String get generateFromSourceControlDescription => 'O GSH Desktop envia apenas o diff selecionado e os assuntos dos commits recentes. Padrões comuns de credenciais e arquivos sensíveis são redigidos antes de o harness rodar.';
 	@override String get discoveryFailed => 'Não foi possível descobrir os harnesses de automação instalados.';
 	@override String staleModel({required Object model, required Object harness}) => 'O modelo "${model}" não está mais disponível para ${harness}. Usando o padrão da CLI; escolha outro modelo em Configurações se precisar.';
 	@override String get recommendedSuffix => 'Recomendado';
@@ -1986,13 +1986,13 @@ class _Translations$settings$page$general$updateFrequency$pt_BR extends Translat
 extension on TranslationsPtBr {
 	dynamic _flatMapFunction(String path) {
 		return switch (path) {
-			'core.bootstrapError.title' => 'Falha ao inicializar o Cockpit',
+			'core.bootstrapError.title' => 'Falha ao inicializar o GSH Desktop',
 			'core.bootstrapError.retry' => 'Tentar novamente',
 			'core.macosNotifications.title' => 'Ativar notificações no macOS',
 			'core.macosNotifications.intro' => 'As notificações estão desativadas nas configurações do sistema. Siga os passos abaixo para ativá-las:',
 			'core.macosNotifications.step1' => 'Abra as Configurações do Sistema no seu Mac.',
 			'core.macosNotifications.step2' => 'Acesse a seção Notificações na barra lateral esquerda.',
-			'core.macosNotifications.step3' => 'Encontre e selecione o aplicativo Cockpit na lista.',
+			'core.macosNotifications.step3' => 'Encontre e selecione o aplicativo GSH Desktop na lista.',
 			'core.macosNotifications.step4' => 'Ative a opção Permitir Notificações.',
 			'core.macosNotifications.tip' => 'Dica: se o aplicativo não aparecer na lista, feche e reabra-o para acionar seu registro no sistema.',
 			'core.macosNotifications.gotIt' => 'Entendi',
@@ -2006,7 +2006,7 @@ extension on TranslationsPtBr {
 			'core.windowControls.maximize' => 'Maximizar',
 			'core.windowControls.close' => 'Fechar',
 			'core.crash.title' => 'Encerramento inesperado',
-			'core.crash.bannerTitle' => 'O Cockpit fechou inesperadamente',
+			'core.crash.bannerTitle' => 'O GSH Desktop fechou inesperadamente',
 			'core.crash.report' => 'Reportar',
 			'core.crash.dismiss' => 'Dispensar',
 			'core.crash.crashMessage' => ({required Object version}) => 'A sessão anterior (versão ${version}) terminou sem encerrar corretamente. Quer reportar? O log vai junto e você pode revisar tudo antes de enviar.',
@@ -2069,8 +2069,8 @@ extension on TranslationsPtBr {
 			'cockpit.confirmDialog.unsavedChangesMessage' => ({required Object fileName}) => '“${fileName}” tem alterações não salvas. Salvar antes de fechar?',
 			'cockpit.confirmDialog.dontSave' => 'Não salvar',
 			'cockpit.confirmDialog.saveAndClose' => 'Salvar e fechar',
-			'cockpit.neovim.unavailable' => 'O Neovim não está disponível. Abrindo no Cockpit.',
-			'cockpit.neovim.openFailed' => 'Não foi possível acessar o Neovim. Abrindo no Cockpit.',
+			'cockpit.neovim.unavailable' => 'O Neovim não está disponível. Abrindo no GSH Desktop.',
+			'cockpit.neovim.openFailed' => 'Não foi possível acessar o Neovim. Abrindo no GSH Desktop.',
 			'cockpit.neovim.unsavedTitle' => 'Buffers não salvos no Neovim',
 			'cockpit.neovim.unsavedMessage' => 'O Neovim tem buffers modificados. Fechar a aba e descartar essas alterações?',
 			'cockpit.neovim.closeAnyway' => 'Fechar mesmo assim',
@@ -2160,7 +2160,7 @@ extension on TranslationsPtBr {
 			'cockpit.cockpitPage.noLspAvailable' => 'Nenhum LSP disponível',
 			'cockpit.cockpitPage.lspRunning' => 'em execução',
 			'cockpit.cockpitPage.lspStopped' => 'parado',
-			'cockpit.welcomeView.title' => 'Bem-vindo ao Cockpit',
+			'cockpit.welcomeView.title' => 'Bem-vindo ao GSH Desktop',
 			'cockpit.welcomeView.subtitle' => 'Abra uma pasta ou conecte a um host remoto para começar.',
 			'cockpit.welcomeView.createWorkspace' => 'Criar workspace',
 			'cockpit.welcomeView.openLocalFolder' => 'Abrir pasta local',
@@ -2502,16 +2502,16 @@ extension on TranslationsPtBr {
 		} ?? switch (path) {
 			'cockpit.dbConnectionDialog.passwordOnHost' => 'A senha fica salva no host, não nesta máquina.',
 			'cockpit.sshPrompts.unknownSshHostTitle' => 'Host SSH desconhecido',
-			'cockpit.sshPrompts.neverConnected' => ({required Object endpoint}) => 'O Cockpit nunca se conectou a ${endpoint} antes.',
+			'cockpit.sshPrompts.neverConnected' => ({required Object endpoint}) => 'O GSH Desktop nunca se conectou a ${endpoint} antes.',
 			'cockpit.sshPrompts.trustHint' => 'Confie apenas se esta fingerprint corresponder ao servidor. Você pode verificar no servidor com:',
 			'cockpit.sshPrompts.trust' => 'Confiar',
 			'cockpit.sshPrompts.sshKeyPassphraseTitle' => 'Senha da chave SSH',
 			'cockpit.sshPrompts.unlockMessage' => ({required Object keyPath, required Object connectionName}) => 'Desbloqueie ${keyPath} para conectar "${connectionName}".',
-			'cockpit.sshPrompts.keptInMemoryHint' => 'Mantida em memória até o Cockpit fechar. Para permitir que agentes usem esta conexão, ative "Salvar senha da chave" na conexão.',
+			'cockpit.sshPrompts.keptInMemoryHint' => 'Mantida em memória até o GSH Desktop fechar. Para permitir que agentes usem esta conexão, ative "Salvar senha da chave" na conexão.',
 			'cockpit.sshPrompts.unlock' => 'Desbloquear',
 			'cockpit.projectsRail.workspaces' => 'Workspaces',
 			'cockpit.projectsRail.keepAwakeOn' => 'Mantendo este computador acordado para acesso remoto. Clique para deixá-lo dormir de novo.',
-			'cockpit.projectsRail.keepAwakeOff' => 'Manter este computador acordado para acesso remoto. Desliga sozinho quando o Cockpit reinicia.',
+			'cockpit.projectsRail.keepAwakeOff' => 'Manter este computador acordado para acesso remoto. Desliga sozinho quando o GSH Desktop reinicia.',
 			'cockpit.projectsRail.keepAwakeBattery' => 'Acordado na bateria. Isso consome a bateria.',
 			'cockpit.projectsRail.keepAwakeLid' => 'Fechar a tampa do notebook continua colocando-o para dormir.',
 			'cockpit.projectsRail.newWorkspace' => 'Novo workspace',
@@ -2555,7 +2555,7 @@ extension on TranslationsPtBr {
 			'cockpit.contentSearch.noResults' => 'Nenhum resultado.',
 			'cockpit.topbar.collapseSidebar' => 'Recolher barra lateral',
 			'cockpit.topbar.toggleFiles' => 'Mostrar/ocultar arquivos',
-			'cockpit.topbar.filesUnavailable' => 'Arquivos indisponíveis no Cockpit',
+			'cockpit.topbar.filesUnavailable' => 'Arquivos indisponíveis no GSH Desktop',
 			'cockpit.topbar.hideKeyboard' => 'Baixar teclado',
 			'cockpit.topbar.visualizeAgents' => 'Visualizar agentes',
 			'cockpit.tasks.hotReload' => 'Hot reload',
@@ -2615,9 +2615,9 @@ extension on TranslationsPtBr {
 			'cockpit.remoteHost.identityEmpty' => 'Nenhuma chave selecionada',
 			'cockpit.remoteHost.identityDialogTitle' => 'Selecione a chave privada SSH',
 			'cockpit.remoteHost.errIdentity' => 'Escolha a chave privada para autenticar.',
-			'cockpit.remoteHost.errHostKeyUnknown' => ({required Object host}) => 'O Cockpit ainda não confia em ${host}. Conecte de novo e confirme o fingerprint.',
+			'cockpit.remoteHost.errHostKeyUnknown' => ({required Object host}) => 'O GSH Desktop ainda não confia em ${host}. Conecte de novo e confirme o fingerprint.',
 			'cockpit.remoteHost.errHostKeyChanged' => ({required Object host}) => '${host} está apresentando uma chave SSH diferente da guardada. Se você não reinstalou essa máquina, pare e verifique — se reinstalou, remova a entrada antiga do ~/.ssh/known_hosts.',
-			'cockpit.remoteHost.errHostBundleMissing' => ({required Object host}) => '${host} é Windows mas não tem o Cockpit instalado. O servidor remoto é instalado a partir do bundle do Cockpit que já está naquela máquina — instale o Cockpit lá e tente de novo.',
+			'cockpit.remoteHost.errHostBundleMissing' => ({required Object host}) => '${host} é Windows mas não tem o GSH Desktop instalado. O servidor remoto é instalado a partir do bundle do GSH Desktop que já está naquela máquina — instale o GSH Desktop lá e tente de novo.',
 			'cockpit.remoteHost.errHostUnknownOs' => ({required Object host}) => 'Não foi possível identificar o sistema de ${host}. A conta pode ter shell restrito, ou nenhum shell.',
 			'cockpit.remoteHost.errIdentityPublic' => 'Só a chave pública está aqui. Isso só funciona se a privada estiver no seu agente SSH; senão, escolha a privada (mesmo nome, sem .pub).',
 			'cockpit.remoteHost.errIdentityNotKey' => 'Esse arquivo não parece uma chave privada.',
@@ -2628,9 +2628,9 @@ extension on TranslationsPtBr {
 			'cockpit.browserPane.reload' => 'Recarregar',
 			'cockpit.browserPane.urlHint' => 'Digite a URL ou endereço',
 			'cockpit.browserPane.go' => 'Ir',
-			'cockpit.documentWindow.mediaNotSupported' => 'Áudio e vídeo abrem na janela principal do Cockpit.',
+			'cockpit.documentWindow.mediaNotSupported' => 'Áudio e vídeo abrem na janela principal do GSH Desktop.',
 			'cockpit.documentWindow.fileNotFound' => ({required Object path}) => 'Arquivo não encontrado: ${path}',
-			'cockpit.gallery.intro' => 'Documentos especiais do Cockpit para que você tenha o visual do que o agente de IA esteja fazendo.',
+			'cockpit.gallery.intro' => 'Documentos especiais do GSH Desktop para que você tenha o visual do que o agente de IA esteja fazendo.',
 			'cockpit.gallery.createErrorTitle' => 'Não foi possível criar o arquivo',
 			'cockpit.gallery.dbQuery.title' => 'Consulta de banco',
 			'cockpit.gallery.dbQuery.description' => 'Editor SQL com grid de resultado, usando uma das conexões registradas.',
@@ -2641,7 +2641,7 @@ extension on TranslationsPtBr {
 			'cockpit.gallery.httpRequest.title' => 'Requests HTTP',
 			'cockpit.gallery.httpRequest.description' => 'Escreva requests num arquivo e execute com a resposta ao lado.',
 			'cockpit.gallery.html.title' => 'Visual HTML',
-			'cockpit.gallery.html.description' => 'Uma página que o agente escreve e o Cockpit renderiza direto: mapa mental, diagrama, gráfico, o que precisar.',
+			'cockpit.gallery.html.description' => 'Uma página que o agente escreve e o GSH Desktop renderiza direto: mapa mental, diagrama, gráfico, o que precisar.',
 			'cockpit.gallery.tasks.title' => 'Tarefas',
 			'cockpit.gallery.tasks.description' => 'Comandos para rodar pelo painel de Tasks, como dev server, testes e build. Fica em .cockpit/tasks.json.',
 			'cockpit.gallery.notebook.title' => 'Caderno',
@@ -2649,7 +2649,7 @@ extension on TranslationsPtBr {
 			'cockpit.gallery.workspaceEnv.title' => 'Env do workspace',
 			'cockpit.gallery.workspaceEnv.description' => 'Variáveis injetadas em todo terminal deste workspace. Coloque tokens ou logins de API aqui em vez de colar no prompt do agente. Fica fora do git.',
 			'cockpit.gallery.panel.title' => 'Painel',
-			'cockpit.gallery.panel.description' => 'Uma página HTML com ponte para o app: os botões rodam comandos da CLI do Cockpit e do shell nesta máquina. Um playground para dashboards rápidos.',
+			'cockpit.gallery.panel.description' => 'Uma página HTML com ponte para o app: os botões rodam comandos da CLI do GSH Desktop e do shell nesta máquina. Um playground para dashboards rápidos.',
 			'cockpit.notebook.notes' => 'Notas',
 			'cockpit.notebook.newNote' => 'Nova nota',
 			'cockpit.notebook.searchPlaceholder' => 'Buscar notas',
@@ -2689,7 +2689,7 @@ extension on TranslationsPtBr {
 			'cockpit.notebook.showList' => 'Mostrar lista de notas',
 			'cockpit.notebook.hideList' => 'Ocultar lista de notas',
 			'cockpit.layoutPreview.applyFailedTitle' => 'Não foi possível aplicar o layout',
-			'cockpit.layoutPreview.applyInCockpit' => 'Aplicar no Cockpit',
+			'cockpit.layoutPreview.applyInCockpit' => 'Aplicar no GSH Desktop',
 			'cockpit.layoutPreview.applyNewWorkspace' => 'Abrir como novo workspace',
 			'cockpit.layoutPreview.applyTo' => ({required Object workspace}) => 'Aplicar em ${workspace}',
 			'cockpit.layoutPreview.autorunWorktree' => 'autorun: worktree. Este layout também é aplicado sozinho quando você cria uma worktree do workspace onde ele está.',
@@ -2765,7 +2765,7 @@ extension on TranslationsPtBr {
 			'cockpit.telemetry.byAgent' => 'pelo agente',
 			'cockpit.telemetry.caseTabTitle' => ({required Object type, required Object file}) => '${type} · ${file}',
 			'cockpit.telemetry.srcApp' => 'App',
-			'cockpit.telemetry.chipApp' => 'Cockpit',
+			'cockpit.telemetry.chipApp' => 'GSH Desktop',
 			'cockpit.panelView.unavailable' => 'Painéis precisam da web view embutida, que ainda não existe no Linux.',
 			'cockpit.panelView.openInBrowser' => 'Abrir no navegador',
 			'cockpit.panelView.openAsHtml' => 'Abrir como HTML',
@@ -2820,11 +2820,11 @@ extension on TranslationsPtBr {
 			'cockpit.agentGraph.queued' => ({required Object n}) => '${n} na fila',
 			'cockpit.agentGraph.agentName' => 'Nome',
 			'cockpit.agentGraph.integration' => 'Integração',
-			'cockpit.agentGraph.integrationHint' => 'O Cockpit adiciona um servidor MCP chamado "cockpit" a este arquivo e salva um backup ao lado. Os outros servidores não são tocados.',
-			'cockpit.agentGraph.integrationConsent' => ({required Object app}) => 'Adicionar o servidor MCP do Cockpit ao config do ${app}',
-			'cockpit.agentGraph.restartHint' => ({required Object app}) => 'Reinicie o ${app} se ele já estava aberto, para carregar o servidor MCP do Cockpit; depois peça a ele para chamar wait_messages.',
-			'cockpit.agentGraph.integrationError.invalidConfig' => ({required Object path}) => '${path} não é um JSON/TOML simples que o Cockpit consiga editar com segurança (comentários ou outro formato). Nada foi alterado.',
-			'cockpit.agentGraph.integrationError.cliMissing' => ({required Object path}) => 'A CLI do Cockpit ainda não foi instalada (${path}). Reinicie o Cockpit e tente de novo.',
+			'cockpit.agentGraph.integrationHint' => 'O GSH Desktop adiciona um servidor MCP chamado "cockpit" a este arquivo e salva um backup ao lado. Os outros servidores não são tocados.',
+			'cockpit.agentGraph.integrationConsent' => ({required Object app}) => 'Adicionar o servidor MCP do GSH Desktop ao config do ${app}',
+			'cockpit.agentGraph.restartHint' => ({required Object app}) => 'Reinicie o ${app} se ele já estava aberto, para carregar o servidor MCP do GSH Desktop; depois peça a ele para chamar wait_messages.',
+			'cockpit.agentGraph.integrationError.invalidConfig' => ({required Object path}) => '${path} não é um JSON/TOML simples que o GSH Desktop consiga editar com segurança (comentários ou outro formato). Nada foi alterado.',
+			'cockpit.agentGraph.integrationError.cliMissing' => ({required Object path}) => 'A CLI do GSH Desktop ainda não foi instalada (${path}). Reinicie o GSH Desktop e tente de novo.',
 			'cockpit.agentGraph.integrationError.writeFailed' => ({required Object detail}) => 'Não foi possível atualizar o config: ${detail}',
 			'settings.language.title' => 'Idioma',
 			'settings.language.system' => 'Sistema',
@@ -2843,24 +2843,24 @@ extension on TranslationsPtBr {
 			'settings.page.nav.remoteHosts' => 'Hosts remotos',
 			'settings.page.general.sectionEditor' => 'Editor',
 			'settings.page.general.editorEngineTitle' => 'Motor',
-			'settings.page.general.editorEngineCockpit' => 'Cockpit (padrão)',
+			'settings.page.general.editorEngineCockpit' => 'GSH Desktop (padrão)',
 			'settings.page.general.editorEngineNeovim' => 'Neovim',
 			'settings.page.general.neovimChecking' => 'Procurando o Neovim…',
 			'settings.page.general.neovimNotFound' => 'O Neovim não foi encontrado na PATH do seu shell.',
 			'settings.page.general.neovimRefresh' => 'Verificar novamente',
-			'settings.page.general.showCockpitTitle' => 'Mostrar terminal do Cockpit',
+			'settings.page.general.showCockpitTitle' => 'Mostrar terminal do GSH Desktop',
 			'settings.page.general.showCockpitDesc' => 'Mantém um workspace sem pasta, só de terminal, fixado no topo da barra lateral. Desligar fecha seus terminais.',
 			'settings.page.general.launchAtStartupTitle' => 'Iniciar ao ligar',
-			'settings.page.general.launchAtStartupDesc' => 'Inicia o Cockpit automaticamente quando você faz login no computador.',
+			'settings.page.general.launchAtStartupDesc' => 'Inicia o GSH Desktop automaticamente quando você faz login no computador.',
 			'settings.page.general.sectionUpdates' => 'Atualizações',
 			'settings.page.general.checkUpdatesTitle' => 'Verificar atualizações',
-			'settings.page.general.checkUpdatesDesc' => 'Com que frequência o Cockpit deve procurar novas versões.',
+			'settings.page.general.checkUpdatesDesc' => 'Com que frequência o GSH Desktop deve procurar novas versões.',
 			'settings.page.general.updateFrequency.daily' => 'Diariamente',
 			'settings.page.general.updateFrequency.weekly' => 'Semanalmente',
 			'settings.page.general.updateFrequency.monthly' => 'Mensalmente',
 			'settings.page.general.updateFrequency.never' => 'Nunca',
 			'settings.page.general.developerModeTitle' => 'Modo desenvolvedor',
-			'settings.page.general.developerModeDesc' => 'Registra os erros e avisos do próprio Cockpit numa base separada da Telemetria (chip “Cockpit”) e liga as métricas de performance. Só serve a quem mantém o app.',
+			'settings.page.general.developerModeDesc' => 'Registra os erros e avisos do próprio GSH Desktop numa base separada da Telemetria (chip “GSH Desktop”) e liga as métricas de performance. Só serve a quem mantém o app.',
 			'settings.page.diagnostics.sectionTitle' => 'Diagnóstico',
 			'settings.page.diagnostics.logFileTitle' => 'Arquivo de log',
 			'settings.page.diagnostics.logFileDesc' => ({required Object days, required Object path}) => 'Erros e eventos de inicialização são registrados aqui, mantidos por ${days} dias.\n${path}',
@@ -2874,29 +2874,29 @@ extension on TranslationsPtBr {
 			'settings.page.diagnostics.reportDialogDescription' => 'Descreva o que deu errado na issue. O log recente está incluído abaixo e em "Copiar detalhes".',
 			'settings.page.storage.sectionTitle' => 'Armazenamento',
 			'settings.page.storage.locationTitle' => 'Local de armazenamento',
-			'settings.page.storage.locationDesc' => ({required Object root}) => 'O Cockpit guarda seus projetos, layouts e configurações aqui. Aponte para uma pasta sincronizada para fazer backup.\n${root}',
+			'settings.page.storage.locationDesc' => ({required Object root}) => 'O GSH Desktop guarda seus projetos, layouts e configurações aqui. Aponte para uma pasta sincronizada para fazer backup.\n${root}',
 			'settings.page.storage.useDefault' => 'Usar padrão',
 			'settings.page.storage.working' => 'Trabalhando…',
 			'settings.page.storage.change' => 'Alterar…',
-			'settings.page.storage.resetTitle' => 'Redefinir o Cockpit',
+			'settings.page.storage.resetTitle' => 'Redefinir o GSH Desktop',
 			'settings.page.storage.resetDesc' => 'Exclui todos os dados locais — projetos, layouts, configurações e histórico do terminal — e volta ao local padrão.',
 			'settings.page.storage.resetButton' => 'Redefinir…',
 			'settings.page.storage.resetConfirm' => 'Redefinir',
-			'settings.page.storage.resetDialogTitle' => 'Redefinir o Cockpit?',
-			'settings.page.storage.resetDialogContent' => 'Isso exclui permanentemente todos os dados locais do Cockpit — projetos, layouts, configurações e histórico do terminal. Isso não pode ser desfeito. O Cockpit será fechado para você começar do zero.',
+			'settings.page.storage.resetDialogTitle' => 'Redefinir o GSH Desktop?',
+			'settings.page.storage.resetDialogContent' => 'Isso exclui permanentemente todos os dados locais do GSH Desktop — projetos, layouts, configurações e histórico do terminal. Isso não pode ser desfeito. O GSH Desktop será fechado para você começar do zero.',
 			'settings.page.storage.restartRequiredTitle' => 'Reinicialização necessária',
-			'settings.page.storage.restartChangeFolderMessage' => ({required Object path}) => 'O Cockpit usará esta pasta a partir da próxima abertura:\n${path}',
-			'settings.page.storage.restartUseDefaultMessage' => 'O Cockpit usará o local padrão do sistema a partir da próxima abertura. Seus dados na pasta personalizada permanecem intactos.',
-			'settings.page.storage.restartResetMessage' => 'Todos os dados do Cockpit foram apagados. Reinicie para começar do zero.',
+			'settings.page.storage.restartChangeFolderMessage' => ({required Object path}) => 'O GSH Desktop usará esta pasta a partir da próxima abertura:\n${path}',
+			'settings.page.storage.restartUseDefaultMessage' => 'O GSH Desktop usará o local padrão do sistema a partir da próxima abertura. Seus dados na pasta personalizada permanecem intactos.',
+			'settings.page.storage.restartResetMessage' => 'Todos os dados do GSH Desktop foram apagados. Reinicie para começar do zero.',
 			'settings.page.storage.later' => 'Mais tarde',
-			'settings.page.storage.quitCockpit' => 'Sair do Cockpit',
-			'settings.page.storage.chooseFolderDialogTitle' => 'Escolha uma pasta para os dados do Cockpit',
+			'settings.page.storage.quitCockpit' => 'Sair do GSH Desktop',
+			'settings.page.storage.chooseFolderDialogTitle' => 'Escolha uma pasta para os dados do GSH Desktop',
 			'settings.page.terminal.sectionDefaultTerminal' => 'Terminal padrão',
 			'settings.page.terminal.engineTitle' => 'Motor',
 			'settings.page.terminal.engineDesc' => 'Usado por novas abas de terminal e buffers de saída de tasks. Abas abertas mantêm o motor atual.',
 			'settings.page.terminal.shellTitle' => 'Shell',
 			'settings.page.terminal.shellDesc' => 'Qual shell novas abas de terminal abrem. A seta ao lado do + ainda abre qualquer outro, só para aquela aba.',
-			'settings.page.terminal.noWslMessage' => 'Nenhuma distro WSL encontrada. Instale uma (wsl.exe --install) e reinicie o Cockpit para vê-la listada aqui.',
+			'settings.page.terminal.noWslMessage' => 'Nenhuma distro WSL encontrada. Instale uma (wsl.exe --install) e reinicie o GSH Desktop para vê-la listada aqui.',
 			'settings.page.terminal.sectionBehavior' => 'Comportamento',
 			'settings.page.terminal.closeOnExitTitle' => 'Fechar a aba quando o shell encerrar',
 			'settings.page.terminal.closeOnExitDesc' => 'Quando um shell termina sozinho (exit, Ctrl-D), fecha a aba em vez de deixar um terminal morto.',
@@ -2960,7 +2960,7 @@ extension on TranslationsPtBr {
 			'settings.page.notifications.enableTitle' => 'Ativar notificações',
 			'settings.page.notifications.enableDesc' => 'Avisar quando um agente terminar uma resposta e a janela não estiver em foco.',
 			'settings.page.notifications.systemPermissionTitle' => 'Permissão do sistema',
-			'settings.page.notifications.grantedDesc' => 'O Cockpit tem permissão para enviar notificações.',
+			'settings.page.notifications.grantedDesc' => 'O GSH Desktop tem permissão para enviar notificações.',
 			'settings.page.notifications.notGrantedDesc' => 'O macOS ainda não concedeu acesso a notificações.',
 			'settings.page.notifications.granted' => 'Concedido',
 			'settings.page.notifications.requestPermission' => 'Solicitar permissão',
@@ -2981,7 +2981,7 @@ extension on TranslationsPtBr {
 			'settings.page.languages.formatOnSaveTitle' => 'Formatar ao salvar',
 			'settings.page.languages.formatOnSaveDesc' => 'Formata o arquivo automaticamente ao salvar (⌘S).',
 			'settings.page.languages.sectionLanguageServers' => 'SERVIDORES DE LINGUAGEM',
-			'settings.page.languages.footerNote' => 'Erros e formatação usam o language server de cada linguagem. O Cockpit não instala servidores — ele usa o que já está na sua máquina. ● responde · ○ não encontrado ou comando inválido (instale o servidor ou ajuste o comando).',
+			'settings.page.languages.footerNote' => 'Erros e formatação usam o language server de cada linguagem. O GSH Desktop não instala servidores — ele usa o que já está na sua máquina. ● responde · ○ não encontrado ou comando inválido (instale o servidor ou ajuste o comando).',
 			'settings.page.languages.serverCommandLabel' => 'Comando do language server',
 			'settings.page.languages.formatterCommandLabel' => 'Comando do formatador (opcional)',
 			'settings.page.languages.formatterHint' => 'Formatador externo com o placeholder %FILE%. Tem prioridade sobre o formatador do LSP quando definido.',
@@ -3006,7 +3006,7 @@ extension on TranslationsPtBr {
 			'settings.page.automations.modelAutoRouted' => 'Este harness escolhe o modelo automaticamente.',
 			'settings.page.automations.modelAccountOnly' => 'Só aparecem os modelos liberados na sua conta.',
 			'settings.page.automations.generateFromSourceControl' => 'Gerar pelo Controle de Versão',
-			'settings.page.automations.generateFromSourceControlDescription' => 'O Cockpit envia apenas o diff selecionado e os assuntos dos commits recentes. Padrões comuns de credenciais e arquivos sensíveis são redigidos antes de o harness rodar.',
+			'settings.page.automations.generateFromSourceControlDescription' => 'O GSH Desktop envia apenas o diff selecionado e os assuntos dos commits recentes. Padrões comuns de credenciais e arquivos sensíveis são redigidos antes de o harness rodar.',
 			'settings.page.automations.discoveryFailed' => 'Não foi possível descobrir os harnesses de automação instalados.',
 			'settings.page.automations.staleModel' => ({required Object model, required Object harness}) => 'O modelo "${model}" não está mais disponível para ${harness}. Usando o padrão da CLI; escolha outro modelo em Configurações se precisar.',
 			'settings.page.automations.recommendedSuffix' => 'Recomendado',
@@ -3032,7 +3032,7 @@ extension on TranslationsPtBr {
 			'settings.remoteHosts.statusOffline' => 'Offline',
 			'settings.remoteHosts.statusIdle' => 'Não conectado',
 			'settings.remoteHosts.helpTitle' => 'Como funciona',
-			'settings.remoteHosts.helpBody' => 'O Cockpit conecta na sua máquina por SSH e fala com um servidor pequeno que roda os terminais, arquivos e git lá. O host precisa ter o Cockpit (desktop) ou o cockpit-server instalado e rodando, e a chave pública deste dispositivo adicionada no ~/.ssh/authorized_keys dele.',
+			'settings.remoteHosts.helpBody' => 'O GSH Desktop conecta na sua máquina por SSH e fala com um servidor pequeno que roda os terminais, arquivos e git lá. O host precisa ter o GSH Desktop (desktop) ou o cockpit-server instalado e rodando, e a chave pública deste dispositivo adicionada no ~/.ssh/authorized_keys dele.',
 			'automation.error.unavailable' => ({required Object harness}) => '${harness} não está instalado ou não está no PATH.',
 			'automation.error.modelUnavailable' => ({required Object model, required Object harness}) => 'O modelo "${model}" não está disponível para ${harness}. Escolha outro modelo em Configurações.',
 			'automation.error.authentication' => ({required Object harness, required Object detail}) => '${harness}: ${detail}',

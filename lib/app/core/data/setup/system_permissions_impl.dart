@@ -69,7 +69,7 @@ class SystemPermissionsImpl implements SystemPermissions {
     await _ensureInitialized();
     await _plugin.show(
       id: _testId++,
-      title: 'Cockpit',
+      title: 'GSH Desktop',
       body: 'Notifications enabled — you will see agent alerts here.',
       notificationDetails: const NotificationDetails(
         macOS: DarwinNotificationDetails(),

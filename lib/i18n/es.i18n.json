@@ -1,7 +1,7 @@
 {
   "core": {
     "bootstrapError": {
-      "title": "No se pudo inicializar Cockpit",
+      "title": "No se pudo inicializar GSH Desktop",
       "retry": "Reintentar"
     },
     "macosNotifications": {
@@ -9,7 +9,7 @@
       "intro": "Las notificaciones están desactivadas en la configuración del sistema. Sigue los pasos a continuación para activarlas:",
       "step1": "Abre los Ajustes del Sistema en tu Mac.",
       "step2": "Ve a la sección Notificaciones en la barra lateral izquierda.",
-      "step3": "Busca y selecciona la aplicación Cockpit en la lista.",
+      "step3": "Busca y selecciona la aplicación GSH Desktop en la lista.",
       "step4": "Activa el interruptor Permitir Notificaciones.",
       "tip": "Consejo: si la aplicación no aparece en la lista, ciérrala y vuelve a abrirla para activar su registro en el sistema.",
       "gotIt": "Entendido"
@@ -31,7 +31,7 @@
     },
     "crash": {
       "title": "Cierre inesperado",
-      "bannerTitle": "Cockpit se cerró inesperadamente",
+      "bannerTitle": "GSH Desktop se cerró inesperadamente",
       "report": "Reportar",
       "dismiss": "Descartar",
       "crashMessage": "La sesión anterior (versión ${version}) terminó sin cerrarse correctamente. ¿Quieres reportarlo? El log se incluye y puedes revisar todo antes de enviar.",
@@ -104,8 +104,8 @@
       "saveAndClose": "Guardar y cerrar"
     },
     "neovim": {
-      "unavailable": "Neovim no está disponible. Abriendo en Cockpit.",
-      "openFailed": "No se pudo acceder a Neovim. Abriendo en Cockpit.",
+      "unavailable": "Neovim no está disponible. Abriendo en GSH Desktop.",
+      "openFailed": "No se pudo acceder a Neovim. Abriendo en GSH Desktop.",
       "unsavedTitle": "Búferes de Neovim sin guardar",
       "unsavedMessage": "Neovim tiene búferes modificados. ¿Cerrar la pestaña y descartar esos cambios?",
       "closeAnyway": "Cerrar de todos modos"
@@ -208,7 +208,7 @@
       "lspStopped": "detenido"
     },
     "welcomeView": {
-      "title": "Bienvenido a Cockpit",
+      "title": "Bienvenido a GSH Desktop",
       "subtitle": "Abre una carpeta o conéctate a un host remoto para empezar.",
       "createWorkspace": "Crear workspace",
       "openLocalFolder": "Abrir carpeta local",
@@ -599,18 +599,18 @@
     },
     "sshPrompts": {
       "unknownSshHostTitle": "Host SSH desconocido",
-      "neverConnected": "Cockpit nunca se ha conectado a ${endpoint} antes.",
+      "neverConnected": "GSH Desktop nunca se ha conectado a ${endpoint} antes.",
       "trustHint": "Confía solo si esta fingerprint coincide con el servidor. Puedes verificarla en el servidor con:",
       "trust": "Confiar",
       "sshKeyPassphraseTitle": "Frase de contraseña de la clave SSH",
       "unlockMessage": "Desbloquea ${keyPath} para conectar \"${connectionName}\".",
-      "keptInMemoryHint": "Se mantiene en memoria hasta que Cockpit se cierre. Para que los agentes usen esta conexión, activa \"Guardar frase de contraseña\" en la conexión.",
+      "keptInMemoryHint": "Se mantiene en memoria hasta que GSH Desktop se cierre. Para que los agentes usen esta conexión, activa \"Guardar frase de contraseña\" en la conexión.",
       "unlock": "Desbloquear"
     },
     "projectsRail": {
       "workspaces": "Workspaces",
       "keepAwakeOn": "Manteniendo este equipo despierto para acceso remoto. Haz clic para dejarlo dormir de nuevo.",
-      "keepAwakeOff": "Mantener este equipo despierto para acceso remoto. Se apaga solo cuando Cockpit se reinicia.",
+      "keepAwakeOff": "Mantener este equipo despierto para acceso remoto. Se apaga solo cuando GSH Desktop se reinicia.",
       "keepAwakeBattery": "Despierto con batería. Esto consume la batería.",
       "keepAwakeLid": "Cerrar la tapa del portátil sigue poniéndolo a dormir.",
       "newWorkspace": "Nuevo workspace",
@@ -663,7 +663,7 @@
     "topbar": {
       "collapseSidebar": "Contraer barra lateral",
       "toggleFiles": "Mostrar/ocultar archivos",
-      "filesUnavailable": "Archivos no disponibles en Cockpit",
+      "filesUnavailable": "Archivos no disponibles en GSH Desktop",
       "hideKeyboard": "Ocultar teclado",
       "visualizeAgents": "Visualizar agentes"
     },
@@ -733,9 +733,9 @@
       "identityEmpty": "Ninguna clave seleccionada",
       "identityDialogTitle": "Selecciona la clave privada SSH",
       "errIdentity": "Elige la clave privada para autenticarte.",
-      "errHostKeyUnknown": "Cockpit todavía no confía en ${host}. Conecta de nuevo y confirma la huella.",
+      "errHostKeyUnknown": "GSH Desktop todavía no confía en ${host}. Conecta de nuevo y confirma la huella.",
       "errHostKeyChanged": "${host} presenta una clave SSH distinta de la guardada. Si no reinstalaste esa máquina, detente y compruébalo; si la reinstalaste, elimina la entrada antigua de ~/.ssh/known_hosts.",
-      "errHostBundleMissing": "${host} es Windows pero no tiene Cockpit instalado. El servidor remoto se instala desde el bundle de Cockpit que ya está en esa máquina — instálalo allí e inténtalo de nuevo.",
+      "errHostBundleMissing": "${host} es Windows pero no tiene GSH Desktop instalado. El servidor remoto se instala desde el bundle de GSH Desktop que ya está en esa máquina — instálalo allí e inténtalo de nuevo.",
       "errHostUnknownOs": "No se pudo identificar el sistema de ${host}. La cuenta puede tener un shell restringido, o ninguno.",
       "errIdentityPublic": "Solo está la clave pública. Eso funciona solo si la privada está en tu agente SSH; si no, elige la privada (mismo nombre, sin .pub).",
       "errIdentityNotKey": "Ese archivo no parece una clave privada.",
@@ -750,11 +750,11 @@
       "go": "Ir"
     },
     "documentWindow": {
-      "mediaNotSupported": "Audio y video se abren en la ventana principal de Cockpit.",
+      "mediaNotSupported": "Audio y video se abren en la ventana principal de GSH Desktop.",
       "fileNotFound": "Archivo no encontrado: ${path}"
     },
     "gallery": {
-      "intro": "Documentos especiales de Cockpit para que veas lo que el agente de IA está haciendo.",
+      "intro": "Documentos especiales de GSH Desktop para que veas lo que el agente de IA está haciendo.",
       "createErrorTitle": "No se pudo crear el archivo",
       "dbQuery": {
         "title": "Consulta de base de datos",
@@ -774,7 +774,7 @@
       },
       "html": {
         "title": "Vista HTML",
-        "description": "Una página que el agente escribe y Cockpit renderiza directo: mapa mental, diagrama, gráfico, lo que necesites."
+        "description": "Una página que el agente escribe y GSH Desktop renderiza directo: mapa mental, diagrama, gráfico, lo que necesites."
       },
       "tasks": {
         "title": "Tareas",
@@ -790,7 +790,7 @@
       },
       "panel": {
         "title": "Panel",
-        "description": "Una página HTML con puente a la app: sus botones ejecutan comandos de la CLI de Cockpit y del shell en esta máquina. Un playground para dashboards rápidos."
+        "description": "Una página HTML con puente a la app: sus botones ejecutan comandos de la CLI de GSH Desktop y del shell en esta máquina. Un playground para dashboards rápidos."
       }
     },
     "notebook": {
@@ -837,7 +837,7 @@
     },
     "layoutPreview": {
       "applyFailedTitle": "No se pudo aplicar el diseño",
-      "applyInCockpit": "Aplicar en Cockpit",
+      "applyInCockpit": "Aplicar en GSH Desktop",
       "applyNewWorkspace": "Abrir como nuevo espacio de trabajo",
       "applyTo": "Aplicar en ${workspace}",
       "autorunWorktree": "autorun: worktree. Este diseño también se aplica solo al crear un worktree del espacio de trabajo que lo contiene.",
@@ -915,7 +915,7 @@
       "byAgent": "por el agente",
       "caseTabTitle": "${type} · ${file}",
       "srcApp": "App",
-      "chipApp": "Cockpit"
+      "chipApp": "GSH Desktop"
     },
     "panelView": {
       "unavailable": "Los paneles necesitan la web view integrada, que todavía no existe en Linux.",
@@ -974,12 +974,12 @@
       "queued": "${n} en cola",
       "agentName": "Nombre",
       "integration": "Integración",
-      "integrationHint": "Cockpit agrega un servidor MCP llamado \"cockpit\" a este archivo y guarda una copia de seguridad al lado. Los demás servidores no se tocan.",
-      "integrationConsent": "Agregar el servidor MCP de Cockpit a la configuración de ${app}",
-      "restartHint": "Reinicia ${app} si ya estaba abierto para que cargue el servidor MCP de Cockpit; luego pídele que llame a wait_messages.",
+      "integrationHint": "GSH Desktop agrega un servidor MCP llamado \"cockpit\" a este archivo y guarda una copia de seguridad al lado. Los demás servidores no se tocan.",
+      "integrationConsent": "Agregar el servidor MCP de GSH Desktop a la configuración de ${app}",
+      "restartHint": "Reinicia ${app} si ya estaba abierto para que cargue el servidor MCP de GSH Desktop; luego pídele que llame a wait_messages.",
       "integrationError": {
-        "invalidConfig": "${path} no es un JSON/TOML simple que Cockpit pueda editar con seguridad (comentarios u otro formato). No se cambió nada.",
-        "cliMissing": "La CLI de Cockpit aún no está instalada (${path}). Reinicia Cockpit e inténtalo de nuevo.",
+        "invalidConfig": "${path} no es un JSON/TOML simple que GSH Desktop pueda editar con seguridad (comentarios u otro formato). No se cambió nada.",
+        "cliMissing": "La CLI de GSH Desktop aún no está instalada (${path}). Reinicia GSH Desktop e inténtalo de nuevo.",
         "writeFailed": "No se pudo actualizar la configuración: ${detail}"
       }
     }
@@ -1010,18 +1010,18 @@
       "general": {
         "sectionEditor": "Editor",
         "editorEngineTitle": "Motor",
-        "editorEngineCockpit": "Cockpit (predeterminado)",
+        "editorEngineCockpit": "GSH Desktop (predeterminado)",
         "editorEngineNeovim": "Neovim",
         "neovimChecking": "Buscando Neovim…",
         "neovimNotFound": "Neovim no se encontró en la PATH de tu shell.",
         "neovimRefresh": "Comprobar de nuevo",
-        "showCockpitTitle": "Mostrar terminal de Cockpit",
+        "showCockpitTitle": "Mostrar terminal de GSH Desktop",
         "showCockpitDesc": "Mantiene un workspace sin carpeta, solo de terminal, fijado en la parte superior de la barra lateral. Desactivarlo cierra sus terminales.",
         "launchAtStartupTitle": "Iniciar al arrancar",
-        "launchAtStartupDesc": "Inicia Cockpit automáticamente cuando inicias sesión en tu computadora.",
+        "launchAtStartupDesc": "Inicia GSH Desktop automáticamente cuando inicias sesión en tu computadora.",
         "sectionUpdates": "Actualizaciones",
         "checkUpdatesTitle": "Buscar actualizaciones",
-        "checkUpdatesDesc": "Con qué frecuencia Cockpit debe buscar nuevas versiones.",
+        "checkUpdatesDesc": "Con qué frecuencia GSH Desktop debe buscar nuevas versiones.",
         "updateFrequency": {
           "daily": "Diariamente",
           "weekly": "Semanalmente",
@@ -1029,7 +1029,7 @@
           "never": "Nunca"
         },
         "developerModeTitle": "Modo desarrollador",
-        "developerModeDesc": "Registra los errores y avisos del propio Cockpit en una base aparte de la Telemetría (chip “Cockpit”) y activa las métricas de rendimiento. Solo sirve a quien mantiene la app."
+        "developerModeDesc": "Registra los errores y avisos del propio GSH Desktop en una base aparte de la Telemetría (chip “GSH Desktop”) y activa las métricas de rendimiento. Solo sirve a quien mantiene la app."
       },
       "diagnostics": {
         "sectionTitle": "Diagnóstico",
@@ -1047,23 +1047,23 @@
       "storage": {
         "sectionTitle": "Almacenamiento",
         "locationTitle": "Ubicación de almacenamiento",
-        "locationDesc": "Cockpit guarda aquí sus proyectos, diseños y configuración. Apúntalo a una carpeta sincronizada para respaldarlo.\n${root}",
+        "locationDesc": "GSH Desktop guarda aquí sus proyectos, diseños y configuración. Apúntalo a una carpeta sincronizada para respaldarlo.\n${root}",
         "useDefault": "Usar predeterminado",
         "working": "Procesando…",
         "change": "Cambiar…",
-        "resetTitle": "Restablecer Cockpit",
+        "resetTitle": "Restablecer GSH Desktop",
         "resetDesc": "Elimina todos los datos locales — proyectos, diseños, configuración e historial de terminal — y vuelve a la ubicación predeterminada.",
         "resetButton": "Restablecer…",
         "resetConfirm": "Restablecer",
-        "resetDialogTitle": "¿Restablecer Cockpit?",
-        "resetDialogContent": "Esto elimina permanentemente todos los datos locales de Cockpit — proyectos, diseños, configuración e historial de terminal. Esto no se puede deshacer. Cockpit se cerrará para que puedas empezar de nuevo.",
+        "resetDialogTitle": "¿Restablecer GSH Desktop?",
+        "resetDialogContent": "Esto elimina permanentemente todos los datos locales de GSH Desktop — proyectos, diseños, configuración e historial de terminal. Esto no se puede deshacer. GSH Desktop se cerrará para que puedas empezar de nuevo.",
         "restartRequiredTitle": "Reinicio necesario",
-        "restartChangeFolderMessage": "Cockpit usará esta carpeta a partir del próximo inicio:\n${path}",
-        "restartUseDefaultMessage": "Cockpit usará la ubicación predeterminada del sistema a partir del próximo inicio. Tus datos en la carpeta personalizada permanecen intactos.",
-        "restartResetMessage": "Se borraron todos los datos de Cockpit. Reinicia para empezar de nuevo.",
+        "restartChangeFolderMessage": "GSH Desktop usará esta carpeta a partir del próximo inicio:\n${path}",
+        "restartUseDefaultMessage": "GSH Desktop usará la ubicación predeterminada del sistema a partir del próximo inicio. Tus datos en la carpeta personalizada permanecen intactos.",
+        "restartResetMessage": "Se borraron todos los datos de GSH Desktop. Reinicia para empezar de nuevo.",
         "later": "Más tarde",
-        "quitCockpit": "Salir de Cockpit",
-        "chooseFolderDialogTitle": "Elige una carpeta para los datos de Cockpit"
+        "quitCockpit": "Salir de GSH Desktop",
+        "chooseFolderDialogTitle": "Elige una carpeta para los datos de GSH Desktop"
       },
       "terminal": {
         "sectionDefaultTerminal": "Terminal predeterminado",
@@ -1071,7 +1071,7 @@
         "engineDesc": "Usado por nuevas pestañas de terminal y buffers de salida de tasks. Las pestañas abiertas mantienen su motor actual.",
         "shellTitle": "Shell",
         "shellDesc": "Qué shell abren las nuevas pestañas de terminal. La flecha junto al + sigue abriendo cualquier otro, solo para esa pestaña.",
-        "noWslMessage": "No se encontraron distros de WSL. Instala una (wsl.exe --install) y reinicia Cockpit para verla listada aquí.",
+        "noWslMessage": "No se encontraron distros de WSL. Instala una (wsl.exe --install) y reinicia GSH Desktop para verla listada aquí.",
         "sectionBehavior": "Comportamiento",
         "closeOnExitTitle": "Cerrar la pestaña cuando el shell termine",
         "closeOnExitDesc": "Cuando un shell termina por sí solo (exit, Ctrl-D), cierra su pestaña en lugar de dejar un terminal muerto."
@@ -1139,7 +1139,7 @@
         "enableTitle": "Activar notificaciones",
         "enableDesc": "Avisarme cuando un agente termine un turno y la ventana no esté enfocada.",
         "systemPermissionTitle": "Permiso del sistema",
-        "grantedDesc": "Cockpit tiene permiso para enviar notificaciones.",
+        "grantedDesc": "GSH Desktop tiene permiso para enviar notificaciones.",
         "notGrantedDesc": "macOS aún no ha concedido acceso a las notificaciones.",
         "granted": "Concedido",
         "requestPermission": "Solicitar permiso",
@@ -1164,7 +1164,7 @@
         "formatOnSaveTitle": "Formatear al guardar",
         "formatOnSaveDesc": "Formatea el archivo automáticamente al guardar (⌘S).",
         "sectionLanguageServers": "SERVIDORES DE LENGUAJE",
-        "footerNote": "Los errores y el formato usan el language server de cada lenguaje. Cockpit no instala servidores — usa lo que ya está en tu máquina. ● responde · ○ no encontrado o comando inválido (instala el servidor o ajusta el comando).",
+        "footerNote": "Los errores y el formato usan el language server de cada lenguaje. GSH Desktop no instala servidores — usa lo que ya está en tu máquina. ● responde · ○ no encontrado o comando inválido (instala el servidor o ajusta el comando).",
         "serverCommandLabel": "Comando del language server",
         "formatterCommandLabel": "Comando del formateador (opcional)",
         "formatterHint": "Formateador externo con el marcador %FILE%. Tiene prioridad sobre el formateador del LSP cuando está definido.",
@@ -1191,7 +1191,7 @@
         "modelAutoRouted": "Este harness elige el modelo automáticamente.",
         "modelAccountOnly": "Solo se muestran los modelos disponibles en tu cuenta.",
         "generateFromSourceControl": "Generar desde Control de versiones",
-        "generateFromSourceControlDescription": "Cockpit envía solo el diff seleccionado y los asuntos de los commits recientes. Los patrones habituales de credenciales y los archivos sensibles se redactan antes de ejecutar el harness.",
+        "generateFromSourceControlDescription": "GSH Desktop envía solo el diff seleccionado y los asuntos de los commits recientes. Los patrones habituales de credenciales y los archivos sensibles se redactan antes de ejecutar el harness.",
         "discoveryFailed": "No se pudieron descubrir los harnesses de automatización instalados.",
         "staleModel": "El modelo \"${model}\" ya no está disponible para ${harness}. Se usará el predeterminado de la CLI; elige otro modelo en Configuración si lo necesitas.",
         "recommendedSuffix": "Recomendado"
@@ -1218,7 +1218,7 @@
       "statusOffline": "Sin conexión",
       "statusIdle": "No conectado",
       "helpTitle": "Cómo funciona",
-      "helpBody": "Cockpit se conecta a tu máquina por SSH y habla con un pequeño servidor que ejecuta las terminales, archivos y git allí. El host debe tener Cockpit (escritorio) o el cockpit-server instalado y en ejecución, y la clave pública de este dispositivo añadida en su ~/.ssh/authorized_keys."
+      "helpBody": "GSH Desktop se conecta a tu máquina por SSH y habla con un pequeño servidor que ejecuta las terminales, archivos y git allí. El host debe tener GSH Desktop (escritorio) o el cockpit-server instalado y en ejecución, y la clave pública de este dispositivo añadida en su ~/.ssh/authorized_keys."
     }
   },
   "automation": {

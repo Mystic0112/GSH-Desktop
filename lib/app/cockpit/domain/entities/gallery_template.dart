@@ -194,7 +194,7 @@ enum GalleryTemplate {
   layout(
     baseName: 'dev',
     extension: 'ckp',
-    iconAsset: 'assets/branding/cockpit_logo.png',
+    iconAsset: 'assets/branding/gsh_logo.png',
     content:
         '# Pane layout — apply with right-click → Open layout,\n'
         '# or `cockpit orchestrate dev.ckp` from a tab.\n'
@@ -211,7 +211,7 @@ enum GalleryTemplate {
     baseName: '',
     extension: 'env.cockpit',
     fixedName: true,
-    iconAsset: 'assets/branding/cockpit_logo.png',
+    iconAsset: 'assets/branding/gsh_logo.png',
     content:
         '# Environment for every terminal Cockpit opens in this workspace.\n'
         '# One KEY=VALUE per line. No interpolation, no multiline.\n'

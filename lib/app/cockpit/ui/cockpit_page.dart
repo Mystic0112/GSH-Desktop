@@ -766,7 +766,7 @@ class _CockpitPageState extends State<CockpitPage> {
             child: Column(
               children: [
                 CockpitTopbar(
-                  projectName: shell.title ?? 'Cockpit',
+                  projectName: shell.title ?? 'GSH Desktop',
                   // No modo estreito os toggles abrem/fecham os drawers; no largo
                   // seguem alternando a visibilidade inline da VM.
                   railVisible: railVisibleEff,

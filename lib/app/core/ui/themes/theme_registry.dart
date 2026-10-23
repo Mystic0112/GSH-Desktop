@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 
 /// Id do tema que sempre existe. Persistir um id (e não um enum) é o que abre
 /// espaço para temas custom sem migração a cada tema novo.
-const String kDefaultThemeId = 'cockpit';
+const String kDefaultThemeId = 'gsh';
 
 /// O tema oficial do Cockpit, e a raiz de todos os outros built-in.
 ///
@@ -20,7 +20,7 @@ const String kDefaultThemeId = 'cockpit';
 /// superfícies neutras da UI do Cockpit, e a que a maioria já reconhece de
 /// olhar código no navegador.
 final CockpitThemeSpec cockpitDefaultTheme = CockpitThemeSpec(
-  id: kDefaultThemeId,
+  id: 'cockpit',
   name: 'Cockpit',
   author: 'Remote Pi',
   dark: _variant(
@@ -749,8 +749,65 @@ final CockpitThemeSpec roseTheme = _tintedThemeOf(
   lightContent: const Color(0xFFFFF9FB),
 );
 
+/// **GSH** — o tema da Gorila Software House, padrão do GSH Desktop.
+///
+/// A marca é acromática: o gorila low-poly é slate (`#7A8588` claro, `#434B4D`
+/// escuro) e o site é cinza com texto `#F1F5F9`. Os neutros aqui levam esse
+/// leve tom azul-acinzentado do logo (matiz ~193°, saturação baixa), e o accent
+/// é o próprio slate: claro no escuro, escuro no claro.
+///
+/// Como no Pantera, a marca não tem cor. As únicas cores vivas da UI são as de
+/// **estado** (verde/amarelo/azul dos agentes, erro, git), herdadas intactas
+/// do Cockpit, para que status nunca dispute atenção com a marca.
+final CockpitThemeSpec gshTheme = CockpitThemeSpec(
+  id: 'gsh',
+  name: 'GSH',
+  author: 'Gorila Software House',
+  dark: _variant(
+    ui: AppColors.dark.copyWith(
+      bg: const Color(0xFF161819), // chrome, o mais fundo
+      panel: const Color(0xFF1E2122), // corpo da aba
+      panel2: const Color(0xFF262A2B), // elevado: cards, composer
+      panel3: const Color(0xFF2F3435), // hover
+      border: const Color(0xFF2A2E2F),
+      border2: const Color(0xFF3A4042),
+      text: const Color(0xFFF1F5F9), // texto do site
+      text2: const Color(0xFFA3ACAE),
+      text3: const Color(0xFF7A8588), // slate claro do logo (3,8:1 no elevado)
+      text4: const Color(0xFF4F585A),
+      accent: const Color(0xFFC9D3D6), // slate claro, lê como marca sem ser cor
+      accentText: const Color(0xFFDCE3E5),
+      accentSoft: const Color(0x337A8588),
+    ),
+    syntax: SyntaxColors.githubDark,
+    terminal: cockpitTerminalThemeDark,
+    terminalOverrides: {'cursor': '#C9D3D6', 'selection': '#7A858855'},
+  ),
+  light: _variant(
+    ui: AppColors.light.copyWith(
+      bg: const Color(0xFFEEF1F2),
+      panel: const Color(0xFFFFFFFF),
+      panel2: const Color(0xFFF4F6F7),
+      panel3: const Color(0xFFE3E8E9),
+      border: const Color(0xFFDDE2E3),
+      border2: const Color(0xFFC7CED0),
+      text: const Color(0xFF1A1A1A), // texto do site claro
+      text2: const Color(0xFF4A5456),
+      text3: const Color(0xFF6B7578),
+      text4: const Color(0xFFA3ACAE),
+      accent: const Color(0xFF434B4D), // slate escuro do logo
+      accentText: const Color(0xFF2E3536),
+      accentSoft: const Color(0x1F434B4D),
+    ),
+    syntax: SyntaxColors.githubLight,
+    terminal: cockpitTerminalThemeLight,
+    terminalOverrides: {'cursor': '#434B4D', 'selection': '#434B4D26'},
+  ),
+);
+
 /// Todos os temas que vêm no app, na ordem em que aparecem no seletor.
 final List<CockpitThemeSpec> builtInThemes = [
+  gshTheme,
   cockpitDefaultTheme,
   cockpit2Theme,
   violet1Theme,

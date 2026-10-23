@@ -41,7 +41,7 @@ class Project {
   /// Constrói o workspace sintético "Cockpit" (terminal-only, sem pasta).
   factory Project.systemTerminal() => Project(
     id: cockpitId,
-    name: 'Cockpit',
+    name: 'GSH Desktop',
     path: '',
     colorValue: 0xFF6B7280,
     createdAt: DateTime.fromMillisecondsSinceEpoch(0),

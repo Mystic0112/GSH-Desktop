@@ -26,7 +26,7 @@ CockpitTokens buildTokens({
   AppSettings settings = const AppSettings(),
   CockpitThemeSpec? theme,
 }) {
-  final variant = (theme ?? cockpitDefaultTheme).variantFor(brightness);
+  final variant = (theme ?? gshTheme).variantFor(brightness);
   final typo = AppTypography.build(
     uiFont: settings.interfaceFont,
     monoFont: settings.codeFont,
@@ -50,7 +50,7 @@ ThemeData buildTheme({
   AppSettings settings = const AppSettings(),
   CockpitThemeSpec? theme,
 }) {
-  final colors = (theme ?? cockpitDefaultTheme).variantFor(brightness).ui;
+  final colors = (theme ?? gshTheme).variantFor(brightness).ui;
   // Reaproveita a resolução de fontes do AppTypography (Hanken/JetBrains ou as
   // custom das settings) e extrai só a FAMÍLIA para alimentar a Typography do
   // shadcn — assim todo componente shadcn herda a tipografia do Cockpit (o

@@ -344,7 +344,7 @@ class _VersionFooterState extends State<_VersionFooter> {
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          _version == null ? 'Cockpit' : 'Cockpit $_version',
+          _version == null ? 'GSH Desktop' : 'GSH Desktop $_version',
           style: context.typo.label.copyWith(color: colors.text4),
         ),
       ),
@@ -422,7 +422,7 @@ class _GeneralPanel extends StatelessWidget {
               // No mobile some tudo; sobram Idioma/Storage/Diagnostics.
               if (!isMobilePlatform) ...[
                 _Section(
-                  label: 'Cockpit',
+                  label: 'GSH Desktop',
                   child: _Card(
                     children: [
                       _Row(
@@ -1423,7 +1423,7 @@ class _AppearancePanel extends StatelessWidget {
                       description: tr.interfaceFontDesc,
                       trailing: _FontField(
                         value: s.interfaceFont,
-                        hint: 'Space Grotesk · Hanken',
+                        hint: 'Montserrat · Hanken',
                         onChanged: controller.setInterfaceFont,
                       ),
                     ),
@@ -2692,7 +2692,7 @@ class _ThemeDropdown extends StatelessWidget {
     final themes = controller.availableThemes;
     final current = themes.firstWhere(
       (t) => t.id == value,
-      orElse: () => cockpitDefaultTheme,
+      orElse: () => gshTheme,
     );
     // `availableThemes` já entrega os nativos primeiro; separar aqui mantém
     // essa ordem sendo a única fonte da divisão.

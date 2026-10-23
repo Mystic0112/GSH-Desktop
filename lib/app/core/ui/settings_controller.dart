@@ -129,7 +129,7 @@ class SettingsController extends ChangeNotifier {
     for (final theme in availableThemes) {
       if (theme.id == _settings.themeId) return theme;
     }
-    return cockpitDefaultTheme;
+    return gshTheme;
   }
 
   void setThemeId(String id) => _apply(_settings.copyWith(themeId: id));

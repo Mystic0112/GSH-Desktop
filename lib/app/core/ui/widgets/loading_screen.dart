@@ -104,7 +104,7 @@ class _LoadingScreenState extends State<LoadingScreen>
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(14),
                   child: Image.asset(
-                    'assets/branding/cockpit_logo.png',
+                    'assets/branding/gsh_logo.png',
                     width: 64,
                     height: 64,
                     filterQuality: FilterQuality.medium,

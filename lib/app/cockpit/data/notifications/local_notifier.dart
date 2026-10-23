@@ -55,7 +55,7 @@ class LocalNotifier implements Notifier {
       // Sem este bloco a plataforma Windows nunca é inicializada e todo
       // `show()` lança LateInitializationError (issue #91).
       windows: WindowsInitializationSettings(
-        appName: 'Cockpit',
+        appName: 'GSH Desktop',
         appUserModelId: _windowsAppUserModelId,
         guid: _windowsNotifierGuid,
       ),

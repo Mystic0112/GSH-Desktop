@@ -736,7 +736,7 @@ class _CockpitSlot extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             child: Text(
-              'Cockpit',
+              'GSH Desktop',
               overflow: TextOverflow.ellipsis,
               style: context.typo.body.copyWith(
                 fontSize: 13.5,

@@ -2,8 +2,9 @@ import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Tipografia do Cockpit — espelha o design: Space Grotesk (display/títulos),
-/// Hanken Grotesk (UI/texto), JetBrains Mono (código). Servidas via
+/// Tipografia do GSH Desktop — identidade Gorila: Montserrat (display/títulos,
+/// a fonte de heading do gorilash.com.br), Hanken Grotesk (UI/texto),
+/// JetBrains Mono (código, também a fonte de corpo do site). Servidas via
 /// `google_fonts` (runtime + cache), sem bundle de .ttf.
 @immutable
 class AppTypography {
@@ -16,10 +17,10 @@ class AppTypography {
     required this.mono,
   });
 
-  /// Space Grotesk — títulos grandes (heading do transcript).
+  /// Montserrat — títulos grandes (heading do transcript).
   final TextStyle display;
 
-  /// Space Grotesk — nomes de workspace/aba/seção.
+  /// Montserrat — nomes de workspace/aba/seção.
   final TextStyle title;
 
   /// Hanken Grotesk — corpo do transcript e inputs.
@@ -28,7 +29,7 @@ class AppTypography {
   /// Hanken Grotesk — rótulos pequenos.
   final TextStyle label;
 
-  /// Space Grotesk — texto das abas.
+  /// Montserrat — texto das abas.
   final TextStyle tab;
 
   /// JetBrains Mono — código, args de tool, métricas.
@@ -47,7 +48,7 @@ class AppTypography {
   int get hashCode => Object.hashAll(_props);
 
   /// Monta a tipografia. Sem args = defaults do design. [uiFont]/[monoFont]
-  /// vazios mantêm Space Grotesk/Hanken e JetBrains Mono; preenchidos trocam a
+  /// vazios mantêm Montserrat/Hanken e JetBrains Mono; preenchidos trocam a
   /// família (resolução pelo SO). [codeSize] define o tamanho do mono. O
   /// "tamanho da interface" NÃO escala aqui — é aplicado globalmente via
   /// `MediaQuery.textScaler` (zoom de texto em todo o app).
@@ -58,11 +59,11 @@ class AppTypography {
   }) {
     final hasUi = uiFont != null && uiFont.trim().isNotEmpty;
     final hasMono = monoFont != null && monoFont.trim().isNotEmpty;
-    // Display/títulos: Space Grotesk por padrão; corpo/rótulos: Hanken. Com uma
+    // Display/títulos: Montserrat por padrão; corpo/rótulos: Hanken. Com uma
     // fonte custom de interface, ela manda em tudo.
     final TextStyle displayBase = hasUi
         ? TextStyle(fontFamily: uiFont)
-        : GoogleFonts.spaceGrotesk();
+        : GoogleFonts.montserrat();
     final TextStyle ui = hasUi
         ? TextStyle(fontFamily: uiFont)
         : GoogleFonts.hankenGrotesk();

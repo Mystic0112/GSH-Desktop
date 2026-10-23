@@ -38,7 +38,7 @@ class AppSettings {
     this.terminalFont,
     this.terminalSize,
     this.terminalFontWeight = TerminalFontWeight.auto,
-    this.themeId = 'cockpit',
+    this.themeId = 'gsh',
     this.pinUserMessage = true,
     this.lastOpenAppId,
     this.lspCommands = const <String, String>{},
@@ -71,7 +71,7 @@ class AppSettings {
 
   final AppThemeMode themeMode;
 
-  /// Família da fonte da interface (`null`/vazio = Space Grotesk/Hanken).
+  /// Família da fonte da interface (`null`/vazio = Montserrat/Hanken).
   final String? interfaceFont;
 
   /// Tamanho base da UI (px). Os estilos escalam proporcionalmente.
@@ -546,7 +546,7 @@ Map<String, String> _strMap(Object? raw) {
 String _themeIdFrom(Map<dynamic, dynamic> json) {
   final explicit = json['themeId'];
   if (explicit is String && explicit.trim().isNotEmpty) return explicit.trim();
-  return 'cockpit';
+  return 'gsh';
 }
 
 T _enumByName<T extends Enum>(List<T> values, Object? raw, T fallback) {

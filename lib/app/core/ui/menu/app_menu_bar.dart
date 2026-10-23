@@ -52,7 +52,7 @@ List<MenuBarMenu> buildAppMenus(
 
   return <MenuBarMenu>[
     // 1ª entrada = menu do app (no macOS o SO rotula com o nome do app).
-    MenuBarMenu('Cockpit', <MenuNode>[
+    MenuBarMenu('GSH Desktop', <MenuNode>[
       const MenuRole(MenuBarRole.about),
       const MenuSeparator(),
       MenuAction(

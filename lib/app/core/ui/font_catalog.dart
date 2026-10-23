@@ -51,7 +51,7 @@ const _absentFamilySentinel = '__cockpit_absent_family__';
 
 /// Famílias que o app serve por conta própria (`google_fonts`), então estão
 /// disponíveis independentemente do que a máquina tem instalado.
-const _appFonts = <String>['JetBrains Mono', 'Space Grotesk', 'Hanken Grotesk'];
+const _appFonts = <String>['JetBrains Mono', 'Montserrat', 'Hanken Grotesk'];
 
 /// Candidatas por plataforma. Não é exaustivo por definição — é uma lista de
 /// suspeitas comuns, e o texto livre continua existindo para o resto.
