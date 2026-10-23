@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:cockpit/app/cockpit/domain/entities/farm_loop.dart';
+import 'package:cockpit/app/cockpit/ui/viewmodels/cockpit_viewmodel.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/farm_viewmodel.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/farm/farm_scene.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/farm/farm_scene_painter.dart';
@@ -209,6 +210,11 @@ class _FarmViewState extends State<FarmView> {
                       _mouse.value = null;
                     },
                     child: GestureDetector(
+                      onTapUp: world == null
+                          ? null
+                          : (d) => _open(
+                              _scene.hit(_cam.toWorld(d.localPosition)),
+                            ),
                       onDoubleTap: world == null
                           ? null
                           : () => _cam.fit(world.layout, _viewport(size)),
@@ -266,6 +272,34 @@ class _FarmViewState extends State<FarmView> {
     );
   }
 
+  /// Clique no bicho: foca a aba do terminal dele (subagente → a do pai).
+  /// Sem aba no GSH, sessão parada é retomada numa aba nova; rodando fora,
+  /// só avisa (retomar ali duplicaria a conversa).
+  void _open(Critter? c) {
+    if (c == null) return;
+    final sid = c.loop.parentId ?? c.loop.id;
+    final main = _vm.loops.where((l) => l.id == sid).firstOrNull ?? c.loop;
+    final parked = main.activity.status == FarmStatus.idle;
+    final ok = context.read<CockpitViewModel>().revealAgentSession(
+      sid,
+      resumeCwd: parked ? main.project : null,
+    );
+    if (ok) return;
+    showToast(
+      context: context,
+      location: ToastLocation.bottomRight,
+      builder: (context, overlay) => SurfaceCard(
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(
+            context.t.cockpit.farm.outsideGsh,
+            style: context.typo.label,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _tip(BuildContext context, Size size, Critter? c, Offset? at) {
     if (c == null || at == null) return const SizedBox.shrink();
     final tr = context.t.cockpit.farm;
@@ -280,6 +314,7 @@ class _FarmViewState extends State<FarmView> {
         out: _compact(l.outputTokens),
         ctx: _compact(l.contextTokens),
       ),
+      tr.clickToOpen,
     ].join('\n');
     final right = at.dx > size.width - 280, below = at.dy < size.height - 140;
     return Stack(

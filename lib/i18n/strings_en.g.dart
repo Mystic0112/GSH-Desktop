@@ -2825,6 +2825,12 @@ class Translations$cockpit$farm$en {
 	/// en: '${out} tokens out · context ${ctx}'
 	String tokensDetail({required Object out, required Object ctx}) => '${out} tokens out · context ${ctx}';
 
+	/// en: 'Click to open its terminal'
+	String get clickToOpen => 'Click to open its terminal';
+
+	/// en: 'This agent is running outside GSH Desktop. Its terminal is in another window.'
+	String get outsideGsh => 'This agent is running outside GSH Desktop. Its terminal is in another window.';
+
 	/// en: '${n} agents'
 	String agents({required Object n}) => '${n} agents';
 
@@ -5057,6 +5063,8 @@ extension on Translations {
 			'cockpit.farm.idle' => ({required Object n}) => '${n} idle',
 			'cockpit.farm.tokens' => ({required Object n}) => '${n} tokens out',
 			'cockpit.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens out · context ${ctx}',
+			'cockpit.farm.clickToOpen' => 'Click to open its terminal',
+			'cockpit.farm.outsideGsh' => 'This agent is running outside GSH Desktop. Its terminal is in another window.',
 			'cockpit.farm.agents' => ({required Object n}) => '${n} agents',
 			'cockpit.farm.subagents' => ({required Object n}) => '${n} sub-agents',
 			'cockpit.farm.activity.thinking' => 'thinking',
@@ -5288,10 +5296,10 @@ extension on Translations {
 			'settings.page.languages.formatterHint' => 'External formatter with %FILE% placeholder. Takes precedence over the LSP formatter when set.',
 			'settings.page.languages.resetToDefault' => 'Reset to default',
 			'settings.page.languages.saveAndRestart' => 'Save & restart',
-			'settings.page.languages.statusResponds' => 'Server responds',
-			'settings.page.languages.statusNotFound' => 'Server not found or command invalid',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.languages.statusResponds' => 'Server responds',
+			'settings.page.languages.statusNotFound' => 'Server not found or command invalid',
 			'settings.page.automations.sectionCommitMessages' => 'Commit messages',
 			'settings.page.automations.harness' => 'Harness',
 			'settings.page.automations.harnessDiscovering' => 'Looking for installed command-line harnesses…',

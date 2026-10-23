@@ -4768,6 +4768,29 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
     notifyListeners();
   }
 
+  /// Fazenda: foca a aba de terminal onde roda a sessão de agente
+  /// [sessionId] (o `session_id` que o hook trouxe), trocando de workspace se
+  /// preciso. Sem aba no GSH e com [resumeCwd], abre uma no workspace ativo
+  /// retomando a sessão (`claude --resume`). `false` = nada foi feito.
+  bool revealAgentSession(String sessionId, {String? resumeCwd}) {
+    for (final s in _sessions.values) {
+      if (s is! TerminalSession || s.claudeSessionId != sessionId) continue;
+      selectProject(s.projectId);
+      final leaf = leafOfTab(s.projectId, s.id);
+      if (leaf == null) return false;
+      selectTab(leaf, s.id);
+      return true;
+    }
+    // O id vira argumento de shell: só aceita o formato de UUID.
+    if (resumeCwd == null || !RegExp(r'^[A-Za-z0-9-]+$').hasMatch(sessionId)) {
+      return false;
+    }
+    return newTerminalTab(
+      cwd: resumeCwd,
+      startupCommand: 'claude --resume $sessionId',
+    ).isSuccess;
+  }
+
   void selectTab(String paneId, String agentId) {
     PerformanceDiagnostics.instance.timeToNextFrame(PerfMetric.tabSwitch);
     final tree = _activeTree;

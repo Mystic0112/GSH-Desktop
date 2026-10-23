@@ -933,6 +933,8 @@
       "idle": "${n} idle",
       "tokens": "${n} tokens out",
       "tokensDetail": "${out} tokens out · context ${ctx}",
+      "clickToOpen": "Click to open its terminal",
+      "outsideGsh": "This agent is running outside GSH Desktop. Its terminal is in another window.",
       "agents": "${n} agents",
       "subagents": "${n} sub-agents",
       "activity": {

@@ -1336,6 +1336,8 @@ class _Translations$cockpit$farm$pt_BR extends Translations$cockpit$farm$en {
 	@override String idle({required Object n}) => '${n} parados';
 	@override String tokens({required Object n}) => '${n} tokens gerados';
 	@override String tokensDetail({required Object out, required Object ctx}) => '${out} tokens gerados · contexto ${ctx}';
+	@override String get clickToOpen => 'Clique para abrir o terminal';
+	@override String get outsideGsh => 'Este agente está rodando fora do GSH Desktop. O terminal dele está em outra janela.';
 	@override String agents({required Object n}) => '${n} agentes';
 	@override String subagents({required Object n}) => '${n} subagentes';
 	@override late final _Translations$cockpit$farm$activity$pt_BR activity = _Translations$cockpit$farm$activity$pt_BR._(_root);
@@ -2822,6 +2824,8 @@ extension on TranslationsPtBr {
 			'cockpit.farm.idle' => ({required Object n}) => '${n} parados',
 			'cockpit.farm.tokens' => ({required Object n}) => '${n} tokens gerados',
 			'cockpit.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens gerados · contexto ${ctx}',
+			'cockpit.farm.clickToOpen' => 'Clique para abrir o terminal',
+			'cockpit.farm.outsideGsh' => 'Este agente está rodando fora do GSH Desktop. O terminal dele está em outra janela.',
 			'cockpit.farm.agents' => ({required Object n}) => '${n} agentes',
 			'cockpit.farm.subagents' => ({required Object n}) => '${n} subagentes',
 			'cockpit.farm.activity.thinking' => 'pensando',
@@ -3053,10 +3057,10 @@ extension on TranslationsPtBr {
 			'settings.page.languages.formatterHint' => 'Formatador externo com o placeholder %FILE%. Tem prioridade sobre o formatador do LSP quando definido.',
 			'settings.page.languages.resetToDefault' => 'Redefinir para o padrão',
 			'settings.page.languages.saveAndRestart' => 'Salvar e reiniciar',
-			'settings.page.languages.statusResponds' => 'Servidor responde',
-			'settings.page.languages.statusNotFound' => 'Servidor não encontrado ou comando inválido',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.languages.statusResponds' => 'Servidor responde',
+			'settings.page.languages.statusNotFound' => 'Servidor não encontrado ou comando inválido',
 			'settings.page.automations.sectionCommitMessages' => 'Mensagens de commit',
 			'settings.page.automations.harness' => 'Harness',
 			'settings.page.automations.harnessDiscovering' => 'Procurando harnesses de linha de comando instalados…',
