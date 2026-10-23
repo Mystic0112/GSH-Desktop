@@ -926,8 +926,11 @@
     },
     "chat": {
       "tabTitle": "Chat",
-      "emptyTitle": "Chat con Claude Code",
-      "emptyHint": "Usa el claude instalado en esta máquina, con tu propio login. Carpeta: ${cwd}",
+      "emptyTitle": "Nueva conversación",
+      "emptySubtitle": "Claude Code en ${folder}, con tu propio login.",
+      "emptyHintSend": "Enter envía; Shift+Enter agrega una línea.",
+      "emptyHintPaste": "Pega una captura con Ctrl+V o suelta archivos en el chat.",
+      "emptyHintMode": "Elige el modo de permiso debajo del campo: pedir, aceptar ediciones, planificar o ignorar.",
       "placeholder": "Mensaje para Claude… (Enter envía, Shift+Enter nueva línea)",
       "send": "Enviar",
       "stop": "Detener",

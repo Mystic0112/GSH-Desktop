@@ -256,37 +256,87 @@ class _Empty extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final tr = context.t.cockpit.chat;
+    if (chat.loadingHistory) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircularProgressIndicator(size: 18, color: colors.text3),
+            const SizedBox(height: 14),
+            Text(
+              tr.loadingHistory,
+              style: context.typo.body.copyWith(
+                fontSize: 13.5,
+                color: colors.text3,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    // Três dicas curtas do que dá para fazer, no lugar de um texto corrido.
+    final hints = <(IconData, String)>[
+      (Icons.keyboard_return, tr.emptyHintSend),
+      (Icons.image_outlined, tr.emptyHintPaste),
+      (Icons.tune, tr.emptyHintMode),
+    ];
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 440),
+          constraints: const BoxConstraints(maxWidth: 420),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (chat.loadingHistory) ...[
-                CircularProgressIndicator(size: 18, color: colors.text3),
-                const SizedBox(height: 14),
-              ] else ...[
-                Text(
+              Center(
+                child: Icon(
+                  Icons.chat_bubble_outline,
+                  size: 28,
+                  color: colors.text4,
+                ),
+              ),
+              const SizedBox(height: 14),
+              Center(
+                child: Text(
                   tr.emptyTitle,
                   style: context.typo.display.copyWith(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: colors.text,
                   ),
                 ),
-                const SizedBox(height: 10),
-              ],
-              Text(
-                chat.loadingHistory
-                    ? tr.loadingHistory
-                    : tr.emptyHint(cwd: chat.cwd),
-                textAlign: TextAlign.center,
-                style: context.typo.body.copyWith(
-                  fontSize: 13.5,
-                  color: colors.text3,
+              ),
+              const SizedBox(height: 6),
+              Center(
+                child: Text(
+                  tr.emptySubtitle(folder: basenameOf(chat.cwd)),
+                  textAlign: TextAlign.center,
+                  style: context.typo.body.copyWith(
+                    fontSize: 13,
+                    color: colors.text3,
+                  ),
                 ),
               ),
+              const SizedBox(height: 22),
+              for (final (icon, text) in hints)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    children: [
+                      Icon(icon, size: 15, color: colors.text3),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          text,
+                          style: context.typo.body.copyWith(
+                            fontSize: 13,
+                            color: colors.text2,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),

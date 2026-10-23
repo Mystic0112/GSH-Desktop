@@ -785,7 +785,9 @@ class _CockpitPageState extends State<CockpitPage> {
                       ? null
                       : _vm.openAgentGraph,
                   onOpenFarm: shell.title == null ? null : _vm.openFarm,
-                  onOpenChat: shell.title == null ? null : _vm.openChat,
+                  // Chat precisa de uma pasta (cwd do claude): o workspace de
+                  // sistema, sem pasta, não tem o botão.
+                  onOpenChat: shell.hasFileTree ? _vm.openChat : null,
                 ),
                 // Host remoto fora do ar: faixa com o estado + botão de
                 // reconectar. Não ocupa espaço em workspace local.

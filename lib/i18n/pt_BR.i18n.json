@@ -926,8 +926,11 @@
     },
     "chat": {
       "tabTitle": "Chat",
-      "emptyTitle": "Chat com o Claude Code",
-      "emptyHint": "Usa o claude instalado nesta máquina, com o seu login. Pasta: ${cwd}",
+      "emptyTitle": "Nova conversa",
+      "emptySubtitle": "Claude Code em ${folder}, com o seu login.",
+      "emptyHintSend": "Enter envia; Shift+Enter quebra linha.",
+      "emptyHintPaste": "Cole um print com Ctrl+V ou solte arquivos no chat.",
+      "emptyHintMode": "Escolha o modo de permissão embaixo do campo: pedir, aceitar edições, planejar ou ignorar.",
       "placeholder": "Mensagem para o Claude… (Enter envia, Shift+Enter quebra linha)",
       "send": "Enviar",
       "stop": "Parar",

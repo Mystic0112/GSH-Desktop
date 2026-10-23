@@ -2805,11 +2805,20 @@ class Translations$cockpit$chat$en {
 	/// en: 'Chat'
 	String get tabTitle => 'Chat';
 
-	/// en: 'Chat with Claude Code'
-	String get emptyTitle => 'Chat with Claude Code';
+	/// en: 'New conversation'
+	String get emptyTitle => 'New conversation';
 
-	/// en: 'Uses the claude installed on this machine, with your own login. Folder: ${cwd}'
-	String emptyHint({required Object cwd}) => 'Uses the claude installed on this machine, with your own login. Folder: ${cwd}';
+	/// en: 'Claude Code in ${folder}, with your own login.'
+	String emptySubtitle({required Object folder}) => 'Claude Code in ${folder}, with your own login.';
+
+	/// en: 'Enter sends; Shift+Enter adds a line.'
+	String get emptyHintSend => 'Enter sends; Shift+Enter adds a line.';
+
+	/// en: 'Paste a screenshot with Ctrl+V, or drop files onto the chat.'
+	String get emptyHintPaste => 'Paste a screenshot with Ctrl+V, or drop files onto the chat.';
+
+	/// en: 'Pick the permission mode below the input: ask, accept edits, plan, or bypass.'
+	String get emptyHintMode => 'Pick the permission mode below the input: ask, accept edits, plan, or bypass.';
 
 	/// en: 'Message Claude… (Enter sends, Shift+Enter for a new line)'
 	String get placeholder => 'Message Claude… (Enter sends, Shift+Enter for a new line)';
@@ -5298,8 +5307,11 @@ extension on Translations {
 			'cockpit.panelView.openInBrowser' => 'Open in browser',
 			'cockpit.panelView.openAsHtml' => 'Open as HTML',
 			'cockpit.chat.tabTitle' => 'Chat',
-			'cockpit.chat.emptyTitle' => 'Chat with Claude Code',
-			'cockpit.chat.emptyHint' => ({required Object cwd}) => 'Uses the claude installed on this machine, with your own login. Folder: ${cwd}',
+			'cockpit.chat.emptyTitle' => 'New conversation',
+			'cockpit.chat.emptySubtitle' => ({required Object folder}) => 'Claude Code in ${folder}, with your own login.',
+			'cockpit.chat.emptyHintSend' => 'Enter sends; Shift+Enter adds a line.',
+			'cockpit.chat.emptyHintPaste' => 'Paste a screenshot with Ctrl+V, or drop files onto the chat.',
+			'cockpit.chat.emptyHintMode' => 'Pick the permission mode below the input: ask, accept edits, plan, or bypass.',
 			'cockpit.chat.placeholder' => 'Message Claude… (Enter sends, Shift+Enter for a new line)',
 			'cockpit.chat.send' => 'Send',
 			'cockpit.chat.stop' => 'Stop',
@@ -5535,11 +5547,11 @@ extension on Translations {
 			'settings.page.appearance.terminalWeightNormal' => 'Normal',
 			'settings.page.appearance.terminalWeightMedium' => 'Medium',
 			'settings.page.appearance.terminalWeightSemiBold' => 'Semibold',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.appearance.sectionConversation' => 'Conversation',
 			'settings.page.appearance.pinUserMessageTitle' => 'Pin user message',
 			'settings.page.appearance.pinUserMessageDesc' => 'The question stays fixed at the top while the answer scrolls.',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.appearance.importTheme' => 'Import…',
 			'settings.page.appearance.exportTheme' => 'Export…',
 			'settings.page.appearance.deleteTheme' => 'Remove',

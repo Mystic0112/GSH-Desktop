@@ -1330,8 +1330,11 @@ class _Translations$cockpit$chat$pt_BR extends Translations$cockpit$chat$en {
 
 	// Translations
 	@override String get tabTitle => 'Chat';
-	@override String get emptyTitle => 'Chat com o Claude Code';
-	@override String emptyHint({required Object cwd}) => 'Usa o claude instalado nesta máquina, com o seu login. Pasta: ${cwd}';
+	@override String get emptyTitle => 'Nova conversa';
+	@override String emptySubtitle({required Object folder}) => 'Claude Code em ${folder}, com o seu login.';
+	@override String get emptyHintSend => 'Enter envia; Shift+Enter quebra linha.';
+	@override String get emptyHintPaste => 'Cole um print com Ctrl+V ou solte arquivos no chat.';
+	@override String get emptyHintMode => 'Escolha o modo de permissão embaixo do campo: pedir, aceitar edições, planejar ou ignorar.';
 	@override String get placeholder => 'Mensagem para o Claude… (Enter envia, Shift+Enter quebra linha)';
 	@override String get send => 'Enviar';
 	@override String get stop => 'Parar';
@@ -2913,8 +2916,11 @@ extension on TranslationsPtBr {
 			'cockpit.panelView.openInBrowser' => 'Abrir no navegador',
 			'cockpit.panelView.openAsHtml' => 'Abrir como HTML',
 			'cockpit.chat.tabTitle' => 'Chat',
-			'cockpit.chat.emptyTitle' => 'Chat com o Claude Code',
-			'cockpit.chat.emptyHint' => ({required Object cwd}) => 'Usa o claude instalado nesta máquina, com o seu login. Pasta: ${cwd}',
+			'cockpit.chat.emptyTitle' => 'Nova conversa',
+			'cockpit.chat.emptySubtitle' => ({required Object folder}) => 'Claude Code em ${folder}, com o seu login.',
+			'cockpit.chat.emptyHintSend' => 'Enter envia; Shift+Enter quebra linha.',
+			'cockpit.chat.emptyHintPaste' => 'Cole um print com Ctrl+V ou solte arquivos no chat.',
+			'cockpit.chat.emptyHintMode' => 'Escolha o modo de permissão embaixo do campo: pedir, aceitar edições, planejar ou ignorar.',
 			'cockpit.chat.placeholder' => 'Mensagem para o Claude… (Enter envia, Shift+Enter quebra linha)',
 			'cockpit.chat.send' => 'Enviar',
 			'cockpit.chat.stop' => 'Parar',
@@ -3150,11 +3156,11 @@ extension on TranslationsPtBr {
 			'settings.page.appearance.terminalWeightNormal' => 'Normal',
 			'settings.page.appearance.terminalWeightMedium' => 'Médio',
 			'settings.page.appearance.terminalWeightSemiBold' => 'Seminegrito',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.appearance.sectionConversation' => 'Conversa',
 			'settings.page.appearance.pinUserMessageTitle' => 'Fixar mensagem do usuário',
 			'settings.page.appearance.pinUserMessageDesc' => 'A pergunta fica fixa no topo enquanto a resposta rola.',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.appearance.importTheme' => 'Importar…',
 			'settings.page.appearance.exportTheme' => 'Exportar…',
 			'settings.page.appearance.deleteTheme' => 'Remover',
