@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cockpit/app/cockpit/domain/contracts/chat_engine.dart';
+import 'package:cockpit/app/cockpit/domain/entities/chat_attachment.dart';
 import 'package:cockpit/app/cockpit/domain/entities/chat_event.dart';
 import 'package:flutter/foundation.dart';
 
@@ -9,8 +10,9 @@ import 'package:flutter/foundation.dart';
 sealed class ChatItem {}
 
 class ChatUserItem extends ChatItem {
-  ChatUserItem(this.text);
+  ChatUserItem(this.text, {this.attachments = const []});
   final String text;
+  final List<ChatAttachment> attachments;
 }
 
 class ChatAssistantItem extends ChatItem {
@@ -119,7 +121,12 @@ class ChatPlanItem extends ChatItem {
   String feedback = '';
 }
 
-enum ChatNoticeKind { startFailed, engineExited, turnFailed }
+enum ChatNoticeKind {
+  startFailed,
+  engineExited,
+  turnFailed,
+  attachmentTooLarge,
+}
 
 /// Aviso do sistema na conversa (sempre erro, por ora). A UI traduz [kind];
 /// [detail] é o texto cru (exceção, stderr, `result`).
@@ -148,6 +155,28 @@ class ChatController extends ChangeNotifier {
 
   /// Sessão em modo plano: o agente só investiga e planeja.
   bool planMode = false;
+
+  /// Anexos esperando o próximo envio.
+  final attachments = <ChatAttachment>[];
+  var _pasted = 0;
+
+  void attachFiles(Iterable<String> paths) {
+    attachments.addAll(paths.map(ChatAttachment.file));
+    notifyListeners();
+  }
+
+  void attachPastedImage(Uint8List png) {
+    attachments.add(
+      ChatAttachment.pastedImage(png, name: 'imagem-${++_pasted}.png'),
+    );
+    notifyListeners();
+  }
+
+  void removeAttachment(ChatAttachment a) {
+    attachments.remove(a);
+    notifyListeners();
+  }
+
   String? model;
   double costUsd = 0;
   bool busy = false;
@@ -209,9 +238,13 @@ class ChatController extends ChangeNotifier {
   }
 
   Future<void> send(String text) async {
-    final msg = text.trim();
+    final files = List.of(attachments);
+    final msg = text.trim().isEmpty && files.isNotEmpty
+        ? '(anexo)'
+        : text.trim();
     if (msg.isEmpty || busy) return;
-    items.add(ChatUserItem(msg));
+    items.add(ChatUserItem(text.trim(), attachments: files));
+    attachments.clear();
     busy = true;
     notifyListeners();
     try {
@@ -220,7 +253,10 @@ class ChatController extends ChangeNotifier {
         engine = _engine = await _startEngine();
         if (planMode) engine.setPermissionMode('plan');
       }
-      engine.send(msg);
+      await engine.send(msg, attachments: files);
+    } on ChatAttachmentTooLarge catch (e) {
+      busy = false;
+      _add(ChatNoticeItem(ChatNoticeKind.attachmentTooLarge, e.name));
     } on Object catch (e) {
       busy = false;
       _engine = null;

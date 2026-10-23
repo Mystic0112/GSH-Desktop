@@ -942,6 +942,7 @@
       "startFailed": "No pude iniciar claude: ${detail}",
       "engineExited": "claude terminó (código ${code}).",
       "turnFailed": "El turno terminó con error: ${detail}",
+      "attachmentTooLarge": "${name} es demasiado grande para enviar (imágenes hasta 5 MB, PDF hasta 32 MB).",
       "loadingHistory": "Cargando la conversación…",
       "allowAlways": "Permitir siempre ${rule}",
       "allowedAlways": "Siempre permitido: ${rule}",

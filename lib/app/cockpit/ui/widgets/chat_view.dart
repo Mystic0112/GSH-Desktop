@@ -2,6 +2,7 @@ import 'package:cockpit/app/cockpit/ui/session/chat_session.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/chat_viewmodel.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/cockpit_viewmodel.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/agent_markdown.dart';
+import 'package:cockpit/app/cockpit/ui/widgets/chat_attachments.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/chat_prompt_cards.dart';
 import 'package:cockpit/app/core/ui/themes/themes.dart';
 import 'package:cockpit/i18n/strings.g.dart';
@@ -59,7 +60,9 @@ class _ChatViewState extends State<ChatView> {
 
   void _send() {
     final text = _input.text;
-    if (text.trim().isEmpty || _chat.busy) return;
+    if ((text.trim().isEmpty && _chat.attachments.isEmpty) || _chat.busy) {
+      return;
+    }
     _input.clear();
     _chat.send(text);
   }
@@ -67,33 +70,29 @@ class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    return ColoredBox(
-      color: colors.panel,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _Header(chat: _chat),
-          Expanded(
-            child: _chat.items.isEmpty
-                ? _Empty(cwd: _chat.cwd, loading: _chat.loadingHistory)
-                : ListView.separated(
-                    controller: _scroll,
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-                    itemCount: _chat.items.length,
-                    separatorBuilder: (_, _) => const SizedBox(height: 10),
-                    itemBuilder: (context, i) =>
-                        _ItemView(item: _chat.items[i], chat: _chat),
-                  ),
-          ),
-          _Composer(
-            controller: _input,
-            busy: _chat.busy,
-            planMode: _chat.planMode,
-            onTogglePlan: _chat.togglePlanMode,
-            onSend: _send,
-            onStop: _chat.interrupt,
-          ),
-        ],
+    return ChatDropZone(
+      chat: _chat,
+      child: ColoredBox(
+        color: colors.panel,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _Header(chat: _chat),
+            Expanded(
+              child: _chat.items.isEmpty
+                  ? _Empty(cwd: _chat.cwd, loading: _chat.loadingHistory)
+                  : ListView.separated(
+                      controller: _scroll,
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+                      itemCount: _chat.items.length,
+                      separatorBuilder: (_, _) => const SizedBox(height: 10),
+                      itemBuilder: (context, i) =>
+                          _ItemView(item: _chat.items[i], chat: _chat),
+                    ),
+            ),
+            _Composer(controller: _input, chat: _chat, onSend: _send),
+          ],
+        ),
       ),
     );
   }
@@ -195,7 +194,7 @@ class _ItemView extends StatelessWidget {
     final colors = context.colors;
     final tr = context.t.cockpit.chat;
     switch (item) {
-      case ChatUserItem(:final text):
+      case ChatUserItem(:final text, :final attachments):
         return Align(
           alignment: Alignment.centerRight,
           child: ConstrainedBox(
@@ -206,9 +205,19 @@ class _ItemView extends StatelessWidget {
                 color: colors.panel3,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: SelectableText(
-                text,
-                style: context.typo.body.copyWith(color: colors.text),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  if (text.isNotEmpty)
+                    SelectableText(
+                      text,
+                      style: context.typo.body.copyWith(color: colors.text),
+                    ),
+                  if (attachments.isNotEmpty) ...[
+                    if (text.isNotEmpty) const SizedBox(height: 6),
+                    ChatAttachmentChips(attachments: attachments),
+                  ],
+                ],
               ),
             ),
           ),
@@ -228,6 +237,9 @@ class _ItemView extends StatelessWidget {
           ChatNoticeKind.startFailed => tr.startFailed(detail: detail),
           ChatNoticeKind.engineExited => tr.engineExited(code: exitCode ?? -1),
           ChatNoticeKind.turnFailed => tr.turnFailed(detail: detail),
+          ChatNoticeKind.attachmentTooLarge => tr.attachmentTooLarge(
+            name: detail,
+          ),
         };
         return SelectableText(
           kind == ChatNoticeKind.engineExited && detail.isNotEmpty
@@ -319,62 +331,87 @@ class _ToolRow extends StatelessWidget {
 class _Composer extends StatelessWidget {
   const _Composer({
     required this.controller,
-    required this.busy,
-    required this.planMode,
-    required this.onTogglePlan,
+    required this.chat,
     required this.onSend,
-    required this.onStop,
   });
   final TextEditingController controller;
-  final bool busy;
-  final bool planMode;
-  final VoidCallback onTogglePlan;
+  final ChatController chat;
   final VoidCallback onSend;
-  final VoidCallback onStop;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final tr = context.t.cockpit.chat;
+    void paste() => pasteIntoChat(chat, controller);
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 10, 16, 14),
       decoration: BoxDecoration(
         border: Border(top: BorderSide(color: colors.border)),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            // Enter envia; Shift+Enter quebra linha (o atalho mais perto do
-            // campo vence o padrão do editor).
-            child: CallbackShortcuts(
-              bindings: {
-                const SingleActivator(LogicalKeyboardKey.enter): onSend,
-              },
-              child: TextField(
-                controller: controller,
-                minLines: 1,
-                maxLines: 8,
-                placeholder: Text(
-                  tr.placeholder,
-                  style: context.typo.body.copyWith(color: colors.text4),
-                ),
-                style: context.typo.body.copyWith(color: colors.text),
-              ),
+          if (chat.attachments.isNotEmpty) ...[
+            ChatAttachmentChips(
+              attachments: chat.attachments,
+              onRemove: chat.removeAttachment,
             ),
+            const SizedBox(height: 8),
+          ],
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              GhostButton(
+                onPressed: () => pickChatAttachments(chat),
+                child: Icon(Icons.attach_file, size: 18, color: colors.text2),
+              ),
+              const SizedBox(width: 4),
+              Expanded(
+                // Enter envia; Shift+Enter quebra linha (o atalho mais perto
+                // do campo vence o padrão do editor). Ctrl/Cmd+V cola imagem
+                // como anexo.
+                child: CallbackShortcuts(
+                  bindings: {
+                    const SingleActivator(LogicalKeyboardKey.enter): onSend,
+                    const SingleActivator(
+                      LogicalKeyboardKey.keyV,
+                      control: true,
+                    ): paste,
+                    const SingleActivator(LogicalKeyboardKey.keyV, meta: true):
+                        paste,
+                  },
+                  child: TextField(
+                    controller: controller,
+                    minLines: 1,
+                    maxLines: 8,
+                    placeholder: Text(
+                      tr.placeholder,
+                      style: context.typo.body.copyWith(color: colors.text4),
+                    ),
+                    style: context.typo.body.copyWith(color: colors.text),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              // Modo plano: o agente investiga e apresenta um plano antes de
+              // mexer em qualquer coisa.
+              if (chat.planMode)
+                PrimaryButton(
+                  onPressed: chat.togglePlanMode,
+                  child: Text(tr.planMode),
+                )
+              else
+                GhostButton(
+                  onPressed: chat.togglePlanMode,
+                  child: Text(tr.planMode),
+                ),
+              const SizedBox(width: 8),
+              if (chat.busy)
+                OutlineButton(onPressed: chat.interrupt, child: Text(tr.stop))
+              else
+                PrimaryButton(onPressed: onSend, child: Text(tr.send)),
+            ],
           ),
-          const SizedBox(width: 8),
-          // Modo plano: o agente investiga e apresenta um plano antes de
-          // mexer em qualquer coisa.
-          if (planMode)
-            PrimaryButton(onPressed: onTogglePlan, child: Text(tr.planMode))
-          else
-            GhostButton(onPressed: onTogglePlan, child: Text(tr.planMode)),
-          const SizedBox(width: 8),
-          if (busy)
-            OutlineButton(onPressed: onStop, child: Text(tr.stop))
-          else
-            PrimaryButton(onPressed: onSend, child: Text(tr.send)),
         ],
       ),
     );

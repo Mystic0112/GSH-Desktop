@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cockpit/app/cockpit/domain/contracts/chat_engine.dart';
+import 'package:cockpit/app/cockpit/domain/entities/chat_attachment.dart';
 import 'package:cockpit/app/cockpit/domain/entities/chat_event.dart';
 import 'package:cockpit/app/core/utils/executable_resolver.dart';
 
@@ -152,10 +153,18 @@ class ClaudeStreamEngine implements ChatEngine {
   }
 
   @override
-  void send(String text) => _write({
-    'type': 'user',
-    'message': {'role': 'user', 'content': text},
-  });
+  Future<void> send(
+    String text, {
+    List<ChatAttachment> attachments = const [],
+  }) async {
+    _write({
+      'type': 'user',
+      'message': {
+        'role': 'user',
+        'content': await buildClaudeUserContent(text, attachments),
+      },
+    });
+  }
 
   @override
   void answerPermission(
@@ -207,6 +216,43 @@ class ClaudeStreamEngine implements ChatEngine {
     await _proc.stdin.close();
     _proc.kill();
   }
+}
+
+/// Conteúdo da mensagem do usuário. Sem anexo, só o texto. Com anexo: imagem
+/// vira bloco `image` (base64), PDF vira `document`, e o resto vira menção
+/// `@"caminho"` no texto, que o próprio Claude Code expande lendo o arquivo.
+Future<Object> buildClaudeUserContent(
+  String text,
+  List<ChatAttachment> attachments,
+) async {
+  if (attachments.isEmpty) return text;
+  final mentions = [
+    for (final a in attachments)
+      if (a.kind == ChatAttachmentKind.file && a.path != null) '@"${a.path}"',
+  ];
+  final blocks = <Map<String, dynamic>>[
+    {
+      'type': 'text',
+      'text': mentions.isEmpty ? text : '$text\n\n${mentions.join(' ')}',
+    },
+  ];
+  for (final a in attachments) {
+    if (a.kind == ChatAttachmentKind.file) continue;
+    final bytes = a.bytes ?? await File(a.path!).readAsBytes();
+    final max = a.kind == ChatAttachmentKind.image
+        ? ChatAttachment.maxImageBytes
+        : ChatAttachment.maxPdfBytes;
+    if (bytes.length > max) throw ChatAttachmentTooLarge(a.name);
+    blocks.add({
+      'type': a.kind == ChatAttachmentKind.image ? 'image' : 'document',
+      'source': {
+        'type': 'base64',
+        'media_type': a.mediaType,
+        'data': base64Encode(bytes),
+      },
+    });
+  }
+  return blocks;
 }
 
 /// Traduz uma linha do `stream-json` do Claude Code em eventos. Tipos que a

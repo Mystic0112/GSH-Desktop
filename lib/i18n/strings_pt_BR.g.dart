@@ -1346,6 +1346,7 @@ class _Translations$cockpit$chat$pt_BR extends Translations$cockpit$chat$en {
 	@override String startFailed({required Object detail}) => 'Não consegui iniciar o claude: ${detail}';
 	@override String engineExited({required Object code}) => 'O claude encerrou (código ${code}).';
 	@override String turnFailed({required Object detail}) => 'O turno terminou com erro: ${detail}';
+	@override String attachmentTooLarge({required Object name}) => '${name} é grande demais para enviar (imagem até 5 MB, PDF até 32 MB).';
 	@override String get loadingHistory => 'Carregando a conversa…';
 	@override String allowAlways({required Object rule}) => 'Sempre permitir ${rule}';
 	@override String allowedAlways({required Object rule}) => 'Sempre permitido: ${rule}';
@@ -2877,6 +2878,7 @@ extension on TranslationsPtBr {
 			'cockpit.chat.startFailed' => ({required Object detail}) => 'Não consegui iniciar o claude: ${detail}',
 			'cockpit.chat.engineExited' => ({required Object code}) => 'O claude encerrou (código ${code}).',
 			'cockpit.chat.turnFailed' => ({required Object detail}) => 'O turno terminou com erro: ${detail}',
+			'cockpit.chat.attachmentTooLarge' => ({required Object name}) => '${name} é grande demais para enviar (imagem até 5 MB, PDF até 32 MB).',
 			'cockpit.chat.loadingHistory' => 'Carregando a conversa…',
 			'cockpit.chat.allowAlways' => ({required Object rule}) => 'Sempre permitir ${rule}',
 			'cockpit.chat.allowedAlways' => ({required Object rule}) => 'Sempre permitido: ${rule}',
@@ -3100,9 +3102,9 @@ extension on TranslationsPtBr {
 			'settings.page.appearance.fontPickerCustomHint' => 'Nome da família',
 			'settings.page.appearance.fontPickerUse' => 'Usar',
 			'settings.page.appearance.fontPickerDefault' => 'Padrão',
-			'settings.page.appearance.fontMissing' => 'Não encontrada nesta máquina — usando o fallback.',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.appearance.fontMissing' => 'Não encontrada nesta máquina — usando o fallback.',
 			'settings.page.appearance.sectionLayout' => 'Layout',
 			'settings.page.appearance.swapPanelsTitle' => 'Inverter panes',
 			'settings.page.appearance.swapPanelsDesc' => 'Coloca os workspaces à direita e arquivos, busca, git e banco à esquerda.',

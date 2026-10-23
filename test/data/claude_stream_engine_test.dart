@@ -1,7 +1,11 @@
 import 'dart:async';
 
 import 'package:cockpit/app/cockpit/data/chat/claude_stream_engine.dart';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:cockpit/app/cockpit/domain/contracts/chat_engine.dart';
+import 'package:cockpit/app/cockpit/domain/entities/chat_attachment.dart';
 import 'package:cockpit/app/cockpit/domain/entities/chat_event.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/chat_viewmodel.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -76,8 +80,16 @@ class _FakeEngine implements ChatEngine {
 
   @override
   Stream<ChatEvent> get events => ctrl.stream;
+  final sentAttachments = <List<ChatAttachment>>[];
   @override
-  void send(String text) => sent.add(text);
+  Future<void> send(
+    String text, {
+    List<ChatAttachment> attachments = const [],
+  }) async {
+    sent.add(text);
+    sentAttachments.add(attachments);
+  }
+
   final always = <String>[];
   final inputs = <String, Map<String, dynamic>?>{};
   final messages = <String, String?>{};
@@ -330,4 +342,62 @@ void main() {
       expect(chat.planMode, isFalse);
     },
   );
+
+  group('anexos', () {
+    test(
+      'imagem e PDF viram blocos; outros arquivos viram @"caminho"',
+      () async {
+        final dir = await Directory.systemTemp.createTemp('chat');
+        addTearDown(() => dir.delete(recursive: true));
+        final pdf = File('${dir.path}/a b.pdf')..writeAsBytesSync([1, 2, 3]);
+        final png = Uint8List.fromList([9, 9]);
+        final content =
+            await buildClaudeUserContent('veja', [
+                  ChatAttachment.pastedImage(png, name: 'x.png'),
+                  ChatAttachment.file(pdf.path),
+                  ChatAttachment.file('/repo/notas da reuniao.txt'),
+                ])
+                as List;
+        expect(content[0], {
+          'type': 'text',
+          'text': 'veja\n\n@"/repo/notas da reuniao.txt"',
+        });
+        expect(content[1]['type'], 'image');
+        expect(content[1]['source']['media_type'], 'image/png');
+        expect(content[1]['source']['data'], 'CQk=');
+        expect(content[2]['type'], 'document');
+        expect(content[2]['source']['data'], 'AQID');
+        expect(await buildClaudeUserContent('só texto', const []), 'só texto');
+      },
+    );
+
+    test('tipo sai da extensão', () {
+      expect(ChatAttachment.file('/a/F.JPG').mediaType, 'image/jpeg');
+      expect(ChatAttachment.file('/a/b.pdf').kind, ChatAttachmentKind.pdf);
+      expect(ChatAttachment.file('/a/Makefile').kind, ChatAttachmentKind.file);
+    });
+
+    test('imagem acima do teto é recusada', () async {
+      final big = Uint8List(ChatAttachment.maxImageBytes + 1);
+      expect(
+        () => buildClaudeUserContent('x', [
+          ChatAttachment.pastedImage(big, name: 'grande.png'),
+        ]),
+        throwsA(isA<ChatAttachmentTooLarge>()),
+      );
+    });
+
+    test('controller: anexos vão no envio e saem do composer', () async {
+      final f = _FakeFactory();
+      final chat = ChatController(f, cwd: '/repo')
+        ..attachFiles(['/repo/a.txt'])
+        ..attachPastedImage(Uint8List.fromList([1]));
+      expect(chat.attachments, hasLength(2));
+      await chat.send('');
+      expect(f.engine.sentAttachments.single, hasLength(2));
+      expect(chat.attachments, isEmpty);
+      final user = chat.items.whereType<ChatUserItem>().single;
+      expect(user.attachments.map((a) => a.name), ['a.txt', 'imagem-1.png']);
+    });
+  });
 }

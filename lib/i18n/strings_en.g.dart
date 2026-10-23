@@ -2853,6 +2853,9 @@ class Translations$cockpit$chat$en {
 	/// en: 'The turn ended with an error: ${detail}'
 	String turnFailed({required Object detail}) => 'The turn ended with an error: ${detail}';
 
+	/// en: '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).'
+	String attachmentTooLarge({required Object name}) => '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).';
+
 	/// en: 'Loading the conversation…'
 	String get loadingHistory => 'Loading the conversation…';
 
@@ -5184,6 +5187,7 @@ extension on Translations {
 			'cockpit.chat.startFailed' => ({required Object detail}) => 'Couldn\'t start claude: ${detail}',
 			'cockpit.chat.engineExited' => ({required Object code}) => 'claude exited (code ${code}).',
 			'cockpit.chat.turnFailed' => ({required Object detail}) => 'The turn ended with an error: ${detail}',
+			'cockpit.chat.attachmentTooLarge' => ({required Object name}) => '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).',
 			'cockpit.chat.loadingHistory' => 'Loading the conversation…',
 			'cockpit.chat.allowAlways' => ({required Object rule}) => 'Always allow ${rule}',
 			'cockpit.chat.allowedAlways' => ({required Object rule}) => 'Always allowed: ${rule}',
@@ -5407,9 +5411,9 @@ extension on Translations {
 			'settings.page.appearance.fontPickerCustomHint' => 'Family name',
 			'settings.page.appearance.fontPickerUse' => 'Use',
 			'settings.page.appearance.fontPickerDefault' => 'Default',
-			'settings.page.appearance.fontMissing' => 'Not found on this machine — falling back.',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.appearance.fontMissing' => 'Not found on this machine — falling back.',
 			'settings.page.appearance.sectionLayout' => 'Layout',
 			'settings.page.appearance.swapPanelsTitle' => 'Swap side panels',
 			'settings.page.appearance.swapPanelsDesc' => 'Puts workspaces on the right and files, search, git and database on the left.',

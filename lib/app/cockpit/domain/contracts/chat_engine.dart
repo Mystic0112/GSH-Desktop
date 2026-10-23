@@ -1,3 +1,4 @@
+import 'package:cockpit/app/cockpit/domain/entities/chat_attachment.dart';
 import 'package:cockpit/app/cockpit/domain/entities/chat_event.dart';
 
 /// Uma conversa viva com um agente (hoje: Claude Code em `stream-json`). Fica
@@ -5,8 +6,9 @@ import 'package:cockpit/app/cockpit/domain/entities/chat_event.dart';
 abstract interface class ChatEngine {
   Stream<ChatEvent> get events;
 
-  /// Manda uma mensagem do usuário (começa um turno).
-  void send(String text);
+  /// Manda uma mensagem do usuário (começa um turno), com [attachments].
+  /// Lança [ChatAttachmentTooLarge] se um anexo passa do teto da API.
+  Future<void> send(String text, {List<ChatAttachment> attachments = const []});
 
   /// Responde um [ChatPermissionAsk]. [always] grava a regra sugerida
   /// ([ChatPermissionAsk.alwaysRule]) nas permissões locais do projeto.
