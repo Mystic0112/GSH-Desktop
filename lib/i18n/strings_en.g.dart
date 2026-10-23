@@ -2852,6 +2852,18 @@ class Translations$cockpit$chat$en {
 
 	/// en: 'The turn ended with an error: ${detail}'
 	String turnFailed({required Object detail}) => 'The turn ended with an error: ${detail}';
+
+	/// en: 'Loading the conversation…'
+	String get loadingHistory => 'Loading the conversation…';
+
+	/// en: 'Always allow ${rule}'
+	String allowAlways({required Object rule}) => 'Always allow ${rule}';
+
+	/// en: 'Always allowed: ${rule}'
+	String allowedAlways({required Object rule}) => 'Always allowed: ${rule}';
+
+	/// en: '… ${n} more lines'
+	String moreLines({required Object n}) => '… ${n} more lines';
 }
 
 // Path: cockpit.farm
@@ -5136,6 +5148,10 @@ extension on Translations {
 			'cockpit.chat.startFailed' => ({required Object detail}) => 'Couldn\'t start claude: ${detail}',
 			'cockpit.chat.engineExited' => ({required Object code}) => 'claude exited (code ${code}).',
 			'cockpit.chat.turnFailed' => ({required Object detail}) => 'The turn ended with an error: ${detail}',
+			'cockpit.chat.loadingHistory' => 'Loading the conversation…',
+			'cockpit.chat.allowAlways' => ({required Object rule}) => 'Always allow ${rule}',
+			'cockpit.chat.allowedAlways' => ({required Object rule}) => 'Always allowed: ${rule}',
+			'cockpit.chat.moreLines' => ({required Object n}) => '… ${n} more lines',
 			'cockpit.farm.tabTitle' => 'Farm',
 			'cockpit.farm.title' => 'Agent farm',
 			'cockpit.farm.emptyTitle' => 'No agents running',
@@ -5356,12 +5372,12 @@ extension on Translations {
 			'settings.page.notifications.granted' => 'Granted',
 			'settings.page.notifications.requestPermission' => 'Request permission',
 			'settings.page.notifications.soundsTitle' => 'Sounds',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.notifications.soundVolumeTitle' => 'Volume',
 			'settings.page.notifications.soundTurnDone' => 'Turn completed',
 			'settings.page.notifications.soundTurnDoneDesc' => 'An agent finished its turn.',
 			'settings.page.notifications.soundActionRequired' => 'Action required',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.notifications.soundActionRequiredDesc' => 'An agent is waiting for your approval or answer.',
 			'settings.page.notifications.soundDefault' => 'Default',
 			'settings.page.notifications.soundCustom' => ({required Object name}) => 'Custom: ${name}',

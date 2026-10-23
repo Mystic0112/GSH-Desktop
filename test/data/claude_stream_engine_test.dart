@@ -78,9 +78,17 @@ class _FakeEngine implements ChatEngine {
   Stream<ChatEvent> get events => ctrl.stream;
   @override
   void send(String text) => sent.add(text);
+  final always = <String>[];
   @override
-  void answerPermission(String requestId, {required bool allow}) =>
-      answers[requestId] = allow;
+  void answerPermission(
+    String requestId, {
+    required bool allow,
+    bool always = false,
+  }) {
+    answers[requestId] = allow;
+    if (always) this.always.add(requestId);
+  }
+
   @override
   void interrupt() {}
   @override
@@ -96,6 +104,12 @@ class _FakeEngine implements ChatEngine {
 class _FakeFactory implements ChatEngineFactory {
   final engine = _FakeEngine();
   String? resumed;
+  List<ChatEvent> past = const [];
+  @override
+  Future<List<ChatEvent>> history({
+    required String cwd,
+    required String sessionId,
+  }) async => past;
   @override
   Future<ChatEngine> start({
     required String cwd,
@@ -154,5 +168,86 @@ void main() {
     expect((tool.done, tool.isError), (true, true));
     expect(chat.items.last, isA<ChatAssistantItem>());
     expect((chat.busy, chat.sessionId, chat.costUsd), (false, 's-1', 0.26));
+  });
+
+  test('texto ao vivo vira um item só, fechado pelo bloco completo', () async {
+    final f = _FakeFactory();
+    final chat = ChatController(f, cwd: '/repo');
+    await chat.send('oi');
+    f.engine.emit({
+      'type': 'stream_event',
+      'event': {
+        'type': 'content_block_delta',
+        'delta': {'type': 'text_delta', 'text': 'Ol'},
+      },
+    });
+    f.engine.emit({
+      'type': 'stream_event',
+      'event': {
+        'type': 'content_block_delta',
+        'delta': {'type': 'text_delta', 'text': 'á!'},
+      },
+    });
+    await Future<void>.delayed(Duration.zero);
+    final live = chat.items.whereType<ChatAssistantItem>().single;
+    expect((live.text, live.streaming), ('Olá!', true));
+    f.engine.emit({
+      'type': 'assistant',
+      'message': {
+        'content': [
+          {'type': 'text', 'text': 'Olá!'},
+        ],
+      },
+    });
+    await Future<void>.delayed(Duration.zero);
+    expect(chat.items.whereType<ChatAssistantItem>().single.streaming, false);
+  });
+
+  test(
+    'sempre permitir: regra sugerida chega no pedido e na resposta',
+    () async {
+      final ask =
+          parseClaudeStreamLine({
+                ..._ask,
+                'request': {
+                  ...(_ask['request']! as Map),
+                  'permission_suggestions': [
+                    {
+                      'type': 'addRules',
+                      'behavior': 'allow',
+                      'destination': 'localSettings',
+                      'rules': [
+                        {'toolName': 'Bash', 'ruleContent': 'rm *'},
+                      ],
+                    },
+                  ],
+                },
+              }).single
+              as ChatPermissionAsk;
+      expect(ask.alwaysRule, 'Bash(rm *)');
+
+      final f = _FakeFactory();
+      final chat = ChatController(f, cwd: '/repo');
+      await chat.send('x');
+      f.engine.ctrl.add(ask);
+      await Future<void>.delayed(Duration.zero);
+      final item = chat.items.whereType<ChatPermissionItem>().single;
+      chat.answer(item, allow: true, always: true);
+      expect(f.engine.always, ['req-1']);
+    expect(item.always, isTrue);
+    },
+  );
+
+  test('aba restaurada mostra o histórico e retoma a sessão', () async {
+    final f = _FakeFactory()
+      ..past = const [ChatUserText('antes'), ChatText('resposta antiga')];
+    final chat = ChatController(f, cwd: '/repo', resumeSessionId: 's-1');
+    await Future<void>.delayed(Duration.zero);
+    expect(chat.items.map((i) => i.runtimeType), [
+      ChatUserItem,
+      ChatAssistantItem,
+    ]);
+    await chat.send('depois');
+    expect(f.resumed, 's-1');
   });
 }

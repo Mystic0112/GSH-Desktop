@@ -941,7 +941,11 @@
       "denied": "Denied",
       "startFailed": "Couldn't start claude: ${detail}",
       "engineExited": "claude exited (code ${code}).",
-      "turnFailed": "The turn ended with an error: ${detail}"
+      "turnFailed": "The turn ended with an error: ${detail}",
+      "loadingHistory": "Loading the conversation…",
+      "allowAlways": "Always allow ${rule}",
+      "allowedAlways": "Always allowed: ${rule}",
+      "moreLines": "… ${n} more lines"
     },
     "farm": {
       "tabTitle": "Farm",

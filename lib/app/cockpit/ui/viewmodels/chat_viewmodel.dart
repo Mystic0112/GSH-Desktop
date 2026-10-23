@@ -14,15 +14,26 @@ class ChatUserItem extends ChatItem {
 }
 
 class ChatAssistantItem extends ChatItem {
-  ChatAssistantItem(this.text);
-  final String text;
+  ChatAssistantItem(this.text, {this.streaming = false});
+  String text;
+
+  /// Ainda chegando pedaço a pedaço; o bloco completo fecha.
+  bool streaming;
 }
 
 class ChatToolItem extends ChatItem {
-  ChatToolItem({required this.id, required this.name, required this.summary});
+  ChatToolItem({
+    required this.id,
+    required this.name,
+    required this.summary,
+    required this.input,
+  });
   final String id;
   final String name;
   final String summary;
+
+  /// Input cru da ferramenta (o diff do Edit/Write sai daqui).
+  final Map<String, dynamic> input;
   bool done = false;
   bool isError = false;
   String result = '';
@@ -33,10 +44,19 @@ class ChatPermissionItem extends ChatItem {
     required this.requestId,
     required this.toolName,
     required this.summary,
+    required this.input,
+    this.alwaysRule,
   });
   final String requestId;
   final String toolName;
   final String summary;
+  final Map<String, dynamic> input;
+
+  /// Regra que "sempre permitir" grava; `null` = sem o botão.
+  final String? alwaysRule;
+
+  /// Escolheu "sempre permitir".
+  bool always = false;
 
   /// `null` = esperando o usuário.
   bool? allowed;
@@ -54,14 +74,20 @@ class ChatNoticeItem extends ChatItem {
 }
 
 /// Estado de uma conversa (uma aba de chat). Sobe o motor no primeiro envio.
+/// Com [resumeSessionId] (aba restaurada), mostra o histórico gravado e o
+/// próximo envio continua aquela sessão.
 class ChatController extends ChangeNotifier {
-  ChatController(this._factory, {required this.cwd});
+  ChatController(this._factory, {required this.cwd, String? resumeSessionId})
+    : sessionId = resumeSessionId {
+    if (resumeSessionId != null) unawaited(_loadHistory(resumeSessionId));
+  }
 
   final ChatEngineFactory _factory;
   final String cwd;
 
   final items = <ChatItem>[];
   String? sessionId;
+  bool loadingHistory = false;
   String? model;
   double costUsd = 0;
   bool busy = false;
@@ -89,16 +115,40 @@ class ChatController extends ChangeNotifier {
     }
   }
 
+  Future<void> _loadHistory(String sid) async {
+    loadingHistory = true;
+    notifyListeners();
+    try {
+      final past = await _factory.history(cwd: cwd, sessionId: sid);
+      if (_disposed) return;
+      final live = List.of(items);
+      items.clear();
+      past.forEach(_apply);
+      items.addAll(live);
+    } on Object catch (e) {
+      debugPrint('[chat] histórico de $sid: $e');
+    } finally {
+      loadingHistory = false;
+      if (!_disposed) notifyListeners();
+    }
+  }
+
   Future<ChatEngine> _startEngine() async {
     final engine = await _factory.start(cwd: cwd, resumeSessionId: sessionId);
     _sub = engine.events.listen(_onEvent);
     return engine;
   }
 
-  void answer(ChatPermissionItem item, {required bool allow}) {
+  void answer(
+    ChatPermissionItem item, {
+    required bool allow,
+    bool always = false,
+  }) {
     if (item.allowed != null) return;
-    item.allowed = allow;
-    _engine?.answerPermission(item.requestId, allow: allow);
+    item
+      ..allowed = allow
+      ..always = allow && always;
+    _engine?.answerPermission(item.requestId, allow: allow, always: always);
     notifyListeners();
   }
 
@@ -106,15 +156,46 @@ class ChatController extends ChangeNotifier {
 
   void _onEvent(ChatEvent e) {
     if (_disposed) return;
+    _apply(e);
+    notifyListeners();
+  }
+
+  ChatAssistantItem? get _streaming {
+    final last = items.lastOrNull;
+    return last is ChatAssistantItem && last.streaming ? last : null;
+  }
+
+  void _apply(ChatEvent e) {
     switch (e) {
       case ChatReady(:final sessionId, :final model):
         this.sessionId = sessionId;
         this.model = model;
+      case ChatUserText(:final text):
+        items.add(ChatUserItem(text));
+      case ChatTextDelta(:final text):
+        final live = _streaming;
+        if (live != null) {
+          live.text += text;
+        } else {
+          items.add(ChatAssistantItem(text, streaming: true));
+        }
       case ChatText(:final text):
-        items.add(ChatAssistantItem(text));
+        final live = _streaming;
+        if (live != null) {
+          live
+            ..text = text
+            ..streaming = false;
+        } else {
+          items.add(ChatAssistantItem(text));
+        }
       case ChatToolCall(:final id, :final name, :final input):
         items.add(
-          ChatToolItem(id: id, name: name, summary: toolSummary(name, input)),
+          ChatToolItem(
+            id: id,
+            name: name,
+            summary: toolSummary(name, input),
+            input: input,
+          ),
         );
       case ChatToolResult(:final toolUseId, :final isError, :final text):
         for (final i in items.reversed) {
@@ -126,12 +207,19 @@ class ChatController extends ChangeNotifier {
             break;
           }
         }
-      case ChatPermissionAsk(:final requestId, :final toolName, :final input):
+      case ChatPermissionAsk(
+        :final requestId,
+        :final toolName,
+        :final input,
+        :final alwaysRule,
+      ):
         items.add(
           ChatPermissionItem(
             requestId: requestId,
             toolName: toolName,
             summary: toolSummary(toolName, input),
+            input: input,
+            alwaysRule: alwaysRule,
           ),
         );
       case ChatTurnEnd(
@@ -156,7 +244,6 @@ class ChatController extends ChangeNotifier {
           ),
         );
     }
-    notifyListeners();
   }
 
   void _add(ChatItem item) {
@@ -200,8 +287,15 @@ class ChatViewModel extends ChangeNotifier {
   final ChatEngineFactory _factory;
   final _chats = <String, ChatController>{};
 
-  ChatController chatFor(String tabId, {required String cwd}) =>
-      _chats[tabId] ??= ChatController(_factory, cwd: cwd);
+  ChatController chatFor(
+    String tabId, {
+    required String cwd,
+    String? resumeSessionId,
+  }) => _chats[tabId] ??= ChatController(
+    _factory,
+    cwd: cwd,
+    resumeSessionId: resumeSessionId,
+  );
 
   void close(String tabId) => _chats.remove(tabId)?.dispose();
 

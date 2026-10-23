@@ -941,7 +941,11 @@
       "denied": "Negado",
       "startFailed": "Não consegui iniciar o claude: ${detail}",
       "engineExited": "O claude encerrou (código ${code}).",
-      "turnFailed": "O turno terminou com erro: ${detail}"
+      "turnFailed": "O turno terminou com erro: ${detail}",
+      "loadingHistory": "Carregando a conversa…",
+      "allowAlways": "Sempre permitir ${rule}",
+      "allowedAlways": "Sempre permitido: ${rule}",
+      "moreLines": "… mais ${n} linhas"
     },
     "farm": {
       "tabTitle": "Fazenda",

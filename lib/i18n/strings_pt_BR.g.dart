@@ -1346,6 +1346,10 @@ class _Translations$cockpit$chat$pt_BR extends Translations$cockpit$chat$en {
 	@override String startFailed({required Object detail}) => 'Não consegui iniciar o claude: ${detail}';
 	@override String engineExited({required Object code}) => 'O claude encerrou (código ${code}).';
 	@override String turnFailed({required Object detail}) => 'O turno terminou com erro: ${detail}';
+	@override String get loadingHistory => 'Carregando a conversa…';
+	@override String allowAlways({required Object rule}) => 'Sempre permitir ${rule}';
+	@override String allowedAlways({required Object rule}) => 'Sempre permitido: ${rule}';
+	@override String moreLines({required Object n}) => '… mais ${n} linhas';
 }
 
 // Path: cockpit.farm
@@ -2861,6 +2865,10 @@ extension on TranslationsPtBr {
 			'cockpit.chat.startFailed' => ({required Object detail}) => 'Não consegui iniciar o claude: ${detail}',
 			'cockpit.chat.engineExited' => ({required Object code}) => 'O claude encerrou (código ${code}).',
 			'cockpit.chat.turnFailed' => ({required Object detail}) => 'O turno terminou com erro: ${detail}',
+			'cockpit.chat.loadingHistory' => 'Carregando a conversa…',
+			'cockpit.chat.allowAlways' => ({required Object rule}) => 'Sempre permitir ${rule}',
+			'cockpit.chat.allowedAlways' => ({required Object rule}) => 'Sempre permitido: ${rule}',
+			'cockpit.chat.moreLines' => ({required Object n}) => '… mais ${n} linhas',
 			'cockpit.farm.tabTitle' => 'Fazenda',
 			'cockpit.farm.title' => 'Fazenda de agentes',
 			'cockpit.farm.emptyTitle' => 'Nenhum agente rodando',
@@ -3081,12 +3089,12 @@ extension on TranslationsPtBr {
 			'settings.page.notifications.granted' => 'Concedido',
 			'settings.page.notifications.requestPermission' => 'Solicitar permissão',
 			'settings.page.notifications.soundsTitle' => 'Sons',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.notifications.soundVolumeTitle' => 'Volume',
 			'settings.page.notifications.soundTurnDone' => 'Turno concluído',
 			'settings.page.notifications.soundTurnDoneDesc' => 'Um agente terminou o turno.',
 			'settings.page.notifications.soundActionRequired' => 'Ação necessária',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.notifications.soundActionRequiredDesc' => 'Um agente está esperando sua aprovação ou resposta.',
 			'settings.page.notifications.soundDefault' => 'Padrão',
 			'settings.page.notifications.soundCustom' => ({required Object name}) => 'Personalizado: ${name}',

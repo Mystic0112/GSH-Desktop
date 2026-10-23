@@ -12,6 +12,19 @@ class ChatReady extends ChatEvent {
   final String model;
 }
 
+/// Pedaço de texto do assistente chegando enquanto o modelo escreve
+/// (`--include-partial-messages`). O [ChatText] completo vem depois.
+class ChatTextDelta extends ChatEvent {
+  const ChatTextDelta(this.text);
+  final String text;
+}
+
+/// Mensagem do usuário lida do histórico (retomar conversa).
+class ChatUserText extends ChatEvent {
+  const ChatUserText(this.text);
+  final String text;
+}
+
 /// Texto do assistente (um bloco `text`).
 class ChatText extends ChatEvent {
   const ChatText(this.text);
@@ -50,11 +63,16 @@ class ChatPermissionAsk extends ChatEvent {
     required this.toolName,
     required this.input,
     this.description,
+    this.alwaysRule,
   });
   final String requestId;
   final String toolName;
   final Map<String, dynamic> input;
   final String? description;
+
+  /// Regra que "sempre permitir" grava (ex.: `Bash(npm test *)`), vinda das
+  /// sugestões do próprio Claude Code. `null` = não oferece.
+  final String? alwaysRule;
 }
 
 /// Fim do turno (`result`).

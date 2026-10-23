@@ -35,12 +35,52 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
         'host',
         '--permission-prompt-tool',
         'stdio',
+        '--include-partial-messages',
         if (resumeSessionId != null) ...['--resume', resumeSessionId],
       ],
       workingDirectory: cwd,
       environment: _withDirOnPath(exe),
     );
     return ClaudeStreamEngine(proc);
+  }
+
+  /// Lê o transcript que o próprio Claude Code grava em
+  /// `~/.claude/projects/<cwd com não-alfanuméricos trocados por ->/<id>.jsonl`.
+  /// As linhas `user`/`assistant` têm o mesmo formato do stream.
+  @override
+  Future<List<ChatEvent>> history({
+    required String cwd,
+    required String sessionId,
+  }) async {
+    final home =
+        Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'];
+    if (home == null || !RegExp(r'^[A-Za-z0-9-]+$').hasMatch(sessionId)) {
+      return const [];
+    }
+    final dir = cwd.replaceAll(RegExp('[^A-Za-z0-9]'), '-');
+    final file = File('$home/.claude/projects/$dir/$sessionId.jsonl');
+    if (!await file.exists()) return const [];
+    final out = <ChatEvent>[];
+    for (final line in await file.readAsLines()) {
+      final Object? o;
+      try {
+        o = jsonDecode(line);
+      } on FormatException {
+        continue;
+      }
+      if (o is! Map<String, dynamic> || o['isSidechain'] == true) continue;
+      if (o['type'] == 'user' && o['isMeta'] != true) {
+        final content = (o['message'] as Map?)?['content'];
+        if (content is String && !content.startsWith('<')) {
+          out.add(ChatUserText(content));
+          continue;
+        }
+      }
+      if (o['type'] == 'user' || o['type'] == 'assistant') {
+        out.addAll(parseClaudeStreamLine(o));
+      }
+    }
+    return out;
   }
 }
 
@@ -72,8 +112,9 @@ class ClaudeStreamEngine implements ChatEngine {
   final _events = StreamController<ChatEvent>.broadcast();
   final _stderr = <String>[];
 
-  /// `allow` precisa devolver o input da ferramenta (`updatedInput`).
-  final _asked = <String, Map<String, dynamic>>{};
+  /// Por pedido: o input da ferramenta (`allow` devolve em `updatedInput`) e a
+  /// sugestão `addRules` que "sempre permitir" manda em `updatedPermissions`.
+  final _asked = <String, (Map<String, dynamic>, Map<String, dynamic>?)>{};
   var _closed = false;
   var _seq = 0;
 
@@ -90,7 +131,9 @@ class ClaudeStreamEngine implements ChatEngine {
     }
     if (o is! Map<String, dynamic>) return;
     for (final e in parseClaudeStreamLine(o)) {
-      if (e is ChatPermissionAsk) _asked[e.requestId] = e.input;
+      if (e is ChatPermissionAsk) {
+        _asked[e.requestId] = (e.input, _addRules(o['request']));
+      }
       _events.add(e);
     }
   }
@@ -115,15 +158,24 @@ class ClaudeStreamEngine implements ChatEngine {
   });
 
   @override
-  void answerPermission(String requestId, {required bool allow}) {
-    final input = _asked.remove(requestId) ?? const <String, dynamic>{};
+  void answerPermission(
+    String requestId, {
+    required bool allow,
+    bool always = false,
+  }) {
+    final (input, rule) =
+        _asked.remove(requestId) ?? (const <String, dynamic>{}, null);
     _write({
       'type': 'control_response',
       'response': {
         'subtype': 'success',
         'request_id': requestId,
         'response': allow
-            ? {'behavior': 'allow', 'updatedInput': input}
+            ? {
+                'behavior': 'allow',
+                'updatedInput': input,
+                if (always && rule != null) 'updatedPermissions': [rule],
+              }
             : {'behavior': 'deny', 'message': 'Negado pelo usuário no GSH'},
       },
     });
@@ -182,6 +234,13 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
               text: _resultText(c['content']),
             ),
       ];
+    case 'stream_event':
+      final ev = o['event'];
+      if (ev is! Map || ev['type'] != 'content_block_delta') return const [];
+      final delta = ev['delta'];
+      if (delta is! Map || delta['type'] != 'text_delta') return const [];
+      final text = delta['text'] as String? ?? '';
+      return text.isEmpty ? const [] : [ChatTextDelta(text)];
     case 'control_request':
       final req = o['request'];
       if (req is! Map || req['subtype'] != 'can_use_tool') return const [];
@@ -191,6 +250,7 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
           toolName: req['tool_name'] as String? ?? '',
           input: (req['input'] as Map?)?.cast<String, dynamic>() ?? const {},
           description: req['description'] as String?,
+          alwaysRule: _ruleLabel(_addRules(req)),
         ),
       ];
     case 'result':
@@ -205,6 +265,30 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
       ];
   }
   return const [];
+}
+
+/// A primeira sugestão `addRules` de um `can_use_tool` (o que o Claude Code
+/// gravaria com "sempre permitir").
+Map<String, dynamic>? _addRules(Object? req) {
+  if (req is! Map) return null;
+  final list = req['permission_suggestions'];
+  if (list is! List) return null;
+  for (final s in list) {
+    if (s is Map && s['type'] == 'addRules' && s['behavior'] == 'allow') {
+      return s.cast<String, dynamic>();
+    }
+  }
+  return null;
+}
+
+/// `Bash(npm test *)`: a regra como o settings.json escreve.
+String? _ruleLabel(Map<String, dynamic>? sugg) {
+  final rules = sugg?['rules'];
+  if (rules is! List || rules.isEmpty || rules.first is! Map) return null;
+  final r = rules.first as Map;
+  final tool = r['toolName'] as String? ?? '';
+  final content = r['ruleContent'] as String?;
+  return content == null || content.isEmpty ? tool : '$tool($content)';
 }
 
 String _resultText(Object? content) {

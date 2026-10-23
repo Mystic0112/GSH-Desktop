@@ -1994,6 +1994,15 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
           )
           as ChatSession?;
 
+  /// Guarda a sessão do Claude Code de uma aba de chat e persiste o layout,
+  /// para reabrir o app e continuar a mesma conversa.
+  void rememberChatSession(String tabId, String sessionId) {
+    final s = _sessions[tabId];
+    if (s is! ChatSession || s.sessionId == sessionId) return;
+    s.sessionId = sessionId;
+    _scheduleSave(s.projectId);
+  }
+
   /// Abre (ou foca) a aba da fazenda de agentes. Uma por workspace; o
   /// conteúdo é o mesmo em todas (todos os loops da máquina).
   FarmSession? openFarm({String? projectId}) =>
@@ -6625,6 +6634,7 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
           id: id,
           projectId: project.id,
           workingDirectory: project.path,
+          sessionId: desc['sid'] as String?,
         );
         return true;
       case 'farm':
@@ -6938,7 +6948,9 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
     }
     if (s is AgentGraphSession) return <String, dynamic>{'type': 'agent_graph'};
     if (s is FarmSession) return <String, dynamic>{'type': 'farm'};
-    if (s is ChatSession) return <String, dynamic>{'type': 'chat'};
+    if (s is ChatSession) {
+      return <String, dynamic>{'type': 'chat', 'sid': ?s.sessionId};
+    }
     if (s is MongoBrowserSession) {
       return <String, dynamic>{
         'type': 'mongo',

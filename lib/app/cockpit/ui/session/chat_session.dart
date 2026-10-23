@@ -8,6 +8,7 @@ class ChatSession extends PaneItem {
     required this.id,
     required this.projectId,
     required this.workingDirectory,
+    this.sessionId,
   });
 
   @override
@@ -16,6 +17,9 @@ class ChatSession extends PaneItem {
   final String projectId;
   @override
   final String workingDirectory;
+
+  /// Sessão do Claude Code desta aba (persistida no layout para retomar).
+  String? sessionId;
 
   // ponytail: `t` global, mesmo motivo do AgentGraphSession.
   @override
