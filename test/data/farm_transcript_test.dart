@@ -55,9 +55,22 @@ void main() {
     test('end_turn é ocioso; tokens contam uma vez por mensagem', () {
       final t = TranscriptTail(isSubagent: false)
         // Mesma mensagem em duas linhas (um bloco por linha), mesmo usage.
-        ..apply(_assistant('m1', [{'type': 'thinking'}], out: 50))
+        ..apply(
+          _assistant('m1', [
+            {'type': 'thinking'},
+          ], out: 50),
+        )
         ..apply(_assistant('m1', [_toolUse('Bash')], out: 50))
-        ..apply(_assistant('m2', [{'type': 'text'}], stop: 'end_turn', out: 7));
+        ..apply(
+          _assistant(
+            'm2',
+            [
+              {'type': 'text'},
+            ],
+            stop: 'end_turn',
+            out: 7,
+          ),
+        );
       expect(t.activity, FarmActivity.idle);
       expect(t.totalOutputTokens, 57);
       expect(t.contextTokens, 102);
@@ -108,13 +121,18 @@ void main() {
     final subs = Directory('${proj.path}/s1/subagents')
       ..createSync(recursive: true);
     File('${subs.path}/agent-a1.jsonl').writeAsStringSync(
-      '${jsonEncode(_assistant('m9', [{'type': 'text'}], stop: 'end_turn', ts: ts))}\n',
+      '${jsonEncode(_assistant('m9', [
+        {'type': 'text'},
+      ], stop: 'end_turn', ts: ts))}\n',
     );
-    File('${subs.path}/agent-a1.meta.json').writeAsStringSync(
-      jsonEncode({'agentType': 'escanor', 'name': 'api'}),
-    );
+    File(
+      '${subs.path}/agent-a1.meta.json',
+    ).writeAsStringSync(jsonEncode({'agentType': 'escanor', 'name': 'api'}));
 
-    final loops = await ClaudeTranscriptFarmSource(root: root.path).scan(now);
+    final loops = await ClaudeTranscriptFarmSource(
+      root: root.path,
+      statusDir: '${root.path}/farm',
+    ).scan(now);
     expect(loops, hasLength(2));
     final main = loops.firstWhere((l) => !l.isSubagent);
     final sub = loops.firstWhere((l) => l.isSubagent);
@@ -124,6 +142,36 @@ void main() {
     expect(sub.agentType, 'escanor');
     expect(sub.title, 'api');
     expect(sub.activity, FarmActivity.done);
+
+    // Hook marcou "waiting" depois da última linha: loop esperando alguém.
+    final status = Directory('${root.path}/farm')..createSync();
+    void hook(String st, DateTime at) =>
+        File('${status.path}/s1.json').writeAsStringSync(
+          jsonEncode({'st': st, 'ts': at.millisecondsSinceEpoch}),
+        );
+    final src = ClaudeTranscriptFarmSource(
+      root: root.path,
+      statusDir: status.path,
+    );
+    hook('waiting', now.add(const Duration(seconds: 1)));
+    var again = await src.scan(now);
+    expect(
+      again.firstWhere((l) => l.id == 's1').activity,
+      FarmActivity.waiting,
+    );
+    // Pedido antigo, transcript andou depois: volta a ler o transcript.
+    hook('waiting', now.subtract(const Duration(minutes: 1)));
+    again = await src.scan(now);
+    expect(
+      again.firstWhere((l) => l.id == 's1').activity,
+      FarmActivity.delegating,
+    );
+    hook('working', now.add(const Duration(seconds: 1)));
+    again = await src.scan(now);
+    expect(
+      again.firstWhere((l) => l.id == 's1').activity,
+      FarmActivity.delegating,
+    );
 
     final plots = groupFarm(loops);
     expect(plots.single.project, '/repo');

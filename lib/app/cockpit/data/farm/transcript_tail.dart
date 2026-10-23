@@ -56,7 +56,13 @@ class TranscriptTail {
 
   /// Aplica uma entrada do transcript.
   void apply(Map<String, dynamic> o) {
-    final ts = DateTime.tryParse(o['timestamp'] as String? ?? '');
+    // Só turno conta como atividade: título, anexos e metadados que o Claude
+    // regrava no meio de uma espera não podem "acordar" o loop nem apagar um
+    // pedido de permissão pendente.
+    final type = o['type'];
+    final ts = type == 'assistant' || type == 'user'
+        ? DateTime.tryParse(o['timestamp'] as String? ?? '')
+        : null;
     if (ts != null && (lastTs == null || ts.isAfter(lastTs!))) lastTs = ts;
     final c = o['cwd'];
     if (c is String && c.isNotEmpty) cwd = c;

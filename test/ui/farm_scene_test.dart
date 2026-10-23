@@ -117,4 +117,14 @@ void main() {
     expect(scene.critters['z']!.home, isNotNull);
     expect(mode('d'), CritterMode.done);
   });
+
+  test('bicho que já existe troca de pose quando a atividade muda', () {
+    final scene = FarmScene(rnd: math.Random(1))..layout = _layout(6);
+    scene.sync(groupFarm([_loop('w', '/p/a')]));
+    expect(scene.critters['w']!.mode, CritterMode.work);
+    scene.sync(
+      groupFarm([_loop('w', '/p/a', activity: FarmActivity.waiting)]),
+    );
+    expect(scene.critters['w']!.mode, CritterMode.wait);
+  });
 }

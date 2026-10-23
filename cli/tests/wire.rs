@@ -303,6 +303,8 @@ fn hook_reporta_status_pelo_mesmo_socket() {
 
     let mut child = Command::new(env!("CARGO_BIN_EXE_cockpit"))
         .arg("hook")
+        // O hook grava o status da fazenda em ~/.cockpit/farm: HOME isolado.
+        .env("HOME", &dir)
         .env("COCKPIT_STATUS_SOCK", &sock_path)
         .env("COCKPIT_PANE_ID", "t3")
         .stdin(std::process::Stdio::piped())

@@ -16,20 +16,27 @@ import 'package:path/path.dart' as p;
 ///
 /// ponytail: polling com `stat` em todos os `.jsonl` (~200 aqui). Se a pasta
 /// crescer para milhares, trocar por watcher (inotify) só nos projetos ativos.
-/// Pedido de permissão não aparece no transcript: um loop parado esperando
-/// aprovação lê como a ferramenta pendente. Upgrade: cruzar com o status do
-/// hook da aba (`waiting`) pelo `session_id`.
+///
+/// Pedido de permissão não aparece no transcript. Ele vem do hook: o
+/// `cockpit hook` grava o último status de cada sessão em
+/// `~/.cockpit/farm/<sid>.json` ([statusDir]), e um `waiting` mais novo que a
+/// última linha do transcript vira [FarmActivity.waiting]. Sem a CLI do GSH
+/// em `~/.cockpit/bin` (o Cockpit original materializa a dele por cima), a
+/// pasta não é escrita e o loop segue lendo como a ferramenta pendente.
 class ClaudeTranscriptFarmSource implements FarmSource {
-  ClaudeTranscriptFarmSource({String? root})
-    : _root =
-          root ??
-          p.join(
-            Platform.environment['HOME'] ??
-                Platform.environment['USERPROFILE'] ??
-                '',
-            '.claude',
-            'projects',
-          );
+  ClaudeTranscriptFarmSource({String? root, String? statusDir})
+    : _root = root ?? p.join(_home, '.claude', 'projects'),
+      statusDir = statusDir ?? p.join(_home, '.cockpit', 'farm');
+
+  static String get _home =>
+      Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'] ?? '';
+
+  /// Onde o `cockpit hook` grava o último status de cada sessão.
+  final String statusDir;
+
+  /// Status de hook mais velho que isso é lixo de sessão que morreu sem
+  /// `SessionEnd`: apagado na varredura.
+  static const statusTtl = Duration(days: 1);
 
   /// Transcript sem escrita há mais que isso sai da fazenda.
   static const window = Duration(minutes: 30);
@@ -47,6 +54,36 @@ class ClaudeTranscriptFarmSource implements FarmSource {
   final String _root;
   final _tails = <String, TranscriptTail>{};
   final _meta = <String, Map<String, dynamic>>{};
+  DateTime _lastSweep = DateTime.fromMillisecondsSinceEpoch(0);
+
+  /// Quando o hook marcou a sessão como `waiting` (pedido de permissão,
+  /// pergunta), ou `null` se o último status do hook é outro.
+  Future<DateTime?> _waitingAt(String sid) async {
+    try {
+      final v = jsonDecode(
+        await File(p.join(statusDir, '$sid.json')).readAsString(),
+      );
+      if (v is! Map || v['st'] != 'waiting') return null;
+      final ts = v['ts'];
+      return ts is int ? DateTime.fromMillisecondsSinceEpoch(ts) : null;
+    } on Object {
+      return null; // sem arquivo (hook antigo, sessão sem evento) ou meio escrito
+    }
+  }
+
+  Future<void> _sweepStatus(DateTime now) async {
+    final dir = Directory(statusDir);
+    try {
+      if (!await dir.exists()) return;
+      await for (final f in dir.list(followLinks: false)) {
+        if (f is! File) continue;
+        final stat = await f.stat();
+        if (now.difference(stat.modified) > statusTtl) await f.delete();
+      }
+    } on FileSystemException {
+      // Varredura é faxina: falhar não importa.
+    }
+  }
 
   @override
   Future<List<FarmLoop>> scan(DateTime now) async {
@@ -64,7 +101,15 @@ class ClaudeTranscriptFarmSource implements FarmSource {
         live.add(f.path);
         final sid = p.basenameWithoutExtension(f.path);
         final project = main.cwd ?? p.basename(dir.path);
-        loops.add(_loop(main, id: sid, project: project, now: now));
+        loops.add(
+          _loop(
+            main,
+            id: sid,
+            project: project,
+            now: now,
+            waitingAt: await _waitingAt(sid),
+          ),
+        );
 
         final subs = Directory(p.join(dir.path, sid, 'subagents'));
         if (!await subs.exists()) continue;
@@ -95,6 +140,10 @@ class ClaudeTranscriptFarmSource implements FarmSource {
           loops.add(loop);
         }
       }
+    }
+    if (now.difference(_lastSweep) > const Duration(minutes: 10)) {
+      _lastSweep = now;
+      await _sweepStatus(now);
     }
     _tails.removeWhere((path, _) => !live.contains(path));
     _meta.removeWhere((path, _) => !live.contains(path));
@@ -164,10 +213,16 @@ class ClaudeTranscriptFarmSource implements FarmSource {
     String? parentId,
     String? agentType,
     String? title,
+    DateTime? waitingAt,
   }) {
-    final lastSeen = t.lastTs ?? now;
+    var lastSeen = t.lastTs ?? now;
     var activity = t.activity;
-    if (parentId != null && activity == FarmActivity.idle) {
+    // O hook disse "esperando" depois da última linha do transcript: nada
+    // aconteceu desde o pedido, então o loop está parado esperando alguém.
+    if (waitingAt != null && !waitingAt.isBefore(lastSeen)) {
+      activity = FarmActivity.waiting;
+      lastSeen = waitingAt;
+    } else if (parentId != null && activity == FarmActivity.idle) {
       activity = FarmActivity.done;
     } else if (now.difference(lastSeen) > sleepAfter) {
       activity = FarmActivity.sleeping;

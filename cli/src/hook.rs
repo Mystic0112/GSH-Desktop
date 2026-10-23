@@ -14,7 +14,12 @@
 //! controlador (escrever em /dev/tty falha com ENXIO). O app injeta no env da
 //! PTY o `COCKPIT_PANE_ID` (roteamento) e o `COCKPIT_STATUS_SOCK` (caminho do
 //! socket); o hook herda os dois. Sessões de agente fora do Cockpit não têm
-//! essas envs, então o hook é no-op (gate natural).
+//! essas envs, então o hook não manda nada pelo socket (gate natural).
+//!
+//! **Fazenda do GSH Desktop:** com ou sem aba, o último status de cada sessão
+//! vai para `~/.cockpit/farm/<session_id>.json` ([record_farm]). É o único
+//! jeito de a fazenda saber de um pedido de permissão: ele não aparece no
+//! transcript, só no `Notification`.
 //!
 //! **Nunca escreve no stdout** (participa do protocolo de hook) e **nunca falha
 //! barulhento**: qualquer erro é engolido pra não atrapalhar o turno.
@@ -23,7 +28,10 @@ use std::io::{Read, Write};
 
 use serde_json::{json, Value};
 
-use crate::util::env_non_empty;
+use std::path::Path;
+use std::time::{SystemTime, UNIX_EPOCH};
+
+use crate::util::{env_non_empty, home_dir};
 
 /// Executa o hook. Sempre retorna sem erro visível.
 pub fn run(args: &[String]) -> ! {
@@ -52,13 +60,6 @@ fn harness_from(args: &[String]) -> String {
 }
 
 fn try_run(harness: String) -> Option<()> {
-    let pane_id = env_non_empty("COCKPIT_PANE_ID")?; // não é sessão do Cockpit
-    let sock = env_non_empty("COCKPIT_STATUS_SOCK");
-    let port = env_non_empty("COCKPIT_STATUS_PORT").and_then(|p| p.parse::<u16>().ok());
-    if sock.is_none() && port.is_none() {
-        return None;
-    }
-
     let mut raw = String::new();
     std::io::stdin().read_to_string(&mut raw).ok()?;
     if raw.trim().is_empty() {
@@ -70,7 +71,19 @@ fn try_run(harness: String) -> Option<()> {
     }
 
     let event = str_field(&decoded, "hook_event_name");
-    let status = status_for(&event, &decoded)?; // evento que não nos interessa
+    let status = status_for(&event, &decoded);
+    if let Some(home) = home_dir() {
+        let dir = Path::new(&home).join(".cockpit").join("farm");
+        record_farm(&dir, &str_field(&decoded, "session_id"), &event, status, &harness);
+    }
+    let status = status?; // evento que não nos interessa
+
+    let pane_id = env_non_empty("COCKPIT_PANE_ID")?; // não é sessão do Cockpit
+    let sock = env_non_empty("COCKPIT_STATUS_SOCK");
+    let port = env_non_empty("COCKPIT_STATUS_PORT").and_then(|p| p.parse::<u16>().ok());
+    if sock.is_none() && port.is_none() {
+        return None;
+    }
 
     let mut payload = json!({
         "paneId": pane_id,
@@ -123,6 +136,38 @@ fn try_run(harness: String) -> Option<()> {
     s.write_all(line.as_bytes()).ok()?;
     let _ = s.flush();
     Some(())
+}
+
+/// Grava o último status da sessão em `<dir>/<sid>.json` (`st`, `ev`, `ts` em
+/// ms, `hn`) para a fazenda. `SessionEnd` apaga o arquivo. Escrita atômica
+/// (tmp + rename): a fazenda lê a cada 2s e nunca pode ver meio JSON.
+fn record_farm(dir: &Path, sid: &str, event: &str, status: Option<&str>, harness: &str) {
+    // O id vira nome de arquivo: só aceita o formato de UUID/slug.
+    if sid.is_empty()
+        || !sid
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_')
+    {
+        return;
+    }
+    let path = dir.join(format!("{sid}.json"));
+    if event == "SessionEnd" {
+        let _ = std::fs::remove_file(&path);
+        return;
+    }
+    let Some(st) = status else { return };
+    if std::fs::create_dir_all(dir).is_err() {
+        return;
+    }
+    let ts = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|d| d.as_millis() as u64)
+        .unwrap_or(0);
+    let body = json!({"st": st, "ev": event, "ts": ts, "hn": harness}).to_string();
+    let tmp = dir.join(format!(".{sid}.{}.tmp", std::process::id()));
+    if std::fs::write(&tmp, body).is_ok() && std::fs::rename(&tmp, &path).is_err() {
+        let _ = std::fs::remove_file(&tmp);
+    }
 }
 
 /// Campo string do JSON do hook, com `""` quando ausente (igual ao Dart, que
@@ -272,6 +317,28 @@ pub fn status_for(event: &str, json: &Value) -> Option<&'static str> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn fazenda_grava_status_e_apaga_no_fim_da_sessao() {
+        let dir = std::env::temp_dir().join(format!("farm-test-{}", std::process::id()));
+        let sid = "abc-123";
+        record_farm(&dir, sid, "Notification", Some("waiting"), "claude");
+        let v: Value =
+            serde_json::from_str(&std::fs::read_to_string(dir.join("abc-123.json")).unwrap())
+                .unwrap();
+        assert_eq!(v["st"], "waiting");
+        assert_eq!(v["ev"], "Notification");
+        assert!(v["ts"].as_u64().unwrap() > 0);
+        // Evento sem status não mexe no arquivo.
+        record_farm(&dir, sid, "SubagentStart", None, "claude");
+        assert!(dir.join("abc-123.json").exists());
+        record_farm(&dir, sid, "SessionEnd", Some("idle"), "claude");
+        assert!(!dir.join("abc-123.json").exists());
+        // Id que não é slug não vira caminho.
+        record_farm(&dir, "../x", "Stop", Some("idle"), "claude");
+        assert!(!dir.join("../x.json").exists());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
 
     #[test]
     fn eventos_de_trabalho() {
