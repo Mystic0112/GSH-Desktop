@@ -1,3 +1,5 @@
+import 'package:cockpit/app/core/data/claude_code_settings_file.dart';
+import 'package:cockpit/app/core/domain/contracts/claude_code_settings.dart';
 import 'package:cockpit/app/core/data/automation/cli_automation_gateway.dart';
 import 'package:cockpit/app/core/data/lsp/lsp_client_impl.dart';
 import 'package:cockpit/app/core/data/lsp/lsp_server_pool.dart';
@@ -42,6 +44,8 @@ Module buildCoreModule({required TerminalProfileResolver terminalProfiles}) {
       ..addInstance<AutomationController>(automation)
       ..addLazySingleton<NeovimGateway>(NeovimGatewayImpl.new)
       ..addLazySingleton<LspServerPool>(LspServerPool.new)
-      ..addInstance<SystemPermissions>(SystemPermissionsImpl()),
+      ..addInstance<SystemPermissions>(SystemPermissionsImpl())
+      // ~/.claude/settings.json (Remote Control ao iniciar).
+      ..addInstance<ClaudeCodeSettings>(ClaudeCodeSettingsFile()),
   );
 }

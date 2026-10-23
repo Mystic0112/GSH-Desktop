@@ -942,6 +942,9 @@
       "startFailed": "No pude iniciar claude: ${detail}",
       "engineExited": "claude terminó (código ${code}).",
       "turnFailed": "El turno terminó con error: ${detail}",
+      "handedOff": "La conversación sigue en una terminal con Remote Control: ábrela en el celular o en claude.ai/code. El chat aquí queda en pausa.",
+      "remoteControl": "Remote Control",
+      "remoteControlHint": "Continuar esta conversación en una terminal con Remote Control (celular, claude.ai/code). El motor del chat no soporta Remote Control.",
       "attachmentTooLarge": "${name} es demasiado grande para enviar (imágenes hasta 5 MB, PDF hasta 32 MB).",
       "loadingHistory": "Cargando la conversación…",
       "allowAlways": "Permitir siempre ${rule}",
@@ -958,7 +961,16 @@
       "planApproved": "Plan aprobado",
       "planRefined": "Pidió seguir planificando",
       "planRefinedWith": "Ajuste: ${text}",
-      "planMode": "Planificar"
+      "newChat": "Nueva conversación",
+      "attach": "Adjuntar archivos",
+      "modeDefault": "Pedir permiso",
+      "modeAcceptEdits": "Aceptar ediciones",
+      "modePlan": "Planificar",
+      "modeBypass": "Omitir permisos",
+      "editedFiles": {
+        "one": "Editó 1 archivo",
+        "other": "Editó ${n} archivos"
+      }
     },
     "farm": {
       "tabTitle": "Granja",
@@ -1085,6 +1097,9 @@
         "showCockpitDesc": "Mantiene un workspace sin carpeta, solo de terminal, fijado en la parte superior de la barra lateral. Desactivarlo cierra sus terminales.",
         "launchAtStartupTitle": "Iniciar al arrancar",
         "launchAtStartupDesc": "Inicia GSH Desktop automáticamente cuando inicias sesión en tu computadora.",
+        "remoteControlTitle": "Conectar nuevas sesiones a Remote Control",
+        "remoteControlDesc": "Cada sesión de claude que inicies en una terminal se conecta a Remote Control, para seguir en el celular o en claude.ai/code. Se guarda en ~/.claude/settings.json (remoteControlAtStartup). Requiere login de claude.ai (Pro, Max, Team o Enterprise).",
+        "remoteControlFailed": "No pude guardar: ${detail}",
         "sectionUpdates": "Actualizaciones",
         "checkUpdatesTitle": "Buscar actualizaciones",
         "checkUpdatesDesc": "Con qué frecuencia GSH Desktop debe buscar nuevas versiones.",

@@ -942,6 +942,9 @@
       "startFailed": "Não consegui iniciar o claude: ${detail}",
       "engineExited": "O claude encerrou (código ${code}).",
       "turnFailed": "O turno terminou com erro: ${detail}",
+      "handedOff": "A conversa continua num terminal com Remote Control: abra no celular ou em claude.ai/code. O chat aqui fica pausado.",
+      "remoteControl": "Remote Control",
+      "remoteControlHint": "Continuar esta conversa num terminal com Remote Control (celular, claude.ai/code). O motor do chat não suporta Remote Control.",
       "attachmentTooLarge": "${name} é grande demais para enviar (imagem até 5 MB, PDF até 32 MB).",
       "loadingHistory": "Carregando a conversa…",
       "allowAlways": "Sempre permitir ${rule}",
@@ -958,7 +961,16 @@
       "planApproved": "Plano aprovado",
       "planRefined": "Pediu para continuar planejando",
       "planRefinedWith": "Ajuste: ${text}",
-      "planMode": "Planejar"
+      "newChat": "Nova conversa",
+      "attach": "Anexar arquivos",
+      "modeDefault": "Pedir permissão",
+      "modeAcceptEdits": "Aceitar edições",
+      "modePlan": "Planejar",
+      "modeBypass": "Ignorar permissões",
+      "editedFiles": {
+        "one": "Editou 1 arquivo",
+        "other": "Editou ${n} arquivos"
+      }
     },
     "farm": {
       "tabTitle": "Fazenda",
@@ -1085,6 +1097,9 @@
         "showCockpitDesc": "Mantém um workspace sem pasta, só de terminal, fixado no topo da barra lateral. Desligar fecha seus terminais.",
         "launchAtStartupTitle": "Iniciar ao ligar",
         "launchAtStartupDesc": "Inicia o GSH Desktop automaticamente quando você faz login no computador.",
+        "remoteControlTitle": "Conectar novas sessões ao Remote Control",
+        "remoteControlDesc": "Toda sessão do claude que você iniciar num terminal se conecta ao Remote Control, para continuar no celular ou em claude.ai/code. Fica no ~/.claude/settings.json (remoteControlAtStartup). Exige login claude.ai (Pro, Max, Team ou Enterprise).",
+        "remoteControlFailed": "Não consegui salvar: ${detail}",
         "sectionUpdates": "Atualizações",
         "checkUpdatesTitle": "Verificar atualizações",
         "checkUpdatesDesc": "Com que frequência o GSH Desktop deve procurar novas versões.",

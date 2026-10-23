@@ -1994,6 +1994,18 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
           )
           as ChatSession?;
 
+  /// Continua a sessão [sessionId] do Claude Code num terminal novo com
+  /// Remote Control (celular, claude.ai/code): o modo `stream-json` do chat
+  /// não suporta Remote Control, a sessão interativa sim.
+  bool continueInRemoteControl(String sessionId, {required String cwd}) {
+    // O id vira argumento de shell: só aceita o formato de UUID.
+    if (!RegExp(r'^[A-Za-z0-9-]+$').hasMatch(sessionId)) return false;
+    return newTerminalTab(
+      cwd: cwd,
+      startupCommand: 'claude --resume $sessionId --remote-control',
+    ).isSuccess;
+  }
+
   /// Guarda a sessão do Claude Code de uma aba de chat e persiste o layout,
   /// para reabrir o app e continuar a mesma conversa.
   void rememberChatSession(String tabId, String sessionId) {

@@ -942,6 +942,9 @@
       "startFailed": "Couldn't start claude: ${detail}",
       "engineExited": "claude exited (code ${code}).",
       "turnFailed": "The turn ended with an error: ${detail}",
+      "handedOff": "This conversation continues in a terminal with Remote Control: open it on your phone or at claude.ai/code. The chat here is paused.",
+      "remoteControl": "Remote Control",
+      "remoteControlHint": "Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat's engine doesn't support Remote Control.",
       "attachmentTooLarge": "${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).",
       "loadingHistory": "Loading the conversation…",
       "allowAlways": "Always allow ${rule}",
@@ -958,7 +961,16 @@
       "planApproved": "Plan approved",
       "planRefined": "Asked to keep planning",
       "planRefinedWith": "Adjustment: ${text}",
-      "planMode": "Plan"
+      "newChat": "New conversation",
+      "attach": "Attach files",
+      "modeDefault": "Ask permission",
+      "modeAcceptEdits": "Accept edits",
+      "modePlan": "Plan",
+      "modeBypass": "Skip permissions",
+      "editedFiles": {
+        "one": "Edited 1 file",
+        "other": "Edited ${n} files"
+      }
     },
     "farm": {
       "tabTitle": "Farm",
@@ -1085,6 +1097,9 @@
         "showCockpitDesc": "Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.",
         "launchAtStartupTitle": "Launch at login",
         "launchAtStartupDesc": "Start GSH Desktop automatically when you sign in to your computer.",
+        "remoteControlTitle": "Connect new sessions to Remote Control",
+        "remoteControlDesc": "Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).",
+        "remoteControlFailed": "Couldn't save: ${detail}",
         "sectionUpdates": "Updates",
         "checkUpdatesTitle": "Check for updates",
         "checkUpdatesDesc": "How often GSH Desktop should look for new versions.",

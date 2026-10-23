@@ -2853,6 +2853,15 @@ class Translations$cockpit$chat$en {
 	/// en: 'The turn ended with an error: ${detail}'
 	String turnFailed({required Object detail}) => 'The turn ended with an error: ${detail}';
 
+	/// en: 'This conversation continues in a terminal with Remote Control: open it on your phone or at claude.ai/code. The chat here is paused.'
+	String get handedOff => 'This conversation continues in a terminal with Remote Control: open it on your phone or at claude.ai/code. The chat here is paused.';
+
+	/// en: 'Remote Control'
+	String get remoteControl => 'Remote Control';
+
+	/// en: 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat's engine doesn't support Remote Control.'
+	String get remoteControlHint => 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat\'s engine doesn\'t support Remote Control.';
+
 	/// en: '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).'
 	String attachmentTooLarge({required Object name}) => '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).';
 
@@ -2901,8 +2910,29 @@ class Translations$cockpit$chat$en {
 	/// en: 'Adjustment: ${text}'
 	String planRefinedWith({required Object text}) => 'Adjustment: ${text}';
 
+	/// en: 'New conversation'
+	String get newChat => 'New conversation';
+
+	/// en: 'Attach files'
+	String get attach => 'Attach files';
+
+	/// en: 'Ask permission'
+	String get modeDefault => 'Ask permission';
+
+	/// en: 'Accept edits'
+	String get modeAcceptEdits => 'Accept edits';
+
 	/// en: 'Plan'
-	String get planMode => 'Plan';
+	String get modePlan => 'Plan';
+
+	/// en: 'Skip permissions'
+	String get modeBypass => 'Skip permissions';
+
+	/// en: '(one) {Edited 1 file} (other) {Edited ${n} files}'
+	String editedFiles({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: 'Edited 1 file',
+		other: 'Edited ${n} files',
+	);
 }
 
 // Path: cockpit.farm
@@ -3818,6 +3848,15 @@ class Translations$settings$page$general$en {
 
 	/// en: 'Start GSH Desktop automatically when you sign in to your computer.'
 	String get launchAtStartupDesc => 'Start GSH Desktop automatically when you sign in to your computer.';
+
+	/// en: 'Connect new sessions to Remote Control'
+	String get remoteControlTitle => 'Connect new sessions to Remote Control';
+
+	/// en: 'Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).'
+	String get remoteControlDesc => 'Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).';
+
+	/// en: 'Couldn't save: ${detail}'
+	String remoteControlFailed({required Object detail}) => 'Couldn\'t save: ${detail}';
 
 	/// en: 'Updates'
 	String get sectionUpdates => 'Updates';
@@ -5187,6 +5226,9 @@ extension on Translations {
 			'cockpit.chat.startFailed' => ({required Object detail}) => 'Couldn\'t start claude: ${detail}',
 			'cockpit.chat.engineExited' => ({required Object code}) => 'claude exited (code ${code}).',
 			'cockpit.chat.turnFailed' => ({required Object detail}) => 'The turn ended with an error: ${detail}',
+			'cockpit.chat.handedOff' => 'This conversation continues in a terminal with Remote Control: open it on your phone or at claude.ai/code. The chat here is paused.',
+			'cockpit.chat.remoteControl' => 'Remote Control',
+			'cockpit.chat.remoteControlHint' => 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat\'s engine doesn\'t support Remote Control.',
 			'cockpit.chat.attachmentTooLarge' => ({required Object name}) => '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).',
 			'cockpit.chat.loadingHistory' => 'Loading the conversation…',
 			'cockpit.chat.allowAlways' => ({required Object rule}) => 'Always allow ${rule}',
@@ -5203,7 +5245,13 @@ extension on Translations {
 			'cockpit.chat.planApproved' => 'Plan approved',
 			'cockpit.chat.planRefined' => 'Asked to keep planning',
 			'cockpit.chat.planRefinedWith' => ({required Object text}) => 'Adjustment: ${text}',
-			'cockpit.chat.planMode' => 'Plan',
+			'cockpit.chat.newChat' => 'New conversation',
+			'cockpit.chat.attach' => 'Attach files',
+			'cockpit.chat.modeDefault' => 'Ask permission',
+			'cockpit.chat.modeAcceptEdits' => 'Accept edits',
+			'cockpit.chat.modePlan' => 'Plan',
+			'cockpit.chat.modeBypass' => 'Skip permissions',
+			'cockpit.chat.editedFiles' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Edited 1 file', other: 'Edited ${n} files', ), 
 			'cockpit.farm.tabTitle' => 'Farm',
 			'cockpit.farm.title' => 'Agent farm',
 			'cockpit.farm.emptyTitle' => 'No agents running',
@@ -5311,6 +5359,9 @@ extension on Translations {
 			'settings.page.general.showCockpitDesc' => 'Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.',
 			'settings.page.general.launchAtStartupTitle' => 'Launch at login',
 			'settings.page.general.launchAtStartupDesc' => 'Start GSH Desktop automatically when you sign in to your computer.',
+			'settings.page.general.remoteControlTitle' => 'Connect new sessions to Remote Control',
+			'settings.page.general.remoteControlDesc' => 'Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).',
+			'settings.page.general.remoteControlFailed' => ({required Object detail}) => 'Couldn\'t save: ${detail}',
 			'settings.page.general.sectionUpdates' => 'Updates',
 			'settings.page.general.checkUpdatesTitle' => 'Check for updates',
 			'settings.page.general.checkUpdatesDesc' => 'How often GSH Desktop should look for new versions.',
@@ -5399,6 +5450,8 @@ extension on Translations {
 			'settings.page.appearance.exportTheme' => 'Export…',
 			'settings.page.appearance.deleteTheme' => 'Remove',
 			'settings.page.appearance.importThemeDialog' => 'Pick a theme file',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.appearance.exportThemeDialog' => 'Save theme as',
 			'settings.page.appearance.themeImported' => ({required Object name}) => 'Theme "${name}" imported.',
 			'settings.page.appearance.themeExported' => 'Theme saved.',
@@ -5411,8 +5464,6 @@ extension on Translations {
 			'settings.page.appearance.fontPickerCustomHint' => 'Family name',
 			'settings.page.appearance.fontPickerUse' => 'Use',
 			'settings.page.appearance.fontPickerDefault' => 'Default',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.appearance.fontMissing' => 'Not found on this machine — falling back.',
 			'settings.page.appearance.sectionLayout' => 'Layout',
 			'settings.page.appearance.swapPanelsTitle' => 'Swap side panels',

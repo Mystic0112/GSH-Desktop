@@ -159,10 +159,15 @@ class _Thumb extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     if (a.kind == ChatAttachmentKind.image) {
-      final image = a.bytes != null
-          ? Image.memory(a.bytes!, width: 24, height: 24, fit: BoxFit.cover)
-          : Image.file(File(a.path!), width: 24, height: 24, fit: BoxFit.cover);
-      return ClipRRect(borderRadius: BorderRadius.circular(3), child: image);
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(3),
+        child: Image(
+          image: chatImageOf(a),
+          width: 24,
+          height: 24,
+          fit: BoxFit.cover,
+        ),
+      );
     }
     return SizedBox.square(
       dimension: 24,
@@ -173,6 +178,134 @@ class _Thumb extends StatelessWidget {
         size: 16,
         color: colors.text3,
       ),
+    );
+  }
+}
+
+/// A imagem de um anexo: bytes colados ou o arquivo do disco.
+ImageProvider chatImageOf(ChatAttachment a) =>
+    a.bytes != null ? MemoryImage(a.bytes!) : FileImage(File(a.path!));
+
+/// Imagem enviada, como prévia na conversa: cantos arredondados, borda fina,
+/// proporção mantida. Clicar abre grande.
+class ChatImagePreview extends StatelessWidget {
+  const ChatImagePreview(this.a, {super.key});
+  final ChatAttachment a;
+
+  static const _maxWidth = 360.0;
+  static const _maxHeight = 320.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final radius = BorderRadius.circular(10);
+    return HoverTap(
+      onTap: () => _open(context),
+      color: colors.panel,
+      hoverColor: colors.panel,
+      borderRadius: radius,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxWidth: _maxWidth,
+          maxHeight: _maxHeight,
+        ),
+        child: Container(
+          foregroundDecoration: BoxDecoration(
+            border: Border.all(color: colors.border2),
+            borderRadius: radius,
+          ),
+          child: ClipRRect(
+            borderRadius: radius,
+            child: Image(image: chatImageOf(a), fit: BoxFit.contain),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _open(BuildContext context) => showDialog<void>(
+    context: context,
+    builder: (dialogContext) => GestureDetector(
+      onTap: () => Navigator.of(dialogContext).pop(),
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Center(
+          child: InteractiveViewer(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image(image: chatImageOf(a), fit: BoxFit.contain),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+/// Anexos esperando envio, dentro do composer: imagem vira miniatura com um
+/// `x` no canto; o resto fica como ficha.
+class ChatPendingAttachments extends StatelessWidget {
+  const ChatPendingAttachments({
+    super.key,
+    required this.attachments,
+    required this.onRemove,
+  });
+  final List<ChatAttachment> attachments;
+  final void Function(ChatAttachment) onRemove;
+
+  static const _thumb = 64.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final images = [
+      for (final a in attachments)
+        if (a.kind == ChatAttachmentKind.image) a,
+    ];
+    final others = [
+      for (final a in attachments)
+        if (a.kind != ChatAttachmentKind.image) a,
+    ];
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        for (final a in images)
+          SizedBox.square(
+            dimension: _thumb,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: Container(
+                    foregroundDecoration: BoxDecoration(
+                      border: Border.all(color: colors.border2),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image(image: chatImageOf(a), fit: BoxFit.cover),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 3,
+                  right: 3,
+                  child: HoverTap(
+                    onTap: () => onRemove(a),
+                    color: colors.bg.withValues(alpha: 0.8),
+                    hoverColor: colors.panel3,
+                    borderRadius: BorderRadius.circular(10),
+                    padding: const EdgeInsets.all(2),
+                    child: Icon(Icons.close, size: 12, color: colors.text),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        if (others.isNotEmpty)
+          ChatAttachmentChips(attachments: others, onRemove: onRemove),
+      ],
     );
   }
 }

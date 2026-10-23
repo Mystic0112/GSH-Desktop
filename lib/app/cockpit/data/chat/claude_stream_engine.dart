@@ -37,6 +37,9 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
         '--permission-prompt-tool',
         'stdio',
         '--include-partial-messages',
+        // Só deixa "Ignorar permissões" disponível no seletor de modo; a
+        // sessão continua começando em `default` (pedindo permissão).
+        '--allow-dangerously-skip-permissions',
         if (resumeSessionId != null) ...['--resume', resumeSessionId],
       ],
       workingDirectory: cwd,

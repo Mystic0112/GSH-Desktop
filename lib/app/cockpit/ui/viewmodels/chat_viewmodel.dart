@@ -122,6 +122,8 @@ class ChatPlanItem extends ChatItem {
 }
 
 enum ChatNoticeKind {
+  /// A conversa foi para um terminal com Remote Control (não é erro).
+  handedOff,
   startFailed,
   engineExited,
   turnFailed,
@@ -153,8 +155,10 @@ class ChatController extends ChangeNotifier {
   String? sessionId;
   bool loadingHistory = false;
 
-  /// Sessão em modo plano: o agente só investiga e planeja.
-  bool planMode = false;
+  /// Modo de permissão da sessão (os do Claude Code): `default` pede
+  /// permissão, `acceptEdits` aceita edições, `plan` só investiga e planeja,
+  /// `bypassPermissions` não pergunta nada.
+  String permissionMode = 'default';
 
   /// Anexos esperando o próximo envio.
   final attachments = <ChatAttachment>[];
@@ -194,11 +198,12 @@ class ChatController extends ChangeNotifier {
     },
   );
 
-  /// Liga/desliga o modo plano. Sem motor no ar ainda, vale para o primeiro
+  /// Troca o modo de permissão. Sem motor no ar ainda, vale para o primeiro
   /// envio.
-  void togglePlanMode() {
-    planMode = !planMode;
-    _engine?.setPermissionMode(planMode ? 'plan' : 'default');
+  void setPermissionMode(String mode) {
+    if (mode == permissionMode) return;
+    permissionMode = mode;
+    _engine?.setPermissionMode(mode);
     notifyListeners();
   }
 
@@ -251,7 +256,9 @@ class ChatController extends ChangeNotifier {
       var engine = _engine;
       if (engine == null) {
         engine = _engine = await _startEngine();
-        if (planMode) engine.setPermissionMode('plan');
+        if (permissionMode != 'default') {
+          engine.setPermissionMode(permissionMode);
+        }
       }
       await engine.send(msg, attachments: files);
     } on ChatAttachmentTooLarge catch (e) {
@@ -319,9 +326,9 @@ class ChatController extends ChangeNotifier {
       case ChatReady(:final sessionId, :final model, :final permissionMode):
         this.sessionId = sessionId;
         this.model = model;
-        if (permissionMode != null) planMode = permissionMode == 'plan';
+        if (permissionMode != null) this.permissionMode = permissionMode;
       case ChatModeChanged(:final mode):
-        planMode = mode == 'plan';
+        permissionMode = mode;
       case ChatUserText(:final text):
         items.add(ChatUserItem(text));
       case ChatTextDelta(:final text):
@@ -424,6 +431,23 @@ class ChatController extends ChangeNotifier {
   void _add(ChatItem item) {
     items.add(item);
     notifyListeners();
+  }
+
+  /// Sessão pronta para sair do chat: tem id e não está no meio de um turno.
+  bool get canHandOff => sessionId != null && !busy;
+
+  /// Encerra o motor desta aba para a mesma sessão continuar em outro
+  /// processo (terminal com Remote Control): dois processos na mesma sessão
+  /// gravariam o transcript em paralelo. Devolve o id, ou `null` se não dá.
+  Future<String?> handOff() async {
+    final sid = sessionId;
+    if (sid == null || busy) return null;
+    await _sub?.cancel();
+    _sub = null;
+    await _engine?.close();
+    _engine = null;
+    _add(ChatNoticeItem(ChatNoticeKind.handedOff, sid));
+    return sid;
   }
 
   @override

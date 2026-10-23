@@ -32,6 +32,7 @@ import 'package:cockpit/app/core/ui/widgets/app_menu.dart';
 import 'package:cockpit/app/core/ui/widgets/code_highlight.dart';
 import 'package:cockpit/app/core/ui/widgets/window_controls.dart';
 import 'package:cockpit/app/settings/ui/notifications_viewmodel.dart';
+import 'package:cockpit/app/settings/ui/remote_control_switch.dart';
 import 'package:cockpit/app/settings/ui/neovim_settings_viewmodel.dart';
 import 'package:cockpit/app/settings/domain/editor_appearance_policy.dart';
 import 'package:cockpit/app/settings/ui/shortcut_catalog.dart';
@@ -448,6 +449,11 @@ class _GeneralPanel extends StatelessWidget {
                           value: s.launchAtStartup,
                           onChanged: controller.setLaunchAtStartup,
                         ),
+                      ),
+                      _Row(
+                        title: tr.remoteControlTitle,
+                        description: tr.remoteControlDesc,
+                        trailing: const RemoteControlSwitch(),
                       ),
                     ],
                   ),

@@ -315,7 +315,7 @@ void main() {
     'plano: ajuste recusa com a mensagem; modo plano liga no início',
     () async {
       final f = _FakeFactory();
-      final chat = ChatController(f, cwd: '/repo')..togglePlanMode();
+      final chat = ChatController(f, cwd: '/repo')..setPermissionMode('plan');
       await chat.send('planeje');
       expect(f.engine.modes, ['plan']);
       f.engine.emit({
@@ -339,7 +339,7 @@ void main() {
         'permissionMode': 'default',
       });
       await Future<void>.delayed(Duration.zero);
-      expect(chat.planMode, isFalse);
+      expect(chat.permissionMode, 'default');
     },
   );
 
@@ -400,4 +400,22 @@ void main() {
       expect(user.attachments.map((a) => a.name), ['a.txt', 'imagem-1.png']);
     });
   });
+
+  test(
+    'handOff: fecha o motor e devolve a sessão; no meio do turno não',
+    () async {
+      final f = _FakeFactory();
+      final chat = ChatController(f, cwd: '/repo');
+      expect(chat.canHandOff, isFalse);
+      await chat.send('oi');
+      f.engine.emit(_init);
+      await Future<void>.delayed(Duration.zero);
+      expect(await chat.handOff(), isNull); // turno em andamento
+      f.engine.emit(_result);
+      await Future<void>.delayed(Duration.zero);
+      expect(chat.canHandOff, isTrue);
+      expect(await chat.handOff(), 's-1');
+      expect(chat.items.last, isA<ChatNoticeItem>());
+    },
+  );
 }

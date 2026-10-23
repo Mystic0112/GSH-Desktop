@@ -5,15 +5,17 @@ import 'package:cockpit/app/core/ui/widgets/hover_tap.dart';
 import 'package:cockpit/i18n/strings.g.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
-/// Moldura comum dos cartões que esperam o usuário: borda amarela enquanto
-/// pendente, neutra depois.
+/// Moldura comum dos cartões que esperam o usuário: cartão compacto na
+/// coluna da conversa, ícone + título; borda âmbar enquanto pendente.
 class _PromptFrame extends StatelessWidget {
   const _PromptFrame({
     required this.pending,
+    required this.icon,
     required this.title,
     required this.child,
   });
   final bool pending;
+  final IconData icon;
   final String title;
   final Widget child;
 
@@ -21,22 +23,53 @@ class _PromptFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
       decoration: BoxDecoration(
         color: colors.panel2,
-        border: Border.all(color: pending ? colors.warn : colors.border),
-        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: pending ? colors.warn.withValues(alpha: 0.55) : colors.border2,
+        ),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: context.typo.title.copyWith(color: colors.text)),
-          const SizedBox(height: 8),
+          Row(
+            children: [
+              Icon(icon, size: 15, color: pending ? colors.warn : colors.text3),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  title,
+                  style: context.typo.body.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: colors.text,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
           child,
         ],
       ),
     );
   }
+}
+
+/// Resultado de um cartão já respondido: uma linha discreta com a cor do
+/// desfecho.
+class _Outcome extends StatelessWidget {
+  const _Outcome(this.text, this.color);
+  final String text;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => Text(
+    text,
+    style: context.typo.label.copyWith(fontSize: 13, color: color),
+  );
 }
 
 /// Pergunta com opções (`AskUserQuestion`): clica nas opções (uma, ou várias
@@ -99,6 +132,7 @@ class _ChatQuestionCardState extends State<ChatQuestionCard> {
 
     return _PromptFrame(
       pending: answered == null,
+      icon: Icons.help_outline,
       title: tr.questionTitle,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,6 +180,7 @@ class _ChatQuestionCardState extends State<ChatQuestionCard> {
           ],
           if (answered == null)
             PrimaryButton(
+              size: ButtonSize.small,
               onPressed: ready
                   ? () => widget.chat.answerQuestions(
                       item,
@@ -181,21 +216,24 @@ class _Option extends StatelessWidget {
         ? (selected ? Icons.check_box : Icons.check_box_outline_blank)
         : (selected ? Icons.radio_button_checked : Icons.radio_button_off);
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
+      padding: const EdgeInsets.only(bottom: 2),
       child: HoverTap(
         onTap: onTap,
         color: selected ? colors.accentSoft : null,
         hoverColor: colors.panel3,
         borderRadius: BorderRadius.circular(6),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                icon,
-                size: 16,
-                color: selected ? colors.accentText : colors.text3,
+              Padding(
+                padding: const EdgeInsets.only(top: 3),
+                child: Icon(
+                  icon,
+                  size: 16,
+                  color: selected ? colors.accentText : colors.text3,
+                ),
               ),
               const SizedBox(width: 8),
               Expanded(
@@ -251,6 +289,7 @@ class _ChatPlanCardState extends State<ChatPlanCard> {
     final decision = item.decision;
     return _PromptFrame(
       pending: decision == null,
+      icon: Icons.checklist,
       title: tr.planTitle,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,15 +297,15 @@ class _ChatPlanCardState extends State<ChatPlanCard> {
           AgentMarkdown(item.plan),
           const SizedBox(height: 10),
           switch (decision) {
-            ChatPlanDecision.approved => Text(
+            ChatPlanDecision.approved => _Outcome(
               tr.planApproved,
-              style: context.typo.label.copyWith(color: colors.online),
+              colors.online,
             ),
-            ChatPlanDecision.refined => Text(
+            ChatPlanDecision.refined => _Outcome(
               item.feedback.isEmpty
                   ? tr.planRefined
                   : tr.planRefinedWith(text: item.feedback),
-              style: context.typo.label.copyWith(color: colors.warn),
+              colors.warn,
             ),
             null when _refining => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -285,12 +324,14 @@ class _ChatPlanCardState extends State<ChatPlanCard> {
                 Row(
                   children: [
                     PrimaryButton(
+                      size: ButtonSize.small,
                       onPressed: () =>
                           widget.chat.refinePlan(item, _feedback.text),
                       child: Text(tr.planSendRefine),
                     ),
                     const SizedBox(width: 8),
                     GhostButton(
+                      size: ButtonSize.small,
                       onPressed: () => setState(() => _refining = false),
                       child: Text(context.t.common.cancel),
                     ),
@@ -301,11 +342,13 @@ class _ChatPlanCardState extends State<ChatPlanCard> {
             null => Row(
               children: [
                 PrimaryButton(
+                  size: ButtonSize.small,
                   onPressed: () => widget.chat.approvePlan(item),
                   child: Text(tr.planApprove),
                 ),
                 const SizedBox(width: 8),
                 OutlineButton(
+                  size: ButtonSize.small,
                   onPressed: () => setState(() => _refining = true),
                   child: Text(tr.planRefine),
                 ),
@@ -330,68 +373,65 @@ class ChatPermissionCard extends StatelessWidget {
     final colors = context.colors;
     final tr = context.t.cockpit.chat;
     final decided = ask.allowed;
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: colors.panel2,
-        border: Border.all(
-          color: decided == null ? colors.warn : colors.border,
-        ),
-        borderRadius: BorderRadius.circular(8),
-      ),
+    return _PromptFrame(
+      pending: decided == null,
+      icon: Icons.shield_outlined,
+      title: tr.askPermission(tool: ask.toolName),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            tr.askPermission(tool: ask.toolName),
-            style: context.typo.title.copyWith(color: colors.text),
-          ),
-          const SizedBox(height: 6),
-          SelectableText(
-            ask.summary,
-            style: context.typo.mono.copyWith(
-              fontSize: 12,
-              color: colors.text2,
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: colors.panel,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: SelectableText(
+              ask.summary,
+              style: context.typo.mono.copyWith(
+                fontSize: 12,
+                color: colors.text2,
+              ),
             ),
           ),
           if (ChatEditDiff.of(ask.toolName, ask.input) case final diff?) ...[
             const SizedBox(height: 8),
             diff,
           ],
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
           if (decided == null)
-            Row(
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
               children: [
                 PrimaryButton(
+                  size: ButtonSize.small,
                   onPressed: () => chat.answer(ask, allow: true),
                   child: Text(tr.allow),
                 ),
-                const SizedBox(width: 8),
-                if (ask.alwaysRule case final rule?) ...[
-                  const SizedBox(width: 8),
+                if (ask.alwaysRule case final rule?)
                   OutlineButton(
+                    size: ButtonSize.small,
                     onPressed: () =>
                         chat.answer(ask, allow: true, always: true),
                     child: Text(tr.allowAlways(rule: rule)),
                   ),
-                ],
-                const SizedBox(width: 8),
                 OutlineButton(
+                  size: ButtonSize.small,
                   onPressed: () => chat.answer(ask, allow: false),
                   child: Text(tr.deny),
                 ),
               ],
             )
           else
-            Text(
+            _Outcome(
               !decided
                   ? tr.denied
                   : ask.always
                   ? tr.allowedAlways(rule: ask.alwaysRule ?? '')
                   : tr.allowed,
-              style: context.typo.label.copyWith(
-                color: decided ? colors.online : colors.error,
-              ),
+              decided ? colors.online : colors.error,
             ),
         ],
       ),
@@ -410,8 +450,17 @@ class ChatEditDiff extends StatelessWidget {
   static const _maxLines = 40;
 
   static Widget? of(String tool, Map<String, dynamic> input) {
+    final hunks = hunksOf(tool, input);
+    return hunks.isEmpty ? null : ChatEditDiff(hunks);
+  }
+
+  /// Pares (antes, depois) de um Edit/MultiEdit/Write; vazio para o resto.
+  static List<(String, String)> hunksOf(
+    String tool,
+    Map<String, dynamic> input,
+  ) {
     String str(Object? v) => v is String ? v : '';
-    final hunks = switch (tool) {
+    return switch (tool) {
       'Edit' => [(str(input['old_string']), str(input['new_string']))],
       'MultiEdit' => [
         for (final e in (input['edits'] as List? ?? const []).whereType<Map>())
@@ -420,7 +469,6 @@ class ChatEditDiff extends StatelessWidget {
       'Write' => [('', str(input['content']))],
       _ => const <(String, String)>[],
     };
-    return hunks.isEmpty ? null : ChatEditDiff(hunks);
   }
 
   @override
@@ -443,8 +491,10 @@ class ChatEditDiff extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.panel,
         border: Border.all(color: colors.border),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(6),
       ),
+      clipBehavior: Clip.antiAlias,
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
