@@ -35,6 +35,6 @@ keywords:
   - agent
   - cockpit
 startup_notify: true
-startup_wm_class: work.jacobmoura.cockpit
+startup_wm_class: work.gorila.gshdesktop
 icon: linux/runner/resources/app_icon_512.png
-metainfo: linux/work.jacobmoura.cockpit.metainfo.xml
+metainfo: linux/work.gorila.gshdesktop.metainfo.xml

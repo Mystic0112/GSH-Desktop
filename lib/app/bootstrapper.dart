@@ -409,7 +409,7 @@ class _CockpitBootstrapperState extends State<CockpitBootstrapper> {
     final brightness = _brightnessFor(s);
     final tokens = buildTokens(brightness: brightness, settings: s);
     return ShadcnApp(
-      title: 'Cockpit',
+      title: 'GSH Desktop',
       debugShowCheckedModeBanner: false,
       theme: buildTheme(brightness: brightness, settings: s),
       home: home,

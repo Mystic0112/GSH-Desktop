@@ -2,7 +2,7 @@
 <!-- AppStream metadata (mínimo) para empacotamento Linux. Instalado em
      share/metainfo/. O <id> casa com o app ID e o .desktop. -->
 <component type="desktop-application">
-  <id>work.jacobmoura.cockpit</id>
+  <id>work.gorila.gshdesktop</id>
   <name>Remote Pi Cockpit</name>
   <summary>Cliente desktop multi-pane do Remote Pi</summary>
 
@@ -23,7 +23,7 @@
     </p>
   </description>
 
-  <launchable type="desktop-id">work.jacobmoura.cockpit.desktop</launchable>
+  <launchable type="desktop-id">work.gorila.gshdesktop.desktop</launchable>
 
   <url type="homepage">https://jacobmoura.work</url>
 

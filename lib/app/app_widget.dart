@@ -41,7 +41,7 @@ class AppRoot extends StatelessWidget {
     final workspace = context.watch<WorkspaceMenuBridge>();
     final menus = buildAppMenus(context.t, controller, editor, workspace);
     final app = ShadcnApp.router(
-      title: 'Cockpit',
+      title: 'GSH Desktop',
       debugShowCheckedModeBanner: false,
       // Todos os overlays ancorados (popover/menu/tooltip) passam pelo nosso
       // handler: o do shadcn mede a âncora no espaço da JANELA e insere o

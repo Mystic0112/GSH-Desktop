@@ -106,17 +106,17 @@ static void my_application_activate(GApplication* application) {
   if (use_header_bar) {
     GtkHeaderBar* header_bar = GTK_HEADER_BAR(gtk_header_bar_new());
     gtk_widget_show(GTK_WIDGET(header_bar));
-    gtk_header_bar_set_title(header_bar, "Cockpit");
+    gtk_header_bar_set_title(header_bar, "GSH Desktop");
     gtk_header_bar_set_show_close_button(header_bar, TRUE);
     gtk_window_set_titlebar(window, GTK_WIDGET(header_bar));
   } else {
-    gtk_window_set_title(window, "Cockpit");
+    gtk_window_set_title(window, "GSH Desktop");
   }
 
   gtk_window_set_default_size(window, 1280, 720);
 
   // Ícone da janela/taskbar: usa o ícone do tema cujo nome é o APPLICATION_ID
-  // (instalado em share/icons/hicolor/.../work.jacobmoura.cockpit.png).
+  // (instalado em share/icons/hicolor/.../work.gorila.gshdesktop.png).
   gtk_window_set_default_icon_name(APPLICATION_ID);
 
   g_autoptr(FlDartProject) project = fl_dart_project_new();

@@ -112,7 +112,7 @@ class _LoadingScreenState extends State<LoadingScreen>
                 ),
               ),
               const SizedBox(height: 22),
-              Text('Cockpit', style: typo.display.copyWith(color: colors.text)),
+              Text('GSH Desktop', style: typo.display.copyWith(color: colors.text)),
               const SizedBox(height: 20),
               AnimatedBuilder(
                 animation: _spinController,
