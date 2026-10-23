@@ -1336,6 +1336,8 @@ class _Translations$cockpit$farm$es extends Translations$cockpit$farm$en {
 	@override String idle({required Object n}) => '${n} inactivos';
 	@override String tokens({required Object n}) => '${n} tokens generados';
 	@override String tokensDetail({required Object out, required Object ctx}) => '${out} tokens generados · contexto ${ctx}';
+	@override String agents({required Object n}) => '${n} agentes';
+	@override String subagents({required Object n}) => '${n} subagentes';
 	@override late final _Translations$cockpit$farm$activity$es activity = _Translations$cockpit$farm$activity$es._(_root);
 }
 
@@ -2820,6 +2822,8 @@ extension on TranslationsEs {
 			'cockpit.farm.idle' => ({required Object n}) => '${n} inactivos',
 			'cockpit.farm.tokens' => ({required Object n}) => '${n} tokens generados',
 			'cockpit.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens generados · contexto ${ctx}',
+			'cockpit.farm.agents' => ({required Object n}) => '${n} agentes',
+			'cockpit.farm.subagents' => ({required Object n}) => '${n} subagentes',
 			'cockpit.farm.activity.thinking' => 'pensando',
 			'cockpit.farm.activity.reading' => 'leyendo',
 			'cockpit.farm.activity.editing' => 'editando',
@@ -3051,10 +3055,10 @@ extension on TranslationsEs {
 			'settings.page.languages.saveAndRestart' => 'Guardar y reiniciar',
 			'settings.page.languages.statusResponds' => 'El servidor responde',
 			'settings.page.languages.statusNotFound' => 'Servidor no encontrado o comando inválido',
-			'settings.page.automations.sectionCommitMessages' => 'Mensajes de commit',
-			'settings.page.automations.harness' => 'Harness',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.automations.sectionCommitMessages' => 'Mensajes de commit',
+			'settings.page.automations.harness' => 'Harness',
 			'settings.page.automations.harnessDiscovering' => 'Buscando harnesses de línea de comandos instalados…',
 			'settings.page.automations.harnessNoneFound' => 'No se encontró ningún harness compatible en el PATH.',
 			'settings.page.automations.harnessConfiguredUnavailable' => ({required Object harness}) => '${harness} está configurado, pero no disponible.',

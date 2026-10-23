@@ -2825,6 +2825,12 @@ class Translations$cockpit$farm$en {
 	/// en: '${out} tokens out · context ${ctx}'
 	String tokensDetail({required Object out, required Object ctx}) => '${out} tokens out · context ${ctx}';
 
+	/// en: '${n} agents'
+	String agents({required Object n}) => '${n} agents';
+
+	/// en: '${n} sub-agents'
+	String subagents({required Object n}) => '${n} sub-agents';
+
 	late final Translations$cockpit$farm$activity$en activity = Translations$cockpit$farm$activity$en.internal(_root);
 }
 
@@ -5051,6 +5057,8 @@ extension on Translations {
 			'cockpit.farm.idle' => ({required Object n}) => '${n} idle',
 			'cockpit.farm.tokens' => ({required Object n}) => '${n} tokens out',
 			'cockpit.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens out · context ${ctx}',
+			'cockpit.farm.agents' => ({required Object n}) => '${n} agents',
+			'cockpit.farm.subagents' => ({required Object n}) => '${n} sub-agents',
 			'cockpit.farm.activity.thinking' => 'thinking',
 			'cockpit.farm.activity.reading' => 'reading',
 			'cockpit.farm.activity.editing' => 'editing',
@@ -5282,10 +5290,10 @@ extension on Translations {
 			'settings.page.languages.saveAndRestart' => 'Save & restart',
 			'settings.page.languages.statusResponds' => 'Server responds',
 			'settings.page.languages.statusNotFound' => 'Server not found or command invalid',
-			'settings.page.automations.sectionCommitMessages' => 'Commit messages',
-			'settings.page.automations.harness' => 'Harness',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.automations.sectionCommitMessages' => 'Commit messages',
+			'settings.page.automations.harness' => 'Harness',
 			'settings.page.automations.harnessDiscovering' => 'Looking for installed command-line harnesses…',
 			'settings.page.automations.harnessNoneFound' => 'No supported harness was found on PATH.',
 			'settings.page.automations.harnessConfiguredUnavailable' => ({required Object harness}) => '${harness} is configured but unavailable.',

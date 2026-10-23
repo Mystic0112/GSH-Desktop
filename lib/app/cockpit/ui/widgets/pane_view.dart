@@ -26,7 +26,7 @@ import 'package:cockpit/app/cockpit/ui/viewmodels/cockpit_viewmodel.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/active_listenable_builder.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/adaptive_terminal_pane.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/agent_graph_view.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/farm_view.dart';
+import 'package:cockpit/app/cockpit/ui/widgets/farm/farm_view.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/browser_pane.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/confirm_dialog.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/db_engine_icon.dart';
@@ -1699,8 +1699,11 @@ class _PaneBodyState extends State<_PaneBody> {
       return AgentGraphView(session: item);
     }
 
-    // Fazenda: todos os loops de agente da máquina.
-    if (item is FarmSession) return const FarmView();
+    // Fazenda: todos os loops de agente da máquina. A animação para quando a
+    // aba não é a ativa (o `IndexedStack` mantém todas montadas).
+    if (item is FarmSession) {
+      return TickerMode(enabled: widget.active, child: const FarmView());
+    }
 
     // Caderno `.notebook` (plano 62, passo 4): lista de notas | nota | tags.
     if (item is NotebookSession) {

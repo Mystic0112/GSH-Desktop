@@ -933,6 +933,8 @@
       "idle": "${n} inactivos",
       "tokens": "${n} tokens generados",
       "tokensDetail": "${out} tokens generados · contexto ${ctx}",
+      "agents": "${n} agentes",
+      "subagents": "${n} subagentes",
       "activity": {
         "thinking": "pensando",
         "reading": "leyendo",

@@ -933,6 +933,8 @@
       "idle": "${n} idle",
       "tokens": "${n} tokens out",
       "tokensDetail": "${out} tokens out · context ${ctx}",
+      "agents": "${n} agents",
+      "subagents": "${n} sub-agents",
       "activity": {
         "thinking": "thinking",
         "reading": "reading",
