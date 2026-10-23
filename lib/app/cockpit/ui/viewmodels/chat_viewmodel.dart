@@ -62,6 +62,63 @@ class ChatPermissionItem extends ChatItem {
   bool? allowed;
 }
 
+/// Uma pergunta do `AskUserQuestion`.
+class ChatQuestion {
+  ChatQuestion({
+    required this.question,
+    required this.header,
+    required this.options,
+    required this.multiSelect,
+  });
+  final String question;
+  final String header;
+
+  /// (rótulo, descrição).
+  final List<(String, String)> options;
+  final bool multiSelect;
+
+  static List<ChatQuestion> parse(Map<String, dynamic> input) => [
+    for (final q in (input['questions'] as List? ?? const []).whereType<Map>())
+      ChatQuestion(
+        question: q['question'] as String? ?? '',
+        header: q['header'] as String? ?? '',
+        multiSelect: q['multiSelect'] == true,
+        options: [
+          for (final o in (q['options'] as List? ?? const []).whereType<Map>())
+            (o['label'] as String? ?? '', o['description'] as String? ?? ''),
+        ],
+      ),
+  ];
+}
+
+/// O agente perguntou algo com opções (`AskUserQuestion`) e espera.
+class ChatQuestionItem extends ChatItem {
+  ChatQuestionItem({
+    required this.requestId,
+    required this.questions,
+    required this.input,
+  });
+  final String requestId;
+  final List<ChatQuestion> questions;
+  final Map<String, dynamic> input;
+
+  /// pergunta → resposta, depois de respondido; `null` = esperando.
+  Map<String, String>? answers;
+}
+
+enum ChatPlanDecision { approved, refined }
+
+/// O agente apresentou um plano (`ExitPlanMode`) e espera aprovação.
+class ChatPlanItem extends ChatItem {
+  ChatPlanItem({required this.requestId, required this.plan});
+  final String requestId;
+  final String plan;
+
+  /// `null` = esperando.
+  ChatPlanDecision? decision;
+  String feedback = '';
+}
+
 enum ChatNoticeKind { startFailed, engineExited, turnFailed }
 
 /// Aviso do sistema na conversa (sempre erro, por ora). A UI traduz [kind];
@@ -88,6 +145,9 @@ class ChatController extends ChangeNotifier {
   final items = <ChatItem>[];
   String? sessionId;
   bool loadingHistory = false;
+
+  /// Sessão em modo plano: o agente só investiga e planeja.
+  bool planMode = false;
   String? model;
   double costUsd = 0;
   bool busy = false;
@@ -96,8 +156,57 @@ class ChatController extends ChangeNotifier {
   StreamSubscription<ChatEvent>? _sub;
   bool _disposed = false;
 
-  bool get waitingPermission =>
-      items.any((i) => i is ChatPermissionItem && i.allowed == null);
+  bool get waitingPermission => items.any(
+    (i) => switch (i) {
+      ChatPermissionItem(:final allowed) => allowed == null,
+      ChatQuestionItem(:final answers) => answers == null,
+      ChatPlanItem(:final decision) => decision == null,
+      _ => false,
+    },
+  );
+
+  /// Liga/desliga o modo plano. Sem motor no ar ainda, vale para o primeiro
+  /// envio.
+  void togglePlanMode() {
+    planMode = !planMode;
+    _engine?.setPermissionMode(planMode ? 'plan' : 'default');
+    notifyListeners();
+  }
+
+  void answerQuestions(ChatQuestionItem item, Map<String, String> answers) {
+    if (item.answers != null) return;
+    item.answers = answers;
+    _engine?.answerPermission(
+      item.requestId,
+      allow: true,
+      input: {...item.input, 'answers': answers},
+    );
+    notifyListeners();
+  }
+
+  void approvePlan(ChatPlanItem item) {
+    if (item.decision != null) return;
+    item.decision = ChatPlanDecision.approved;
+    _engine?.answerPermission(item.requestId, allow: true);
+    notifyListeners();
+  }
+
+  /// "Continuar planejando": recusa o plano com o ajuste pedido; o agente
+  /// refaz e apresenta de novo.
+  void refinePlan(ChatPlanItem item, String feedback) {
+    if (item.decision != null) return;
+    item
+      ..decision = ChatPlanDecision.refined
+      ..feedback = feedback.trim();
+    _engine?.answerPermission(
+      item.requestId,
+      allow: false,
+      message: item.feedback.isEmpty
+          ? 'Continue planejando antes de executar.'
+          : item.feedback,
+    );
+    notifyListeners();
+  }
 
   Future<void> send(String text) async {
     final msg = text.trim();
@@ -106,7 +215,11 @@ class ChatController extends ChangeNotifier {
     busy = true;
     notifyListeners();
     try {
-      final engine = _engine ??= await _startEngine();
+      var engine = _engine;
+      if (engine == null) {
+        engine = _engine = await _startEngine();
+        if (planMode) engine.setPermissionMode('plan');
+      }
       engine.send(msg);
     } on Object catch (e) {
       busy = false;
@@ -167,9 +280,12 @@ class ChatController extends ChangeNotifier {
 
   void _apply(ChatEvent e) {
     switch (e) {
-      case ChatReady(:final sessionId, :final model):
+      case ChatReady(:final sessionId, :final model, :final permissionMode):
         this.sessionId = sessionId;
         this.model = model;
+        if (permissionMode != null) planMode = permissionMode == 'plan';
+      case ChatModeChanged(:final mode):
+        planMode = mode == 'plan';
       case ChatUserText(:final text):
         items.add(ChatUserItem(text));
       case ChatTextDelta(:final text):
@@ -207,6 +323,29 @@ class ChatController extends ChangeNotifier {
             break;
           }
         }
+      case ChatPermissionAsk(
+        :final requestId,
+        toolName: 'AskUserQuestion',
+        :final input,
+      ):
+        items.add(
+          ChatQuestionItem(
+            requestId: requestId,
+            questions: ChatQuestion.parse(input),
+            input: input,
+          ),
+        );
+      case ChatPermissionAsk(
+        :final requestId,
+        toolName: 'ExitPlanMode',
+        :final input,
+      ):
+        items.add(
+          ChatPlanItem(
+            requestId: requestId,
+            plan: input['plan'] as String? ?? '',
+          ),
+        );
       case ChatPermissionAsk(
         :final requestId,
         :final toolName,

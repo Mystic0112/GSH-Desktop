@@ -79,15 +79,25 @@ class _FakeEngine implements ChatEngine {
   @override
   void send(String text) => sent.add(text);
   final always = <String>[];
+  final inputs = <String, Map<String, dynamic>?>{};
+  final messages = <String, String?>{};
+  final modes = <String>[];
   @override
   void answerPermission(
     String requestId, {
     required bool allow,
     bool always = false,
+    Map<String, dynamic>? input,
+    String? message,
   }) {
     answers[requestId] = allow;
+    inputs[requestId] = input;
+    messages[requestId] = message;
     if (always) this.always.add(requestId);
   }
+
+  @override
+  void setPermissionMode(String mode) => modes.add(mode);
 
   @override
   void interrupt() {}
@@ -234,7 +244,7 @@ void main() {
       final item = chat.items.whereType<ChatPermissionItem>().single;
       chat.answer(item, allow: true, always: true);
       expect(f.engine.always, ['req-1']);
-    expect(item.always, isTrue);
+      expect(item.always, isTrue);
     },
   );
 
@@ -250,4 +260,74 @@ void main() {
     await chat.send('depois');
     expect(f.resumed, 's-1');
   });
+
+  test('pergunta do agente: opções escolhidas voltam em answers', () async {
+    final f = _FakeFactory();
+    final chat = ChatController(f, cwd: '/repo');
+    await chat.send('x');
+    f.engine.emit({
+      'type': 'control_request',
+      'request_id': 'q1',
+      'request': {
+        'subtype': 'can_use_tool',
+        'tool_name': 'AskUserQuestion',
+        'input': {
+          'questions': [
+            {
+              'question': 'Qual sua cor favorita?',
+              'header': 'Cor',
+              'multiSelect': false,
+              'options': [
+                {'label': 'Azul', 'description': 'Cor azul'},
+                {'label': 'Verde', 'description': 'Cor verde'},
+              ],
+            },
+          ],
+        },
+      },
+    });
+    await Future<void>.delayed(Duration.zero);
+    final q = chat.items.whereType<ChatQuestionItem>().single;
+    expect(q.questions.single.options.map((o) => o.$1), ['Azul', 'Verde']);
+    expect(chat.waitingPermission, isTrue);
+    chat.answerQuestions(q, {'Qual sua cor favorita?': 'Verde'});
+    expect(f.engine.answers['q1'], isTrue);
+    expect(f.engine.inputs['q1']!['answers'], {
+      'Qual sua cor favorita?': 'Verde',
+    });
+    expect(f.engine.inputs['q1']!['questions'], isNotNull);
+    expect(chat.waitingPermission, isFalse);
+  });
+
+  test(
+    'plano: ajuste recusa com a mensagem; modo plano liga no início',
+    () async {
+      final f = _FakeFactory();
+      final chat = ChatController(f, cwd: '/repo')..togglePlanMode();
+      await chat.send('planeje');
+      expect(f.engine.modes, ['plan']);
+      f.engine.emit({
+        'type': 'control_request',
+        'request_id': 'p1',
+        'request': {
+          'subtype': 'can_use_tool',
+          'tool_name': 'ExitPlanMode',
+          'input': {'plan': '# Plano'},
+        },
+      });
+      await Future<void>.delayed(Duration.zero);
+      final plan = chat.items.whereType<ChatPlanItem>().single;
+      expect(plan.plan, '# Plano');
+      chat.refinePlan(plan, 'use final.txt');
+      expect(f.engine.answers['p1'], isFalse);
+      expect(f.engine.messages['p1'], 'use final.txt');
+      f.engine.emit({
+        'type': 'system',
+        'subtype': 'status',
+        'permissionMode': 'default',
+      });
+      await Future<void>.delayed(Duration.zero);
+      expect(chat.planMode, isFalse);
+    },
+  );
 }

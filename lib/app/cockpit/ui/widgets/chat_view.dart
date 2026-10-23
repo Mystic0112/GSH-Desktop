@@ -2,6 +2,7 @@ import 'package:cockpit/app/cockpit/ui/session/chat_session.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/chat_viewmodel.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/cockpit_viewmodel.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/agent_markdown.dart';
+import 'package:cockpit/app/cockpit/ui/widgets/chat_prompt_cards.dart';
 import 'package:cockpit/app/core/ui/themes/themes.dart';
 import 'package:cockpit/i18n/strings.g.dart';
 import 'package:flutter/services.dart';
@@ -87,6 +88,8 @@ class _ChatViewState extends State<ChatView> {
           _Composer(
             controller: _input,
             busy: _chat.busy,
+            planMode: _chat.planMode,
+            onTogglePlan: _chat.togglePlanMode,
             onSend: _send,
             onStop: _chat.interrupt,
           ),
@@ -215,7 +218,11 @@ class _ItemView extends StatelessWidget {
       case final ChatToolItem tool:
         return _ToolRow(tool: tool);
       case final ChatPermissionItem ask:
-        return _PermissionCard(ask: ask, chat: chat);
+        return ChatPermissionCard(ask: ask, chat: chat);
+      case final ChatQuestionItem q:
+        return ChatQuestionCard(item: q, chat: chat);
+      case final ChatPlanItem plan:
+        return ChatPlanCard(item: plan, chat: chat);
       case ChatNoticeItem(:final kind, :final detail, :final exitCode):
         final text = switch (kind) {
           ChatNoticeKind.startFailed => tr.startFailed(detail: detail),
@@ -285,7 +292,7 @@ class _ToolRow extends StatelessWidget {
               ),
             ],
           ),
-          if (_EditDiff.of(tool.name, tool.input) case final diff?)
+          if (ChatEditDiff.of(tool.name, tool.input) case final diff?)
             Padding(
               padding: const EdgeInsets.only(left: 22, top: 6),
               child: diff,
@@ -309,165 +316,19 @@ class _ToolRow extends StatelessWidget {
   }
 }
 
-class _PermissionCard extends StatelessWidget {
-  const _PermissionCard({required this.ask, required this.chat});
-  final ChatPermissionItem ask;
-  final ChatController chat;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final tr = context.t.cockpit.chat;
-    final decided = ask.allowed;
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: colors.panel2,
-        border: Border.all(
-          color: decided == null ? colors.warn : colors.border,
-        ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            tr.askPermission(tool: ask.toolName),
-            style: context.typo.title.copyWith(color: colors.text),
-          ),
-          const SizedBox(height: 6),
-          SelectableText(
-            ask.summary,
-            style: context.typo.mono.copyWith(
-              fontSize: 12,
-              color: colors.text2,
-            ),
-          ),
-          if (_EditDiff.of(ask.toolName, ask.input) case final diff?) ...[
-            const SizedBox(height: 8),
-            diff,
-          ],
-          const SizedBox(height: 10),
-          if (decided == null)
-            Row(
-              children: [
-                PrimaryButton(
-                  onPressed: () => chat.answer(ask, allow: true),
-                  child: Text(tr.allow),
-                ),
-                const SizedBox(width: 8),
-                if (ask.alwaysRule case final rule?) ...[
-                  const SizedBox(width: 8),
-                  OutlineButton(
-                    onPressed: () =>
-                        chat.answer(ask, allow: true, always: true),
-                    child: Text(tr.allowAlways(rule: rule)),
-                  ),
-                ],
-                const SizedBox(width: 8),
-                OutlineButton(
-                  onPressed: () => chat.answer(ask, allow: false),
-                  child: Text(tr.deny),
-                ),
-              ],
-            )
-          else
-            Text(
-              !decided
-                  ? tr.denied
-                  : ask.always
-                  ? tr.allowedAlways(rule: ask.alwaysRule ?? '')
-                  : tr.allowed,
-              style: context.typo.label.copyWith(
-                color: decided ? colors.online : colors.error,
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-/// O que um Edit/MultiEdit/Write muda, em linhas `-`/`+`. `null` para
-/// ferramentas que não editam arquivo.
-class _EditDiff extends StatelessWidget {
-  const _EditDiff(this.hunks);
-
-  /// Pares (antes, depois); `antes` vazio = arquivo novo/sobrescrito.
-  final List<(String, String)> hunks;
-
-  static const _maxLines = 40;
-
-  static Widget? of(String tool, Map<String, dynamic> input) {
-    String str(Object? v) => v is String ? v : '';
-    final hunks = switch (tool) {
-      'Edit' => [(str(input['old_string']), str(input['new_string']))],
-      'MultiEdit' => [
-        for (final e in (input['edits'] as List? ?? const []).whereType<Map>())
-          (str(e['old_string']), str(e['new_string'])),
-      ],
-      'Write' => [('', str(input['content']))],
-      _ => const <(String, String)>[],
-    };
-    return hunks.isEmpty ? null : _EditDiff(hunks);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final style = context.typo.mono.copyWith(fontSize: 11.5, height: 1.4);
-    final lines = <(String, Color?, Color)>[];
-    for (final (before, after) in hunks) {
-      if (lines.isNotEmpty) lines.add(('⋯', null, colors.text4));
-      for (final l in before.isEmpty ? const <String>[] : before.split('\n')) {
-        lines.add(('- $l', colors.error.withValues(alpha: 0.12), colors.text2));
-      }
-      for (final l in after.split('\n')) {
-        lines.add(('+ $l', colors.online.withValues(alpha: 0.12), colors.text));
-      }
-    }
-    final shown = lines.take(_maxLines).toList();
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: colors.panel,
-        border: Border.all(color: colors.border),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (final (text, bg, fg) in shown)
-            Container(
-              color: bg,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text(text, style: style.copyWith(color: fg)),
-            ),
-          if (lines.length > shown.length)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              child: Text(
-                context.t.cockpit.chat.moreLines(
-                  n: lines.length - shown.length,
-                ),
-                style: style.copyWith(color: colors.text3),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
 class _Composer extends StatelessWidget {
   const _Composer({
     required this.controller,
     required this.busy,
+    required this.planMode,
+    required this.onTogglePlan,
     required this.onSend,
     required this.onStop,
   });
   final TextEditingController controller;
   final bool busy;
+  final bool planMode;
+  final VoidCallback onTogglePlan;
   final VoidCallback onSend;
   final VoidCallback onStop;
 
@@ -502,6 +363,13 @@ class _Composer extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(width: 8),
+          // Modo plano: o agente investiga e apresenta um plano antes de
+          // mexer em qualquer coisa.
+          if (planMode)
+            PrimaryButton(onPressed: onTogglePlan, child: Text(tr.planMode))
+          else
+            GhostButton(onPressed: onTogglePlan, child: Text(tr.planMode)),
           const SizedBox(width: 8),
           if (busy)
             OutlineButton(onPressed: onStop, child: Text(tr.stop))

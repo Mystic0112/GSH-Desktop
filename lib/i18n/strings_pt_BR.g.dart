@@ -1350,6 +1350,18 @@ class _Translations$cockpit$chat$pt_BR extends Translations$cockpit$chat$en {
 	@override String allowAlways({required Object rule}) => 'Sempre permitir ${rule}';
 	@override String allowedAlways({required Object rule}) => 'Sempre permitido: ${rule}';
 	@override String moreLines({required Object n}) => '… mais ${n} linhas';
+	@override String get questionTitle => 'O agente está perguntando';
+	@override String get other => 'Outro…';
+	@override String get answer => 'Responder';
+	@override String get planTitle => 'Plano do agente';
+	@override String get planApprove => 'Aprovar e executar';
+	@override String get planRefine => 'Continuar planejando';
+	@override String get planRefineHint => 'O que mudar no plano?';
+	@override String get planSendRefine => 'Enviar ajuste';
+	@override String get planApproved => 'Plano aprovado';
+	@override String get planRefined => 'Pediu para continuar planejando';
+	@override String planRefinedWith({required Object text}) => 'Ajuste: ${text}';
+	@override String get planMode => 'Planejar';
 }
 
 // Path: cockpit.farm
@@ -2869,6 +2881,18 @@ extension on TranslationsPtBr {
 			'cockpit.chat.allowAlways' => ({required Object rule}) => 'Sempre permitir ${rule}',
 			'cockpit.chat.allowedAlways' => ({required Object rule}) => 'Sempre permitido: ${rule}',
 			'cockpit.chat.moreLines' => ({required Object n}) => '… mais ${n} linhas',
+			'cockpit.chat.questionTitle' => 'O agente está perguntando',
+			'cockpit.chat.other' => 'Outro…',
+			'cockpit.chat.answer' => 'Responder',
+			'cockpit.chat.planTitle' => 'Plano do agente',
+			'cockpit.chat.planApprove' => 'Aprovar e executar',
+			'cockpit.chat.planRefine' => 'Continuar planejando',
+			'cockpit.chat.planRefineHint' => 'O que mudar no plano?',
+			'cockpit.chat.planSendRefine' => 'Enviar ajuste',
+			'cockpit.chat.planApproved' => 'Plano aprovado',
+			'cockpit.chat.planRefined' => 'Pediu para continuar planejando',
+			'cockpit.chat.planRefinedWith' => ({required Object text}) => 'Ajuste: ${text}',
+			'cockpit.chat.planMode' => 'Planejar',
 			'cockpit.farm.tabTitle' => 'Fazenda',
 			'cockpit.farm.title' => 'Fazenda de agentes',
 			'cockpit.farm.emptyTitle' => 'Nenhum agente rodando',
@@ -3077,6 +3101,8 @@ extension on TranslationsPtBr {
 			'settings.page.appearance.fontPickerUse' => 'Usar',
 			'settings.page.appearance.fontPickerDefault' => 'Padrão',
 			'settings.page.appearance.fontMissing' => 'Não encontrada nesta máquina — usando o fallback.',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.appearance.sectionLayout' => 'Layout',
 			'settings.page.appearance.swapPanelsTitle' => 'Inverter panes',
 			'settings.page.appearance.swapPanelsDesc' => 'Coloca os workspaces à direita e arquivos, busca, git e banco à esquerda.',
@@ -3089,8 +3115,6 @@ extension on TranslationsPtBr {
 			'settings.page.notifications.granted' => 'Concedido',
 			'settings.page.notifications.requestPermission' => 'Solicitar permissão',
 			'settings.page.notifications.soundsTitle' => 'Sons',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.notifications.soundVolumeTitle' => 'Volume',
 			'settings.page.notifications.soundTurnDone' => 'Turno concluído',
 			'settings.page.notifications.soundTurnDoneDesc' => 'Um agente terminou o turno.',

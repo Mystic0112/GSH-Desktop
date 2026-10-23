@@ -7,9 +7,21 @@ sealed class ChatEvent {
 
 /// Sessão no ar (`system/init`).
 class ChatReady extends ChatEvent {
-  const ChatReady({required this.sessionId, required this.model});
+  const ChatReady({
+    required this.sessionId,
+    required this.model,
+    this.permissionMode,
+  });
   final String sessionId;
   final String model;
+  final String? permissionMode;
+}
+
+/// O modo de permissão mudou (`plan`, `default`, `acceptEdits`...): o usuário
+/// pediu, ou o agente saiu do plano ao ser aprovado.
+class ChatModeChanged extends ChatEvent {
+  const ChatModeChanged(this.mode);
+  final String mode;
 }
 
 /// Pedaço de texto do assistente chegando enquanto o modelo escreve

@@ -162,8 +162,10 @@ class ClaudeStreamEngine implements ChatEngine {
     String requestId, {
     required bool allow,
     bool always = false,
+    Map<String, dynamic>? input,
+    String? message,
   }) {
-    final (input, rule) =
+    final (asked, rule) =
         _asked.remove(requestId) ?? (const <String, dynamic>{}, null);
     _write({
       'type': 'control_response',
@@ -173,13 +175,23 @@ class ClaudeStreamEngine implements ChatEngine {
         'response': allow
             ? {
                 'behavior': 'allow',
-                'updatedInput': input,
+                'updatedInput': input ?? asked,
                 if (always && rule != null) 'updatedPermissions': [rule],
               }
-            : {'behavior': 'deny', 'message': 'Negado pelo usuário no GSH'},
+            : {
+                'behavior': 'deny',
+                'message': message ?? 'Negado pelo usuário no GSH',
+              },
       },
     });
   }
+
+  @override
+  void setPermissionMode(String mode) => _write({
+    'type': 'control_request',
+    'request_id': 'gsh-${++_seq}',
+    'request': {'subtype': 'set_permission_mode', 'mode': mode},
+  });
 
   @override
   void interrupt() => _write({
@@ -206,8 +218,12 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
         ChatReady(
           sessionId: o['session_id'] as String? ?? '',
           model: o['model'] as String? ?? '',
+          permissionMode: o['permissionMode'] as String?,
         ),
       ];
+    case 'system' when o['subtype'] == 'status':
+      final mode = o['permissionMode'];
+      return mode is String ? [ChatModeChanged(mode)] : const [];
     case 'assistant':
       final content = (o['message'] as Map?)?['content'];
       if (content is! List) return const [];

@@ -10,11 +10,19 @@ abstract interface class ChatEngine {
 
   /// Responde um [ChatPermissionAsk]. [always] grava a regra sugerida
   /// ([ChatPermissionAsk.alwaysRule]) nas permissões locais do projeto.
+  /// [input] substitui o input da ferramenta no `allow` (é como as respostas
+  /// do `AskUserQuestion` voltam); [message] explica um `deny` ao agente (é
+  /// como "continuar planejando" manda o ajuste do plano).
   void answerPermission(
     String requestId, {
     required bool allow,
     bool always = false,
+    Map<String, dynamic>? input,
+    String? message,
   });
+
+  /// Troca o modo de permissão da sessão (`plan` = só planeja).
+  void setPermissionMode(String mode);
 
   /// Interrompe o turno em andamento.
   void interrupt();

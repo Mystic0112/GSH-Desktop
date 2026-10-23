@@ -945,7 +945,19 @@
       "loadingHistory": "Loading the conversation…",
       "allowAlways": "Always allow ${rule}",
       "allowedAlways": "Always allowed: ${rule}",
-      "moreLines": "… ${n} more lines"
+      "moreLines": "… ${n} more lines",
+      "questionTitle": "The agent is asking",
+      "other": "Other…",
+      "answer": "Answer",
+      "planTitle": "Agent's plan",
+      "planApprove": "Approve and run",
+      "planRefine": "Keep planning",
+      "planRefineHint": "What should change in the plan?",
+      "planSendRefine": "Send adjustment",
+      "planApproved": "Plan approved",
+      "planRefined": "Asked to keep planning",
+      "planRefinedWith": "Adjustment: ${text}",
+      "planMode": "Plan"
     },
     "farm": {
       "tabTitle": "Farm",

@@ -945,7 +945,19 @@
       "loadingHistory": "Carregando a conversa…",
       "allowAlways": "Sempre permitir ${rule}",
       "allowedAlways": "Sempre permitido: ${rule}",
-      "moreLines": "… mais ${n} linhas"
+      "moreLines": "… mais ${n} linhas",
+      "questionTitle": "O agente está perguntando",
+      "other": "Outro…",
+      "answer": "Responder",
+      "planTitle": "Plano do agente",
+      "planApprove": "Aprovar e executar",
+      "planRefine": "Continuar planejando",
+      "planRefineHint": "O que mudar no plano?",
+      "planSendRefine": "Enviar ajuste",
+      "planApproved": "Plano aprovado",
+      "planRefined": "Pediu para continuar planejando",
+      "planRefinedWith": "Ajuste: ${text}",
+      "planMode": "Planejar"
     },
     "farm": {
       "tabTitle": "Fazenda",

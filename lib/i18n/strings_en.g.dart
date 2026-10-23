@@ -2864,6 +2864,42 @@ class Translations$cockpit$chat$en {
 
 	/// en: '… ${n} more lines'
 	String moreLines({required Object n}) => '… ${n} more lines';
+
+	/// en: 'The agent is asking'
+	String get questionTitle => 'The agent is asking';
+
+	/// en: 'Other…'
+	String get other => 'Other…';
+
+	/// en: 'Answer'
+	String get answer => 'Answer';
+
+	/// en: 'Agent's plan'
+	String get planTitle => 'Agent\'s plan';
+
+	/// en: 'Approve and run'
+	String get planApprove => 'Approve and run';
+
+	/// en: 'Keep planning'
+	String get planRefine => 'Keep planning';
+
+	/// en: 'What should change in the plan?'
+	String get planRefineHint => 'What should change in the plan?';
+
+	/// en: 'Send adjustment'
+	String get planSendRefine => 'Send adjustment';
+
+	/// en: 'Plan approved'
+	String get planApproved => 'Plan approved';
+
+	/// en: 'Asked to keep planning'
+	String get planRefined => 'Asked to keep planning';
+
+	/// en: 'Adjustment: ${text}'
+	String planRefinedWith({required Object text}) => 'Adjustment: ${text}';
+
+	/// en: 'Plan'
+	String get planMode => 'Plan';
 }
 
 // Path: cockpit.farm
@@ -5152,6 +5188,18 @@ extension on Translations {
 			'cockpit.chat.allowAlways' => ({required Object rule}) => 'Always allow ${rule}',
 			'cockpit.chat.allowedAlways' => ({required Object rule}) => 'Always allowed: ${rule}',
 			'cockpit.chat.moreLines' => ({required Object n}) => '… ${n} more lines',
+			'cockpit.chat.questionTitle' => 'The agent is asking',
+			'cockpit.chat.other' => 'Other…',
+			'cockpit.chat.answer' => 'Answer',
+			'cockpit.chat.planTitle' => 'Agent\'s plan',
+			'cockpit.chat.planApprove' => 'Approve and run',
+			'cockpit.chat.planRefine' => 'Keep planning',
+			'cockpit.chat.planRefineHint' => 'What should change in the plan?',
+			'cockpit.chat.planSendRefine' => 'Send adjustment',
+			'cockpit.chat.planApproved' => 'Plan approved',
+			'cockpit.chat.planRefined' => 'Asked to keep planning',
+			'cockpit.chat.planRefinedWith' => ({required Object text}) => 'Adjustment: ${text}',
+			'cockpit.chat.planMode' => 'Plan',
 			'cockpit.farm.tabTitle' => 'Farm',
 			'cockpit.farm.title' => 'Agent farm',
 			'cockpit.farm.emptyTitle' => 'No agents running',
@@ -5360,6 +5408,8 @@ extension on Translations {
 			'settings.page.appearance.fontPickerUse' => 'Use',
 			'settings.page.appearance.fontPickerDefault' => 'Default',
 			'settings.page.appearance.fontMissing' => 'Not found on this machine — falling back.',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.appearance.sectionLayout' => 'Layout',
 			'settings.page.appearance.swapPanelsTitle' => 'Swap side panels',
 			'settings.page.appearance.swapPanelsDesc' => 'Puts workspaces on the right and files, search, git and database on the left.',
@@ -5372,8 +5422,6 @@ extension on Translations {
 			'settings.page.notifications.granted' => 'Granted',
 			'settings.page.notifications.requestPermission' => 'Request permission',
 			'settings.page.notifications.soundsTitle' => 'Sounds',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.notifications.soundVolumeTitle' => 'Volume',
 			'settings.page.notifications.soundTurnDone' => 'Turn completed',
 			'settings.page.notifications.soundTurnDoneDesc' => 'An agent finished its turn.',
