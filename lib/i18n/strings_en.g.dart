@@ -187,6 +187,7 @@ class Translations$cockpit$en {
 	late final Translations$cockpit$layoutPreview$en layoutPreview = Translations$cockpit$layoutPreview$en.internal(_root);
 	late final Translations$cockpit$telemetry$en telemetry = Translations$cockpit$telemetry$en.internal(_root);
 	late final Translations$cockpit$panelView$en panelView = Translations$cockpit$panelView$en.internal(_root);
+	late final Translations$cockpit$farm$en farm = Translations$cockpit$farm$en.internal(_root);
 	late final Translations$cockpit$agentGraph$en agentGraph = Translations$cockpit$agentGraph$en.internal(_root);
 }
 
@@ -2136,6 +2137,9 @@ class Translations$cockpit$topbar$en {
 
 	/// en: 'Visualize agents'
 	String get visualizeAgents => 'Visualize agents';
+
+	/// en: 'Agent farm'
+	String get openFarm => 'Agent farm';
 }
 
 // Path: cockpit.tasks
@@ -2784,6 +2788,44 @@ class Translations$cockpit$panelView$en {
 
 	/// en: 'Open as HTML'
 	String get openAsHtml => 'Open as HTML';
+}
+
+// Path: cockpit.farm
+class Translations$cockpit$farm$en {
+	Translations$cockpit$farm$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Farm'
+	String get tabTitle => 'Farm';
+
+	/// en: 'Agent farm'
+	String get title => 'Agent farm';
+
+	/// en: 'No agents running'
+	String get emptyTitle => 'No agents running';
+
+	/// en: 'Every Claude Code loop on this machine shows up here while it works, including subagents and sessions outside GSH Desktop.'
+	String get emptyHint => 'Every Claude Code loop on this machine shows up here while it works, including subagents and sessions outside GSH Desktop.';
+
+	/// en: '${n} working'
+	String working({required Object n}) => '${n} working';
+
+	/// en: '${n} need you'
+	String waiting({required Object n}) => '${n} need you';
+
+	/// en: '${n} idle'
+	String idle({required Object n}) => '${n} idle';
+
+	/// en: '${n} tokens out'
+	String tokens({required Object n}) => '${n} tokens out';
+
+	/// en: '${out} tokens out · context ${ctx}'
+	String tokensDetail({required Object out, required Object ctx}) => '${out} tokens out · context ${ctx}';
+
+	late final Translations$cockpit$farm$activity$en activity = Translations$cockpit$farm$activity$en.internal(_root);
 }
 
 // Path: cockpit.agentGraph
@@ -3499,6 +3541,48 @@ class Translations$cockpit$notebook$format$en {
 
 	/// en: 'Insert image…'
 	String get image => 'Insert image…';
+}
+
+// Path: cockpit.farm.activity
+class Translations$cockpit$farm$activity$en {
+	Translations$cockpit$farm$activity$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'thinking'
+	String get thinking => 'thinking';
+
+	/// en: 'reading'
+	String get reading => 'reading';
+
+	/// en: 'editing'
+	String get editing => 'editing';
+
+	/// en: 'running a command'
+	String get running => 'running a command';
+
+	/// en: 'searching the web'
+	String get searching => 'searching the web';
+
+	/// en: 'delegating'
+	String get delegating => 'delegating';
+
+	/// en: 'using a tool'
+	String get tooling => 'using a tool';
+
+	/// en: 'waiting for you'
+	String get waiting => 'waiting for you';
+
+	/// en: 'idle'
+	String get idle => 'idle';
+
+	/// en: 'asleep'
+	String get sleeping => 'asleep';
+
+	/// en: 'done'
+	String get done => 'done';
 }
 
 // Path: cockpit.agentGraph.integrationError
@@ -4746,6 +4830,7 @@ extension on Translations {
 			'cockpit.topbar.filesUnavailable' => 'Files unavailable in GSH Desktop',
 			'cockpit.topbar.hideKeyboard' => 'Hide keyboard',
 			'cockpit.topbar.visualizeAgents' => 'Visualize agents',
+			'cockpit.topbar.openFarm' => 'Agent farm',
 			'cockpit.tasks.hotReload' => 'Hot reload',
 			'cockpit.tasks.hotRestart' => 'Hot restart',
 			'cockpit.tasks.toggleDebugPaint' => 'Toggle debug paint',
@@ -4957,6 +5042,26 @@ extension on Translations {
 			'cockpit.panelView.unavailable' => 'Panels need the embedded web view, which is not available on Linux yet.',
 			'cockpit.panelView.openInBrowser' => 'Open in browser',
 			'cockpit.panelView.openAsHtml' => 'Open as HTML',
+			'cockpit.farm.tabTitle' => 'Farm',
+			'cockpit.farm.title' => 'Agent farm',
+			'cockpit.farm.emptyTitle' => 'No agents running',
+			'cockpit.farm.emptyHint' => 'Every Claude Code loop on this machine shows up here while it works, including subagents and sessions outside GSH Desktop.',
+			'cockpit.farm.working' => ({required Object n}) => '${n} working',
+			'cockpit.farm.waiting' => ({required Object n}) => '${n} need you',
+			'cockpit.farm.idle' => ({required Object n}) => '${n} idle',
+			'cockpit.farm.tokens' => ({required Object n}) => '${n} tokens out',
+			'cockpit.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens out · context ${ctx}',
+			'cockpit.farm.activity.thinking' => 'thinking',
+			'cockpit.farm.activity.reading' => 'reading',
+			'cockpit.farm.activity.editing' => 'editing',
+			'cockpit.farm.activity.running' => 'running a command',
+			'cockpit.farm.activity.searching' => 'searching the web',
+			'cockpit.farm.activity.delegating' => 'delegating',
+			'cockpit.farm.activity.tooling' => 'using a tool',
+			'cockpit.farm.activity.waiting' => 'waiting for you',
+			'cockpit.farm.activity.idle' => 'idle',
+			'cockpit.farm.activity.sleeping' => 'asleep',
+			'cockpit.farm.activity.done' => 'done',
 			'cockpit.agentGraph.tabTitle' => 'Agents',
 			'cockpit.agentGraph.newAgent' => 'New agent',
 			'cockpit.agentGraph.emptyTitle' => 'No agents in this workspace',
@@ -5179,6 +5284,8 @@ extension on Translations {
 			'settings.page.languages.statusNotFound' => 'Server not found or command invalid',
 			'settings.page.automations.sectionCommitMessages' => 'Commit messages',
 			'settings.page.automations.harness' => 'Harness',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.automations.harnessDiscovering' => 'Looking for installed command-line harnesses…',
 			'settings.page.automations.harnessNoneFound' => 'No supported harness was found on PATH.',
 			'settings.page.automations.harnessConfiguredUnavailable' => ({required Object harness}) => '${harness} is configured but unavailable.',
@@ -5200,8 +5307,6 @@ extension on Translations {
 			'settings.page.automations.recommendedSuffix' => 'Recommended',
 			'settings.remoteHosts.title' => 'Remote hosts',
 			'settings.remoteHosts.description' => 'Machines you reach over SSH. Adding a host here is the same as adding one from the workspace "+" menu.',
-			_ => null,
-		} ?? switch (path) {
 			'settings.remoteHosts.empty' => 'No remote hosts yet.',
 			'settings.remoteHosts.add' => 'Add host',
 			'settings.remoteHosts.edit' => 'Edit',

@@ -139,6 +139,7 @@ class _Translations$cockpit$es extends Translations$cockpit$en {
 	@override late final _Translations$cockpit$layoutPreview$es layoutPreview = _Translations$cockpit$layoutPreview$es._(_root);
 	@override late final _Translations$cockpit$telemetry$es telemetry = _Translations$cockpit$telemetry$es._(_root);
 	@override late final _Translations$cockpit$panelView$es panelView = _Translations$cockpit$panelView$es._(_root);
+	@override late final _Translations$cockpit$farm$es farm = _Translations$cockpit$farm$es._(_root);
 	@override late final _Translations$cockpit$agentGraph$es agentGraph = _Translations$cockpit$agentGraph$es._(_root);
 }
 
@@ -1022,6 +1023,7 @@ class _Translations$cockpit$topbar$es extends Translations$cockpit$topbar$en {
 	@override String get filesUnavailable => 'Archivos no disponibles en GSH Desktop';
 	@override String get hideKeyboard => 'Ocultar teclado';
 	@override String get visualizeAgents => 'Visualizar agentes';
+	@override String get openFarm => 'Granja de agentes';
 }
 
 // Path: cockpit.tasks
@@ -1316,6 +1318,25 @@ class _Translations$cockpit$panelView$es extends Translations$cockpit$panelView$
 	@override String get unavailable => 'Los paneles necesitan la web view integrada, que todavía no existe en Linux.';
 	@override String get openInBrowser => 'Abrir en el navegador';
 	@override String get openAsHtml => 'Abrir como HTML';
+}
+
+// Path: cockpit.farm
+class _Translations$cockpit$farm$es extends Translations$cockpit$farm$en {
+	_Translations$cockpit$farm$es._(TranslationsEs root) : this._root = root, super.internal(root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get tabTitle => 'Granja';
+	@override String get title => 'Granja de agentes';
+	@override String get emptyTitle => 'Ningún agente en ejecución';
+	@override String get emptyHint => 'Cada loop de Claude Code en esta máquina aparece aquí mientras trabaja, incluidos subagentes y sesiones fuera de GSH Desktop.';
+	@override String working({required Object n}) => '${n} trabajando';
+	@override String waiting({required Object n}) => '${n} te necesitan';
+	@override String idle({required Object n}) => '${n} inactivos';
+	@override String tokens({required Object n}) => '${n} tokens generados';
+	@override String tokensDetail({required Object out, required Object ctx}) => '${out} tokens generados · contexto ${ctx}';
+	@override late final _Translations$cockpit$farm$activity$es activity = _Translations$cockpit$farm$activity$es._(_root);
 }
 
 // Path: cockpit.agentGraph
@@ -1676,6 +1697,26 @@ class _Translations$cockpit$notebook$format$es extends Translations$cockpit$note
 	@override String get noteLink => 'Enlace a una nota ([[…]])';
 	@override String get noteLinkSearch => 'Buscar notas';
 	@override String get image => 'Insertar imagen…';
+}
+
+// Path: cockpit.farm.activity
+class _Translations$cockpit$farm$activity$es extends Translations$cockpit$farm$activity$en {
+	_Translations$cockpit$farm$activity$es._(TranslationsEs root) : this._root = root, super.internal(root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get thinking => 'pensando';
+	@override String get reading => 'leyendo';
+	@override String get editing => 'editando';
+	@override String get running => 'ejecutando comando';
+	@override String get searching => 'buscando en la web';
+	@override String get delegating => 'delegando';
+	@override String get tooling => 'usando herramienta';
+	@override String get waiting => 'esperándote';
+	@override String get idle => 'inactivo';
+	@override String get sleeping => 'dormido';
+	@override String get done => 'terminado';
 }
 
 // Path: cockpit.agentGraph.integrationError
@@ -2558,6 +2599,7 @@ extension on TranslationsEs {
 			'cockpit.topbar.filesUnavailable' => 'Archivos no disponibles en GSH Desktop',
 			'cockpit.topbar.hideKeyboard' => 'Ocultar teclado',
 			'cockpit.topbar.visualizeAgents' => 'Visualizar agentes',
+			'cockpit.topbar.openFarm' => 'Granja de agentes',
 			'cockpit.tasks.hotReload' => 'Hot reload',
 			'cockpit.tasks.hotRestart' => 'Hot restart',
 			'cockpit.tasks.toggleDebugPaint' => 'Alternar debug paint',
@@ -2769,6 +2811,26 @@ extension on TranslationsEs {
 			'cockpit.panelView.unavailable' => 'Los paneles necesitan la web view integrada, que todavía no existe en Linux.',
 			'cockpit.panelView.openInBrowser' => 'Abrir en el navegador',
 			'cockpit.panelView.openAsHtml' => 'Abrir como HTML',
+			'cockpit.farm.tabTitle' => 'Granja',
+			'cockpit.farm.title' => 'Granja de agentes',
+			'cockpit.farm.emptyTitle' => 'Ningún agente en ejecución',
+			'cockpit.farm.emptyHint' => 'Cada loop de Claude Code en esta máquina aparece aquí mientras trabaja, incluidos subagentes y sesiones fuera de GSH Desktop.',
+			'cockpit.farm.working' => ({required Object n}) => '${n} trabajando',
+			'cockpit.farm.waiting' => ({required Object n}) => '${n} te necesitan',
+			'cockpit.farm.idle' => ({required Object n}) => '${n} inactivos',
+			'cockpit.farm.tokens' => ({required Object n}) => '${n} tokens generados',
+			'cockpit.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens generados · contexto ${ctx}',
+			'cockpit.farm.activity.thinking' => 'pensando',
+			'cockpit.farm.activity.reading' => 'leyendo',
+			'cockpit.farm.activity.editing' => 'editando',
+			'cockpit.farm.activity.running' => 'ejecutando comando',
+			'cockpit.farm.activity.searching' => 'buscando en la web',
+			'cockpit.farm.activity.delegating' => 'delegando',
+			'cockpit.farm.activity.tooling' => 'usando herramienta',
+			'cockpit.farm.activity.waiting' => 'esperándote',
+			'cockpit.farm.activity.idle' => 'inactivo',
+			'cockpit.farm.activity.sleeping' => 'dormido',
+			'cockpit.farm.activity.done' => 'terminado',
 			'cockpit.agentGraph.tabTitle' => 'Agentes',
 			'cockpit.agentGraph.newAgent' => 'Nuevo agente',
 			'cockpit.agentGraph.emptyTitle' => 'No hay agentes en este workspace',
@@ -2991,6 +3053,8 @@ extension on TranslationsEs {
 			'settings.page.languages.statusNotFound' => 'Servidor no encontrado o comando inválido',
 			'settings.page.automations.sectionCommitMessages' => 'Mensajes de commit',
 			'settings.page.automations.harness' => 'Harness',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.automations.harnessDiscovering' => 'Buscando harnesses de línea de comandos instalados…',
 			'settings.page.automations.harnessNoneFound' => 'No se encontró ningún harness compatible en el PATH.',
 			'settings.page.automations.harnessConfiguredUnavailable' => ({required Object harness}) => '${harness} está configurado, pero no disponible.',
@@ -3012,8 +3076,6 @@ extension on TranslationsEs {
 			'settings.page.automations.recommendedSuffix' => 'Recomendado',
 			'settings.remoteHosts.title' => 'Hosts remotos',
 			'settings.remoteHosts.description' => 'Máquinas a las que accedes por SSH. Añadir un host aquí es lo mismo que hacerlo desde el menú "+" del workspace.',
-			_ => null,
-		} ?? switch (path) {
 			'settings.remoteHosts.empty' => 'Aún no hay hosts remotos.',
 			'settings.remoteHosts.add' => 'Añadir host',
 			'settings.remoteHosts.edit' => 'Editar',

@@ -112,6 +112,7 @@ import 'package:cockpit/app/cockpit/ui/session/terminal_session.dart';
 import 'package:cockpit/app/cockpit/ui/states/pane_node.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/agent_file_activity.dart';
 import 'package:cockpit/app/cockpit/ui/session/agent_graph_session.dart';
+import 'package:cockpit/app/cockpit/ui/session/farm_session.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/agent_graph_store.dart';
 import 'package:cockpit/app/cockpit/domain/contracts/desktop_agent_apps.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/agent_message_log.dart';
@@ -1980,6 +1981,17 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
             ),
           )
           as AgentGraphSession?;
+
+  /// Abre (ou foca) a aba da fazenda de agentes. Uma por workspace; o
+  /// conteúdo é o mesmo em todas (todos os loops da máquina).
+  FarmSession? openFarm({String? projectId}) =>
+      _openBrowserTab(
+            projectId,
+            matches: (s) => s is FarmSession,
+            make: (id, pid, path) =>
+                FarmSession(id: id, projectId: pid, workingDirectory: path),
+          )
+          as FarmSession?;
 
   /// Texto de um arquivo (local ou host remoto) pra widgets que leem vários
   /// arquivos de uma pasta (caderno). `null` = binário/ilegível.
@@ -6573,6 +6585,13 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
           workingDirectory: project.path,
         );
         return true;
+      case 'farm':
+        _sessions[id] = FarmSession(
+          id: id,
+          projectId: project.id,
+          workingDirectory: project.path,
+        );
+        return true;
       case 'browser':
         _sessions[id] = BrowserSession(
           id: id,
@@ -6876,6 +6895,7 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
       return <String, dynamic>{'type': 'notebook', 'path': s.path};
     }
     if (s is AgentGraphSession) return <String, dynamic>{'type': 'agent_graph'};
+    if (s is FarmSession) return <String, dynamic>{'type': 'farm'};
     if (s is MongoBrowserSession) {
       return <String, dynamic>{
         'type': 'mongo',

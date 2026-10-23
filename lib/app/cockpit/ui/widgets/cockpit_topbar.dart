@@ -25,6 +25,7 @@ class CockpitTopbar extends StatelessWidget {
     required this.onToggleTree,
     this.filesEnabled = true,
     this.onVisualizeAgents,
+    this.onOpenFarm,
   });
 
   final String projectName;
@@ -40,6 +41,9 @@ class CockpitTopbar extends StatelessWidget {
   /// Abre/foca o grafo de agentes do workspace. `null` = botão oculto (sem
   /// workspace selecionado).
   final VoidCallback? onVisualizeAgents;
+
+  /// Abre/foca a fazenda de agentes. `null` = botão oculto.
+  final VoidCallback? onOpenFarm;
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +80,14 @@ class CockpitTopbar extends StatelessWidget {
           style: context.typo.title.copyWith(fontSize: 14, color: colors.text),
         ),
         const Spacer(),
+        if (onOpenFarm case final onTap?) ...[
+          _IconBtn(
+            icon: Icons.grass_outlined,
+            tooltip: context.t.cockpit.topbar.openFarm,
+            onTap: onTap,
+          ),
+          const SizedBox(width: 4),
+        ],
         if (onVisualizeAgents case final onTap?) ...[
           _IconBtn(
             icon: Icons.hub_outlined,

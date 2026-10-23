@@ -7,6 +7,7 @@ import 'package:cockpit/app/cockpit/domain/entities/db_connection.dart';
 import 'package:cockpit/app/cockpit/ui/actions/tab_actions.dart';
 import 'package:cockpit/app/cockpit/ui/document/document_windows.dart';
 import 'package:cockpit/app/cockpit/ui/session/agent_graph_session.dart';
+import 'package:cockpit/app/cockpit/ui/session/farm_session.dart';
 import 'package:cockpit/app/cockpit/ui/session/browser_session.dart';
 import 'package:cockpit/app/cockpit/ui/session/diff_viewer_session.dart';
 import 'package:cockpit/app/cockpit/ui/session/empty_tab.dart';
@@ -25,6 +26,7 @@ import 'package:cockpit/app/cockpit/ui/viewmodels/cockpit_viewmodel.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/active_listenable_builder.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/adaptive_terminal_pane.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/agent_graph_view.dart';
+import 'package:cockpit/app/cockpit/ui/widgets/farm_view.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/browser_pane.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/confirm_dialog.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/db_engine_icon.dart';
@@ -216,6 +218,7 @@ IconData _tabIcon(PaneItem? item) {
   if (item is MongoBrowserSession) return Icons.data_object_outlined;
   if (item is NotebookSession) return Icons.menu_book_outlined;
   if (item is AgentGraphSession) return Icons.hub_outlined;
+  if (item is FarmSession) return Icons.grass_outlined;
   if (item is EmptyTab) return Icons.edit_outlined;
   return Icons.auto_awesome;
 }
@@ -1695,6 +1698,9 @@ class _PaneBodyState extends State<_PaneBody> {
     if (item is AgentGraphSession) {
       return AgentGraphView(session: item);
     }
+
+    // Fazenda: todos os loops de agente da máquina.
+    if (item is FarmSession) return const FarmView();
 
     // Caderno `.notebook` (plano 62, passo 4): lista de notas | nota | tags.
     if (item is NotebookSession) {

@@ -665,7 +665,8 @@
       "toggleFiles": "Show/hide files",
       "filesUnavailable": "Files unavailable in GSH Desktop",
       "hideKeyboard": "Hide keyboard",
-      "visualizeAgents": "Visualize agents"
+      "visualizeAgents": "Visualize agents",
+      "openFarm": "Agent farm"
     },
     "tasks": {
       "hotReload": "Hot reload",
@@ -921,6 +922,30 @@
       "unavailable": "Panels need the embedded web view, which is not available on Linux yet.",
       "openInBrowser": "Open in browser",
       "openAsHtml": "Open as HTML"
+    },
+    "farm": {
+      "tabTitle": "Farm",
+      "title": "Agent farm",
+      "emptyTitle": "No agents running",
+      "emptyHint": "Every Claude Code loop on this machine shows up here while it works, including subagents and sessions outside GSH Desktop.",
+      "working": "${n} working",
+      "waiting": "${n} need you",
+      "idle": "${n} idle",
+      "tokens": "${n} tokens out",
+      "tokensDetail": "${out} tokens out · context ${ctx}",
+      "activity": {
+        "thinking": "thinking",
+        "reading": "reading",
+        "editing": "editing",
+        "running": "running a command",
+        "searching": "searching the web",
+        "delegating": "delegating",
+        "tooling": "using a tool",
+        "waiting": "waiting for you",
+        "idle": "idle",
+        "sleeping": "asleep",
+        "done": "done"
+      }
     },
     "agentGraph": {
       "tabTitle": "Agents",

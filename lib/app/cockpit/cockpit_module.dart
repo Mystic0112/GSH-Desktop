@@ -37,6 +37,9 @@ import 'package:cockpit/app/cockpit/data/repositories/json_realm_repository.dart
 import 'package:cockpit/app/cockpit/data/repositories/json_workspace_layout_store.dart';
 import 'package:cockpit/app/cockpit/data/repositories/project_schema_migrator.dart';
 import 'package:cockpit/app/cockpit/data/hooks/terminal_status_server_impl.dart';
+import 'package:cockpit/app/cockpit/data/farm/claude_transcript_farm_source.dart';
+import 'package:cockpit/app/cockpit/domain/contracts/farm_source.dart';
+import 'package:cockpit/app/cockpit/ui/viewmodels/farm_viewmodel.dart';
 import 'package:cockpit/app/cockpit/data/tasks/pty_task_runner.dart';
 import 'package:cockpit/app/cockpit/data/telemetry/line_parser/telemetry_line_parser_impl.dart';
 import 'package:cockpit/app/cockpit/data/telemetry/telemetry_ingest_impl.dart';
@@ -254,6 +257,8 @@ Future<Module> buildCockpitModule({
               CockpitTerminalHarnessMonitor(provider, windowActivity),
         )
         ..addLazySingleton<TerminalStatusServer>(TerminalStatusServerImpl.new)
+        // Fazenda: loops de agente lidos dos transcripts do Claude Code.
+        ..addInstance<FarmSource>(ClaudeTranscriptFarmSource())
         // Telemetria (plano 66): um store por workspace no cache local, parser
         // único compartilhado por task/wrapper, ingest resolve pelo cwd.
         ..addInstance<TelemetryStoreProvider>(TelemetryStoreRegistry())
@@ -313,7 +318,8 @@ Future<Module> buildCockpitModule({
             ..addChangeNotifier<UpdateViewModel>(UpdateViewModel.new)
             ..addChangeNotifier<DatabaseViewModel>(DatabaseViewModel.new)
             ..addChangeNotifier<TelemetryViewModel>(TelemetryViewModel.new)
-            ..addChangeNotifier<HttpViewModel>(HttpViewModel.new),
+            ..addChangeNotifier<HttpViewModel>(HttpViewModel.new)
+            ..addChangeNotifier<FarmViewModel>(FarmViewModel.new),
           child: (context, state) => const CockpitPage(),
         );
     },

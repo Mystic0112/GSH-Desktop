@@ -665,7 +665,8 @@
       "toggleFiles": "Mostrar/ocultar archivos",
       "filesUnavailable": "Archivos no disponibles en GSH Desktop",
       "hideKeyboard": "Ocultar teclado",
-      "visualizeAgents": "Visualizar agentes"
+      "visualizeAgents": "Visualizar agentes",
+      "openFarm": "Granja de agentes"
     },
     "tasks": {
       "hotReload": "Hot reload",
@@ -921,6 +922,30 @@
       "unavailable": "Los paneles necesitan la web view integrada, que todavía no existe en Linux.",
       "openInBrowser": "Abrir en el navegador",
       "openAsHtml": "Abrir como HTML"
+    },
+    "farm": {
+      "tabTitle": "Granja",
+      "title": "Granja de agentes",
+      "emptyTitle": "Ningún agente en ejecución",
+      "emptyHint": "Cada loop de Claude Code en esta máquina aparece aquí mientras trabaja, incluidos subagentes y sesiones fuera de GSH Desktop.",
+      "working": "${n} trabajando",
+      "waiting": "${n} te necesitan",
+      "idle": "${n} inactivos",
+      "tokens": "${n} tokens generados",
+      "tokensDetail": "${out} tokens generados · contexto ${ctx}",
+      "activity": {
+        "thinking": "pensando",
+        "reading": "leyendo",
+        "editing": "editando",
+        "running": "ejecutando comando",
+        "searching": "buscando en la web",
+        "delegating": "delegando",
+        "tooling": "usando herramienta",
+        "waiting": "esperándote",
+        "idle": "inactivo",
+        "sleeping": "dormido",
+        "done": "terminado"
+      }
     },
     "agentGraph": {
       "tabTitle": "Agentes",

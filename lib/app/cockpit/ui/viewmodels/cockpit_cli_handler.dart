@@ -31,6 +31,7 @@ import 'package:cockpit/app/core/utils/path_utils.dart';
 import 'package:cockpit/app/core/utils/shell_command.dart';
 import 'package:cockpit/app/cockpit/ui/document/document_windows.dart';
 import 'package:cockpit/app/cockpit/ui/session/agent_graph_session.dart';
+import 'package:cockpit/app/cockpit/ui/session/farm_session.dart';
 import 'package:cockpit/app/cockpit/ui/session/empty_tab.dart';
 import 'package:cockpit/app/cockpit/ui/session/external_agent.dart';
 import 'package:cockpit/app/cockpit/ui/session/browser_session.dart';
@@ -1816,6 +1817,7 @@ class CockpitCliHandler {
     if (s is MongoBrowserSession) return 'mongo';
     if (s is NotebookSession) return 'notebook';
     if (s is AgentGraphSession) return 'agents';
+    if (s is FarmSession) return 'farm';
     return 'other';
   }
 
