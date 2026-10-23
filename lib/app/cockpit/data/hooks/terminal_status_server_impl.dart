@@ -1,0 +1,268 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
+
+import 'package:cockpit/app/cockpit/domain/contracts/terminal_status_server.dart';
+import 'package:cockpit/app/core/data/diagnostics/diagnostics_log.dart';
+import 'package:cockpit/app/core/data/setup/remote_pi_resolver.dart';
+import 'package:flutter/foundation.dart';
+
+/// [TerminalStatusServer] híbrido por plataforma:
+/// - **POSIX**: socket Unix em `~/.cockpit/status[-debug].sock` (permissão do
+///   arquivo já protege contra outros usuários).
+/// - **Windows**: TCP loopback `127.0.0.1:<porta-efêmera>` + **token**
+///   (loopback é acessível por qualquer processo local; o token valida a
+///   origem). O Dart não suporta socket Unix no Windows.
+///
+/// Cada conexão do `cockpit-hook` manda **uma linha JSON** (`{paneId, st, sid,
+/// tx, tok?}`) e fecha.
+class TerminalStatusServerImpl implements TerminalStatusServer {
+  TerminalStatusServerImpl();
+
+  ServerSocket? _server;
+  void Function(ClaudeStatusUpdate update)? _onUpdate;
+  Future<CockpitCommandResult> Function(CockpitCommand command)? _onCommand;
+  String? _token; // só no Windows/TCP
+
+  String get _socketPath {
+    final home = remotePiHome() ?? Directory.systemTemp.path;
+    // Namespaceado por debug/release: um Cockpit de dev (`flutter run`) e um de
+    // produção rodam lado a lado, mas `~/.cockpit/` é o HOME real (não é isolado
+    // por bundle id como o Hive). Sem o sufixo, ambos disputam o MESMO
+    // `status.sock` — e o `start()` DELETA o do outro e faz bind por cima,
+    // roubando o roteamento: os hooks do app deslocado passam a reportar pro
+    // socket errado e o spinner daquele app fica preso até reiniciar. O env
+    // `COCKPIT_STATUS_SOCK` injetado carrega o path certo, e hook/CLI só leem do
+    // env, então basta variar aqui.
+    final suffix = kDebugMode ? '-debug' : '';
+    return '$home/.cockpit/status$suffix.sock';
+  }
+
+  @override
+  Map<String, String> get hookEnv {
+    final server = _server;
+    if (server == null) return const <String, String>{};
+    if (Platform.isWindows) {
+      final env = <String, String>{'COCKPIT_STATUS_PORT': '${server.port}'};
+      final token = _token;
+      if (token != null) env['COCKPIT_STATUS_TOKEN'] = token;
+      return env;
+    }
+    return <String, String>{'COCKPIT_STATUS_SOCK': _socketPath};
+  }
+
+  @override
+  Future<void> start(
+    void Function(ClaudeStatusUpdate update) onUpdate, {
+    Future<CockpitCommandResult> Function(CockpitCommand command)? onCommand,
+  }) async {
+    // Mobile (iPad/Android): o status-server é o socket do cockpit-hook do
+    // desktop (som/chime de fim de turno via Claude Code local). No mobile não
+    // há hook local — e o path do container do iOS estoura o limite de UDS.
+    // No-op; o status remoto do host virá pelo protocolo (ver plano 58/59).
+    if (Platform.isIOS || Platform.isAndroid) return;
+    if (_server != null) return;
+    _onUpdate = onUpdate;
+    _onCommand = onCommand;
+    try {
+      if (Platform.isWindows) {
+        _token = _randomToken();
+        _server = await ServerSocket.bind(InternetAddress.loopbackIPv4, 0);
+        await _writeEndpointFile();
+      } else {
+        final file = File(_socketPath);
+        await file.parent.create(recursive: true);
+        // Remove socket órfão do ciclo anterior (bind falha se já existe).
+        if (await file.exists()) await file.delete();
+        final address = InternetAddress(
+          _socketPath,
+          type: InternetAddressType.unix,
+        );
+        _server = await ServerSocket.bind(address, 0);
+      }
+      _server!.listen(_handleConnection, onError: (_) {});
+    } catch (e) {
+      if (kDebugMode) debugPrint('[status-server] bind falhou: $e');
+    }
+  }
+
+  /// Windows: anuncia `{port, tok}` em `~/.cockpit/status[-debug].json` pra
+  /// quem precisa achar o app SEM herdar o env de uma aba: o segundo processo
+  /// que o Explorer abre num duplo clique (instância única, ver
+  /// `RunningInstance`) e a CLI rodada de fora. É o equivalente do caminho bem
+  /// conhecido do socket Unix; o token continua exigido no wire.
+  String get _endpointFilePath {
+    final home = remotePiHome() ?? Directory.systemTemp.path;
+    final suffix = kDebugMode ? '-debug' : '';
+    return '$home/.cockpit/status$suffix.json';
+  }
+
+  Future<void> _writeEndpointFile() async {
+    final server = _server;
+    if (server == null) return;
+    try {
+      final file = File(_endpointFilePath);
+      await file.parent.create(recursive: true);
+      await file.writeAsString(
+        jsonEncode({'port': server.port, 'tok': _token}),
+        flush: true,
+      );
+    } catch (e) {
+      if (kDebugMode) debugPrint('[status-server] endpoint file: $e');
+    }
+  }
+
+  String _randomToken() {
+    final r = Random.secure();
+    return List<int>.generate(
+      16,
+      (_) => r.nextInt(256),
+    ).map((b) => b.toRadixString(16).padLeft(2, '0')).join();
+  }
+
+  void _handleConnection(Socket socket) {
+    // Despacha na PRIMEIRA linha (`\n`), não no fim da conexão: o `cockpit-hook`
+    // (status) fecha logo após enviar, mas a CLI (`type:"cmd"`) mantém o socket
+    // aberto esperando a resposta — esperar `onDone` deadlockaria o
+    // request/response. Status → resposta null (só destrói); comando → escreve
+    // uma linha de resposta e destrói.
+    late StreamSubscription<String> sub;
+    var handled = false;
+    sub = socket
+        .cast<List<int>>()
+        .transform(utf8.decoder)
+        .transform(const LineSplitter())
+        .listen(
+          (line) async {
+            if (handled) return;
+            handled = true;
+            await sub.cancel();
+            String? response;
+            void Function()? after;
+            try {
+              (response, after) = await _dispatch(line);
+            } catch (_) {
+              response = null;
+            }
+            if (response != null) {
+              try {
+                socket.add(utf8.encode('$response\n'));
+                await socket.flush();
+              } catch (_) {
+                /* peer sumiu: ignora */
+              }
+            }
+            socket.destroy();
+            // Efeito pós-resposta (ver `CockpitCommandResult.afterResponse`):
+            // só aqui o `close-tab` da própria aba pode matar o PTY sem levar
+            // junto o `cockpit` que esperava o `ok`.
+            after?.call();
+          },
+          onError: (_) => socket.destroy(),
+          onDone: () {
+            if (!handled) socket.destroy();
+          },
+          cancelOnError: true,
+        );
+  }
+
+  /// Processa uma linha JSON. Devolve a linha de resposta a escrever de volta
+  /// (comandos da CLI) — `null` quando não há resposta (status do hook) — e o
+  /// efeito a rodar DEPOIS de a resposta ter saído (ver
+  /// `CockpitCommandResult.afterResponse`).
+  Future<(String?, void Function()?)> _dispatch(String raw) async {
+    final line = raw.trim();
+    if (line.isEmpty) return (null, null);
+    try {
+      final decoded = jsonDecode(line);
+      if (decoded is! Map) return (null, null);
+      final isCmd = decoded['type'] == 'cmd';
+      // No Windows/TCP, exige o token (anti-spoof do loopback).
+      if (_token != null && decoded['tok'] != _token) {
+        return (
+          isCmd
+              ? jsonEncode(
+                  const CockpitCommandResult.fail('invalid token').toJson(),
+                )
+              : null,
+          null,
+        );
+      }
+      if (isCmd) return await _dispatchCommand(decoded);
+      // Caminho de status (default / `type` ausente): fire-and-forget.
+      final paneId = (decoded['paneId'] ?? '').toString();
+      final status = (decoded['st'] ?? '').toString();
+      if (paneId.isEmpty || status.isEmpty) return (null, null);
+      final sid = (decoded['sid'] ?? '').toString();
+      final tx = (decoded['tx'] ?? '').toString();
+      final ev = (decoded['ev'] ?? '').toString();
+      final hn = (decoded['hn'] ?? '').toString();
+      final files = decoded['files'];
+      _onUpdate?.call(
+        ClaudeStatusUpdate(
+          paneId: paneId,
+          status: status,
+          event: ev.isEmpty ? null : ev,
+          sessionId: sid.isEmpty ? null : sid,
+          transcriptPath: tx.isEmpty ? null : tx,
+          harness: hn.isEmpty ? null : hn,
+          files: files is List
+              ? [for (final f in files) f.toString()]
+              : const <String>[],
+        ),
+      );
+      return (null, null);
+    } on Object catch (e) {
+      // linha malformada: sem resposta (a CLI reporta timeout/erro de leitura).
+      // Leva um trecho da linha: sem ele o aviso era indiagnosticavel
+      // (caso ev_6vw da Telemetria do app).
+      final sample = line.length > 200 ? '${line.substring(0, 200)}…' : line;
+      DiagnosticsLog.instance.warn(
+        'cli-socket',
+        'malformed line: $sample',
+        error: e,
+      );
+      return (null, null);
+    }
+  }
+
+  Future<(String?, void Function()?)> _dispatchCommand(
+    Map<dynamic, dynamic> decoded,
+  ) async {
+    final handler = _onCommand;
+    if (handler == null) {
+      return (
+        jsonEncode(
+          const CockpitCommandResult.fail('commands unavailable').toJson(),
+        ),
+        null,
+      );
+    }
+    final tabRaw = (decoded['tabId'] ?? '').toString();
+    final argsRaw = decoded['args'];
+    final command = CockpitCommand(
+      cmd: (decoded['cmd'] ?? '').toString(),
+      tabId: tabRaw.isEmpty ? null : tabRaw,
+      args: argsRaw is Map
+          ? Map<String, dynamic>.from(argsRaw)
+          : const <String, dynamic>{},
+    );
+    final result = await handler(command);
+    return (jsonEncode(result.toJson()), result.afterResponse);
+  }
+
+  @override
+  Future<void> stop() async {
+    await _server?.close();
+    _server = null;
+    _onUpdate = null;
+    _token = null;
+    try {
+      final file = File(Platform.isWindows ? _endpointFilePath : _socketPath);
+      if (await file.exists()) await file.delete();
+    } on Object catch (_) {
+      // best-effort: socket/endpoint órfão é apagado no próximo start.
+    }
+  }
+}

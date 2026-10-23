@@ -1,0 +1,5274 @@
+///
+/// Generated file. Do not edit.
+///
+// coverage:ignore-file
+// ignore_for_file: type=lint, unused_import
+// dart format off
+
+part of 'strings.g.dart';
+
+// Path: <root>
+typedef TranslationsEn = Translations; // ignore: unused_element
+class Translations with BaseTranslations<AppLocale, Translations> {
+	/// Returns the current translations of the given [context].
+	///
+	/// Usage:
+	/// final t = Translations.of(context);
+	static Translations of(BuildContext context) => InheritedLocaleData.of<AppLocale, Translations>(context).translations;
+
+	/// You can call this constructor and build your own translation instance of this locale.
+	/// Constructing via the enum [AppLocale.build] is preferred.
+	Translations({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
+		: assert(overrides == null, 'Set "translation_overrides: true" in order to enable this feature.'),
+		  _meta = meta ?? TranslationMetadata(
+		    locale: AppLocale.en,
+		    overrides: overrides ?? {},
+		    cardinalResolver: cardinalResolver,
+		    ordinalResolver: ordinalResolver,
+		  ) {
+		_meta.setFlatMapFunction(_flatMapFunction);
+	}
+
+	/// Metadata for the translations of <en>.
+	final TranslationMetadata<AppLocale, Translations> _meta;
+	@override TranslationMetadata<AppLocale, Translations> get $meta => _meta;
+
+	/// Access flat map
+	dynamic operator[](String key) => _meta.getTranslation(key);
+
+	late final Translations _root = this; // ignore: unused_field
+
+	Translations $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => Translations(meta: meta ?? this.$meta);
+
+	// Translations
+	late final Translations$core$en core = Translations$core$en.internal(_root);
+	late final Translations$common$en common = Translations$common$en.internal(_root);
+	late final Translations$cockpit$en cockpit = Translations$cockpit$en.internal(_root);
+	late final Translations$settings$en settings = Translations$settings$en.internal(_root);
+	late final Translations$automation$en automation = Translations$automation$en.internal(_root);
+	late final Translations$fileOperation$en fileOperation = Translations$fileOperation$en.internal(_root);
+	late final Translations$theme$en theme = Translations$theme$en.internal(_root);
+}
+
+// Path: core
+class Translations$core$en {
+	Translations$core$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final Translations$core$bootstrapError$en bootstrapError = Translations$core$bootstrapError$en.internal(_root);
+	late final Translations$core$macosNotifications$en macosNotifications = Translations$core$macosNotifications$en.internal(_root);
+	late final Translations$core$appErrorView$en appErrorView = Translations$core$appErrorView$en.internal(_root);
+	late final Translations$core$errorReportDialog$en errorReportDialog = Translations$core$errorReportDialog$en.internal(_root);
+	late final Translations$core$windowControls$en windowControls = Translations$core$windowControls$en.internal(_root);
+	late final Translations$core$crash$en crash = Translations$core$crash$en.internal(_root);
+	late final Translations$core$menu$en menu = Translations$core$menu$en.internal(_root);
+}
+
+// Path: common
+class Translations$common$en {
+	Translations$common$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Cancel'
+	String get cancel => 'Cancel';
+
+	/// en: 'Confirm'
+	String get confirm => 'Confirm';
+
+	/// en: 'Create'
+	String get create => 'Create';
+
+	/// en: 'Got it'
+	String get gotIt => 'Got it';
+
+	/// en: 'Save'
+	String get save => 'Save';
+
+	/// en: 'Close'
+	String get close => 'Close';
+
+	/// en: 'Delete'
+	String get delete => 'Delete';
+
+	/// en: 'Done'
+	String get done => 'Done';
+
+	/// en: 'Add'
+	String get add => 'Add';
+
+	/// en: 'Test'
+	String get test => 'Test';
+
+	/// en: 'OK'
+	String get ok => 'OK';
+
+	/// en: 'Loading…'
+	String get loading => 'Loading…';
+
+	/// en: 'Checking…'
+	String get checking => 'Checking…';
+
+	/// en: 'Remove'
+	String get remove => 'Remove';
+
+	/// en: 'Restart'
+	String get restart => 'Restart';
+
+	/// en: 'Settings'
+	String get settings => 'Settings';
+
+	/// en: 'Send'
+	String get send => 'Send';
+
+	/// en: 'Open'
+	String get open => 'Open';
+
+	/// en: 'Dismiss'
+	String get dismiss => 'Dismiss';
+
+	/// en: 'Report'
+	String get report => 'Report';
+
+	/// en: 'Copy code'
+	String get copyCode => 'Copy code';
+
+	/// en: 'Search'
+	String get search => 'Search';
+
+	/// en: 'No results'
+	String get noResults => 'No results';
+}
+
+// Path: cockpit
+class Translations$cockpit$en {
+	Translations$cockpit$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final Translations$cockpit$confirmDialog$en confirmDialog = Translations$cockpit$confirmDialog$en.internal(_root);
+	late final Translations$cockpit$neovim$en neovim = Translations$cockpit$neovim$en.internal(_root);
+	late final Translations$cockpit$worktreeCreateDialog$en worktreeCreateDialog = Translations$cockpit$worktreeCreateDialog$en.internal(_root);
+	late final Translations$cockpit$commitMessageDialog$en commitMessageDialog = Translations$cockpit$commitMessageDialog$en.internal(_root);
+	late final Translations$cockpit$tasksPanel$en tasksPanel = Translations$cockpit$tasksPanel$en.internal(_root);
+	late final Translations$cockpit$cockpitPage$en cockpitPage = Translations$cockpit$cockpitPage$en.internal(_root);
+	late final Translations$cockpit$welcomeView$en welcomeView = Translations$cockpit$welcomeView$en.internal(_root);
+	late final Translations$cockpit$paneView$en paneView = Translations$cockpit$paneView$en.internal(_root);
+	late final Translations$cockpit$fileTreePanel$en fileTreePanel = Translations$cockpit$fileTreePanel$en.internal(_root);
+	late final Translations$cockpit$fileViewer$en fileViewer = Translations$cockpit$fileViewer$en.internal(_root);
+	late final Translations$cockpit$workspaceSettingsDialog$en workspaceSettingsDialog = Translations$cockpit$workspaceSettingsDialog$en.internal(_root);
+	late final Translations$cockpit$realmDialogs$en realmDialogs = Translations$cockpit$realmDialogs$en.internal(_root);
+	late final Translations$cockpit$dbRedisTable$en dbRedisTable = Translations$cockpit$dbRedisTable$en.internal(_root);
+	late final Translations$cockpit$dbQueryView$en dbQueryView = Translations$cockpit$dbQueryView$en.internal(_root);
+	late final Translations$cockpit$httpView$en httpView = Translations$cockpit$httpView$en.internal(_root);
+	late final Translations$cockpit$kanbanView$en kanbanView = Translations$cockpit$kanbanView$en.internal(_root);
+	late final Translations$cockpit$dbPanel$en dbPanel = Translations$cockpit$dbPanel$en.internal(_root);
+	late final Translations$cockpit$dbMongoView$en dbMongoView = Translations$cockpit$dbMongoView$en.internal(_root);
+	late final Translations$cockpit$dbConnectionDialog$en dbConnectionDialog = Translations$cockpit$dbConnectionDialog$en.internal(_root);
+	late final Translations$cockpit$sshPrompts$en sshPrompts = Translations$cockpit$sshPrompts$en.internal(_root);
+	late final Translations$cockpit$projectsRail$en projectsRail = Translations$cockpit$projectsRail$en.internal(_root);
+	late final Translations$cockpit$findBar$en findBar = Translations$cockpit$findBar$en.internal(_root);
+	late final Translations$cockpit$contentSearch$en contentSearch = Translations$cockpit$contentSearch$en.internal(_root);
+	late final Translations$cockpit$topbar$en topbar = Translations$cockpit$topbar$en.internal(_root);
+	late final Translations$cockpit$tasks$en tasks = Translations$cockpit$tasks$en.internal(_root);
+	late final Translations$cockpit$notifications$en notifications = Translations$cockpit$notifications$en.internal(_root);
+	late final Translations$cockpit$terminalLink$en terminalLink = Translations$cockpit$terminalLink$en.internal(_root);
+	late final Translations$cockpit$terminal$en terminal = Translations$cockpit$terminal$en.internal(_root);
+	late final Translations$cockpit$remoteHost$en remoteHost = Translations$cockpit$remoteHost$en.internal(_root);
+	late final Translations$cockpit$browserPane$en browserPane = Translations$cockpit$browserPane$en.internal(_root);
+	late final Translations$cockpit$documentWindow$en documentWindow = Translations$cockpit$documentWindow$en.internal(_root);
+	late final Translations$cockpit$gallery$en gallery = Translations$cockpit$gallery$en.internal(_root);
+	late final Translations$cockpit$notebook$en notebook = Translations$cockpit$notebook$en.internal(_root);
+	late final Translations$cockpit$layoutPreview$en layoutPreview = Translations$cockpit$layoutPreview$en.internal(_root);
+	late final Translations$cockpit$telemetry$en telemetry = Translations$cockpit$telemetry$en.internal(_root);
+	late final Translations$cockpit$panelView$en panelView = Translations$cockpit$panelView$en.internal(_root);
+	late final Translations$cockpit$agentGraph$en agentGraph = Translations$cockpit$agentGraph$en.internal(_root);
+}
+
+// Path: settings
+class Translations$settings$en {
+	Translations$settings$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final Translations$settings$language$en language = Translations$settings$language$en.internal(_root);
+	late final Translations$settings$page$en page = Translations$settings$page$en.internal(_root);
+	late final Translations$settings$remoteHosts$en remoteHosts = Translations$settings$remoteHosts$en.internal(_root);
+}
+
+// Path: automation
+class Translations$automation$en {
+	Translations$automation$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final Translations$automation$error$en error = Translations$automation$error$en.internal(_root);
+}
+
+// Path: fileOperation
+class Translations$fileOperation$en {
+	Translations$fileOperation$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final Translations$fileOperation$error$en error = Translations$fileOperation$error$en.internal(_root);
+}
+
+// Path: theme
+class Translations$theme$en {
+	Translations$theme$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final Translations$theme$error$en error = Translations$theme$error$en.internal(_root);
+}
+
+// Path: core.bootstrapError
+class Translations$core$bootstrapError$en {
+	Translations$core$bootstrapError$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Failed to initialize Cockpit'
+	String get title => 'Failed to initialize Cockpit';
+
+	/// en: 'Retry'
+	String get retry => 'Retry';
+}
+
+// Path: core.macosNotifications
+class Translations$core$macosNotifications$en {
+	Translations$core$macosNotifications$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Enable Notifications on macOS'
+	String get title => 'Enable Notifications on macOS';
+
+	/// en: 'Notifications are currently disabled in your system settings. Follow the steps below to enable them:'
+	String get intro => 'Notifications are currently disabled in your system settings. Follow the steps below to enable them:';
+
+	/// en: 'Open System Settings on your Mac.'
+	String get step1 => 'Open System Settings on your Mac.';
+
+	/// en: 'Navigate to the Notifications section in the left sidebar.'
+	String get step2 => 'Navigate to the Notifications section in the left sidebar.';
+
+	/// en: 'Find and select the Cockpit application from the list.'
+	String get step3 => 'Find and select the Cockpit application from the list.';
+
+	/// en: 'Toggle the Allow Notifications switch on.'
+	String get step4 => 'Toggle the Allow Notifications switch on.';
+
+	/// en: 'Tip: If the app does not appear in the list, close and reopen it to trigger its registration in the system.'
+	String get tip => 'Tip: If the app does not appear in the list, close and reopen it to trigger its registration in the system.';
+
+	/// en: 'Got it'
+	String get gotIt => 'Got it';
+}
+
+// Path: core.appErrorView
+class Translations$core$appErrorView$en {
+	Translations$core$appErrorView$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'This part of the app failed to render'
+	String get renderFailed => 'This part of the app failed to render';
+
+	/// en: 'Details'
+	String get details => 'Details';
+
+	/// en: 'Render error'
+	String get renderErrorTitle => 'Render error';
+}
+
+// Path: core.errorReportDialog
+class Translations$core$errorReportDialog$en {
+	Translations$core$errorReportDialog$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Something went wrong. The details below were saved to the log — you can report them so it gets fixed.'
+	String get defaultDescription => 'Something went wrong. The details below were saved to the log — you can report them so it gets fixed.';
+
+	/// en: 'Copy details'
+	String get copyDetails => 'Copy details';
+
+	/// en: 'Report issue'
+	String get reportIssue => 'Report issue';
+}
+
+// Path: core.windowControls
+class Translations$core$windowControls$en {
+	Translations$core$windowControls$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Minimize'
+	String get minimize => 'Minimize';
+
+	/// en: 'Maximize'
+	String get maximize => 'Maximize';
+
+	/// en: 'Close'
+	String get close => 'Close';
+}
+
+// Path: core.crash
+class Translations$core$crash$en {
+	Translations$core$crash$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Unexpected shutdown'
+	String get title => 'Unexpected shutdown';
+
+	/// en: 'Cockpit closed unexpectedly'
+	String get bannerTitle => 'Cockpit closed unexpectedly';
+
+	/// en: 'Report'
+	String get report => 'Report';
+
+	/// en: 'Dismiss'
+	String get dismiss => 'Dismiss';
+
+	/// en: 'The previous session (version ${version}) ended without shutting down cleanly. Want to report it? The log is included and you can review everything before sending.'
+	String crashMessage({required Object version}) => 'The previous session (version ${version}) ended without shutting down cleanly. Want to report it? The log is included and you can review everything before sending.';
+
+	/// en: 'Session started at ${startedAt} (pid ${pid}) ended without a clean shutdown.'
+	String crashError({required Object startedAt, required Object pid}) => 'Session started at ${startedAt} (pid ${pid}) ended without a clean shutdown.';
+
+	/// en: 'No error was captured — the app was terminated by the system. The log below is from that session and is the most useful part.'
+	String get crashDescription => 'No error was captured — the app was terminated by the system. The log below is from that session and is the most useful part.';
+}
+
+// Path: core.menu
+class Translations$core$menu$en {
+	Translations$core$menu$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Settings…'
+	String get settings => 'Settings…';
+
+	/// en: 'Check for Updates…'
+	String get checkForUpdates => 'Check for Updates…';
+
+	/// en: 'File'
+	String get file => 'File';
+
+	/// en: 'New Terminal'
+	String get newTerminal => 'New Terminal';
+
+	/// en: 'Open Workspace'
+	String get openWorkspace => 'Open Workspace';
+
+	/// en: 'Save'
+	String get save => 'Save';
+
+	/// en: 'Discard'
+	String get discard => 'Discard';
+
+	/// en: 'Format'
+	String get format => 'Format';
+
+	/// en: 'View'
+	String get view => 'View';
+
+	/// en: 'Toggle Workspace Panel'
+	String get toggleWorkspacePanel => 'Toggle Workspace Panel';
+
+	/// en: 'Toggle Files'
+	String get toggleFiles => 'Toggle Files';
+
+	/// en: 'Split Right'
+	String get splitRight => 'Split Right';
+
+	/// en: 'Split Down'
+	String get splitDown => 'Split Down';
+
+	/// en: 'Focus Pane'
+	String get focusPane => 'Focus Pane';
+
+	/// en: 'Left (⌘⌥←)'
+	String get focusLeft => 'Left  (⌘⌥←)';
+
+	/// en: 'Right (⌘⌥→)'
+	String get focusRight => 'Right  (⌘⌥→)';
+
+	/// en: 'Up (⌘⌥↑)'
+	String get focusUp => 'Up  (⌘⌥↑)';
+
+	/// en: 'Down (⌘⌥↓)'
+	String get focusDown => 'Down  (⌘⌥↓)';
+
+	/// en: 'Select Tab'
+	String get selectTab => 'Select Tab';
+
+	/// en: 'Tab ${n}'
+	String tabN({required Object n}) => 'Tab ${n}';
+
+	/// en: 'Last Tab'
+	String get lastTab => 'Last Tab';
+
+	/// en: 'Previous Workspace'
+	String get previousWorkspace => 'Previous Workspace';
+
+	/// en: 'Next Workspace'
+	String get nextWorkspace => 'Next Workspace';
+
+	/// en: 'Zoom In'
+	String get zoomIn => 'Zoom In';
+
+	/// en: 'Zoom Out'
+	String get zoomOut => 'Zoom Out';
+
+	/// en: 'Actual Size'
+	String get actualSize => 'Actual Size';
+
+	/// en: 'Window'
+	String get window => 'Window';
+
+	/// en: 'Quit'
+	String get quit => 'Quit';
+
+	/// en: 'Minimize'
+	String get minimize => 'Minimize';
+
+	/// en: 'Zoom'
+	String get zoom => 'Zoom';
+}
+
+// Path: cockpit.confirmDialog
+class Translations$cockpit$confirmDialog$en {
+	Translations$cockpit$confirmDialog$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Unsaved changes'
+	String get unsavedChangesTitle => 'Unsaved changes';
+
+	/// en: '“${fileName}” has unsaved changes. Save them before closing?'
+	String unsavedChangesMessage({required Object fileName}) => '“${fileName}” has unsaved changes. Save them before closing?';
+
+	/// en: 'Don't save'
+	String get dontSave => 'Don\'t save';
+
+	/// en: 'Save & close'
+	String get saveAndClose => 'Save & close';
+}
+
+// Path: cockpit.neovim
+class Translations$cockpit$neovim$en {
+	Translations$cockpit$neovim$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Neovim is not available. Opening in Cockpit instead.'
+	String get unavailable => 'Neovim is not available. Opening in Cockpit instead.';
+
+	/// en: 'Could not reach Neovim. Opening in Cockpit instead.'
+	String get openFailed => 'Could not reach Neovim. Opening in Cockpit instead.';
+
+	/// en: 'Unsaved Neovim buffers'
+	String get unsavedTitle => 'Unsaved Neovim buffers';
+
+	/// en: 'Neovim has modified buffers. Close the tab and discard those changes?'
+	String get unsavedMessage => 'Neovim has modified buffers. Close the tab and discard those changes?';
+
+	/// en: 'Close anyway'
+	String get closeAnyway => 'Close anyway';
+}
+
+// Path: cockpit.worktreeCreateDialog
+class Translations$cockpit$worktreeCreateDialog$en {
+	Translations$cockpit$worktreeCreateDialog$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Fork worktree'
+	String get forkTitle => 'Fork worktree';
+
+	/// en: 'Create worktree'
+	String get createTitle => 'Create worktree';
+
+	/// en: 'New worktree branched from ${root}.'
+	String forkSubtitle({required Object root}) => 'New worktree branched from ${root}.';
+
+	/// en: 'New feature in ${root} — new branch from the current HEAD.'
+	String createSubtitle({required Object root}) => 'New feature in ${root} — new branch from the current HEAD.';
+
+	/// en: 'feat/minha-feature'
+	String get namePlaceholder => 'feat/minha-feature';
+
+	/// en: 'No spaces in the name.'
+	String get errorWhitespace => 'No spaces in the name.';
+
+	/// en: 'Invalid character for a branch name.'
+	String get errorInvalidChar => 'Invalid character for a branch name.';
+
+	/// en: 'Invalid sequence (e.g. "..", "//", starting/ending with "/").'
+	String get errorInvalidSequence => 'Invalid sequence (e.g. "..", "//", starting/ending with "/").';
+
+	/// en: 'Reserved position (do not start with "-"/"." or end with ".lock").'
+	String get errorReserved => 'Reserved position (do not start with "-"/"." or end with ".lock").';
+
+	/// en: 'A branch with that name already exists.'
+	String get errorDuplicateBranch => 'A branch with that name already exists.';
+
+	/// en: 'A worktree with that name already exists.'
+	String get errorDuplicateWorktree => 'A worktree with that name already exists.';
+
+	/// en: 'Cannot create branch '${target}' because it conflicts with the existing branch '${existing}'.'
+	String errorBranchHierarchyConflict({required Object target, required Object existing}) => 'Cannot create branch \'${target}\' because it conflicts with the existing branch \'${existing}\'.';
+
+	/// en: 'A branch with a conflicting hierarchy already exists.'
+	String get errorBranchHierarchicalConflictGeneral => 'A branch with a conflicting hierarchy already exists.';
+
+	/// en: 'Fork'
+	String get fork => 'Fork';
+
+	/// en: 'This repository has a post-checkout hook.'
+	String get postCheckoutHint => 'This repository has a post-checkout hook.';
+
+	/// en: 'Running…'
+	String get running => 'Running…';
+
+	/// en: 'Advanced Settings'
+	String get advancedSettings => 'Advanced Settings';
+
+	/// en: 'Copy ignored files (.gitignore)'
+	String get copyIgnored => 'Copy ignored files (.gitignore)';
+
+	/// en: 'Copies files ignored by .gitignore (e.g. .env, local keys) to the new worktree.'
+	String get copyIgnoredDesc => 'Copies files ignored by .gitignore (e.g. .env, local keys) to the new worktree.';
+
+	/// en: 'Copy untracked files'
+	String get copyUntracked => 'Copy untracked files';
+
+	/// en: 'Copies new or modified files that haven't been staged yet.'
+	String get copyUntrackedDesc => 'Copies new or modified files that haven\'t been staged yet.';
+
+	/// en: 'Base branch'
+	String get baseBranch => 'Base branch';
+
+	/// en: 'The branch from which the new worktree and branch will be created.'
+	String get baseBranchDesc => 'The branch from which the new worktree and branch will be created.';
+
+	/// en: 'Fetch remote branch'
+	String get fetchRemote => 'Fetch remote branch';
+
+	/// en: 'Run git fetch to guarantee the base branch is confirmed before creating the worktree.'
+	String get fetchRemoteDesc => 'Run git fetch to guarantee the base branch is confirmed before creating the worktree.';
+
+	/// en: 'Search branch...'
+	String get searchBranch => 'Search branch...';
+
+	/// en: 'Back'
+	String get back => 'Back';
+}
+
+// Path: cockpit.commitMessageDialog
+class Translations$cockpit$commitMessageDialog$en {
+	Translations$cockpit$commitMessageDialog$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Commit'
+	String get commitTitle => 'Commit';
+
+	/// en: 'Stage and Commit'
+	String get stageAndCommitTitle => 'Stage and Commit';
+
+	/// en: 'Commit "${fileName}" only.'
+	String scopeNote({required Object fileName}) => 'Commit "${fileName}" only.';
+
+	/// en: 'fix: short summary of the change'
+	String get placeholder => 'fix: short summary of the change';
+
+	/// en: 'The first line (subject) cannot be empty.'
+	String get errorEmptySubject => 'The first line (subject) cannot be empty.';
+
+	/// en: 'Subject too short (min ${min} characters).'
+	String errorTooShort({required Object min}) => 'Subject too short (min ${min} characters).';
+
+	/// en: 'Subject too long (max ${max} characters).'
+	String errorTooLong({required Object max}) => 'Subject too long (max ${max} characters).';
+
+	/// en: 'Subject should not end with a period.'
+	String get errorTrailingPeriod => 'Subject should not end with a period.';
+
+	/// en: 'Subject contains control characters.'
+	String get errorControlChars => 'Subject contains control characters.';
+
+	/// en: 'Leave the second line blank (git subject/body separator).'
+	String get errorBlankSecondLine => 'Leave the second line blank (git subject/body separator).';
+
+	/// en: 'Generate commit message'
+	String get generate => 'Generate commit message';
+
+	/// en: 'Generate with ${harness}'
+	String generateWith({required Object harness}) => 'Generate with ${harness}';
+
+	/// en: 'Generating…'
+	String get generating => 'Generating…';
+
+	/// en: 'Cancel generation'
+	String get cancelGeneration => 'Cancel generation';
+}
+
+// Path: cockpit.tasksPanel
+class Translations$cockpit$tasksPanel$en {
+	Translations$cockpit$tasksPanel$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Reload tasks'
+	String get reloadTasksTooltip => 'Reload tasks';
+
+	/// en: 'Restart'
+	String get restartTooltip => 'Restart';
+
+	/// en: 'Stop'
+	String get stopTooltip => 'Stop';
+
+	/// en: 'Run'
+	String get runTooltip => 'Run';
+
+	/// en: '${label} (sends '${key}')'
+	String sendsKeyTooltip({required Object label, required Object key}) => '${label} (sends \'${key}\')';
+
+	/// en: 'Starting…'
+	String get startingTooltip => 'Starting…';
+
+	/// en: 'Stopping…'
+	String get stoppingTooltip => 'Stopping…';
+
+	/// en: 'Switch profile'
+	String get switchProfileTooltip => 'Switch profile';
+
+	/// en: 'More keys'
+	String get moreKeysTooltip => 'More keys';
+
+	/// en: 'TASKS'
+	String get sectionTasks => 'TASKS';
+
+	/// en: 'No tasks detected in this project.'
+	String get noTasks => 'No tasks detected in this project.';
+
+	/// en: 'Create tasks.json'
+	String get createTasksJson => 'Create tasks.json';
+
+	/// en: 'Generate Compose tasks'
+	String get generateComposeTasks => 'Generate Compose tasks';
+
+	/// en: 'Choose a Compose engine'
+	String get selectComposeEngine => 'Choose a Compose engine';
+
+	/// en: 'Docker Compose or Podman Compose was not found.'
+	String get noComposeEngine => 'Docker Compose or Podman Compose was not found.';
+
+	/// en: 'The active file is not a valid Compose file with services.'
+	String get invalidComposeFile => 'The active file is not a valid Compose file with services.';
+
+	/// en: 'tasks.json is invalid. No changes were written.'
+	String get invalidTasksJson => 'tasks.json is invalid. No changes were written.';
+
+	/// en: 'Kept non-Compose tasks with conflicting labels: ${labels}'
+	String composeConflicts({required Object labels}) => 'Kept non-Compose tasks with conflicting labels: ${labels}';
+}
+
+// Path: cockpit.cockpitPage
+class Translations$cockpit$cockpitPage$en {
+	Translations$cockpit$cockpitPage$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Choose the project folder'
+	String get chooseProjectFolderDialogTitle => 'Choose the project folder';
+
+	/// en: 'Choose the workspace folder'
+	String get chooseWorkspaceFolderDialogTitle => 'Choose the workspace folder';
+
+	/// en: 'Workspace renamed'
+	String get workspaceRenamedTitle => 'Workspace renamed';
+
+	/// en: 'The new name "${name}" will only be sent to agents after restarting the workspace or the application.'
+	String workspaceRenamedMessage({required Object name}) => 'The new name "${name}" will only be sent to agents after restarting the workspace or the application.';
+
+	/// en: 'Sync — ${label}'
+	String syncTitle({required Object label}) => 'Sync — ${label}';
+
+	/// en: 'Pull — ${label}'
+	String pullTitle({required Object label}) => 'Pull — ${label}';
+
+	/// en: 'Push — ${label}'
+	String pushTitle({required Object label}) => 'Push — ${label}';
+
+	/// en: 'Update from Parent — ${name}'
+	String updateFromParentTitle({required Object name}) => 'Update from Parent — ${name}';
+
+	/// en: 'Merge to Parent — ${name}'
+	String mergeToParentTitle({required Object name}) => 'Merge to Parent — ${name}';
+
+	/// en: 'Worktree merged and removed.'
+	String get worktreeMergedAndRemoved => 'Worktree merged and removed.';
+
+	/// en: 'Nothing was changed.'
+	String get nothingWasChanged => 'Nothing was changed.';
+
+	/// en: 'New realm'
+	String get newRealmTitle => 'New realm';
+
+	/// en: 'Close workspace'
+	String get closeWorkspaceTitle => 'Close workspace';
+
+	/// en: 'Close "${name}"? The agents in this workspace will be terminated. The folder on disk is kept.'
+	String closeWorkspaceMessage({required Object name}) => 'Close "${name}"? The agents in this workspace will be terminated. The folder on disk is kept.';
+
+	/// en: 'Close'
+	String get closeAction => 'Close';
+
+	/// en: 'Remove worktree'
+	String get removeWorktreeTitle => 'Remove worktree';
+
+	/// en: 'Remove "${name}"? The worktree folder and the branch will be deleted and the agents in this fork will be terminated.${warn}'
+	String removeWorktreeMessage({required Object name, required Object warn}) => 'Remove "${name}"? The worktree folder and the branch will be deleted and the agents in this fork will be terminated.${warn}';
+
+	/// en: ' Warning: the branch "${name}" has not been merged yet — removing it (git branch -D) discards the unmerged work.'
+	String removeWorktreeWarning({required Object name}) => '\n\nWarning: the branch "${name}" has not been merged yet — removing it (git branch -D) discards the unmerged work.';
+
+	/// en: 'Failed to remove worktree'
+	String get failedToRemoveWorktreeTitle => 'Failed to remove worktree';
+
+	/// en: 'Open layout'
+	String get openLayoutTitle => 'Open layout';
+
+	/// en: 'Replace the current layout?'
+	String get replaceLayoutTitle => 'Replace the current layout?';
+
+	/// en: '(one) {1 tab will be closed, including one with a running process.} (other) {${n} tabs will be closed, including ones with running processes.}'
+	String replaceLayoutMessage({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '1 tab will be closed, including one with a running process.',
+		other: '${n} tabs will be closed, including ones with running processes.',
+	);
+
+	/// en: 'Replace'
+	String get replaceLayoutConfirm => 'Replace';
+
+	/// en: 'Restart server'
+	String get restartServerTooltip => 'Restart server';
+
+	/// en: 'No LSP available'
+	String get noLspAvailable => 'No LSP available';
+
+	/// en: 'running'
+	String get lspRunning => 'running';
+
+	/// en: 'stopped'
+	String get lspStopped => 'stopped';
+}
+
+// Path: cockpit.welcomeView
+class Translations$cockpit$welcomeView$en {
+	Translations$cockpit$welcomeView$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Welcome to Cockpit'
+	String get title => 'Welcome to Cockpit';
+
+	/// en: 'Open a folder or connect to a remote host to start.'
+	String get subtitle => 'Open a folder or connect to a remote host to start.';
+
+	/// en: 'Create workspace'
+	String get createWorkspace => 'Create workspace';
+
+	/// en: 'Open local folder'
+	String get openLocalFolder => 'Open local folder';
+
+	/// en: 'Connect to host'
+	String get connectHost => 'Connect to host';
+
+	/// en: 'Configure host'
+	String get configureHost => 'Configure host';
+
+	/// en: 'Add workspace'
+	String get addWorkspace => 'Add workspace';
+}
+
+// Path: cockpit.paneView
+class Translations$cockpit$paneView$en {
+	Translations$cockpit$paneView$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Close pane?'
+	String get closePaneTitle => 'Close pane?';
+
+	/// en: 'This closes all ${count} tab(s) in this pane and ends the agents/terminals in it.'
+	String closePaneMessage({required Object count}) => 'This closes all ${count} tab(s) in this pane and ends the agents/terminals in it.';
+
+	/// en: 'Close'
+	String get close => 'Close';
+
+	/// en: 'Close others'
+	String get closeOtherTabs => 'Close others';
+
+	/// en: 'Close to the right'
+	String get closeTabsToTheRight => 'Close to the right';
+
+	/// en: 'Close all'
+	String get closeAllTabs => 'Close all';
+
+	/// en: 'Close tabs?'
+	String get closeTabsTitle => 'Close tabs?';
+
+	/// en: 'This closes ${count} tab(s) and ends the agents/terminals in them.'
+	String closeTabsMessage({required Object count}) => 'This closes ${count} tab(s) and ends the agents/terminals in them.';
+
+	/// en: 'All tabs'
+	String get allTabs => 'All tabs';
+
+	/// en: 'Pin tab'
+	String get pinTab => 'Pin tab';
+
+	/// en: 'Open in new window'
+	String get openInNewWindow => 'Open in new window';
+
+	/// en: 'Rename'
+	String get rename => 'Rename';
+
+	/// en: 'Open as markdown'
+	String get openAsMarkdown => 'Open as markdown';
+
+	/// en: 'Open as board'
+	String get openAsBoard => 'Open as board';
+
+	/// en: 'Reset Title'
+	String get resetTitle => 'Reset Title';
+
+	/// en: 'Copy Id'
+	String get copyId => 'Copy Id';
+
+	/// en: 'Restart'
+	String get restartTab => 'Restart';
+
+	/// en: 'New tab'
+	String get newTab => 'New tab';
+
+	/// en: 'New terminal…'
+	String get newTerminal => 'New terminal…';
+
+	/// en: 'Split right'
+	String get splitRight => 'Split right';
+
+	/// en: 'Split down'
+	String get splitDown => 'Split down';
+
+	/// en: 'Close pane'
+	String get closePane => 'Close pane';
+
+	/// en: 'Drop here to move the tab'
+	String get dropHereToMove => 'Drop here to move the tab';
+
+	/// en: 'Dock as tab'
+	String get dockAsTab => 'Dock as tab';
+
+	/// en: 'Open browser'
+	String get openBrowser => 'Open browser';
+
+	/// en: 'Open terminal'
+	String get openTerminal => 'Open terminal';
+
+	/// en: 'Open as layout'
+	String get openAsLayout => 'Open as layout';
+
+	/// en: 'Open as YAML'
+	String get openAsYaml => 'Open as YAML';
+
+	/// en: 'Open as panel'
+	String get openAsPanel => 'Open as panel';
+
+	/// en: 'Open as HTML'
+	String get openAsHtml => 'Open as HTML';
+}
+
+// Path: cockpit.fileTreePanel
+class Translations$cockpit$fileTreePanel$en {
+	Translations$cockpit$fileTreePanel$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'View Diff'
+	String get viewDiff => 'View Diff';
+
+	/// en: 'Commit'
+	String get commit => 'Commit';
+
+	/// en: 'Stage and Commit'
+	String get stageAndCommit => 'Stage and Commit';
+
+	/// en: 'Unstage'
+	String get unstage => 'Unstage';
+
+	/// en: 'Stage Changes'
+	String get stageChanges => 'Stage Changes';
+
+	/// en: 'Discard Changes'
+	String get discardChanges => 'Discard Changes';
+
+	/// en: 'Enter a commit message.'
+	String get enterCommitMessage => 'Enter a commit message.';
+
+	/// en: 'Commit is unavailable for this workspace.'
+	String get commitUnavailable => 'Commit is unavailable for this workspace.';
+
+	/// en: 'Git error'
+	String get gitErrorTitle => 'Git error';
+
+	/// en: 'Delete new file?'
+	String get deleteNewFileTitle => 'Delete new file?';
+
+	/// en: 'Discard changes?'
+	String get discardChangesTitle => 'Discard changes?';
+
+	/// en: '"${name}" is a new file and cannot be restored. Delete it?'
+	String deleteNewFileMessage({required Object name}) => '"${name}" is a new file and cannot be restored. Delete it?';
+
+	/// en: 'Discard all changes in "${name}"? Deleted files will be restored.'
+	String discardOneMessage({required Object name}) => 'Discard all changes in "${name}"? Deleted files will be restored.';
+
+	/// en: 'Discard'
+	String get discard => 'Discard';
+
+	/// en: 'Delete all new files?'
+	String get deleteAllNewFilesTitle => 'Delete all new files?';
+
+	/// en: 'All ${count} files are new and will be deleted. This cannot be undone.'
+	String allNewFilesMessage({required Object count}) => 'All ${count} files are new and will be deleted. This cannot be undone.';
+
+	/// en: 'Discard changes in ${count} tracked file(s)?${extra}'
+	String discardTrackedMessage({required Object count, required Object extra}) => 'Discard changes in ${count} tracked file(s)?${extra}';
+
+	/// en: ' ${count} new file(s) will be kept.'
+	String discardTrackedExtra({required Object count}) => ' ${count} new file(s) will be kept.';
+
+	/// en: 'Delete All'
+	String get deleteAll => 'Delete All';
+
+	/// en: 'Delete?'
+	String get deleteQuestionTitle => 'Delete?';
+
+	/// en: 'Move “${name}” to the Trash?'
+	String moveToTrash({required Object name}) => 'Move “${name}” to the Trash?';
+
+	/// en: 'Permanently delete “${name}”? This can’t be undone.'
+	String permanentlyDelete({required Object name}) => 'Permanently delete “${name}”? This can’t be undone.';
+
+	/// en: 'Could not delete'
+	String get couldNotDeleteTitle => 'Could not delete';
+
+	/// en: 'Move?'
+	String get moveQuestionTitle => 'Move?';
+
+	/// en: 'Move “${name}” to “${dest}”?'
+	String moveMessage({required Object name, required Object dest}) => 'Move “${name}” to “${dest}”?';
+
+	/// en: 'Move'
+	String get moveAction => 'Move';
+
+	/// en: 'Could not move'
+	String get couldNotMoveTitle => 'Could not move';
+
+	/// en: 'Could not paste'
+	String get couldNotPasteTitle => 'Could not paste';
+
+	/// en: 'Files'
+	String get filesTooltip => 'Files';
+
+	/// en: 'Search'
+	String get searchTooltip => 'Search';
+
+	/// en: 'Source Control'
+	String get sourceControlTooltip => 'Source Control';
+
+	/// en: 'Database'
+	String get databaseTooltip => 'Database';
+
+	/// en: 'FILES'
+	String get sectionFiles => 'FILES';
+
+	/// en: 'New file'
+	String get newFile => 'New file';
+
+	/// en: 'New folder'
+	String get newFolder => 'New folder';
+
+	/// en: 'Refresh'
+	String get refreshTooltip => 'Refresh';
+
+	/// en: 'Filter by agent'
+	String get agentFilterTooltip => 'Filter by agent';
+
+	/// en: 'All agents'
+	String get allAgents => 'All agents';
+
+	/// en: 'tracking unavailable'
+	String get trackingUnavailable => 'tracking unavailable';
+
+	/// en: 'Edited by ${label} · ${time}'
+	String editedBy({required Object label, required Object time}) => 'Edited by ${label} · ${time}';
+
+	/// en: '(inferred)'
+	String get inferredSuffix => '(inferred)';
+
+	/// en: 'No files touched by this agent yet'
+	String get noTouchedFiles => 'No files touched by this agent yet';
+
+	/// en: 'Edited by 2+ agents in the last 10 minutes'
+	String get concurrentAgentEdits => 'Edited by 2+ agents in the last 10 minutes';
+
+	/// en: 'Collapse all folders'
+	String get collapseAll => 'Collapse all folders';
+
+	/// en: 'SOURCE CONTROL'
+	String get sectionSourceControl => 'SOURCE CONTROL';
+
+	/// en: 'View as List'
+	String get viewAsList => 'View as List';
+
+	/// en: 'View as Tree'
+	String get viewAsTree => 'View as Tree';
+
+	/// en: 'No folder — open a workspace.'
+	String get noFolderMessage => 'No folder — open a workspace.';
+
+	/// en: 'Amend'
+	String get amend => 'Amend';
+
+	/// en: 'Commit Message'
+	String get commitMessagePlaceholder => 'Commit Message';
+
+	/// en: 'Amend Commit'
+	String get amendCommit => 'Amend Commit';
+
+	/// en: 'last commit'
+	String get lastCommit => 'last commit';
+
+	/// en: 'Open in Finder'
+	String get openInFinder => 'Open in Finder';
+
+	/// en: 'Open in Explorer'
+	String get openInExplorer => 'Open in Explorer';
+
+	/// en: 'Open in file manager'
+	String get openInFileManager => 'Open in file manager';
+
+	/// en: 'Open'
+	String get open => 'Open';
+
+	/// en: 'Open with'
+	String get openWith => 'Open with';
+
+	/// en: 'Open in new window'
+	String get openInNewWindow => 'Open in new window';
+
+	/// en: 'Open layout'
+	String get openLayout => 'Open layout';
+
+	/// en: 'Open as markdown'
+	String get openAsMarkdown => 'Open as markdown';
+
+	/// en: 'Show git diff'
+	String get showGitDiff => 'Show git diff';
+
+	/// en: 'Open terminal'
+	String get createTerminal => 'Open terminal';
+
+	/// en: 'Rename'
+	String get rename => 'Rename';
+
+	/// en: 'Copy'
+	String get copy => 'Copy';
+
+	/// en: 'Cut'
+	String get cut => 'Cut';
+
+	/// en: 'Paste'
+	String get paste => 'Paste';
+
+	/// en: 'Copy relative path'
+	String get copyRelativePath => 'Copy relative path';
+
+	/// en: 'Copy absolute path'
+	String get copyAbsolutePath => 'Copy absolute path';
+
+	/// en: 'Rename failed.'
+	String get renameFailed => 'Rename failed.';
+
+	/// en: 'No changes.'
+	String get noChanges => 'No changes.';
+
+	/// en: 'STAGED CHANGES (${count})'
+	String stagedChangesHeader({required Object count}) => 'STAGED CHANGES (${count})';
+
+	/// en: 'CHANGES (${count})'
+	String changesHeader({required Object count}) => 'CHANGES (${count})';
+
+	/// en: 'Discard All Changes'
+	String get discardAllChanges => 'Discard All Changes';
+
+	/// en: 'Unstage All Changes'
+	String get unstageAllChanges => 'Unstage All Changes';
+
+	/// en: 'Stage All Changes'
+	String get stageAllChanges => 'Stage All Changes';
+
+	/// en: 'Discard Folder Changes'
+	String get discardFolderChanges => 'Discard Folder Changes';
+
+	/// en: 'Unstage Folder Changes'
+	String get unstageFolderChanges => 'Unstage Folder Changes';
+
+	/// en: 'Stage Folder Changes'
+	String get stageFolderChanges => 'Stage Folder Changes';
+
+	/// en: 'Generate commit message'
+	String get generateCommitMessage => 'Generate commit message';
+
+	/// en: 'Generate with ${harness}'
+	String generateWith({required Object harness}) => 'Generate with ${harness}';
+
+	/// en: 'Unavailable while amending a commit'
+	String get generateUnavailableWhileAmending => 'Unavailable while amending a commit';
+
+	/// en: 'Cancel generation'
+	String get cancelGeneration => 'Cancel generation';
+
+	/// en: 'Changes'
+	String get changes => 'Changes';
+
+	/// en: 'History'
+	String get history => 'History';
+
+	/// en: 'Repository'
+	String get historyRepository => 'Repository';
+
+	/// en: 'No Git repository available.'
+	String get historyNoRepository => 'No Git repository available.';
+
+	/// en: 'No commits found.'
+	String get historyEmpty => 'No commits found.';
+
+	/// en: 'Could not load Git history.'
+	String get historyLoadFailed => 'Could not load Git history.';
+
+	/// en: 'Untitled commit'
+	String get historyUntitledCommit => 'Untitled commit';
+
+	/// en: 'now'
+	String get historyNow => 'now';
+
+	/// en: '${count}m ago'
+	String historyMinutesAgo({required Object count}) => '${count}m ago';
+
+	/// en: '${count}h ago'
+	String historyHoursAgo({required Object count}) => '${count}h ago';
+
+	/// en: 'yesterday'
+	String get historyYesterday => 'yesterday';
+
+	/// en: '1d ago'
+	String get historyDayAgo => '1d ago';
+
+	/// en: '${count}d ago'
+	String historyDaysAgo({required Object count}) => '${count}d ago';
+
+	/// en: 'Files changed'
+	String get historyFiles => 'Files changed';
+
+	/// en: 'No files changed.'
+	String get historyFilesEmpty => 'No files changed.';
+
+	/// en: 'Could not load changed files.'
+	String get historyFilesLoadFailed => 'Could not load changed files.';
+
+	/// en: 'Empty tree'
+	String get diffEmptyTree => 'Empty tree';
+
+	/// en: 'Original ${ref}'
+	String diffOriginal({required Object ref}) => 'Original ${ref}';
+
+	/// en: 'Modified ${ref}'
+	String diffModified({required Object ref}) => 'Modified ${ref}';
+
+	/// en: 'Working tree'
+	String get diffWorkingTree => 'Working tree';
+
+	/// en: 'Binary file - no text diff.'
+	String get diffBinaryFile => 'Binary file - no text diff.';
+
+	/// en: 'No changes.'
+	String get diffNoChanges => 'No changes.';
+
+	/// en: 'Could not read the diff: ${detail}'
+	String diffError({required Object detail}) => 'Could not read the diff: ${detail}';
+
+	/// en: 'Gallery'
+	String get galleryTooltip => 'Gallery';
+
+	/// en: 'GALLERY'
+	String get sectionGallery => 'GALLERY';
+
+	/// en: 'Open as HTML'
+	String get openAsHtml => 'Open as HTML';
+
+	/// en: 'Copy here?'
+	String get importQuestionTitle => 'Copy here?';
+
+	/// en: 'Copy ${count} items into “${dest}”?'
+	String importMessage({required Object count, required Object dest}) => 'Copy ${count} items into “${dest}”?';
+
+	/// en: 'Copy'
+	String get importAction => 'Copy';
+
+	/// en: 'Could not copy'
+	String get couldNotImportTitle => 'Could not copy';
+
+	/// en: 'Open in ${harness}'
+	String openInAgent({required Object harness}) => 'Open in ${harness}';
+}
+
+// Path: cockpit.fileViewer
+class Translations$cockpit$fileViewer$en {
+	Translations$cockpit$fileViewer$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Can't open this file.'
+	String get cantOpen => 'Can\'t open this file.';
+
+	/// en: 'Could not load the image.'
+	String get couldNotLoadImage => 'Could not load the image.';
+
+	/// en: 'Preview'
+	String get preview => 'Preview';
+
+	/// en: 'Source'
+	String get source => 'Source';
+
+	/// en: 'Reload'
+	String get reload => 'Reload';
+}
+
+// Path: cockpit.workspaceSettingsDialog
+class Translations$cockpit$workspaceSettingsDialog$en {
+	Translations$cockpit$workspaceSettingsDialog$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Choose workspace photo'
+	String get choosePhotoTitle => 'Choose workspace photo';
+
+	/// en: 'Workspace settings'
+	String get title => 'Workspace settings';
+
+	/// en: 'Workspace name'
+	String get namePlaceholder => 'Workspace name';
+
+	/// en: 'Add photo'
+	String get addPhoto => 'Add photo';
+
+	/// en: 'Change photo'
+	String get changePhoto => 'Change photo';
+
+	/// en: 'Remove'
+	String get remove => 'Remove';
+
+	/// en: 'Color'
+	String get color => 'Color';
+
+	/// en: 'Host'
+	String get host => 'Host';
+
+	/// en: 'Folder'
+	String get folder => 'Folder';
+}
+
+// Path: cockpit.realmDialogs
+class Translations$cockpit$realmDialogs$en {
+	Translations$cockpit$realmDialogs$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Realm name'
+	String get namePlaceholder => 'Realm name';
+
+	/// en: 'A realm with this name already exists.'
+	String get duplicateName => 'A realm with this name already exists.';
+
+	/// en: 'New realm'
+	String get newRealmTitle => 'New realm';
+
+	/// en: 'Rename realm'
+	String get renameRealmTitle => 'Rename realm';
+
+	/// en: 'Rename'
+	String get rename => 'Rename';
+
+	/// en: 'Delete realm'
+	String get deleteRealmTitle => 'Delete realm';
+
+	/// en: 'Delete "${name}"? No workspace is deleted — the folder list just changes.${suffix}'
+	String deleteMessage({required Object name, required Object suffix}) => 'Delete "${name}"? No workspace is deleted — the folder list just changes.${suffix}';
+
+	/// en: ' Its workspace will move to Default.'
+	String get deleteSuffixOne => ' Its workspace will move to Default.';
+
+	/// en: ' Its ${count} workspaces will move to Default.'
+	String deleteSuffixMany({required Object count}) => ' Its ${count} workspaces will move to Default.';
+
+	/// en: 'Manage realms'
+	String get manageRealmsTitle => 'Manage realms';
+
+	/// en: '(one) {1 workspace} (other) {${n} workspaces}'
+	String workspaceCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '1 workspace',
+		other: '${n} workspaces',
+	);
+}
+
+// Path: cockpit.dbRedisTable
+class Translations$cockpit$dbRedisTable$en {
+	Translations$cockpit$dbRedisTable$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Delete key'
+	String get deleteKeyTitle => 'Delete key';
+
+	/// en: 'Delete "${key}" from this Redis database?'
+	String deleteKeyMessage({required Object key}) => 'Delete "${key}" from this Redis database?';
+
+	/// en: 'Refresh'
+	String get refresh => 'Refresh';
+
+	/// en: 'New key'
+	String get newKey => 'New key';
+
+	/// en: 'KEY'
+	String get columnKey => 'KEY';
+
+	/// en: 'VALUE'
+	String get columnValue => 'VALUE';
+
+	/// en: 'TYPE'
+	String get columnType => 'TYPE';
+
+	/// en: 'TTL'
+	String get columnTtl => 'TTL';
+
+	/// en: '(one) {1 key} (other) {${n} keys}'
+	String keyCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '1 key',
+		other: '${n} keys',
+	);
+
+	/// en: 'No keys in this database.'
+	String get noKeys => 'No keys in this database.';
+
+	/// en: 'No keys match "${pattern}".'
+	String noKeysMatch({required Object pattern}) => 'No keys match "${pattern}".';
+
+	/// en: 'Load more'
+	String get loadMore => 'Load more';
+
+	/// en: 'Loading full value…'
+	String get loadingFullValue => 'Loading full value…';
+
+	/// en: 'TTL must be a number of seconds.'
+	String get ttlMustBeNumber => 'TTL must be a number of seconds.';
+
+	/// en: 'Add key'
+	String get addKey => 'Add key';
+
+	/// en: 'key'
+	String get keyFieldHint => 'key';
+
+	/// en: 'ttl (s, optional)'
+	String get ttlFieldHint => 'ttl (s, optional)';
+
+	/// en: 'value'
+	String get valueFieldHint => 'value';
+
+	/// en: 'Search — pattern, e.g. user:*'
+	String get searchHint => 'Search — pattern, e.g. user:*';
+}
+
+// Path: cockpit.dbQueryView
+class Translations$cockpit$dbQueryView$en {
+	Translations$cockpit$dbQueryView$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Save query as'
+	String get saveQueryAs => 'Save query as';
+
+	/// en: 'Could not save'
+	String get couldNotSave => 'Could not save';
+
+	/// en: 'Select database'
+	String get selectDatabase => 'Select database';
+
+	/// en: 'No SQL connections'
+	String get noSqlConnections => 'No SQL connections';
+
+	/// en: 'Running…'
+	String get running => 'Running…';
+
+	/// en: 'Run selection'
+	String get runSelection => 'Run selection';
+
+	/// en: 'Run'
+	String get run => 'Run';
+
+	/// en: 'Pick a database above, then Run (⌘↵).'
+	String get pickDatabaseHint => 'Pick a database above, then Run (⌘↵).';
+
+	/// en: 'Run the query (⌘↵) to see results here.'
+	String get runQueryHint => 'Run the query (⌘↵) to see results here.';
+
+	/// en: 'No rows.'
+	String get noRows => 'No rows.';
+
+	/// en: '(one) {1 row affected} (other) {${n} rows affected}'
+	String rowsAffected({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '1 row affected',
+		other: '${n} rows affected',
+	);
+
+	/// en: '${n} rows'
+	String rowsFooter({required Object n}) => '${n} rows';
+
+	/// en: ' · truncated (raise -- limit)'
+	String get truncatedSuffix => ' · truncated (raise -- limit)';
+
+	/// en: 'Table'
+	String get table => 'Table';
+
+	/// en: 'JSON'
+	String get json => 'JSON';
+
+	/// en: 'unsaved'
+	String get unsaved => 'unsaved';
+
+	/// en: 'saved'
+	String get saved => 'saved';
+
+	/// en: 'Copied'
+	String get copied => 'Copied';
+
+	/// en: 'Copy'
+	String get copy => 'Copy';
+}
+
+// Path: cockpit.httpView
+class Translations$cockpit$httpView$en {
+	Translations$cockpit$httpView$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Save request as'
+	String get saveRequestAs => 'Save request as';
+
+	/// en: 'Could not save'
+	String get couldNotSave => 'Could not save';
+
+	/// en: 'Run'
+	String get run => 'Run';
+
+	/// en: 'Running…'
+	String get running => 'Running…';
+
+	/// en: 'No request in this file — write one, e.g. GET https://example.com'
+	String get noRequests => 'No request in this file — write one, e.g. GET https://example.com';
+
+	/// en: 'Select request'
+	String get selectRequest => 'Select request';
+
+	/// en: '(one) {1 request} (other) {${n} requests}'
+	String requestCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '1 request',
+		other: '${n} requests',
+	);
+
+	/// en: 'Run the request (⌘↵) to see the response here.'
+	String get runHint => 'Run the request (⌘↵) to see the response here.';
+
+	/// en: 'Empty response body.'
+	String get emptyBody => 'Empty response body.';
+
+	/// en: 'JSON'
+	String get body => 'JSON';
+
+	/// en: 'Headers'
+	String get headers => 'Headers';
+
+	/// en: 'Text'
+	String get raw => 'Text';
+
+	/// en: ' · truncated (response too large)'
+	String get truncatedSuffix => ' · truncated (response too large)';
+
+	late final Translations$cockpit$httpView$error$en error = Translations$cockpit$httpView$error$en.internal(_root);
+}
+
+// Path: cockpit.kanbanView
+class Translations$cockpit$kanbanView$en {
+	Translations$cockpit$kanbanView$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Filter'
+	String get filter => 'Filter';
+
+	/// en: 'Search titles'
+	String get filterTitlePlaceholder => 'Search titles';
+
+	/// en: 'Labels'
+	String get filterLabels => 'Labels';
+
+	/// en: 'Clear'
+	String get filterClear => 'Clear';
+
+	/// en: 'Dependencies'
+	String get filterDependencies => 'Dependencies';
+
+	/// en: 'Blocked'
+	String get filterBlocked => 'Blocked';
+
+	/// en: 'Ready'
+	String get filterReady => 'Ready';
+
+	/// en: 'Blocked by'
+	String get blockedBy => 'Blocked by';
+
+	/// en: 'Add a blocking card'
+	String get addBlocker => 'Add a blocking card';
+
+	/// en: 'Search cards'
+	String get searchCards => 'Search cards';
+
+	/// en: 'unknown'
+	String get unknownCard => 'unknown';
+
+	/// en: 'Board'
+	String get boardView => 'Board';
+
+	/// en: 'List'
+	String get listView => 'List';
+
+	/// en: 'Refresh from disk'
+	String get refresh => 'Refresh from disk';
+
+	/// en: 'Labels'
+	String get manageLabels => 'Labels';
+
+	/// en: 'Labels in this board'
+	String get labelsTitle => 'Labels in this board';
+
+	/// en: 'label name'
+	String get labelNamePlaceholder => 'label name';
+
+	/// en: '(one) {1 card} (other) {${n} cards}'
+	String labelUsage({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '1 card',
+		other: '${n} cards',
+	);
+
+	/// en: 'Delete label'
+	String get deleteLabel => 'Delete label';
+
+	/// en: 'new card'
+	String get newCard => 'new card';
+
+	/// en: 'New card'
+	String get newCardTitle => 'New card';
+
+	/// en: 'New column'
+	String get newColumn => 'New column';
+
+	/// en: 'Column name'
+	String get columnNameTitle => 'Column name';
+
+	/// en: 'Drag column'
+	String get dragColumn => 'Drag column';
+
+	/// en: 'Column options'
+	String get columnOptions => 'Column options';
+
+	/// en: 'Rename column'
+	String get renameColumn => 'Rename column';
+
+	/// en: 'Move left'
+	String get moveColumnLeft => 'Move left';
+
+	/// en: 'Move right'
+	String get moveColumnRight => 'Move right';
+
+	/// en: 'Delete column'
+	String get deleteColumn => 'Delete column';
+
+	/// en: 'New card here'
+	String get newCardHere => 'New card here';
+
+	/// en: 'Duplicate'
+	String get duplicateCard => 'Duplicate';
+
+	/// en: 'Labels'
+	String get cardLabels => 'Labels';
+
+	/// en: 'Delete card'
+	String get deleteCard => 'Delete card';
+
+	/// en: 'Move to next column'
+	String get advance => 'Move to next column';
+
+	/// en: 'Move to next column (hold: move to last column)'
+	String get advanceHold => 'Move to next column (hold: move to last column)';
+
+	/// en: 'Move back a column'
+	String get advanceBack => 'Move back a column';
+
+	/// en: 'No cards'
+	String get emptyColumn => 'No cards';
+
+	/// en: '(one) {1 card} (other) {${n} cards}'
+	String cardCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '1 card',
+		other: '${n} cards',
+	);
+
+	/// en: 'Note'
+	String get notes => 'Note';
+
+	/// en: 'Write a note'
+	String get notesPlaceholder => 'Write a note';
+
+	/// en: 'Comments'
+	String get comments => 'Comments';
+
+	/// en: 'Add comment'
+	String get addComment => 'Add comment';
+
+	/// en: 'Write a comment'
+	String get commentPlaceholder => 'Write a comment';
+
+	/// en: 'No comments yet'
+	String get noComments => 'No comments yet';
+
+	/// en: 'Close'
+	String get closeDetail => 'Close';
+
+	/// en: 'This file has no ## columns yet — it opens as markdown.'
+	String get notABoard => 'This file has no ## columns yet — it opens as markdown.';
+
+	/// en: 'Start a board'
+	String get startBoard => 'Start a board';
+
+	/// en: 'Could not save the board'
+	String get couldNotSave => 'Could not save the board';
+
+	/// en: 'Not recognized by the parser — drags whole, no inline editing.'
+	String get unrecognizedBlock => 'Not recognized by the parser — drags whole, no inline editing.';
+
+	late final Translations$cockpit$kanbanView$deleteColumnDialog$en deleteColumnDialog = Translations$cockpit$kanbanView$deleteColumnDialog$en.internal(_root);
+}
+
+// Path: cockpit.dbPanel
+class Translations$cockpit$dbPanel$en {
+	Translations$cockpit$dbPanel$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'DATABASE'
+	String get sectionDatabase => 'DATABASE';
+
+	/// en: 'Edit…'
+	String get edit => 'Edit…';
+
+	/// en: 'Copy name'
+	String get copyName => 'Copy name';
+
+	/// en: 'New query'
+	String get newQuery => 'New query';
+
+	/// en: 'Browse keys'
+	String get browseKeys => 'Browse keys';
+
+	/// en: 'Delete connection'
+	String get deleteConnectionTitle => 'Delete connection';
+
+	/// en: 'Remove "${name}" from this workspace? Any saved password is discarded. .dbq files that reference it are not touched.'
+	String deleteConnectionMessage({required Object name}) => 'Remove "${name}" from this workspace? Any saved password is discarded. .dbq files that reference it are not touched.';
+
+	/// en: '.cockpit/databases.json · ${n} connections'
+	String footer({required Object n}) => '.cockpit/databases.json · ${n} connections';
+
+	/// en: '.cockpit/databases.json · 1 connection'
+	String get footerOne => '.cockpit/databases.json · 1 connection';
+
+	/// en: 'No connections yet.'
+	String get noConnections => 'No connections yet.';
+
+	/// en: 'Password not found on the host. Open this connection and enter it again — it is saved on the machine that runs the database, not on this one.'
+	String get passwordRequired => 'Password not found on the host. Open this connection and enter it again — it is saved on the machine that runs the database, not on this one.';
+}
+
+// Path: cockpit.dbMongoView
+class Translations$cockpit$dbMongoView$en {
+	Translations$cockpit$dbMongoView$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Delete document'
+	String get deleteDocumentTitle => 'Delete document';
+
+	/// en: 'Delete the document with _id ${id} from "${collection}"?'
+	String deleteDocumentMessage({required Object id, required Object collection}) => 'Delete the document with _id ${id} from "${collection}"?';
+
+	/// en: 'Filter — JSON, e.g. {"status": "active"}'
+	String get filterHint => 'Filter — JSON, e.g. {"status": "active"}';
+
+	/// en: '(one) {1 doc} (other) {${n} docs}'
+	String docCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '1 doc',
+		other: '${n} docs',
+	);
+
+	/// en: 'Refresh'
+	String get refresh => 'Refresh';
+
+	/// en: 'Insert document'
+	String get insertDocument => 'Insert document';
+
+	/// en: 'No documents in this collection.'
+	String get noDocuments => 'No documents in this collection.';
+
+	/// en: 'No documents match this filter.'
+	String get noDocumentsMatch => 'No documents match this filter.';
+
+	/// en: 'Load more'
+	String get loadMore => 'Load more';
+
+	/// en: 'Edit'
+	String get edit => 'Edit';
+
+	/// en: 'Insert'
+	String get insert => 'Insert';
+}
+
+// Path: cockpit.dbConnectionDialog
+class Translations$cockpit$dbConnectionDialog$en {
+	Translations$cockpit$dbConnectionDialog$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Choose SQLite database'
+	String get chooseFileTitle => 'Choose SQLite database';
+
+	/// en: 'File'
+	String get file => 'File';
+
+	/// en: 'Choose a SQLite file…'
+	String get chooseFilePlaceholder => 'Choose a SQLite file…';
+
+	/// en: 'Name'
+	String get name => 'Name';
+
+	/// en: 'Password'
+	String get password => 'Password';
+
+	/// en: 'Save Password'
+	String get savePassword => 'Save Password';
+
+	/// en: 'Allow writes (agents)'
+	String get allowWrites => 'Allow writes (agents)';
+
+	/// en: 'off = agents can only read via CLI'
+	String get allowWritesHint => 'off = agents can only read via CLI';
+
+	/// en: 'Visible to agents'
+	String get visibleToAgents => 'Visible to agents';
+
+	/// en: 'off = hidden from the CLI, GUI only'
+	String get visibleToAgentsHint => 'off = hidden from the CLI, GUI only';
+
+	/// en: 'Testing connection…'
+	String get testing => 'Testing connection…';
+
+	/// en: 'Connection OK'
+	String get connectionOk => 'Connection OK';
+
+	/// en: 'Connection failed'
+	String get connectionFailed => 'Connection failed';
+
+	/// en: 'Edit connection'
+	String get editTitle => 'Edit connection';
+
+	/// en: 'New connection'
+	String get newTitle => 'New connection';
+
+	/// en: 'Connection string'
+	String get connectionString => 'Connection string';
+
+	/// en: 'Not a valid connection URL.'
+	String get invalidUrl => 'Not a valid connection URL.';
+
+	/// en: 'SSH Tunnel'
+	String get sshTunnel => 'SSH Tunnel';
+
+	/// en: 'SSH Host'
+	String get sshHost => 'SSH Host';
+
+	/// en: 'SSH Port'
+	String get sshPort => 'SSH Port';
+
+	/// en: 'SSH User'
+	String get sshUser => 'SSH User';
+
+	/// en: 'Private key'
+	String get privateKey => 'Private key';
+
+	/// en: 'Choose a private key…'
+	String get choosePrivateKeyPlaceholder => 'Choose a private key…';
+
+	/// en: 'Choose SSH private key'
+	String get choosePrivateKeyDialogTitle => 'Choose SSH private key';
+
+	/// en: 'Key passphrase'
+	String get keyPassphrase => 'Key passphrase';
+
+	/// en: 'Save passphrase'
+	String get savePassphrase => 'Save passphrase';
+
+	/// en: 'The password is stored on the host, not on this machine.'
+	String get passwordOnHost => 'The password is stored on the host, not on this machine.';
+}
+
+// Path: cockpit.sshPrompts
+class Translations$cockpit$sshPrompts$en {
+	Translations$cockpit$sshPrompts$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Unknown SSH host'
+	String get unknownSshHostTitle => 'Unknown SSH host';
+
+	/// en: 'Cockpit has never connected to ${endpoint} before.'
+	String neverConnected({required Object endpoint}) => 'Cockpit has never connected to ${endpoint} before.';
+
+	/// en: 'Trust it only if this fingerprint matches the server. You can check it on the server with:'
+	String get trustHint => 'Trust it only if this fingerprint matches the server. You can check it on the server with:';
+
+	/// en: 'Trust'
+	String get trust => 'Trust';
+
+	/// en: 'SSH key passphrase'
+	String get sshKeyPassphraseTitle => 'SSH key passphrase';
+
+	/// en: 'Unlock ${keyPath} to connect "${connectionName}".'
+	String unlockMessage({required Object keyPath, required Object connectionName}) => 'Unlock ${keyPath} to connect "${connectionName}".';
+
+	/// en: 'Kept in memory until Cockpit quits. To let agents use this connection, enable "Save passphrase" in the connection.'
+	String get keptInMemoryHint => 'Kept in memory until Cockpit quits. To let agents use this connection, enable "Save passphrase" in the connection.';
+
+	/// en: 'Unlock'
+	String get unlock => 'Unlock';
+}
+
+// Path: cockpit.projectsRail
+class Translations$cockpit$projectsRail$en {
+	Translations$cockpit$projectsRail$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Workspaces'
+	String get workspaces => 'Workspaces';
+
+	/// en: 'Keeping this computer awake for remote access. Click to let it sleep again.'
+	String get keepAwakeOn => 'Keeping this computer awake for remote access. Click to let it sleep again.';
+
+	/// en: 'Keep this computer awake for remote access. Off again when Cockpit restarts.'
+	String get keepAwakeOff => 'Keep this computer awake for remote access. Off again when Cockpit restarts.';
+
+	/// en: 'Keeping awake on battery power. This drains the battery.'
+	String get keepAwakeBattery => 'Keeping awake on battery power. This drains the battery.';
+
+	/// en: 'Closing a laptop lid still puts it to sleep.'
+	String get keepAwakeLid => 'Closing a laptop lid still puts it to sleep.';
+
+	/// en: 'New workspace'
+	String get newWorkspace => 'New workspace';
+
+	/// en: 'Settings'
+	String get settings => 'Settings';
+
+	/// en: 'Merge to Parent'
+	String get mergeToParent => 'Merge to Parent';
+
+	/// en: 'Update from Parent'
+	String get updateFromParent => 'Update from Parent';
+
+	/// en: 'Fork Worktree'
+	String get forkWorktree => 'Fork Worktree';
+
+	/// en: 'Copy branch'
+	String get copyBranch => 'Copy branch';
+
+	/// en: 'Remove'
+	String get remove => 'Remove';
+
+	/// en: 'Move to realm'
+	String get moveToRealm => 'Move to realm';
+
+	/// en: 'Copy workspace id'
+	String get copyWorkspaceId => 'Copy workspace id';
+
+	/// en: 'Rename'
+	String get rename => 'Rename';
+
+	/// en: 'Close'
+	String get close => 'Close';
+
+	/// en: 'New realm…'
+	String get newRealm => 'New realm…';
+
+	/// en: 'Manage realms…'
+	String get manageRealms => 'Manage realms…';
+
+	/// en: 'No workspaces yet.'
+	String get noWorkspaces => 'No workspaces yet.';
+
+	/// en: 'Sync'
+	String get sync => 'Sync';
+
+	/// en: 'Pull'
+	String get pull => 'Pull';
+
+	/// en: 'Push'
+	String get push => 'Push';
+
+	/// en: 'Create worktree'
+	String get createWorktree => 'Create worktree';
+
+	/// en: '(one) {1 worktree} (other) {${n} worktrees}'
+	String worktreeCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '1 worktree',
+		other: '${n} worktrees',
+	);
+
+	/// en: 'Expand worktrees'
+	String get expandWorktrees => 'Expand worktrees';
+
+	/// en: 'Collapse worktrees'
+	String get collapseWorktrees => 'Collapse worktrees';
+}
+
+// Path: cockpit.findBar
+class Translations$cockpit$findBar$en {
+	Translations$cockpit$findBar$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Find'
+	String get find => 'Find';
+
+	/// en: 'Match case'
+	String get matchCase => 'Match case';
+
+	/// en: 'Whole word'
+	String get wholeWord => 'Whole word';
+
+	/// en: 'Use regular expression'
+	String get useRegex => 'Use regular expression';
+
+	/// en: 'Previous (⇧⏎)'
+	String get previous => 'Previous (⇧⏎)';
+
+	/// en: 'Next (⏎)'
+	String get next => 'Next (⏎)';
+
+	/// en: 'Close (Esc)'
+	String get close => 'Close (Esc)';
+
+	/// en: 'Bad pattern'
+	String get badPattern => 'Bad pattern';
+
+	/// en: 'No results'
+	String get noResults => 'No results';
+}
+
+// Path: cockpit.contentSearch
+class Translations$cockpit$contentSearch$en {
+	Translations$cockpit$contentSearch$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'SEARCH'
+	String get sectionSearch => 'SEARCH';
+
+	/// en: 'Search in files'
+	String get searchInFiles => 'Search in files';
+
+	/// en: 'Match case'
+	String get matchCase => 'Match case';
+
+	/// en: 'Whole word'
+	String get wholeWord => 'Whole word';
+
+	/// en: 'Use regular expression'
+	String get useRegex => 'Use regular expression';
+
+	/// en: 'Invalid regular expression.'
+	String get invalidRegex => 'Invalid regular expression.';
+
+	/// en: 'Type to search across files.'
+	String get typeToSearch => 'Type to search across files.';
+
+	/// en: 'Searching…'
+	String get searching => 'Searching…';
+
+	/// en: 'No results.'
+	String get noResults => 'No results.';
+}
+
+// Path: cockpit.topbar
+class Translations$cockpit$topbar$en {
+	Translations$cockpit$topbar$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Collapse sidebar'
+	String get collapseSidebar => 'Collapse sidebar';
+
+	/// en: 'Show/hide files'
+	String get toggleFiles => 'Show/hide files';
+
+	/// en: 'Files unavailable in Cockpit'
+	String get filesUnavailable => 'Files unavailable in Cockpit';
+
+	/// en: 'Hide keyboard'
+	String get hideKeyboard => 'Hide keyboard';
+
+	/// en: 'Visualize agents'
+	String get visualizeAgents => 'Visualize agents';
+}
+
+// Path: cockpit.tasks
+class Translations$cockpit$tasks$en {
+	Translations$cockpit$tasks$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Hot reload'
+	String get hotReload => 'Hot reload';
+
+	/// en: 'Hot restart'
+	String get hotRestart => 'Hot restart';
+
+	/// en: 'Toggle debug paint'
+	String get toggleDebugPaint => 'Toggle debug paint';
+
+	/// en: 'Toggle platform'
+	String get togglePlatform => 'Toggle platform';
+
+	/// en: 'Quit'
+	String get quit => 'Quit';
+}
+
+// Path: cockpit.notifications
+class Translations$cockpit$notifications$en {
+	Translations$cockpit$notifications$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Agent finished'
+	String get agentFinished => 'Agent finished';
+
+	/// en: 'Open'
+	String get open => 'Open';
+
+	/// en: 'Agent needs your input'
+	String get agentNeedsAction => 'Agent needs your input';
+}
+
+// Path: cockpit.terminalLink
+class Translations$cockpit$terminalLink$en {
+	Translations$cockpit$terminalLink$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Open'
+	String get open => 'Open';
+
+	/// en: 'Reveal in Finder'
+	String get revealFinder => 'Reveal in Finder';
+
+	/// en: 'Show in Explorer'
+	String get revealExplorer => 'Show in Explorer';
+
+	/// en: 'Open containing folder'
+	String get revealFolder => 'Open containing folder';
+
+	/// en: 'Copy path'
+	String get copyPath => 'Copy path';
+
+	/// en: 'Open link'
+	String get openLink => 'Open link';
+
+	/// en: 'Copy link'
+	String get copyLink => 'Copy link';
+}
+
+// Path: cockpit.terminal
+class Translations$cockpit$terminal$en {
+	Translations$cockpit$terminal$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Warning: the folder "${requested}" does not exist. This terminal opened in "${path}".'
+	String cwdFallbackWarning({required Object requested, required Object path}) => 'Warning: the folder "${requested}" does not exist. This terminal opened in "${path}".';
+
+	/// en: 'Notice: .env.cockpit is tracked by git (it came with the repository). Injected: ${keys}'
+	String workspaceEnvTracked({required Object keys}) => 'Notice: .env.cockpit is tracked by git (it came with the repository). Injected: ${keys}';
+}
+
+// Path: cockpit.remoteHost
+class Translations$cockpit$remoteHost$en {
+	Translations$cockpit$remoteHost$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Add remote host'
+	String get addHost => 'Add remote host';
+
+	/// en: 'Name'
+	String get hostName => 'Name';
+
+	/// en: 'SSH target (user@host)'
+	String get sshTarget => 'SSH target (user@host)';
+
+	/// en: 'Connecting to ${host}…'
+	String connecting({required Object host}) => 'Connecting to ${host}…';
+
+	/// en: 'SSH tunnel'
+	String get openingTunnel => 'SSH tunnel';
+
+	/// en: 'Installing server'
+	String get installingServer => 'Installing server';
+
+	/// en: 'Server ${version}'
+	String handshake({required Object version}) => 'Server ${version}';
+
+	/// en: 'Loading workspace…'
+	String get loadingWorkspace => 'Loading workspace…';
+
+	/// en: 'Reconnecting to ${host}…'
+	String reconnecting({required Object host}) => 'Reconnecting to ${host}…';
+
+	/// en: '${host} offline'
+	String offline({required Object host}) => '${host} offline';
+
+	/// en: 'Remove'
+	String get remove => 'Remove';
+
+	/// en: 'Reconnect'
+	String get reconnect => 'Reconnect';
+
+	/// en: 'Install server'
+	String get installServer => 'Install server';
+
+	/// en: 'Cannot reach ${host} over SSH. Is it on, and is Remote Login enabled?'
+	String errSshUnreachable({required Object host}) => 'Cannot reach ${host} over SSH. Is it on, and is Remote Login enabled?';
+
+	/// en: 'Could not install the server on ${host}.'
+	String errInstallFailed({required Object host}) => 'Could not install the server on ${host}.';
+
+	/// en: 'Server version incompatible; update it.'
+	String get errVersionMismatch => 'Server version incompatible; update it.';
+
+	/// en: 'Details: ${detail}'
+	String errDetail({required Object detail}) => 'Details: ${detail}';
+
+	/// en: 'Open folder on ${host}'
+	String pickFolderTitle({required Object host}) => 'Open folder on ${host}';
+
+	/// en: 'Open here'
+	String get openHere => 'Open here';
+
+	/// en: 'No subfolders'
+	String get emptyFolder => 'No subfolders';
+
+	/// en: 'Local'
+	String get newLocal => 'Local';
+
+	/// en: 'Remote'
+	String get newRemote => 'Remote';
+
+	/// en: 'Choose a host'
+	String get chooseHost => 'Choose a host';
+
+	/// en: 'New host…'
+	String get newHostEntry => 'New host…';
+
+	/// en: 'Edit host'
+	String get editHost => 'Edit host';
+
+	/// en: 'Username'
+	String get userLabel => 'Username';
+
+	/// en: 'Host / IP'
+	String get hostLabel => 'Host / IP';
+
+	/// en: 'Port'
+	String get portLabel => 'Port';
+
+	/// en: 'Authentication'
+	String get authLabel => 'Authentication';
+
+	/// en: 'SSH key'
+	String get authKey => 'SSH key';
+
+	/// en: 'Password'
+	String get authPassword => 'Password';
+
+	/// en: 'Password'
+	String get passwordLabel => 'Password';
+
+	/// en: 'Leave blank to keep current'
+	String get passwordKeep => 'Leave blank to keep current';
+
+	/// en: 'Username required'
+	String get errUser => 'Username required';
+
+	/// en: 'Host required'
+	String get errHost => 'Host required';
+
+	/// en: 'Password required'
+	String get errPassword => 'Password required';
+
+	/// en: 'Choose…'
+	String get identityChoose => 'Choose…';
+
+	/// en: 'No key selected'
+	String get identityEmpty => 'No key selected';
+
+	/// en: 'Select the SSH private key'
+	String get identityDialogTitle => 'Select the SSH private key';
+
+	/// en: 'Pick the private key to authenticate with.'
+	String get errIdentity => 'Pick the private key to authenticate with.';
+
+	/// en: 'Cockpit does not trust ${host} yet. Connect again and confirm the fingerprint.'
+	String errHostKeyUnknown({required Object host}) => 'Cockpit does not trust ${host} yet. Connect again and confirm the fingerprint.';
+
+	/// en: '${host} is presenting a different SSH key than the one stored. If you did not reinstall that machine, stop and check it — otherwise remove the old entry from ~/.ssh/known_hosts.'
+	String errHostKeyChanged({required Object host}) => '${host} is presenting a different SSH key than the one stored. If you did not reinstall that machine, stop and check it — otherwise remove the old entry from ~/.ssh/known_hosts.';
+
+	/// en: '${host} runs Windows but does not have Cockpit installed. The remote server is installed from the Cockpit bundle already on that machine, so install Cockpit there and try again.'
+	String errHostBundleMissing({required Object host}) => '${host} runs Windows but does not have Cockpit installed. The remote server is installed from the Cockpit bundle already on that machine, so install Cockpit there and try again.';
+
+	/// en: 'Could not identify the operating system of ${host}. The account may have a restricted shell, or no shell at all.'
+	String errHostUnknownOs({required Object host}) => 'Could not identify the operating system of ${host}. The account may have a restricted shell, or no shell at all.';
+
+	/// en: 'Only the public key is here. That works only if the private key is in your SSH agent; otherwise pick the private file (same name, without .pub).'
+	String get errIdentityPublic => 'Only the public key is here. That works only if the private key is in your SSH agent; otherwise pick the private file (same name, without .pub).';
+
+	/// en: 'That file does not look like a private key.'
+	String get errIdentityNotKey => 'That file does not look like a private key.';
+
+	/// en: 'That file no longer exists.'
+	String get errIdentityMissingFile => 'That file no longer exists.';
+
+	/// en: 'That file could not be read.'
+	String get errIdentityUnreadable => 'That file could not be read.';
+}
+
+// Path: cockpit.browserPane
+class Translations$cockpit$browserPane$en {
+	Translations$cockpit$browserPane$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Back'
+	String get back => 'Back';
+
+	/// en: 'Forward'
+	String get forward => 'Forward';
+
+	/// en: 'Reload'
+	String get reload => 'Reload';
+
+	/// en: 'Enter URL or address'
+	String get urlHint => 'Enter URL or address';
+
+	/// en: 'Go'
+	String get go => 'Go';
+}
+
+// Path: cockpit.documentWindow
+class Translations$cockpit$documentWindow$en {
+	Translations$cockpit$documentWindow$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Audio and video open in the main Cockpit window.'
+	String get mediaNotSupported => 'Audio and video open in the main Cockpit window.';
+
+	/// en: 'File not found: ${path}'
+	String fileNotFound({required Object path}) => 'File not found: ${path}';
+}
+
+// Path: cockpit.gallery
+class Translations$cockpit$gallery$en {
+	Translations$cockpit$gallery$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Special Cockpit documents that give you a visual of what the AI agent is doing.'
+	String get intro => 'Special Cockpit documents that give you a visual of what the AI agent is doing.';
+
+	/// en: 'Could not create the file'
+	String get createErrorTitle => 'Could not create the file';
+
+	late final Translations$cockpit$gallery$dbQuery$en dbQuery = Translations$cockpit$gallery$dbQuery$en.internal(_root);
+	late final Translations$cockpit$gallery$kanban$en kanban = Translations$cockpit$gallery$kanban$en.internal(_root);
+	late final Translations$cockpit$gallery$layout$en layout = Translations$cockpit$gallery$layout$en.internal(_root);
+	late final Translations$cockpit$gallery$httpRequest$en httpRequest = Translations$cockpit$gallery$httpRequest$en.internal(_root);
+	late final Translations$cockpit$gallery$html$en html = Translations$cockpit$gallery$html$en.internal(_root);
+	late final Translations$cockpit$gallery$tasks$en tasks = Translations$cockpit$gallery$tasks$en.internal(_root);
+	late final Translations$cockpit$gallery$notebook$en notebook = Translations$cockpit$gallery$notebook$en.internal(_root);
+	late final Translations$cockpit$gallery$workspaceEnv$en workspaceEnv = Translations$cockpit$gallery$workspaceEnv$en.internal(_root);
+	late final Translations$cockpit$gallery$panel$en panel = Translations$cockpit$gallery$panel$en.internal(_root);
+}
+
+// Path: cockpit.notebook
+class Translations$cockpit$notebook$en {
+	Translations$cockpit$notebook$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Notes'
+	String get notes => 'Notes';
+
+	/// en: 'New note'
+	String get newNote => 'New note';
+
+	/// en: 'Search notes'
+	String get searchPlaceholder => 'Search notes';
+
+	/// en: 'No notes yet. Create one, or ask the agent to write here.'
+	String get empty => 'No notes yet. Create one, or ask the agent to write here.';
+
+	/// en: 'No note matches.'
+	String get noMatch => 'No note matches.';
+
+	/// en: 'Select a note'
+	String get selectNote => 'Select a note';
+
+	/// en: 'Reload from disk'
+	String get reload => 'Reload from disk';
+
+	/// en: 'untagged'
+	String get untagged => 'untagged';
+
+	/// en: 'Could not save the note'
+	String get saveFailed => 'Could not save the note';
+
+	/// en: 'Could not create the note'
+	String get createFailed => 'Could not create the note';
+
+	/// en: 'add tag'
+	String get addTag => 'add tag';
+
+	/// en: 'Untitled'
+	String get untitled => 'Untitled';
+
+	/// en: 'Delete note'
+	String get deleteNote => 'Delete note';
+
+	/// en: 'Move “${name}” to the trash?'
+	String deleteConfirm({required Object name}) => 'Move “${name}” to the trash?';
+
+	/// en: 'Could not save the image'
+	String get imageFailed => 'Could not save the image';
+
+	late final Translations$cockpit$notebook$format$en format = Translations$cockpit$notebook$format$en.internal(_root);
+
+	/// en: 'Linked from'
+	String get backlinks => 'Linked from';
+
+	/// en: 'Rename tag'
+	String get renameTag => 'Rename tag';
+
+	/// en: 'Delete tag'
+	String get deleteTag => 'Delete tag';
+
+	/// en: 'Remove “${name}” from ${count} notes? The notes stay.'
+	String deleteTagConfirm({required Object name, required Object count}) => 'Remove “${name}” from ${count} notes? The notes stay.';
+
+	/// en: 'Show notes list'
+	String get showList => 'Show notes list';
+
+	/// en: 'Hide notes list'
+	String get hideList => 'Hide notes list';
+}
+
+// Path: cockpit.layoutPreview
+class Translations$cockpit$layoutPreview$en {
+	Translations$cockpit$layoutPreview$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Could not apply the layout'
+	String get applyFailedTitle => 'Could not apply the layout';
+
+	/// en: 'Apply in Cockpit'
+	String get applyInCockpit => 'Apply in Cockpit';
+
+	/// en: 'Open as new workspace'
+	String get applyNewWorkspace => 'Open as new workspace';
+
+	/// en: 'Apply to ${workspace}'
+	String applyTo({required Object workspace}) => 'Apply to ${workspace}';
+
+	/// en: 'autorun: worktree. This layout is also applied on its own when you create a worktree of the workspace that holds it.'
+	String get autorunWorktree => 'autorun: worktree. This layout is also applied on its own when you create a worktree of the workspace that holds it.';
+
+	/// en: 'Command'
+	String get command => 'Command';
+
+	/// en: 'Folder'
+	String get folder => 'Folder';
+
+	/// en: 'no command, opens a shell'
+	String get noCommand => 'no command, opens a shell';
+
+	/// en: 'Replace layout'
+	String get replaceConfirm => 'Replace layout';
+
+	/// en: '${n} open tabs of this workspace will be closed, including any running work.'
+	String replaceMessage({required Object n}) => '${n} open tabs of this workspace will be closed, including any running work.';
+
+	/// en: 'Replace the layout of ${workspace}?'
+	String replaceTitle({required Object workspace}) => 'Replace the layout of ${workspace}?';
+
+	/// en: 'Not created on this system'
+	String get skippedTitle => 'Not created on this system';
+
+	/// en: 'split down'
+	String get splitDown => 'split down';
+
+	/// en: 'split right'
+	String get splitRight => 'split right';
+
+	/// en: 'tab'
+	String get splitTab => 'tab';
+
+	/// en: 'This layout opens ${n} terminals. Read the commands before applying.'
+	String subtitle({required Object n}) => 'This layout opens ${n} terminals. Read the commands before applying.';
+}
+
+// Path: cockpit.telemetry
+class Translations$cockpit$telemetry$en {
+	Translations$cockpit$telemetry$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Telemetry'
+	String get tooltip => 'Telemetry';
+
+	/// en: 'Telemetry'
+	String get title => 'Telemetry';
+
+	/// en: '${n} live'
+	String liveRuns({required Object n}) => '${n} live';
+
+	/// en: 'Open a workspace to see its telemetry.'
+	String get noWorkspace => 'Open a workspace to see its telemetry.';
+
+	/// en: 'Nothing here yet.'
+	String get empty => 'Nothing here yet.';
+
+	/// en: 'Nothing here yet.'
+	String get emptyFiltered => 'Nothing here yet.';
+
+	/// en: 'Filter cases'
+	String get searchHint => 'Filter cases';
+
+	/// en: 'Open'
+	String get chipOpen => 'Open';
+
+	/// en: 'New'
+	String get chipNew => 'New';
+
+	/// en: 'Resolved'
+	String get chipResolved => 'Resolved';
+
+	/// en: 'Ignored'
+	String get chipIgnored => 'Ignored';
+
+	/// en: 'Warnings'
+	String get chipWarnings => 'Warnings';
+
+	/// en: 'new'
+	String get tagNew => 'new';
+
+	/// en: 'regression'
+	String get tagRegression => 'regression';
+
+	/// en: 'resolved'
+	String get tagResolved => 'resolved';
+
+	/// en: 'ignored'
+	String get tagIgnored => 'ignored';
+
+	/// en: 'task'
+	String get srcTask => 'task';
+
+	/// en: 'cockpit telemetry'
+	String get srcWrapper => 'cockpit telemetry';
+
+	/// en: 'run ${id}'
+	String run({required Object id}) => 'run ${id}';
+
+	/// en: 'Mark resolved'
+	String get resolve => 'Mark resolved';
+
+	/// en: 'Ignore (hide from agents too)'
+	String get ignore => 'Ignore (hide from agents too)';
+
+	/// en: 'Reopen'
+	String get reopen => 'Reopen';
+
+	/// en: 'Clear occurrences'
+	String get clear => 'Clear occurrences';
+
+	/// en: 'Clear this run'
+	String get clearRun => 'Clear this run';
+
+	/// en: 'Clear project'
+	String get clearProject => 'Clear project';
+
+	/// en: 'Open ${location}'
+	String openFile({required Object location}) => 'Open ${location}';
+
+	/// en: 'Show in terminal'
+	String get showInTerminal => 'Show in terminal';
+
+	/// en: 'Copy CLI command'
+	String get copyCommand => 'Copy CLI command';
+
+	/// en: 'Copied'
+	String get copied => 'Copied';
+
+	/// en: 'Open'
+	String get statusOpen => 'Open';
+
+	/// en: 'Resolved'
+	String get statusResolved => 'Resolved';
+
+	/// en: 'Ignored'
+	String get statusIgnored => 'Ignored';
+
+	/// en: 'Occurrences'
+	String get occurrences => 'Occurrences';
+
+	/// en: 'in ${n} runs'
+	String inRuns({required Object n}) => 'in ${n} runs';
+
+	/// en: 'First'
+	String get first => 'First';
+
+	/// en: 'Last'
+	String get last => 'Last';
+
+	/// en: 'Origin'
+	String get origin => 'Origin';
+
+	/// en: 'Stack'
+	String get sectionStack => 'Stack';
+
+	/// en: 'project frames highlighted · click opens the file'
+	String get stackHint => 'project frames highlighted · click opens the file';
+
+	/// en: 'Correlated log'
+	String get sectionCorrelated => 'Correlated log';
+
+	/// en: 'the closest JSON log before the error, same run'
+	String get correlatedHint => 'the closest JSON log before the error, same run';
+
+	/// en: 'none'
+	String get none => 'none';
+
+	/// en: 'Occurrences by run'
+	String get sectionRuns => 'Occurrences by run';
+
+	/// en: 'same key (cwd, command): this is how new and regression are computed'
+	String get runsHint => 'same key (cwd, command): this is how new and regression are computed';
+
+	/// en: 'Raw context'
+	String get sectionContext => 'Raw context';
+
+	/// en: 'terminal lines around the last occurrence'
+	String get contextHint => 'terminal lines around the last occurrence';
+
+	/// en: 'current'
+	String get current => 'current';
+
+	/// en: 'fingerprint = type + normalized message + ${location}'
+	String fingerprintHint({required Object location}) => 'fingerprint = type + normalized message + ${location}';
+
+	/// en: 'changed in working tree'
+	String get blameUncommitted => 'changed in working tree';
+
+	/// en: 'changed ${ago} (${sha})'
+	String blameCommit({required Object ago, required Object sha}) => 'changed ${ago} (${sha})';
+
+	/// en: 'just now'
+	String get justNow => 'just now';
+
+	/// en: '${n}m ago'
+	String minutesAgo({required Object n}) => '${n}m ago';
+
+	/// en: '${n}h ago'
+	String hoursAgo({required Object n}) => '${n}h ago';
+
+	/// en: '${n}d ago'
+	String daysAgo({required Object n}) => '${n}d ago';
+
+	/// en: 'Resolved. If it comes back in a later run it reappears as a regression.'
+	String get resolvedToast => 'Resolved. If it comes back in a later run it reappears as a regression.';
+
+	/// en: 'Ignored. Agents no longer see it (unless --include-ignored).'
+	String get ignoredToast => 'Ignored. Agents no longer see it (unless --include-ignored).';
+
+	/// en: 'Occurrences deleted. Triage rules are kept.'
+	String get clearedToast => 'Occurrences deleted. Triage rules are kept.';
+
+	/// en: 'by you'
+	String get byHuman => 'by you';
+
+	/// en: 'by agent'
+	String get byAgent => 'by agent';
+
+	/// en: '${type} · ${file}'
+	String caseTabTitle({required Object type, required Object file}) => '${type} · ${file}';
+
+	/// en: 'App'
+	String get srcApp => 'App';
+
+	/// en: 'Cockpit'
+	String get chipApp => 'Cockpit';
+}
+
+// Path: cockpit.panelView
+class Translations$cockpit$panelView$en {
+	Translations$cockpit$panelView$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Panels need the embedded web view, which is not available on Linux yet.'
+	String get unavailable => 'Panels need the embedded web view, which is not available on Linux yet.';
+
+	/// en: 'Open in browser'
+	String get openInBrowser => 'Open in browser';
+
+	/// en: 'Open as HTML'
+	String get openAsHtml => 'Open as HTML';
+}
+
+// Path: cockpit.agentGraph
+class Translations$cockpit$agentGraph$en {
+	Translations$cockpit$agentGraph$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Agents'
+	String get tabTitle => 'Agents';
+
+	/// en: 'New agent'
+	String get newAgent => 'New agent';
+
+	/// en: 'No agents in this workspace'
+	String get emptyTitle => 'No agents in this workspace';
+
+	/// en: 'Start an agent in a terminal or create one here. Drag from an agent's port to another agent to connect them.'
+	String get emptyHint => 'Start an agent in a terminal or create one here. Drag from an agent\'s port to another agent to connect them.';
+
+	/// en: 'Working'
+	String get statusWorking => 'Working';
+
+	/// en: 'Waiting'
+	String get statusWaiting => 'Waiting';
+
+	/// en: 'Idle'
+	String get statusIdle => 'Idle';
+
+	/// en: 'Messages: ${n}'
+	String messageCount({required Object n}) => 'Messages: ${n}';
+
+	/// en: 'Last: ${preview}'
+	String lastMessage({required Object preview}) => 'Last: ${preview}';
+
+	/// en: 'Connected'
+	String get linked => 'Connected';
+
+	/// en: 'Right-click to remove the connection'
+	String get removeLinkHint => 'Right-click to remove the connection';
+
+	/// en: 'Remove connection'
+	String get removeLink => 'Remove connection';
+
+	/// en: 'Drag to another agent to connect'
+	String get connectHint => 'Drag to another agent to connect';
+
+	/// en: 'Quick start'
+	String get quickStart => 'Quick start';
+
+	/// en: 'Shell'
+	String get shell => 'Shell';
+
+	/// en: 'Details'
+	String get tabDetails => 'Details';
+
+	/// en: 'Appearance'
+	String get tabAppearance => 'Appearance';
+
+	/// en: 'Agent'
+	String get tabAgent => 'Agent';
+
+	/// en: 'Terminal name'
+	String get name => 'Terminal name';
+
+	/// en: 'e.g. Reviewer'
+	String get namePlaceholder => 'e.g. Reviewer';
+
+	/// en: 'Another tab already uses this name. Names must be unique so `cockpit msg --to` can reach it.'
+	String get nameTaken => 'Another tab already uses this name. Names must be unique so `cockpit msg --to` can reach it.';
+
+	/// en: 'Command'
+	String get command => 'Command';
+
+	/// en: 'e.g. claude --model opus (empty = shell)'
+	String get commandPlaceholder => 'e.g. claude --model opus (empty = shell)';
+
+	/// en: 'Working directory'
+	String get cwd => 'Working directory';
+
+	/// en: 'Browse…'
+	String get browse => 'Browse…';
+
+	/// en: 'This folder does not exist.'
+	String get cwdMissing => 'This folder does not exist.';
+
+	/// en: 'Monitor activity'
+	String get monitor => 'Monitor activity';
+
+	/// en: 'Badge, sound and notification when a turn ends.'
+	String get monitorHint => 'Badge, sound and notification when a turn ends.';
+
+	/// en: 'Maestro'
+	String get maestro => 'Maestro';
+
+	/// en: 'Promotes this agent to maestro: it is connected to every agent on the canvas and coordinates them.'
+	String get maestroTooltip => 'Promotes this agent to maestro: it is connected to every agent on the canvas and coordinates them.';
+
+	/// en: '${name} is the current maestro and will be demoted.'
+	String maestroReplaces({required Object name}) => '${name} is the current maestro and will be demoted.';
+
+	/// en: 'Color'
+	String get color => 'Color';
+
+	/// en: 'Automatic'
+	String get colorAuto => 'Automatic';
+
+	/// en: 'Role / instructions'
+	String get role => 'Role / instructions';
+
+	/// en: 'Sent as its first message once the agent is ready.'
+	String get rolePlaceholder => 'Sent as its first message once the agent is ready.';
+
+	/// en: 'Initial task'
+	String get task => 'Initial task';
+
+	/// en: 'Sent right after the role.'
+	String get taskPlaceholder => 'Sent right after the role.';
+
+	/// en: 'Focus'
+	String get focus => 'Focus';
+
+	/// en: 'Rename'
+	String get rename => 'Rename';
+
+	/// en: 'Rename agent'
+	String get renameTitle => 'Rename agent';
+
+	/// en: 'Make maestro'
+	String get makeMaestro => 'Make maestro';
+
+	/// en: 'Remove maestro'
+	String get removeMaestro => 'Remove maestro';
+
+	/// en: 'Close tab'
+	String get closeTab => 'Close tab';
+
+	/// en: 'Remove from canvas'
+	String get removeFromCanvas => 'Remove from canvas';
+
+	/// en: 'Desktop apps'
+	String get desktopApps => 'Desktop apps';
+
+	/// en: 'desktop'
+	String get desktopBadge => 'desktop';
+
+	/// en: 'Online'
+	String get statusOnline => 'Online';
+
+	/// en: 'Offline'
+	String get statusOffline => 'Offline';
+
+	/// en: '${n} queued'
+	String queued({required Object n}) => '${n} queued';
+
+	/// en: 'Name'
+	String get agentName => 'Name';
+
+	/// en: 'Integration'
+	String get integration => 'Integration';
+
+	/// en: 'Cockpit adds an MCP server named "cockpit" to this file and saves a backup next to it. Other servers are not touched.'
+	String get integrationHint => 'Cockpit adds an MCP server named "cockpit" to this file and saves a backup next to it. Other servers are not touched.';
+
+	/// en: 'Add the Cockpit MCP server to ${app}'s config'
+	String integrationConsent({required Object app}) => 'Add the Cockpit MCP server to ${app}\'s config';
+
+	/// en: 'Restart ${app} if it was already open so it loads the Cockpit MCP server; then ask it to call wait_messages.'
+	String restartHint({required Object app}) => 'Restart ${app} if it was already open so it loads the Cockpit MCP server; then ask it to call wait_messages.';
+
+	late final Translations$cockpit$agentGraph$integrationError$en integrationError = Translations$cockpit$agentGraph$integrationError$en.internal(_root);
+}
+
+// Path: settings.language
+class Translations$settings$language$en {
+	Translations$settings$language$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Language'
+	String get title => 'Language';
+
+	/// en: 'System'
+	String get system => 'System';
+
+	/// en: 'English'
+	String get english => 'English';
+
+	/// en: 'Português (BR)'
+	String get portugueseBr => 'Português (BR)';
+
+	/// en: 'Español'
+	String get spanish => 'Español';
+}
+
+// Path: settings.page
+class Translations$settings$page$en {
+	Translations$settings$page$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final Translations$settings$page$header$en header = Translations$settings$page$header$en.internal(_root);
+	late final Translations$settings$page$nav$en nav = Translations$settings$page$nav$en.internal(_root);
+	late final Translations$settings$page$general$en general = Translations$settings$page$general$en.internal(_root);
+	late final Translations$settings$page$diagnostics$en diagnostics = Translations$settings$page$diagnostics$en.internal(_root);
+	late final Translations$settings$page$storage$en storage = Translations$settings$page$storage$en.internal(_root);
+	late final Translations$settings$page$terminal$en terminal = Translations$settings$page$terminal$en.internal(_root);
+	late final Translations$settings$page$appearance$en appearance = Translations$settings$page$appearance$en.internal(_root);
+	late final Translations$settings$page$notifications$en notifications = Translations$settings$page$notifications$en.internal(_root);
+	late final Translations$settings$page$shortcuts$en shortcuts = Translations$settings$page$shortcuts$en.internal(_root);
+	late final Translations$settings$page$languages$en languages = Translations$settings$page$languages$en.internal(_root);
+	late final Translations$settings$page$automations$en automations = Translations$settings$page$automations$en.internal(_root);
+}
+
+// Path: settings.remoteHosts
+class Translations$settings$remoteHosts$en {
+	Translations$settings$remoteHosts$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Remote hosts'
+	String get title => 'Remote hosts';
+
+	/// en: 'Machines you reach over SSH. Adding a host here is the same as adding one from the workspace "+" menu.'
+	String get description => 'Machines you reach over SSH. Adding a host here is the same as adding one from the workspace "+" menu.';
+
+	/// en: 'No remote hosts yet.'
+	String get empty => 'No remote hosts yet.';
+
+	/// en: 'Add host'
+	String get add => 'Add host';
+
+	/// en: 'Edit'
+	String get edit => 'Edit';
+
+	/// en: 'Reconnect'
+	String get reconnect => 'Reconnect';
+
+	/// en: 'Remove'
+	String get remove => 'Remove';
+
+	/// en: 'Remove host'
+	String get removeTitle => 'Remove host';
+
+	/// en: 'Remove "${name}" and all its workspaces? Nothing is deleted on the host itself.'
+	String removeMessage({required Object name}) => 'Remove "${name}" and all its workspaces? Nothing is deleted on the host itself.';
+
+	/// en: '${count} workspace(s)'
+	String workspacesCount({required Object count}) => '${count} workspace(s)';
+
+	/// en: 'This device's key'
+	String get deviceKeyTitle => 'This device\'s key';
+
+	/// en: 'Add this public key to ~/.ssh/authorized_keys on the host so this device can connect.'
+	String get deviceKeyDesc => 'Add this public key to ~/.ssh/authorized_keys on the host so this device can connect.';
+
+	/// en: 'Copy public key'
+	String get deviceKeyCopy => 'Copy public key';
+
+	/// en: 'Public key copied'
+	String get deviceKeyCopied => 'Public key copied';
+
+	/// en: 'Connected'
+	String get statusConnected => 'Connected';
+
+	/// en: 'Connecting…'
+	String get statusConnecting => 'Connecting…';
+
+	/// en: 'Reconnecting…'
+	String get statusReconnecting => 'Reconnecting…';
+
+	/// en: 'Offline'
+	String get statusOffline => 'Offline';
+
+	/// en: 'Not connected'
+	String get statusIdle => 'Not connected';
+
+	/// en: 'How it works'
+	String get helpTitle => 'How it works';
+
+	/// en: 'Cockpit connects to your machine over SSH and talks to a small server that runs the terminals, files and git there. The host must have Cockpit (desktop) or the cockpit-server installed and running, and this device’s public key added to its ~/.ssh/authorized_keys.'
+	String get helpBody => 'Cockpit connects to your machine over SSH and talks to a small server that runs the terminals, files and git there. The host must have Cockpit (desktop) or the cockpit-server installed and running, and this device’s public key added to its ~/.ssh/authorized_keys.';
+}
+
+// Path: automation.error
+class Translations$automation$error$en {
+	Translations$automation$error$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: '${harness} is not installed or is not on PATH.'
+	String unavailable({required Object harness}) => '${harness} is not installed or is not on PATH.';
+
+	/// en: 'Model "${model}" is not available for ${harness}. Choose another model in Settings.'
+	String modelUnavailable({required Object model, required Object harness}) => 'Model "${model}" is not available for ${harness}. Choose another model in Settings.';
+
+	/// en: '${harness}: ${detail}'
+	String authentication({required Object harness, required Object detail}) => '${harness}: ${detail}';
+
+	/// en: '${harness} did not respond within ${seconds} seconds.'
+	String timeout({required Object harness, required Object seconds}) => '${harness} did not respond within ${seconds} seconds.';
+
+	/// en: 'Commit message generation was cancelled.'
+	String get cancelled => 'Commit message generation was cancelled.';
+
+	/// en: '${harness}: ${detail}'
+	String process({required Object harness, required Object detail}) => '${harness}: ${detail}';
+
+	/// en: '${harness} could not generate a commit message.'
+	String processNoDetail({required Object harness}) => '${harness} could not generate a commit message.';
+
+	/// en: 'The automation returned an empty commit message.'
+	String get invalidResponse => 'The automation returned an empty commit message.';
+
+	/// en: 'Another commit message is already being generated.'
+	String get busy => 'Another commit message is already being generated.';
+
+	/// en: 'The automation could not generate a commit message.'
+	String get unknown => 'The automation could not generate a commit message.';
+
+	/// en: 'No workspace selected.'
+	String get noWorkspace => 'No workspace selected.';
+
+	/// en: 'File is outside the workspace roots.'
+	String get fileOutsideWorkspace => 'File is outside the workspace roots.';
+
+	/// en: 'Could not read the file: ${detail}'
+	String fileUnreadable({required Object detail}) => 'Could not read the file: ${detail}';
+
+	/// en: 'A commit message cannot be generated for a binary file.'
+	String get binaryFile => 'A commit message cannot be generated for a binary file.';
+
+	/// en: 'There are no changes to describe for this file.'
+	String get noFileChanges => 'There are no changes to describe for this file.';
+
+	/// en: 'There are no staged changes to describe.'
+	String get noStagedChanges => 'There are no staged changes to describe.';
+
+	/// en: 'Staged changes belong to multiple repositories. Generate them separately.'
+	String get multipleRepositories => 'Staged changes belong to multiple repositories. Generate them separately.';
+
+	/// en: 'Could not read the diff.'
+	String get diffUnavailable => 'Could not read the diff.';
+
+	/// en: 'Configure a commit message harness in Settings.'
+	String get notConfigured => 'Configure a commit message harness in Settings.';
+}
+
+// Path: fileOperation.error
+class Translations$fileOperation$error$en {
+	Translations$fileOperation$error$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Already exists: “${name}”.'
+	String alreadyExists({required Object name}) => 'Already exists: “${name}”.';
+
+	/// en: 'Not found: “${name}”.'
+	String notFound({required Object name}) => 'Not found: “${name}”.';
+
+	/// en: 'Invalid path.'
+	String get invalidPath => 'Invalid path.';
+
+	/// en: 'The name cannot be empty.'
+	String get emptyName => 'The name cannot be empty.';
+
+	/// en: 'No workspace selected.'
+	String get noWorkspace => 'No workspace selected.';
+
+	/// en: 'Cannot move a folder into itself.'
+	String get cannotMoveIntoItself => 'Cannot move a folder into itself.';
+
+	/// en: 'Clipboard is empty.'
+	String get clipboardEmpty => 'Clipboard is empty.';
+
+	/// en: 'This tab is not a scratch file.'
+	String get notScratchTab => 'This tab is not a scratch file.';
+
+	/// en: 'Could not write the file.'
+	String get writeFailed => 'Could not write the file.';
+
+	/// en: 'Empty formatter command.'
+	String get formatterEmptyCommand => 'Empty formatter command.';
+
+	/// en: 'Formatter command must include the %FILE% placeholder.'
+	String get formatterMissingPlaceholder => 'Formatter command must include the %FILE% placeholder.';
+
+	/// en: 'Formatter timed out.'
+	String get formatterTimeout => 'Formatter timed out.';
+
+	/// en: 'Formatter exited with ${code}.'
+	String formatterExitCode({required Object code}) => 'Formatter exited with ${code}.';
+
+	/// en: 'The formatter could not run.'
+	String get formatterFailed => 'The formatter could not run.';
+
+	/// en: '${detail}'
+	String osFailure({required Object detail}) => '${detail}';
+
+	/// en: 'Name cannot contain “/”.'
+	String get nameHasSlash => 'Name cannot contain “/”.';
+
+	/// en: 'Invalid name.'
+	String get invalidName => 'Invalid name.';
+
+	/// en: 'Dropping files into a remote workspace is not supported yet.'
+	String get remoteDropUnsupported => 'Dropping files into a remote workspace is not supported yet.';
+}
+
+// Path: theme.error
+class Translations$theme$error$en {
+	Translations$theme$error$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Could not read or write the theme file.'
+	String get io => 'Could not read or write the theme file.';
+
+	/// en: 'Could not read or write the theme file: ${detail}'
+	String ioDetail({required Object detail}) => 'Could not read or write the theme file: ${detail}';
+
+	/// en: 'This file is not valid JSON: ${detail}'
+	String malformedJson({required Object detail}) => 'This file is not valid JSON: ${detail}';
+
+	/// en: 'This file is not a valid theme.'
+	String get invalidTheme => 'This file is not a valid theme.';
+
+	/// en: 'This theme uses the id of a built-in theme. Change "id" in the file and import again.'
+	String get reservedId => 'This theme uses the id of a built-in theme. Change "id" in the file and import again.';
+
+	/// en: 'Expected an object at "${field}".'
+	String notAnObject({required Object field}) => 'Expected an object at "${field}".';
+
+	/// en: 'Missing required field "${field}".'
+	String missingField({required Object field}) => 'Missing required field "${field}".';
+
+	/// en: '"${value}" at "${field}" is not a color. Use #RGB, #RRGGBB or #RRGGBBAA.'
+	String badColor({required Object value, required Object field}) => '"${value}" at "${field}" is not a color. Use #RGB, #RRGGBB or #RRGGBBAA.';
+
+	/// en: 'Unknown base theme "${value}" in "extends".'
+	String unknownBase({required Object value}) => 'Unknown base theme "${value}" in "extends".';
+
+	/// en: 'The theme declares no variant. Add "dark", "light" or both under "variants".'
+	String get noVariants => 'The theme declares no variant. Add "dark", "light" or both under "variants".';
+}
+
+// Path: cockpit.httpView.error
+class Translations$cockpit$httpView$error$en {
+	Translations$cockpit$httpView$error$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Request failed'
+	String get title => 'Request failed';
+
+	/// en: 'No request found at the cursor.'
+	String get noRequest => 'No request found at the cursor.';
+
+	/// en: 'Invalid URL: ${url}'
+	String invalidUrl({required Object url}) => 'Invalid URL: ${url}';
+
+	/// en: 'Variable {{${name}}} has no value. Declare it with @${name} = … in this file.'
+	String unresolvedVariable({required Object name}) => 'Variable {{${name}}} has no value. Declare it with @${name} = … in this file.';
+
+	/// en: 'Body file not found: ${path}'
+	String bodyFileMissing({required Object path}) => 'Body file not found: ${path}';
+
+	/// en: 'Could not read the body file ${path}: ${detail}'
+	String bodyFileUnreadable({required Object path, required Object detail}) => 'Could not read the body file ${path}: ${detail}';
+
+	/// en: 'Could not reach the server: ${detail}'
+	String connectionFailed({required Object detail}) => 'Could not reach the server: ${detail}';
+
+	/// en: 'Could not reach the server.'
+	String get connectionFailedNoDetail => 'Could not reach the server.';
+
+	/// en: 'The request timed out after ${seconds}s.'
+	String timeout({required Object seconds}) => 'The request timed out after ${seconds}s.';
+
+	/// en: 'The response is larger than the ${bytes} byte limit.'
+	String responseTooLarge({required Object bytes}) => 'The response is larger than the ${bytes} byte limit.';
+}
+
+// Path: cockpit.kanbanView.deleteColumnDialog
+class Translations$cockpit$kanbanView$deleteColumnDialog$en {
+	Translations$cockpit$kanbanView$deleteColumnDialog$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Delete “${name}”?'
+	String title({required Object name}) => 'Delete “${name}”?';
+
+	/// en: 'This column has ${count}. Choose what happens to them.'
+	String message({required Object count}) => 'This column has ${count}. Choose what happens to them.';
+
+	/// en: 'Move to the previous column'
+	String get moveCards => 'Move to the previous column';
+
+	/// en: 'Delete with the column'
+	String get deleteAll => 'Delete with the column';
+
+	/// en: 'This column is empty.'
+	String get emptyMessage => 'This column is empty.';
+}
+
+// Path: cockpit.gallery.dbQuery
+class Translations$cockpit$gallery$dbQuery$en {
+	Translations$cockpit$gallery$dbQuery$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Database query'
+	String get title => 'Database query';
+
+	/// en: 'SQL editor with a result grid, using one of the registered connections.'
+	String get description => 'SQL editor with a result grid, using one of the registered connections.';
+}
+
+// Path: cockpit.gallery.kanban
+class Translations$cockpit$gallery$kanban$en {
+	Translations$cockpit$gallery$kanban$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Kanban board'
+	String get title => 'Kanban board';
+
+	/// en: 'Columns and cards stored as plain markdown. Drag, edit and comment.'
+	String get description => 'Columns and cards stored as plain markdown. Drag, edit and comment.';
+}
+
+// Path: cockpit.gallery.layout
+class Translations$cockpit$gallery$layout$en {
+	Translations$cockpit$gallery$layout$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Pane layout'
+	String get title => 'Pane layout';
+
+	/// en: 'Terminals and splits to open in one go, like tmuxinator. Can run automatically on new worktrees.'
+	String get description => 'Terminals and splits to open in one go, like tmuxinator. Can run automatically on new worktrees.';
+}
+
+// Path: cockpit.gallery.httpRequest
+class Translations$cockpit$gallery$httpRequest$en {
+	Translations$cockpit$gallery$httpRequest$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'HTTP requests'
+	String get title => 'HTTP requests';
+
+	/// en: 'Write requests in a file and run them with the response next to it.'
+	String get description => 'Write requests in a file and run them with the response next to it.';
+}
+
+// Path: cockpit.gallery.html
+class Translations$cockpit$gallery$html$en {
+	Translations$cockpit$gallery$html$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'HTML view'
+	String get title => 'HTML view';
+
+	/// en: 'A page the agent writes and Cockpit renders directly: mind maps, diagrams, charts, whatever you need.'
+	String get description => 'A page the agent writes and Cockpit renders directly: mind maps, diagrams, charts, whatever you need.';
+}
+
+// Path: cockpit.gallery.tasks
+class Translations$cockpit$gallery$tasks$en {
+	Translations$cockpit$gallery$tasks$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Tasks'
+	String get title => 'Tasks';
+
+	/// en: 'Commands to run from the Tasks panel, such as the dev server, tests and build. Stored in .cockpit/tasks.json.'
+	String get description => 'Commands to run from the Tasks panel, such as the dev server, tests and build. Stored in .cockpit/tasks.json.';
+}
+
+// Path: cockpit.gallery.notebook
+class Translations$cockpit$gallery$notebook$en {
+	Translations$cockpit$gallery$notebook$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Notebook'
+	String get title => 'Notebook';
+
+	/// en: 'A folder of short notes with tags. The agent writes, you read and edit. Also opens in Obsidian.'
+	String get description => 'A folder of short notes with tags. The agent writes, you read and edit. Also opens in Obsidian.';
+}
+
+// Path: cockpit.gallery.workspaceEnv
+class Translations$cockpit$gallery$workspaceEnv$en {
+	Translations$cockpit$gallery$workspaceEnv$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Workspace env'
+	String get title => 'Workspace env';
+
+	/// en: 'Variables injected into every terminal of this workspace. Put API tokens or logins here instead of pasting them into the agent's prompt. Kept out of git.'
+	String get description => 'Variables injected into every terminal of this workspace. Put API tokens or logins here instead of pasting them into the agent\'s prompt. Kept out of git.';
+}
+
+// Path: cockpit.gallery.panel
+class Translations$cockpit$gallery$panel$en {
+	Translations$cockpit$gallery$panel$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Panel'
+	String get title => 'Panel';
+
+	/// en: 'An HTML page with a bridge to the app: its buttons run Cockpit CLI and shell commands on this machine. A playground for quick dashboards.'
+	String get description => 'An HTML page with a bridge to the app: its buttons run Cockpit CLI and shell commands on this machine. A playground for quick dashboards.';
+}
+
+// Path: cockpit.notebook.format
+class Translations$cockpit$notebook$format$en {
+	Translations$cockpit$notebook$format$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Bold (⌘B)'
+	String get bold => 'Bold (⌘B)';
+
+	/// en: 'Italic (⌘I)'
+	String get italic => 'Italic (⌘I)';
+
+	/// en: 'Strikethrough'
+	String get strike => 'Strikethrough';
+
+	/// en: 'Heading 1'
+	String get heading1 => 'Heading 1';
+
+	/// en: 'Heading 2'
+	String get heading2 => 'Heading 2';
+
+	/// en: 'Heading 3'
+	String get heading3 => 'Heading 3';
+
+	/// en: 'Bullet list'
+	String get bullets => 'Bullet list';
+
+	/// en: 'Numbered list'
+	String get numbered => 'Numbered list';
+
+	/// en: 'Checklist'
+	String get checklist => 'Checklist';
+
+	/// en: 'Quote'
+	String get quote => 'Quote';
+
+	/// en: 'Inline code (⌘E)'
+	String get code => 'Inline code (⌘E)';
+
+	/// en: 'Code block'
+	String get codeBlock => 'Code block';
+
+	/// en: 'Link (⌘K)'
+	String get link => 'Link (⌘K)';
+
+	/// en: 'Divider'
+	String get rule => 'Divider';
+
+	/// en: 'Link to a note ([[…]])'
+	String get noteLink => 'Link to a note ([[…]])';
+
+	/// en: 'Search notes'
+	String get noteLinkSearch => 'Search notes';
+
+	/// en: 'Insert image…'
+	String get image => 'Insert image…';
+}
+
+// Path: cockpit.agentGraph.integrationError
+class Translations$cockpit$agentGraph$integrationError$en {
+	Translations$cockpit$agentGraph$integrationError$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: '${path} is not plain JSON/TOML that Cockpit can edit safely (comments or a different layout). Nothing was changed.'
+	String invalidConfig({required Object path}) => '${path} is not plain JSON/TOML that Cockpit can edit safely (comments or a different layout). Nothing was changed.';
+
+	/// en: 'The Cockpit CLI is not installed yet (${path}). Restart Cockpit and try again.'
+	String cliMissing({required Object path}) => 'The Cockpit CLI is not installed yet (${path}). Restart Cockpit and try again.';
+
+	/// en: 'Could not update the config: ${detail}'
+	String writeFailed({required Object detail}) => 'Could not update the config: ${detail}';
+}
+
+// Path: settings.page.header
+class Translations$settings$page$header$en {
+	Translations$settings$page$header$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Back'
+	String get back => 'Back';
+
+	/// en: 'Settings'
+	String get title => 'Settings';
+}
+
+// Path: settings.page.nav
+class Translations$settings$page$nav$en {
+	Translations$settings$page$nav$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'General'
+	String get general => 'General';
+
+	/// en: 'Appearance'
+	String get appearance => 'Appearance';
+
+	/// en: 'Terminal'
+	String get terminal => 'Terminal';
+
+	/// en: 'Language'
+	String get language => 'Language';
+
+	/// en: 'Shortcuts'
+	String get shortcuts => 'Shortcuts';
+
+	/// en: 'Notifications'
+	String get notifications => 'Notifications';
+
+	/// en: 'Automations'
+	String get automations => 'Automations';
+
+	/// en: 'Remote hosts'
+	String get remoteHosts => 'Remote hosts';
+}
+
+// Path: settings.page.general
+class Translations$settings$page$general$en {
+	Translations$settings$page$general$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Editor'
+	String get sectionEditor => 'Editor';
+
+	/// en: 'Engine'
+	String get editorEngineTitle => 'Engine';
+
+	/// en: 'Cockpit (default)'
+	String get editorEngineCockpit => 'Cockpit (default)';
+
+	/// en: 'Neovim'
+	String get editorEngineNeovim => 'Neovim';
+
+	/// en: 'Looking for Neovim…'
+	String get neovimChecking => 'Looking for Neovim…';
+
+	/// en: 'Neovim was not found in your shell PATH.'
+	String get neovimNotFound => 'Neovim was not found in your shell PATH.';
+
+	/// en: 'Check again'
+	String get neovimRefresh => 'Check again';
+
+	/// en: 'Show Cockpit terminal'
+	String get showCockpitTitle => 'Show Cockpit terminal';
+
+	/// en: 'Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.'
+	String get showCockpitDesc => 'Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.';
+
+	/// en: 'Launch at login'
+	String get launchAtStartupTitle => 'Launch at login';
+
+	/// en: 'Start Cockpit automatically when you sign in to your computer.'
+	String get launchAtStartupDesc => 'Start Cockpit automatically when you sign in to your computer.';
+
+	/// en: 'Updates'
+	String get sectionUpdates => 'Updates';
+
+	/// en: 'Check for updates'
+	String get checkUpdatesTitle => 'Check for updates';
+
+	/// en: 'How often Cockpit should look for new versions.'
+	String get checkUpdatesDesc => 'How often Cockpit should look for new versions.';
+
+	late final Translations$settings$page$general$updateFrequency$en updateFrequency = Translations$settings$page$general$updateFrequency$en.internal(_root);
+
+	/// en: 'Developer mode'
+	String get developerModeTitle => 'Developer mode';
+
+	/// en: 'Records Cockpit’s own errors and warnings in a separate Telemetry store (the “Cockpit” chip) and turns on performance metrics. Only useful to whoever maintains the app.'
+	String get developerModeDesc => 'Records Cockpit’s own errors and warnings in a separate Telemetry store (the “Cockpit” chip) and turns on performance metrics. Only useful to whoever maintains the app.';
+}
+
+// Path: settings.page.diagnostics
+class Translations$settings$page$diagnostics$en {
+	Translations$settings$page$diagnostics$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Diagnostics'
+	String get sectionTitle => 'Diagnostics';
+
+	/// en: 'Log file'
+	String get logFileTitle => 'Log file';
+
+	/// en: 'Errors and startup events are recorded here, kept for ${days} days. ${path}'
+	String logFileDesc({required Object days, required Object path}) => 'Errors and startup events are recorded here, kept for ${days} days.\n${path}';
+
+	/// en: 'unavailable'
+	String get unavailable => 'unavailable';
+
+	/// en: 'Reveal'
+	String get reveal => 'Reveal';
+
+	/// en: 'Report a problem'
+	String get reportTitle => 'Report a problem';
+
+	/// en: 'Opens a pre-filled issue with your version, OS and recent log. Nothing is sent automatically — you review it first.'
+	String get reportDesc => 'Opens a pre-filled issue with your version, OS and recent log. Nothing is sent automatically — you review it first.';
+
+	/// en: 'Report…'
+	String get reportButton => 'Report…';
+
+	/// en: 'Problem report'
+	String get reportDialogTitle => 'Problem report';
+
+	/// en: 'Reported manually from Settings.'
+	String get reportDialogError => 'Reported manually from Settings.';
+
+	/// en: 'Describe what went wrong in the issue. The recent log is included below and in "Copy details".'
+	String get reportDialogDescription => 'Describe what went wrong in the issue. The recent log is included below and in "Copy details".';
+}
+
+// Path: settings.page.storage
+class Translations$settings$page$storage$en {
+	Translations$settings$page$storage$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Storage'
+	String get sectionTitle => 'Storage';
+
+	/// en: 'Storage location'
+	String get locationTitle => 'Storage location';
+
+	/// en: 'Cockpit keeps its projects, layouts and settings here. Point it at a synced folder to back it up. ${root}'
+	String locationDesc({required Object root}) => 'Cockpit keeps its projects, layouts and settings here. Point it at a synced folder to back it up.\n${root}';
+
+	/// en: 'Use default'
+	String get useDefault => 'Use default';
+
+	/// en: 'Working…'
+	String get working => 'Working…';
+
+	/// en: 'Change…'
+	String get change => 'Change…';
+
+	/// en: 'Reset Cockpit'
+	String get resetTitle => 'Reset Cockpit';
+
+	/// en: 'Delete all local data — projects, layouts, settings and terminal history — and return to the default location.'
+	String get resetDesc => 'Delete all local data — projects, layouts, settings and terminal history — and return to the default location.';
+
+	/// en: 'Reset…'
+	String get resetButton => 'Reset…';
+
+	/// en: 'Reset'
+	String get resetConfirm => 'Reset';
+
+	/// en: 'Reset Cockpit?'
+	String get resetDialogTitle => 'Reset Cockpit?';
+
+	/// en: 'This permanently deletes all local Cockpit data — projects, layouts, settings and terminal history. This cannot be undone. Cockpit will close so you can start fresh.'
+	String get resetDialogContent => 'This permanently deletes all local Cockpit data — projects, layouts, settings and terminal history. This cannot be undone. Cockpit will close so you can start fresh.';
+
+	/// en: 'Restart required'
+	String get restartRequiredTitle => 'Restart required';
+
+	/// en: 'Cockpit will use this folder from the next launch: ${path}'
+	String restartChangeFolderMessage({required Object path}) => 'Cockpit will use this folder from the next launch:\n${path}';
+
+	/// en: 'Cockpit will use the default system location from the next launch. Your data in the custom folder is left untouched.'
+	String get restartUseDefaultMessage => 'Cockpit will use the default system location from the next launch. Your data in the custom folder is left untouched.';
+
+	/// en: 'All Cockpit data was cleared. Restart to start fresh.'
+	String get restartResetMessage => 'All Cockpit data was cleared. Restart to start fresh.';
+
+	/// en: 'Later'
+	String get later => 'Later';
+
+	/// en: 'Quit Cockpit'
+	String get quitCockpit => 'Quit Cockpit';
+
+	/// en: 'Choose a folder for Cockpit data'
+	String get chooseFolderDialogTitle => 'Choose a folder for Cockpit data';
+}
+
+// Path: settings.page.terminal
+class Translations$settings$page$terminal$en {
+	Translations$settings$page$terminal$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Default terminal'
+	String get sectionDefaultTerminal => 'Default terminal';
+
+	/// en: 'Engine'
+	String get engineTitle => 'Engine';
+
+	/// en: 'Used by new terminal tabs and task output buffers. Open tabs keep their current engine.'
+	String get engineDesc => 'Used by new terminal tabs and task output buffers. Open tabs keep their current engine.';
+
+	/// en: 'Shell'
+	String get shellTitle => 'Shell';
+
+	/// en: 'Which shell new terminal tabs open. The arrow next to + still opens any other one, just for that tab.'
+	String get shellDesc => 'Which shell new terminal tabs open. The arrow next to + still opens any other one, just for that tab.';
+
+	/// en: 'No WSL distros found. Install one (wsl.exe --install) and restart Cockpit to see it listed here.'
+	String get noWslMessage => 'No WSL distros found. Install one (wsl.exe --install) and restart Cockpit to see it listed here.';
+
+	/// en: 'Behavior'
+	String get sectionBehavior => 'Behavior';
+
+	/// en: 'Close tab when the shell exits'
+	String get closeOnExitTitle => 'Close tab when the shell exits';
+
+	/// en: 'When a shell ends on its own (exit, Ctrl-D), close its tab instead of leaving a dead terminal.'
+	String get closeOnExitDesc => 'When a shell ends on its own (exit, Ctrl-D), close its tab instead of leaving a dead terminal.';
+}
+
+// Path: settings.page.appearance
+class Translations$settings$page$appearance$en {
+	Translations$settings$page$appearance$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Theme'
+	String get sectionTheme => 'Theme';
+
+	/// en: 'Theme'
+	String get themeTitle => 'Theme';
+
+	/// en: 'App colors, code highlighting and terminal palette.'
+	String get themeDesc => 'App colors, code highlighting and terminal palette.';
+
+	/// en: 'Mode'
+	String get modeTitle => 'Mode';
+
+	/// en: 'Which variant of the theme to use.'
+	String get modeDesc => 'Which variant of the theme to use.';
+
+	/// en: '"${theme}" only ships a dark variant, so this has no effect.'
+	String modeOnlyDark({required Object theme}) => '"${theme}" only ships a dark variant, so this has no effect.';
+
+	/// en: '"${theme}" only ships a light variant, so this has no effect.'
+	String modeOnlyLight({required Object theme}) => '"${theme}" only ships a light variant, so this has no effect.';
+
+	/// en: 'Theme file'
+	String get themeFileTitle => 'Theme file';
+
+	/// en: 'Import a theme from a JSON file, or export the active one.'
+	String get themeFileDesc => 'Import a theme from a JSON file, or export the active one.';
+
+	/// en: 'Code'
+	String get previewCode => 'Code';
+
+	/// en: 'Terminal'
+	String get previewTerminal => 'Terminal';
+
+	/// en: 'System'
+	String get themeSystem => 'System';
+
+	/// en: 'Light'
+	String get themeLight => 'Light';
+
+	/// en: 'Dark'
+	String get themeDark => 'Dark';
+
+	/// en: 'Fonts'
+	String get sectionFonts => 'Fonts';
+
+	/// en: 'Interface font'
+	String get interfaceFontTitle => 'Interface font';
+
+	/// en: 'Used across the whole app. Empty = system default.'
+	String get interfaceFontDesc => 'Used across the whole app. Empty = system default.';
+
+	/// en: 'Interface size'
+	String get interfaceSizeTitle => 'Interface size';
+
+	/// en: 'Code font'
+	String get codeFontTitle => 'Code font';
+
+	/// en: 'Code and diffs. Empty = system default.'
+	String get codeFontDesc => 'Code and diffs. Empty = system default.';
+
+	/// en: 'Code size'
+	String get codeSizeTitle => 'Code size';
+
+	/// en: 'Terminal font'
+	String get terminalFontTitle => 'Terminal font';
+
+	/// en: 'Terminal only. Empty = system default.'
+	String get terminalFontDesc => 'Terminal only. Empty = system default.';
+
+	/// en: 'Terminal size'
+	String get terminalSizeTitle => 'Terminal size';
+
+	/// en: 'Off = follows the code size.'
+	String get terminalSizeDesc => 'Off = follows the code size.';
+
+	/// en: 'Follow code size'
+	String get terminalSizeInherit => 'Follow code size';
+
+	/// en: 'Terminal weight'
+	String get terminalWeightTitle => 'Terminal weight';
+
+	/// en: 'Low-density screens render strokes heavier. Auto lightens them there and leaves Retina untouched.'
+	String get terminalWeightDesc => 'Low-density screens render strokes heavier. Auto lightens them there and leaves Retina untouched.';
+
+	/// en: 'Auto (by screen)'
+	String get terminalWeightAuto => 'Auto (by screen)';
+
+	/// en: 'Light'
+	String get terminalWeightLight => 'Light';
+
+	/// en: 'Normal'
+	String get terminalWeightNormal => 'Normal';
+
+	/// en: 'Medium'
+	String get terminalWeightMedium => 'Medium';
+
+	/// en: 'Semibold'
+	String get terminalWeightSemiBold => 'Semibold';
+
+	/// en: 'Conversation'
+	String get sectionConversation => 'Conversation';
+
+	/// en: 'Pin user message'
+	String get pinUserMessageTitle => 'Pin user message';
+
+	/// en: 'The question stays fixed at the top while the answer scrolls.'
+	String get pinUserMessageDesc => 'The question stays fixed at the top while the answer scrolls.';
+
+	/// en: 'Import…'
+	String get importTheme => 'Import…';
+
+	/// en: 'Export…'
+	String get exportTheme => 'Export…';
+
+	/// en: 'Remove'
+	String get deleteTheme => 'Remove';
+
+	/// en: 'Pick a theme file'
+	String get importThemeDialog => 'Pick a theme file';
+
+	/// en: 'Save theme as'
+	String get exportThemeDialog => 'Save theme as';
+
+	/// en: 'Theme "${name}" imported.'
+	String themeImported({required Object name}) => 'Theme "${name}" imported.';
+
+	/// en: 'Theme saved.'
+	String get themeExported => 'Theme saved.';
+
+	/// en: 'Theme removed.'
+	String get themeDeleted => 'Theme removed.';
+
+	/// en: 'Choose a font'
+	String get fontPickerTitle => 'Choose a font';
+
+	/// en: 'Search fonts'
+	String get fontPickerSearch => 'Search fonts';
+
+	/// en: 'No matching font found on this machine.'
+	String get fontPickerEmpty => 'No matching font found on this machine.';
+
+	/// en: 'included'
+	String get fontPickerBundled => 'included';
+
+	/// en: 'Not listed? Type the exact family name.'
+	String get fontPickerCustom => 'Not listed? Type the exact family name.';
+
+	/// en: 'Family name'
+	String get fontPickerCustomHint => 'Family name';
+
+	/// en: 'Use'
+	String get fontPickerUse => 'Use';
+
+	/// en: 'Default'
+	String get fontPickerDefault => 'Default';
+
+	/// en: 'Not found on this machine — falling back.'
+	String get fontMissing => 'Not found on this machine — falling back.';
+
+	/// en: 'Layout'
+	String get sectionLayout => 'Layout';
+
+	/// en: 'Swap side panels'
+	String get swapPanelsTitle => 'Swap side panels';
+
+	/// en: 'Puts workspaces on the right and files, search, git and database on the left.'
+	String get swapPanelsDesc => 'Puts workspaces on the right and files, search, git and database on the left.';
+}
+
+// Path: settings.page.notifications
+class Translations$settings$page$notifications$en {
+	Translations$settings$page$notifications$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Notifications'
+	String get sectionTitle => 'Notifications';
+
+	/// en: 'Enable notifications'
+	String get enableTitle => 'Enable notifications';
+
+	/// en: 'Alert me when an agent finishes a turn and the window is not focused.'
+	String get enableDesc => 'Alert me when an agent finishes a turn and the window is not focused.';
+
+	/// en: 'System permission'
+	String get systemPermissionTitle => 'System permission';
+
+	/// en: 'Cockpit is allowed to send notifications.'
+	String get grantedDesc => 'Cockpit is allowed to send notifications.';
+
+	/// en: 'macOS has not granted notification access yet.'
+	String get notGrantedDesc => 'macOS has not granted notification access yet.';
+
+	/// en: 'Granted'
+	String get granted => 'Granted';
+
+	/// en: 'Request permission'
+	String get requestPermission => 'Request permission';
+
+	/// en: 'Sounds'
+	String get soundsTitle => 'Sounds';
+
+	/// en: 'Volume'
+	String get soundVolumeTitle => 'Volume';
+
+	/// en: 'Turn completed'
+	String get soundTurnDone => 'Turn completed';
+
+	/// en: 'An agent finished its turn.'
+	String get soundTurnDoneDesc => 'An agent finished its turn.';
+
+	/// en: 'Action required'
+	String get soundActionRequired => 'Action required';
+
+	/// en: 'An agent is waiting for your approval or answer.'
+	String get soundActionRequiredDesc => 'An agent is waiting for your approval or answer.';
+
+	/// en: 'Default'
+	String get soundDefault => 'Default';
+
+	/// en: 'Custom: ${name}'
+	String soundCustom({required Object name}) => 'Custom: ${name}';
+
+	/// en: 'Choose file'
+	String get soundChooseFile => 'Choose file';
+
+	/// en: 'Reset to default'
+	String get soundReset => 'Reset to default';
+
+	/// en: 'Also play when this tab is active'
+	String get soundOnActiveTab => 'Also play when this tab is active';
+
+	/// en: 'Preview'
+	String get soundPreview => 'Preview';
+}
+
+// Path: settings.page.shortcuts
+class Translations$settings$page$shortcuts$en {
+	Translations$settings$page$shortcuts$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Keyboard shortcuts are not customizable yet.'
+	String get notCustomizable => 'Keyboard shortcuts are not customizable yet.';
+}
+
+// Path: settings.page.languages
+class Translations$settings$page$languages$en {
+	Translations$settings$page$languages$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'FORMATTING'
+	String get sectionFormatting => 'FORMATTING';
+
+	/// en: 'Format on save'
+	String get formatOnSaveTitle => 'Format on save';
+
+	/// en: 'Format the file automatically when you save (⌘S).'
+	String get formatOnSaveDesc => 'Format the file automatically when you save (⌘S).';
+
+	/// en: 'LANGUAGE SERVERS'
+	String get sectionLanguageServers => 'LANGUAGE SERVERS';
+
+	/// en: 'Errors and formatting use each language's language server. Cockpit does not install servers — it uses what is already on your machine. ● responds · ○ not found or invalid command (install the server or adjust the command).'
+	String get footerNote => 'Errors and formatting use each language\'s language server. Cockpit does not install servers — it uses what is already on your machine. ● responds · ○ not found or invalid command (install the server or adjust the command).';
+
+	/// en: 'Language server command'
+	String get serverCommandLabel => 'Language server command';
+
+	/// en: 'Formatter command (optional)'
+	String get formatterCommandLabel => 'Formatter command (optional)';
+
+	/// en: 'External formatter with %FILE% placeholder. Takes precedence over the LSP formatter when set.'
+	String get formatterHint => 'External formatter with %FILE% placeholder. Takes precedence over the LSP formatter when set.';
+
+	/// en: 'Reset to default'
+	String get resetToDefault => 'Reset to default';
+
+	/// en: 'Save & restart'
+	String get saveAndRestart => 'Save & restart';
+
+	/// en: 'Server responds'
+	String get statusResponds => 'Server responds';
+
+	/// en: 'Server not found or command invalid'
+	String get statusNotFound => 'Server not found or command invalid';
+}
+
+// Path: settings.page.automations
+class Translations$settings$page$automations$en {
+	Translations$settings$page$automations$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Commit messages'
+	String get sectionCommitMessages => 'Commit messages';
+
+	/// en: 'Harness'
+	String get harness => 'Harness';
+
+	/// en: 'Looking for installed command-line harnesses…'
+	String get harnessDiscovering => 'Looking for installed command-line harnesses…';
+
+	/// en: 'No supported harness was found on PATH.'
+	String get harnessNoneFound => 'No supported harness was found on PATH.';
+
+	/// en: '${harness} is configured but unavailable.'
+	String harnessConfiguredUnavailable({required Object harness}) => '${harness} is configured but unavailable.';
+
+	/// en: 'Choose the CLI used to generate commit messages.'
+	String get harnessChoose => 'Choose the CLI used to generate commit messages.';
+
+	/// en: 'Refresh installed harnesses'
+	String get harnessRefresh => 'Refresh installed harnesses';
+
+	/// en: 'Not configured'
+	String get notConfigured => 'Not configured';
+
+	/// en: 'Model'
+	String get model => 'Model';
+
+	/// en: 'The model list is unavailable until the harness is found.'
+	String get modelUnavailable => 'The model list is unavailable until the harness is found.';
+
+	/// en: 'This harness uses its CLI default model.'
+	String get modelCliOnly => 'This harness uses its CLI default model.';
+
+	/// en: 'CLI default'
+	String get modelCliDefault => 'CLI default';
+
+	/// en: 'Auto'
+	String get modelAuto => 'Auto';
+
+	/// en: 'Search among ${count} models…'
+	String modelSearch({required Object count}) => 'Search among ${count} models…';
+
+	/// en: 'This harness routes the model automatically.'
+	String get modelAutoRouted => 'This harness routes the model automatically.';
+
+	/// en: 'Only models your account can use are listed.'
+	String get modelAccountOnly => 'Only models your account can use are listed.';
+
+	/// en: 'Generate from Source Control'
+	String get generateFromSourceControl => 'Generate from Source Control';
+
+	/// en: 'Cockpit sends only the selected diff and recent commit subjects. Common credential patterns and sensitive files are redacted before the harness runs.'
+	String get generateFromSourceControlDescription => 'Cockpit sends only the selected diff and recent commit subjects. Common credential patterns and sensitive files are redacted before the harness runs.';
+
+	/// en: 'Could not discover installed automation harnesses.'
+	String get discoveryFailed => 'Could not discover installed automation harnesses.';
+
+	/// en: 'Model "${model}" is no longer available for ${harness}. Using the CLI default — pick another model in Settings if needed.'
+	String staleModel({required Object model, required Object harness}) => 'Model "${model}" is no longer available for ${harness}. Using the CLI default — pick another model in Settings if needed.';
+
+	/// en: 'Recommended'
+	String get recommendedSuffix => 'Recommended';
+}
+
+// Path: settings.page.general.updateFrequency
+class Translations$settings$page$general$updateFrequency$en {
+	Translations$settings$page$general$updateFrequency$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Daily'
+	String get daily => 'Daily';
+
+	/// en: 'Weekly'
+	String get weekly => 'Weekly';
+
+	/// en: 'Monthly'
+	String get monthly => 'Monthly';
+
+	/// en: 'Never'
+	String get never => 'Never';
+}
+
+/// The flat map containing all translations for locale <en>.
+/// Only for edge cases! For simple maps, use the map function of this library.
+///
+/// The Dart AOT compiler has issues with very large switch statements,
+/// so the map is split into smaller functions (512 entries each).
+extension on Translations {
+	dynamic _flatMapFunction(String path) {
+		return switch (path) {
+			'core.bootstrapError.title' => 'Failed to initialize Cockpit',
+			'core.bootstrapError.retry' => 'Retry',
+			'core.macosNotifications.title' => 'Enable Notifications on macOS',
+			'core.macosNotifications.intro' => 'Notifications are currently disabled in your system settings. Follow the steps below to enable them:',
+			'core.macosNotifications.step1' => 'Open System Settings on your Mac.',
+			'core.macosNotifications.step2' => 'Navigate to the Notifications section in the left sidebar.',
+			'core.macosNotifications.step3' => 'Find and select the Cockpit application from the list.',
+			'core.macosNotifications.step4' => 'Toggle the Allow Notifications switch on.',
+			'core.macosNotifications.tip' => 'Tip: If the app does not appear in the list, close and reopen it to trigger its registration in the system.',
+			'core.macosNotifications.gotIt' => 'Got it',
+			'core.appErrorView.renderFailed' => 'This part of the app failed to render',
+			'core.appErrorView.details' => 'Details',
+			'core.appErrorView.renderErrorTitle' => 'Render error',
+			'core.errorReportDialog.defaultDescription' => 'Something went wrong. The details below were saved to the log — you can report them so it gets fixed.',
+			'core.errorReportDialog.copyDetails' => 'Copy details',
+			'core.errorReportDialog.reportIssue' => 'Report issue',
+			'core.windowControls.minimize' => 'Minimize',
+			'core.windowControls.maximize' => 'Maximize',
+			'core.windowControls.close' => 'Close',
+			'core.crash.title' => 'Unexpected shutdown',
+			'core.crash.bannerTitle' => 'Cockpit closed unexpectedly',
+			'core.crash.report' => 'Report',
+			'core.crash.dismiss' => 'Dismiss',
+			'core.crash.crashMessage' => ({required Object version}) => 'The previous session (version ${version}) ended without shutting down cleanly. Want to report it? The log is included and you can review everything before sending.',
+			'core.crash.crashError' => ({required Object startedAt, required Object pid}) => 'Session started at ${startedAt} (pid ${pid}) ended without a clean shutdown.',
+			'core.crash.crashDescription' => 'No error was captured — the app was terminated by the system. The log below is from that session and is the most useful part.',
+			'core.menu.settings' => 'Settings…',
+			'core.menu.checkForUpdates' => 'Check for Updates…',
+			'core.menu.file' => 'File',
+			'core.menu.newTerminal' => 'New Terminal',
+			'core.menu.openWorkspace' => 'Open Workspace',
+			'core.menu.save' => 'Save',
+			'core.menu.discard' => 'Discard',
+			'core.menu.format' => 'Format',
+			'core.menu.view' => 'View',
+			'core.menu.toggleWorkspacePanel' => 'Toggle Workspace Panel',
+			'core.menu.toggleFiles' => 'Toggle Files',
+			'core.menu.splitRight' => 'Split Right',
+			'core.menu.splitDown' => 'Split Down',
+			'core.menu.focusPane' => 'Focus Pane',
+			'core.menu.focusLeft' => 'Left  (⌘⌥←)',
+			'core.menu.focusRight' => 'Right  (⌘⌥→)',
+			'core.menu.focusUp' => 'Up  (⌘⌥↑)',
+			'core.menu.focusDown' => 'Down  (⌘⌥↓)',
+			'core.menu.selectTab' => 'Select Tab',
+			'core.menu.tabN' => ({required Object n}) => 'Tab ${n}',
+			'core.menu.lastTab' => 'Last Tab',
+			'core.menu.previousWorkspace' => 'Previous Workspace',
+			'core.menu.nextWorkspace' => 'Next Workspace',
+			'core.menu.zoomIn' => 'Zoom In',
+			'core.menu.zoomOut' => 'Zoom Out',
+			'core.menu.actualSize' => 'Actual Size',
+			'core.menu.window' => 'Window',
+			'core.menu.quit' => 'Quit',
+			'core.menu.minimize' => 'Minimize',
+			'core.menu.zoom' => 'Zoom',
+			'common.cancel' => 'Cancel',
+			'common.confirm' => 'Confirm',
+			'common.create' => 'Create',
+			'common.gotIt' => 'Got it',
+			'common.save' => 'Save',
+			'common.close' => 'Close',
+			'common.delete' => 'Delete',
+			'common.done' => 'Done',
+			'common.add' => 'Add',
+			'common.test' => 'Test',
+			'common.ok' => 'OK',
+			'common.loading' => 'Loading…',
+			'common.checking' => 'Checking…',
+			'common.remove' => 'Remove',
+			'common.restart' => 'Restart',
+			'common.settings' => 'Settings',
+			'common.send' => 'Send',
+			'common.open' => 'Open',
+			'common.dismiss' => 'Dismiss',
+			'common.report' => 'Report',
+			'common.copyCode' => 'Copy code',
+			'common.search' => 'Search',
+			'common.noResults' => 'No results',
+			'cockpit.confirmDialog.unsavedChangesTitle' => 'Unsaved changes',
+			'cockpit.confirmDialog.unsavedChangesMessage' => ({required Object fileName}) => '“${fileName}” has unsaved changes. Save them before closing?',
+			'cockpit.confirmDialog.dontSave' => 'Don\'t save',
+			'cockpit.confirmDialog.saveAndClose' => 'Save & close',
+			'cockpit.neovim.unavailable' => 'Neovim is not available. Opening in Cockpit instead.',
+			'cockpit.neovim.openFailed' => 'Could not reach Neovim. Opening in Cockpit instead.',
+			'cockpit.neovim.unsavedTitle' => 'Unsaved Neovim buffers',
+			'cockpit.neovim.unsavedMessage' => 'Neovim has modified buffers. Close the tab and discard those changes?',
+			'cockpit.neovim.closeAnyway' => 'Close anyway',
+			'cockpit.worktreeCreateDialog.forkTitle' => 'Fork worktree',
+			'cockpit.worktreeCreateDialog.createTitle' => 'Create worktree',
+			'cockpit.worktreeCreateDialog.forkSubtitle' => ({required Object root}) => 'New worktree branched from ${root}.',
+			'cockpit.worktreeCreateDialog.createSubtitle' => ({required Object root}) => 'New feature in ${root} — new branch from the current HEAD.',
+			'cockpit.worktreeCreateDialog.namePlaceholder' => 'feat/minha-feature',
+			'cockpit.worktreeCreateDialog.errorWhitespace' => 'No spaces in the name.',
+			'cockpit.worktreeCreateDialog.errorInvalidChar' => 'Invalid character for a branch name.',
+			'cockpit.worktreeCreateDialog.errorInvalidSequence' => 'Invalid sequence (e.g. "..", "//", starting/ending with "/").',
+			'cockpit.worktreeCreateDialog.errorReserved' => 'Reserved position (do not start with "-"/"." or end with ".lock").',
+			'cockpit.worktreeCreateDialog.errorDuplicateBranch' => 'A branch with that name already exists.',
+			'cockpit.worktreeCreateDialog.errorDuplicateWorktree' => 'A worktree with that name already exists.',
+			'cockpit.worktreeCreateDialog.errorBranchHierarchyConflict' => ({required Object target, required Object existing}) => 'Cannot create branch \'${target}\' because it conflicts with the existing branch \'${existing}\'.',
+			'cockpit.worktreeCreateDialog.errorBranchHierarchicalConflictGeneral' => 'A branch with a conflicting hierarchy already exists.',
+			'cockpit.worktreeCreateDialog.fork' => 'Fork',
+			'cockpit.worktreeCreateDialog.postCheckoutHint' => 'This repository has a post-checkout hook.',
+			'cockpit.worktreeCreateDialog.running' => 'Running…',
+			'cockpit.worktreeCreateDialog.advancedSettings' => 'Advanced Settings',
+			'cockpit.worktreeCreateDialog.copyIgnored' => 'Copy ignored files (.gitignore)',
+			'cockpit.worktreeCreateDialog.copyIgnoredDesc' => 'Copies files ignored by .gitignore (e.g. .env, local keys) to the new worktree.',
+			'cockpit.worktreeCreateDialog.copyUntracked' => 'Copy untracked files',
+			'cockpit.worktreeCreateDialog.copyUntrackedDesc' => 'Copies new or modified files that haven\'t been staged yet.',
+			'cockpit.worktreeCreateDialog.baseBranch' => 'Base branch',
+			'cockpit.worktreeCreateDialog.baseBranchDesc' => 'The branch from which the new worktree and branch will be created.',
+			'cockpit.worktreeCreateDialog.fetchRemote' => 'Fetch remote branch',
+			'cockpit.worktreeCreateDialog.fetchRemoteDesc' => 'Run git fetch to guarantee the base branch is confirmed before creating the worktree.',
+			'cockpit.worktreeCreateDialog.searchBranch' => 'Search branch...',
+			'cockpit.worktreeCreateDialog.back' => 'Back',
+			'cockpit.commitMessageDialog.commitTitle' => 'Commit',
+			'cockpit.commitMessageDialog.stageAndCommitTitle' => 'Stage and Commit',
+			'cockpit.commitMessageDialog.scopeNote' => ({required Object fileName}) => 'Commit "${fileName}" only.',
+			'cockpit.commitMessageDialog.placeholder' => 'fix: short summary of the change',
+			'cockpit.commitMessageDialog.errorEmptySubject' => 'The first line (subject) cannot be empty.',
+			'cockpit.commitMessageDialog.errorTooShort' => ({required Object min}) => 'Subject too short (min ${min} characters).',
+			'cockpit.commitMessageDialog.errorTooLong' => ({required Object max}) => 'Subject too long (max ${max} characters).',
+			'cockpit.commitMessageDialog.errorTrailingPeriod' => 'Subject should not end with a period.',
+			'cockpit.commitMessageDialog.errorControlChars' => 'Subject contains control characters.',
+			'cockpit.commitMessageDialog.errorBlankSecondLine' => 'Leave the second line blank (git subject/body separator).',
+			'cockpit.commitMessageDialog.generate' => 'Generate commit message',
+			'cockpit.commitMessageDialog.generateWith' => ({required Object harness}) => 'Generate with ${harness}',
+			'cockpit.commitMessageDialog.generating' => 'Generating…',
+			'cockpit.commitMessageDialog.cancelGeneration' => 'Cancel generation',
+			'cockpit.tasksPanel.reloadTasksTooltip' => 'Reload tasks',
+			'cockpit.tasksPanel.restartTooltip' => 'Restart',
+			'cockpit.tasksPanel.stopTooltip' => 'Stop',
+			'cockpit.tasksPanel.runTooltip' => 'Run',
+			'cockpit.tasksPanel.sendsKeyTooltip' => ({required Object label, required Object key}) => '${label} (sends \'${key}\')',
+			'cockpit.tasksPanel.startingTooltip' => 'Starting…',
+			'cockpit.tasksPanel.stoppingTooltip' => 'Stopping…',
+			'cockpit.tasksPanel.switchProfileTooltip' => 'Switch profile',
+			'cockpit.tasksPanel.moreKeysTooltip' => 'More keys',
+			'cockpit.tasksPanel.sectionTasks' => 'TASKS',
+			'cockpit.tasksPanel.noTasks' => 'No tasks detected in this project.',
+			'cockpit.tasksPanel.createTasksJson' => 'Create tasks.json',
+			'cockpit.tasksPanel.generateComposeTasks' => 'Generate Compose tasks',
+			'cockpit.tasksPanel.selectComposeEngine' => 'Choose a Compose engine',
+			'cockpit.tasksPanel.noComposeEngine' => 'Docker Compose or Podman Compose was not found.',
+			'cockpit.tasksPanel.invalidComposeFile' => 'The active file is not a valid Compose file with services.',
+			'cockpit.tasksPanel.invalidTasksJson' => 'tasks.json is invalid. No changes were written.',
+			'cockpit.tasksPanel.composeConflicts' => ({required Object labels}) => 'Kept non-Compose tasks with conflicting labels: ${labels}',
+			'cockpit.cockpitPage.chooseProjectFolderDialogTitle' => 'Choose the project folder',
+			'cockpit.cockpitPage.chooseWorkspaceFolderDialogTitle' => 'Choose the workspace folder',
+			'cockpit.cockpitPage.workspaceRenamedTitle' => 'Workspace renamed',
+			'cockpit.cockpitPage.workspaceRenamedMessage' => ({required Object name}) => 'The new name "${name}" will only be sent to agents after restarting the workspace or the application.',
+			'cockpit.cockpitPage.syncTitle' => ({required Object label}) => 'Sync — ${label}',
+			'cockpit.cockpitPage.pullTitle' => ({required Object label}) => 'Pull — ${label}',
+			'cockpit.cockpitPage.pushTitle' => ({required Object label}) => 'Push — ${label}',
+			'cockpit.cockpitPage.updateFromParentTitle' => ({required Object name}) => 'Update from Parent — ${name}',
+			'cockpit.cockpitPage.mergeToParentTitle' => ({required Object name}) => 'Merge to Parent — ${name}',
+			'cockpit.cockpitPage.worktreeMergedAndRemoved' => 'Worktree merged and removed.',
+			'cockpit.cockpitPage.nothingWasChanged' => 'Nothing was changed.',
+			'cockpit.cockpitPage.newRealmTitle' => 'New realm',
+			'cockpit.cockpitPage.closeWorkspaceTitle' => 'Close workspace',
+			'cockpit.cockpitPage.closeWorkspaceMessage' => ({required Object name}) => 'Close "${name}"? The agents in this workspace will be terminated. The folder on disk is kept.',
+			'cockpit.cockpitPage.closeAction' => 'Close',
+			'cockpit.cockpitPage.removeWorktreeTitle' => 'Remove worktree',
+			'cockpit.cockpitPage.removeWorktreeMessage' => ({required Object name, required Object warn}) => 'Remove "${name}"? The worktree folder and the branch will be deleted and the agents in this fork will be terminated.${warn}',
+			'cockpit.cockpitPage.removeWorktreeWarning' => ({required Object name}) => '\n\nWarning: the branch "${name}" has not been merged yet — removing it (git branch -D) discards the unmerged work.',
+			'cockpit.cockpitPage.failedToRemoveWorktreeTitle' => 'Failed to remove worktree',
+			'cockpit.cockpitPage.openLayoutTitle' => 'Open layout',
+			'cockpit.cockpitPage.replaceLayoutTitle' => 'Replace the current layout?',
+			'cockpit.cockpitPage.replaceLayoutMessage' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 tab will be closed, including one with a running process.', other: '${n} tabs will be closed, including ones with running processes.', ), 
+			'cockpit.cockpitPage.replaceLayoutConfirm' => 'Replace',
+			'cockpit.cockpitPage.restartServerTooltip' => 'Restart server',
+			'cockpit.cockpitPage.noLspAvailable' => 'No LSP available',
+			'cockpit.cockpitPage.lspRunning' => 'running',
+			'cockpit.cockpitPage.lspStopped' => 'stopped',
+			'cockpit.welcomeView.title' => 'Welcome to Cockpit',
+			'cockpit.welcomeView.subtitle' => 'Open a folder or connect to a remote host to start.',
+			'cockpit.welcomeView.createWorkspace' => 'Create workspace',
+			'cockpit.welcomeView.openLocalFolder' => 'Open local folder',
+			'cockpit.welcomeView.connectHost' => 'Connect to host',
+			'cockpit.welcomeView.configureHost' => 'Configure host',
+			'cockpit.welcomeView.addWorkspace' => 'Add workspace',
+			'cockpit.paneView.closePaneTitle' => 'Close pane?',
+			'cockpit.paneView.closePaneMessage' => ({required Object count}) => 'This closes all ${count} tab(s) in this pane and ends the agents/terminals in it.',
+			'cockpit.paneView.close' => 'Close',
+			'cockpit.paneView.closeOtherTabs' => 'Close others',
+			'cockpit.paneView.closeTabsToTheRight' => 'Close to the right',
+			'cockpit.paneView.closeAllTabs' => 'Close all',
+			'cockpit.paneView.closeTabsTitle' => 'Close tabs?',
+			'cockpit.paneView.closeTabsMessage' => ({required Object count}) => 'This closes ${count} tab(s) and ends the agents/terminals in them.',
+			'cockpit.paneView.allTabs' => 'All tabs',
+			'cockpit.paneView.pinTab' => 'Pin tab',
+			'cockpit.paneView.openInNewWindow' => 'Open in new window',
+			'cockpit.paneView.rename' => 'Rename',
+			'cockpit.paneView.openAsMarkdown' => 'Open as markdown',
+			'cockpit.paneView.openAsBoard' => 'Open as board',
+			'cockpit.paneView.resetTitle' => 'Reset Title',
+			'cockpit.paneView.copyId' => 'Copy Id',
+			'cockpit.paneView.restartTab' => 'Restart',
+			'cockpit.paneView.newTab' => 'New tab',
+			'cockpit.paneView.newTerminal' => 'New terminal…',
+			'cockpit.paneView.splitRight' => 'Split right',
+			'cockpit.paneView.splitDown' => 'Split down',
+			'cockpit.paneView.closePane' => 'Close pane',
+			'cockpit.paneView.dropHereToMove' => 'Drop here to move the tab',
+			'cockpit.paneView.dockAsTab' => 'Dock as tab',
+			'cockpit.paneView.openBrowser' => 'Open browser',
+			'cockpit.paneView.openTerminal' => 'Open terminal',
+			'cockpit.paneView.openAsLayout' => 'Open as layout',
+			'cockpit.paneView.openAsYaml' => 'Open as YAML',
+			'cockpit.paneView.openAsPanel' => 'Open as panel',
+			'cockpit.paneView.openAsHtml' => 'Open as HTML',
+			'cockpit.fileTreePanel.viewDiff' => 'View Diff',
+			'cockpit.fileTreePanel.commit' => 'Commit',
+			'cockpit.fileTreePanel.stageAndCommit' => 'Stage and Commit',
+			'cockpit.fileTreePanel.unstage' => 'Unstage',
+			'cockpit.fileTreePanel.stageChanges' => 'Stage Changes',
+			'cockpit.fileTreePanel.discardChanges' => 'Discard Changes',
+			'cockpit.fileTreePanel.enterCommitMessage' => 'Enter a commit message.',
+			'cockpit.fileTreePanel.commitUnavailable' => 'Commit is unavailable for this workspace.',
+			'cockpit.fileTreePanel.gitErrorTitle' => 'Git error',
+			'cockpit.fileTreePanel.deleteNewFileTitle' => 'Delete new file?',
+			'cockpit.fileTreePanel.discardChangesTitle' => 'Discard changes?',
+			'cockpit.fileTreePanel.deleteNewFileMessage' => ({required Object name}) => '"${name}" is a new file and cannot be restored. Delete it?',
+			'cockpit.fileTreePanel.discardOneMessage' => ({required Object name}) => 'Discard all changes in "${name}"? Deleted files will be restored.',
+			'cockpit.fileTreePanel.discard' => 'Discard',
+			'cockpit.fileTreePanel.deleteAllNewFilesTitle' => 'Delete all new files?',
+			'cockpit.fileTreePanel.allNewFilesMessage' => ({required Object count}) => 'All ${count} files are new and will be deleted. This cannot be undone.',
+			'cockpit.fileTreePanel.discardTrackedMessage' => ({required Object count, required Object extra}) => 'Discard changes in ${count} tracked file(s)?${extra}',
+			'cockpit.fileTreePanel.discardTrackedExtra' => ({required Object count}) => ' ${count} new file(s) will be kept.',
+			'cockpit.fileTreePanel.deleteAll' => 'Delete All',
+			'cockpit.fileTreePanel.deleteQuestionTitle' => 'Delete?',
+			'cockpit.fileTreePanel.moveToTrash' => ({required Object name}) => 'Move “${name}” to the Trash?',
+			'cockpit.fileTreePanel.permanentlyDelete' => ({required Object name}) => 'Permanently delete “${name}”? This can’t be undone.',
+			'cockpit.fileTreePanel.couldNotDeleteTitle' => 'Could not delete',
+			'cockpit.fileTreePanel.moveQuestionTitle' => 'Move?',
+			'cockpit.fileTreePanel.moveMessage' => ({required Object name, required Object dest}) => 'Move “${name}” to “${dest}”?',
+			'cockpit.fileTreePanel.moveAction' => 'Move',
+			'cockpit.fileTreePanel.couldNotMoveTitle' => 'Could not move',
+			'cockpit.fileTreePanel.couldNotPasteTitle' => 'Could not paste',
+			'cockpit.fileTreePanel.filesTooltip' => 'Files',
+			'cockpit.fileTreePanel.searchTooltip' => 'Search',
+			'cockpit.fileTreePanel.sourceControlTooltip' => 'Source Control',
+			'cockpit.fileTreePanel.databaseTooltip' => 'Database',
+			'cockpit.fileTreePanel.sectionFiles' => 'FILES',
+			'cockpit.fileTreePanel.newFile' => 'New file',
+			'cockpit.fileTreePanel.newFolder' => 'New folder',
+			'cockpit.fileTreePanel.refreshTooltip' => 'Refresh',
+			'cockpit.fileTreePanel.agentFilterTooltip' => 'Filter by agent',
+			'cockpit.fileTreePanel.allAgents' => 'All agents',
+			'cockpit.fileTreePanel.trackingUnavailable' => 'tracking unavailable',
+			'cockpit.fileTreePanel.editedBy' => ({required Object label, required Object time}) => 'Edited by ${label} · ${time}',
+			'cockpit.fileTreePanel.inferredSuffix' => '(inferred)',
+			'cockpit.fileTreePanel.noTouchedFiles' => 'No files touched by this agent yet',
+			'cockpit.fileTreePanel.concurrentAgentEdits' => 'Edited by 2+ agents in the last 10 minutes',
+			'cockpit.fileTreePanel.collapseAll' => 'Collapse all folders',
+			'cockpit.fileTreePanel.sectionSourceControl' => 'SOURCE CONTROL',
+			'cockpit.fileTreePanel.viewAsList' => 'View as List',
+			'cockpit.fileTreePanel.viewAsTree' => 'View as Tree',
+			'cockpit.fileTreePanel.noFolderMessage' => 'No folder — open a workspace.',
+			'cockpit.fileTreePanel.amend' => 'Amend',
+			'cockpit.fileTreePanel.commitMessagePlaceholder' => 'Commit Message',
+			'cockpit.fileTreePanel.amendCommit' => 'Amend Commit',
+			'cockpit.fileTreePanel.lastCommit' => 'last commit',
+			'cockpit.fileTreePanel.openInFinder' => 'Open in Finder',
+			'cockpit.fileTreePanel.openInExplorer' => 'Open in Explorer',
+			'cockpit.fileTreePanel.openInFileManager' => 'Open in file manager',
+			'cockpit.fileTreePanel.open' => 'Open',
+			'cockpit.fileTreePanel.openWith' => 'Open with',
+			'cockpit.fileTreePanel.openInNewWindow' => 'Open in new window',
+			'cockpit.fileTreePanel.openLayout' => 'Open layout',
+			'cockpit.fileTreePanel.openAsMarkdown' => 'Open as markdown',
+			'cockpit.fileTreePanel.showGitDiff' => 'Show git diff',
+			'cockpit.fileTreePanel.createTerminal' => 'Open terminal',
+			'cockpit.fileTreePanel.rename' => 'Rename',
+			'cockpit.fileTreePanel.copy' => 'Copy',
+			'cockpit.fileTreePanel.cut' => 'Cut',
+			'cockpit.fileTreePanel.paste' => 'Paste',
+			'cockpit.fileTreePanel.copyRelativePath' => 'Copy relative path',
+			'cockpit.fileTreePanel.copyAbsolutePath' => 'Copy absolute path',
+			'cockpit.fileTreePanel.renameFailed' => 'Rename failed.',
+			'cockpit.fileTreePanel.noChanges' => 'No changes.',
+			'cockpit.fileTreePanel.stagedChangesHeader' => ({required Object count}) => 'STAGED CHANGES (${count})',
+			'cockpit.fileTreePanel.changesHeader' => ({required Object count}) => 'CHANGES (${count})',
+			'cockpit.fileTreePanel.discardAllChanges' => 'Discard All Changes',
+			'cockpit.fileTreePanel.unstageAllChanges' => 'Unstage All Changes',
+			'cockpit.fileTreePanel.stageAllChanges' => 'Stage All Changes',
+			'cockpit.fileTreePanel.discardFolderChanges' => 'Discard Folder Changes',
+			'cockpit.fileTreePanel.unstageFolderChanges' => 'Unstage Folder Changes',
+			'cockpit.fileTreePanel.stageFolderChanges' => 'Stage Folder Changes',
+			'cockpit.fileTreePanel.generateCommitMessage' => 'Generate commit message',
+			'cockpit.fileTreePanel.generateWith' => ({required Object harness}) => 'Generate with ${harness}',
+			'cockpit.fileTreePanel.generateUnavailableWhileAmending' => 'Unavailable while amending a commit',
+			'cockpit.fileTreePanel.cancelGeneration' => 'Cancel generation',
+			'cockpit.fileTreePanel.changes' => 'Changes',
+			'cockpit.fileTreePanel.history' => 'History',
+			'cockpit.fileTreePanel.historyRepository' => 'Repository',
+			'cockpit.fileTreePanel.historyNoRepository' => 'No Git repository available.',
+			'cockpit.fileTreePanel.historyEmpty' => 'No commits found.',
+			'cockpit.fileTreePanel.historyLoadFailed' => 'Could not load Git history.',
+			'cockpit.fileTreePanel.historyUntitledCommit' => 'Untitled commit',
+			'cockpit.fileTreePanel.historyNow' => 'now',
+			'cockpit.fileTreePanel.historyMinutesAgo' => ({required Object count}) => '${count}m ago',
+			'cockpit.fileTreePanel.historyHoursAgo' => ({required Object count}) => '${count}h ago',
+			'cockpit.fileTreePanel.historyYesterday' => 'yesterday',
+			'cockpit.fileTreePanel.historyDayAgo' => '1d ago',
+			'cockpit.fileTreePanel.historyDaysAgo' => ({required Object count}) => '${count}d ago',
+			'cockpit.fileTreePanel.historyFiles' => 'Files changed',
+			'cockpit.fileTreePanel.historyFilesEmpty' => 'No files changed.',
+			'cockpit.fileTreePanel.historyFilesLoadFailed' => 'Could not load changed files.',
+			'cockpit.fileTreePanel.diffEmptyTree' => 'Empty tree',
+			'cockpit.fileTreePanel.diffOriginal' => ({required Object ref}) => 'Original ${ref}',
+			'cockpit.fileTreePanel.diffModified' => ({required Object ref}) => 'Modified ${ref}',
+			'cockpit.fileTreePanel.diffWorkingTree' => 'Working tree',
+			'cockpit.fileTreePanel.diffBinaryFile' => 'Binary file - no text diff.',
+			'cockpit.fileTreePanel.diffNoChanges' => 'No changes.',
+			'cockpit.fileTreePanel.diffError' => ({required Object detail}) => 'Could not read the diff: ${detail}',
+			'cockpit.fileTreePanel.galleryTooltip' => 'Gallery',
+			'cockpit.fileTreePanel.sectionGallery' => 'GALLERY',
+			'cockpit.fileTreePanel.openAsHtml' => 'Open as HTML',
+			'cockpit.fileTreePanel.importQuestionTitle' => 'Copy here?',
+			'cockpit.fileTreePanel.importMessage' => ({required Object count, required Object dest}) => 'Copy ${count} items into “${dest}”?',
+			'cockpit.fileTreePanel.importAction' => 'Copy',
+			'cockpit.fileTreePanel.couldNotImportTitle' => 'Could not copy',
+			'cockpit.fileTreePanel.openInAgent' => ({required Object harness}) => 'Open in ${harness}',
+			'cockpit.fileViewer.cantOpen' => 'Can\'t open this file.',
+			'cockpit.fileViewer.couldNotLoadImage' => 'Could not load the image.',
+			'cockpit.fileViewer.preview' => 'Preview',
+			'cockpit.fileViewer.source' => 'Source',
+			'cockpit.fileViewer.reload' => 'Reload',
+			'cockpit.workspaceSettingsDialog.choosePhotoTitle' => 'Choose workspace photo',
+			'cockpit.workspaceSettingsDialog.title' => 'Workspace settings',
+			'cockpit.workspaceSettingsDialog.namePlaceholder' => 'Workspace name',
+			'cockpit.workspaceSettingsDialog.addPhoto' => 'Add photo',
+			'cockpit.workspaceSettingsDialog.changePhoto' => 'Change photo',
+			'cockpit.workspaceSettingsDialog.remove' => 'Remove',
+			'cockpit.workspaceSettingsDialog.color' => 'Color',
+			'cockpit.workspaceSettingsDialog.host' => 'Host',
+			'cockpit.workspaceSettingsDialog.folder' => 'Folder',
+			'cockpit.realmDialogs.namePlaceholder' => 'Realm name',
+			'cockpit.realmDialogs.duplicateName' => 'A realm with this name already exists.',
+			'cockpit.realmDialogs.newRealmTitle' => 'New realm',
+			'cockpit.realmDialogs.renameRealmTitle' => 'Rename realm',
+			'cockpit.realmDialogs.rename' => 'Rename',
+			'cockpit.realmDialogs.deleteRealmTitle' => 'Delete realm',
+			'cockpit.realmDialogs.deleteMessage' => ({required Object name, required Object suffix}) => 'Delete "${name}"? No workspace is deleted — the folder list just changes.${suffix}',
+			'cockpit.realmDialogs.deleteSuffixOne' => ' Its workspace will move to Default.',
+			'cockpit.realmDialogs.deleteSuffixMany' => ({required Object count}) => ' Its ${count} workspaces will move to Default.',
+			'cockpit.realmDialogs.manageRealmsTitle' => 'Manage realms',
+			'cockpit.realmDialogs.workspaceCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 workspace', other: '${n} workspaces', ), 
+			'cockpit.dbRedisTable.deleteKeyTitle' => 'Delete key',
+			'cockpit.dbRedisTable.deleteKeyMessage' => ({required Object key}) => 'Delete "${key}" from this Redis database?',
+			'cockpit.dbRedisTable.refresh' => 'Refresh',
+			'cockpit.dbRedisTable.newKey' => 'New key',
+			'cockpit.dbRedisTable.columnKey' => 'KEY',
+			'cockpit.dbRedisTable.columnValue' => 'VALUE',
+			'cockpit.dbRedisTable.columnType' => 'TYPE',
+			'cockpit.dbRedisTable.columnTtl' => 'TTL',
+			'cockpit.dbRedisTable.keyCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 key', other: '${n} keys', ), 
+			'cockpit.dbRedisTable.noKeys' => 'No keys in this database.',
+			'cockpit.dbRedisTable.noKeysMatch' => ({required Object pattern}) => 'No keys match "${pattern}".',
+			'cockpit.dbRedisTable.loadMore' => 'Load more',
+			'cockpit.dbRedisTable.loadingFullValue' => 'Loading full value…',
+			'cockpit.dbRedisTable.ttlMustBeNumber' => 'TTL must be a number of seconds.',
+			'cockpit.dbRedisTable.addKey' => 'Add key',
+			'cockpit.dbRedisTable.keyFieldHint' => 'key',
+			'cockpit.dbRedisTable.ttlFieldHint' => 'ttl (s, optional)',
+			'cockpit.dbRedisTable.valueFieldHint' => 'value',
+			'cockpit.dbRedisTable.searchHint' => 'Search — pattern, e.g. user:*',
+			'cockpit.dbQueryView.saveQueryAs' => 'Save query as',
+			'cockpit.dbQueryView.couldNotSave' => 'Could not save',
+			'cockpit.dbQueryView.selectDatabase' => 'Select database',
+			'cockpit.dbQueryView.noSqlConnections' => 'No SQL connections',
+			'cockpit.dbQueryView.running' => 'Running…',
+			'cockpit.dbQueryView.runSelection' => 'Run selection',
+			'cockpit.dbQueryView.run' => 'Run',
+			'cockpit.dbQueryView.pickDatabaseHint' => 'Pick a database above, then Run (⌘↵).',
+			'cockpit.dbQueryView.runQueryHint' => 'Run the query (⌘↵) to see results here.',
+			'cockpit.dbQueryView.noRows' => 'No rows.',
+			'cockpit.dbQueryView.rowsAffected' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 row affected', other: '${n} rows affected', ), 
+			'cockpit.dbQueryView.rowsFooter' => ({required Object n}) => '${n} rows',
+			'cockpit.dbQueryView.truncatedSuffix' => ' · truncated (raise -- limit)',
+			'cockpit.dbQueryView.table' => 'Table',
+			'cockpit.dbQueryView.json' => 'JSON',
+			'cockpit.dbQueryView.unsaved' => 'unsaved',
+			'cockpit.dbQueryView.saved' => 'saved',
+			'cockpit.dbQueryView.copied' => 'Copied',
+			'cockpit.dbQueryView.copy' => 'Copy',
+			'cockpit.httpView.saveRequestAs' => 'Save request as',
+			'cockpit.httpView.couldNotSave' => 'Could not save',
+			'cockpit.httpView.run' => 'Run',
+			'cockpit.httpView.running' => 'Running…',
+			'cockpit.httpView.noRequests' => 'No request in this file — write one, e.g. GET https://example.com',
+			'cockpit.httpView.selectRequest' => 'Select request',
+			'cockpit.httpView.requestCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 request', other: '${n} requests', ), 
+			'cockpit.httpView.runHint' => 'Run the request (⌘↵) to see the response here.',
+			'cockpit.httpView.emptyBody' => 'Empty response body.',
+			'cockpit.httpView.body' => 'JSON',
+			'cockpit.httpView.headers' => 'Headers',
+			'cockpit.httpView.raw' => 'Text',
+			'cockpit.httpView.truncatedSuffix' => ' · truncated (response too large)',
+			'cockpit.httpView.error.title' => 'Request failed',
+			'cockpit.httpView.error.noRequest' => 'No request found at the cursor.',
+			'cockpit.httpView.error.invalidUrl' => ({required Object url}) => 'Invalid URL: ${url}',
+			'cockpit.httpView.error.unresolvedVariable' => ({required Object name}) => 'Variable {{${name}}} has no value. Declare it with @${name} = … in this file.',
+			'cockpit.httpView.error.bodyFileMissing' => ({required Object path}) => 'Body file not found: ${path}',
+			'cockpit.httpView.error.bodyFileUnreadable' => ({required Object path, required Object detail}) => 'Could not read the body file ${path}: ${detail}',
+			'cockpit.httpView.error.connectionFailed' => ({required Object detail}) => 'Could not reach the server: ${detail}',
+			'cockpit.httpView.error.connectionFailedNoDetail' => 'Could not reach the server.',
+			'cockpit.httpView.error.timeout' => ({required Object seconds}) => 'The request timed out after ${seconds}s.',
+			'cockpit.httpView.error.responseTooLarge' => ({required Object bytes}) => 'The response is larger than the ${bytes} byte limit.',
+			'cockpit.kanbanView.filter' => 'Filter',
+			'cockpit.kanbanView.filterTitlePlaceholder' => 'Search titles',
+			'cockpit.kanbanView.filterLabels' => 'Labels',
+			'cockpit.kanbanView.filterClear' => 'Clear',
+			'cockpit.kanbanView.filterDependencies' => 'Dependencies',
+			'cockpit.kanbanView.filterBlocked' => 'Blocked',
+			'cockpit.kanbanView.filterReady' => 'Ready',
+			'cockpit.kanbanView.blockedBy' => 'Blocked by',
+			'cockpit.kanbanView.addBlocker' => 'Add a blocking card',
+			'cockpit.kanbanView.searchCards' => 'Search cards',
+			'cockpit.kanbanView.unknownCard' => 'unknown',
+			'cockpit.kanbanView.boardView' => 'Board',
+			'cockpit.kanbanView.listView' => 'List',
+			'cockpit.kanbanView.refresh' => 'Refresh from disk',
+			'cockpit.kanbanView.manageLabels' => 'Labels',
+			'cockpit.kanbanView.labelsTitle' => 'Labels in this board',
+			'cockpit.kanbanView.labelNamePlaceholder' => 'label name',
+			'cockpit.kanbanView.labelUsage' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 card', other: '${n} cards', ), 
+			'cockpit.kanbanView.deleteLabel' => 'Delete label',
+			'cockpit.kanbanView.newCard' => 'new card',
+			'cockpit.kanbanView.newCardTitle' => 'New card',
+			'cockpit.kanbanView.newColumn' => 'New column',
+			'cockpit.kanbanView.columnNameTitle' => 'Column name',
+			'cockpit.kanbanView.dragColumn' => 'Drag column',
+			'cockpit.kanbanView.columnOptions' => 'Column options',
+			'cockpit.kanbanView.renameColumn' => 'Rename column',
+			'cockpit.kanbanView.moveColumnLeft' => 'Move left',
+			'cockpit.kanbanView.moveColumnRight' => 'Move right',
+			'cockpit.kanbanView.deleteColumn' => 'Delete column',
+			'cockpit.kanbanView.newCardHere' => 'New card here',
+			'cockpit.kanbanView.duplicateCard' => 'Duplicate',
+			'cockpit.kanbanView.cardLabels' => 'Labels',
+			'cockpit.kanbanView.deleteCard' => 'Delete card',
+			'cockpit.kanbanView.advance' => 'Move to next column',
+			'cockpit.kanbanView.advanceHold' => 'Move to next column (hold: move to last column)',
+			'cockpit.kanbanView.advanceBack' => 'Move back a column',
+			'cockpit.kanbanView.emptyColumn' => 'No cards',
+			'cockpit.kanbanView.cardCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 card', other: '${n} cards', ), 
+			'cockpit.kanbanView.notes' => 'Note',
+			'cockpit.kanbanView.notesPlaceholder' => 'Write a note',
+			'cockpit.kanbanView.comments' => 'Comments',
+			'cockpit.kanbanView.addComment' => 'Add comment',
+			'cockpit.kanbanView.commentPlaceholder' => 'Write a comment',
+			'cockpit.kanbanView.noComments' => 'No comments yet',
+			'cockpit.kanbanView.closeDetail' => 'Close',
+			'cockpit.kanbanView.notABoard' => 'This file has no ## columns yet — it opens as markdown.',
+			'cockpit.kanbanView.startBoard' => 'Start a board',
+			'cockpit.kanbanView.couldNotSave' => 'Could not save the board',
+			'cockpit.kanbanView.unrecognizedBlock' => 'Not recognized by the parser — drags whole, no inline editing.',
+			'cockpit.kanbanView.deleteColumnDialog.title' => ({required Object name}) => 'Delete “${name}”?',
+			'cockpit.kanbanView.deleteColumnDialog.message' => ({required Object count}) => 'This column has ${count}. Choose what happens to them.',
+			'cockpit.kanbanView.deleteColumnDialog.moveCards' => 'Move to the previous column',
+			'cockpit.kanbanView.deleteColumnDialog.deleteAll' => 'Delete with the column',
+			'cockpit.kanbanView.deleteColumnDialog.emptyMessage' => 'This column is empty.',
+			'cockpit.dbPanel.sectionDatabase' => 'DATABASE',
+			'cockpit.dbPanel.edit' => 'Edit…',
+			'cockpit.dbPanel.copyName' => 'Copy name',
+			'cockpit.dbPanel.newQuery' => 'New query',
+			'cockpit.dbPanel.browseKeys' => 'Browse keys',
+			'cockpit.dbPanel.deleteConnectionTitle' => 'Delete connection',
+			'cockpit.dbPanel.deleteConnectionMessage' => ({required Object name}) => 'Remove "${name}" from this workspace? Any saved password is discarded. .dbq files that reference it are not touched.',
+			'cockpit.dbPanel.footer' => ({required Object n}) => '.cockpit/databases.json · ${n} connections',
+			'cockpit.dbPanel.footerOne' => '.cockpit/databases.json · 1 connection',
+			'cockpit.dbPanel.noConnections' => 'No connections yet.',
+			'cockpit.dbPanel.passwordRequired' => 'Password not found on the host. Open this connection and enter it again — it is saved on the machine that runs the database, not on this one.',
+			'cockpit.dbMongoView.deleteDocumentTitle' => 'Delete document',
+			'cockpit.dbMongoView.deleteDocumentMessage' => ({required Object id, required Object collection}) => 'Delete the document with _id ${id} from "${collection}"?',
+			'cockpit.dbMongoView.filterHint' => 'Filter — JSON, e.g. {"status": "active"}',
+			'cockpit.dbMongoView.docCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 doc', other: '${n} docs', ), 
+			'cockpit.dbMongoView.refresh' => 'Refresh',
+			'cockpit.dbMongoView.insertDocument' => 'Insert document',
+			'cockpit.dbMongoView.noDocuments' => 'No documents in this collection.',
+			'cockpit.dbMongoView.noDocumentsMatch' => 'No documents match this filter.',
+			'cockpit.dbMongoView.loadMore' => 'Load more',
+			'cockpit.dbMongoView.edit' => 'Edit',
+			'cockpit.dbMongoView.insert' => 'Insert',
+			'cockpit.dbConnectionDialog.chooseFileTitle' => 'Choose SQLite database',
+			'cockpit.dbConnectionDialog.file' => 'File',
+			'cockpit.dbConnectionDialog.chooseFilePlaceholder' => 'Choose a SQLite file…',
+			'cockpit.dbConnectionDialog.name' => 'Name',
+			'cockpit.dbConnectionDialog.password' => 'Password',
+			'cockpit.dbConnectionDialog.savePassword' => 'Save Password',
+			'cockpit.dbConnectionDialog.allowWrites' => 'Allow writes (agents)',
+			'cockpit.dbConnectionDialog.allowWritesHint' => 'off = agents can only read via CLI',
+			'cockpit.dbConnectionDialog.visibleToAgents' => 'Visible to agents',
+			'cockpit.dbConnectionDialog.visibleToAgentsHint' => 'off = hidden from the CLI, GUI only',
+			'cockpit.dbConnectionDialog.testing' => 'Testing connection…',
+			'cockpit.dbConnectionDialog.connectionOk' => 'Connection OK',
+			'cockpit.dbConnectionDialog.connectionFailed' => 'Connection failed',
+			'cockpit.dbConnectionDialog.editTitle' => 'Edit connection',
+			'cockpit.dbConnectionDialog.newTitle' => 'New connection',
+			'cockpit.dbConnectionDialog.connectionString' => 'Connection string',
+			'cockpit.dbConnectionDialog.invalidUrl' => 'Not a valid connection URL.',
+			'cockpit.dbConnectionDialog.sshTunnel' => 'SSH Tunnel',
+			'cockpit.dbConnectionDialog.sshHost' => 'SSH Host',
+			'cockpit.dbConnectionDialog.sshPort' => 'SSH Port',
+			'cockpit.dbConnectionDialog.sshUser' => 'SSH User',
+			'cockpit.dbConnectionDialog.privateKey' => 'Private key',
+			'cockpit.dbConnectionDialog.choosePrivateKeyPlaceholder' => 'Choose a private key…',
+			'cockpit.dbConnectionDialog.choosePrivateKeyDialogTitle' => 'Choose SSH private key',
+			'cockpit.dbConnectionDialog.keyPassphrase' => 'Key passphrase',
+			'cockpit.dbConnectionDialog.savePassphrase' => 'Save passphrase',
+			_ => null,
+		} ?? switch (path) {
+			'cockpit.dbConnectionDialog.passwordOnHost' => 'The password is stored on the host, not on this machine.',
+			'cockpit.sshPrompts.unknownSshHostTitle' => 'Unknown SSH host',
+			'cockpit.sshPrompts.neverConnected' => ({required Object endpoint}) => 'Cockpit has never connected to ${endpoint} before.',
+			'cockpit.sshPrompts.trustHint' => 'Trust it only if this fingerprint matches the server. You can check it on the server with:',
+			'cockpit.sshPrompts.trust' => 'Trust',
+			'cockpit.sshPrompts.sshKeyPassphraseTitle' => 'SSH key passphrase',
+			'cockpit.sshPrompts.unlockMessage' => ({required Object keyPath, required Object connectionName}) => 'Unlock ${keyPath} to connect "${connectionName}".',
+			'cockpit.sshPrompts.keptInMemoryHint' => 'Kept in memory until Cockpit quits. To let agents use this connection, enable "Save passphrase" in the connection.',
+			'cockpit.sshPrompts.unlock' => 'Unlock',
+			'cockpit.projectsRail.workspaces' => 'Workspaces',
+			'cockpit.projectsRail.keepAwakeOn' => 'Keeping this computer awake for remote access. Click to let it sleep again.',
+			'cockpit.projectsRail.keepAwakeOff' => 'Keep this computer awake for remote access. Off again when Cockpit restarts.',
+			'cockpit.projectsRail.keepAwakeBattery' => 'Keeping awake on battery power. This drains the battery.',
+			'cockpit.projectsRail.keepAwakeLid' => 'Closing a laptop lid still puts it to sleep.',
+			'cockpit.projectsRail.newWorkspace' => 'New workspace',
+			'cockpit.projectsRail.settings' => 'Settings',
+			'cockpit.projectsRail.mergeToParent' => 'Merge to Parent',
+			'cockpit.projectsRail.updateFromParent' => 'Update from Parent',
+			'cockpit.projectsRail.forkWorktree' => 'Fork Worktree',
+			'cockpit.projectsRail.copyBranch' => 'Copy branch',
+			'cockpit.projectsRail.remove' => 'Remove',
+			'cockpit.projectsRail.moveToRealm' => 'Move to realm',
+			'cockpit.projectsRail.copyWorkspaceId' => 'Copy workspace id',
+			'cockpit.projectsRail.rename' => 'Rename',
+			'cockpit.projectsRail.close' => 'Close',
+			'cockpit.projectsRail.newRealm' => 'New realm…',
+			'cockpit.projectsRail.manageRealms' => 'Manage realms…',
+			'cockpit.projectsRail.noWorkspaces' => 'No workspaces yet.',
+			'cockpit.projectsRail.sync' => 'Sync',
+			'cockpit.projectsRail.pull' => 'Pull',
+			'cockpit.projectsRail.push' => 'Push',
+			'cockpit.projectsRail.createWorktree' => 'Create worktree',
+			'cockpit.projectsRail.worktreeCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 worktree', other: '${n} worktrees', ), 
+			'cockpit.projectsRail.expandWorktrees' => 'Expand worktrees',
+			'cockpit.projectsRail.collapseWorktrees' => 'Collapse worktrees',
+			'cockpit.findBar.find' => 'Find',
+			'cockpit.findBar.matchCase' => 'Match case',
+			'cockpit.findBar.wholeWord' => 'Whole word',
+			'cockpit.findBar.useRegex' => 'Use regular expression',
+			'cockpit.findBar.previous' => 'Previous (⇧⏎)',
+			'cockpit.findBar.next' => 'Next (⏎)',
+			'cockpit.findBar.close' => 'Close (Esc)',
+			'cockpit.findBar.badPattern' => 'Bad pattern',
+			'cockpit.findBar.noResults' => 'No results',
+			'cockpit.contentSearch.sectionSearch' => 'SEARCH',
+			'cockpit.contentSearch.searchInFiles' => 'Search in files',
+			'cockpit.contentSearch.matchCase' => 'Match case',
+			'cockpit.contentSearch.wholeWord' => 'Whole word',
+			'cockpit.contentSearch.useRegex' => 'Use regular expression',
+			'cockpit.contentSearch.invalidRegex' => 'Invalid regular expression.',
+			'cockpit.contentSearch.typeToSearch' => 'Type to search across files.',
+			'cockpit.contentSearch.searching' => 'Searching…',
+			'cockpit.contentSearch.noResults' => 'No results.',
+			'cockpit.topbar.collapseSidebar' => 'Collapse sidebar',
+			'cockpit.topbar.toggleFiles' => 'Show/hide files',
+			'cockpit.topbar.filesUnavailable' => 'Files unavailable in Cockpit',
+			'cockpit.topbar.hideKeyboard' => 'Hide keyboard',
+			'cockpit.topbar.visualizeAgents' => 'Visualize agents',
+			'cockpit.tasks.hotReload' => 'Hot reload',
+			'cockpit.tasks.hotRestart' => 'Hot restart',
+			'cockpit.tasks.toggleDebugPaint' => 'Toggle debug paint',
+			'cockpit.tasks.togglePlatform' => 'Toggle platform',
+			'cockpit.tasks.quit' => 'Quit',
+			'cockpit.notifications.agentFinished' => 'Agent finished',
+			'cockpit.notifications.open' => 'Open',
+			'cockpit.notifications.agentNeedsAction' => 'Agent needs your input',
+			'cockpit.terminalLink.open' => 'Open',
+			'cockpit.terminalLink.revealFinder' => 'Reveal in Finder',
+			'cockpit.terminalLink.revealExplorer' => 'Show in Explorer',
+			'cockpit.terminalLink.revealFolder' => 'Open containing folder',
+			'cockpit.terminalLink.copyPath' => 'Copy path',
+			'cockpit.terminalLink.openLink' => 'Open link',
+			'cockpit.terminalLink.copyLink' => 'Copy link',
+			'cockpit.terminal.cwdFallbackWarning' => ({required Object requested, required Object path}) => 'Warning: the folder "${requested}" does not exist. This terminal opened in "${path}".',
+			'cockpit.terminal.workspaceEnvTracked' => ({required Object keys}) => 'Notice: .env.cockpit is tracked by git (it came with the repository). Injected: ${keys}',
+			'cockpit.remoteHost.addHost' => 'Add remote host',
+			'cockpit.remoteHost.hostName' => 'Name',
+			'cockpit.remoteHost.sshTarget' => 'SSH target (user@host)',
+			'cockpit.remoteHost.connecting' => ({required Object host}) => 'Connecting to ${host}…',
+			'cockpit.remoteHost.openingTunnel' => 'SSH tunnel',
+			'cockpit.remoteHost.installingServer' => 'Installing server',
+			'cockpit.remoteHost.handshake' => ({required Object version}) => 'Server ${version}',
+			'cockpit.remoteHost.loadingWorkspace' => 'Loading workspace…',
+			'cockpit.remoteHost.reconnecting' => ({required Object host}) => 'Reconnecting to ${host}…',
+			'cockpit.remoteHost.offline' => ({required Object host}) => '${host} offline',
+			'cockpit.remoteHost.remove' => 'Remove',
+			'cockpit.remoteHost.reconnect' => 'Reconnect',
+			'cockpit.remoteHost.installServer' => 'Install server',
+			'cockpit.remoteHost.errSshUnreachable' => ({required Object host}) => 'Cannot reach ${host} over SSH. Is it on, and is Remote Login enabled?',
+			'cockpit.remoteHost.errInstallFailed' => ({required Object host}) => 'Could not install the server on ${host}.',
+			'cockpit.remoteHost.errVersionMismatch' => 'Server version incompatible; update it.',
+			'cockpit.remoteHost.errDetail' => ({required Object detail}) => 'Details: ${detail}',
+			'cockpit.remoteHost.pickFolderTitle' => ({required Object host}) => 'Open folder on ${host}',
+			'cockpit.remoteHost.openHere' => 'Open here',
+			'cockpit.remoteHost.emptyFolder' => 'No subfolders',
+			'cockpit.remoteHost.newLocal' => 'Local',
+			'cockpit.remoteHost.newRemote' => 'Remote',
+			'cockpit.remoteHost.chooseHost' => 'Choose a host',
+			'cockpit.remoteHost.newHostEntry' => 'New host…',
+			'cockpit.remoteHost.editHost' => 'Edit host',
+			'cockpit.remoteHost.userLabel' => 'Username',
+			'cockpit.remoteHost.hostLabel' => 'Host / IP',
+			'cockpit.remoteHost.portLabel' => 'Port',
+			'cockpit.remoteHost.authLabel' => 'Authentication',
+			'cockpit.remoteHost.authKey' => 'SSH key',
+			'cockpit.remoteHost.authPassword' => 'Password',
+			'cockpit.remoteHost.passwordLabel' => 'Password',
+			'cockpit.remoteHost.passwordKeep' => 'Leave blank to keep current',
+			'cockpit.remoteHost.errUser' => 'Username required',
+			'cockpit.remoteHost.errHost' => 'Host required',
+			'cockpit.remoteHost.errPassword' => 'Password required',
+			'cockpit.remoteHost.identityChoose' => 'Choose…',
+			'cockpit.remoteHost.identityEmpty' => 'No key selected',
+			'cockpit.remoteHost.identityDialogTitle' => 'Select the SSH private key',
+			'cockpit.remoteHost.errIdentity' => 'Pick the private key to authenticate with.',
+			'cockpit.remoteHost.errHostKeyUnknown' => ({required Object host}) => 'Cockpit does not trust ${host} yet. Connect again and confirm the fingerprint.',
+			'cockpit.remoteHost.errHostKeyChanged' => ({required Object host}) => '${host} is presenting a different SSH key than the one stored. If you did not reinstall that machine, stop and check it — otherwise remove the old entry from ~/.ssh/known_hosts.',
+			'cockpit.remoteHost.errHostBundleMissing' => ({required Object host}) => '${host} runs Windows but does not have Cockpit installed. The remote server is installed from the Cockpit bundle already on that machine, so install Cockpit there and try again.',
+			'cockpit.remoteHost.errHostUnknownOs' => ({required Object host}) => 'Could not identify the operating system of ${host}. The account may have a restricted shell, or no shell at all.',
+			'cockpit.remoteHost.errIdentityPublic' => 'Only the public key is here. That works only if the private key is in your SSH agent; otherwise pick the private file (same name, without .pub).',
+			'cockpit.remoteHost.errIdentityNotKey' => 'That file does not look like a private key.',
+			'cockpit.remoteHost.errIdentityMissingFile' => 'That file no longer exists.',
+			'cockpit.remoteHost.errIdentityUnreadable' => 'That file could not be read.',
+			'cockpit.browserPane.back' => 'Back',
+			'cockpit.browserPane.forward' => 'Forward',
+			'cockpit.browserPane.reload' => 'Reload',
+			'cockpit.browserPane.urlHint' => 'Enter URL or address',
+			'cockpit.browserPane.go' => 'Go',
+			'cockpit.documentWindow.mediaNotSupported' => 'Audio and video open in the main Cockpit window.',
+			'cockpit.documentWindow.fileNotFound' => ({required Object path}) => 'File not found: ${path}',
+			'cockpit.gallery.intro' => 'Special Cockpit documents that give you a visual of what the AI agent is doing.',
+			'cockpit.gallery.createErrorTitle' => 'Could not create the file',
+			'cockpit.gallery.dbQuery.title' => 'Database query',
+			'cockpit.gallery.dbQuery.description' => 'SQL editor with a result grid, using one of the registered connections.',
+			'cockpit.gallery.kanban.title' => 'Kanban board',
+			'cockpit.gallery.kanban.description' => 'Columns and cards stored as plain markdown. Drag, edit and comment.',
+			'cockpit.gallery.layout.title' => 'Pane layout',
+			'cockpit.gallery.layout.description' => 'Terminals and splits to open in one go, like tmuxinator. Can run automatically on new worktrees.',
+			'cockpit.gallery.httpRequest.title' => 'HTTP requests',
+			'cockpit.gallery.httpRequest.description' => 'Write requests in a file and run them with the response next to it.',
+			'cockpit.gallery.html.title' => 'HTML view',
+			'cockpit.gallery.html.description' => 'A page the agent writes and Cockpit renders directly: mind maps, diagrams, charts, whatever you need.',
+			'cockpit.gallery.tasks.title' => 'Tasks',
+			'cockpit.gallery.tasks.description' => 'Commands to run from the Tasks panel, such as the dev server, tests and build. Stored in .cockpit/tasks.json.',
+			'cockpit.gallery.notebook.title' => 'Notebook',
+			'cockpit.gallery.notebook.description' => 'A folder of short notes with tags. The agent writes, you read and edit. Also opens in Obsidian.',
+			'cockpit.gallery.workspaceEnv.title' => 'Workspace env',
+			'cockpit.gallery.workspaceEnv.description' => 'Variables injected into every terminal of this workspace. Put API tokens or logins here instead of pasting them into the agent\'s prompt. Kept out of git.',
+			'cockpit.gallery.panel.title' => 'Panel',
+			'cockpit.gallery.panel.description' => 'An HTML page with a bridge to the app: its buttons run Cockpit CLI and shell commands on this machine. A playground for quick dashboards.',
+			'cockpit.notebook.notes' => 'Notes',
+			'cockpit.notebook.newNote' => 'New note',
+			'cockpit.notebook.searchPlaceholder' => 'Search notes',
+			'cockpit.notebook.empty' => 'No notes yet. Create one, or ask the agent to write here.',
+			'cockpit.notebook.noMatch' => 'No note matches.',
+			'cockpit.notebook.selectNote' => 'Select a note',
+			'cockpit.notebook.reload' => 'Reload from disk',
+			'cockpit.notebook.untagged' => 'untagged',
+			'cockpit.notebook.saveFailed' => 'Could not save the note',
+			'cockpit.notebook.createFailed' => 'Could not create the note',
+			'cockpit.notebook.addTag' => 'add tag',
+			'cockpit.notebook.untitled' => 'Untitled',
+			'cockpit.notebook.deleteNote' => 'Delete note',
+			'cockpit.notebook.deleteConfirm' => ({required Object name}) => 'Move “${name}” to the trash?',
+			'cockpit.notebook.imageFailed' => 'Could not save the image',
+			'cockpit.notebook.format.bold' => 'Bold (⌘B)',
+			'cockpit.notebook.format.italic' => 'Italic (⌘I)',
+			'cockpit.notebook.format.strike' => 'Strikethrough',
+			'cockpit.notebook.format.heading1' => 'Heading 1',
+			'cockpit.notebook.format.heading2' => 'Heading 2',
+			'cockpit.notebook.format.heading3' => 'Heading 3',
+			'cockpit.notebook.format.bullets' => 'Bullet list',
+			'cockpit.notebook.format.numbered' => 'Numbered list',
+			'cockpit.notebook.format.checklist' => 'Checklist',
+			'cockpit.notebook.format.quote' => 'Quote',
+			'cockpit.notebook.format.code' => 'Inline code (⌘E)',
+			'cockpit.notebook.format.codeBlock' => 'Code block',
+			'cockpit.notebook.format.link' => 'Link (⌘K)',
+			'cockpit.notebook.format.rule' => 'Divider',
+			'cockpit.notebook.format.noteLink' => 'Link to a note ([[…]])',
+			'cockpit.notebook.format.noteLinkSearch' => 'Search notes',
+			'cockpit.notebook.format.image' => 'Insert image…',
+			'cockpit.notebook.backlinks' => 'Linked from',
+			'cockpit.notebook.renameTag' => 'Rename tag',
+			'cockpit.notebook.deleteTag' => 'Delete tag',
+			'cockpit.notebook.deleteTagConfirm' => ({required Object name, required Object count}) => 'Remove “${name}” from ${count} notes? The notes stay.',
+			'cockpit.notebook.showList' => 'Show notes list',
+			'cockpit.notebook.hideList' => 'Hide notes list',
+			'cockpit.layoutPreview.applyFailedTitle' => 'Could not apply the layout',
+			'cockpit.layoutPreview.applyInCockpit' => 'Apply in Cockpit',
+			'cockpit.layoutPreview.applyNewWorkspace' => 'Open as new workspace',
+			'cockpit.layoutPreview.applyTo' => ({required Object workspace}) => 'Apply to ${workspace}',
+			'cockpit.layoutPreview.autorunWorktree' => 'autorun: worktree. This layout is also applied on its own when you create a worktree of the workspace that holds it.',
+			'cockpit.layoutPreview.command' => 'Command',
+			'cockpit.layoutPreview.folder' => 'Folder',
+			'cockpit.layoutPreview.noCommand' => 'no command, opens a shell',
+			'cockpit.layoutPreview.replaceConfirm' => 'Replace layout',
+			'cockpit.layoutPreview.replaceMessage' => ({required Object n}) => '${n} open tabs of this workspace will be closed, including any running work.',
+			'cockpit.layoutPreview.replaceTitle' => ({required Object workspace}) => 'Replace the layout of ${workspace}?',
+			'cockpit.layoutPreview.skippedTitle' => 'Not created on this system',
+			'cockpit.layoutPreview.splitDown' => 'split down',
+			'cockpit.layoutPreview.splitRight' => 'split right',
+			'cockpit.layoutPreview.splitTab' => 'tab',
+			'cockpit.layoutPreview.subtitle' => ({required Object n}) => 'This layout opens ${n} terminals. Read the commands before applying.',
+			'cockpit.telemetry.tooltip' => 'Telemetry',
+			'cockpit.telemetry.title' => 'Telemetry',
+			'cockpit.telemetry.liveRuns' => ({required Object n}) => '${n} live',
+			'cockpit.telemetry.noWorkspace' => 'Open a workspace to see its telemetry.',
+			'cockpit.telemetry.empty' => 'Nothing here yet.',
+			'cockpit.telemetry.emptyFiltered' => 'Nothing here yet.',
+			'cockpit.telemetry.searchHint' => 'Filter cases',
+			'cockpit.telemetry.chipOpen' => 'Open',
+			'cockpit.telemetry.chipNew' => 'New',
+			'cockpit.telemetry.chipResolved' => 'Resolved',
+			'cockpit.telemetry.chipIgnored' => 'Ignored',
+			'cockpit.telemetry.chipWarnings' => 'Warnings',
+			'cockpit.telemetry.tagNew' => 'new',
+			'cockpit.telemetry.tagRegression' => 'regression',
+			'cockpit.telemetry.tagResolved' => 'resolved',
+			'cockpit.telemetry.tagIgnored' => 'ignored',
+			'cockpit.telemetry.srcTask' => 'task',
+			'cockpit.telemetry.srcWrapper' => 'cockpit telemetry',
+			'cockpit.telemetry.run' => ({required Object id}) => 'run ${id}',
+			'cockpit.telemetry.resolve' => 'Mark resolved',
+			'cockpit.telemetry.ignore' => 'Ignore (hide from agents too)',
+			'cockpit.telemetry.reopen' => 'Reopen',
+			'cockpit.telemetry.clear' => 'Clear occurrences',
+			'cockpit.telemetry.clearRun' => 'Clear this run',
+			'cockpit.telemetry.clearProject' => 'Clear project',
+			'cockpit.telemetry.openFile' => ({required Object location}) => 'Open ${location}',
+			'cockpit.telemetry.showInTerminal' => 'Show in terminal',
+			'cockpit.telemetry.copyCommand' => 'Copy CLI command',
+			'cockpit.telemetry.copied' => 'Copied',
+			'cockpit.telemetry.statusOpen' => 'Open',
+			'cockpit.telemetry.statusResolved' => 'Resolved',
+			'cockpit.telemetry.statusIgnored' => 'Ignored',
+			'cockpit.telemetry.occurrences' => 'Occurrences',
+			'cockpit.telemetry.inRuns' => ({required Object n}) => 'in ${n} runs',
+			'cockpit.telemetry.first' => 'First',
+			'cockpit.telemetry.last' => 'Last',
+			'cockpit.telemetry.origin' => 'Origin',
+			'cockpit.telemetry.sectionStack' => 'Stack',
+			'cockpit.telemetry.stackHint' => 'project frames highlighted · click opens the file',
+			'cockpit.telemetry.sectionCorrelated' => 'Correlated log',
+			'cockpit.telemetry.correlatedHint' => 'the closest JSON log before the error, same run',
+			'cockpit.telemetry.none' => 'none',
+			'cockpit.telemetry.sectionRuns' => 'Occurrences by run',
+			'cockpit.telemetry.runsHint' => 'same key (cwd, command): this is how new and regression are computed',
+			'cockpit.telemetry.sectionContext' => 'Raw context',
+			'cockpit.telemetry.contextHint' => 'terminal lines around the last occurrence',
+			'cockpit.telemetry.current' => 'current',
+			'cockpit.telemetry.fingerprintHint' => ({required Object location}) => 'fingerprint = type + normalized message + ${location}',
+			'cockpit.telemetry.blameUncommitted' => 'changed in working tree',
+			'cockpit.telemetry.blameCommit' => ({required Object ago, required Object sha}) => 'changed ${ago} (${sha})',
+			'cockpit.telemetry.justNow' => 'just now',
+			'cockpit.telemetry.minutesAgo' => ({required Object n}) => '${n}m ago',
+			'cockpit.telemetry.hoursAgo' => ({required Object n}) => '${n}h ago',
+			'cockpit.telemetry.daysAgo' => ({required Object n}) => '${n}d ago',
+			'cockpit.telemetry.resolvedToast' => 'Resolved. If it comes back in a later run it reappears as a regression.',
+			'cockpit.telemetry.ignoredToast' => 'Ignored. Agents no longer see it (unless --include-ignored).',
+			'cockpit.telemetry.clearedToast' => 'Occurrences deleted. Triage rules are kept.',
+			'cockpit.telemetry.byHuman' => 'by you',
+			'cockpit.telemetry.byAgent' => 'by agent',
+			'cockpit.telemetry.caseTabTitle' => ({required Object type, required Object file}) => '${type} · ${file}',
+			'cockpit.telemetry.srcApp' => 'App',
+			'cockpit.telemetry.chipApp' => 'Cockpit',
+			'cockpit.panelView.unavailable' => 'Panels need the embedded web view, which is not available on Linux yet.',
+			'cockpit.panelView.openInBrowser' => 'Open in browser',
+			'cockpit.panelView.openAsHtml' => 'Open as HTML',
+			'cockpit.agentGraph.tabTitle' => 'Agents',
+			'cockpit.agentGraph.newAgent' => 'New agent',
+			'cockpit.agentGraph.emptyTitle' => 'No agents in this workspace',
+			'cockpit.agentGraph.emptyHint' => 'Start an agent in a terminal or create one here. Drag from an agent\'s port to another agent to connect them.',
+			'cockpit.agentGraph.statusWorking' => 'Working',
+			'cockpit.agentGraph.statusWaiting' => 'Waiting',
+			'cockpit.agentGraph.statusIdle' => 'Idle',
+			'cockpit.agentGraph.messageCount' => ({required Object n}) => 'Messages: ${n}',
+			'cockpit.agentGraph.lastMessage' => ({required Object preview}) => 'Last: ${preview}',
+			'cockpit.agentGraph.linked' => 'Connected',
+			'cockpit.agentGraph.removeLinkHint' => 'Right-click to remove the connection',
+			'cockpit.agentGraph.removeLink' => 'Remove connection',
+			'cockpit.agentGraph.connectHint' => 'Drag to another agent to connect',
+			'cockpit.agentGraph.quickStart' => 'Quick start',
+			'cockpit.agentGraph.shell' => 'Shell',
+			'cockpit.agentGraph.tabDetails' => 'Details',
+			'cockpit.agentGraph.tabAppearance' => 'Appearance',
+			'cockpit.agentGraph.tabAgent' => 'Agent',
+			'cockpit.agentGraph.name' => 'Terminal name',
+			'cockpit.agentGraph.namePlaceholder' => 'e.g. Reviewer',
+			'cockpit.agentGraph.nameTaken' => 'Another tab already uses this name. Names must be unique so `cockpit msg --to` can reach it.',
+			'cockpit.agentGraph.command' => 'Command',
+			'cockpit.agentGraph.commandPlaceholder' => 'e.g. claude --model opus (empty = shell)',
+			'cockpit.agentGraph.cwd' => 'Working directory',
+			'cockpit.agentGraph.browse' => 'Browse…',
+			'cockpit.agentGraph.cwdMissing' => 'This folder does not exist.',
+			'cockpit.agentGraph.monitor' => 'Monitor activity',
+			'cockpit.agentGraph.monitorHint' => 'Badge, sound and notification when a turn ends.',
+			'cockpit.agentGraph.maestro' => 'Maestro',
+			'cockpit.agentGraph.maestroTooltip' => 'Promotes this agent to maestro: it is connected to every agent on the canvas and coordinates them.',
+			'cockpit.agentGraph.maestroReplaces' => ({required Object name}) => '${name} is the current maestro and will be demoted.',
+			'cockpit.agentGraph.color' => 'Color',
+			'cockpit.agentGraph.colorAuto' => 'Automatic',
+			'cockpit.agentGraph.role' => 'Role / instructions',
+			'cockpit.agentGraph.rolePlaceholder' => 'Sent as its first message once the agent is ready.',
+			'cockpit.agentGraph.task' => 'Initial task',
+			'cockpit.agentGraph.taskPlaceholder' => 'Sent right after the role.',
+			'cockpit.agentGraph.focus' => 'Focus',
+			'cockpit.agentGraph.rename' => 'Rename',
+			'cockpit.agentGraph.renameTitle' => 'Rename agent',
+			'cockpit.agentGraph.makeMaestro' => 'Make maestro',
+			'cockpit.agentGraph.removeMaestro' => 'Remove maestro',
+			'cockpit.agentGraph.closeTab' => 'Close tab',
+			'cockpit.agentGraph.removeFromCanvas' => 'Remove from canvas',
+			'cockpit.agentGraph.desktopApps' => 'Desktop apps',
+			'cockpit.agentGraph.desktopBadge' => 'desktop',
+			'cockpit.agentGraph.statusOnline' => 'Online',
+			'cockpit.agentGraph.statusOffline' => 'Offline',
+			'cockpit.agentGraph.queued' => ({required Object n}) => '${n} queued',
+			'cockpit.agentGraph.agentName' => 'Name',
+			'cockpit.agentGraph.integration' => 'Integration',
+			'cockpit.agentGraph.integrationHint' => 'Cockpit adds an MCP server named "cockpit" to this file and saves a backup next to it. Other servers are not touched.',
+			'cockpit.agentGraph.integrationConsent' => ({required Object app}) => 'Add the Cockpit MCP server to ${app}\'s config',
+			'cockpit.agentGraph.restartHint' => ({required Object app}) => 'Restart ${app} if it was already open so it loads the Cockpit MCP server; then ask it to call wait_messages.',
+			'cockpit.agentGraph.integrationError.invalidConfig' => ({required Object path}) => '${path} is not plain JSON/TOML that Cockpit can edit safely (comments or a different layout). Nothing was changed.',
+			'cockpit.agentGraph.integrationError.cliMissing' => ({required Object path}) => 'The Cockpit CLI is not installed yet (${path}). Restart Cockpit and try again.',
+			'cockpit.agentGraph.integrationError.writeFailed' => ({required Object detail}) => 'Could not update the config: ${detail}',
+			'settings.language.title' => 'Language',
+			'settings.language.system' => 'System',
+			'settings.language.english' => 'English',
+			'settings.language.portugueseBr' => 'Português (BR)',
+			'settings.language.spanish' => 'Español',
+			'settings.page.header.back' => 'Back',
+			'settings.page.header.title' => 'Settings',
+			'settings.page.nav.general' => 'General',
+			'settings.page.nav.appearance' => 'Appearance',
+			'settings.page.nav.terminal' => 'Terminal',
+			'settings.page.nav.language' => 'Language',
+			'settings.page.nav.shortcuts' => 'Shortcuts',
+			'settings.page.nav.notifications' => 'Notifications',
+			'settings.page.nav.automations' => 'Automations',
+			'settings.page.nav.remoteHosts' => 'Remote hosts',
+			'settings.page.general.sectionEditor' => 'Editor',
+			'settings.page.general.editorEngineTitle' => 'Engine',
+			'settings.page.general.editorEngineCockpit' => 'Cockpit (default)',
+			'settings.page.general.editorEngineNeovim' => 'Neovim',
+			'settings.page.general.neovimChecking' => 'Looking for Neovim…',
+			'settings.page.general.neovimNotFound' => 'Neovim was not found in your shell PATH.',
+			'settings.page.general.neovimRefresh' => 'Check again',
+			'settings.page.general.showCockpitTitle' => 'Show Cockpit terminal',
+			'settings.page.general.showCockpitDesc' => 'Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.',
+			'settings.page.general.launchAtStartupTitle' => 'Launch at login',
+			'settings.page.general.launchAtStartupDesc' => 'Start Cockpit automatically when you sign in to your computer.',
+			'settings.page.general.sectionUpdates' => 'Updates',
+			'settings.page.general.checkUpdatesTitle' => 'Check for updates',
+			'settings.page.general.checkUpdatesDesc' => 'How often Cockpit should look for new versions.',
+			'settings.page.general.updateFrequency.daily' => 'Daily',
+			'settings.page.general.updateFrequency.weekly' => 'Weekly',
+			'settings.page.general.updateFrequency.monthly' => 'Monthly',
+			'settings.page.general.updateFrequency.never' => 'Never',
+			'settings.page.general.developerModeTitle' => 'Developer mode',
+			'settings.page.general.developerModeDesc' => 'Records Cockpit’s own errors and warnings in a separate Telemetry store (the “Cockpit” chip) and turns on performance metrics. Only useful to whoever maintains the app.',
+			'settings.page.diagnostics.sectionTitle' => 'Diagnostics',
+			'settings.page.diagnostics.logFileTitle' => 'Log file',
+			'settings.page.diagnostics.logFileDesc' => ({required Object days, required Object path}) => 'Errors and startup events are recorded here, kept for ${days} days.\n${path}',
+			'settings.page.diagnostics.unavailable' => 'unavailable',
+			'settings.page.diagnostics.reveal' => 'Reveal',
+			'settings.page.diagnostics.reportTitle' => 'Report a problem',
+			'settings.page.diagnostics.reportDesc' => 'Opens a pre-filled issue with your version, OS and recent log. Nothing is sent automatically — you review it first.',
+			'settings.page.diagnostics.reportButton' => 'Report…',
+			'settings.page.diagnostics.reportDialogTitle' => 'Problem report',
+			'settings.page.diagnostics.reportDialogError' => 'Reported manually from Settings.',
+			'settings.page.diagnostics.reportDialogDescription' => 'Describe what went wrong in the issue. The recent log is included below and in "Copy details".',
+			'settings.page.storage.sectionTitle' => 'Storage',
+			'settings.page.storage.locationTitle' => 'Storage location',
+			'settings.page.storage.locationDesc' => ({required Object root}) => 'Cockpit keeps its projects, layouts and settings here. Point it at a synced folder to back it up.\n${root}',
+			'settings.page.storage.useDefault' => 'Use default',
+			'settings.page.storage.working' => 'Working…',
+			'settings.page.storage.change' => 'Change…',
+			'settings.page.storage.resetTitle' => 'Reset Cockpit',
+			'settings.page.storage.resetDesc' => 'Delete all local data — projects, layouts, settings and terminal history — and return to the default location.',
+			'settings.page.storage.resetButton' => 'Reset…',
+			'settings.page.storage.resetConfirm' => 'Reset',
+			'settings.page.storage.resetDialogTitle' => 'Reset Cockpit?',
+			'settings.page.storage.resetDialogContent' => 'This permanently deletes all local Cockpit data — projects, layouts, settings and terminal history. This cannot be undone. Cockpit will close so you can start fresh.',
+			'settings.page.storage.restartRequiredTitle' => 'Restart required',
+			'settings.page.storage.restartChangeFolderMessage' => ({required Object path}) => 'Cockpit will use this folder from the next launch:\n${path}',
+			'settings.page.storage.restartUseDefaultMessage' => 'Cockpit will use the default system location from the next launch. Your data in the custom folder is left untouched.',
+			'settings.page.storage.restartResetMessage' => 'All Cockpit data was cleared. Restart to start fresh.',
+			'settings.page.storage.later' => 'Later',
+			'settings.page.storage.quitCockpit' => 'Quit Cockpit',
+			'settings.page.storage.chooseFolderDialogTitle' => 'Choose a folder for Cockpit data',
+			'settings.page.terminal.sectionDefaultTerminal' => 'Default terminal',
+			'settings.page.terminal.engineTitle' => 'Engine',
+			'settings.page.terminal.engineDesc' => 'Used by new terminal tabs and task output buffers. Open tabs keep their current engine.',
+			'settings.page.terminal.shellTitle' => 'Shell',
+			'settings.page.terminal.shellDesc' => 'Which shell new terminal tabs open. The arrow next to + still opens any other one, just for that tab.',
+			'settings.page.terminal.noWslMessage' => 'No WSL distros found. Install one (wsl.exe --install) and restart Cockpit to see it listed here.',
+			'settings.page.terminal.sectionBehavior' => 'Behavior',
+			'settings.page.terminal.closeOnExitTitle' => 'Close tab when the shell exits',
+			'settings.page.terminal.closeOnExitDesc' => 'When a shell ends on its own (exit, Ctrl-D), close its tab instead of leaving a dead terminal.',
+			'settings.page.appearance.sectionTheme' => 'Theme',
+			'settings.page.appearance.themeTitle' => 'Theme',
+			'settings.page.appearance.themeDesc' => 'App colors, code highlighting and terminal palette.',
+			'settings.page.appearance.modeTitle' => 'Mode',
+			'settings.page.appearance.modeDesc' => 'Which variant of the theme to use.',
+			'settings.page.appearance.modeOnlyDark' => ({required Object theme}) => '"${theme}" only ships a dark variant, so this has no effect.',
+			'settings.page.appearance.modeOnlyLight' => ({required Object theme}) => '"${theme}" only ships a light variant, so this has no effect.',
+			'settings.page.appearance.themeFileTitle' => 'Theme file',
+			'settings.page.appearance.themeFileDesc' => 'Import a theme from a JSON file, or export the active one.',
+			'settings.page.appearance.previewCode' => 'Code',
+			'settings.page.appearance.previewTerminal' => 'Terminal',
+			'settings.page.appearance.themeSystem' => 'System',
+			'settings.page.appearance.themeLight' => 'Light',
+			'settings.page.appearance.themeDark' => 'Dark',
+			'settings.page.appearance.sectionFonts' => 'Fonts',
+			'settings.page.appearance.interfaceFontTitle' => 'Interface font',
+			'settings.page.appearance.interfaceFontDesc' => 'Used across the whole app. Empty = system default.',
+			'settings.page.appearance.interfaceSizeTitle' => 'Interface size',
+			'settings.page.appearance.codeFontTitle' => 'Code font',
+			'settings.page.appearance.codeFontDesc' => 'Code and diffs. Empty = system default.',
+			'settings.page.appearance.codeSizeTitle' => 'Code size',
+			'settings.page.appearance.terminalFontTitle' => 'Terminal font',
+			'settings.page.appearance.terminalFontDesc' => 'Terminal only. Empty = system default.',
+			'settings.page.appearance.terminalSizeTitle' => 'Terminal size',
+			'settings.page.appearance.terminalSizeDesc' => 'Off = follows the code size.',
+			'settings.page.appearance.terminalSizeInherit' => 'Follow code size',
+			'settings.page.appearance.terminalWeightTitle' => 'Terminal weight',
+			'settings.page.appearance.terminalWeightDesc' => 'Low-density screens render strokes heavier. Auto lightens them there and leaves Retina untouched.',
+			'settings.page.appearance.terminalWeightAuto' => 'Auto (by screen)',
+			'settings.page.appearance.terminalWeightLight' => 'Light',
+			'settings.page.appearance.terminalWeightNormal' => 'Normal',
+			'settings.page.appearance.terminalWeightMedium' => 'Medium',
+			'settings.page.appearance.terminalWeightSemiBold' => 'Semibold',
+			'settings.page.appearance.sectionConversation' => 'Conversation',
+			'settings.page.appearance.pinUserMessageTitle' => 'Pin user message',
+			'settings.page.appearance.pinUserMessageDesc' => 'The question stays fixed at the top while the answer scrolls.',
+			'settings.page.appearance.importTheme' => 'Import…',
+			'settings.page.appearance.exportTheme' => 'Export…',
+			'settings.page.appearance.deleteTheme' => 'Remove',
+			'settings.page.appearance.importThemeDialog' => 'Pick a theme file',
+			'settings.page.appearance.exportThemeDialog' => 'Save theme as',
+			'settings.page.appearance.themeImported' => ({required Object name}) => 'Theme "${name}" imported.',
+			'settings.page.appearance.themeExported' => 'Theme saved.',
+			'settings.page.appearance.themeDeleted' => 'Theme removed.',
+			'settings.page.appearance.fontPickerTitle' => 'Choose a font',
+			'settings.page.appearance.fontPickerSearch' => 'Search fonts',
+			'settings.page.appearance.fontPickerEmpty' => 'No matching font found on this machine.',
+			'settings.page.appearance.fontPickerBundled' => 'included',
+			'settings.page.appearance.fontPickerCustom' => 'Not listed? Type the exact family name.',
+			'settings.page.appearance.fontPickerCustomHint' => 'Family name',
+			'settings.page.appearance.fontPickerUse' => 'Use',
+			'settings.page.appearance.fontPickerDefault' => 'Default',
+			'settings.page.appearance.fontMissing' => 'Not found on this machine — falling back.',
+			'settings.page.appearance.sectionLayout' => 'Layout',
+			'settings.page.appearance.swapPanelsTitle' => 'Swap side panels',
+			'settings.page.appearance.swapPanelsDesc' => 'Puts workspaces on the right and files, search, git and database on the left.',
+			'settings.page.notifications.sectionTitle' => 'Notifications',
+			'settings.page.notifications.enableTitle' => 'Enable notifications',
+			'settings.page.notifications.enableDesc' => 'Alert me when an agent finishes a turn and the window is not focused.',
+			'settings.page.notifications.systemPermissionTitle' => 'System permission',
+			'settings.page.notifications.grantedDesc' => 'Cockpit is allowed to send notifications.',
+			'settings.page.notifications.notGrantedDesc' => 'macOS has not granted notification access yet.',
+			'settings.page.notifications.granted' => 'Granted',
+			'settings.page.notifications.requestPermission' => 'Request permission',
+			'settings.page.notifications.soundsTitle' => 'Sounds',
+			'settings.page.notifications.soundVolumeTitle' => 'Volume',
+			'settings.page.notifications.soundTurnDone' => 'Turn completed',
+			'settings.page.notifications.soundTurnDoneDesc' => 'An agent finished its turn.',
+			'settings.page.notifications.soundActionRequired' => 'Action required',
+			'settings.page.notifications.soundActionRequiredDesc' => 'An agent is waiting for your approval or answer.',
+			'settings.page.notifications.soundDefault' => 'Default',
+			'settings.page.notifications.soundCustom' => ({required Object name}) => 'Custom: ${name}',
+			'settings.page.notifications.soundChooseFile' => 'Choose file',
+			'settings.page.notifications.soundReset' => 'Reset to default',
+			'settings.page.notifications.soundOnActiveTab' => 'Also play when this tab is active',
+			'settings.page.notifications.soundPreview' => 'Preview',
+			'settings.page.shortcuts.notCustomizable' => 'Keyboard shortcuts are not customizable yet.',
+			'settings.page.languages.sectionFormatting' => 'FORMATTING',
+			'settings.page.languages.formatOnSaveTitle' => 'Format on save',
+			'settings.page.languages.formatOnSaveDesc' => 'Format the file automatically when you save (⌘S).',
+			'settings.page.languages.sectionLanguageServers' => 'LANGUAGE SERVERS',
+			'settings.page.languages.footerNote' => 'Errors and formatting use each language\'s language server. Cockpit does not install servers — it uses what is already on your machine. ● responds · ○ not found or invalid command (install the server or adjust the command).',
+			'settings.page.languages.serverCommandLabel' => 'Language server command',
+			'settings.page.languages.formatterCommandLabel' => 'Formatter command (optional)',
+			'settings.page.languages.formatterHint' => 'External formatter with %FILE% placeholder. Takes precedence over the LSP formatter when set.',
+			'settings.page.languages.resetToDefault' => 'Reset to default',
+			'settings.page.languages.saveAndRestart' => 'Save & restart',
+			'settings.page.languages.statusResponds' => 'Server responds',
+			'settings.page.languages.statusNotFound' => 'Server not found or command invalid',
+			'settings.page.automations.sectionCommitMessages' => 'Commit messages',
+			'settings.page.automations.harness' => 'Harness',
+			'settings.page.automations.harnessDiscovering' => 'Looking for installed command-line harnesses…',
+			'settings.page.automations.harnessNoneFound' => 'No supported harness was found on PATH.',
+			'settings.page.automations.harnessConfiguredUnavailable' => ({required Object harness}) => '${harness} is configured but unavailable.',
+			'settings.page.automations.harnessChoose' => 'Choose the CLI used to generate commit messages.',
+			'settings.page.automations.harnessRefresh' => 'Refresh installed harnesses',
+			'settings.page.automations.notConfigured' => 'Not configured',
+			'settings.page.automations.model' => 'Model',
+			'settings.page.automations.modelUnavailable' => 'The model list is unavailable until the harness is found.',
+			'settings.page.automations.modelCliOnly' => 'This harness uses its CLI default model.',
+			'settings.page.automations.modelCliDefault' => 'CLI default',
+			'settings.page.automations.modelAuto' => 'Auto',
+			'settings.page.automations.modelSearch' => ({required Object count}) => 'Search among ${count} models…',
+			'settings.page.automations.modelAutoRouted' => 'This harness routes the model automatically.',
+			'settings.page.automations.modelAccountOnly' => 'Only models your account can use are listed.',
+			'settings.page.automations.generateFromSourceControl' => 'Generate from Source Control',
+			'settings.page.automations.generateFromSourceControlDescription' => 'Cockpit sends only the selected diff and recent commit subjects. Common credential patterns and sensitive files are redacted before the harness runs.',
+			'settings.page.automations.discoveryFailed' => 'Could not discover installed automation harnesses.',
+			'settings.page.automations.staleModel' => ({required Object model, required Object harness}) => 'Model "${model}" is no longer available for ${harness}. Using the CLI default — pick another model in Settings if needed.',
+			'settings.page.automations.recommendedSuffix' => 'Recommended',
+			'settings.remoteHosts.title' => 'Remote hosts',
+			'settings.remoteHosts.description' => 'Machines you reach over SSH. Adding a host here is the same as adding one from the workspace "+" menu.',
+			_ => null,
+		} ?? switch (path) {
+			'settings.remoteHosts.empty' => 'No remote hosts yet.',
+			'settings.remoteHosts.add' => 'Add host',
+			'settings.remoteHosts.edit' => 'Edit',
+			'settings.remoteHosts.reconnect' => 'Reconnect',
+			'settings.remoteHosts.remove' => 'Remove',
+			'settings.remoteHosts.removeTitle' => 'Remove host',
+			'settings.remoteHosts.removeMessage' => ({required Object name}) => 'Remove "${name}" and all its workspaces? Nothing is deleted on the host itself.',
+			'settings.remoteHosts.workspacesCount' => ({required Object count}) => '${count} workspace(s)',
+			'settings.remoteHosts.deviceKeyTitle' => 'This device\'s key',
+			'settings.remoteHosts.deviceKeyDesc' => 'Add this public key to ~/.ssh/authorized_keys on the host so this device can connect.',
+			'settings.remoteHosts.deviceKeyCopy' => 'Copy public key',
+			'settings.remoteHosts.deviceKeyCopied' => 'Public key copied',
+			'settings.remoteHosts.statusConnected' => 'Connected',
+			'settings.remoteHosts.statusConnecting' => 'Connecting…',
+			'settings.remoteHosts.statusReconnecting' => 'Reconnecting…',
+			'settings.remoteHosts.statusOffline' => 'Offline',
+			'settings.remoteHosts.statusIdle' => 'Not connected',
+			'settings.remoteHosts.helpTitle' => 'How it works',
+			'settings.remoteHosts.helpBody' => 'Cockpit connects to your machine over SSH and talks to a small server that runs the terminals, files and git there. The host must have Cockpit (desktop) or the cockpit-server installed and running, and this device’s public key added to its ~/.ssh/authorized_keys.',
+			'automation.error.unavailable' => ({required Object harness}) => '${harness} is not installed or is not on PATH.',
+			'automation.error.modelUnavailable' => ({required Object model, required Object harness}) => 'Model "${model}" is not available for ${harness}. Choose another model in Settings.',
+			'automation.error.authentication' => ({required Object harness, required Object detail}) => '${harness}: ${detail}',
+			'automation.error.timeout' => ({required Object harness, required Object seconds}) => '${harness} did not respond within ${seconds} seconds.',
+			'automation.error.cancelled' => 'Commit message generation was cancelled.',
+			'automation.error.process' => ({required Object harness, required Object detail}) => '${harness}: ${detail}',
+			'automation.error.processNoDetail' => ({required Object harness}) => '${harness} could not generate a commit message.',
+			'automation.error.invalidResponse' => 'The automation returned an empty commit message.',
+			'automation.error.busy' => 'Another commit message is already being generated.',
+			'automation.error.unknown' => 'The automation could not generate a commit message.',
+			'automation.error.noWorkspace' => 'No workspace selected.',
+			'automation.error.fileOutsideWorkspace' => 'File is outside the workspace roots.',
+			'automation.error.fileUnreadable' => ({required Object detail}) => 'Could not read the file: ${detail}',
+			'automation.error.binaryFile' => 'A commit message cannot be generated for a binary file.',
+			'automation.error.noFileChanges' => 'There are no changes to describe for this file.',
+			'automation.error.noStagedChanges' => 'There are no staged changes to describe.',
+			'automation.error.multipleRepositories' => 'Staged changes belong to multiple repositories. Generate them separately.',
+			'automation.error.diffUnavailable' => 'Could not read the diff.',
+			'automation.error.notConfigured' => 'Configure a commit message harness in Settings.',
+			'fileOperation.error.alreadyExists' => ({required Object name}) => 'Already exists: “${name}”.',
+			'fileOperation.error.notFound' => ({required Object name}) => 'Not found: “${name}”.',
+			'fileOperation.error.invalidPath' => 'Invalid path.',
+			'fileOperation.error.emptyName' => 'The name cannot be empty.',
+			'fileOperation.error.noWorkspace' => 'No workspace selected.',
+			'fileOperation.error.cannotMoveIntoItself' => 'Cannot move a folder into itself.',
+			'fileOperation.error.clipboardEmpty' => 'Clipboard is empty.',
+			'fileOperation.error.notScratchTab' => 'This tab is not a scratch file.',
+			'fileOperation.error.writeFailed' => 'Could not write the file.',
+			'fileOperation.error.formatterEmptyCommand' => 'Empty formatter command.',
+			'fileOperation.error.formatterMissingPlaceholder' => 'Formatter command must include the %FILE% placeholder.',
+			'fileOperation.error.formatterTimeout' => 'Formatter timed out.',
+			'fileOperation.error.formatterExitCode' => ({required Object code}) => 'Formatter exited with ${code}.',
+			'fileOperation.error.formatterFailed' => 'The formatter could not run.',
+			'fileOperation.error.osFailure' => ({required Object detail}) => '${detail}',
+			'fileOperation.error.nameHasSlash' => 'Name cannot contain “/”.',
+			'fileOperation.error.invalidName' => 'Invalid name.',
+			'fileOperation.error.remoteDropUnsupported' => 'Dropping files into a remote workspace is not supported yet.',
+			'theme.error.io' => 'Could not read or write the theme file.',
+			'theme.error.ioDetail' => ({required Object detail}) => 'Could not read or write the theme file: ${detail}',
+			'theme.error.malformedJson' => ({required Object detail}) => 'This file is not valid JSON: ${detail}',
+			'theme.error.invalidTheme' => 'This file is not a valid theme.',
+			'theme.error.reservedId' => 'This theme uses the id of a built-in theme. Change "id" in the file and import again.',
+			'theme.error.notAnObject' => ({required Object field}) => 'Expected an object at "${field}".',
+			'theme.error.missingField' => ({required Object field}) => 'Missing required field "${field}".',
+			'theme.error.badColor' => ({required Object value, required Object field}) => '"${value}" at "${field}" is not a color. Use #RGB, #RRGGBB or #RRGGBBAA.',
+			'theme.error.unknownBase' => ({required Object value}) => 'Unknown base theme "${value}" in "extends".',
+			'theme.error.noVariants' => 'The theme declares no variant. Add "dark", "light" or both under "variants".',
+			_ => null,
+		};
+	}
+}

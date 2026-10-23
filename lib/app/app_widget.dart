@@ -1,0 +1,139 @@
+import 'dart:io' show Platform;
+
+import 'package:cockpit/app/core/domain/entities/app_settings.dart';
+import 'package:cockpit/app/core/ui/menu/app_menu_bar.dart';
+import 'package:cockpit/app/core/ui/menu/editor_menu_bridge.dart';
+import 'package:cockpit/app/core/ui/menu/menu_model.dart';
+import 'package:cockpit/app/core/ui/menu/workspace_menu_bridge.dart';
+import 'package:cockpit/app/core/ui/app_zoom.dart';
+import 'package:cockpit/app/core/ui/clamping_scroll_behavior.dart';
+import 'package:cockpit/app/core/ui/widgets/devtools_inspector.dart';
+import 'package:cockpit/app/core/ui/overlay/app_popover_handler.dart';
+import 'package:cockpit/app/core/ui/settings_controller.dart';
+import 'package:cockpit/app/core/ui/themes/themes.dart';
+import 'package:cockpit/app/core/utils/platform_kind.dart';
+import 'package:cockpit/i18n/strings.g.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart';
+
+/// Raiz visual do app. Fica **abaixo** do `ModularApp` (que provê o router) e
+/// **acima** do `ShadcnApp.router`. Lê o [SettingsController] app-scoped (provido
+/// em `ModularApp.provide`, no `main`) via `context.watch` → trocar tema/fonte
+/// repinta tudo. O router vem de `ModularApp.routerConfigOf(context)`.
+class AppRoot extends StatelessWidget {
+  const AppRoot({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = context.watch<SettingsController>();
+    final s = controller.settings;
+    // O tema ativo (built-in ou importado) alimenta tanto o ThemeData do shadcn
+    // quanto os tokens bespoke — uma escolha só pinta o app inteiro.
+    final theme = controller.activeTheme;
+    // "Tamanho da interface" = **zoom do app inteiro** (texto, panes, ícones,
+    // app bar, terminal). Baseline 14 = 1.0x. Ver [_AppZoom].
+    final uiScale = s.interfaceSize / 14.0;
+    // Fonte de verdade dos menus (usada pelo menu nativo do macOS aqui e pela
+    // barra desenhada da janela [WindowMenuBar] no Windows/Linux, montada na
+    // barra de título do shell). `watch` no bridge do editor → o menu File
+    // (Save/Discard/Format) reconstrói e re-habilita conforme a aba focada.
+    final editor = context.watch<EditorMenuBridge>();
+    final workspace = context.watch<WorkspaceMenuBridge>();
+    final menus = buildAppMenus(context.t, controller, editor, workspace);
+    final app = ShadcnApp.router(
+      title: 'Cockpit',
+      debugShowCheckedModeBanner: false,
+      // Todos os overlays ancorados (popover/menu/tooltip) passam pelo nosso
+      // handler: o do shadcn mede a âncora no espaço da JANELA e insere o
+      // overlay dentro do [_AppZoom] — com escala ≠ 1.0 tudo abre deslocado.
+      popoverHandler: const AppPopoverOverlayHandler(),
+      menuHandler: const AppPopoverOverlayHandler(),
+      tooltipHandler: const AppPopoverOverlayHandler(),
+      // Física de scroll CLAMP em todo o app (mata o bounce/overscroll estranho
+      // do default BouncingScrollPhysics do shadcn). Ver ClampingScrollBehavior.
+      scrollBehavior: const ClampingScrollBehavior(),
+      theme: buildTheme(
+        brightness: Brightness.light,
+        settings: s,
+        theme: theme,
+      ),
+      darkTheme: buildTheme(
+        brightness: Brightness.dark,
+        settings: s,
+        theme: theme,
+      ),
+      themeMode: _themeMode(s.themeMode),
+      routerConfig: ModularApp.routerConfigOf(context),
+      builder: (context, child) {
+        // Brightness efetiva (já resolvida pelo ShadcnApp via themeMode): monta os
+        // tokens bespoke e os instala via CockpitTheme — alimenta
+        // context.colors/typo/syntax em toda a árvore de rotas.
+        final tokens = buildTokens(
+          brightness: Theme.of(context).brightness,
+          settings: s,
+          theme: theme,
+        );
+        // App content zoomado + tema. No mobile (iPad/Android) envolvemos em
+        // SafeArea pra não passar por baixo da status bar / home indicator; o
+        // fundo do tema é pintado **edge-to-edge** (ColoredBox) atrás da
+        // SafeArea, então os insets ficam na cor do app, nunca pretos.
+        // Cor de seleção do app inteiro. O `ShadcnApp` não é `MaterialApp`, e
+        // sem um `DefaultSelectionStyle` acima o fallback do Flutter tem
+        // `selectionColor` NULO — qualquer widget que o desreferencie com `!`
+        // crasha ao montar. Foi o que derrubou o markdown do agente
+        // (`gpt_markdown`, `_SelectableAdapter.createRenderObject`), e valeria
+        // para qualquer coisa selecionável daqui pra frente.
+        //
+        // Fica no topo, junto do tema: cor de seleção é decisão de tema, não
+        // de widget.
+        Widget content = DefaultSelectionStyle(
+          selectionColor: tokens.terminal.selection,
+          cursorColor: tokens.colors.accent,
+          child: AppZoom(
+            scale: uiScale,
+            child: CockpitTheme(
+              colors: tokens.colors,
+              typo: tokens.typo,
+              syntax: tokens.syntax,
+              terminal: tokens.terminal,
+              child: child ?? const SizedBox(),
+            ),
+          ),
+        );
+        if (isMobilePlatform) content = SafeArea(child: content);
+        content = ColoredBox(color: tokens.colors.bg, child: content);
+        return CallbackShortcuts(
+          // Atalhos globais (sempre na cadeia de foco): zoom (⌘=/⌘-/⌘0) e foco do
+          // input (⌘L). CallbackShortcuts é aditivo (não quebra copiar/colar) e
+          // funciona mesmo sem nada focado. Fora do macOS somamos os aceleradores
+          // do menu (⌘,/⌘O etc): lá a barra é desenhada e não dispara teclas
+          // sozinha; no macOS a barra nativa já dispara, então não duplicamos.
+          bindings: {
+            ...zoomBindings(controller),
+            if (!Platform.isMacOS) ...menuShortcuts(menus),
+          },
+          // macOS: barra de menu **nativa** do SO — o [AppMenuBar] envolve com um
+          // `PlatformMenuBar`. Fica **abaixo** do `ShadcnApp` (dentro do builder,
+          // com `View`/`MediaQuery` ancestrais): acima dele o `setMenus` do engine
+          // não é aplicado. Windows/Linux: no-op aqui — a barra é desenhada na
+          // barra de título do shell pelo [WindowMenuBar].
+          child: AppMenuBar(
+            menus: menus,
+            child: DevToolsInspector(child: content),
+          ),
+        );
+      },
+    );
+    return app;
+  }
+
+  ThemeMode _themeMode(AppThemeMode mode) => switch (mode) {
+    AppThemeMode.system => ThemeMode.system,
+    AppThemeMode.light => ThemeMode.light,
+    AppThemeMode.dark => ThemeMode.dark,
+  };
+
+  /// Atalhos de zoom (tamanho da interface). `meta` = ⌘ (macOS); `control` = Ctrl
+  /// (Windows/Linux). `=`/numpad+ aumenta, `-`/numpad- diminui, `0` reseta. Step
+  /// de 1, limitado a 11..22 (igual ao stepper das Configurações).
+}
