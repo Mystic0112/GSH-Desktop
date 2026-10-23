@@ -1835,6 +1835,8 @@ class _Translations$settings$page$nav$es extends Translations$settings$page$nav$
 	final TranslationsEs _root; // ignore: unused_field
 
 	// Translations
+	@override String get sideGsh => 'GSH Desktop';
+	@override String get sideClaude => 'Claude';
 	@override String get general => 'General';
 	@override String get appearance => 'Apariencia';
 	@override String get terminal => 'Terminal';
@@ -3465,6 +3467,8 @@ extension on TranslationsEs {
 			'settings.language.spanish' => 'Español',
 			'settings.page.header.back' => 'Atrás',
 			'settings.page.header.title' => 'Configuración',
+			'settings.page.nav.sideGsh' => 'GSH Desktop',
+			'settings.page.nav.sideClaude' => 'Claude',
 			'settings.page.nav.general' => 'General',
 			'settings.page.nav.appearance' => 'Apariencia',
 			'settings.page.nav.terminal' => 'Terminal',
@@ -3564,10 +3568,10 @@ extension on TranslationsEs {
 			'settings.page.appearance.themeFileDesc' => 'Importa un tema desde un archivo JSON, o exporta el activo.',
 			'settings.page.appearance.previewCode' => 'Código',
 			'settings.page.appearance.previewTerminal' => 'Terminal',
-			'settings.page.appearance.themeSystem' => 'Sistema',
-			'settings.page.appearance.themeLight' => 'Claro',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.appearance.themeSystem' => 'Sistema',
+			'settings.page.appearance.themeLight' => 'Claro',
 			'settings.page.appearance.themeDark' => 'Oscuro',
 			'settings.page.appearance.sectionFonts' => 'Fuentes',
 			'settings.page.appearance.interfaceFontTitle' => 'Fuente de la interfaz',

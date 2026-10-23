@@ -16,10 +16,10 @@ const _textSizes = (small: 13.0, medium: 14.0, large: 16.0);
 /// próprias do GSH ([gshSections]). A seção Voz não existe: o GSH não tem
 /// ditado.
 class GeneralPanel extends StatelessWidget {
-  const GeneralPanel({super.key, required this.gshSections});
+  const GeneralPanel({super.key, this.gshSections});
 
   /// Terminal do GSH, editor, atualizações, idioma, diagnóstico.
-  final Widget gshSections;
+  final Widget? gshSections;
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +143,7 @@ class GeneralPanel extends StatelessWidget {
             ),
           ],
         ),
-        gshSections,
+        ?gshSections,
       ],
     );
   }

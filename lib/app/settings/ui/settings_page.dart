@@ -114,8 +114,9 @@ class _SettingsPageState extends State<SettingsPage> {
     final nav = context.t.settings.page.nav;
     final ph = context.t.settings.page.placeholder;
     final Widget panel = switch (category) {
-      SettingsCategory.general => const GeneralPanel(
-        gshSections: _GeneralGshSections(),
+      SettingsCategory.general => const GeneralPanel(),
+      SettingsCategory.gshGeneral => const SettingsPanelBody(
+        children: [_GeneralGshSections()],
       ),
       SettingsCategory.account => const AccountPanel(),
       SettingsCategory.privacy => const PrivacyPanel(),

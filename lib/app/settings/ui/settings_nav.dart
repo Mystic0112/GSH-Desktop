@@ -1,6 +1,7 @@
 import 'package:cockpit/app/core/ui/themes/themes.dart';
 import 'package:cockpit/app/core/ui/widgets/hover_tap.dart';
 import 'package:cockpit/app/core/utils/platform_kind.dart';
+import 'package:cockpit/app/settings/ui/settings_widgets.dart';
 import 'package:cockpit/i18n/strings.g.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
@@ -26,6 +27,7 @@ enum SettingsCategory {
   connectors,
   plugins,
   // GSH Desktop (abas próprias do app)
+  gshGeneral,
   appearance,
   terminal,
   languages,
@@ -35,11 +37,31 @@ enum SettingsCategory {
   remoteHosts,
 }
 
+/// Lado do menu: as configurações do próprio GSH ou as do motor Claude.
+enum SettingsSide { gsh, claude }
+
+extension SettingsCategorySide on SettingsCategory {
+  SettingsSide get side =>
+      const {
+        SettingsCategory.gshGeneral,
+        SettingsCategory.appearance,
+        SettingsCategory.terminal,
+        SettingsCategory.languages,
+        SettingsCategory.automations,
+        SettingsCategory.shortcuts,
+        SettingsCategory.notifications,
+        SettingsCategory.remoteHosts,
+      }.contains(this)
+      ? SettingsSide.gsh
+      : SettingsSide.claude;
+}
+
 extension SettingsCategoryPlatform on SettingsCategory {
   /// No mobile (plano 59) só sobram as abas que não dependem do motor local
   /// nem da CLI `claude` desta máquina.
   bool get hiddenOnMobile => !const {
     SettingsCategory.general,
+    SettingsCategory.gshGeneral,
     SettingsCategory.appearance,
     SettingsCategory.shortcuts,
     SettingsCategory.notifications,
@@ -55,10 +77,10 @@ class _Entry {
   final SettingsCategory? category;
 }
 
-/// Menu lateral das Configurações: busca no topo e as abas em grupos
-/// (Configurações · Este computador · Personalização · Plataforma · GSH
-/// Desktop). A busca filtra pelo rótulo (contém, sem diferenciar caixa) e
-/// esconde os grupos que ficam vazios.
+/// Menu lateral das Configurações: no topo, o lado (GSH Desktop | Claude) e
+/// a busca; embaixo, as abas daquele lado em grupos. O lado é o da aba
+/// selecionada; trocar de lado seleciona a primeira aba dele. A busca filtra
+/// pelo rótulo (contém, sem diferenciar caixa) e esconde os grupos vazios.
 class SettingsNav extends StatefulWidget {
   const SettingsNav({
     super.key,
@@ -97,6 +119,51 @@ class _SettingsNavState extends State<SettingsNav> {
   List<(String, List<_Entry>)> _groups(BuildContext context) {
     final nav = context.t.settings.page.nav;
     final groups = nav.groups;
+    if (widget.selected.side == SettingsSide.gsh) {
+      return [
+        (
+          groups.app,
+          [
+            _Entry(
+              Icons.settings_outlined,
+              nav.general,
+              SettingsCategory.gshGeneral,
+            ),
+            _Entry(
+              Icons.brightness_6_outlined,
+              nav.appearance,
+              SettingsCategory.appearance,
+            ),
+            _Entry(
+              Icons.terminal_outlined,
+              nav.terminal,
+              SettingsCategory.terminal,
+            ),
+            _Entry(Icons.data_object, nav.language, SettingsCategory.languages),
+            _Entry(
+              Icons.auto_awesome_outlined,
+              nav.automations,
+              SettingsCategory.automations,
+            ),
+            _Entry(
+              Icons.keyboard_outlined,
+              nav.shortcuts,
+              SettingsCategory.shortcuts,
+            ),
+            _Entry(
+              Icons.notifications_outlined,
+              nav.notifications,
+              SettingsCategory.notifications,
+            ),
+            _Entry(
+              Icons.cloud_outlined,
+              nav.remoteHosts,
+              SettingsCategory.remoteHosts,
+            ),
+          ],
+        ),
+      ];
+    }
     return [
       (
         groups.settings,
@@ -165,43 +232,17 @@ class _SettingsNavState extends State<SettingsNav> {
         ],
       ),
       (groups.platform, [_Entry(Icons.vpn_key_outlined, nav.apiKeys)]),
-      (
-        groups.app,
-        [
-          _Entry(
-            Icons.brightness_6_outlined,
-            nav.appearance,
-            SettingsCategory.appearance,
-          ),
-          _Entry(
-            Icons.terminal_outlined,
-            nav.terminal,
-            SettingsCategory.terminal,
-          ),
-          _Entry(Icons.data_object, nav.language, SettingsCategory.languages),
-          _Entry(
-            Icons.auto_awesome_outlined,
-            nav.automations,
-            SettingsCategory.automations,
-          ),
-          _Entry(
-            Icons.keyboard_outlined,
-            nav.shortcuts,
-            SettingsCategory.shortcuts,
-          ),
-          _Entry(
-            Icons.notifications_outlined,
-            nav.notifications,
-            SettingsCategory.notifications,
-          ),
-          _Entry(
-            Icons.cloud_outlined,
-            nav.remoteHosts,
-            SettingsCategory.remoteHosts,
-          ),
-        ],
-      ),
     ];
+  }
+
+  /// Troca de lado: vai para a primeira aba do outro lado.
+  void _switchSide(SettingsSide side) {
+    if (side == widget.selected.side) return;
+    widget.onSelect(
+      side == SettingsSide.gsh
+          ? SettingsCategory.gshGeneral
+          : SettingsCategory.general,
+    );
   }
 
   @override
@@ -244,7 +285,18 @@ class _SettingsNavState extends State<SettingsNav> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(12, 12, 12, 6),
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
+            child: SettingsSegmented<SettingsSide>(
+              value: widget.selected.side,
+              onChanged: _switchSide,
+              options: {
+                SettingsSide.gsh: context.t.settings.page.nav.sideGsh,
+                SettingsSide.claude: context.t.settings.page.nav.sideClaude,
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 0, 12, 6),
             child: SizedBox(
               child: TextField(
                 controller: _search,

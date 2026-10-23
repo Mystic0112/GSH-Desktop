@@ -10,6 +10,7 @@ import 'package:cockpit/app/core/ui/themes/themes.dart';
 import 'package:cockpit/app/settings/domain/claude_info.dart';
 import 'package:cockpit/app/settings/ui/claude_info_viewmodel.dart';
 import 'package:cockpit/app/settings/ui/neovim_settings_viewmodel.dart';
+import 'package:cockpit/app/settings/ui/settings_nav.dart';
 import 'package:cockpit/app/settings/ui/settings_page.dart';
 import 'package:cockpit/i18n/strings.g.dart';
 import 'package:flutter/services.dart' show MethodChannel;
@@ -353,23 +354,43 @@ void main() {
       'Configurações',
       'Este computador',
       'Personalização',
-      'Plataforma',
-      'Chaves de API',
       'Cowork',
     ]) {
       expect(find.text(label), findsWidgets, reason: label);
     }
+    // O fim do menu fica fora da janela de teste: rola até lá.
+    await tester.scrollUntilVisible(
+      find.text('Chaves de API'),
+      120,
+      // O campo de busca também é um Scrollable; o da lista vem depois.
+      scrollable: find
+          .descendant(
+            of: find.byType(SettingsNav),
+            matching: find.byType(Scrollable),
+          )
+          .last,
+    );
+    expect(find.text('Plataforma'), findsOneWidget);
     await tester.enterText(find.byType(TextField).first, 'PLUG');
     await tester.pumpAndSettle();
     expect(find.text('Plugins'), findsOneWidget);
     expect(find.text('Conectores'), findsNothing);
     expect(find.text('Este computador'), findsNothing);
-    // As abas próprias do GSH ficam no último grupo (fora da tela sem busca).
+    // As abas próprias do GSH ficam no outro lado do menu.
+    await tester.enterText(find.byType(TextField).first, '');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('GSH Desktop').first);
+    await tester.pumpAndSettle();
+    expect(find.text('Hosts remotos'), findsOneWidget);
+    expect(find.text('Este computador'), findsNothing);
     await tester.enterText(find.byType(TextField).first, 'hosts');
     await tester.pumpAndSettle();
     expect(find.text('Hosts remotos'), findsOneWidget);
+    expect(find.text('Automações'), findsNothing);
 
     await tester.enterText(find.byType(TextField).first, '');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Claude').first);
     await tester.pumpAndSettle();
     await _open(tester, 'Conectores');
     expect(find.text('Vincular'), findsNWidgets(2));

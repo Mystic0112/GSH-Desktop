@@ -3826,6 +3826,12 @@ class Translations$settings$page$nav$en {
 
 	// Translations
 
+	/// en: 'GSH Desktop'
+	String get sideGsh => 'GSH Desktop';
+
+	/// en: 'Claude'
+	String get sideClaude => 'Claude';
+
 	/// en: 'General'
 	String get general => 'General';
 
@@ -6300,6 +6306,8 @@ extension on Translations {
 			'settings.language.spanish' => 'Español',
 			'settings.page.header.back' => 'Back',
 			'settings.page.header.title' => 'Settings',
+			'settings.page.nav.sideGsh' => 'GSH Desktop',
+			'settings.page.nav.sideClaude' => 'Claude',
 			'settings.page.nav.general' => 'General',
 			'settings.page.nav.appearance' => 'Appearance',
 			'settings.page.nav.terminal' => 'Terminal',
@@ -6399,10 +6407,10 @@ extension on Translations {
 			'settings.page.appearance.themeFileDesc' => 'Import a theme from a JSON file, or export the active one.',
 			'settings.page.appearance.previewCode' => 'Code',
 			'settings.page.appearance.previewTerminal' => 'Terminal',
-			'settings.page.appearance.themeSystem' => 'System',
-			'settings.page.appearance.themeLight' => 'Light',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.appearance.themeSystem' => 'System',
+			'settings.page.appearance.themeLight' => 'Light',
 			'settings.page.appearance.themeDark' => 'Dark',
 			'settings.page.appearance.sectionFonts' => 'Fonts',
 			'settings.page.appearance.interfaceFontTitle' => 'Interface font',

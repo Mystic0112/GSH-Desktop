@@ -1085,6 +1085,8 @@
         "title": "Settings"
       },
       "nav": {
+        "sideGsh": "GSH Desktop",
+        "sideClaude": "Claude",
         "general": "General",
         "appearance": "Appearance",
         "terminal": "Terminal",
