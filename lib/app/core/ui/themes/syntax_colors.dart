@@ -411,3 +411,31 @@ class SyntaxColors {
     );
   }
 }
+
+/// Paletas de syntax que o usuário pode escolher por modo (Configurações →
+/// Claude Code → Aparência do código), por cima da paleta do tema ativo.
+/// Persistidas pelo [name] em `AppSettings.codeThemeLight/Dark`.
+enum SyntaxPalette {
+  githubLight('GitHub Light', SyntaxColors.githubLight),
+  githubDark('GitHub Dark', SyntaxColors.githubDark),
+  oneLight('One Light', SyntaxColors.oneLight),
+  oneDark('One Dark', SyntaxColors.oneDark),
+  draculaLight('Dracula Light', SyntaxColors.draculaLight),
+  draculaDark('Dracula', SyntaxColors.draculaDark),
+  flexokiLight('Flexoki Light', SyntaxColors.flexokiLight),
+  flexokiDark('Flexoki Dark', SyntaxColors.flexokiDark);
+
+  const SyntaxPalette(this.label, this.colors);
+
+  /// Nome próprio da paleta (não se traduz).
+  final String label;
+  final SyntaxColors colors;
+
+  /// Nome salvo → paleta; desconhecido ou `null` = seguir o tema.
+  static SyntaxPalette? byName(String? name) {
+    for (final p in values) {
+      if (p.name == name) return p;
+    }
+    return null;
+  }
+}

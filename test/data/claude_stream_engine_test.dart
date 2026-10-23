@@ -8,6 +8,7 @@ import 'package:cockpit/app/cockpit/domain/contracts/chat_engine.dart';
 import 'package:cockpit/app/cockpit/domain/entities/chat_attachment.dart';
 import 'package:cockpit/app/cockpit/domain/entities/chat_event.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/chat_viewmodel.dart';
+import 'package:cockpit/app/core/domain/entities/app_settings.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // Formatos reais do `claude -p --output-format stream-json` (2.1.309),
@@ -126,6 +127,7 @@ class _FakeEngine implements ChatEngine {
 class _FakeFactory implements ChatEngineFactory {
   final engine = _FakeEngine();
   String? resumed;
+  bool? thinking;
   List<ChatEvent> past = const [];
   @override
   Future<List<ChatEvent>> history({
@@ -136,8 +138,10 @@ class _FakeFactory implements ChatEngineFactory {
   Future<ChatEngine> start({
     required String cwd,
     String? resumeSessionId,
+    bool showThinking = false,
   }) async {
     resumed = resumeSessionId;
+    thinking = showThinking;
     return engine;
   }
 }
@@ -190,6 +194,114 @@ void main() {
     expect((tool.done, tool.isError), (true, true));
     expect(chat.items.last, isA<ChatAssistantItem>());
     expect((chat.busy, chat.sessionId, chat.costUsd), (false, 's-1', 0.26));
+  });
+
+  group('raciocínio e estado da sessão', () {
+    // Formatos reais (2.1.309, `--thinking-display summarized`), enxugados.
+    Map<String, dynamic> thinkingDelta(String t) => {
+      'type': 'stream_event',
+      'event': {
+        'type': 'content_block_delta',
+        'delta': {'type': 'thinking_delta', 'thinking': t},
+      },
+    };
+    final thinkingBlock = {
+      'type': 'assistant',
+      'message': {
+        'content': [
+          {'type': 'thinking', 'thinking': 'Checando 1009.', 'signature': 'x'},
+        ],
+      },
+    };
+    Map<String, dynamic> summary(String category) => {
+      'type': 'system',
+      'subtype': 'post_turn_summary',
+      'summarizes_uuid': 'u-1',
+      'status_category': category,
+      'status_detail': '1009 é primo ',
+      'needs_action': '',
+      'session_id': 's-1',
+    };
+
+    test('parser: thinking, thinking_delta e post_turn_summary', () {
+      expect(
+        (parseClaudeStreamLine(thinkingDelta('Che')).single
+                as ChatThinkingDelta)
+            .text,
+        'Che',
+      );
+      expect(
+        (parseClaudeStreamLine(thinkingBlock).single as ChatThinking).text,
+        'Checando 1009.',
+      );
+      // Bloco vazio (sem a flag o CLI manda assim) não vira evento.
+      expect(
+        parseClaudeStreamLine(_toolUse).whereType<ChatThinking>(),
+        isEmpty,
+      );
+      for (final (raw, state) in [
+        ('completed', ChatSessionState.completed),
+        ('review_ready', ChatSessionState.reviewReady),
+        ('blocked', ChatSessionState.blocked),
+        ('need_input', ChatSessionState.blocked),
+        ('failed', ChatSessionState.failed),
+      ]) {
+        final e =
+            parseClaudeStreamLine(summary(raw)).single as ChatSessionClassified;
+        expect((e.state, e.detail), (state, '1009 é primo'));
+      }
+      expect(parseClaudeStreamLine(summary('outra_coisa')), isEmpty);
+    });
+
+    test('Normal: não pede nem mostra raciocínio', () async {
+      final f = _FakeFactory();
+      final chat = ChatController(f, cwd: '/repo');
+      await chat.send('oi');
+      f.engine
+        ..emit(thinkingDelta('Che'))
+        ..emit(thinkingBlock)
+        ..emit(_text);
+      await Future<void>.delayed(Duration.zero);
+      expect(f.thinking, isFalse);
+      expect(chat.items.whereType<ChatThinkingItem>(), isEmpty);
+    });
+
+    test('Raciocínio: item ao vivo, fechado pelo bloco completo', () async {
+      final f = _FakeFactory();
+      final chat = ChatController(
+        f,
+        cwd: '/repo',
+        view: TranscriptView.thinking,
+      );
+      await chat.send('oi');
+      f.engine
+        ..emit(thinkingDelta('Che'))
+        ..emit(thinkingDelta('cando'));
+      await Future<void>.delayed(Duration.zero);
+      expect(f.thinking, isTrue);
+      final live = chat.items.whereType<ChatThinkingItem>().single;
+      expect((live.text, live.streaming), ('Checando', true));
+      f.engine
+        ..emit(thinkingBlock)
+        ..emit(_text);
+      await Future<void>.delayed(Duration.zero);
+      expect((live.text, live.streaming), ('Checando 1009.', false));
+      expect(chat.items.last, isA<ChatAssistantItem>());
+    });
+
+    test('estado classificado no fim do turno; some no próximo', () async {
+      final f = _FakeFactory();
+      final chat = ChatController(f, cwd: '/repo');
+      await chat.send('oi');
+      f.engine
+        ..emit(_result)
+        ..emit(summary('review_ready'));
+      await Future<void>.delayed(Duration.zero);
+      expect(chat.sessionState, ChatSessionState.reviewReady);
+      expect(chat.sessionStateDetail, '1009 é primo');
+      await chat.send('mais uma');
+      expect(chat.sessionState, isNull);
+    });
   });
 
   test('texto ao vivo vira um item só, fechado pelo bloco completo', () async {

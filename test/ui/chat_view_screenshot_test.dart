@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui' as ui;
 
 import 'package:cockpit/app/cockpit/domain/contracts/chat_engine.dart';
 import 'package:cockpit/app/cockpit/domain/entities/chat_attachment.dart';
@@ -10,12 +9,11 @@ import 'package:cockpit/app/cockpit/ui/viewmodels/chat_viewmodel.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/chat/chat_composer.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/chat/chat_pane.dart';
 import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
 import 'package:cockpit/i18n/strings.g.dart';
-import 'package:flutter/services.dart' show FontLoader;
-import 'package:flutter/rendering.dart' show RenderRepaintBoundary;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+
+import 'shot_harness.dart';
 
 class _Engine implements ChatEngine {
   final ctrl = StreamController<ChatEvent>.broadcast();
@@ -49,74 +47,13 @@ class _Factory implements ChatEngineFactory {
   Future<ChatEngine> start({
     required String cwd,
     String? resumeSessionId,
+    bool showThinking = false,
   }) async => engine;
   @override
   Future<List<ChatEvent>> history({
     required String cwd,
     required String sessionId,
   }) async => const [];
-}
-
-/// Fontes reais (cache do google_fonts do app, Material Icons do SDK) para o
-/// PNG não sair com caixinhas. Sem os arquivos o teste roda igual.
-const _settings = AppSettings(interfaceFont: 'ChatUi', codeFont: 'ChatMono');
-
-Future<void> _loadFonts() async {
-  final home = Platform.environment['HOME'] ?? '';
-  final flutter = File(Platform.resolvedExecutable).parent.parent.parent.path;
-  Future<void> load(String family, Iterable<String> paths) async {
-    final loader = FontLoader(family);
-    var any = false;
-    for (final p in paths) {
-      final f = File(p);
-      if (!f.existsSync()) continue;
-      loader.addFont(Future.value(f.readAsBytesSync().buffer.asByteData()));
-      any = true;
-    }
-    if (any) await loader.load();
-  }
-
-  List<String> cached(String prefix) => [
-    for (final dir in const [
-      '.local/share/work.gorila.gshdesktop',
-      '.local/share/work.jacobmoura.cockpit',
-    ])
-      if (Directory('$home/$dir').existsSync())
-        for (final f in Directory('$home/$dir').listSync())
-          if (f.path.split('/').last.startsWith(prefix)) f.path,
-  ];
-  await load('ChatUi', cached('HankenGrotesk_').take(1));
-  await load('ChatMono', cached('JetBrainsMono_500').take(1));
-  await load('MaterialIcons', [
-    '$flutter/artifacts/material_fonts/MaterialIcons-Regular.otf',
-    '$home/.local/flutter/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
-  ]);
-}
-
-Widget _host(Widget child) {
-  final tokens = buildTokens(brightness: Brightness.dark, settings: _settings);
-  return TranslationProvider(
-    child: ShadcnApp(
-      debugShowCheckedModeBanner: false,
-      // linux: sem isto o shadcn abre o menu como bottom sheet (o teste roda
-      // como android).
-      theme: buildTheme(
-        brightness: Brightness.dark,
-        settings: _settings,
-      ).copyWith(platform: () => TargetPlatform.linux),
-      home: DefaultSelectionStyle(
-        selectionColor: tokens.terminal.selection,
-        cursorColor: tokens.colors.accent,
-        child: CockpitTheme(
-          colors: tokens.colors,
-          typo: tokens.typo,
-          syntax: tokens.syntax,
-          terminal: tokens.terminal,
-          child: child,
-        ),
-      ),
-    ),
-  );
 }
 
 /// Conversa roteirizada: anexos, markdown, ferramentas, duas edições e os
@@ -220,43 +157,15 @@ Future<(ChatController, _Factory)> _script(
   return (chat, f);
 }
 
-Future<void> _settle(WidgetTester tester) async {
-  await tester.pump();
-  // Decodifica as imagens de verdade (fora do relógio falso do teste).
-  await tester.runAsync(() async {
-    for (final e in find.byType(Image).evaluate()) {
-      await precacheImage((e.widget as Image).image, e);
-    }
-  });
-  await tester.pump(const Duration(milliseconds: 200));
-}
-
-Future<void> _shot(WidgetTester tester, String name) async {
-  await _settle(tester);
-  final boundary = tester.renderObject<RenderRepaintBoundary>(
-    find.byKey(const ValueKey('shot')),
-  );
-  await tester.runAsync(() async {
-    final image = await boundary.toImage();
-    final png = await image.toByteData(format: ui.ImageByteFormat.png);
-    File('${_scratch()}/$name.png').writeAsBytesSync(png!.buffer.asUint8List());
-  });
-}
-
-String _scratch() =>
-    Platform.environment['CHAT_SHOT_DIR'] ??
-    '/tmp/claude-1000/-home-heliodev-projetos-GSH-Desktop/'
-        'b713b305-45e6-4007-bc9e-3aa6865ff854/scratchpad';
-
 Uint8List? _png() {
-  final f = File('${_scratch()}/../images/1.png');
+  final f = File('${shotDir()}/../images/1.png');
   return f.existsSync() ? f.readAsBytesSync() : null;
 }
 
 void main() {
   setUpAll(() async {
     LocaleSettings.setLocale(AppLocale.ptBr);
-    await _loadFonts();
+    await loadShotFonts();
   });
 
   test('nome curto do modelo', () {
@@ -274,7 +183,7 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     final (chat, f) = await _script(tester, null);
-    await tester.pumpWidget(_host(ChatPane(chat: chat, branch: 'helio')));
+    await tester.pumpWidget(shotHost(ChatPane(chat: chat, branch: 'helio')));
     await tester.pump();
 
     expect(find.text('Editou 2 arquivos'), findsOneWidget);
@@ -302,9 +211,9 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     final (chat, _) = await _script(tester, _png());
-    Widget pane(ChatController c) => _host(
+    Widget pane(ChatController c) => shotHost(
       RepaintBoundary(
-        key: const ValueKey('shot'),
+        key: shotKey,
         child: ChatPane(chat: c, branch: 'helio', onRemoteControl: () {}),
       ),
     );
@@ -318,24 +227,81 @@ void main() {
     ScrollPosition pos() => tester.state<ScrollableState>(list).position;
 
     pos().jumpTo(0);
-    await _shot(tester, 'chat_ui_1');
+    await takeShot(tester, 'chat_ui_1');
 
     await tester.tap(find.text('Roda os testes do chat'));
     await tester.tap(find.text('chat_view.dart'));
-    await _settle(tester);
-    await _shot(tester, 'chat_ui_2');
+    await settleShot(tester);
+    await takeShot(tester, 'chat_ui_2');
 
     pos().jumpTo(pos().maxScrollExtent * 0.45);
-    await _shot(tester, 'chat_ui_3');
+    await takeShot(tester, 'chat_ui_3');
 
     pos().jumpTo(pos().maxScrollExtent);
     if (_png() case final png?) chat.attachPastedImage(png);
-    await _shot(tester, 'chat_ui_4');
+    await takeShot(tester, 'chat_ui_4');
 
     final empty = ChatController(_Factory(), cwd: '/home/dev/GSH-Desktop');
     await tester.pumpWidget(pane(empty));
-    await _shot(tester, 'chat_ui_5');
+    await takeShot(tester, 'chat_ui_5');
     chat.dispose();
     empty.dispose();
+  });
+
+  testWidgets('preview: raciocínio e estado da sessão', tags: ['preview'], (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1100, 700);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final f = _Factory();
+    final chat = ChatController(
+      f,
+      cwd: '/home/dev/GSH-Desktop',
+      view: TranscriptView.thinking,
+    );
+    await chat.send('1009 é primo?');
+    void emit(ChatEvent e) => f.engine.ctrl.add(e);
+    emit(const ChatReady(sessionId: 's-1', model: 'claude-opus-5-5'));
+    // Texto real do `--thinking-display summarized` (2.1.309).
+    emit(
+      const ChatThinking(
+        'Checking divisibility of 1009 by primes up to its square root — '
+        "none of 7, 11, 13, 17, 19, 23 divide evenly, so I'm continuing to "
+        'test 29 next.',
+      ),
+    );
+    emit(
+      const ChatToolCall(
+        id: 't1',
+        name: 'Bash',
+        input: {
+          'command': 'python3 -c "print(all(1009 % p for p in range(2, 32)))"',
+          'description': 'Confere com Python',
+        },
+      ),
+    );
+    emit(const ChatToolResult(toolUseId: 't1', isError: false, text: 'True'));
+    emit(const ChatText('Sim: **1009 é primo**.'));
+    emit(const ChatTurnEnd(isError: false, text: '', sessionId: 's-1'));
+    emit(
+      const ChatSessionClassified(
+        ChatSessionState.completed,
+        detail: '1009 é primo; conferido até 31',
+      ),
+    );
+    await tester.pump();
+    await tester.pumpWidget(
+      shotHost(
+        RepaintBoundary(
+          key: shotKey,
+          child: ChatPane(chat: chat, branch: 'helio', showSessionState: true),
+        ),
+      ),
+    );
+    expect(find.text('Raciocínio'), findsOneWidget);
+    expect(find.text('Concluída'), findsOneWidget);
+    await takeShot(tester, 'chat_thinking_1');
+    chat.dispose();
   });
 }

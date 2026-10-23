@@ -1375,6 +1375,12 @@ class _Translations$cockpit$chat$es extends Translations$cockpit$chat$en {
 		one: 'Editó 1 archivo',
 		other: 'Editó ${n} archivos',
 	);
+	@override String get thinkingTitle => 'Razonamiento';
+	@override String get thinkingLive => 'Pensando…';
+	@override String get stateCompleted => 'Completada';
+	@override String get stateReviewReady => 'Lista para revisión';
+	@override String get stateBlocked => 'Bloqueada';
+	@override String get stateFailed => 'Falló';
 }
 
 // Path: cockpit.farm
@@ -1496,6 +1502,7 @@ class _Translations$settings$page$es extends Translations$settings$page$en {
 	@override late final _Translations$settings$page$shortcuts$es shortcuts = _Translations$settings$page$shortcuts$es._(_root);
 	@override late final _Translations$settings$page$languages$es languages = _Translations$settings$page$languages$es._(_root);
 	@override late final _Translations$settings$page$automations$es automations = _Translations$settings$page$automations$es._(_root);
+	@override late final _Translations$settings$page$claudeCode$es claudeCode = _Translations$settings$page$claudeCode$es._(_root);
 }
 
 // Path: settings.remoteHosts
@@ -1818,6 +1825,7 @@ class _Translations$settings$page$nav$es extends Translations$settings$page$nav$
 	@override String get notifications => 'Notificaciones';
 	@override String get automations => 'Automatizaciones';
 	@override String get remoteHosts => 'Hosts remotos';
+	@override String get claudeCode => 'Claude Code';
 }
 
 // Path: settings.page.general
@@ -1838,9 +1846,6 @@ class _Translations$settings$page$general$es extends Translations$settings$page$
 	@override String get showCockpitDesc => 'Mantiene un workspace sin carpeta, solo de terminal, fijado en la parte superior de la barra lateral. Desactivarlo cierra sus terminales.';
 	@override String get launchAtStartupTitle => 'Iniciar al arrancar';
 	@override String get launchAtStartupDesc => 'Inicia GSH Desktop automáticamente cuando inicias sesión en tu computadora.';
-	@override String get remoteControlTitle => 'Conectar nuevas sesiones a Remote Control';
-	@override String get remoteControlDesc => 'Cada sesión de claude que inicies en una terminal se conecta a Remote Control, para seguir en el celular o en claude.ai/code. Se guarda en ~/.claude/settings.json (remoteControlAtStartup). Requiere login de claude.ai (Pro, Max, Team o Enterprise).';
-	@override String remoteControlFailed({required Object detail}) => 'No pude guardar: ${detail}';
 	@override String get sectionUpdates => 'Actualizaciones';
 	@override String get checkUpdatesTitle => 'Buscar actualizaciones';
 	@override String get checkUpdatesDesc => 'Con qué frecuencia GSH Desktop debe buscar nuevas versiones.';
@@ -2068,6 +2073,37 @@ class _Translations$settings$page$automations$es extends Translations$settings$p
 	@override String get discoveryFailed => 'No se pudieron descubrir los harnesses de automatización instalados.';
 	@override String staleModel({required Object model, required Object harness}) => 'El modelo "${model}" ya no está disponible para ${harness}. Se usará el predeterminado de la CLI; elige otro modelo en Configuración si lo necesitas.';
 	@override String get recommendedSuffix => 'Recomendado';
+}
+
+// Path: settings.page.claudeCode
+class _Translations$settings$page$claudeCode$es extends Translations$settings$page$claudeCode$en {
+	_Translations$settings$page$claudeCode$es._(TranslationsEs root) : this._root = root, super.internal(root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get sectionGeneral => 'General';
+	@override String get classifyTitle => 'Clasificar estados de las sesiones';
+	@override String get classifyDesc => 'Muestra en el encabezado del chat el estado que Claude Code asigna al final de cada turno: completada, lista para revisión o bloqueada. Claude Code clasifica igual; desactivarlo solo oculta la insignia.';
+	@override String get switchModelsTitle => 'Cambiar de modelo cuando se marque un mensaje';
+	@override String get switchModelsDesc => 'Cuando las salvaguardas marquen un mensaje, cambiar automáticamente a otro modelo para continuar la conversación. Si está desactivado, tu sesión se pausará. Se guarda en ~/.claude/settings.json (switchModelsOnFlag).';
+	@override String get sectionCodeAppearance => 'Apariencia del código';
+	@override String get followTheme => 'Del tema activo';
+	@override String get codeThemeLightHint => 'Colores del código en modo claro';
+	@override String get codeThemeDarkHint => 'Colores del código en modo oscuro';
+	@override String get codeFontTitle => 'Fuente de código';
+	@override String get codeFontDesc => 'Define una fuente monoespaciada personalizada para el código: visor, editor, diffs y bloques de código del chat. La terminal tiene su propia fuente en Apariencia.';
+	@override String get codeFontPlaceholder => 'p. ej.: JetBrains Mono';
+	@override String get sectionAppearance => 'Apariencia';
+	@override String get transcriptTitle => 'Vista predeterminada de la transcripción';
+	@override String get transcriptDesc => 'La vista con la que abren las nuevas conversaciones del chat. Las conversaciones ya abiertas mantienen la suya.';
+	@override String get viewNormal => 'Normal';
+	@override String get viewThinking => 'Razonamiento';
+	@override String get viewVerbose => 'Detallada';
+	@override String get sectionRemoteControl => 'Remote Control';
+	@override String get remoteControlTitle => 'Conectar nuevas sesiones a Remote Control';
+	@override String get remoteControlDesc => 'Cada sesión de claude que inicies en una terminal se conecta a Remote Control, para seguir en el celular o en claude.ai/code. Se guarda en ~/.claude/settings.json (remoteControlAtStartup). Requiere login de claude.ai (Pro, Max, Team o Enterprise).';
+	@override String saveFailed({required Object detail}) => 'No pude guardar: ${detail}';
 }
 
 // Path: settings.page.general.updateFrequency
@@ -2919,6 +2955,12 @@ extension on TranslationsEs {
 			'cockpit.chat.modePlan' => 'Planificar',
 			'cockpit.chat.modeBypass' => 'Omitir permisos',
 			'cockpit.chat.editedFiles' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('es'))(n, one: 'Editó 1 archivo', other: 'Editó ${n} archivos', ), 
+			'cockpit.chat.thinkingTitle' => 'Razonamiento',
+			'cockpit.chat.thinkingLive' => 'Pensando…',
+			'cockpit.chat.stateCompleted' => 'Completada',
+			'cockpit.chat.stateReviewReady' => 'Lista para revisión',
+			'cockpit.chat.stateBlocked' => 'Bloqueada',
+			'cockpit.chat.stateFailed' => 'Falló',
 			'cockpit.farm.tabTitle' => 'Granja',
 			'cockpit.farm.title' => 'Granja de agentes',
 			'cockpit.farm.emptyTitle' => 'Ningún agente en ejecución',
@@ -3015,6 +3057,7 @@ extension on TranslationsEs {
 			'settings.page.nav.notifications' => 'Notificaciones',
 			'settings.page.nav.automations' => 'Automatizaciones',
 			'settings.page.nav.remoteHosts' => 'Hosts remotos',
+			'settings.page.nav.claudeCode' => 'Claude Code',
 			'settings.page.general.sectionEditor' => 'Editor',
 			'settings.page.general.editorEngineTitle' => 'Motor',
 			'settings.page.general.editorEngineCockpit' => 'GSH Desktop (predeterminado)',
@@ -3026,9 +3069,6 @@ extension on TranslationsEs {
 			'settings.page.general.showCockpitDesc' => 'Mantiene un workspace sin carpeta, solo de terminal, fijado en la parte superior de la barra lateral. Desactivarlo cierra sus terminales.',
 			'settings.page.general.launchAtStartupTitle' => 'Iniciar al arrancar',
 			'settings.page.general.launchAtStartupDesc' => 'Inicia GSH Desktop automáticamente cuando inicias sesión en tu computadora.',
-			'settings.page.general.remoteControlTitle' => 'Conectar nuevas sesiones a Remote Control',
-			'settings.page.general.remoteControlDesc' => 'Cada sesión de claude que inicies en una terminal se conecta a Remote Control, para seguir en el celular o en claude.ai/code. Se guarda en ~/.claude/settings.json (remoteControlAtStartup). Requiere login de claude.ai (Pro, Max, Team o Enterprise).',
-			'settings.page.general.remoteControlFailed' => ({required Object detail}) => 'No pude guardar: ${detail}',
 			'settings.page.general.sectionUpdates' => 'Actualizaciones',
 			'settings.page.general.checkUpdatesTitle' => 'Buscar actualizaciones',
 			'settings.page.general.checkUpdatesDesc' => 'Con qué frecuencia GSH Desktop debe buscar nuevas versiones.',
@@ -3113,12 +3153,12 @@ extension on TranslationsEs {
 			'settings.page.appearance.sectionConversation' => 'Conversación',
 			'settings.page.appearance.pinUserMessageTitle' => 'Fijar mensaje del usuario',
 			'settings.page.appearance.pinUserMessageDesc' => 'La pregunta permanece fija arriba mientras la respuesta se desplaza.',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.appearance.importTheme' => 'Importar…',
 			'settings.page.appearance.exportTheme' => 'Exportar…',
 			'settings.page.appearance.deleteTheme' => 'Eliminar',
 			'settings.page.appearance.importThemeDialog' => 'Elige un archivo de tema',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.appearance.exportThemeDialog' => 'Guardar tema como',
 			'settings.page.appearance.themeImported' => ({required Object name}) => 'Tema "${name}" importado.',
 			'settings.page.appearance.themeExported' => 'Tema guardado.',
@@ -3189,6 +3229,28 @@ extension on TranslationsEs {
 			'settings.page.automations.discoveryFailed' => 'No se pudieron descubrir los harnesses de automatización instalados.',
 			'settings.page.automations.staleModel' => ({required Object model, required Object harness}) => 'El modelo "${model}" ya no está disponible para ${harness}. Se usará el predeterminado de la CLI; elige otro modelo en Configuración si lo necesitas.',
 			'settings.page.automations.recommendedSuffix' => 'Recomendado',
+			'settings.page.claudeCode.sectionGeneral' => 'General',
+			'settings.page.claudeCode.classifyTitle' => 'Clasificar estados de las sesiones',
+			'settings.page.claudeCode.classifyDesc' => 'Muestra en el encabezado del chat el estado que Claude Code asigna al final de cada turno: completada, lista para revisión o bloqueada. Claude Code clasifica igual; desactivarlo solo oculta la insignia.',
+			'settings.page.claudeCode.switchModelsTitle' => 'Cambiar de modelo cuando se marque un mensaje',
+			'settings.page.claudeCode.switchModelsDesc' => 'Cuando las salvaguardas marquen un mensaje, cambiar automáticamente a otro modelo para continuar la conversación. Si está desactivado, tu sesión se pausará. Se guarda en ~/.claude/settings.json (switchModelsOnFlag).',
+			'settings.page.claudeCode.sectionCodeAppearance' => 'Apariencia del código',
+			'settings.page.claudeCode.followTheme' => 'Del tema activo',
+			'settings.page.claudeCode.codeThemeLightHint' => 'Colores del código en modo claro',
+			'settings.page.claudeCode.codeThemeDarkHint' => 'Colores del código en modo oscuro',
+			'settings.page.claudeCode.codeFontTitle' => 'Fuente de código',
+			'settings.page.claudeCode.codeFontDesc' => 'Define una fuente monoespaciada personalizada para el código: visor, editor, diffs y bloques de código del chat. La terminal tiene su propia fuente en Apariencia.',
+			'settings.page.claudeCode.codeFontPlaceholder' => 'p. ej.: JetBrains Mono',
+			'settings.page.claudeCode.sectionAppearance' => 'Apariencia',
+			'settings.page.claudeCode.transcriptTitle' => 'Vista predeterminada de la transcripción',
+			'settings.page.claudeCode.transcriptDesc' => 'La vista con la que abren las nuevas conversaciones del chat. Las conversaciones ya abiertas mantienen la suya.',
+			'settings.page.claudeCode.viewNormal' => 'Normal',
+			'settings.page.claudeCode.viewThinking' => 'Razonamiento',
+			'settings.page.claudeCode.viewVerbose' => 'Detallada',
+			'settings.page.claudeCode.sectionRemoteControl' => 'Remote Control',
+			'settings.page.claudeCode.remoteControlTitle' => 'Conectar nuevas sesiones a Remote Control',
+			'settings.page.claudeCode.remoteControlDesc' => 'Cada sesión de claude que inicies en una terminal se conecta a Remote Control, para seguir en el celular o en claude.ai/code. Se guarda en ~/.claude/settings.json (remoteControlAtStartup). Requiere login de claude.ai (Pro, Max, Team o Enterprise).',
+			'settings.page.claudeCode.saveFailed' => ({required Object detail}) => 'No pude guardar: ${detail}',
 			'settings.remoteHosts.title' => 'Hosts remotos',
 			'settings.remoteHosts.description' => 'Máquinas a las que accedes por SSH. Añadir un host aquí es lo mismo que hacerlo desde el menú "+" del workspace.',
 			'settings.remoteHosts.empty' => 'Aún no hay hosts remotos.',

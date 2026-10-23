@@ -970,7 +970,13 @@
       "editedFiles": {
         "one": "Editó 1 archivo",
         "other": "Editó ${n} archivos"
-      }
+      },
+      "thinkingTitle": "Razonamiento",
+      "thinkingLive": "Pensando…",
+      "stateCompleted": "Completada",
+      "stateReviewReady": "Lista para revisión",
+      "stateBlocked": "Bloqueada",
+      "stateFailed": "Falló"
     },
     "farm": {
       "tabTitle": "Granja",
@@ -1083,7 +1089,8 @@
         "shortcuts": "Atajos",
         "notifications": "Notificaciones",
         "automations": "Automatizaciones",
-        "remoteHosts": "Hosts remotos"
+        "remoteHosts": "Hosts remotos",
+        "claudeCode": "Claude Code"
       },
       "general": {
         "sectionEditor": "Editor",
@@ -1097,9 +1104,6 @@
         "showCockpitDesc": "Mantiene un workspace sin carpeta, solo de terminal, fijado en la parte superior de la barra lateral. Desactivarlo cierra sus terminales.",
         "launchAtStartupTitle": "Iniciar al arrancar",
         "launchAtStartupDesc": "Inicia GSH Desktop automáticamente cuando inicias sesión en tu computadora.",
-        "remoteControlTitle": "Conectar nuevas sesiones a Remote Control",
-        "remoteControlDesc": "Cada sesión de claude que inicies en una terminal se conecta a Remote Control, para seguir en el celular o en claude.ai/code. Se guarda en ~/.claude/settings.json (remoteControlAtStartup). Requiere login de claude.ai (Pro, Max, Team o Enterprise).",
-        "remoteControlFailed": "No pude guardar: ${detail}",
         "sectionUpdates": "Actualizaciones",
         "checkUpdatesTitle": "Buscar actualizaciones",
         "checkUpdatesDesc": "Con qué frecuencia GSH Desktop debe buscar nuevas versiones.",
@@ -1276,6 +1280,30 @@
         "discoveryFailed": "No se pudieron descubrir los harnesses de automatización instalados.",
         "staleModel": "El modelo \"${model}\" ya no está disponible para ${harness}. Se usará el predeterminado de la CLI; elige otro modelo en Configuración si lo necesitas.",
         "recommendedSuffix": "Recomendado"
+      },
+      "claudeCode": {
+        "sectionGeneral": "General",
+        "classifyTitle": "Clasificar estados de las sesiones",
+        "classifyDesc": "Muestra en el encabezado del chat el estado que Claude Code asigna al final de cada turno: completada, lista para revisión o bloqueada. Claude Code clasifica igual; desactivarlo solo oculta la insignia.",
+        "switchModelsTitle": "Cambiar de modelo cuando se marque un mensaje",
+        "switchModelsDesc": "Cuando las salvaguardas marquen un mensaje, cambiar automáticamente a otro modelo para continuar la conversación. Si está desactivado, tu sesión se pausará. Se guarda en ~/.claude/settings.json (switchModelsOnFlag).",
+        "sectionCodeAppearance": "Apariencia del código",
+        "followTheme": "Del tema activo",
+        "codeThemeLightHint": "Colores del código en modo claro",
+        "codeThemeDarkHint": "Colores del código en modo oscuro",
+        "codeFontTitle": "Fuente de código",
+        "codeFontDesc": "Define una fuente monoespaciada personalizada para el código: visor, editor, diffs y bloques de código del chat. La terminal tiene su propia fuente en Apariencia.",
+        "codeFontPlaceholder": "p. ej.: JetBrains Mono",
+        "sectionAppearance": "Apariencia",
+        "transcriptTitle": "Vista predeterminada de la transcripción",
+        "transcriptDesc": "La vista con la que abren las nuevas conversaciones del chat. Las conversaciones ya abiertas mantienen la suya.",
+        "viewNormal": "Normal",
+        "viewThinking": "Razonamiento",
+        "viewVerbose": "Detallada",
+        "sectionRemoteControl": "Remote Control",
+        "remoteControlTitle": "Conectar nuevas sesiones a Remote Control",
+        "remoteControlDesc": "Cada sesión de claude que inicies en una terminal se conecta a Remote Control, para seguir en el celular o en claude.ai/code. Se guarda en ~/.claude/settings.json (remoteControlAtStartup). Requiere login de claude.ai (Pro, Max, Team o Enterprise).",
+        "saveFailed": "No pude guardar: ${detail}"
       }
     },
     "remoteHosts": {

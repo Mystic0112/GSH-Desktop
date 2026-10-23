@@ -32,7 +32,7 @@ import 'package:cockpit/app/core/ui/widgets/app_menu.dart';
 import 'package:cockpit/app/core/ui/widgets/code_highlight.dart';
 import 'package:cockpit/app/core/ui/widgets/window_controls.dart';
 import 'package:cockpit/app/settings/ui/notifications_viewmodel.dart';
-import 'package:cockpit/app/settings/ui/remote_control_switch.dart';
+import 'package:cockpit/app/settings/ui/claude_code_panel.dart';
 import 'package:cockpit/app/settings/ui/neovim_settings_viewmodel.dart';
 import 'package:cockpit/app/settings/domain/editor_appearance_policy.dart';
 import 'package:cockpit/app/settings/ui/shortcut_catalog.dart';
@@ -73,6 +73,7 @@ enum _Category {
   terminal,
   languages,
   automations,
+  claudeCode,
   shortcuts,
   notifications,
   remoteHosts,
@@ -84,7 +85,8 @@ extension on _Category {
   bool get hiddenOnMobile =>
       this == _Category.terminal ||
       this == _Category.languages ||
-      this == _Category.automations;
+      this == _Category.automations ||
+      this == _Category.claudeCode;
 }
 
 class _SettingsPageState extends State<SettingsPage> {
@@ -127,6 +129,7 @@ class _SettingsPageState extends State<SettingsPage> {
       _Category.terminal => const _TerminalPanel(),
       _Category.languages => const _LanguagesPanel(),
       _Category.automations => const _AutomationsPanel(),
+      _Category.claudeCode => const ClaudeCodePanel(),
       _Category.shortcuts => const _ShortcutsPanel(),
       _Category.notifications => const _NotificationsPanel(),
       _Category.remoteHosts => const _RemoteHostsPanel(),
@@ -285,6 +288,12 @@ class _CategoryNav extends StatelessWidget {
               label: context.t.settings.page.nav.automations,
               selected: selected == _Category.automations,
               onTap: () => onSelect(_Category.automations),
+            ),
+            _NavItem(
+              icon: Icons.code,
+              label: context.t.settings.page.nav.claudeCode,
+              selected: selected == _Category.claudeCode,
+              onTap: () => onSelect(_Category.claudeCode),
             ),
           ],
           _NavItem(
@@ -449,11 +458,6 @@ class _GeneralPanel extends StatelessWidget {
                           value: s.launchAtStartup,
                           onChanged: controller.setLaunchAtStartup,
                         ),
-                      ),
-                      _Row(
-                        title: tr.remoteControlTitle,
-                        description: tr.remoteControlDesc,
-                        trailing: const RemoteControlSwitch(),
                       ),
                     ],
                   ),

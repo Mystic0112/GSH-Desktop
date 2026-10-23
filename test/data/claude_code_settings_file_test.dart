@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cockpit/app/core/data/claude_code_settings_file.dart';
+import 'package:cockpit/app/core/domain/contracts/claude_code_settings.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+const _rc = ClaudeCodeKeys.remoteControlAtStartup;
 
 void main() {
   late Directory home;
@@ -24,15 +27,15 @@ void main() {
         }),
       );
     final s = ClaudeCodeSettingsFile(home: home.path);
-    expect(await s.remoteControlAtStartup(), isFalse);
+    expect(await s.getBool(_rc), isNull);
 
-    expect((await s.setRemoteControlAtStartup(true)).isSuccess, isTrue);
-    expect(await s.remoteControlAtStartup(), isTrue);
+    expect((await s.setBool(_rc, true)).isSuccess, isTrue);
+    expect(await s.getBool(_rc), isTrue);
     final on = jsonDecode(file.readAsStringSync()) as Map;
     expect(on['model'], 'opus');
     expect(on['hooks'], {'Stop': <Object>[]});
 
-    await s.setRemoteControlAtStartup(false);
+    await s.setBool(_rc, null);
     final off = jsonDecode(file.readAsStringSync()) as Map;
     expect(off.containsKey('remoteControlAtStartup'), isFalse);
     expect(off['model'], 'opus');
@@ -40,7 +43,7 @@ void main() {
 
   test('cria o arquivo quando não existe', () async {
     final s = ClaudeCodeSettingsFile(home: home.path);
-    expect((await s.setRemoteControlAtStartup(true)).isSuccess, isTrue);
+    expect((await s.setBool(_rc, true)).isSuccess, isTrue);
     expect(jsonDecode(file.readAsStringSync()), {
       'remoteControlAtStartup': true,
     });
@@ -51,8 +54,23 @@ void main() {
       ..createSync(recursive: true)
       ..writeAsStringSync('{ "model": "opus", // comentário\n}');
     final s = ClaudeCodeSettingsFile(home: home.path);
-    final r = await s.setRemoteControlAtStartup(true);
+    final r = await s.setBool(_rc, true);
     expect(r.isFailure, isTrue);
     expect(file.readAsStringSync(), contains('// comentário'));
   });
+
+  test(
+    'false explícito fica gravado; chave de outro tipo lê como null',
+    () async {
+      file
+        ..createSync(recursive: true)
+        ..writeAsStringSync(jsonEncode({'switchModelsOnFlag': 'sim'}));
+      final s = ClaudeCodeSettingsFile(home: home.path);
+      const key = ClaudeCodeKeys.switchModelsOnFlag;
+      expect(await s.getBool(key), isNull);
+      expect((await s.setBool(key, false)).isSuccess, isTrue);
+      expect(await s.getBool(key), isFalse);
+      expect(jsonDecode(file.readAsStringSync()), {key: false});
+    },
+  );
 }

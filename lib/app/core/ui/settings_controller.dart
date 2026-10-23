@@ -297,6 +297,22 @@ class SettingsController extends ChangeNotifier {
   void setLastUpdateCheckTime(DateTime time) =>
       _apply(_settings.copyWith(lastUpdateCheckTime: time));
 
+  void setClassifySessionStates(bool value) =>
+      _apply(_settings.copyWith(classifySessionStates: value));
+
+  /// Paleta de código do modo claro; `null` = a do tema ativo.
+  void setCodeThemeLight(String? id) => _apply(
+    _settings.copyWith(codeThemeLight: id, clearCodeThemeLight: id == null),
+  );
+
+  /// Paleta de código do modo escuro; `null` = a do tema ativo.
+  void setCodeThemeDark(String? id) => _apply(
+    _settings.copyWith(codeThemeDark: id, clearCodeThemeDark: id == null),
+  );
+
+  void setTranscriptView(TranscriptView view) =>
+      _apply(_settings.copyWith(transcriptView: view));
+
   /// Persiste a visibilidade dos painéis do shell (rail de projetos + árvore de
   /// arquivos) para restaurar no próximo boot. Não faz `notifyListeners` porque
   /// a fonte de verdade em runtime é a `CockpitViewModel` — aqui só grava.

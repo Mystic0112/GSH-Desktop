@@ -31,6 +31,31 @@ class ChatTextDelta extends ChatEvent {
   final String text;
 }
 
+/// Pedaço do resumo de raciocínio chegando (`thinking_delta`, só com
+/// `--thinking-display summarized`). O [ChatThinking] completo vem depois.
+class ChatThinkingDelta extends ChatEvent {
+  const ChatThinkingDelta(this.text);
+  final String text;
+}
+
+/// Resumo de raciocínio do modelo (um bloco `thinking` com texto).
+class ChatThinking extends ChatEvent {
+  const ChatThinking(this.text);
+  final String text;
+}
+
+/// Estado que o Claude Code classifica ao fim do turno
+/// (`system/post_turn_summary`, `status_category`).
+enum ChatSessionState { completed, reviewReady, blocked, failed }
+
+/// O Claude Code classificou a sessão ao fim do turno. [detail] é o
+/// `status_detail` (texto do modelo, cru).
+class ChatSessionClassified extends ChatEvent {
+  const ChatSessionClassified(this.state, {this.detail = ''});
+  final ChatSessionState state;
+  final String detail;
+}
+
 /// Mensagem do usuário lida do histórico (retomar conversa).
 class ChatUserText extends ChatEvent {
   const ChatUserText(this.text);

@@ -2933,6 +2933,24 @@ class Translations$cockpit$chat$en {
 		one: 'Edited 1 file',
 		other: 'Edited ${n} files',
 	);
+
+	/// en: 'Thinking'
+	String get thinkingTitle => 'Thinking';
+
+	/// en: 'Thinking…'
+	String get thinkingLive => 'Thinking…';
+
+	/// en: 'Completed'
+	String get stateCompleted => 'Completed';
+
+	/// en: 'Ready for review'
+	String get stateReviewReady => 'Ready for review';
+
+	/// en: 'Blocked'
+	String get stateBlocked => 'Blocked';
+
+	/// en: 'Failed'
+	String get stateFailed => 'Failed';
 }
 
 // Path: cockpit.farm
@@ -3200,6 +3218,7 @@ class Translations$settings$page$en {
 	late final Translations$settings$page$shortcuts$en shortcuts = Translations$settings$page$shortcuts$en.internal(_root);
 	late final Translations$settings$page$languages$en languages = Translations$settings$page$languages$en.internal(_root);
 	late final Translations$settings$page$automations$en automations = Translations$settings$page$automations$en.internal(_root);
+	late final Translations$settings$page$claudeCode$en claudeCode = Translations$settings$page$claudeCode$en.internal(_root);
 }
 
 // Path: settings.remoteHosts
@@ -3806,6 +3825,9 @@ class Translations$settings$page$nav$en {
 
 	/// en: 'Remote hosts'
 	String get remoteHosts => 'Remote hosts';
+
+	/// en: 'Claude Code'
+	String get claudeCode => 'Claude Code';
 }
 
 // Path: settings.page.general
@@ -3848,15 +3870,6 @@ class Translations$settings$page$general$en {
 
 	/// en: 'Start GSH Desktop automatically when you sign in to your computer.'
 	String get launchAtStartupDesc => 'Start GSH Desktop automatically when you sign in to your computer.';
-
-	/// en: 'Connect new sessions to Remote Control'
-	String get remoteControlTitle => 'Connect new sessions to Remote Control';
-
-	/// en: 'Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).'
-	String get remoteControlDesc => 'Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).';
-
-	/// en: 'Couldn't save: ${detail}'
-	String remoteControlFailed({required Object detail}) => 'Couldn\'t save: ${detail}';
 
 	/// en: 'Updates'
 	String get sectionUpdates => 'Updates';
@@ -4393,6 +4406,81 @@ class Translations$settings$page$automations$en {
 
 	/// en: 'Recommended'
 	String get recommendedSuffix => 'Recommended';
+}
+
+// Path: settings.page.claudeCode
+class Translations$settings$page$claudeCode$en {
+	Translations$settings$page$claudeCode$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'General'
+	String get sectionGeneral => 'General';
+
+	/// en: 'Classify session states'
+	String get classifyTitle => 'Classify session states';
+
+	/// en: 'Show in the chat header the state Claude Code assigns at the end of each turn: completed, ready for review or blocked. Claude Code classifies either way; turning this off only hides the badge.'
+	String get classifyDesc => 'Show in the chat header the state Claude Code assigns at the end of each turn: completed, ready for review or blocked. Claude Code classifies either way; turning this off only hides the badge.';
+
+	/// en: 'Switch models when a message is flagged'
+	String get switchModelsTitle => 'Switch models when a message is flagged';
+
+	/// en: 'When safeguards flag a message, automatically switch to a different model to keep the conversation going. When off, your session pauses instead. Saved in ~/.claude/settings.json (switchModelsOnFlag).'
+	String get switchModelsDesc => 'When safeguards flag a message, automatically switch to a different model to keep the conversation going. When off, your session pauses instead. Saved in ~/.claude/settings.json (switchModelsOnFlag).';
+
+	/// en: 'Code appearance'
+	String get sectionCodeAppearance => 'Code appearance';
+
+	/// en: 'From the active theme'
+	String get followTheme => 'From the active theme';
+
+	/// en: 'Code colors in light mode'
+	String get codeThemeLightHint => 'Code colors in light mode';
+
+	/// en: 'Code colors in dark mode'
+	String get codeThemeDarkHint => 'Code colors in dark mode';
+
+	/// en: 'Code font'
+	String get codeFontTitle => 'Code font';
+
+	/// en: 'A custom monospaced font for code: viewer, editor, diffs and the chat's code blocks. The terminal has its own font under Appearance.'
+	String get codeFontDesc => 'A custom monospaced font for code: viewer, editor, diffs and the chat\'s code blocks. The terminal has its own font under Appearance.';
+
+	/// en: 'e.g. JetBrains Mono'
+	String get codeFontPlaceholder => 'e.g. JetBrains Mono';
+
+	/// en: 'Appearance'
+	String get sectionAppearance => 'Appearance';
+
+	/// en: 'Default transcript view'
+	String get transcriptTitle => 'Default transcript view';
+
+	/// en: 'The view new chat conversations open with. Conversations already open keep theirs.'
+	String get transcriptDesc => 'The view new chat conversations open with. Conversations already open keep theirs.';
+
+	/// en: 'Normal'
+	String get viewNormal => 'Normal';
+
+	/// en: 'Thinking'
+	String get viewThinking => 'Thinking';
+
+	/// en: 'Verbose'
+	String get viewVerbose => 'Verbose';
+
+	/// en: 'Remote Control'
+	String get sectionRemoteControl => 'Remote Control';
+
+	/// en: 'Connect new sessions to Remote Control'
+	String get remoteControlTitle => 'Connect new sessions to Remote Control';
+
+	/// en: 'Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).'
+	String get remoteControlDesc => 'Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).';
+
+	/// en: 'Couldn't save: ${detail}'
+	String saveFailed({required Object detail}) => 'Couldn\'t save: ${detail}';
 }
 
 // Path: settings.page.general.updateFrequency
@@ -5252,6 +5340,12 @@ extension on Translations {
 			'cockpit.chat.modePlan' => 'Plan',
 			'cockpit.chat.modeBypass' => 'Skip permissions',
 			'cockpit.chat.editedFiles' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Edited 1 file', other: 'Edited ${n} files', ), 
+			'cockpit.chat.thinkingTitle' => 'Thinking',
+			'cockpit.chat.thinkingLive' => 'Thinking…',
+			'cockpit.chat.stateCompleted' => 'Completed',
+			'cockpit.chat.stateReviewReady' => 'Ready for review',
+			'cockpit.chat.stateBlocked' => 'Blocked',
+			'cockpit.chat.stateFailed' => 'Failed',
 			'cockpit.farm.tabTitle' => 'Farm',
 			'cockpit.farm.title' => 'Agent farm',
 			'cockpit.farm.emptyTitle' => 'No agents running',
@@ -5348,6 +5442,7 @@ extension on Translations {
 			'settings.page.nav.notifications' => 'Notifications',
 			'settings.page.nav.automations' => 'Automations',
 			'settings.page.nav.remoteHosts' => 'Remote hosts',
+			'settings.page.nav.claudeCode' => 'Claude Code',
 			'settings.page.general.sectionEditor' => 'Editor',
 			'settings.page.general.editorEngineTitle' => 'Engine',
 			'settings.page.general.editorEngineCockpit' => 'GSH Desktop (default)',
@@ -5359,9 +5454,6 @@ extension on Translations {
 			'settings.page.general.showCockpitDesc' => 'Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.',
 			'settings.page.general.launchAtStartupTitle' => 'Launch at login',
 			'settings.page.general.launchAtStartupDesc' => 'Start GSH Desktop automatically when you sign in to your computer.',
-			'settings.page.general.remoteControlTitle' => 'Connect new sessions to Remote Control',
-			'settings.page.general.remoteControlDesc' => 'Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).',
-			'settings.page.general.remoteControlFailed' => ({required Object detail}) => 'Couldn\'t save: ${detail}',
 			'settings.page.general.sectionUpdates' => 'Updates',
 			'settings.page.general.checkUpdatesTitle' => 'Check for updates',
 			'settings.page.general.checkUpdatesDesc' => 'How often GSH Desktop should look for new versions.',
@@ -5446,12 +5538,12 @@ extension on Translations {
 			'settings.page.appearance.sectionConversation' => 'Conversation',
 			'settings.page.appearance.pinUserMessageTitle' => 'Pin user message',
 			'settings.page.appearance.pinUserMessageDesc' => 'The question stays fixed at the top while the answer scrolls.',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.appearance.importTheme' => 'Import…',
 			'settings.page.appearance.exportTheme' => 'Export…',
 			'settings.page.appearance.deleteTheme' => 'Remove',
 			'settings.page.appearance.importThemeDialog' => 'Pick a theme file',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.appearance.exportThemeDialog' => 'Save theme as',
 			'settings.page.appearance.themeImported' => ({required Object name}) => 'Theme "${name}" imported.',
 			'settings.page.appearance.themeExported' => 'Theme saved.',
@@ -5522,6 +5614,28 @@ extension on Translations {
 			'settings.page.automations.discoveryFailed' => 'Could not discover installed automation harnesses.',
 			'settings.page.automations.staleModel' => ({required Object model, required Object harness}) => 'Model "${model}" is no longer available for ${harness}. Using the CLI default — pick another model in Settings if needed.',
 			'settings.page.automations.recommendedSuffix' => 'Recommended',
+			'settings.page.claudeCode.sectionGeneral' => 'General',
+			'settings.page.claudeCode.classifyTitle' => 'Classify session states',
+			'settings.page.claudeCode.classifyDesc' => 'Show in the chat header the state Claude Code assigns at the end of each turn: completed, ready for review or blocked. Claude Code classifies either way; turning this off only hides the badge.',
+			'settings.page.claudeCode.switchModelsTitle' => 'Switch models when a message is flagged',
+			'settings.page.claudeCode.switchModelsDesc' => 'When safeguards flag a message, automatically switch to a different model to keep the conversation going. When off, your session pauses instead. Saved in ~/.claude/settings.json (switchModelsOnFlag).',
+			'settings.page.claudeCode.sectionCodeAppearance' => 'Code appearance',
+			'settings.page.claudeCode.followTheme' => 'From the active theme',
+			'settings.page.claudeCode.codeThemeLightHint' => 'Code colors in light mode',
+			'settings.page.claudeCode.codeThemeDarkHint' => 'Code colors in dark mode',
+			'settings.page.claudeCode.codeFontTitle' => 'Code font',
+			'settings.page.claudeCode.codeFontDesc' => 'A custom monospaced font for code: viewer, editor, diffs and the chat\'s code blocks. The terminal has its own font under Appearance.',
+			'settings.page.claudeCode.codeFontPlaceholder' => 'e.g. JetBrains Mono',
+			'settings.page.claudeCode.sectionAppearance' => 'Appearance',
+			'settings.page.claudeCode.transcriptTitle' => 'Default transcript view',
+			'settings.page.claudeCode.transcriptDesc' => 'The view new chat conversations open with. Conversations already open keep theirs.',
+			'settings.page.claudeCode.viewNormal' => 'Normal',
+			'settings.page.claudeCode.viewThinking' => 'Thinking',
+			'settings.page.claudeCode.viewVerbose' => 'Verbose',
+			'settings.page.claudeCode.sectionRemoteControl' => 'Remote Control',
+			'settings.page.claudeCode.remoteControlTitle' => 'Connect new sessions to Remote Control',
+			'settings.page.claudeCode.remoteControlDesc' => 'Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).',
+			'settings.page.claudeCode.saveFailed' => ({required Object detail}) => 'Couldn\'t save: ${detail}',
 			'settings.remoteHosts.title' => 'Remote hosts',
 			'settings.remoteHosts.description' => 'Machines you reach over SSH. Adding a host here is the same as adding one from the workspace "+" menu.',
 			'settings.remoteHosts.empty' => 'No remote hosts yet.',

@@ -1,4 +1,7 @@
 import 'package:cockpit/app/cockpit/domain/entities/chat_attachment.dart';
+import 'package:cockpit/app/cockpit/domain/entities/chat_event.dart';
+import 'package:cockpit/app/core/domain/entities/app_settings.dart';
+import 'package:cockpit/app/core/ui/widgets/app_tooltip.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/chat_viewmodel.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/agent_markdown.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/chat/chat_edits_card.dart';
@@ -49,7 +52,11 @@ class ChatRowView extends StatelessWidget {
       ChatAssistantItem(:final text, :final streaming) => AgentMarkdown(
         streaming ? '$text ▍' : text,
       ),
-      final ChatToolItem tool => ChatToolLine(tool: tool),
+      final ChatThinkingItem thinking => ChatThinkingBlock(item: thinking),
+      final ChatToolItem tool => ChatToolLine(
+        tool: tool,
+        expanded: chat.view == TranscriptView.verbose,
+      ),
       final ChatPermissionItem ask => ChatPermissionCard(ask: ask, chat: chat),
       final ChatQuestionItem q => ChatQuestionCard(item: q, chat: chat),
       final ChatPlanItem plan => ChatPlanCard(item: plan, chat: chat),
@@ -131,15 +138,18 @@ class _UserBubble extends StatelessWidget {
 /// Ferramenta recolhida numa linha discreta: a `description` que o agente deu
 /// (ou o nome + resumo) e um `>`; clicar mostra o comando e o resultado.
 class ChatToolLine extends StatefulWidget {
-  const ChatToolLine({super.key, required this.tool});
+  const ChatToolLine({super.key, required this.tool, this.expanded = false});
   final ChatToolItem tool;
+
+  /// Já abre com o comando e o resultado (visualização Detalhado).
+  final bool expanded;
 
   @override
   State<ChatToolLine> createState() => _ChatToolLineState();
 }
 
 class _ChatToolLineState extends State<ChatToolLine> {
-  bool _open = false;
+  late bool _open = widget.expanded;
 
   @override
   Widget build(BuildContext context) {
@@ -237,5 +247,111 @@ class _ToolDetails extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+/// Resumo de raciocínio do modelo: bloco discreto, aberto por padrão, que
+/// recolhe no cabeçalho.
+class ChatThinkingBlock extends StatefulWidget {
+  const ChatThinkingBlock({super.key, required this.item});
+  final ChatThinkingItem item;
+
+  @override
+  State<ChatThinkingBlock> createState() => _ChatThinkingBlockState();
+}
+
+class _ChatThinkingBlockState extends State<ChatThinkingBlock> {
+  bool _open = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final tr = context.t.cockpit.chat;
+    final item = widget.item;
+    final muted = context.typo.body.copyWith(color: colors.text3);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        HoverTap(
+          onTap: () => setState(() => _open = !_open),
+          hoverColor: colors.panel2,
+          borderRadius: BorderRadius.circular(6),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.lightbulb_outline, size: 14, color: colors.text3),
+              const SizedBox(width: 6),
+              Text(
+                item.streaming ? tr.thinkingLive : tr.thinkingTitle,
+                style: muted,
+              ),
+              const SizedBox(width: 4),
+              AnimatedRotation(
+                turns: _open ? 0.25 : 0,
+                duration: const Duration(milliseconds: 120),
+                child: Icon(Icons.chevron_right, size: 16, color: colors.text3),
+              ),
+            ],
+          ),
+        ),
+        if (_open)
+          Container(
+            margin: const EdgeInsets.only(left: 10, top: 4),
+            padding: const EdgeInsets.only(left: 12),
+            decoration: BoxDecoration(
+              border: Border(left: BorderSide(color: colors.border2, width: 2)),
+            ),
+            child: SelectableText(
+              item.text.trim(),
+              style: muted.copyWith(fontStyle: FontStyle.italic, height: 1.5),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+/// Selo do estado classificado no fim do turno (cabeçalho do chat); o
+/// `status_detail` do Claude Code vai no tooltip.
+class ChatSessionStateBadge extends StatelessWidget {
+  const ChatSessionStateBadge({
+    super.key,
+    required this.state,
+    this.detail = '',
+  });
+  final ChatSessionState state;
+  final String detail;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final tr = context.t.cockpit.chat;
+    final (label, color) = switch (state) {
+      ChatSessionState.completed => (tr.stateCompleted, colors.ok),
+      ChatSessionState.reviewReady => (tr.stateReviewReady, colors.accentText),
+      ChatSessionState.blocked => (tr.stateBlocked, colors.warn),
+      ChatSessionState.failed => (tr.stateFailed, colors.error),
+    };
+    final badge = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 6,
+            height: 6,
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
+          const SizedBox(width: 6),
+          Text(label, style: context.typo.label.copyWith(color: color)),
+        ],
+      ),
+    );
+    return detail.isEmpty ? badge : AppTooltip(message: detail, child: badge);
   }
 }

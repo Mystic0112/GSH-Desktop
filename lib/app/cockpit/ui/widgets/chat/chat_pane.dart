@@ -19,9 +19,13 @@ class ChatPane extends StatefulWidget {
     required this.chat,
     this.branch,
     this.onRemoteControl,
+    this.showSessionState = false,
   });
   final ChatController chat;
   final String? branch;
+
+  /// Selo com o estado que o Claude Code classificou no fim do turno.
+  final bool showSessionState;
 
   /// "Continuar no Remote Control"; `null` = sem o botão.
   final VoidCallback? onRemoteControl;
@@ -105,7 +109,11 @@ class _ChatPaneState extends State<ChatPane> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _Header(chat: _chat, onRemoteControl: widget.onRemoteControl),
+                _Header(
+                  chat: _chat,
+                  onRemoteControl: widget.onRemoteControl,
+                  showSessionState: widget.showSessionState,
+                ),
                 Expanded(
                   child: rows.isEmpty
                       ? _Empty(chat: _chat)
@@ -153,9 +161,14 @@ class _ChatPaneState extends State<ChatPane> {
 }
 
 class _Header extends StatelessWidget {
-  const _Header({required this.chat, this.onRemoteControl});
+  const _Header({
+    required this.chat,
+    this.onRemoteControl,
+    this.showSessionState = false,
+  });
   final ChatController chat;
   final VoidCallback? onRemoteControl;
+  final bool showSessionState;
 
   @override
   Widget build(BuildContext context) {
@@ -174,31 +187,47 @@ class _Header extends StatelessWidget {
         children: [
           Icon(Icons.laptop, size: 15, color: colors.text2),
           const SizedBox(width: 8),
-          Flexible(
-            child: Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: context.typo.body.copyWith(
-                fontSize: 13.5,
-                fontWeight: FontWeight.w500,
-                color: colors.text,
-              ),
+          // Título + pasta ocupam o resto; o que vem depois fica à direita.
+          Expanded(
+            child: Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.typo.body.copyWith(
+                      fontSize: 13.5,
+                      fontWeight: FontWeight.w500,
+                      color: colors.text,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: colors.panel3,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    basenameOf(chat.cwd),
+                    style: context.typo.label.copyWith(color: colors.text2),
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(width: 10),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-            decoration: BoxDecoration(
-              color: colors.panel3,
-              borderRadius: BorderRadius.circular(4),
+          if (chat.sessionState case final state? when showSessionState) ...[
+            ChatSessionStateBadge(
+              state: state,
+              detail: chat.sessionStateDetail,
             ),
-            child: Text(
-              basenameOf(chat.cwd),
-              style: context.typo.label.copyWith(color: colors.text2),
-            ),
-          ),
-          const Spacer(),
+            const SizedBox(width: 8),
+          ],
           if (onRemoteControl case final open?)
             AppTooltip(
               message: context.t.cockpit.chat.remoteControlHint,

@@ -2,6 +2,7 @@ import 'package:cockpit/app/cockpit/ui/session/chat_session.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/chat_viewmodel.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/cockpit_viewmodel.dart';
 import 'package:cockpit/app/cockpit/ui/widgets/chat/chat_pane.dart';
+import 'package:cockpit/app/core/ui/settings_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
@@ -21,6 +22,7 @@ class _ChatViewState extends State<ChatView> {
     widget.session.id,
     cwd: widget.session.workingDirectory,
     resumeSessionId: widget.session.sessionId,
+    view: context.read<SettingsController>().settings.transcriptView,
   );
   late final CockpitViewModel _shell = context.read<CockpitViewModel>();
 
@@ -52,9 +54,13 @@ class _ChatViewState extends State<ChatView> {
                   vm.gitInfo(s.projectId))
               ?.branch,
     );
+    final showState = context.select<SettingsController, bool>(
+      (c) => c.settings.classifySessionStates,
+    );
     return ChatPane(
       chat: _chat,
       branch: branch,
+      showSessionState: showState,
       onRemoteControl: _continueInRemoteControl,
     );
   }

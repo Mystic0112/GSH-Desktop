@@ -26,6 +26,12 @@ enum SourceControlViewMode { list, tree }
 
 enum UpdateCheckFrequency { daily, weekly, monthly, never }
 
+/// Como o chat do Claude Code mostra a conversa ao abrir.
+/// [normal]: ferramentas recolhidas, sem raciocínio. [thinking]: também mostra
+/// os resumos de raciocínio do modelo. [verbose]: raciocínio + ferramentas
+/// já abertas.
+enum TranscriptView { normal, thinking, verbose }
+
 /// Preferências do app, persistidas localmente (Hive). Imutável; mudanças via
 /// [copyWith]. Fontes vazias (`null`) = usar os defaults do design.
 class AppSettings {
@@ -67,6 +73,10 @@ class AppSettings {
     this.automationModelId,
     this.updateCheckFrequency = UpdateCheckFrequency.daily,
     this.lastUpdateCheckTime,
+    this.classifySessionStates = true,
+    this.codeThemeLight,
+    this.codeThemeDark,
+    this.transcriptView = TranscriptView.normal,
   });
 
   final AppThemeMode themeMode;
@@ -246,6 +256,18 @@ class AppSettings {
   /// Data da última verificação de atualização.
   final DateTime? lastUpdateCheckTime;
 
+  /// Mostra no cabeçalho do chat o estado que o Claude Code classifica ao fim
+  /// de cada turno (concluída / pronta para revisão / bloqueada).
+  final bool classifySessionStates;
+
+  /// Paleta de syntax no modo claro / escuro (nome do `SyntaxPalette` da UI).
+  /// `null` = a paleta do tema ativo.
+  final String? codeThemeLight;
+  final String? codeThemeDark;
+
+  /// Visualização com que novas conversas do chat abrem.
+  final TranscriptView transcriptView;
+
   AppSettings copyWith({
     AppThemeMode? themeMode,
     String? interfaceFont,
@@ -293,6 +315,12 @@ class AppSettings {
     bool useDefaultAutomationModel = false,
     UpdateCheckFrequency? updateCheckFrequency,
     DateTime? lastUpdateCheckTime,
+    bool? classifySessionStates,
+    String? codeThemeLight,
+    bool clearCodeThemeLight = false,
+    String? codeThemeDark,
+    bool clearCodeThemeDark = false,
+    TranscriptView? transcriptView,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -347,6 +375,15 @@ class AppSettings {
           : (automationModelId ?? this.automationModelId),
       updateCheckFrequency: updateCheckFrequency ?? this.updateCheckFrequency,
       lastUpdateCheckTime: lastUpdateCheckTime ?? this.lastUpdateCheckTime,
+      classifySessionStates:
+          classifySessionStates ?? this.classifySessionStates,
+      codeThemeLight: clearCodeThemeLight
+          ? null
+          : (codeThemeLight ?? this.codeThemeLight),
+      codeThemeDark: clearCodeThemeDark
+          ? null
+          : (codeThemeDark ?? this.codeThemeDark),
+      transcriptView: transcriptView ?? this.transcriptView,
     );
   }
 
@@ -408,6 +445,10 @@ class AppSettings {
     'updateCheckFrequency': updateCheckFrequency.name,
     if (lastUpdateCheckTime != null)
       'lastUpdateCheckTime': lastUpdateCheckTime!.toIso8601String(),
+    if (!classifySessionStates) 'chat.classifySessionStates': false,
+    if (codeThemeLight != null) 'code.themeLight': codeThemeLight,
+    if (codeThemeDark != null) 'code.themeDark': codeThemeDark,
+    'chat.transcriptView': transcriptView.name,
   };
 
   factory AppSettings.fromJson(Map<dynamic, dynamic> json) {
@@ -495,6 +536,15 @@ class AppSettings {
       lastUpdateCheckTime: json['lastUpdateCheckTime'] != null
           ? DateTime.tryParse(json['lastUpdateCheckTime'] as String)
           : null,
+      classifySessionStates:
+          json['chat.classifySessionStates'] as bool? ?? true,
+      codeThemeLight: str(json['code.themeLight']),
+      codeThemeDark: str(json['code.themeDark']),
+      transcriptView: _enumByName(
+        TranscriptView.values,
+        json['chat.transcriptView'],
+        TranscriptView.normal,
+      ),
     );
   }
 }

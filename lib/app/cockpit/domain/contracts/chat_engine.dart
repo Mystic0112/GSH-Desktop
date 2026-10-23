@@ -32,9 +32,14 @@ abstract interface class ChatEngine {
   Future<void> close();
 }
 
-/// Sobe um [ChatEngine] em [cwd]; [resumeSessionId] retoma uma sessão.
+/// Sobe um [ChatEngine] em [cwd]; [resumeSessionId] retoma uma sessão;
+/// [showThinking] pede os resumos de raciocínio do modelo.
 abstract interface class ChatEngineFactory {
-  Future<ChatEngine> start({required String cwd, String? resumeSessionId});
+  Future<ChatEngine> start({
+    required String cwd,
+    String? resumeSessionId,
+    bool showThinking = false,
+  });
 
   /// A conversa já gravada da sessão [sessionId] (para mostrar ao retomar).
   Future<List<ChatEvent>> history({

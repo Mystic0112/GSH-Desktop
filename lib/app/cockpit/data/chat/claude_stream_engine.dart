@@ -21,6 +21,7 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
   Future<ChatEngine> start({
     required String cwd,
     String? resumeSessionId,
+    bool showThinking = false,
   }) async {
     final exe = await resolveExecutable('claude');
     final proc = await Process.start(
@@ -40,6 +41,9 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
         // Só deixa "Ignorar permissões" disponível no seletor de modo; a
         // sessão continua começando em `default` (pedindo permissão).
         '--allow-dangerously-skip-permissions',
+        // Resumos de raciocínio (`thinking` com texto). Sem a flag o CLI
+        // manda o bloco vazio.
+        if (showThinking) ...['--thinking-display', 'summarized'],
         if (resumeSessionId != null) ...['--resume', resumeSessionId],
       ],
       workingDirectory: cwd,
@@ -270,6 +274,22 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
           permissionMode: o['permissionMode'] as String?,
         ),
       ];
+    case 'system' when o['subtype'] == 'post_turn_summary':
+      final state = switch (o['status_category']) {
+        'completed' => ChatSessionState.completed,
+        'review_ready' => ChatSessionState.reviewReady,
+        // `need_input` é como o remoto renomeia o `blocked`.
+        'blocked' || 'need_input' => ChatSessionState.blocked,
+        'failed' => ChatSessionState.failed,
+        _ => null,
+      };
+      if (state == null) return const [];
+      return [
+        ChatSessionClassified(
+          state,
+          detail: (o['status_detail'] as String? ?? '').trim(),
+        ),
+      ];
     case 'system' when o['subtype'] == 'status':
       final mode = o['permissionMode'];
       return mode is String ? [ChatModeChanged(mode)] : const [];
@@ -280,6 +300,9 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
         for (final c in content.whereType<Map>())
           if (c['type'] == 'text' && (c['text'] as String? ?? '').isNotEmpty)
             ChatText(c['text'] as String)
+          else if (c['type'] == 'thinking' &&
+              (c['thinking'] as String? ?? '').trim().isNotEmpty)
+            ChatThinking(c['thinking'] as String)
           else if (c['type'] == 'tool_use')
             ChatToolCall(
               id: c['id'] as String? ?? '',
@@ -303,7 +326,12 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
       final ev = o['event'];
       if (ev is! Map || ev['type'] != 'content_block_delta') return const [];
       final delta = ev['delta'];
-      if (delta is! Map || delta['type'] != 'text_delta') return const [];
+      if (delta is! Map) return const [];
+      if (delta['type'] == 'thinking_delta') {
+        final text = delta['thinking'] as String? ?? '';
+        return text.isEmpty ? const [] : [ChatThinkingDelta(text)];
+      }
+      if (delta['type'] != 'text_delta') return const [];
       final text = delta['text'] as String? ?? '';
       return text.isEmpty ? const [] : [ChatTextDelta(text)];
     case 'control_request':

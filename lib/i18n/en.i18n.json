@@ -970,7 +970,13 @@
       "editedFiles": {
         "one": "Edited 1 file",
         "other": "Edited ${n} files"
-      }
+      },
+      "thinkingTitle": "Thinking",
+      "thinkingLive": "Thinking…",
+      "stateCompleted": "Completed",
+      "stateReviewReady": "Ready for review",
+      "stateBlocked": "Blocked",
+      "stateFailed": "Failed"
     },
     "farm": {
       "tabTitle": "Farm",
@@ -1083,7 +1089,8 @@
         "shortcuts": "Shortcuts",
         "notifications": "Notifications",
         "automations": "Automations",
-        "remoteHosts": "Remote hosts"
+        "remoteHosts": "Remote hosts",
+        "claudeCode": "Claude Code"
       },
       "general": {
         "sectionEditor": "Editor",
@@ -1097,9 +1104,6 @@
         "showCockpitDesc": "Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.",
         "launchAtStartupTitle": "Launch at login",
         "launchAtStartupDesc": "Start GSH Desktop automatically when you sign in to your computer.",
-        "remoteControlTitle": "Connect new sessions to Remote Control",
-        "remoteControlDesc": "Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).",
-        "remoteControlFailed": "Couldn't save: ${detail}",
         "sectionUpdates": "Updates",
         "checkUpdatesTitle": "Check for updates",
         "checkUpdatesDesc": "How often GSH Desktop should look for new versions.",
@@ -1276,6 +1280,30 @@
         "discoveryFailed": "Could not discover installed automation harnesses.",
         "staleModel": "Model \"${model}\" is no longer available for ${harness}. Using the CLI default — pick another model in Settings if needed.",
         "recommendedSuffix": "Recommended"
+      },
+      "claudeCode": {
+        "sectionGeneral": "General",
+        "classifyTitle": "Classify session states",
+        "classifyDesc": "Show in the chat header the state Claude Code assigns at the end of each turn: completed, ready for review or blocked. Claude Code classifies either way; turning this off only hides the badge.",
+        "switchModelsTitle": "Switch models when a message is flagged",
+        "switchModelsDesc": "When safeguards flag a message, automatically switch to a different model to keep the conversation going. When off, your session pauses instead. Saved in ~/.claude/settings.json (switchModelsOnFlag).",
+        "sectionCodeAppearance": "Code appearance",
+        "followTheme": "From the active theme",
+        "codeThemeLightHint": "Code colors in light mode",
+        "codeThemeDarkHint": "Code colors in dark mode",
+        "codeFontTitle": "Code font",
+        "codeFontDesc": "A custom monospaced font for code: viewer, editor, diffs and the chat's code blocks. The terminal has its own font under Appearance.",
+        "codeFontPlaceholder": "e.g. JetBrains Mono",
+        "sectionAppearance": "Appearance",
+        "transcriptTitle": "Default transcript view",
+        "transcriptDesc": "The view new chat conversations open with. Conversations already open keep theirs.",
+        "viewNormal": "Normal",
+        "viewThinking": "Thinking",
+        "viewVerbose": "Verbose",
+        "sectionRemoteControl": "Remote Control",
+        "remoteControlTitle": "Connect new sessions to Remote Control",
+        "remoteControlDesc": "Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).",
+        "saveFailed": "Couldn't save: ${detail}"
       }
     },
     "remoteHosts": {

@@ -32,10 +32,19 @@ CockpitTokens buildTokens({
     monoFont: settings.codeFont,
     codeSize: settings.codeSize,
   );
+  // Paleta escolhida para o modo vence a do tema; o fundo continua o do tema
+  // (campo unificado do `_variant`): só as cores do código mudam.
+  final override = SyntaxPalette.byName(
+    brightness == Brightness.dark
+        ? settings.codeThemeDark
+        : settings.codeThemeLight,
+  );
   return (
     colors: variant.ui,
     typo: typo,
-    syntax: variant.syntax,
+    syntax:
+        override?.colors.copyWith(background: variant.syntax.background) ??
+        variant.syntax,
     terminal: variant.terminal,
   );
 }

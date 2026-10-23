@@ -17,28 +17,29 @@ class ClaudeCodeSettingsFile implements ClaudeCodeSettings {
         '/.claude/settings.json',
       );
 
-  static const _remoteControlKey = 'remoteControlAtStartup';
-
   final File _file;
 
   @override
-  Future<bool> remoteControlAtStartup() async {
+  Future<bool?> getBool(String key) async {
     final root = await _read();
-    return root is Success<Map<String, dynamic>, String> &&
-        root.value[_remoteControlKey] == true;
+    if (root case Success(:final value)) {
+      final v = value[key];
+      return v is bool ? v : null;
+    }
+    return null;
   }
 
   @override
-  Future<Result<void, String>> setRemoteControlAtStartup(bool on) async {
+  Future<Result<void, String>> setBool(String key, bool? value) async {
     final read = await _read();
     switch (read) {
       case Failure(:final error):
         return Failure(error);
       case Success(value: final root):
-        if (on) {
-          root[_remoteControlKey] = true;
+        if (value == null) {
+          root.remove(key);
         } else {
-          root.remove(_remoteControlKey);
+          root[key] = value;
         }
         try {
           await _file.parent.create(recursive: true);

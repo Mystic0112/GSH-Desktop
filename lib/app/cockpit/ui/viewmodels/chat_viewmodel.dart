@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:cockpit/app/cockpit/domain/contracts/chat_engine.dart';
 import 'package:cockpit/app/cockpit/domain/entities/chat_attachment.dart';
 import 'package:cockpit/app/cockpit/domain/entities/chat_event.dart';
+import 'package:cockpit/app/core/domain/entities/app_settings.dart';
 import 'package:flutter/foundation.dart';
 
 /// Uma linha da conversa na tela.
@@ -20,6 +21,14 @@ class ChatAssistantItem extends ChatItem {
   String text;
 
   /// Ainda chegando pedaço a pedaço; o bloco completo fecha.
+  bool streaming;
+}
+
+/// Resumo de raciocínio do modelo (só nas visualizações Raciocínio e
+/// Detalhado).
+class ChatThinkingItem extends ChatItem {
+  ChatThinkingItem(this.text, {this.streaming = false});
+  String text;
   bool streaming;
 }
 
@@ -143,13 +152,28 @@ class ChatNoticeItem extends ChatItem {
 /// Com [resumeSessionId] (aba restaurada), mostra o histórico gravado e o
 /// próximo envio continua aquela sessão.
 class ChatController extends ChangeNotifier {
-  ChatController(this._factory, {required this.cwd, String? resumeSessionId})
-    : sessionId = resumeSessionId {
+  ChatController(
+    this._factory, {
+    required this.cwd,
+    String? resumeSessionId,
+    this.view = TranscriptView.normal,
+  }) : sessionId = resumeSessionId {
     if (resumeSessionId != null) unawaited(_loadHistory(resumeSessionId));
   }
 
   final ChatEngineFactory _factory;
   final String cwd;
+
+  /// Visualização da conversa, fixada ao abrir: decide se o motor pede os
+  /// resumos de raciocínio e se as ferramentas já abrem expandidas.
+  final TranscriptView view;
+
+  bool get showsThinking => view != TranscriptView.normal;
+
+  /// Estado que o Claude Code classificou no fim do último turno; `null`
+  /// enquanto um turno roda ou se o CLI não classificou.
+  ChatSessionState? sessionState;
+  String sessionStateDetail = '';
 
   final items = <ChatItem>[];
   String? sessionId;
@@ -251,6 +275,7 @@ class ChatController extends ChangeNotifier {
     items.add(ChatUserItem(text.trim(), attachments: files));
     attachments.clear();
     busy = true;
+    sessionState = null;
     notifyListeners();
     try {
       var engine = _engine;
@@ -290,7 +315,11 @@ class ChatController extends ChangeNotifier {
   }
 
   Future<ChatEngine> _startEngine() async {
-    final engine = await _factory.start(cwd: cwd, resumeSessionId: sessionId);
+    final engine = await _factory.start(
+      cwd: cwd,
+      resumeSessionId: sessionId,
+      showThinking: showsThinking,
+    );
     _sub = engine.events.listen(_onEvent);
     return engine;
   }
@@ -321,8 +350,39 @@ class ChatController extends ChangeNotifier {
     return last is ChatAssistantItem && last.streaming ? last : null;
   }
 
+  ChatThinkingItem? get _thinking {
+    final last = items.lastOrNull;
+    return last is ChatThinkingItem && last.streaming ? last : null;
+  }
+
   void _apply(ChatEvent e) {
+    // Qualquer outra coisa chegando fecha o raciocínio ao vivo.
+    if (e is! ChatThinkingDelta && e is! ChatThinking) {
+      _thinking?.streaming = false;
+    }
     switch (e) {
+      // Na visualização Normal o raciocínio não aparece (nem do histórico).
+      case ChatThinkingDelta() || ChatThinking() when !showsThinking:
+        break;
+      case ChatThinkingDelta(:final text):
+        final live = _thinking;
+        if (live != null) {
+          live.text += text;
+        } else {
+          items.add(ChatThinkingItem(text, streaming: true));
+        }
+      case ChatThinking(:final text):
+        final live = _thinking;
+        if (live != null) {
+          live
+            ..text = text
+            ..streaming = false;
+        } else {
+          items.add(ChatThinkingItem(text));
+        }
+      case ChatSessionClassified(:final state, :final detail):
+        sessionState = state;
+        sessionStateDetail = detail;
       case ChatReady(:final sessionId, :final model, :final permissionMode):
         this.sessionId = sessionId;
         this.model = model;
@@ -486,14 +546,17 @@ class ChatViewModel extends ChangeNotifier {
   final ChatEngineFactory _factory;
   final _chats = <String, ChatController>{};
 
+  /// [view] só vale ao criar: a conversa já aberta mantém a dela.
   ChatController chatFor(
     String tabId, {
     required String cwd,
     String? resumeSessionId,
+    TranscriptView view = TranscriptView.normal,
   }) => _chats[tabId] ??= ChatController(
     _factory,
     cwd: cwd,
     resumeSessionId: resumeSessionId,
+    view: view,
   );
 
   void close(String tabId) => _chats.remove(tabId)?.dispose();
