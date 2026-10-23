@@ -19,3 +19,18 @@ VoidCallback? requestOpenProject;
 /// Menu **Cockpit → Verificar atualizações…** → dispara um check imediato do
 /// self-updater (Sparkle/WinSparkle) e, se já houver download pronto, instala.
 VoidCallback? requestCheckForUpdates;
+
+// Pontes usadas pelas Configurações (rota empilhada sobre o shell, sem acesso
+// ao CockpitViewModel page-scoped). Registradas pelo próprio CockpitViewModel
+// enquanto ele vive.
+
+/// Abre [path] numa aba fixa do workspace ativo (Memória, Skills,
+/// Desenvolvedor).
+void Function(String path)? requestOpenFileTab;
+
+/// Nova aba de terminal no workspace ativo rodando [command] (Conta →
+/// Entrar). Devolve `false` sem workspace local ativo.
+bool Function(String command)? requestRunInTerminal;
+
+/// Raiz local do workspace ativo; `null` sem workspace com pasta local.
+String? Function()? activeWorkspaceRoot;

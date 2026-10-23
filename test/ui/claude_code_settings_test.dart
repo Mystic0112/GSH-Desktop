@@ -4,7 +4,9 @@ import 'package:cockpit/app/core/domain/entities/app_settings.dart';
 import 'package:cockpit/app/core/domain/result.dart';
 import 'package:cockpit/app/core/ui/settings_controller.dart';
 import 'package:cockpit/app/core/ui/themes/themes.dart';
+import 'package:cockpit/app/settings/domain/claude_info.dart';
 import 'package:cockpit/app/settings/ui/claude_code_panel.dart';
+import 'package:cockpit/app/settings/ui/claude_info_viewmodel.dart';
 import 'package:cockpit/i18n/strings.g.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,14 +23,27 @@ class _Store implements SettingsStore {
 
 /// `~/.claude/settings.json` em memória.
 class _ClaudeSettings implements ClaudeCodeSettings {
-  final values = <String, bool>{};
+  final values = <String, Object>{};
   @override
-  Future<bool?> getBool(String key) async => values[key];
+  Future<bool?> getBool(String key) async => values[key] as bool?;
   @override
-  Future<Result<void, String>> setBool(String key, bool? value) async {
+  Future<Result<void, String>> setBool(String key, bool? value) =>
+      setValue(key, value);
+  @override
+  Future<Object?> getValue(String key) async => values[key];
+  @override
+  Future<Result<void, String>> setValue(String key, Object? value) async {
     value == null ? values.remove(key) : values[key] = value;
     return const Success(null);
   }
+}
+
+/// O painel só pede os estilos de saída à CLI.
+class _NoClaude implements ClaudeInfoSource {
+  @override
+  Future<List<String>> outputStyles() async => const ['Explanatory'];
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class _Root extends StatelessWidget {
@@ -55,8 +70,11 @@ Future<(SettingsController, _ClaudeSettings)> _mount(
   final module = createModule(
     register: (c) => c
       ..addInstance<ClaudeCodeSettings>(claude)
+      ..addInstance<ClaudeInfoSource>(_NoClaude())
       ..route(
         '/',
+        provide: (s) =>
+            s.addChangeNotifier<ClaudeInfoViewModel>(ClaudeInfoViewModel.new),
         child: (context, state) => shotTheme(
           RepaintBoundary(
             key: shotKey,
@@ -104,7 +122,9 @@ void main() {
     expect(settings.settings.transcriptView, TranscriptView.thinking);
 
     final switches = find.byType(Switch);
-    expect(switches, findsNWidgets(3));
+    // Geral (2) + Remote Control + Sessões (sugestões, sandbox, estrito) +
+    // Navegador.
+    expect(switches, findsNWidgets(7));
     // Classificar: GSH, padrão ligado.
     await tester.tap(switches.at(0));
     await tester.pump();

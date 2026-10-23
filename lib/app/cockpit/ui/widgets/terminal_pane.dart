@@ -35,6 +35,7 @@ class TerminalPane extends StatefulWidget {
     required this.onKeyEvent,
     this.hardwareKeyboardOnly = false,
     this.onOpenFile,
+    this.onOpenUrl,
   });
 
   final Terminal terminal;
@@ -49,6 +50,9 @@ class TerminalPane extends StatefulWidget {
   /// desliga a detecção de arquivos (mantém só URLs). [line] vem do sufixo
   /// `arquivo:42`, quando presente.
   final void Function(String path, {int? line})? onOpenFile;
+
+  /// Link http(s) clicado; `null` = navegador do SO.
+  final void Function(Uri uri)? onOpenUrl;
 
   @override
   State<TerminalPane> createState() => _TerminalPaneState();
@@ -195,7 +199,12 @@ class _TerminalPaneState extends State<TerminalPane>
     final raw = url.startsWith('www.') ? 'https://$url' : url;
     final uri = Uri.tryParse(raw);
     if (uri != null && uri.hasScheme) {
-      launchUrl(uri, mode: LaunchMode.externalApplication);
+      final inApp = widget.onOpenUrl;
+      if (inApp != null && (uri.scheme == 'http' || uri.scheme == 'https')) {
+        inApp(uri);
+      } else {
+        launchUrl(uri, mode: LaunchMode.externalApplication);
+      }
     }
   }
 

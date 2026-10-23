@@ -734,6 +734,13 @@ class _CockpitPageState extends State<CockpitPage> {
     final swapped = context.select<SettingsController, bool>(
       (s) => s.settings.swapSidePanels,
     );
+    // Configurações → Recursos: botões que o usuário tirou da barra.
+    bool shows(AppFeature f) => context.select<SettingsController, bool>(
+      (s) => s.settings.showsFeature(f),
+    );
+    final showGraph = shows(AppFeature.agentGraph);
+    final showFarm = shows(AppFeature.farm);
+    final showChat = shows(AppFeature.chat);
     final colors = context.colors;
 
     if (!shell.ready) {
@@ -781,13 +788,17 @@ class _CockpitPageState extends State<CockpitPage> {
                   // (systemTerminal) não. `activeHasFileTree` cobre os dois —
                   // `!isPathless` desabilitava indevidamente o remoto (path='').
                   filesEnabled: shell.hasFileTree,
-                  onVisualizeAgents: shell.title == null
+                  onVisualizeAgents: shell.title == null || !showGraph
                       ? null
                       : _vm.openAgentGraph,
-                  onOpenFarm: shell.title == null ? null : _vm.openFarm,
+                  onOpenFarm: shell.title == null || !showFarm
+                      ? null
+                      : _vm.openFarm,
                   // Chat precisa de uma pasta (cwd do claude): o workspace de
                   // sistema, sem pasta, não tem o botão.
-                  onOpenChat: shell.hasFileTree ? _vm.openChat : null,
+                  onOpenChat: shell.hasFileTree && showChat
+                      ? _vm.openChat
+                      : null,
                 ),
                 // Host remoto fora do ar: faixa com o estado + botão de
                 // reconectar. Não ocupa espaço em workspace local.

@@ -91,6 +91,7 @@ import 'package:cockpit/app/core/ui/automation_controller.dart';
 import 'package:cockpit/app/core/utils/path_utils.dart';
 import 'package:cockpit/app/core/utils/platform_kind.dart';
 import 'package:cockpit/app/core/utils/user_home.dart';
+import 'package:cockpit/app/core/app_intents.dart' as intents;
 import 'package:cockpit/app/cockpit/ui/session/empty_tab.dart';
 import 'package:cockpit/app/cockpit/ui/session/diff_viewer_session.dart';
 import 'package:cockpit/app/cockpit/ui/session/file_viewer_session.dart';
@@ -233,6 +234,33 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
     realmCtrl.addListener(notifyListeners);
     // Auto-open do navegador quando uma task anuncia dev server (plano 58).
     _previewSub = _taskRunner.previewUrls().listen(_onTaskPreviewUrl);
+    _registerSettingsBridges();
+  }
+
+  /// Pontes das Configurações (ver `app_intents.dart`): a rota de settings
+  /// fica empilhada sobre o shell e não enxerga este VM page-scoped.
+  void _registerSettingsBridges() {
+    intents.requestOpenFileTab = _openFileTabBridge;
+    intents.requestRunInTerminal = _runInTerminalBridge;
+    intents.activeWorkspaceRoot = _workspaceRootBridge;
+  }
+
+  void _openFileTabBridge(String path) =>
+      unawaited(openFile(path, isPreview: false));
+
+  /// Remoto fica de fora: o comando rodaria no host, não nesta máquina.
+  bool _runInTerminalBridge(String command) {
+    final project = selectedProject;
+    if (project == null || project.isRemoteTerminal) return false;
+    final cwd = project.path.isEmpty ? userHome() : project.path;
+    if (cwd == null) return false;
+    return newTerminalTab(cwd: cwd, startupCommand: command).isSuccess;
+  }
+
+  String? _workspaceRootBridge() {
+    final project = selectedProject;
+    if (project == null || project.isPathless) return null;
+    return project.path;
   }
 
   StreamSubscription<TaskPreviewUrl>? _previewSub;
@@ -7197,6 +7225,12 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
 
   @override
   void dispose() {
+    // Só limpa se ainda são as nossas (outro VM pode já ter registrado).
+    if (intents.requestOpenFileTab == _openFileTabBridge) {
+      intents.requestOpenFileTab = null;
+      intents.requestRunInTerminal = null;
+      intents.activeWorkspaceRoot = null;
+    }
     _remoteHosts.removeListener(_onRemoteHostsChanged);
     agentMessages.dispose();
     agentFiles.dispose();

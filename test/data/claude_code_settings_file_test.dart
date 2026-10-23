@@ -73,4 +73,22 @@ void main() {
       expect(jsonDecode(file.readAsStringSync()), {key: false});
     },
   );
+
+  test('chave com ponto desce no objeto e poda o pai vazio', () async {
+    file
+      ..createSync(recursive: true)
+      ..writeAsStringSync(jsonEncode({'model': 'opus'}));
+    final s = ClaudeCodeSettingsFile(home: home.path);
+    await s.setValue(ClaudeCodeKeys.sandboxEnabled, true);
+    await s.setValue(ClaudeCodeKeys.disableTelemetry, '1');
+    expect(await s.getValue(ClaudeCodeKeys.sandboxEnabled), isTrue);
+    expect(jsonDecode(file.readAsStringSync()), {
+      'model': 'opus',
+      'sandbox': {'enabled': true},
+      'env': {'DISABLE_TELEMETRY': '1'},
+    });
+    await s.setValue(ClaudeCodeKeys.disableTelemetry, null);
+    await s.setValue(ClaudeCodeKeys.sandboxEnabled, null);
+    expect(jsonDecode(file.readAsStringSync()), {'model': 'opus'});
+  });
 }

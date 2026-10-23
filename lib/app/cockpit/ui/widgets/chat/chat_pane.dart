@@ -20,6 +20,8 @@ class ChatPane extends StatefulWidget {
     this.branch,
     this.onRemoteControl,
     this.showSessionState = false,
+    this.columnWidth = 760,
+    this.fontFamily,
   });
   final ChatController chat;
   final String? branch;
@@ -30,8 +32,11 @@ class ChatPane extends StatefulWidget {
   /// "Continuar no Remote Control"; `null` = sem o botão.
   final VoidCallback? onRemoteControl;
 
-  /// Largura da coluna da conversa.
-  static const columnWidth = 760.0;
+  /// Largura da coluna da conversa (preferência "Largura da transcrição").
+  final double columnWidth;
+
+  /// Fonte do texto do chat; `null` = a da interface.
+  final String? fontFamily;
 
   @override
   State<ChatPane> createState() => _ChatPaneState();
@@ -95,7 +100,7 @@ class _ChatPaneState extends State<ChatPane> {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final rows = groupChatItems(_chat.items);
-    return ChatDropZone(
+    final pane = ChatDropZone(
       chat: _chat,
       child: ColoredBox(
         color: colors.panel,
@@ -104,7 +109,7 @@ class _ChatPaneState extends State<ChatPane> {
             // Coluna central: margem lateral que sobra, nunca menos de 24.
             final side = math.max(
               24.0,
-              (box.maxWidth - ChatPane.columnWidth) / 2,
+              (box.maxWidth - widget.columnWidth) / 2,
             );
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -148,6 +153,19 @@ class _ChatPaneState extends State<ChatPane> {
           },
         ),
       ),
+    );
+    final font = widget.fontFamily;
+    if (font == null) return pane;
+    // Fonte do chat: troca só o corpo do texto, o resto do tema segue igual.
+    final theme = CockpitTheme.of(context);
+    return CockpitTheme(
+      colors: theme.colors,
+      typo: theme.typo.copyWith(
+        body: theme.typo.body.copyWith(fontFamily: font),
+      ),
+      syntax: theme.syntax,
+      terminal: theme.terminal,
+      child: pane,
     );
   }
 

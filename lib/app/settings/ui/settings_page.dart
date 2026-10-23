@@ -21,9 +21,7 @@ import 'package:cockpit/app/core/data/diagnostics/diagnostics_log.dart';
 import 'package:cockpit/app/core/ui/widgets/error_report_dialog.dart';
 import 'package:cockpit/app/core/data/lsp/lsp_command.dart';
 import 'package:cockpit/app/core/data/lsp/lsp_launchers.dart';
-import 'package:cockpit/app/core/data/setup/storage_location.dart';
 import 'package:flutter/services.dart';
-import 'package:cockpit/app/core/utils/native_folder_picker.dart';
 import 'package:cockpit/app/core/utils/platform_kind.dart';
 import 'package:cockpit/app/core/domain/entities/app_settings.dart';
 import 'package:cockpit/app/core/terminal/terminal_controller.dart'
@@ -32,7 +30,22 @@ import 'package:cockpit/app/core/ui/widgets/app_menu.dart';
 import 'package:cockpit/app/core/ui/widgets/code_highlight.dart';
 import 'package:cockpit/app/core/ui/widgets/window_controls.dart';
 import 'package:cockpit/app/settings/ui/notifications_viewmodel.dart';
+import 'package:cockpit/app/cockpit/domain/contracts/url_opener.dart';
+import 'package:cockpit/app/settings/ui/account_panel.dart';
 import 'package:cockpit/app/settings/ui/claude_code_panel.dart';
+import 'package:cockpit/app/settings/ui/connectors_panel.dart';
+import 'package:cockpit/app/settings/ui/design_systems_panel.dart';
+import 'package:cockpit/app/settings/ui/developer_panel.dart';
+import 'package:cockpit/app/settings/ui/general_panel.dart';
+import 'package:cockpit/app/settings/ui/memory_panel.dart';
+import 'package:cockpit/app/settings/ui/placeholder_panel.dart';
+import 'package:cockpit/app/settings/ui/plugins_panel.dart';
+import 'package:cockpit/app/settings/ui/privacy_panel.dart';
+import 'package:cockpit/app/settings/ui/resources_panel.dart';
+import 'package:cockpit/app/settings/ui/settings_nav.dart';
+import 'package:cockpit/app/settings/ui/skills_panel.dart';
+import 'package:cockpit/app/settings/ui/system_panel.dart';
+import 'package:cockpit/app/settings/ui/usage_panel.dart';
 import 'package:cockpit/app/settings/ui/neovim_settings_viewmodel.dart';
 import 'package:cockpit/app/settings/domain/editor_appearance_policy.dart';
 import 'package:cockpit/app/settings/ui/shortcut_catalog.dart';
@@ -43,20 +56,17 @@ import 'package:cockpit/app/core/domain/entities/sound_event.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:media_kit/media_kit.dart' show Media, Player;
 import 'package:path/path.dart' as p;
-import 'package:cockpit/app/core/ui/font_catalog.dart';
 import 'package:cockpit/app/core/ui/widgets/hover_tap.dart';
-import 'package:cockpit/app/settings/ui/font_picker_dialog.dart';
+import 'package:cockpit/app/settings/ui/settings_widgets.dart';
 import 'package:cockpit/i18n/strings.g.dart';
 import 'package:cockpit/app/core/routes.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cockpit/app/core/ui/widgets/app_tooltip.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
-/// Tela cheia de Configurações (push). Categorias à esquerda (Aparência ·
-/// Conectividade) e o conteúdo à direita. Por ora só **Aparência** está
-/// implementada; Conectividade chega na próxima fase.
+/// Tela cheia de Configurações (push): menu lateral em grupos com busca
+/// ([SettingsNav]) e a aba escolhida à direita.
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key, this.initialTab});
 
@@ -67,30 +77,8 @@ class SettingsPage extends StatefulWidget {
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
-enum _Category {
-  general,
-  appearance,
-  terminal,
-  languages,
-  automations,
-  claudeCode,
-  shortcuts,
-  notifications,
-  remoteHosts,
-}
-
-extension on _Category {
-  /// Abas escondidas no mobile (plano 59): motor-local ou desktop-only. Sobram
-  /// General, Appearance, Shortcuts, Notifications e Remote hosts.
-  bool get hiddenOnMobile =>
-      this == _Category.terminal ||
-      this == _Category.languages ||
-      this == _Category.automations ||
-      this == _Category.claudeCode;
-}
-
 class _SettingsPageState extends State<SettingsPage> {
-  _Category _category = _Category.general;
+  SettingsCategory _category = SettingsCategory.general;
 
   /// Abaixo desta largura (mobile portrait) o nav de categorias vira DRAWER —
   /// senão a lista à esquerda espreme o painel e fica ilegível (plano 60).
@@ -103,7 +91,7 @@ class _SettingsPageState extends State<SettingsPage> {
     // Deep-link: abrir já numa aba (ex.: WelcomeView do mobile → Remote hosts,
     // onde mora a chave do device). O argumento vem do pushNamed.
     if (widget.initialTab == SettingsTab.remoteHosts) {
-      _category = _Category.remoteHosts;
+      _category = SettingsCategory.remoteHosts;
     }
     // Sonda o ambiente para decidir se as abas remotas aparecem.
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -117,31 +105,59 @@ class _SettingsPageState extends State<SettingsPage> {
     final colors = context.colors;
     // No mobile, abas motor-local/desktop-only não existem → cai pra General.
     final category = (isMobilePlatform && _category.hiddenOnMobile)
-        ? _Category.general
+        ? SettingsCategory.general
         : _category;
     final narrow =
         isMobilePlatform &&
         MediaQuery.sizeOf(context).width < _drawerBreakpoint;
 
+    final nav = context.t.settings.page.nav;
+    final ph = context.t.settings.page.placeholder;
     final Widget panel = switch (category) {
-      _Category.general => const _GeneralPanel(),
-      _Category.appearance => const _AppearancePanel(),
-      _Category.terminal => const _TerminalPanel(),
-      _Category.languages => const _LanguagesPanel(),
-      _Category.automations => const _AutomationsPanel(),
-      _Category.claudeCode => const ClaudeCodePanel(),
-      _Category.shortcuts => const _ShortcutsPanel(),
-      _Category.notifications => const _NotificationsPanel(),
-      _Category.remoteHosts => const _RemoteHostsPanel(),
+      SettingsCategory.general => const GeneralPanel(
+        gshSections: _GeneralGshSections(),
+      ),
+      SettingsCategory.account => const AccountPanel(),
+      SettingsCategory.privacy => const PrivacyPanel(),
+      SettingsCategory.usage => const UsagePanel(),
+      SettingsCategory.resources => ResourcesPanel(
+        onOpenSkills: () => setState(() => _category = SettingsCategory.skills),
+      ),
+      SettingsCategory.memory => const MemoryPanel(),
+      SettingsCategory.designSystems => const DesignSystemsPanel(),
+      SettingsCategory.claudeCode => const ClaudeCodePanel(),
+      SettingsCategory.cowork => SettingsPlaceholderPanel(
+        title: nav.cowork,
+        lines: [ph.cowork1, ph.cowork2],
+      ),
+      SettingsCategory.system => const SystemPanel(),
+      SettingsCategory.extensions => SettingsPlaceholderPanel(
+        title: nav.extensions,
+        description: ph.extensionsDesc,
+        icon: Icons.extension_outlined,
+        lines: [ph.extensionsEmpty, ph.extensions],
+      ),
+      SettingsCategory.developer => const DeveloperPanel(),
+      SettingsCategory.skills => const SkillsPanel(),
+      SettingsCategory.connectors => const ConnectorsPanel(),
+      SettingsCategory.plugins => const PluginsPanel(),
+      SettingsCategory.appearance => const _AppearancePanel(),
+      SettingsCategory.terminal => const _TerminalPanel(),
+      SettingsCategory.languages => const _LanguagesPanel(),
+      SettingsCategory.automations => const _AutomationsPanel(),
+      SettingsCategory.shortcuts => const _ShortcutsPanel(),
+      SettingsCategory.notifications => const _NotificationsPanel(),
+      SettingsCategory.remoteHosts => const _RemoteHostsPanel(),
     };
 
-    final nav = _CategoryNav(
+    final navWidget = SettingsNav(
       selected: category,
       // No estreito, escolher categoria fecha o drawer (revela o painel).
       onSelect: (c) => setState(() {
         _category = c;
         _navOpen = false;
       }),
+      onOpenApiKeys: () => inject<UrlOpener>().open(apiKeysUrl),
     );
 
     return Scaffold(
@@ -166,14 +182,19 @@ class _SettingsPageState extends State<SettingsPage> {
                             child: ColoredBox(color: colors.scrim),
                           ),
                         ),
-                        Positioned(left: 0, top: 0, bottom: 0, child: nav),
+                        Positioned(
+                          left: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: navWidget,
+                        ),
                       ],
                     ],
                   )
                 : Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      nav,
+                      navWidget,
                       Expanded(child: panel),
                     ],
                   ),
@@ -235,183 +256,13 @@ class _SettingsHeader extends StatelessWidget {
   }
 }
 
-class _CategoryNav extends StatelessWidget {
-  const _CategoryNav({required this.selected, required this.onSelect});
-  final _Category selected;
-
-  /// Extensão remote-pi + supervisor instalados → mostra as abas remotas.
-  final ValueChanged<_Category> onSelect;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Container(
-      width: 210,
-      // Fundo opaco: no drawer (mobile portrait) o nav fica SOBRE o painel —
-      // sem cor, o painel apareceria através dele. No layout largo é a mesma cor
-      // do Scaffold, então nada muda.
-      decoration: BoxDecoration(
-        color: colors.bg,
-        border: Border(right: BorderSide(color: colors.border)),
-      ),
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          _NavItem(
-            icon: Icons.tune,
-            label: context.t.settings.page.nav.general,
-            selected: selected == _Category.general,
-            onTap: () => onSelect(_Category.general),
-          ),
-          _NavItem(
-            icon: Icons.palette_outlined,
-            label: context.t.settings.page.nav.appearance,
-            selected: selected == _Category.appearance,
-            onTap: () => onSelect(_Category.appearance),
-          ),
-          // Terminal / Languages / Automations: motor-local, ocultos no mobile.
-          if (!isMobilePlatform) ...[
-            _NavItem(
-              icon: Icons.terminal_outlined,
-              label: context.t.settings.page.nav.terminal,
-              selected: selected == _Category.terminal,
-              onTap: () => onSelect(_Category.terminal),
-            ),
-            _NavItem(
-              icon: Icons.code,
-              label: context.t.settings.page.nav.language,
-              selected: selected == _Category.languages,
-              onTap: () => onSelect(_Category.languages),
-            ),
-            _NavItem(
-              icon: Icons.auto_awesome_outlined,
-              label: context.t.settings.page.nav.automations,
-              selected: selected == _Category.automations,
-              onTap: () => onSelect(_Category.automations),
-            ),
-            _NavItem(
-              icon: Icons.code,
-              label: context.t.settings.page.nav.claudeCode,
-              selected: selected == _Category.claudeCode,
-              onTap: () => onSelect(_Category.claudeCode),
-            ),
-          ],
-          _NavItem(
-            icon: Icons.keyboard_outlined,
-            label: context.t.settings.page.nav.shortcuts,
-            selected: selected == _Category.shortcuts,
-            onTap: () => onSelect(_Category.shortcuts),
-          ),
-          _NavItem(
-            icon: Icons.notifications_outlined,
-            label: context.t.settings.page.nav.notifications,
-            selected: selected == _Category.notifications,
-            onTap: () => onSelect(_Category.notifications),
-          ),
-          // Hosts remotos (plano 58, SSH) — sempre disponível, não depende do
-          // ambiente remote-pi (extensão/supervisor).
-          _NavItem(
-            icon: Icons.cloud_outlined,
-            label: context.t.settings.page.nav.remoteHosts,
-            selected: selected == _Category.remoteHosts,
-            onTap: () => onSelect(_Category.remoteHosts),
-          ),
-          // Empurra a versão pro rodapé do nav (identificação visual da build).
-          const Spacer(),
-          const _VersionFooter(),
-        ],
-      ),
-    );
-  }
-}
-
-/// Rodapé do nav: "Cockpit `version`" no canto inferior esquerdo, pra
-/// identificar visualmente qual build está rodando. A versão vem do
-/// `PackageInfo` (mesma fonte do self-update), carregada de forma assíncrona.
-class _VersionFooter extends StatefulWidget {
-  const _VersionFooter();
-
-  @override
-  State<_VersionFooter> createState() => _VersionFooterState();
-}
-
-class _VersionFooterState extends State<_VersionFooter> {
-  String? _version;
-
-  @override
-  void initState() {
-    super.initState();
-    PackageInfo.fromPlatform().then((info) {
-      if (mounted) setState(() => _version = info.version);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          _version == null ? 'GSH Desktop' : 'GSH Desktop $_version',
-          style: context.typo.label.copyWith(color: colors.text4),
-        ),
-      ),
-    );
-  }
-}
-
-class _NavItem extends StatelessWidget {
-  const _NavItem({
-    required this.icon,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-  final IconData icon;
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
-      child: HoverTap(
-        color: selected ? colors.panel2 : Colors.transparent,
-        borderRadius: BorderRadius.circular(7),
-        onTap: onTap,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              size: 16,
-              color: selected ? colors.accentText : colors.text3,
-            ),
-            const SizedBox(width: 10),
-            Text(
-              label,
-              style: context.typo.body.copyWith(
-                fontSize: 13.5,
-                color: selected ? colors.text : colors.text2,
-                fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 // ---------------------------------------------------------------------------
 // General
 // ---------------------------------------------------------------------------
-class _GeneralPanel extends StatelessWidget {
-  const _GeneralPanel();
+/// Seções próprias do GSH no fim da aba Geral (terminal do GSH, editor,
+/// atualizações, idioma, diagnóstico), no estilo plano das abas novas.
+class _GeneralGshSections extends StatelessWidget {
+  const _GeneralGshSections();
 
   @override
   Widget build(BuildContext context) {
@@ -420,125 +271,85 @@ class _GeneralPanel extends StatelessWidget {
     final neovim = context.watch<NeovimSettingsViewModel>();
     final tr = context.t.settings.page.general;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(28, 24, 28, 40),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 680),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Cockpit / Updates: motor-local + self-update = desktop.
-              // No mobile some tudo; sobram Idioma/Storage/Diagnostics.
-              if (!isMobilePlatform) ...[
-                _Section(
-                  label: 'GSH Desktop',
-                  child: _Card(
-                    children: [
-                      _Row(
-                        title: tr.showCockpitTitle,
-                        description: tr.showCockpitDesc,
-                        trailing: Switch(
-                          value: s.showCockpit,
-                          onChanged: controller.setShowCockpit,
-                        ),
-                      ),
-                      _Row(
-                        title: tr.developerModeTitle,
-                        description: tr.developerModeDesc,
-                        trailing: Switch(
-                          value: s.developerMode,
-                          onChanged: controller.setDeveloperMode,
-                        ),
-                      ),
-                      _Row(
-                        title: tr.launchAtStartupTitle,
-                        description: tr.launchAtStartupDesc,
-                        trailing: Switch(
-                          value: s.launchAtStartup,
-                          onChanged: controller.setLaunchAtStartup,
-                        ),
-                      ),
-                    ],
-                  ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // GSH / Updates: motor-local + self-update = desktop.
+        // No mobile some tudo; sobram Idioma/Diagnóstico.
+        if (!isMobilePlatform) ...[
+          SettingsSection(
+            title: 'GSH Desktop',
+            rows: [
+              SettingsRow(
+                title: tr.showCockpitTitle,
+                description: tr.showCockpitDesc,
+                trailing: Switch(
+                  value: s.showCockpit,
+                  onChanged: controller.setShowCockpit,
                 ),
-                _Section(
-                  label: tr.sectionEditor,
-                  child: _Card(
-                    children: [
-                      _Row(
-                        title: tr.editorEngineTitle,
-                        description: neovim.checking
-                            ? tr.neovimChecking
-                            : neovim.executable ?? tr.neovimNotFound,
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            AppTooltip(
-                              message: tr.neovimRefresh,
-                              child: IconButton.outline(
-                                onPressed: neovim.checking
-                                    ? null
-                                    : () => neovim.check(refresh: true),
-                                icon: neovim.checking
-                                    ? const CircularProgressIndicator(size: 14)
-                                    : const Icon(Icons.refresh, size: 16),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            _FileEditorEngineDropdown(
-                              value: s.fileEditorEngine,
-                              neovimAvailable: neovim.available,
-                              onChanged: controller.setFileEditorEngine,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                _Section(
-                  label: tr.sectionUpdates,
-                  child: _Card(
-                    children: [
-                      _Row(
-                        title: tr.checkUpdatesTitle,
-                        description: tr.checkUpdatesDesc,
-                        trailing: _UpdateCheckDropdown(
-                          value: s.updateCheckFrequency,
-                          onChanged: controller.setUpdateCheckFrequency,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-              _Section(
-                label: context.t.settings.language.title,
-                child: _Card(
+              ),
+              SettingsRow(
+                title: tr.editorEngineTitle,
+                description: neovim.checking
+                    ? tr.neovimChecking
+                    : neovim.executable ?? tr.neovimNotFound,
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    _Row(
-                      title: context.t.settings.language.title,
-                      trailing: _LocaleDropdown(
-                        value: s.locale,
-                        onChanged: controller.setLocale,
+                    AppTooltip(
+                      message: tr.neovimRefresh,
+                      child: IconButton.outline(
+                        onPressed: neovim.checking
+                            ? null
+                            : () => neovim.check(refresh: true),
+                        icon: neovim.checking
+                            ? const CircularProgressIndicator(size: 14)
+                            : const Icon(Icons.refresh, size: 16),
                       ),
+                    ),
+                    const SizedBox(width: 8),
+                    _FileEditorEngineDropdown(
+                      value: s.fileEditorEngine,
+                      neovimAvailable: neovim.available,
+                      onChanged: controller.setFileEditorEngine,
                     ),
                   ],
                 ),
               ),
-              // Local de Armazenamento: escolher pasta/relocar não se aplica ao
-              // mobile (sandbox do app, sem pastas do usuário como no desktop).
-              if (!isMobilePlatform) const _StorageSection(),
-              const _DiagnosticsSection(),
+              SettingsRow(
+                title: tr.checkUpdatesTitle,
+                description: tr.checkUpdatesDesc,
+                trailing: _UpdateCheckDropdown(
+                  value: s.updateCheckFrequency,
+                  onChanged: controller.setUpdateCheckFrequency,
+                ),
+              ),
+              SettingsRow(
+                title: context.t.settings.language.title,
+                trailing: _LocaleDropdown(
+                  value: s.locale,
+                  onChanged: controller.setLocale,
+                ),
+              ),
             ],
           ),
-        ),
-      ),
+        ] else
+          SettingsSection(
+            title: context.t.settings.language.title,
+            rows: [
+              SettingsRow(
+                title: context.t.settings.language.title,
+                trailing: _LocaleDropdown(
+                  value: s.locale,
+                  onChanged: controller.setLocale,
+                ),
+              ),
+            ],
+          ),
+        const _DiagnosticsSection(),
+      ],
     );
   }
-
-  /// Erro ao tentar desligar agentes com uma aba de agente aberta.
 }
 
 // ---------------------------------------------------------------------------
@@ -802,13 +613,6 @@ class _HarnessIcon extends StatelessWidget {
   }
 }
 
-// Storage (General) — pasta de dados escolhível + reset
-// ---------------------------------------------------------------------------
-
-/// Seção "Storage": mostra onde o Cockpit guarda seu estado, deixa o usuário
-/// apontar pra outra pasta (ex.: um diretório sincronizado) e oferece um reset
-/// de fábrica. Trocar a pasta ou resetar **exige reiniciar** — a UI informa e
-/// oferece fechar o app na hora.
 /// Diagnóstico: acesso ao log e caminho para reportar um problema sem depender
 /// de um erro estar acontecendo agora — é como o usuário abre issue de um bug
 /// que já passou (o log do dia continua lá).
@@ -819,36 +623,34 @@ class _DiagnosticsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final dir = DiagnosticsLog.instance.directory;
     final tr = context.t.settings.page.diagnostics;
-    return _Section(
-      label: tr.sectionTitle,
-      child: _Card(
-        children: [
-          _Row(
-            title: tr.logFileTitle,
-            description: tr.logFileDesc(
-              days: DiagnosticsLog.retentionDays,
-              path: dir?.path ?? tr.unavailable,
-            ),
-            trailing: OutlineButton(
-              onPressed: dir == null ? null : () => _revealFolder(dir.path),
-              child: Text(tr.reveal),
-            ),
+    return SettingsSection(
+      title: tr.sectionTitle,
+      rows: [
+        SettingsRow(
+          title: tr.logFileTitle,
+          description: tr.logFileDesc(
+            days: DiagnosticsLog.retentionDays,
+            path: dir?.path ?? tr.unavailable,
           ),
-          _Row(
-            title: tr.reportTitle,
-            description: tr.reportDesc,
-            trailing: OutlineButton(
-              onPressed: () => showErrorReportDialog(
-                context,
-                title: tr.reportDialogTitle,
-                error: tr.reportDialogError,
-                description: tr.reportDialogDescription,
-              ),
-              child: Text(tr.reportButton),
-            ),
+          trailing: OutlineButton(
+            onPressed: dir == null ? null : () => _revealFolder(dir.path),
+            child: Text(tr.reveal),
           ),
-        ],
-      ),
+        ),
+        SettingsRow(
+          title: tr.reportTitle,
+          description: tr.reportDesc,
+          trailing: OutlineButton(
+            onPressed: () => showErrorReportDialog(
+              context,
+              title: tr.reportDialogTitle,
+              error: tr.reportDialogError,
+              description: tr.reportDialogDescription,
+            ),
+            child: Text(tr.reportButton),
+          ),
+        ),
+      ],
     );
   }
 
@@ -870,217 +672,6 @@ class _DiagnosticsSection extends StatelessWidget {
     } on ProcessException catch (e) {
       DiagnosticsLog.instance.logError('settings', e, null);
     }
-  }
-}
-
-class _StorageSection extends StatefulWidget {
-  const _StorageSection();
-
-  @override
-  State<_StorageSection> createState() => _StorageSectionState();
-}
-
-class _StorageSectionState extends State<_StorageSection> {
-  String? _root; // raiz efetiva (pasta que o usuário "vê")
-  bool _custom = false;
-  bool _loading = true;
-  bool _busy = false; // durante copy/pick, evita cliques repetidos
-
-  @override
-  void initState() {
-    super.initState();
-    _load();
-  }
-
-  Future<void> _load() async {
-    final root = await StorageLocation.effectiveRoot();
-    final custom = await StorageLocation.isCustom();
-    if (!mounted) return;
-    setState(() {
-      _root = root;
-      _custom = custom;
-      _loading = false;
-    });
-  }
-
-  Future<void> _changeFolder() async {
-    if (_busy) return;
-    final tr = context.t.settings.page.storage;
-    final picked = await NativeFolderPicker.pick(
-      dialogTitle: tr.chooseFolderDialogTitle,
-      initialDirectory: _root, // abre na pasta atual do Cockpit
-    );
-    if (picked == null || !mounted) return;
-    setState(() => _busy = true);
-    // Copia os dados atuais pra nova pasta (se estiver vazia) — evita a
-    // surpresa de "meus projetos sumiram" após o restart.
-    await StorageLocation.migrateStateTo(picked);
-    await StorageLocation.setOverrideRoot(picked);
-    if (!mounted) return;
-    setState(() => _busy = false);
-    await _promptRestart(tr.restartChangeFolderMessage(path: picked));
-  }
-
-  Future<void> _useDefault() async {
-    if (_busy) return;
-    await StorageLocation.setOverrideRoot(null);
-    if (!mounted) return;
-    await _promptRestart(
-      context.t.settings.page.storage.restartUseDefaultMessage,
-    );
-  }
-
-  Future<void> _reset() async {
-    final confirmed = await _confirmReset();
-    if (confirmed != true || !mounted) return;
-    await StorageLocation.resetAll();
-    if (!mounted) return;
-    await _promptRestart(
-      context.t.settings.page.storage.restartResetMessage,
-      quitOnly: true,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final tr = context.t.settings.page.storage;
-    return _Section(
-      label: tr.sectionTitle,
-      child: _Card(
-        children: [
-          _Row(
-            title: tr.locationTitle,
-            description: _loading
-                ? context.t.common.loading
-                : tr.locationDesc(root: _root ?? '—'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (_custom) ...[
-                  GhostButton(
-                    onPressed: _loading || _busy ? null : _useDefault,
-                    child: Text(tr.useDefault),
-                  ),
-                  const SizedBox(width: 8),
-                ],
-                OutlineButton(
-                  onPressed: _loading || _busy ? null : _changeFolder,
-                  child: Text(_busy ? tr.working : tr.change),
-                ),
-              ],
-            ),
-          ),
-          _Row(
-            title: tr.resetTitle,
-            description: tr.resetDesc,
-            trailing: DestructiveButton(
-              onPressed: _loading ? null : _reset,
-              child: Text(
-                tr.resetButton,
-                style: TextStyle(color: colors.error),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// Confirmação destrutiva do reset.
-  Future<bool?> _confirmReset() {
-    return showDialog<bool>(
-      context: context,
-      barrierColor: context.colors.scrim,
-      builder: (context) {
-        final colors = context.colors;
-        final tr = context.t.settings.page.storage;
-        return AlertDialog(
-          title: Text(
-            tr.resetDialogTitle,
-            style: context.typo.title.copyWith(
-              fontSize: 15,
-              color: colors.text,
-            ),
-          ),
-          content: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 380),
-            child: Text(
-              tr.resetDialogContent,
-              style: context.typo.body.copyWith(
-                fontSize: 13.5,
-                color: colors.text2,
-              ),
-            ),
-          ),
-          actions: [
-            GhostButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: Text(context.t.common.cancel),
-            ),
-            DestructiveButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              child: Text(
-                tr.resetConfirm,
-                style: TextStyle(color: colors.error),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  /// Informa que a mudança só vale no próximo boot e oferece fechar agora.
-  /// [quitOnly] esconde o "Later" (reset já apagou tudo — continuar seria
-  /// esquisito), mas nunca força o fechamento sem o clique do usuário.
-  Future<void> _promptRestart(String message, {bool quitOnly = false}) {
-    return showDialog<void>(
-      context: context,
-      barrierColor: context.colors.scrim,
-      builder: (context) {
-        final colors = context.colors;
-        final tr = context.t.settings.page.storage;
-        return AlertDialog(
-          title: Text(
-            tr.restartRequiredTitle,
-            style: context.typo.title.copyWith(
-              fontSize: 15,
-              color: colors.text,
-            ),
-          ),
-          content: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 380),
-            child: Text(
-              message,
-              style: context.typo.body.copyWith(
-                fontSize: 13.5,
-                color: colors.text2,
-              ),
-            ),
-          ),
-          actions: [
-            if (!quitOnly)
-              GhostButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(tr.later),
-              ),
-            PrimaryButton(
-              // Encerra abrupto de propósito: descarta escritas pendentes nas
-              // boxes antigas (já migradas/apagadas), sem recriar arquivos no
-              // caminho velho via o save de window_state no onWindowClose.
-              // Marca saída limpa antes: `exit()` não dispara o
-              // `onExitRequested`, e sem isso o próximo boot acusaria crash.
-              onPressed: () {
-                DiagnosticsLog.instance.markCleanExit();
-                exit(0);
-              },
-              child: Text(tr.quitCockpit),
-            ),
-          ],
-        );
-      },
-    );
   }
 }
 
@@ -1431,7 +1022,7 @@ class _AppearancePanel extends StatelessWidget {
                     _Row(
                       title: tr.interfaceFontTitle,
                       description: tr.interfaceFontDesc,
-                      trailing: _FontField(
+                      trailing: SettingsFontField(
                         value: s.interfaceFont,
                         hint: 'Montserrat · Hanken',
                         onChanged: controller.setInterfaceFont,
@@ -1450,7 +1041,7 @@ class _AppearancePanel extends StatelessWidget {
                       _Row(
                         title: tr.codeFontTitle,
                         description: tr.codeFontDesc,
-                        trailing: _FontField(
+                        trailing: SettingsFontField(
                           value: s.codeFont,
                           hint: 'JetBrains Mono',
                           monospacedOnly: true,
@@ -1470,7 +1061,7 @@ class _AppearancePanel extends StatelessWidget {
                     _Row(
                       title: tr.terminalFontTitle,
                       description: tr.terminalFontDesc,
-                      trailing: _FontField(
+                      trailing: SettingsFontField(
                         value: s.terminalFont,
                         hint: 'Menlo · monospace',
                         monospacedOnly: true,
@@ -2570,7 +2161,7 @@ class _ThemeFileRow extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           OutlineButton(
-            onPressed: () => _import(context),
+            onPressed: () => importThemeWithPicker(context),
             child: Text(tr.importTheme),
           ),
           const SizedBox(width: 8),
@@ -2590,29 +2181,6 @@ class _ThemeFileRow extends StatelessWidget {
     );
   }
 
-  Future<void> _import(BuildContext context) async {
-    final controller = context.read<SettingsController>();
-    final tr = context.t.settings.page.appearance;
-    final picked = await FilePicker.platform.pickFiles(
-      dialogTitle: tr.importThemeDialog,
-      type: FileType.custom,
-      allowedExtensions: const ['json'],
-    );
-    final path = picked?.files.singleOrNull?.path;
-    if (path == null) return;
-
-    final result = await controller.importTheme(File(path));
-    if (!context.mounted) return;
-    result.fold(
-      (theme) => _toast(context, tr.themeImported(name: theme.name)),
-      (error) => _toast(
-        context,
-        themeStoreErrorMessage(context, error),
-        isError: true,
-      ),
-    );
-  }
-
   Future<void> _export(BuildContext context) async {
     final controller = context.read<SettingsController>();
     final tr = context.t.settings.page.appearance;
@@ -2627,8 +2195,8 @@ class _ThemeFileRow extends StatelessWidget {
     final result = await controller.exportActiveTheme(path);
     if (!context.mounted) return;
     result.fold(
-      (_) => _toast(context, tr.themeExported),
-      (error) => _toast(
+      (_) => showSettingsToast(context, tr.themeExported),
+      (error) => showSettingsToast(
         context,
         themeStoreErrorMessage(context, error),
         isError: true,
@@ -2642,42 +2210,11 @@ class _ThemeFileRow extends StatelessWidget {
     final result = await controller.deleteTheme(controller.activeTheme.id);
     if (!context.mounted) return;
     result.fold(
-      (_) => _toast(context, tr.themeDeleted),
-      (error) => _toast(
+      (_) => showSettingsToast(context, tr.themeDeleted),
+      (error) => showSettingsToast(
         context,
         themeStoreErrorMessage(context, error),
         isError: true,
-      ),
-    );
-  }
-
-  void _toast(BuildContext context, String message, {bool isError = false}) {
-    final colors = context.colors;
-    showToast(
-      context: context,
-      location: ToastLocation.bottomRight,
-      builder: (context, overlay) => SurfaceCard(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                isError ? Icons.error_outline : Icons.check_circle_outline,
-                size: 18,
-                color: isError ? colors.error : colors.ok,
-              ),
-              const SizedBox(width: 10),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 360),
-                child: Text(
-                  message,
-                  style: context.typo.label.copyWith(color: colors.text),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -2769,90 +2306,6 @@ class _UpdateCheckDropdown extends StatelessWidget {
         );
         if (picked != null) onChanged(picked);
       },
-    );
-  }
-}
-
-/// Campo de família de fonte (texto livre; vazio = padrão).
-/// Seleção de família de fonte.
-///
-/// Substituiu um campo de texto livre que falhava em silêncio: nome com erro de
-/// digitação ou fonte não instalada caíam no fallback sem nenhum aviso. Agora a
-/// escolha sai de uma lista do que a máquina realmente tem (ver
-/// [showFontPickerDialog]), o nome escolhido é desenhado **na própria fonte**, e
-/// uma família que não resolve é sinalizada aqui no chip.
-class _FontField extends StatelessWidget {
-  const _FontField({
-    required this.value,
-    required this.hint,
-    required this.onChanged,
-    this.monospacedOnly = false,
-  });
-
-  final String? value;
-
-  /// Descrição do padrão do design, mostrada quando não há escolha.
-  final String hint;
-  final ValueChanged<String?> onChanged;
-  final bool monospacedOnly;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final family = value;
-    final missing = family != null && !isFontAvailable(family);
-
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (missing) ...[
-          AppTooltip(
-            message: context.t.settings.page.appearance.fontMissing,
-            child: Icon(Icons.warning_amber, size: 15, color: colors.warn),
-          ),
-          const SizedBox(width: 6),
-        ],
-        HoverTap(
-          color: colors.panel3,
-          borderRadius: BorderRadius.circular(7),
-          padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 8),
-          onTap: () async {
-            final choice = await showFontPickerDialog(
-              context,
-              current: family,
-              defaultLabel: hint,
-              monospacedOnly: monospacedOnly,
-            );
-            // Dialog dispensado devolve null; só uma escolha real muda algo.
-            if (choice != null) onChanged(choice.family);
-          },
-          child: SizedBox(
-            width: 218,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    family ?? hint,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: family == null
-                        ? context.typo.body.copyWith(
-                            fontSize: 13,
-                            color: colors.text3,
-                          )
-                        : TextStyle(
-                            fontFamily: family,
-                            fontSize: 13,
-                            color: colors.text,
-                          ),
-                  ),
-                ),
-                Icon(Icons.keyboard_arrow_down, size: 16, color: colors.text3),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

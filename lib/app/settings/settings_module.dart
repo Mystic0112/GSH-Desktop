@@ -1,4 +1,7 @@
 import 'package:cockpit/app/cockpit/ui/remote/remote_hosts_controller.dart';
+import 'package:cockpit/app/settings/data/claude_cli_info_source.dart';
+import 'package:cockpit/app/settings/domain/claude_info.dart';
+import 'package:cockpit/app/settings/ui/claude_info_viewmodel.dart';
 import 'package:cockpit/app/settings/ui/notifications_viewmodel.dart';
 import 'package:cockpit/app/settings/ui/neovim_settings_viewmodel.dart';
 import 'package:cockpit/app/settings/ui/settings_page.dart';
@@ -12,32 +15,39 @@ import 'package:flutter_modular/flutter_modular.dart';
 Module buildSettingsModule() => createModule(
   path: '/settings',
   register: (c) {
-    c.route(
-      '/',
-      transition: TransitionType.fade,
-      provide: (s) => s
-        // Hosts remotos (plano 58): singleton do cockpit_module (já carregado
-        // — cockpit é a rota inicial). Observado aqui pela aba "Remote hosts"
-        // (a MESMA instância que a rail). Usa addListenable com **dispose
-        // no-op**: `addChangeNotifier` daria `vm.dispose()` no pop desta rota
-        // e mataria o singleton compartilhado ("used after disposed" ao
-        // reabrir Settings ou no próximo rebuild da rail). O dono é o
-        // cockpit_module (rota base, nunca sai da pilha).
-        ..addListenable<RemoteHostsController>(
-          () => inject<RemoteHostsController>(),
-          (vm) => vm,
-          (_) {},
-        )
-        // Resolve SystemPermissions do core upward (page-scoped enxerga core).
-        ..addChangeNotifier<NotificationsViewModel>(NotificationsViewModel.new)
-        ..addChangeNotifier<NeovimSettingsViewModel>(
-          NeovimSettingsViewModel.new,
+    c
+      // CLI `claude` + `~/.claude`: abas Conta, Uso, Memória, Skills,
+      // Conectores e Plugins.
+      ..addLazySingleton<ClaudeInfoSource>(ClaudeCliInfoSource.new)
+      ..route(
+        '/',
+        transition: TransitionType.fade,
+        provide: (s) => s
+          // Hosts remotos (plano 58): singleton do cockpit_module (já carregado
+          // — cockpit é a rota inicial). Observado aqui pela aba "Remote hosts"
+          // (a MESMA instância que a rail). Usa addListenable com **dispose
+          // no-op**: `addChangeNotifier` daria `vm.dispose()` no pop desta rota
+          // e mataria o singleton compartilhado ("used after disposed" ao
+          // reabrir Settings ou no próximo rebuild da rail). O dono é o
+          // cockpit_module (rota base, nunca sai da pilha).
+          ..addListenable<RemoteHostsController>(
+            () => inject<RemoteHostsController>(),
+            (vm) => vm,
+            (_) {},
+          )
+          // Resolve SystemPermissions do core upward (page-scoped enxerga core).
+          ..addChangeNotifier<NotificationsViewModel>(
+            NotificationsViewModel.new,
+          )
+          ..addChangeNotifier<NeovimSettingsViewModel>(
+            NeovimSettingsViewModel.new,
+          )
+          ..addChangeNotifier<ClaudeInfoViewModel>(ClaudeInfoViewModel.new),
+        child: (context, state) => SettingsPage(
+          initialTab: state.arguments is SettingsTab
+              ? state.arguments as SettingsTab
+              : null,
         ),
-      child: (context, state) => SettingsPage(
-        initialTab: state.arguments is SettingsTab
-            ? state.arguments as SettingsTab
-            : null,
-      ),
-    );
+      );
   },
 );

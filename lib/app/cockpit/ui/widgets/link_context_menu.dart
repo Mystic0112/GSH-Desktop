@@ -98,6 +98,7 @@ Future<void> openTerminalLink({
   String? resolvedFilePath,
   Uri? uri,
   void Function(String path, {int? line})? onOpenFile,
+  void Function(Uri uri)? onOpenUrl,
 }) async {
   if (filePath != null) {
     final target = _expandHome(resolvedFilePath ?? filePath);
@@ -109,6 +110,11 @@ Future<void> openTerminalLink({
     return;
   }
   if (uri != null) {
+    // Configurações → Claude Code → "Abrir links no navegador integrado".
+    if (onOpenUrl != null && (uri.scheme == 'http' || uri.scheme == 'https')) {
+      onOpenUrl(uri);
+      return;
+    }
     await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 }

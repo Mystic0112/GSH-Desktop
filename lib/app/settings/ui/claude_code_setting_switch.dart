@@ -14,6 +14,8 @@ class ClaudeCodeSettingSwitch extends StatefulWidget {
     required this.settingKey,
     required this.unsetValue,
     this.removeWhenDefault = false,
+    this.onValue = true,
+    this.offValue = false,
   });
 
   final String settingKey;
@@ -22,6 +24,12 @@ class ClaudeCodeSettingSwitch extends StatefulWidget {
   /// Voltar ao default apaga a chave em vez de gravar o valor. Para chaves
   /// em que o CLI distingue "nunca escolhido" de "escolhido", deixe `false`.
   final bool removeWhenDefault;
+
+  /// Valor gravado com o switch ligado / desligado. Ex.: modo estrito do
+  /// sandbox liga gravando `false`; flag de `env` liga gravando `'1'`.
+  /// [offValue] `null` = desligar remove a chave.
+  final Object onValue;
+  final Object? offValue;
 
   @override
   State<ClaudeCodeSettingSwitch> createState() =>
@@ -35,8 +43,15 @@ class _ClaudeCodeSettingSwitchState extends State<ClaudeCodeSettingSwitch> {
   @override
   void initState() {
     super.initState();
-    _settings.getBool(widget.settingKey).then((on) {
-      if (mounted) setState(() => _on = on ?? widget.unsetValue);
+    _settings.getValue(widget.settingKey).then((v) {
+      if (!mounted) return;
+      setState(
+        () => _on = v == widget.onValue
+            ? true
+            : v != null && v == widget.offValue
+            ? false
+            : widget.unsetValue,
+      );
     });
   }
 
@@ -44,8 +59,10 @@ class _ClaudeCodeSettingSwitchState extends State<ClaudeCodeSettingSwitch> {
     setState(() => _on = on);
     final value = widget.removeWhenDefault && on == widget.unsetValue
         ? null
-        : on;
-    final result = await _settings.setBool(widget.settingKey, value);
+        : on
+        ? widget.onValue
+        : widget.offValue;
+    final result = await _settings.setValue(widget.settingKey, value);
     if (!mounted) return;
     if (result case Failure(:final error)) {
       setState(() => _on = !on);

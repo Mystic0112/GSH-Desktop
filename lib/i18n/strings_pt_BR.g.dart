@@ -1506,6 +1506,21 @@ class _Translations$settings$page$pt_BR extends Translations$settings$page$en {
 	@override late final _Translations$settings$page$languages$pt_BR languages = _Translations$settings$page$languages$pt_BR._(_root);
 	@override late final _Translations$settings$page$automations$pt_BR automations = _Translations$settings$page$automations$pt_BR._(_root);
 	@override late final _Translations$settings$page$claudeCode$pt_BR claudeCode = _Translations$settings$page$claudeCode$pt_BR._(_root);
+	@override late final _Translations$settings$page$placeholder$pt_BR placeholder = _Translations$settings$page$placeholder$pt_BR._(_root);
+	@override late final _Translations$settings$page$claude$pt_BR claude = _Translations$settings$page$claude$pt_BR._(_root);
+	@override late final _Translations$settings$page$account$pt_BR account = _Translations$settings$page$account$pt_BR._(_root);
+	@override late final _Translations$settings$page$usage$pt_BR usage = _Translations$settings$page$usage$pt_BR._(_root);
+	@override late final _Translations$settings$page$memory$pt_BR memory = _Translations$settings$page$memory$pt_BR._(_root);
+	@override late final _Translations$settings$page$skills$pt_BR skills = _Translations$settings$page$skills$pt_BR._(_root);
+	@override late final _Translations$settings$page$connectors$pt_BR connectors = _Translations$settings$page$connectors$pt_BR._(_root);
+	@override late final _Translations$settings$page$plugins$pt_BR plugins = _Translations$settings$page$plugins$pt_BR._(_root);
+	@override late final _Translations$settings$page$developer$pt_BR developer = _Translations$settings$page$developer$pt_BR._(_root);
+	@override late final _Translations$settings$page$system$pt_BR system = _Translations$settings$page$system$pt_BR._(_root);
+	@override late final _Translations$settings$page$catalog$pt_BR catalog = _Translations$settings$page$catalog$pt_BR._(_root);
+	@override late final _Translations$settings$page$generalClaude$pt_BR generalClaude = _Translations$settings$page$generalClaude$pt_BR._(_root);
+	@override late final _Translations$settings$page$privacy$pt_BR privacy = _Translations$settings$page$privacy$pt_BR._(_root);
+	@override late final _Translations$settings$page$resources$pt_BR resources = _Translations$settings$page$resources$pt_BR._(_root);
+	@override late final _Translations$settings$page$designSystems$pt_BR designSystems = _Translations$settings$page$designSystems$pt_BR._(_root);
 }
 
 // Path: settings.remoteHosts
@@ -1829,6 +1844,22 @@ class _Translations$settings$page$nav$pt_BR extends Translations$settings$page$n
 	@override String get automations => 'Automações';
 	@override String get remoteHosts => 'Hosts remotos';
 	@override String get claudeCode => 'Claude Code';
+	@override String get search => 'Procurar';
+	@override String get account => 'Conta';
+	@override String get privacy => 'Privacidade';
+	@override String get usage => 'Uso';
+	@override String get resources => 'Recursos';
+	@override String get memory => 'Memória';
+	@override String get designSystems => 'Design systems';
+	@override String get cowork => 'Cowork';
+	@override String get system => 'Sistema';
+	@override String get extensions => 'Extensões';
+	@override String get developer => 'Desenvolvedor';
+	@override String get skills => 'Skills';
+	@override String get connectors => 'Conectores';
+	@override String get plugins => 'Plugins';
+	@override String get apiKeys => 'Chaves de API';
+	@override late final _Translations$settings$page$nav$groups$pt_BR groups = _Translations$settings$page$nav$groups$pt_BR._(_root);
 }
 
 // Path: settings.page.general
@@ -2107,6 +2138,346 @@ class _Translations$settings$page$claudeCode$pt_BR extends Translations$settings
 	@override String get remoteControlTitle => 'Conectar novas sessões ao Remote Control';
 	@override String get remoteControlDesc => 'Toda sessão do claude que você iniciar num terminal se conecta ao Remote Control, para continuar no celular ou em claude.ai/code. Fica no ~/.claude/settings.json (remoteControlAtStartup). Exige login claude.ai (Pro, Max, Team ou Enterprise).';
 	@override String saveFailed({required Object detail}) => 'Não consegui salvar: ${detail}';
+	@override String get sectionSessions => 'Sessões';
+	@override String get promptSuggestionsTitle => 'Sugestões de prompts';
+	@override String get promptSuggestionsDesc => 'Mostrar uma sugestão de próximo prompt depois que o Claude responder. As sugestões consomem um pouco do seu uso.';
+	@override String get outputStyleTitle => 'Estilo de saída';
+	@override String get outputStyleDesc => 'Como o Claude estrutura suas respostas nas sessões do Code. Aplica-se a novas sessões.';
+	@override String get outputStyleDefault => 'Padrão';
+	@override String get sandboxTitle => 'Sandbox local';
+	@override String get sandboxDesc => 'Executa os comandos bash do Claude Code num sandbox isolado. Aplica-se a novas sessões.';
+	@override String get sandboxStrictTitle => 'Modo sandbox estrito';
+	@override String get sandboxStrictDesc => 'Bloqueia comandos que não podem ser executados dentro do sandbox em vez de executá-los fora dele.';
+	@override String get sectionBrowser => 'Navegador';
+	@override String get linksInAppTitle => 'Abrir links no navegador integrado';
+	@override String get linksInAppDesc => 'Links clicados nos terminais abrem numa aba de navegador do GSH em vez do seu navegador padrão.';
+}
+
+// Path: settings.page.placeholder
+class _Translations$settings$page$placeholder$pt_BR extends Translations$settings$page$placeholder$en {
+	_Translations$settings$page$placeholder$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get cowork1 => 'O Cowork é um recurso do Claude Desktop (tarefas que rodam neste computador com arquivos locais, navegador e MCPs).';
+	@override String get cowork2 => 'No GSH, o equivalente é o chat com o Claude num workspace e a Fazenda, onde os loops de agente rodam em terminais.';
+	@override String get extensionsDesc => 'Permitir que o Claude interaja diretamente com aplicativos, dados e ferramentas no seu computador.';
+	@override String get extensionsEmpty => 'Nenhuma extensão instalada';
+	@override String get extensions => 'Extensões .MCPB/.DXT são do Claude Desktop. No GSH, os servidores MCP ficam em Conectores e Desenvolvedor.';
+}
+
+// Path: settings.page.claude
+class _Translations$settings$page$claude$pt_BR extends Translations$settings$page$claude$en {
+	_Translations$settings$page$claude$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get refresh => 'Atualizar';
+	@override String get loading => 'Carregando…';
+	@override String get terminalTitle => 'Abrir um terminal';
+	@override String get noWorkspace => 'Abra um workspace local antes: isto roda a CLI `claude` num terminal dele, para você acompanhar.';
+	@override String get months => 'jan.|fev.|mar.|abr.|mai.|jun.|jul.|ago.|set.|out.|nov.|dez.';
+	@override String get weekdays => 'seg.|ter.|qua.|qui.|sex.|sáb.|dom.';
+	@override String dateShort({required Object day, required Object month}) => '${day} de ${month}';
+	@override late final _Translations$settings$page$claude$error$pt_BR error = _Translations$settings$page$claude$error$pt_BR._(_root);
+}
+
+// Path: settings.page.account
+class _Translations$settings$page$account$pt_BR extends Translations$settings$page$account$en {
+	_Translations$settings$page$account$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Conta';
+	@override String get profile => 'Perfil';
+	@override String get instructions => 'Instruções para o Claude';
+	@override String get instructionsDesc => 'Gravado em ~/.claude/CLAUDE.md: o Claude Code carrega em toda sessão deste computador.';
+	@override String get instructionsHint => 'ex.: manter explicações breves e diretas';
+	@override String get loggedIn => 'Conectado';
+	@override String get loggedOut => 'Desconectado';
+	@override String get loggedInDesc => 'O Claude Code deste computador usa esta conta.';
+	@override String get loggedOutDesc => 'Entre para usar sua assinatura do Claude no Claude Code.';
+	@override String get login => 'Entrar';
+	@override String get logout => 'Sair';
+	@override String get logoutConfirmTitle => 'Sair do Claude Code?';
+	@override String get logoutConfirmMessage => 'Roda `claude auth logout`. As sessões deste computador deixam de usar sua assinatura até você entrar de novo.';
+	@override String get email => 'E-mail';
+	@override String get organization => 'Organização';
+	@override String get orgId => 'ID da organização';
+	@override String get plan => 'Plano';
+	@override String get method => 'Método de login';
+}
+
+// Path: settings.page.usage
+class _Translations$settings$page$usage$pt_BR extends Translations$settings$page$usage$en {
+	_Translations$settings$page$usage$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Seus limites de uso';
+	@override String get weeklyTitle => 'Limites semanais';
+	@override String get unavailable => 'Limites de plano não se aplicam a este login (chave de API ou provedor terceiro).';
+	@override String get windowSession => 'Sessão atual';
+	@override String get windowWeekly => 'Todos os modelos';
+	@override String resetsIn({required Object when}) => 'Reinicia em ${when}';
+	@override String resetsAt({required Object when}) => 'Reinicia ${when}';
+	@override String percentUsed({required Object pct}) => '${pct}% usado';
+	@override String updated({required Object when}) => 'Última atualização: ${when}';
+	@override String get justNow => 'há menos de um minuto';
+	@override String minutesAgo({required Object n}) => 'há ${n} min';
+	@override String minutes({required Object m}) => '${m} min';
+	@override String hoursMinutes({required Object h, required Object m}) => '${h} h ${m} min';
+	@override late final _Translations$settings$page$usage$plans$pt_BR plans = _Translations$settings$page$usage$plans$pt_BR._(_root);
+}
+
+// Path: settings.page.memory
+class _Translations$settings$page$memory$pt_BR extends Translations$settings$page$memory$en {
+	_Translations$settings$page$memory$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Memória';
+	@override String get intro => 'O que uma sessão do Claude Code no workspace ativo carrega: suas instruções e a memória que o próprio Claude grava. Clique para abrir o arquivo.';
+	@override String get instructionsTitle => 'Instruções';
+	@override String get autoTitle => 'Memória automática';
+	@override String get empty => 'Nenhum CLAUDE.md encontrado.';
+	@override String get autoEmpty => 'O Claude ainda não gravou memórias para este workspace.';
+	@override String get scopeUser => 'Usuário (todos os projetos)';
+	@override String get scopeProject => 'Projeto';
+	@override String updated({required Object when}) => 'Atualizado ${when}';
+}
+
+// Path: settings.page.skills
+class _Translations$settings$page$skills$pt_BR extends Translations$settings$page$skills$en {
+	_Translations$settings$page$skills$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get groupUser => 'Criado por você';
+	@override String get groupProject => 'Do projeto';
+	@override String get groupPlugins => 'Dos plugins';
+	@override String get byYou => 'por você';
+	@override String get byProject => 'do projeto';
+	@override String get empty => 'Nenhuma skill instalada.';
+}
+
+// Path: settings.page.connectors
+class _Translations$settings$page$connectors$pt_BR extends Translations$settings$page$connectors$en {
+	_Translations$settings$page$connectors$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get checking => 'Verificando cada servidor… pode levar alguns segundos.';
+	@override String get empty => 'Nenhum servidor MCP configurado.';
+	@override String get addServer => 'Adicionar servidor MCP';
+	@override String get colConnector => 'Conector';
+	@override String get colType => 'Tipo';
+	@override String get colStatus => 'Status';
+	@override String fromPlugin({required Object plugin}) => 'Fornecido pelo plugin ${plugin}';
+	@override String get typeWeb => 'Web';
+	@override String get typeLocal => 'Local';
+	@override String get originPlugin => 'Plugin';
+	@override String get link => 'Vincular';
+	@override String get discoverIntro => 'O diretório de conectores do claude.ai não tem API pública, então o GSH não o lista. Adicione qualquer servidor MCP aqui: o GSH roda `claude mcp add` num terminal.';
+	@override String get formName => 'Nome';
+	@override String get formType => 'Tipo';
+	@override String get formUrl => 'URL';
+	@override String get formCommand => 'Comando';
+	@override String get formScope => 'Escopo';
+	@override String get formScopeDesc => 'Usuário = todos os projetos; Local = só o projeto do terminal.';
+	@override String get scopeUser => 'Usuário';
+	@override String get scopeLocal => 'Local';
+	@override String get docs => 'Docs de MCP';
+	@override String get addInTerminal => 'Adicionar no terminal';
+	@override late final _Translations$settings$page$connectors$status$pt_BR status = _Translations$settings$page$connectors$status$pt_BR._(_root);
+}
+
+// Path: settings.page.plugins
+class _Translations$settings$page$plugins$pt_BR extends Translations$settings$page$plugins$en {
+	_Translations$settings$page$plugins$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get search => 'Pesquisar skills e plugins';
+	@override String get groupProject => 'Neste projeto';
+	@override String get groupMarketplaces => 'Dos marketplaces que você adicionou';
+	@override String get noWorkspace => 'Abra um workspace para ver os plugins habilitados nele.';
+	@override String get projectEmpty => 'Nenhum plugin habilitado no .claude/settings.json deste projeto.';
+	@override String get empty => 'Nenhum plugin instalado.';
+	@override String get disabled => 'Desabilitado';
+}
+
+// Path: settings.page.developer
+class _Translations$settings$page$developer$pt_BR extends Translations$settings$page$developer$en {
+	_Translations$settings$page$developer$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Desenvolvedor';
+	@override String get mcpTitle => 'Servidores MCP locais';
+	@override String get mcpDesc => 'Servidores MCP stdio que o Claude Code sobe neste computador. Eles ficam no ~/.claude.json.';
+	@override String get mcpEmpty => 'Nenhum servidor MCP local.';
+	@override String get editConfig => 'Editar configuração';
+	@override String get command => 'Comando';
+	@override String get arguments => 'Argumentos';
+	@override String get error => 'Erro';
+	@override String get telemetryTitle => 'Telemetria';
+	@override String get telemetryDesc => 'Erros e logs dos processos do workspace ficam no painel Telemetria do shell; com o modo desenvolvedor ele mostra também os do próprio GSH Desktop.';
+	@override String get claudeSettingsTitle => 'Arquivo de configurações do Claude Code';
+	@override String get claudeSettingsDesc => '~/.claude/settings.json — permissões, hooks, ambiente e modelo.';
+	@override String get apiKeyTitle => 'Quer uma chave de API?';
+	@override String get apiKeyDesc => 'Crie chaves e veja o uso no Claude Console. Isso requer outra conta, e o uso da API é cobrado separadamente.';
+	@override String get apiKeyButton => 'Ir para o Console';
+}
+
+// Path: settings.page.system
+class _Translations$settings$page$system$pt_BR extends Translations$settings$page$system$en {
+	_Translations$settings$page$system$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Sistema';
+	@override String get version => 'Versão do aplicativo';
+	@override String get keepAwakeTitle => 'Manter computador ativo';
+	@override String get keepAwakeDesc => 'Impede a suspensão por inatividade enquanto ligado (o mesmo botão de raio do rail). Desliga ao fechar o app; fechar a tampa ainda suspende.';
+}
+
+// Path: settings.page.catalog
+class _Translations$settings$page$catalog$pt_BR extends Translations$settings$page$catalog$en {
+	_Translations$settings$page$catalog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get mine => 'Meus';
+	@override String get discover => 'Descobrir';
+	@override String get add => 'Adicionar';
+	@override String get all => 'Todos';
+	@override String by({required Object author}) => 'por ${author}';
+	@override String get newSkill => 'Nova skill…';
+	@override String get addMarketplace => 'Adicionar marketplace…';
+}
+
+// Path: settings.page.generalClaude
+class _Translations$settings$page$generalClaude$pt_BR extends Translations$settings$page$generalClaude$en {
+	_Translations$settings$page$generalClaude$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get sectionAppearance => 'Aparência';
+	@override String get theme => 'Tema';
+	@override String get themeSystem => 'Sistema';
+	@override String get themeLight => 'Claro';
+	@override String get themeDark => 'Escuro';
+	@override String get uiFont => 'Fonte da interface';
+	@override String get uiFontDesc => 'Fonte para toda a interface — menus, barras laterais e painéis.';
+	@override String get chatFont => 'Fonte do chat';
+	@override String get chatFontDesc => 'Texto da conversa no chat com o Claude.';
+	@override String get chatFontDefault => 'Mesma da interface';
+	@override String get textSize => 'Tamanho do texto da conversa';
+	@override String get textSizeDesc => 'Tamanho base do texto do app (o mesmo ajuste de Aparência).';
+	@override String get sizeSmall => 'Pequeno';
+	@override String get sizeMedium => 'Médio';
+	@override String get sizeLarge => 'Grande';
+	@override String get transcriptWidth => 'Largura da transcrição';
+	@override String get transcriptWidthDesc => 'Largura máxima das colunas da transcrição e do campo de mensagem.';
+	@override String get widthNarrow => 'Estreito';
+	@override String get widthMedium => 'Médio';
+	@override String get widthWide => 'Largo';
+	@override String get reducedMotion => 'Movimento reduzido';
+	@override String get reducedMotionDesc => 'Menos animações no Claude Code (brilho do spinner, piscadas). Gravado como prefersReducedMotion no ~/.claude/settings.json.';
+	@override String get sectionNotifications => 'Notificações';
+	@override String get notifyTurnDone => 'Conclusão de respostas';
+	@override String get notifyTurnDoneDesc => 'Receba uma notificação quando um agente terminar uma resposta e a janela não estiver em foco.';
+	@override String get notifyPermission => 'Solicitações de permissão do Code';
+	@override String get notifyPermissionDesc => 'Toca um som quando um agente estiver esperando sua aprovação ou resposta.';
+	@override String get pushInputNeeded => 'Push no celular quando precisar de você';
+	@override String get pushInputNeededDesc => 'O Claude Code manda um push quando uma permissão ou pergunta estiver esperando (inputNeededNotifEnabled).';
+	@override String get pushAgent => 'Notificações proativas no celular';
+	@override String get pushAgentDesc => 'Deixa o Claude avisar no celular sobre atualizações importantes de uma sessão (agentPushNotifEnabled).';
+}
+
+// Path: settings.page.privacy
+class _Translations$settings$page$privacy$pt_BR extends Translations$settings$page$privacy$en {
+	_Translations$settings$page$privacy$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Dados';
+	@override String get gshTelemetry => 'Telemetria do GSH';
+	@override String get gshTelemetryDesc => 'Só local: erros e logs ficam num SQLite deste computador e nunca são enviados.';
+	@override String get ccTelemetry => 'Desligar a telemetria do Claude Code';
+	@override String get ccTelemetryDesc => 'Define DISABLE_TELEMETRY no env do ~/.claude/settings.json (métricas de uso não são enviadas).';
+	@override String get ccErrors => 'Desligar relatórios de erro do Claude Code';
+	@override String get ccErrorsDesc => 'Define DISABLE_ERROR_REPORTING no env do ~/.claude/settings.json.';
+}
+
+// Path: settings.page.resources
+class _Translations$settings$page$resources$pt_BR extends Translations$settings$page$resources$en {
+	_Translations$settings$page$resources$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get sectionGeneral => 'Geral';
+	@override String get sectionShell => 'Recursos do GSH';
+	@override String get chat => 'Chat com o Claude (beta)';
+	@override String get chatDesc => 'Botão de chat na barra do workspace (Claude Code em stream-json).';
+	@override String get farm => 'Fazenda';
+	@override String get farmDesc => 'Loops de agente lidos dos transcripts do Claude Code.';
+	@override String get graph => 'Grafo de agentes';
+	@override String get graphDesc => 'Visualiza os agentes do workspace e quem fala com quem.';
+	@override String get browser => 'Navegador embutido';
+	@override String get browserDesc => 'Aba "Navegador" no menu da pane (onde a plataforma tem webview embutida).';
+	@override String get skillsMoved => 'As Skills foram movidas para ';
+}
+
+// Path: settings.page.designSystems
+class _Translations$settings$page$designSystems$pt_BR extends Translations$settings$page$designSystems$en {
+	_Translations$settings$page$designSystems$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Design systems';
+	@override String get desc => 'No GSH, são os temas: cores da interface, do terminal e do código num pacote só.';
+	@override String get add => 'Novo design system';
+	@override String get search => 'Pesquisar por nome';
+	@override String showing({required Object n, required Object total}) => 'Exibindo ${n} de ${total}';
+	@override String get colName => 'Nome';
+	@override String get colOrigin => 'Origem';
+	@override String get colAuthor => 'Autor';
+	@override String get active => 'Ativo';
+	@override String get imported => 'Importado';
+	@override String get builtIn => 'Embutido';
+	@override String get activate => 'Usar este tema';
+	@override String get remove => 'Remover';
+}
+
+// Path: settings.page.nav.groups
+class _Translations$settings$page$nav$groups$pt_BR extends Translations$settings$page$nav$groups$en {
+	_Translations$settings$page$nav$groups$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get settings => 'Configurações';
+	@override String get thisComputer => 'Este computador';
+	@override String get personalization => 'Personalização';
+	@override String get platform => 'Plataforma';
+	@override String get app => 'GSH Desktop';
 }
 
 // Path: settings.page.general.updateFrequency
@@ -2120,6 +2491,45 @@ class _Translations$settings$page$general$updateFrequency$pt_BR extends Translat
 	@override String get weekly => 'Semanalmente';
 	@override String get monthly => 'Mensalmente';
 	@override String get never => 'Nunca';
+}
+
+// Path: settings.page.claude.error
+class _Translations$settings$page$claude$error$pt_BR extends Translations$settings$page$claude$error$en {
+	_Translations$settings$page$claude$error$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get cliMissing => 'CLI do Claude Code (`claude`) não encontrada neste computador.';
+	@override String get timeout => 'A CLI `claude` demorou demais para responder.';
+	@override String failed({required Object detail}) => 'A CLI `claude` falhou: ${detail}';
+}
+
+// Path: settings.page.usage.plans
+class _Translations$settings$page$usage$plans$pt_BR extends Translations$settings$page$usage$plans$en {
+	_Translations$settings$page$usage$plans$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get pro => 'Pro';
+	@override String get max => 'Max';
+	@override String get team => 'Equipe';
+	@override String get enterprise => 'Empresa';
+}
+
+// Path: settings.page.connectors.status
+class _Translations$settings$page$connectors$status$pt_BR extends Translations$settings$page$connectors$status$en {
+	_Translations$settings$page$connectors$status$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get connected => 'Conectado';
+	@override String get needsAuth => 'Precisa autenticar';
+	@override String get failed => 'Falhou';
+	@override String get pending => 'Aprovação pendente';
+	@override String get unknown => 'Desconhecido';
 }
 
 /// The flat map containing all translations for locale <pt-BR>.
@@ -3064,6 +3474,26 @@ extension on TranslationsPtBr {
 			'settings.page.nav.automations' => 'Automações',
 			'settings.page.nav.remoteHosts' => 'Hosts remotos',
 			'settings.page.nav.claudeCode' => 'Claude Code',
+			'settings.page.nav.search' => 'Procurar',
+			'settings.page.nav.account' => 'Conta',
+			'settings.page.nav.privacy' => 'Privacidade',
+			'settings.page.nav.usage' => 'Uso',
+			'settings.page.nav.resources' => 'Recursos',
+			'settings.page.nav.memory' => 'Memória',
+			'settings.page.nav.designSystems' => 'Design systems',
+			'settings.page.nav.cowork' => 'Cowork',
+			'settings.page.nav.system' => 'Sistema',
+			'settings.page.nav.extensions' => 'Extensões',
+			'settings.page.nav.developer' => 'Desenvolvedor',
+			'settings.page.nav.skills' => 'Skills',
+			'settings.page.nav.connectors' => 'Conectores',
+			'settings.page.nav.plugins' => 'Plugins',
+			'settings.page.nav.apiKeys' => 'Chaves de API',
+			'settings.page.nav.groups.settings' => 'Configurações',
+			'settings.page.nav.groups.thisComputer' => 'Este computador',
+			'settings.page.nav.groups.personalization' => 'Personalização',
+			'settings.page.nav.groups.platform' => 'Plataforma',
+			'settings.page.nav.groups.app' => 'GSH Desktop',
 			'settings.page.general.sectionEditor' => 'Editor',
 			'settings.page.general.editorEngineTitle' => 'Motor',
 			'settings.page.general.editorEngineCockpit' => 'GSH Desktop (padrão)',
@@ -3136,6 +3566,8 @@ extension on TranslationsPtBr {
 			'settings.page.appearance.previewTerminal' => 'Terminal',
 			'settings.page.appearance.themeSystem' => 'Sistema',
 			'settings.page.appearance.themeLight' => 'Claro',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.appearance.themeDark' => 'Escuro',
 			'settings.page.appearance.sectionFonts' => 'Fontes',
 			'settings.page.appearance.interfaceFontTitle' => 'Fonte da interface',
@@ -3156,8 +3588,6 @@ extension on TranslationsPtBr {
 			'settings.page.appearance.terminalWeightNormal' => 'Normal',
 			'settings.page.appearance.terminalWeightMedium' => 'Médio',
 			'settings.page.appearance.terminalWeightSemiBold' => 'Seminegrito',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.appearance.sectionConversation' => 'Conversa',
 			'settings.page.appearance.pinUserMessageTitle' => 'Fixar mensagem do usuário',
 			'settings.page.appearance.pinUserMessageDesc' => 'A pergunta fica fixa no topo enquanto a resposta rola.',
@@ -3257,6 +3687,206 @@ extension on TranslationsPtBr {
 			'settings.page.claudeCode.remoteControlTitle' => 'Conectar novas sessões ao Remote Control',
 			'settings.page.claudeCode.remoteControlDesc' => 'Toda sessão do claude que você iniciar num terminal se conecta ao Remote Control, para continuar no celular ou em claude.ai/code. Fica no ~/.claude/settings.json (remoteControlAtStartup). Exige login claude.ai (Pro, Max, Team ou Enterprise).',
 			'settings.page.claudeCode.saveFailed' => ({required Object detail}) => 'Não consegui salvar: ${detail}',
+			'settings.page.claudeCode.sectionSessions' => 'Sessões',
+			'settings.page.claudeCode.promptSuggestionsTitle' => 'Sugestões de prompts',
+			'settings.page.claudeCode.promptSuggestionsDesc' => 'Mostrar uma sugestão de próximo prompt depois que o Claude responder. As sugestões consomem um pouco do seu uso.',
+			'settings.page.claudeCode.outputStyleTitle' => 'Estilo de saída',
+			'settings.page.claudeCode.outputStyleDesc' => 'Como o Claude estrutura suas respostas nas sessões do Code. Aplica-se a novas sessões.',
+			'settings.page.claudeCode.outputStyleDefault' => 'Padrão',
+			'settings.page.claudeCode.sandboxTitle' => 'Sandbox local',
+			'settings.page.claudeCode.sandboxDesc' => 'Executa os comandos bash do Claude Code num sandbox isolado. Aplica-se a novas sessões.',
+			'settings.page.claudeCode.sandboxStrictTitle' => 'Modo sandbox estrito',
+			'settings.page.claudeCode.sandboxStrictDesc' => 'Bloqueia comandos que não podem ser executados dentro do sandbox em vez de executá-los fora dele.',
+			'settings.page.claudeCode.sectionBrowser' => 'Navegador',
+			'settings.page.claudeCode.linksInAppTitle' => 'Abrir links no navegador integrado',
+			'settings.page.claudeCode.linksInAppDesc' => 'Links clicados nos terminais abrem numa aba de navegador do GSH em vez do seu navegador padrão.',
+			'settings.page.placeholder.cowork1' => 'O Cowork é um recurso do Claude Desktop (tarefas que rodam neste computador com arquivos locais, navegador e MCPs).',
+			'settings.page.placeholder.cowork2' => 'No GSH, o equivalente é o chat com o Claude num workspace e a Fazenda, onde os loops de agente rodam em terminais.',
+			'settings.page.placeholder.extensionsDesc' => 'Permitir que o Claude interaja diretamente com aplicativos, dados e ferramentas no seu computador.',
+			'settings.page.placeholder.extensionsEmpty' => 'Nenhuma extensão instalada',
+			'settings.page.placeholder.extensions' => 'Extensões .MCPB/.DXT são do Claude Desktop. No GSH, os servidores MCP ficam em Conectores e Desenvolvedor.',
+			'settings.page.claude.refresh' => 'Atualizar',
+			'settings.page.claude.loading' => 'Carregando…',
+			'settings.page.claude.terminalTitle' => 'Abrir um terminal',
+			'settings.page.claude.noWorkspace' => 'Abra um workspace local antes: isto roda a CLI `claude` num terminal dele, para você acompanhar.',
+			'settings.page.claude.months' => 'jan.|fev.|mar.|abr.|mai.|jun.|jul.|ago.|set.|out.|nov.|dez.',
+			'settings.page.claude.weekdays' => 'seg.|ter.|qua.|qui.|sex.|sáb.|dom.',
+			'settings.page.claude.dateShort' => ({required Object day, required Object month}) => '${day} de ${month}',
+			'settings.page.claude.error.cliMissing' => 'CLI do Claude Code (`claude`) não encontrada neste computador.',
+			'settings.page.claude.error.timeout' => 'A CLI `claude` demorou demais para responder.',
+			'settings.page.claude.error.failed' => ({required Object detail}) => 'A CLI `claude` falhou: ${detail}',
+			'settings.page.account.title' => 'Conta',
+			'settings.page.account.profile' => 'Perfil',
+			'settings.page.account.instructions' => 'Instruções para o Claude',
+			'settings.page.account.instructionsDesc' => 'Gravado em ~/.claude/CLAUDE.md: o Claude Code carrega em toda sessão deste computador.',
+			'settings.page.account.instructionsHint' => 'ex.: manter explicações breves e diretas',
+			'settings.page.account.loggedIn' => 'Conectado',
+			'settings.page.account.loggedOut' => 'Desconectado',
+			'settings.page.account.loggedInDesc' => 'O Claude Code deste computador usa esta conta.',
+			'settings.page.account.loggedOutDesc' => 'Entre para usar sua assinatura do Claude no Claude Code.',
+			'settings.page.account.login' => 'Entrar',
+			'settings.page.account.logout' => 'Sair',
+			'settings.page.account.logoutConfirmTitle' => 'Sair do Claude Code?',
+			'settings.page.account.logoutConfirmMessage' => 'Roda `claude auth logout`. As sessões deste computador deixam de usar sua assinatura até você entrar de novo.',
+			'settings.page.account.email' => 'E-mail',
+			'settings.page.account.organization' => 'Organização',
+			'settings.page.account.orgId' => 'ID da organização',
+			'settings.page.account.plan' => 'Plano',
+			'settings.page.account.method' => 'Método de login',
+			'settings.page.usage.title' => 'Seus limites de uso',
+			'settings.page.usage.weeklyTitle' => 'Limites semanais',
+			'settings.page.usage.unavailable' => 'Limites de plano não se aplicam a este login (chave de API ou provedor terceiro).',
+			'settings.page.usage.windowSession' => 'Sessão atual',
+			'settings.page.usage.windowWeekly' => 'Todos os modelos',
+			'settings.page.usage.resetsIn' => ({required Object when}) => 'Reinicia em ${when}',
+			'settings.page.usage.resetsAt' => ({required Object when}) => 'Reinicia ${when}',
+			'settings.page.usage.percentUsed' => ({required Object pct}) => '${pct}% usado',
+			'settings.page.usage.updated' => ({required Object when}) => 'Última atualização: ${when}',
+			'settings.page.usage.justNow' => 'há menos de um minuto',
+			'settings.page.usage.minutesAgo' => ({required Object n}) => 'há ${n} min',
+			'settings.page.usage.minutes' => ({required Object m}) => '${m} min',
+			'settings.page.usage.hoursMinutes' => ({required Object h, required Object m}) => '${h} h ${m} min',
+			'settings.page.usage.plans.pro' => 'Pro',
+			'settings.page.usage.plans.max' => 'Max',
+			'settings.page.usage.plans.team' => 'Equipe',
+			'settings.page.usage.plans.enterprise' => 'Empresa',
+			'settings.page.memory.title' => 'Memória',
+			'settings.page.memory.intro' => 'O que uma sessão do Claude Code no workspace ativo carrega: suas instruções e a memória que o próprio Claude grava. Clique para abrir o arquivo.',
+			'settings.page.memory.instructionsTitle' => 'Instruções',
+			'settings.page.memory.autoTitle' => 'Memória automática',
+			'settings.page.memory.empty' => 'Nenhum CLAUDE.md encontrado.',
+			'settings.page.memory.autoEmpty' => 'O Claude ainda não gravou memórias para este workspace.',
+			'settings.page.memory.scopeUser' => 'Usuário (todos os projetos)',
+			'settings.page.memory.scopeProject' => 'Projeto',
+			'settings.page.memory.updated' => ({required Object when}) => 'Atualizado ${when}',
+			'settings.page.skills.groupUser' => 'Criado por você',
+			'settings.page.skills.groupProject' => 'Do projeto',
+			'settings.page.skills.groupPlugins' => 'Dos plugins',
+			'settings.page.skills.byYou' => 'por você',
+			'settings.page.skills.byProject' => 'do projeto',
+			'settings.page.skills.empty' => 'Nenhuma skill instalada.',
+			'settings.page.connectors.checking' => 'Verificando cada servidor… pode levar alguns segundos.',
+			'settings.page.connectors.empty' => 'Nenhum servidor MCP configurado.',
+			'settings.page.connectors.addServer' => 'Adicionar servidor MCP',
+			'settings.page.connectors.colConnector' => 'Conector',
+			'settings.page.connectors.colType' => 'Tipo',
+			'settings.page.connectors.colStatus' => 'Status',
+			'settings.page.connectors.fromPlugin' => ({required Object plugin}) => 'Fornecido pelo plugin ${plugin}',
+			'settings.page.connectors.typeWeb' => 'Web',
+			'settings.page.connectors.typeLocal' => 'Local',
+			'settings.page.connectors.originPlugin' => 'Plugin',
+			'settings.page.connectors.link' => 'Vincular',
+			'settings.page.connectors.discoverIntro' => 'O diretório de conectores do claude.ai não tem API pública, então o GSH não o lista. Adicione qualquer servidor MCP aqui: o GSH roda `claude mcp add` num terminal.',
+			'settings.page.connectors.formName' => 'Nome',
+			'settings.page.connectors.formType' => 'Tipo',
+			'settings.page.connectors.formUrl' => 'URL',
+			'settings.page.connectors.formCommand' => 'Comando',
+			'settings.page.connectors.formScope' => 'Escopo',
+			'settings.page.connectors.formScopeDesc' => 'Usuário = todos os projetos; Local = só o projeto do terminal.',
+			'settings.page.connectors.scopeUser' => 'Usuário',
+			'settings.page.connectors.scopeLocal' => 'Local',
+			'settings.page.connectors.docs' => 'Docs de MCP',
+			'settings.page.connectors.addInTerminal' => 'Adicionar no terminal',
+			'settings.page.connectors.status.connected' => 'Conectado',
+			'settings.page.connectors.status.needsAuth' => 'Precisa autenticar',
+			'settings.page.connectors.status.failed' => 'Falhou',
+			'settings.page.connectors.status.pending' => 'Aprovação pendente',
+			'settings.page.connectors.status.unknown' => 'Desconhecido',
+			'settings.page.plugins.search' => 'Pesquisar skills e plugins',
+			'settings.page.plugins.groupProject' => 'Neste projeto',
+			'settings.page.plugins.groupMarketplaces' => 'Dos marketplaces que você adicionou',
+			'settings.page.plugins.noWorkspace' => 'Abra um workspace para ver os plugins habilitados nele.',
+			'settings.page.plugins.projectEmpty' => 'Nenhum plugin habilitado no .claude/settings.json deste projeto.',
+			'settings.page.plugins.empty' => 'Nenhum plugin instalado.',
+			'settings.page.plugins.disabled' => 'Desabilitado',
+			'settings.page.developer.title' => 'Desenvolvedor',
+			'settings.page.developer.mcpTitle' => 'Servidores MCP locais',
+			'settings.page.developer.mcpDesc' => 'Servidores MCP stdio que o Claude Code sobe neste computador. Eles ficam no ~/.claude.json.',
+			'settings.page.developer.mcpEmpty' => 'Nenhum servidor MCP local.',
+			'settings.page.developer.editConfig' => 'Editar configuração',
+			'settings.page.developer.command' => 'Comando',
+			'settings.page.developer.arguments' => 'Argumentos',
+			'settings.page.developer.error' => 'Erro',
+			'settings.page.developer.telemetryTitle' => 'Telemetria',
+			'settings.page.developer.telemetryDesc' => 'Erros e logs dos processos do workspace ficam no painel Telemetria do shell; com o modo desenvolvedor ele mostra também os do próprio GSH Desktop.',
+			'settings.page.developer.claudeSettingsTitle' => 'Arquivo de configurações do Claude Code',
+			'settings.page.developer.claudeSettingsDesc' => '~/.claude/settings.json — permissões, hooks, ambiente e modelo.',
+			'settings.page.developer.apiKeyTitle' => 'Quer uma chave de API?',
+			'settings.page.developer.apiKeyDesc' => 'Crie chaves e veja o uso no Claude Console. Isso requer outra conta, e o uso da API é cobrado separadamente.',
+			'settings.page.developer.apiKeyButton' => 'Ir para o Console',
+			'settings.page.system.title' => 'Sistema',
+			'settings.page.system.version' => 'Versão do aplicativo',
+			'settings.page.system.keepAwakeTitle' => 'Manter computador ativo',
+			'settings.page.system.keepAwakeDesc' => 'Impede a suspensão por inatividade enquanto ligado (o mesmo botão de raio do rail). Desliga ao fechar o app; fechar a tampa ainda suspende.',
+			'settings.page.catalog.mine' => 'Meus',
+			'settings.page.catalog.discover' => 'Descobrir',
+			'settings.page.catalog.add' => 'Adicionar',
+			'settings.page.catalog.all' => 'Todos',
+			'settings.page.catalog.by' => ({required Object author}) => 'por ${author}',
+			'settings.page.catalog.newSkill' => 'Nova skill…',
+			'settings.page.catalog.addMarketplace' => 'Adicionar marketplace…',
+			'settings.page.generalClaude.sectionAppearance' => 'Aparência',
+			'settings.page.generalClaude.theme' => 'Tema',
+			'settings.page.generalClaude.themeSystem' => 'Sistema',
+			'settings.page.generalClaude.themeLight' => 'Claro',
+			'settings.page.generalClaude.themeDark' => 'Escuro',
+			'settings.page.generalClaude.uiFont' => 'Fonte da interface',
+			'settings.page.generalClaude.uiFontDesc' => 'Fonte para toda a interface — menus, barras laterais e painéis.',
+			'settings.page.generalClaude.chatFont' => 'Fonte do chat',
+			'settings.page.generalClaude.chatFontDesc' => 'Texto da conversa no chat com o Claude.',
+			'settings.page.generalClaude.chatFontDefault' => 'Mesma da interface',
+			'settings.page.generalClaude.textSize' => 'Tamanho do texto da conversa',
+			'settings.page.generalClaude.textSizeDesc' => 'Tamanho base do texto do app (o mesmo ajuste de Aparência).',
+			'settings.page.generalClaude.sizeSmall' => 'Pequeno',
+			'settings.page.generalClaude.sizeMedium' => 'Médio',
+			'settings.page.generalClaude.sizeLarge' => 'Grande',
+			'settings.page.generalClaude.transcriptWidth' => 'Largura da transcrição',
+			'settings.page.generalClaude.transcriptWidthDesc' => 'Largura máxima das colunas da transcrição e do campo de mensagem.',
+			'settings.page.generalClaude.widthNarrow' => 'Estreito',
+			'settings.page.generalClaude.widthMedium' => 'Médio',
+			'settings.page.generalClaude.widthWide' => 'Largo',
+			'settings.page.generalClaude.reducedMotion' => 'Movimento reduzido',
+			'settings.page.generalClaude.reducedMotionDesc' => 'Menos animações no Claude Code (brilho do spinner, piscadas). Gravado como prefersReducedMotion no ~/.claude/settings.json.',
+			'settings.page.generalClaude.sectionNotifications' => 'Notificações',
+			'settings.page.generalClaude.notifyTurnDone' => 'Conclusão de respostas',
+			'settings.page.generalClaude.notifyTurnDoneDesc' => 'Receba uma notificação quando um agente terminar uma resposta e a janela não estiver em foco.',
+			'settings.page.generalClaude.notifyPermission' => 'Solicitações de permissão do Code',
+			'settings.page.generalClaude.notifyPermissionDesc' => 'Toca um som quando um agente estiver esperando sua aprovação ou resposta.',
+			'settings.page.generalClaude.pushInputNeeded' => 'Push no celular quando precisar de você',
+			'settings.page.generalClaude.pushInputNeededDesc' => 'O Claude Code manda um push quando uma permissão ou pergunta estiver esperando (inputNeededNotifEnabled).',
+			'settings.page.generalClaude.pushAgent' => 'Notificações proativas no celular',
+			'settings.page.generalClaude.pushAgentDesc' => 'Deixa o Claude avisar no celular sobre atualizações importantes de uma sessão (agentPushNotifEnabled).',
+			'settings.page.privacy.title' => 'Dados',
+			'settings.page.privacy.gshTelemetry' => 'Telemetria do GSH',
+			'settings.page.privacy.gshTelemetryDesc' => 'Só local: erros e logs ficam num SQLite deste computador e nunca são enviados.',
+			'settings.page.privacy.ccTelemetry' => 'Desligar a telemetria do Claude Code',
+			'settings.page.privacy.ccTelemetryDesc' => 'Define DISABLE_TELEMETRY no env do ~/.claude/settings.json (métricas de uso não são enviadas).',
+			'settings.page.privacy.ccErrors' => 'Desligar relatórios de erro do Claude Code',
+			'settings.page.privacy.ccErrorsDesc' => 'Define DISABLE_ERROR_REPORTING no env do ~/.claude/settings.json.',
+			'settings.page.resources.sectionGeneral' => 'Geral',
+			'settings.page.resources.sectionShell' => 'Recursos do GSH',
+			'settings.page.resources.chat' => 'Chat com o Claude (beta)',
+			'settings.page.resources.chatDesc' => 'Botão de chat na barra do workspace (Claude Code em stream-json).',
+			'settings.page.resources.farm' => 'Fazenda',
+			'settings.page.resources.farmDesc' => 'Loops de agente lidos dos transcripts do Claude Code.',
+			'settings.page.resources.graph' => 'Grafo de agentes',
+			'settings.page.resources.graphDesc' => 'Visualiza os agentes do workspace e quem fala com quem.',
+			'settings.page.resources.browser' => 'Navegador embutido',
+			'settings.page.resources.browserDesc' => 'Aba "Navegador" no menu da pane (onde a plataforma tem webview embutida).',
+			'settings.page.resources.skillsMoved' => 'As Skills foram movidas para ',
+			'settings.page.designSystems.title' => 'Design systems',
+			'settings.page.designSystems.desc' => 'No GSH, são os temas: cores da interface, do terminal e do código num pacote só.',
+			'settings.page.designSystems.add' => 'Novo design system',
+			'settings.page.designSystems.search' => 'Pesquisar por nome',
+			'settings.page.designSystems.showing' => ({required Object n, required Object total}) => 'Exibindo ${n} de ${total}',
+			'settings.page.designSystems.colName' => 'Nome',
+			'settings.page.designSystems.colOrigin' => 'Origem',
+			'settings.page.designSystems.colAuthor' => 'Autor',
+			'settings.page.designSystems.active' => 'Ativo',
+			'settings.page.designSystems.imported' => 'Importado',
+			'settings.page.designSystems.builtIn' => 'Embutido',
+			'settings.page.designSystems.activate' => 'Usar este tema',
+			'settings.page.designSystems.remove' => 'Remover',
 			'settings.remoteHosts.title' => 'Hosts remotos',
 			'settings.remoteHosts.description' => 'Máquinas que você acessa por SSH. Adicionar um host aqui é o mesmo que adicionar pelo menu "+" do workspace.',
 			'settings.remoteHosts.empty' => 'Nenhum host remoto ainda.',

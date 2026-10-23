@@ -2,9 +2,11 @@ import 'package:cockpit/app/core/domain/contracts/claude_code_settings.dart';
 import 'package:cockpit/app/core/domain/entities/app_settings.dart';
 import 'package:cockpit/app/core/ui/settings_controller.dart';
 import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/core/ui/widgets/hover_tap.dart';
+import 'package:cockpit/app/core/ui/widgets/app_menu.dart';
 import 'package:cockpit/app/settings/ui/claude_code_setting_switch.dart';
+import 'package:cockpit/app/settings/ui/claude_info_viewmodel.dart';
 import 'package:cockpit/app/settings/ui/code_theme_picker.dart';
+import 'package:cockpit/app/settings/ui/settings_widgets.dart';
 import 'package:cockpit/i18n/strings.g.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
@@ -14,241 +16,198 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 class ClaudeCodePanel extends StatelessWidget {
   const ClaudeCodePanel({super.key});
 
-  /// Largura máxima do conteúdo (a da referência).
-  static const maxWidth = 1010.0;
-
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<SettingsController>();
     final s = controller.settings;
     final tr = context.t.settings.page.claudeCode;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(28, 26, 28, 48),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: maxWidth),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _Section(
-                title: tr.sectionGeneral,
-                rows: [
-                  _Row(
-                    title: tr.classifyTitle,
-                    description: tr.classifyDesc,
-                    trailing: Switch(
-                      value: s.classifySessionStates,
-                      onChanged: controller.setClassifySessionStates,
-                    ),
-                  ),
-                  _Row(
-                    title: tr.switchModelsTitle,
-                    description: tr.switchModelsDesc,
-                    // Gravado explícito: o CLI só pergunta a preferência
-                    // enquanto a chave nunca foi escolhida.
-                    trailing: const ClaudeCodeSettingSwitch(
-                      settingKey: ClaudeCodeKeys.switchModelsOnFlag,
-                      unsetValue: true,
-                    ),
-                  ),
-                ],
-              ),
-              _Section(
-                title: tr.sectionCodeAppearance,
-                rows: [
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 14),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: CodeThemePicker(brightness: Brightness.light),
-                        ),
-                        SizedBox(width: 16),
-                        Expanded(
-                          child: CodeThemePicker(brightness: Brightness.dark),
-                        ),
-                      ],
-                    ),
-                  ),
-                  _Row(
-                    title: tr.codeFontTitle,
-                    description: tr.codeFontDesc,
-                    trailing: _FontNameField(
-                      value: s.codeFont,
-                      placeholder: tr.codeFontPlaceholder,
-                      onChanged: controller.setCodeFont,
-                    ),
-                  ),
-                ],
-              ),
-              _Section(
-                title: tr.sectionAppearance,
-                rows: [
-                  _Row(
-                    title: tr.transcriptTitle,
-                    description: tr.transcriptDesc,
-                    trailing: _Segmented<TranscriptView>(
-                      value: s.transcriptView,
-                      onChanged: controller.setTranscriptView,
-                      options: {
-                        TranscriptView.normal: tr.viewNormal,
-                        TranscriptView.thinking: tr.viewThinking,
-                        TranscriptView.verbose: tr.viewVerbose,
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              _Section(
-                title: tr.sectionRemoteControl,
-                rows: [
-                  _Row(
-                    title: tr.remoteControlTitle,
-                    description: tr.remoteControlDesc,
-                    trailing: const ClaudeCodeSettingSwitch(
-                      settingKey: ClaudeCodeKeys.remoteControlAtStartup,
-                      unsetValue: false,
-                      removeWhenDefault: true,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Título em negrito e as linhas abaixo, separadas por um fio.
-class _Section extends StatelessWidget {
-  const _Section({required this.title, required this.rows});
-  final String title;
-  final List<Widget> rows;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 36),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 14),
-            child: Text(
-              title,
-              style: context.typo.body.copyWith(
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-                color: colors.text,
+    return SettingsPanelBody(
+      children: [
+        SettingsSection(
+          title: tr.sectionGeneral,
+          rows: [
+            SettingsRow(
+              title: tr.classifyTitle,
+              description: tr.classifyDesc,
+              trailing: Switch(
+                value: s.classifySessionStates,
+                onChanged: controller.setClassifySessionStates,
               ),
             ),
-          ),
-          for (var i = 0; i < rows.length; i++) ...[
-            if (i > 0) Divider(height: 1, thickness: 1, color: colors.border),
-            rows[i],
+            SettingsRow(
+              title: tr.switchModelsTitle,
+              description: tr.switchModelsDesc,
+              // Gravado explícito: o CLI só pergunta a preferência
+              // enquanto a chave nunca foi escolhida.
+              trailing: const ClaudeCodeSettingSwitch(
+                settingKey: ClaudeCodeKeys.switchModelsOnFlag,
+                unsetValue: true,
+              ),
+            ),
           ],
-        ],
-      ),
-    );
-  }
-}
-
-/// Título + descrição à esquerda, controle à direita (centralizado na altura).
-class _Row extends StatelessWidget {
-  const _Row({required this.title, required this.trailing, this.description});
-  final String title;
-  final String? description;
-  final Widget trailing;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: context.typo.body.copyWith(
-                    fontSize: 14,
-                    color: colors.text,
+        ),
+        SettingsSection(
+          title: tr.sectionCodeAppearance,
+          rows: [
+            const Padding(
+              padding: EdgeInsets.only(bottom: 14),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: CodeThemePicker(brightness: Brightness.light),
                   ),
-                ),
-                if (description case final d?) ...[
-                  const SizedBox(height: 4),
-                  Text(
-                    d,
-                    style: context.typo.body.copyWith(
-                      fontSize: 13.5,
-                      height: 1.45,
-                      color: colors.text3,
-                    ),
-                  ),
+                  SizedBox(width: 16),
+                  Expanded(child: CodeThemePicker(brightness: Brightness.dark)),
                 ],
-              ],
+              ),
             ),
-          ),
-          const SizedBox(width: 40),
-          trailing,
-        ],
-      ),
+            SettingsRow(
+              title: tr.codeFontTitle,
+              description: tr.codeFontDesc,
+              trailing: _FontNameField(
+                value: s.codeFont,
+                placeholder: tr.codeFontPlaceholder,
+                onChanged: controller.setCodeFont,
+              ),
+            ),
+          ],
+        ),
+        SettingsSection(
+          title: tr.sectionAppearance,
+          rows: [
+            SettingsRow(
+              title: tr.transcriptTitle,
+              description: tr.transcriptDesc,
+              trailing: SettingsSegmented<TranscriptView>(
+                value: s.transcriptView,
+                onChanged: controller.setTranscriptView,
+                options: {
+                  TranscriptView.normal: tr.viewNormal,
+                  TranscriptView.thinking: tr.viewThinking,
+                  TranscriptView.verbose: tr.viewVerbose,
+                },
+              ),
+            ),
+          ],
+        ),
+        SettingsSection(
+          title: tr.sectionRemoteControl,
+          rows: [
+            SettingsRow(
+              title: tr.remoteControlTitle,
+              description: tr.remoteControlDesc,
+              trailing: const ClaudeCodeSettingSwitch(
+                settingKey: ClaudeCodeKeys.remoteControlAtStartup,
+                unsetValue: false,
+                removeWhenDefault: true,
+              ),
+            ),
+          ],
+        ),
+        SettingsSection(
+          title: tr.sectionSessions,
+          rows: [
+            SettingsRow(
+              title: tr.promptSuggestionsTitle,
+              description: tr.promptSuggestionsDesc,
+              trailing: const ClaudeCodeSettingSwitch(
+                settingKey: ClaudeCodeKeys.promptSuggestion,
+                unsetValue: true,
+                removeWhenDefault: true,
+              ),
+            ),
+            SettingsRow(
+              title: tr.outputStyleTitle,
+              description: tr.outputStyleDesc,
+              trailing: const _OutputStyleDropdown(),
+            ),
+            SettingsRow(
+              title: tr.sandboxTitle,
+              description: tr.sandboxDesc,
+              trailing: const ClaudeCodeSettingSwitch(
+                settingKey: ClaudeCodeKeys.sandboxEnabled,
+                unsetValue: false,
+                removeWhenDefault: true,
+              ),
+            ),
+            SettingsRow(
+              title: tr.sandboxStrictTitle,
+              description: tr.sandboxStrictDesc,
+              // Estrito = `allowUnsandboxedCommands: false`.
+              trailing: const ClaudeCodeSettingSwitch(
+                settingKey: ClaudeCodeKeys.sandboxAllowUnsandboxed,
+                unsetValue: false,
+                removeWhenDefault: true,
+                onValue: false,
+                offValue: true,
+              ),
+            ),
+          ],
+        ),
+        SettingsSection(
+          title: tr.sectionBrowser,
+          rows: [
+            SettingsRow(
+              title: tr.linksInAppTitle,
+              description: tr.linksInAppDesc,
+              trailing: Switch(
+                value: s.openLinksInApp,
+                onChanged: controller.setOpenLinksInApp,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
 
-/// Controle segmentado: uma pílula com as opções, a escolhida em relevo.
-class _Segmented<T> extends StatelessWidget {
-  const _Segmented({
-    required this.value,
-    required this.options,
-    required this.onChanged,
-  });
-  final T value;
-  final Map<T, String> options;
-  final ValueChanged<T> onChanged;
+/// "Estilo de saída" (`outputStyle` do `~/.claude/settings.json`): Padrão
+/// (chave ausente), os embutidos e os de `~/.claude/output-styles`.
+class _OutputStyleDropdown extends StatefulWidget {
+  const _OutputStyleDropdown();
+
+  @override
+  State<_OutputStyleDropdown> createState() => _OutputStyleDropdownState();
+}
+
+class _OutputStyleDropdownState extends State<_OutputStyleDropdown> {
+  final _settings = inject<ClaudeCodeSettings>();
+  String? _value;
+
+  @override
+  void initState() {
+    super.initState();
+    _settings.getValue(ClaudeCodeKeys.outputStyle).then((v) {
+      if (mounted) setState(() => _value = v is String ? v : null);
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.read<ClaudeInfoViewModel>().loadOutputStyles();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Container(
-      padding: const EdgeInsets.all(2),
-      decoration: BoxDecoration(
-        color: colors.panel2,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (final MapEntry(:key, value: label) in options.entries)
-            HoverTap(
-              onTap: () => onChanged(key),
-              color: key == value ? colors.panel3 : null,
-              hoverColor: key == value ? colors.panel3 : colors.panel,
-              border: Border.all(
-                color: key == value ? colors.border2 : Colors.transparent,
-              ),
-              borderRadius: BorderRadius.circular(6),
-              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
-              child: Text(
-                label,
-                style: context.typo.body.copyWith(
-                  fontSize: 13.5,
-                  color: key == value ? colors.text : colors.text2,
-                  fontWeight: key == value ? FontWeight.w500 : null,
-                ),
-              ),
-            ),
-        ],
-      ),
+    final styles = context.watch<ClaudeInfoViewModel>().outputStyles ?? [];
+    final standard = context.t.settings.page.claudeCode.outputStyleDefault;
+    return SettingsDropdown(
+      label: _value ?? standard,
+      onTap: () async {
+        final picked = await showAppMenu<String>(
+          context,
+          items: [
+            AppMenuItem(value: '', label: standard, selected: _value == null),
+            for (final name in styles)
+              AppMenuItem(value: name, label: name, selected: _value == name),
+          ],
+        );
+        if (picked == null || !mounted) return;
+        final next = picked.isEmpty ? null : picked;
+        setState(() => _value = next);
+        await _settings.setValue(ClaudeCodeKeys.outputStyle, next);
+      },
     );
   }
 }

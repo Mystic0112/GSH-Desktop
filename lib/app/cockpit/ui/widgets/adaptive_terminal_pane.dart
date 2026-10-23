@@ -26,6 +26,7 @@ class AdaptiveTerminalPane extends StatelessWidget {
     this.onKeyEvent,
     this.onPaste,
     this.onOpenFile,
+    this.onOpenUrl,
     this.readOnly = false,
   });
 
@@ -37,6 +38,9 @@ class AdaptiveTerminalPane extends StatelessWidget {
   final KeyEventResult Function(KeyEvent event)? onKeyEvent;
   final VoidCallback? onPaste;
   final void Function(String path, {int? line})? onOpenFile;
+
+  /// Link http(s) clicado; `null` = navegador do SO.
+  final void Function(Uri uri)? onOpenUrl;
   final bool readOnly;
 
   @override
@@ -50,6 +54,7 @@ class AdaptiveTerminalPane extends StatelessWidget {
       hardwareKeyboardOnly: readOnly,
       onKeyEvent: onKeyEvent ?? (_) => KeyEventResult.ignored,
       onOpenFile: onOpenFile,
+      onOpenUrl: onOpenUrl,
     ),
     final GhosttyTerminalController value => _GhosttyPane(
       terminal: value,
@@ -59,6 +64,7 @@ class AdaptiveTerminalPane extends StatelessWidget {
       theme: theme,
       onPaste: onPaste,
       onOpenFile: onOpenFile,
+      onOpenUrl: onOpenUrl,
       readOnly: readOnly,
     ),
   };
@@ -77,6 +83,7 @@ class _GhosttyPane extends StatelessWidget {
     required this.theme,
     required this.onPaste,
     required this.onOpenFile,
+    required this.onOpenUrl,
     required this.readOnly,
   });
 
@@ -87,6 +94,7 @@ class _GhosttyPane extends StatelessWidget {
   final xterm.TerminalTheme theme;
   final VoidCallback? onPaste;
   final void Function(String path, {int? line})? onOpenFile;
+  final void Function(Uri uri)? onOpenUrl;
   final bool readOnly;
 
   @override
@@ -192,6 +200,7 @@ class _GhosttyPane extends StatelessWidget {
       resolvedFilePath: file?.resolvedPath,
       uri: file == null ? link.uri : null,
       onOpenFile: onOpenFile,
+      onOpenUrl: onOpenUrl,
     );
   }
 

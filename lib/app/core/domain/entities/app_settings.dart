@@ -32,6 +32,19 @@ enum UpdateCheckFrequency { daily, weekly, monthly, never }
 /// já abertas.
 enum TranscriptView { normal, thinking, verbose }
 
+/// Largura máxima da coluna da conversa do chat (e do campo de mensagem).
+enum TranscriptWidth {
+  narrow(680),
+  medium(760),
+  wide(900);
+
+  const TranscriptWidth(this.px);
+  final double px;
+}
+
+/// Recursos do shell que o usuário pode tirar da barra (aba Recursos).
+enum AppFeature { chat, farm, agentGraph, browser }
+
 /// Preferências do app, persistidas localmente (Hive). Imutável; mudanças via
 /// [copyWith]. Fontes vazias (`null`) = usar os defaults do design.
 class AppSettings {
@@ -77,6 +90,10 @@ class AppSettings {
     this.codeThemeLight,
     this.codeThemeDark,
     this.transcriptView = TranscriptView.normal,
+    this.chatFont,
+    this.transcriptWidth = TranscriptWidth.medium,
+    this.hiddenFeatures = const <AppFeature>{},
+    this.openLinksInApp = false,
   });
 
   final AppThemeMode themeMode;
@@ -268,6 +285,21 @@ class AppSettings {
   /// Visualização com que novas conversas do chat abrem.
   final TranscriptView transcriptView;
 
+  /// Família da fonte do texto do chat (`null` = a da interface).
+  final String? chatFont;
+
+  /// Largura da coluna da conversa do chat.
+  final TranscriptWidth transcriptWidth;
+
+  /// Recursos tirados da barra do shell (aba Recursos). Vazio = todos.
+  final Set<AppFeature> hiddenFeatures;
+
+  /// Links clicados no terminal abrem no navegador integrado (quando a
+  /// plataforma tem webview inline) em vez do navegador do SO.
+  final bool openLinksInApp;
+
+  bool showsFeature(AppFeature f) => !hiddenFeatures.contains(f);
+
   AppSettings copyWith({
     AppThemeMode? themeMode,
     String? interfaceFont,
@@ -321,6 +353,11 @@ class AppSettings {
     String? codeThemeDark,
     bool clearCodeThemeDark = false,
     TranscriptView? transcriptView,
+    String? chatFont,
+    bool clearChatFont = false,
+    TranscriptWidth? transcriptWidth,
+    Set<AppFeature>? hiddenFeatures,
+    bool? openLinksInApp,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -384,6 +421,10 @@ class AppSettings {
           ? null
           : (codeThemeDark ?? this.codeThemeDark),
       transcriptView: transcriptView ?? this.transcriptView,
+      chatFont: clearChatFont ? null : (chatFont ?? this.chatFont),
+      transcriptWidth: transcriptWidth ?? this.transcriptWidth,
+      hiddenFeatures: hiddenFeatures ?? this.hiddenFeatures,
+      openLinksInApp: openLinksInApp ?? this.openLinksInApp,
     );
   }
 
@@ -449,6 +490,11 @@ class AppSettings {
     if (codeThemeLight != null) 'code.themeLight': codeThemeLight,
     if (codeThemeDark != null) 'code.themeDark': codeThemeDark,
     'chat.transcriptView': transcriptView.name,
+    if (chatFont != null) 'chat.font': chatFont,
+    'chat.transcriptWidth': transcriptWidth.name,
+    if (hiddenFeatures.isNotEmpty)
+      'features.hidden': [for (final f in hiddenFeatures) f.name],
+    if (openLinksInApp) 'links.openInApp': true,
   };
 
   factory AppSettings.fromJson(Map<dynamic, dynamic> json) {
@@ -545,6 +591,17 @@ class AppSettings {
         json['chat.transcriptView'],
         TranscriptView.normal,
       ),
+      chatFont: str(json['chat.font']),
+      transcriptWidth: _enumByName(
+        TranscriptWidth.values,
+        json['chat.transcriptWidth'],
+        TranscriptWidth.medium,
+      ),
+      hiddenFeatures: {
+        if (json['features.hidden'] case final List<dynamic> names)
+          for (final n in names) ?_nullableEnumByName(AppFeature.values, n),
+      },
+      openLinksInApp: json['links.openInApp'] as bool? ?? false,
     );
   }
 }

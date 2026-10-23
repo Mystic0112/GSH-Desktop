@@ -46,6 +46,8 @@ import 'package:cockpit/app/cockpit/ui/widgets/pane_tab_leading.dart';
 import 'package:cockpit/app/core/domain/entities/terminal_profile.dart';
 import 'package:cockpit/app/core/terminal/xterm/xterm.dart';
 import 'package:cockpit/app/core/ui/file_icons/file_icons.dart';
+import 'package:cockpit/app/core/domain/entities/app_settings.dart'
+    show AppFeature;
 import 'package:cockpit/app/core/ui/settings_controller.dart';
 import 'package:cockpit/app/core/ui/themes/themes.dart';
 import 'package:cockpit/app/core/ui/widgets/app_menu.dart';
@@ -551,7 +553,11 @@ class _TabStripState extends State<_TabStrip> {
               ),
               // Sem webview na plataforma (Linux) o botão nem aparece — regra
               // de "zero UI órfã" do plano 58.
-              onOpenBrowser: BrowserCapability.resolve().isInline
+              onOpenBrowser:
+                  BrowserCapability.resolve().isInline &&
+                      context.select<SettingsController, bool>(
+                        (c) => c.settings.showsFeature(AppFeature.browser),
+                      )
                   ? () => widget.vm.openWebBrowser('', inPane: widget.pane.id)
                   : null,
               onClosePane: () => _confirmClosePane(context),
@@ -1938,6 +1944,16 @@ class _PaneBodyState extends State<_PaneBody> {
                       cwd: item.currentDirectory ?? item.workingDirectory,
                       line: line,
                     ),
+                // Configurações → Claude Code → "Abrir links no navegador
+                // integrado" (só onde há webview inline).
+                onOpenUrl:
+                    settings.openLinksInApp &&
+                        BrowserCapability.resolve().isInline
+                    ? (uri) => context.read<CockpitViewModel>().openWebBrowser(
+                        uri.toString(),
+                        reuse: true,
+                      )
+                    : null,
                 theme: context.terminalTheme,
                 textStyle: termStyle,
               ),

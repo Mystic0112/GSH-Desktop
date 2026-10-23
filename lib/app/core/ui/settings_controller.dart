@@ -313,6 +313,26 @@ class SettingsController extends ChangeNotifier {
   void setTranscriptView(TranscriptView view) =>
       _apply(_settings.copyWith(transcriptView: view));
 
+  /// Fonte do chat; `null`/vazio = a da interface.
+  void setChatFont(String? font) {
+    final empty = font == null || font.trim().isEmpty;
+    _apply(_settings.copyWith(chatFont: font, clearChatFont: empty));
+  }
+
+  void setTranscriptWidth(TranscriptWidth width) =>
+      _apply(_settings.copyWith(transcriptWidth: width));
+
+  void setFeatureVisible(AppFeature feature, bool visible) => _apply(
+    _settings.copyWith(
+      hiddenFeatures: visible
+          ? (_settings.hiddenFeatures.toSet()..remove(feature))
+          : {..._settings.hiddenFeatures, feature},
+    ),
+  );
+
+  void setOpenLinksInApp(bool value) =>
+      _apply(_settings.copyWith(openLinksInApp: value));
+
   /// Persiste a visibilidade dos painéis do shell (rail de projetos + árvore de
   /// arquivos) para restaurar no próximo boot. Não faz `notifyListeners` porque
   /// a fonte de verdade em runtime é a `CockpitViewModel` — aqui só grava.

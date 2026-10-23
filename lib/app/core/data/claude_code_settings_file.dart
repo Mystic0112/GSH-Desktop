@@ -21,26 +21,36 @@ class ClaudeCodeSettingsFile implements ClaudeCodeSettings {
 
   @override
   Future<bool?> getBool(String key) async {
+    final v = await getValue(key);
+    return v is bool ? v : null;
+  }
+
+  @override
+  Future<Result<void, String>> setBool(String key, bool? value) =>
+      setValue(key, value);
+
+  @override
+  Future<Object?> getValue(String key) async {
     final root = await _read();
     if (root case Success(:final value)) {
-      final v = value[key];
-      return v is bool ? v : null;
+      Object? node = value;
+      for (final part in key.split('.')) {
+        if (node is! Map) return null;
+        node = node[part];
+      }
+      return node;
     }
     return null;
   }
 
   @override
-  Future<Result<void, String>> setBool(String key, bool? value) async {
+  Future<Result<void, String>> setValue(String key, Object? value) async {
     final read = await _read();
     switch (read) {
       case Failure(:final error):
         return Failure(error);
       case Success(value: final root):
-        if (value == null) {
-          root.remove(key);
-        } else {
-          root[key] = value;
-        }
+        _put(root, key.split('.'), value);
         try {
           await _file.parent.create(recursive: true);
           final tmp = File('${_file.path}.gsh-$pid.tmp');
@@ -53,6 +63,22 @@ class ClaudeCodeSettingsFile implements ClaudeCodeSettings {
           return Failure('${_file.path}: ${e.message}');
         }
     }
+  }
+
+  /// Grava no caminho [path] criando os objetos que faltam; `null` remove a
+  /// folha e poda o objeto pai que ficou vazio (ex.: `env: {}`).
+  static void _put(Map<String, dynamic> map, List<String> path, Object? value) {
+    final key = path.first;
+    if (path.length == 1) {
+      value == null ? map.remove(key) : map[key] = value;
+      return;
+    }
+    final child = map[key] is Map
+        ? Map<String, dynamic>.from(map[key] as Map)
+        : <String, dynamic>{};
+    if (value == null && map[key] is! Map) return;
+    _put(child, path.sublist(1), value);
+    child.isEmpty ? map.remove(key) : map[key] = child;
   }
 
   Future<Result<Map<String, dynamic>, String>> _read() async {

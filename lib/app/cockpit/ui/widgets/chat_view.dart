@@ -57,10 +57,18 @@ class _ChatViewState extends State<ChatView> {
     final showState = context.select<SettingsController, bool>(
       (c) => c.settings.classifySessionStates,
     );
+    final width = context.select<SettingsController, double>(
+      (c) => c.settings.transcriptWidth.px,
+    );
+    final font = context.select<SettingsController, String?>(
+      (c) => c.settings.chatFont,
+    );
     return ChatPane(
       chat: _chat,
       branch: branch,
       showSessionState: showState,
+      columnWidth: width,
+      fontFamily: font,
       onRemoteControl: _continueInRemoteControl,
     );
   }
