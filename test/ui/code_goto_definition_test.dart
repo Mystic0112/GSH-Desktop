@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/domain/entities/lsp_location.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_location.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

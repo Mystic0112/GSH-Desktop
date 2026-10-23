@@ -1,5 +1,5 @@
-import 'package:cockpit/app/cockpit/domain/exceptions/http_request_error.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/gsh/domain/exceptions/http_request_error.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter/widgets.dart';
 
 /// Traduz um [HttpRequestError] para a frase mostrada ao usuário.
@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 /// Texto de terceiros (mensagem do socket/SO) entra como `detail` e é
 /// interpolado **cru**, sem tradução.
 String httpRequestErrorMessage(BuildContext context, HttpRequestError error) {
-  final tr = context.t.cockpit.httpView.error;
+  final tr = context.t.gsh.httpView.error;
   final detail = error.detail?.trim() ?? '';
 
   return switch (error.kind) {

@@ -1,11 +1,11 @@
-import 'package:cockpit/app/cockpit/data/telemetry/line_parser/telemetry_line_parser_impl.dart';
-import 'package:cockpit/app/cockpit/data/telemetry/sqlite_telemetry_store.dart';
-import 'package:cockpit/app/cockpit/data/telemetry/telemetry_db.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/telemetry_line_parser.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/telemetry_store.dart';
-import 'package:cockpit/app/cockpit/domain/entities/telemetry_case.dart';
-import 'package:cockpit/app/cockpit/domain/entities/telemetry_event.dart';
-import 'package:cockpit/app/cockpit/domain/entities/telemetry_run.dart';
+import 'package:gsh_desktop/app/gsh/data/telemetry/line_parser/telemetry_line_parser_impl.dart';
+import 'package:gsh_desktop/app/gsh/data/telemetry/sqlite_telemetry_store.dart';
+import 'package:gsh_desktop/app/gsh/data/telemetry/telemetry_db.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/telemetry_line_parser.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/telemetry_store.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/telemetry_case.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/telemetry_event.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/telemetry_run.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _flutterBlock = '''

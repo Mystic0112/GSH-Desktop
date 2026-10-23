@@ -96,7 +96,7 @@
     "search": "Search",
     "noResults": "No results"
   },
-  "cockpit": {
+  "gsh": {
     "confirmDialog": {
       "unsavedChangesTitle": "Unsaved changes",
       "unsavedChangesMessage": "“${fileName}” has unsaved changes. Save them before closing?",
@@ -175,7 +175,7 @@
       "invalidTasksJson": "tasks.json is invalid. No changes were written.",
       "composeConflicts": "Kept non-Compose tasks with conflicting labels: ${labels}"
     },
-    "cockpitPage": {
+    "gshPage": {
       "chooseProjectFolderDialogTitle": "Choose the project folder",
       "chooseWorkspaceFolderDialogTitle": "Choose the workspace folder",
       "workspaceRenamedTitle": "Workspace renamed",
@@ -547,8 +547,8 @@
       "browseKeys": "Browse keys",
       "deleteConnectionTitle": "Delete connection",
       "deleteConnectionMessage": "Remove \"${name}\" from this workspace? Any saved password is discarded. .dbq files that reference it are not touched.",
-      "footer": ".cockpit/databases.json · ${n} connections",
-      "footerOne": ".cockpit/databases.json · 1 connection",
+      "footer": ".gsh/databases.json · ${n} connections",
+      "footerOne": ".gsh/databases.json · 1 connection",
       "noConnections": "No connections yet.",
       "passwordRequired": "Password not found on the host. Open this connection and enter it again — it is saved on the machine that runs the database, not on this one."
     },
@@ -692,7 +692,7 @@
     },
     "terminal": {
       "cwdFallbackWarning": "Warning: the folder \"${requested}\" does not exist. This terminal opened in \"${path}\".",
-      "workspaceEnvTracked": "Notice: .env.cockpit is tracked by git (it came with the repository). Injected: ${keys}"
+      "workspaceEnvTracked": "Notice: .env.gsh is tracked by git (it came with the repository). Injected: ${keys}"
     },
     "remoteHost": {
       "addHost": "Add remote host",
@@ -780,7 +780,7 @@
       },
       "tasks": {
         "title": "Tasks",
-        "description": "Commands to run from the Tasks panel, such as the dev server, tests and build. Stored in .cockpit/tasks.json."
+        "description": "Commands to run from the Tasks panel, such as the dev server, tests and build. Stored in .gsh/tasks.json."
       },
       "notebook": {
         "title": "Notebook",
@@ -839,7 +839,7 @@
     },
     "layoutPreview": {
       "applyFailedTitle": "Could not apply the layout",
-      "applyInCockpit": "Apply in GSH Desktop",
+      "applyInGsh": "Apply in GSH Desktop",
       "applyNewWorkspace": "Open as new workspace",
       "applyTo": "Apply to ${workspace}",
       "autorunWorktree": "autorun: worktree. This layout is also applied on its own when you create a worktree of the workspace that holds it.",
@@ -873,7 +873,7 @@
       "tagResolved": "resolved",
       "tagIgnored": "ignored",
       "srcTask": "task",
-      "srcWrapper": "cockpit telemetry",
+      "srcWrapper": "gsh telemetry",
       "run": "run ${id}",
       "resolve": "Mark resolved",
       "ignore": "Ignore (hide from agents too)",
@@ -1030,7 +1030,7 @@
       "tabAgent": "Agent",
       "name": "Terminal name",
       "namePlaceholder": "e.g. Reviewer",
-      "nameTaken": "Another tab already uses this name. Names must be unique so `cockpit msg --to` can reach it.",
+      "nameTaken": "Another tab already uses this name. Names must be unique so `gsh msg --to` can reach it.",
       "command": "Command",
       "commandPlaceholder": "e.g. claude --model opus (empty = shell)",
       "cwd": "Working directory",
@@ -1061,7 +1061,7 @@
       "queued": "${n} queued",
       "agentName": "Name",
       "integration": "Integration",
-      "integrationHint": "GSH Desktop adds an MCP server named \"cockpit\" to this file and saves a backup next to it. Other servers are not touched.",
+      "integrationHint": "GSH Desktop adds an MCP server named \"gsh\" to this file and saves a backup next to it. Other servers are not touched.",
       "integrationConsent": "Add the GSH Desktop MCP server to ${app}'s config",
       "restartHint": "Restart ${app} if it was already open so it loads the GSH Desktop MCP server; then ask it to call wait_messages.",
       "integrationError": {
@@ -1122,13 +1122,13 @@
       "general": {
         "sectionEditor": "Editor",
         "editorEngineTitle": "Engine",
-        "editorEngineCockpit": "GSH Desktop (default)",
+        "editorEngineGsh": "GSH Desktop (default)",
         "editorEngineNeovim": "Neovim",
         "neovimChecking": "Looking for Neovim…",
         "neovimNotFound": "Neovim was not found in your shell PATH.",
         "neovimRefresh": "Check again",
-        "showCockpitTitle": "Show GSH Desktop terminal",
-        "showCockpitDesc": "Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.",
+        "showGshTitle": "Show GSH Desktop terminal",
+        "showGshDesc": "Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.",
         "launchAtStartupTitle": "Launch at login",
         "launchAtStartupDesc": "Start GSH Desktop automatically when you sign in to your computer.",
         "sectionUpdates": "Updates",
@@ -1174,7 +1174,7 @@
         "restartUseDefaultMessage": "GSH Desktop will use the default system location from the next launch. Your data in the custom folder is left untouched.",
         "restartResetMessage": "All GSH Desktop data was cleared. Restart to start fresh.",
         "later": "Later",
-        "quitCockpit": "Quit GSH Desktop",
+        "quitGsh": "Quit GSH Desktop",
         "chooseFolderDialogTitle": "Choose a folder for GSH Desktop data"
       },
       "terminal": {
@@ -1590,7 +1590,7 @@
       "statusOffline": "Offline",
       "statusIdle": "Not connected",
       "helpTitle": "How it works",
-      "helpBody": "GSH Desktop connects to your machine over SSH and talks to a small server that runs the terminals, files and git there. The host must have GSH Desktop (desktop) or the cockpit-server installed and running, and this device’s public key added to its ~/.ssh/authorized_keys."
+      "helpBody": "GSH Desktop connects to your machine over SSH and talks to a small server that runs the terminals, files and git there. The host must have GSH Desktop (desktop) or the gsh-server installed and running, and this device’s public key added to its ~/.ssh/authorized_keys."
     }
   },
   "automation": {

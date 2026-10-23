@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/data/panel/panel_command.dart';
+import 'package:gsh_desktop/app/gsh/data/panel/panel_command.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -1,8 +1,8 @@
 //! Transporte: uma requisição por conexão, uma linha JSON em cada direção.
 //!
 //! Mesmo socket do hook, discriminado por `type` no wire (`"cmd"` aqui,
-//! status no hook). POSIX usa socket Unix (`COCKPIT_STATUS_SOCK`); Windows usa
-//! TCP no loopback (`COCKPIT_STATUS_PORT` + `COCKPIT_STATUS_TOKEN`), porque lá
+//! status no hook). POSIX usa socket Unix (`GSH_STATUS_SOCK`); Windows usa
+//! TCP no loopback (`GSH_STATUS_PORT` + `GSH_STATUS_TOKEN`), porque lá
 //! não há UDS. O token só importa no TCP: o loopback é acessível por qualquer
 //! processo local, enquanto no UDS a permissão do arquivo já protege.
 
@@ -58,32 +58,32 @@ impl Write for Conn {
 }
 
 /// Abre a conexão com o app pelo transporte da plataforma. `Ok(None)` = as envs
-/// não estão setadas (não estamos dentro de um terminal do Cockpit).
+/// não estão setadas (não estamos dentro de um terminal do GSH).
 /// Flavor assado no binário pelo build (ver `build.rs`). `Some("debug")` no
 /// build de desenvolvimento.
-const FLAVOR: Option<&str> = option_env!("COCKPIT_FLAVOR");
+const FLAVOR: Option<&str> = option_env!("GSH_FLAVOR");
 
 /// Sockets a tentar, em ordem: o do ambiente (injetado pelo app na PTY da aba)
 /// e, como fallback, os caminhos bem conhecidos.
 ///
-/// O fallback é o que permite usar a CLI **de fora** de um terminal do Cockpit
-/// (ex.: uma ferramenta de ditado chamando `cockpit send --focused`), onde não
+/// O fallback é o que permite usar a CLI **de fora** de um terminal do GSH
+/// (ex.: uma ferramenta de ditado chamando `gsh send --focused`), onde não
 /// existe env nenhuma herdada.
 ///
-/// Release e debug têm sockets separados de propósito (um Cockpit de dev e um
+/// Release e debug têm sockets separados de propósito (um GSH de dev e um
 /// instalado rodam lado a lado), então a ordem importa: **o socket do próprio
 /// flavor vem primeiro**. Com os dois apps abertos, a CLI de dev era atendida
 /// pelo app instalado, que pode ser bem mais velho — deu "tab @focused does not
 /// exist" porque aquele app nem conhecia o sentinela. O outro flavor continua
 /// como fallback: melhor falar com o app errado do que não falar com nenhum.
 ///
-/// É também a **descoberta** do servidor MCP (`cockpit mcp`): um app desktop
-/// (Claude Desktop, Cursor…) spawna a CLI sem env nenhuma do Cockpit, e o
+/// É também a **descoberta** do servidor MCP (`gsh mcp`): um app desktop
+/// (Claude Desktop, Cursor…) spawna a CLI sem env nenhuma do GSH, e o
 /// caminho bem conhecido do socket é o arquivo de descoberta no POSIX.
 #[cfg(unix)]
 fn candidate_sockets() -> Vec<String> {
     candidate_sockets_from(
-        env_non_empty("COCKPIT_STATUS_SOCK"),
+        env_non_empty("GSH_STATUS_SOCK"),
         crate::util::home_dir(),
         FLAVOR == Some("debug"),
     )
@@ -101,8 +101,8 @@ fn candidate_sockets_from(
         out.push(path);
     }
     if let Some(home) = home {
-        let release = format!("{home}/.cockpit/status.sock");
-        let debug = format!("{home}/.cockpit/status-debug.sock");
+        let release = format!("{home}/.gsh/status.sock");
+        let debug = format!("{home}/.gsh/status-debug.sock");
         if debug_first {
             out.push(debug);
             out.push(release);
@@ -114,7 +114,7 @@ fn candidate_sockets_from(
     out
 }
 
-/// Windows: `{port, tok}` que o app grava em `~/.cockpit/status[-debug].json`
+/// Windows: `{port, tok}` que o app grava em `~/.gsh/status[-debug].json`
 /// ao subir — o equivalente do caminho bem conhecido do socket Unix, pra CLI
 /// rodada de FORA de uma aba (sem env herdada). Mesma ordem de flavor do POSIX.
 #[cfg(windows)]
@@ -125,7 +125,7 @@ fn endpoint_from_file() -> Option<(u16, Option<String>)> {
         names.reverse();
     }
     for name in names {
-        let path = format!("{home}\\.cockpit\\{name}");
+        let path = format!("{home}\\.gsh\\{name}");
         let Ok(raw) = std::fs::read_to_string(&path) else {
             continue;
         };
@@ -147,7 +147,7 @@ fn endpoint_from_file() -> Option<(u16, Option<String>)> {
 }
 
 fn connect() -> Result<Option<Conn>, String> {
-    let mut port = env_non_empty("COCKPIT_STATUS_PORT").and_then(|p| p.parse::<u16>().ok());
+    let mut port = env_non_empty("GSH_STATUS_PORT").and_then(|p| p.parse::<u16>().ok());
     if port.is_none() {
         port = endpoint_from_file().map(|(p, _)| p);
     }
@@ -183,8 +183,8 @@ fn connect() -> Result<Option<Conn>, String> {
 /// `true` quando há algum caminho possível até o app (env de socket, porta, ou
 /// um socket bem conhecido no disco).
 pub fn transport_configured() -> bool {
-    if env_non_empty("COCKPIT_STATUS_SOCK").is_some()
-        || env_non_empty("COCKPIT_STATUS_PORT")
+    if env_non_empty("GSH_STATUS_SOCK").is_some()
+        || env_non_empty("GSH_STATUS_PORT")
             .and_then(|p| p.parse::<u16>().ok())
             .is_some()
     {
@@ -202,23 +202,23 @@ pub fn transport_configured() -> bool {
 
 /// Envia uma requisição e devolve a resposta decodificada.
 ///
-/// Fora de um terminal do Cockpit, encerra com exit 3 (mesma mensagem da CLI
+/// Fora de um terminal do GSH, encerra com exit 3 (mesma mensagem da CLI
 /// Dart). Falha de rede também é exit 3; resposta ausente/malformada vira um
 /// `{"ok": false, "error": …}` pro chamador tratar como erro de aplicação.
 pub fn request(req: Value, timeout: Duration) -> Value {
-    try_request(req, timeout).unwrap_or_else(|e| die(&format!("cockpit: {e}"), 3))
+    try_request(req, timeout).unwrap_or_else(|e| die(&format!("gsh: {e}"), 3))
 }
 
 /// [request] sem matar o processo: `Err` = não há app pra falar (sem socket,
 /// conexão recusada). Quem precisa seguir vivo (o servidor MCP) usa esta.
 pub fn try_request(mut req: Value, timeout: Duration) -> Result<Value, String> {
     if !transport_configured() {
-        return Err("no Cockpit app to talk to (COCKPIT_STATUS_SOCK is unset and \
-no socket found in ~/.cockpit). Is the app running?"
+        return Err("no GSH app to talk to (GSH_STATUS_SOCK is unset and \
+no socket found in ~/.gsh). Is the app running?"
             .to_string());
     }
     req["type"] = json!("cmd");
-    if let Ok(tok) = std::env::var("COCKPIT_STATUS_TOKEN") {
+    if let Ok(tok) = std::env::var("GSH_STATUS_TOKEN") {
         req["tok"] = json!(tok);
     } else if let Some((_, Some(tok))) = endpoint_from_file() {
         req["tok"] = json!(tok);
@@ -227,7 +227,7 @@ no socket found in ~/.cockpit). Is the app running?"
     let mut conn = match connect() {
         Ok(Some(c)) => c,
         Ok(None) => {
-            return Err("not inside a Cockpit terminal (COCKPIT_STATUS_SOCK is unset)".to_string())
+            return Err("not inside a GSH terminal (GSH_STATUS_SOCK is unset)".to_string())
         }
         Err(e) => return Err(format!("could not connect to app: {e}")),
     };
@@ -279,7 +279,7 @@ no socket found in ~/.cockpit). Is the app running?"
 /// mas o resultado tem cara de ser da máquina onde o comando foi digitado.
 pub fn is_ok(resp: &Value) -> bool {
     if let Some(Value::String(w)) = resp.get("warning") {
-        eprintln!("cockpit: {w}");
+        eprintln!("gsh: {w}");
     }
     resp.get("ok") == Some(&Value::Bool(true))
 }
@@ -295,7 +295,7 @@ pub fn error_text(resp: &Value) -> String {
 
 /// Encerra com o erro da resposta (exit 1) — padrão dos comandos "simples".
 pub fn fail_with(resp: &Value) -> ! {
-    die(&format!("cockpit: {}", error_text(resp)), 1)
+    die(&format!("gsh: {}", error_text(resp)), 1)
 }
 
 #[cfg(test)]
@@ -307,12 +307,12 @@ mod tests {
         let h = Some("/h".to_string());
         assert_eq!(
             candidate_sockets_from(Some("/x.sock".into()), h.clone(), false),
-            ["/x.sock", "/h/.cockpit/status.sock", "/h/.cockpit/status-debug.sock"]
+            ["/x.sock", "/h/.gsh/status.sock", "/h/.gsh/status-debug.sock"]
         );
-        // Sem env (app desktop spawnando `cockpit mcp`): só os bem conhecidos.
+        // Sem env (app desktop spawnando `gsh mcp`): só os bem conhecidos.
         assert_eq!(
             candidate_sockets_from(None, h, true),
-            ["/h/.cockpit/status-debug.sock", "/h/.cockpit/status.sock"]
+            ["/h/.gsh/status-debug.sock", "/h/.gsh/status.sock"]
         );
         assert!(candidate_sockets_from(None, None, false).is_empty());
     }

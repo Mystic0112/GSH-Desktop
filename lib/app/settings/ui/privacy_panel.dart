@@ -1,7 +1,7 @@
-import 'package:cockpit/app/core/domain/contracts/claude_code_settings.dart';
-import 'package:cockpit/app/settings/ui/claude_code_setting_switch.dart';
-import 'package:cockpit/app/settings/ui/settings_widgets.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
+import 'package:gsh_desktop/app/settings/ui/claude_code_setting_switch.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_widgets.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 /// Aba **Privacidade**: o GSH não manda nada para lugar nenhum; o que dá para

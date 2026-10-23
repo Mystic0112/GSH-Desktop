@@ -1,6 +1,6 @@
-import 'package:cockpit/app/cockpit/data/db/nosql_command_runner.dart';
-import 'package:cockpit/app/cockpit/domain/entities/db_connection.dart';
-import 'package:cockpit/app/cockpit/domain/entities/db_result.dart';
+import 'package:gsh_desktop/app/gsh/data/db/nosql_command_runner.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/db_connection.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/db_result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Guarda a dependência que faz o Mongo atrás de bastion existir (plano 54).

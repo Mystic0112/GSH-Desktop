@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/ui/widgets/file_find_bar.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/file_find_bar.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

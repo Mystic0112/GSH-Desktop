@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/filesystem/git_binary.dart';
-import 'package:cockpit/app/cockpit/data/filesystem/git_diff_reader_impl.dart';
-import 'package:cockpit/app/cockpit/domain/entities/file_diff.dart';
+import 'package:gsh_desktop/app/gsh/data/filesystem/git_binary.dart';
+import 'package:gsh_desktop/app/gsh/data/filesystem/git_diff_reader_impl.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/file_diff.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -24,7 +24,7 @@ void main() {
       File('${repo.path}/$rel').writeAsString(content);
 
   setUp(() async {
-    repo = await Directory.systemTemp.createTemp('cockpit_diff_test_');
+    repo = await Directory.systemTemp.createTemp('gsh_diff_test_');
     await git(['init']);
     await git(['config', 'user.email', 'test@example.com']);
     await git(['config', 'user.name', 'Test']);

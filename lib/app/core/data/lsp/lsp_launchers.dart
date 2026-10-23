@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/domain/contracts/lsp_client.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/lsp_client.dart';
 
 /// Definição de uma linguagem para o LSP: como detectá-la (extensões), onde
 /// está a raiz do projeto (markers, ver [ProjectRootFinder]) e o comando padrão
@@ -49,7 +49,7 @@ const List<LanguageDef> kLanguageDefs = <LanguageDef>[
     extensions: <String>['dart'],
     markers: <String>['pubspec.yaml'],
     defaultExecutable: 'dart',
-    defaultArgs: <String>['language-server', '--client-id', 'cockpit'],
+    defaultArgs: <String>['language-server', '--client-id', 'gsh'],
   ),
   LanguageDef(
     id: 'typescript',

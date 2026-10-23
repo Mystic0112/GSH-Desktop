@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/ui/font_catalog.dart';
+import 'package:gsh_desktop/app/core/ui/font_catalog.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

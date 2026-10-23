@@ -1,8 +1,8 @@
 // Wave 4 (plano 58) — GATE: o anaki (driver de DB Rust/FFI) executa num
-// processo Dart headless, FORA do Flutter? Se sim, o cockpit-server pode
+// processo Dart headless, FORA do Flutter? Se sim, o gsh-server pode
 // hospedar os drivers de banco e a wave é viável no desenho Dart-only.
 //
-// Uso (da pasta cockpit/):
+// Uso (da pasta gsh/):
 //   (cd tool/wave4 && dart pub get)
 //   dart run tool/wave4/wave4_gate.dart
 import 'dart:io';

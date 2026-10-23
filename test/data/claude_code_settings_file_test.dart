@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/claude_code_settings_file.dart';
-import 'package:cockpit/app/core/domain/contracts/claude_code_settings.dart';
+import 'package:gsh_desktop/app/core/data/claude_code_settings_file.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _rc = ClaudeCodeKeys.remoteControlAtStartup;

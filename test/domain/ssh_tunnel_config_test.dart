@@ -1,5 +1,5 @@
-import 'package:cockpit_core/cockpit_core.dart';
-import 'package:cockpit/app/cockpit/domain/entities/db_connection.dart';
+import 'package:gsh_core/gsh_core.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/db_connection.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -116,7 +116,7 @@ void main() {
         database: 'app',
         user: 'postgres',
         password: 's3cr3t',
-        query: 'application_name=cockpit',
+        query: 'application_name=gsh',
         tls: true,
         ssh: ssh,
       );
@@ -128,7 +128,7 @@ void main() {
       expect(local.database, 'app');
       // Query params sobrevivem à reescrita — inclusive o TLS, que sem isso
       // seria silenciosamente rebaixado ao entrar no túnel.
-      expect(local.url, contains('application_name=cockpit'));
+      expect(local.url, contains('application_name=gsh'));
       expect(local.useTls, isTrue);
       // O túnel não viaja na cópia — ela já está dentro dele.
       expect(local.ssh, isNull);

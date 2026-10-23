@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter/rendering.dart' show RenderRepaintBoundary;
 import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
@@ -37,7 +37,7 @@ Future<void> loadShotFonts() async {
   List<String> cached(String prefix) => [
     for (final dir in const [
       '.local/share/work.gorila.gshdesktop',
-      '.local/share/work.jacobmoura.cockpit',
+      '.local/share/work.gorila.gshdesktop',
     ])
       if (Directory('$home/$dir').existsSync())
         for (final f in Directory('$home/$dir').listSync())
@@ -66,13 +66,13 @@ Widget shotHost(Widget child, {Brightness brightness = Brightness.dark}) =>
       ),
     );
 
-/// Só os tokens do Cockpit (para quem já tem o próprio `ShadcnApp`).
+/// Só os tokens do GSH (para quem já tem o próprio `ShadcnApp`).
 Widget shotTheme(Widget child, {Brightness brightness = Brightness.dark}) {
   final tokens = buildTokens(brightness: brightness, settings: shotSettings);
   return DefaultSelectionStyle(
     selectionColor: tokens.terminal.selection,
     cursorColor: tokens.colors.accent,
-    child: CockpitTheme(
+    child: GshTheme(
       colors: tokens.colors,
       typo: tokens.typo,
       syntax: tokens.syntax,

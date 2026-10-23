@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/domain/result.dart';
-import 'package:cockpit/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
 import 'package:flutter/foundation.dart';
 
 /// Estado de uma consulta à CLI: ainda não pedida, carregando, ou o último

@@ -1,7 +1,7 @@
-import 'package:cockpit/app/core/domain/contracts/claude_code_settings.dart';
-import 'package:cockpit/app/core/domain/result.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 

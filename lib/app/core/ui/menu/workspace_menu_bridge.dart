@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 
 /// Ponte **reativa** entre o shell e o menu **File** (New Agent / New Terminal).
-/// O `CockpitPage` publica se há um workspace ativo + os callbacks que abrem uma
+/// O `GshPage` publica se há um workspace ativo + os callbacks que abrem uma
 /// aba nova nele; o menu habilita os itens só quando [hasWorkspace] e dispara a
 /// ação. `ChangeNotifier` app-scoped (provido no `ModularApp.provide`): o
 /// `AppRoot`/topbar dão `context.watch` pra reconstruir os menus quando um
@@ -40,7 +40,7 @@ class WorkspaceMenuBridge extends ChangeNotifier {
   void focusPaneUp() => _onFocusPaneUp?.call();
   void focusPaneDown() => _onFocusPaneDown?.call();
 
-  /// O `CockpitPage` publica o estado atual. Callbacks são sempre atualizados;
+  /// O `GshPage` publica o estado atual. Callbacks são sempre atualizados;
   /// só notifica (→ menu/settings reconstroem) quando [hasWorkspace] muda.
   void setWorkspace({
     required bool hasWorkspace,
@@ -73,7 +73,7 @@ class WorkspaceMenuBridge extends ChangeNotifier {
     _onFocusPaneDown = onFocusPaneDown;
     if (hasWorkspace == _hasWorkspace) return;
     _hasWorkspace = hasWorkspace;
-    // CockpitPage clears this bridge from dispose(), which runs while Flutter
+    // GshPage clears this bridge from dispose(), which runs while Flutter
     // finalizes the route subtree. Notifying synchronously there asks AppRoot
     // (an ancestor) to rebuild while the element tree is locked and produces
     // the misleading _InactiveElements._unmount cascade. Match the editor

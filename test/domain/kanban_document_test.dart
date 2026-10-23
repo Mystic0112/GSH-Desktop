@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/domain/entities/kanban_document.dart';
-import 'package:cockpit/app/cockpit/domain/services/kanban_editor.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/kanban_document.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/kanban_editor.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _board = '''
@@ -620,10 +620,10 @@ um parágrafo solto
   // dela deixar de casar com o parser, ele passa a produzir arquivos tortos —
   // e documentação errada é pior que documentação nenhuma.
   group('exemplo da skill', () {
-    test('o board de exemplo da skill cockpit-design parseia como descrito', () {
-      // Plano 69: o exemplo mora em cli/skills/cockpit-design/references/kanban.md.
+    test('o board de exemplo da skill gsh-design parseia como descrito', () {
+      // Plano 69: o exemplo mora em cli/skills/gsh-design/references/kanban.md.
       final skill = File(
-        'cli/skills/cockpit-design/references/kanban.md',
+        'cli/skills/gsh-design/references/kanban.md',
       ).readAsStringSync();
       final fence = RegExp(
         r'```markdown\n(.*?)```',

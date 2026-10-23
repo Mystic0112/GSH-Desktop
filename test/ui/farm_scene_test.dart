@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
-import 'package:cockpit/app/cockpit/domain/entities/farm_loop.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/farm_viewmodel.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/farm/farm_scene.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/farm/farm_world.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_world.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 FarmLoop _loop(

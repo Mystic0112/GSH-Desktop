@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/http/http_request_runner_impl.dart';
-import 'package:cockpit/app/cockpit/domain/entities/http_document.dart';
-import 'package:cockpit/app/cockpit/domain/entities/http_response_result.dart';
-import 'package:cockpit/app/cockpit/domain/exceptions/http_request_error.dart';
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/gsh/data/http/http_request_runner_impl.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/http_document.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/http_response_result.dart';
+import 'package:gsh_desktop/app/gsh/domain/exceptions/http_request_error.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

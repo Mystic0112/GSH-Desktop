@@ -6,11 +6,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/terminal/pty_output_scheduler.dart';
-import 'package:cockpit/app/core/terminal/terminal_controller.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/process_tree_provider.dart';
-import 'package:cockpit/app/cockpit/domain/entities/process_snapshot.dart';
-import 'package:cockpit/app/cockpit/domain/services/terminal_harness_monitor.dart';
+import 'package:gsh_desktop/app/core/terminal/pty_output_scheduler.dart';
+import 'package:gsh_desktop/app/core/terminal/terminal_controller.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/process_tree_provider.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/process_snapshot.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/terminal_harness_monitor.dart';
 import 'package:flterm/flterm.dart' as ghost;
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';

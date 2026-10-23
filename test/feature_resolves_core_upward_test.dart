@@ -9,7 +9,7 @@ class _CoreDep {
 }
 
 /// Bind de nível de FEATURE que depende de uma dep root-owned do core — o cenário
-/// exato do cockpit (binds `.new` de feature que resolvem algo do core).
+/// exato do gsh (binds `.new` de feature que resolvem algo do core).
 class _FeatureBind {
   _FeatureBind(this.dep);
   final _CoreDep dep;

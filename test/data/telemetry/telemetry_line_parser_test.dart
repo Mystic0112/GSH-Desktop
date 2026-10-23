@@ -1,8 +1,8 @@
-import 'package:cockpit/app/cockpit/data/telemetry/fingerprint.dart';
-import 'package:cockpit/app/cockpit/data/telemetry/line_parser/telemetry_line_parser_impl.dart';
-import 'package:cockpit/app/cockpit/data/telemetry/redaction.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/telemetry_line_parser.dart';
-import 'package:cockpit/app/cockpit/domain/entities/telemetry_event.dart';
+import 'package:gsh_desktop/app/gsh/data/telemetry/fingerprint.dart';
+import 'package:gsh_desktop/app/gsh/data/telemetry/line_parser/telemetry_line_parser_impl.dart';
+import 'package:gsh_desktop/app/gsh/data/telemetry/redaction.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/telemetry_line_parser.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/telemetry_event.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 List<TelemetryEvent> parse(

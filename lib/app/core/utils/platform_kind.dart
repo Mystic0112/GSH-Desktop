@@ -1,6 +1,6 @@
 import 'dart:io';
 
-/// Fonte única de verdade pra "isto é mobile?" (plano 59). O cockpit no
+/// Fonte única de verdade pra "isto é mobile?" (plano 59). O gsh no
 /// iPad/Android é um cliente **remote-only**: sem motor local, sem plugins de
 /// desktop. Todo gating de superfície (pseudo-workspace, abas de Settings,
 /// menu, "+") lê daqui — não espalha `Platform.isIOS || Platform.isAndroid`.

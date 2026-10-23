@@ -1,10 +1,10 @@
 # `*.notebook` — Cadernos de notas
 
 Uma pasta cujo nome termina em `.notebook` é um **caderno**: um `.md` por nota,
-cada um com um frontmatter YAML raso. O Cockpit mostra a pasta como **item
-único** na árvore (logo do Cockpit, sem expandir) e abre como uma tab de notas.
+cada um com um frontmatter YAML raso. O GSH mostra a pasta como **item
+único** na árvore (logo do GSH, sem expandir) e abre como uma tab de notas.
 Fora do app é uma pasta comum: git, Obsidian e o agente no terminal veem os
-`.md` direto. Plano de referência: `plan/62-cockpit-gallery.md`, passo 4.
+`.md` direto. Plano de referência: `plan/62-gsh-gallery.md`, passo 4.
 
 ## Formato de uma nota
 
@@ -76,13 +76,13 @@ busca. No rodapé da nota, **Citada em** lista as notas que apontam pra ela
 ## CLI
 
 ```sh
-cockpit note add <dir.notebook> --title <t> [--tag <a>]... [--body <texto> | --body -]
-cockpit note list <dir.notebook> [--json]
+gsh note add <dir.notebook> --title <t> [--tag <a>]... [--body <texto> | --body -]
+gsh note list <dir.notebook> [--json]
 ```
 
 `add` cria a pasta se faltar, grava a nota e recarrega a tab aberta; imprime o
 caminho. `--body -` lê o corpo do stdin. O wire é `note-add` / `note-list`
-(ver `cockpit_cli_handler.dart`).
+(ver `gsh_cli_handler.dart`).
 
 ## Gallery
 

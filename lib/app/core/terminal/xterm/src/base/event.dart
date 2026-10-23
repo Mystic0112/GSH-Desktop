@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/terminal/xterm/src/base/disposable.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/base/disposable.dart';
 
 typedef EventListener<T> = void Function(T event);
 

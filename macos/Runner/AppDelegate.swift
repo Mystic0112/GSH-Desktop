@@ -14,7 +14,7 @@ class AppDelegate: FlutterAppDelegate {
     disableAppNap()
   }
 
-  /// Impede o App Nap de suspender o Cockpit quando ele perde o foco.
+  /// Impede o App Nap de suspender o GSH quando ele perde o foco.
   ///
   /// O App Nap coalesce timers e rebaixa I/O de apps em background — e a
   /// política vale pros processos FILHOS, que é onde mora o trabalho real:
@@ -43,7 +43,7 @@ class AppDelegate: FlutterAppDelegate {
     super.applicationWillTerminate(notification)
   }
 
-  /// "Click-through": quando a janela do cockpit está sem foco, o primeiro
+  /// "Click-through": quando a janela do gsh está sem foco, o primeiro
   /// clique numa janela de app já ATIVA e é engolido (só depois o 2º clique age)
   /// — porque `NSView.acceptsFirstMouse(for:)` retorna `false` por padrão e o
   /// `FlutterView` não sobrescreve. Como toda a UI (tabs inclusive) é desenhada
@@ -81,8 +81,8 @@ class AppDelegate: FlutterAppDelegate {
     return true
   }
 
-  /// Duplo clique num `.kanban`/`.notebook`/… no Finder, "Abrir com Cockpit"
-  /// ou `open -a Cockpit arquivo`: cada caminho vira uma janela de documento
+  /// Duplo clique num `.kanban`/`.notebook`/… no Finder, "Abrir com GSH"
+  /// ou `open -a GSH arquivo`: cada caminho vira uma janela de documento
   /// (ver DocumentWindows.swift). Vale com o app já aberto ou a frio.
   override func application(_ sender: NSApplication, openFiles filenames: [String]) {
     OpenFilesChannel.shared.open(filenames)

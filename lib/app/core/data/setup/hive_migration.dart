@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/diagnostics/diagnostics_log.dart';
-import 'package:cockpit/app/core/data/setup/json_state_store.dart';
-import 'package:cockpit/app/core/data/setup/storage_location.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
+import 'package:gsh_desktop/app/core/data/setup/json_state_store.dart';
+import 'package:gsh_desktop/app/core/data/setup/storage_location.dart';
 import 'package:hive/hive.dart';
 import 'package:path/path.dart' as p;
 
@@ -43,7 +43,7 @@ class HiveToJsonMigration {
   final String? stateDirOverride;
   final List<String>? legacyDirCandidatesOverride;
 
-  /// As 5 boxes históricas do Cockpit.
+  /// As 5 boxes históricas do GSH.
   static const List<String> boxNames = [
     'settings',
     'window_state',

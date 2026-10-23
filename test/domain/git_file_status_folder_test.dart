@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/domain/entities/git_file_status.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/git_file_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

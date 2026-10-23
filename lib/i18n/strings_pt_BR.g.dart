@@ -41,7 +41,7 @@ class TranslationsPtBr extends Translations with BaseTranslations<AppLocale, Tra
 	// Translations
 	@override late final _Translations$core$pt_BR core = _Translations$core$pt_BR._(_root);
 	@override late final _Translations$common$pt_BR common = _Translations$common$pt_BR._(_root);
-	@override late final _Translations$cockpit$pt_BR cockpit = _Translations$cockpit$pt_BR._(_root);
+	@override late final _Translations$gsh$pt_BR gsh = _Translations$gsh$pt_BR._(_root);
 	@override late final _Translations$settings$pt_BR settings = _Translations$settings$pt_BR._(_root);
 	@override late final _Translations$automation$pt_BR automation = _Translations$automation$pt_BR._(_root);
 	@override late final _Translations$fileOperation$pt_BR fileOperation = _Translations$fileOperation$pt_BR._(_root);
@@ -96,52 +96,52 @@ class _Translations$common$pt_BR extends Translations$common$en {
 	@override String get noResults => 'Nenhum resultado';
 }
 
-// Path: cockpit
-class _Translations$cockpit$pt_BR extends Translations$cockpit$en {
-	_Translations$cockpit$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh
+class _Translations$gsh$pt_BR extends Translations$gsh$en {
+	_Translations$gsh$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
 	// Translations
-	@override late final _Translations$cockpit$confirmDialog$pt_BR confirmDialog = _Translations$cockpit$confirmDialog$pt_BR._(_root);
-	@override late final _Translations$cockpit$neovim$pt_BR neovim = _Translations$cockpit$neovim$pt_BR._(_root);
-	@override late final _Translations$cockpit$worktreeCreateDialog$pt_BR worktreeCreateDialog = _Translations$cockpit$worktreeCreateDialog$pt_BR._(_root);
-	@override late final _Translations$cockpit$commitMessageDialog$pt_BR commitMessageDialog = _Translations$cockpit$commitMessageDialog$pt_BR._(_root);
-	@override late final _Translations$cockpit$tasksPanel$pt_BR tasksPanel = _Translations$cockpit$tasksPanel$pt_BR._(_root);
-	@override late final _Translations$cockpit$cockpitPage$pt_BR cockpitPage = _Translations$cockpit$cockpitPage$pt_BR._(_root);
-	@override late final _Translations$cockpit$welcomeView$pt_BR welcomeView = _Translations$cockpit$welcomeView$pt_BR._(_root);
-	@override late final _Translations$cockpit$paneView$pt_BR paneView = _Translations$cockpit$paneView$pt_BR._(_root);
-	@override late final _Translations$cockpit$fileTreePanel$pt_BR fileTreePanel = _Translations$cockpit$fileTreePanel$pt_BR._(_root);
-	@override late final _Translations$cockpit$fileViewer$pt_BR fileViewer = _Translations$cockpit$fileViewer$pt_BR._(_root);
-	@override late final _Translations$cockpit$workspaceSettingsDialog$pt_BR workspaceSettingsDialog = _Translations$cockpit$workspaceSettingsDialog$pt_BR._(_root);
-	@override late final _Translations$cockpit$realmDialogs$pt_BR realmDialogs = _Translations$cockpit$realmDialogs$pt_BR._(_root);
-	@override late final _Translations$cockpit$dbRedisTable$pt_BR dbRedisTable = _Translations$cockpit$dbRedisTable$pt_BR._(_root);
-	@override late final _Translations$cockpit$dbQueryView$pt_BR dbQueryView = _Translations$cockpit$dbQueryView$pt_BR._(_root);
-	@override late final _Translations$cockpit$httpView$pt_BR httpView = _Translations$cockpit$httpView$pt_BR._(_root);
-	@override late final _Translations$cockpit$kanbanView$pt_BR kanbanView = _Translations$cockpit$kanbanView$pt_BR._(_root);
-	@override late final _Translations$cockpit$dbPanel$pt_BR dbPanel = _Translations$cockpit$dbPanel$pt_BR._(_root);
-	@override late final _Translations$cockpit$dbMongoView$pt_BR dbMongoView = _Translations$cockpit$dbMongoView$pt_BR._(_root);
-	@override late final _Translations$cockpit$dbConnectionDialog$pt_BR dbConnectionDialog = _Translations$cockpit$dbConnectionDialog$pt_BR._(_root);
-	@override late final _Translations$cockpit$sshPrompts$pt_BR sshPrompts = _Translations$cockpit$sshPrompts$pt_BR._(_root);
-	@override late final _Translations$cockpit$projectsRail$pt_BR projectsRail = _Translations$cockpit$projectsRail$pt_BR._(_root);
-	@override late final _Translations$cockpit$findBar$pt_BR findBar = _Translations$cockpit$findBar$pt_BR._(_root);
-	@override late final _Translations$cockpit$contentSearch$pt_BR contentSearch = _Translations$cockpit$contentSearch$pt_BR._(_root);
-	@override late final _Translations$cockpit$topbar$pt_BR topbar = _Translations$cockpit$topbar$pt_BR._(_root);
-	@override late final _Translations$cockpit$tasks$pt_BR tasks = _Translations$cockpit$tasks$pt_BR._(_root);
-	@override late final _Translations$cockpit$notifications$pt_BR notifications = _Translations$cockpit$notifications$pt_BR._(_root);
-	@override late final _Translations$cockpit$terminalLink$pt_BR terminalLink = _Translations$cockpit$terminalLink$pt_BR._(_root);
-	@override late final _Translations$cockpit$terminal$pt_BR terminal = _Translations$cockpit$terminal$pt_BR._(_root);
-	@override late final _Translations$cockpit$remoteHost$pt_BR remoteHost = _Translations$cockpit$remoteHost$pt_BR._(_root);
-	@override late final _Translations$cockpit$browserPane$pt_BR browserPane = _Translations$cockpit$browserPane$pt_BR._(_root);
-	@override late final _Translations$cockpit$documentWindow$pt_BR documentWindow = _Translations$cockpit$documentWindow$pt_BR._(_root);
-	@override late final _Translations$cockpit$gallery$pt_BR gallery = _Translations$cockpit$gallery$pt_BR._(_root);
-	@override late final _Translations$cockpit$notebook$pt_BR notebook = _Translations$cockpit$notebook$pt_BR._(_root);
-	@override late final _Translations$cockpit$layoutPreview$pt_BR layoutPreview = _Translations$cockpit$layoutPreview$pt_BR._(_root);
-	@override late final _Translations$cockpit$telemetry$pt_BR telemetry = _Translations$cockpit$telemetry$pt_BR._(_root);
-	@override late final _Translations$cockpit$panelView$pt_BR panelView = _Translations$cockpit$panelView$pt_BR._(_root);
-	@override late final _Translations$cockpit$chat$pt_BR chat = _Translations$cockpit$chat$pt_BR._(_root);
-	@override late final _Translations$cockpit$farm$pt_BR farm = _Translations$cockpit$farm$pt_BR._(_root);
-	@override late final _Translations$cockpit$agentGraph$pt_BR agentGraph = _Translations$cockpit$agentGraph$pt_BR._(_root);
+	@override late final _Translations$gsh$confirmDialog$pt_BR confirmDialog = _Translations$gsh$confirmDialog$pt_BR._(_root);
+	@override late final _Translations$gsh$neovim$pt_BR neovim = _Translations$gsh$neovim$pt_BR._(_root);
+	@override late final _Translations$gsh$worktreeCreateDialog$pt_BR worktreeCreateDialog = _Translations$gsh$worktreeCreateDialog$pt_BR._(_root);
+	@override late final _Translations$gsh$commitMessageDialog$pt_BR commitMessageDialog = _Translations$gsh$commitMessageDialog$pt_BR._(_root);
+	@override late final _Translations$gsh$tasksPanel$pt_BR tasksPanel = _Translations$gsh$tasksPanel$pt_BR._(_root);
+	@override late final _Translations$gsh$gshPage$pt_BR gshPage = _Translations$gsh$gshPage$pt_BR._(_root);
+	@override late final _Translations$gsh$welcomeView$pt_BR welcomeView = _Translations$gsh$welcomeView$pt_BR._(_root);
+	@override late final _Translations$gsh$paneView$pt_BR paneView = _Translations$gsh$paneView$pt_BR._(_root);
+	@override late final _Translations$gsh$fileTreePanel$pt_BR fileTreePanel = _Translations$gsh$fileTreePanel$pt_BR._(_root);
+	@override late final _Translations$gsh$fileViewer$pt_BR fileViewer = _Translations$gsh$fileViewer$pt_BR._(_root);
+	@override late final _Translations$gsh$workspaceSettingsDialog$pt_BR workspaceSettingsDialog = _Translations$gsh$workspaceSettingsDialog$pt_BR._(_root);
+	@override late final _Translations$gsh$realmDialogs$pt_BR realmDialogs = _Translations$gsh$realmDialogs$pt_BR._(_root);
+	@override late final _Translations$gsh$dbRedisTable$pt_BR dbRedisTable = _Translations$gsh$dbRedisTable$pt_BR._(_root);
+	@override late final _Translations$gsh$dbQueryView$pt_BR dbQueryView = _Translations$gsh$dbQueryView$pt_BR._(_root);
+	@override late final _Translations$gsh$httpView$pt_BR httpView = _Translations$gsh$httpView$pt_BR._(_root);
+	@override late final _Translations$gsh$kanbanView$pt_BR kanbanView = _Translations$gsh$kanbanView$pt_BR._(_root);
+	@override late final _Translations$gsh$dbPanel$pt_BR dbPanel = _Translations$gsh$dbPanel$pt_BR._(_root);
+	@override late final _Translations$gsh$dbMongoView$pt_BR dbMongoView = _Translations$gsh$dbMongoView$pt_BR._(_root);
+	@override late final _Translations$gsh$dbConnectionDialog$pt_BR dbConnectionDialog = _Translations$gsh$dbConnectionDialog$pt_BR._(_root);
+	@override late final _Translations$gsh$sshPrompts$pt_BR sshPrompts = _Translations$gsh$sshPrompts$pt_BR._(_root);
+	@override late final _Translations$gsh$projectsRail$pt_BR projectsRail = _Translations$gsh$projectsRail$pt_BR._(_root);
+	@override late final _Translations$gsh$findBar$pt_BR findBar = _Translations$gsh$findBar$pt_BR._(_root);
+	@override late final _Translations$gsh$contentSearch$pt_BR contentSearch = _Translations$gsh$contentSearch$pt_BR._(_root);
+	@override late final _Translations$gsh$topbar$pt_BR topbar = _Translations$gsh$topbar$pt_BR._(_root);
+	@override late final _Translations$gsh$tasks$pt_BR tasks = _Translations$gsh$tasks$pt_BR._(_root);
+	@override late final _Translations$gsh$notifications$pt_BR notifications = _Translations$gsh$notifications$pt_BR._(_root);
+	@override late final _Translations$gsh$terminalLink$pt_BR terminalLink = _Translations$gsh$terminalLink$pt_BR._(_root);
+	@override late final _Translations$gsh$terminal$pt_BR terminal = _Translations$gsh$terminal$pt_BR._(_root);
+	@override late final _Translations$gsh$remoteHost$pt_BR remoteHost = _Translations$gsh$remoteHost$pt_BR._(_root);
+	@override late final _Translations$gsh$browserPane$pt_BR browserPane = _Translations$gsh$browserPane$pt_BR._(_root);
+	@override late final _Translations$gsh$documentWindow$pt_BR documentWindow = _Translations$gsh$documentWindow$pt_BR._(_root);
+	@override late final _Translations$gsh$gallery$pt_BR gallery = _Translations$gsh$gallery$pt_BR._(_root);
+	@override late final _Translations$gsh$notebook$pt_BR notebook = _Translations$gsh$notebook$pt_BR._(_root);
+	@override late final _Translations$gsh$layoutPreview$pt_BR layoutPreview = _Translations$gsh$layoutPreview$pt_BR._(_root);
+	@override late final _Translations$gsh$telemetry$pt_BR telemetry = _Translations$gsh$telemetry$pt_BR._(_root);
+	@override late final _Translations$gsh$panelView$pt_BR panelView = _Translations$gsh$panelView$pt_BR._(_root);
+	@override late final _Translations$gsh$chat$pt_BR chat = _Translations$gsh$chat$pt_BR._(_root);
+	@override late final _Translations$gsh$farm$pt_BR farm = _Translations$gsh$farm$pt_BR._(_root);
+	@override late final _Translations$gsh$agentGraph$pt_BR agentGraph = _Translations$gsh$agentGraph$pt_BR._(_root);
 }
 
 // Path: settings
@@ -305,9 +305,9 @@ class _Translations$core$menu$pt_BR extends Translations$core$menu$en {
 	@override String get zoom => 'Zoom';
 }
 
-// Path: cockpit.confirmDialog
-class _Translations$cockpit$confirmDialog$pt_BR extends Translations$cockpit$confirmDialog$en {
-	_Translations$cockpit$confirmDialog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.confirmDialog
+class _Translations$gsh$confirmDialog$pt_BR extends Translations$gsh$confirmDialog$en {
+	_Translations$gsh$confirmDialog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -318,9 +318,9 @@ class _Translations$cockpit$confirmDialog$pt_BR extends Translations$cockpit$con
 	@override String get saveAndClose => 'Salvar e fechar';
 }
 
-// Path: cockpit.neovim
-class _Translations$cockpit$neovim$pt_BR extends Translations$cockpit$neovim$en {
-	_Translations$cockpit$neovim$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.neovim
+class _Translations$gsh$neovim$pt_BR extends Translations$gsh$neovim$en {
+	_Translations$gsh$neovim$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -332,9 +332,9 @@ class _Translations$cockpit$neovim$pt_BR extends Translations$cockpit$neovim$en 
 	@override String get closeAnyway => 'Fechar mesmo assim';
 }
 
-// Path: cockpit.worktreeCreateDialog
-class _Translations$cockpit$worktreeCreateDialog$pt_BR extends Translations$cockpit$worktreeCreateDialog$en {
-	_Translations$cockpit$worktreeCreateDialog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.worktreeCreateDialog
+class _Translations$gsh$worktreeCreateDialog$pt_BR extends Translations$gsh$worktreeCreateDialog$en {
+	_Translations$gsh$worktreeCreateDialog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -368,9 +368,9 @@ class _Translations$cockpit$worktreeCreateDialog$pt_BR extends Translations$cock
 	@override String get back => 'Voltar';
 }
 
-// Path: cockpit.commitMessageDialog
-class _Translations$cockpit$commitMessageDialog$pt_BR extends Translations$cockpit$commitMessageDialog$en {
-	_Translations$cockpit$commitMessageDialog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.commitMessageDialog
+class _Translations$gsh$commitMessageDialog$pt_BR extends Translations$gsh$commitMessageDialog$en {
+	_Translations$gsh$commitMessageDialog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -391,9 +391,9 @@ class _Translations$cockpit$commitMessageDialog$pt_BR extends Translations$cockp
 	@override String get cancelGeneration => 'Cancelar geração';
 }
 
-// Path: cockpit.tasksPanel
-class _Translations$cockpit$tasksPanel$pt_BR extends Translations$cockpit$tasksPanel$en {
-	_Translations$cockpit$tasksPanel$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.tasksPanel
+class _Translations$gsh$tasksPanel$pt_BR extends Translations$gsh$tasksPanel$en {
+	_Translations$gsh$tasksPanel$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -418,9 +418,9 @@ class _Translations$cockpit$tasksPanel$pt_BR extends Translations$cockpit$tasksP
 	@override String composeConflicts({required Object labels}) => 'Tasks não Compose com rótulos conflitantes foram mantidas: ${labels}';
 }
 
-// Path: cockpit.cockpitPage
-class _Translations$cockpit$cockpitPage$pt_BR extends Translations$cockpit$cockpitPage$en {
-	_Translations$cockpit$cockpitPage$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.gshPage
+class _Translations$gsh$gshPage$pt_BR extends Translations$gsh$gshPage$en {
+	_Translations$gsh$gshPage$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -457,9 +457,9 @@ class _Translations$cockpit$cockpitPage$pt_BR extends Translations$cockpit$cockp
 	@override String get lspStopped => 'parado';
 }
 
-// Path: cockpit.welcomeView
-class _Translations$cockpit$welcomeView$pt_BR extends Translations$cockpit$welcomeView$en {
-	_Translations$cockpit$welcomeView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.welcomeView
+class _Translations$gsh$welcomeView$pt_BR extends Translations$gsh$welcomeView$en {
+	_Translations$gsh$welcomeView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -473,9 +473,9 @@ class _Translations$cockpit$welcomeView$pt_BR extends Translations$cockpit$welco
 	@override String get addWorkspace => 'Adicionar workspace';
 }
 
-// Path: cockpit.paneView
-class _Translations$cockpit$paneView$pt_BR extends Translations$cockpit$paneView$en {
-	_Translations$cockpit$paneView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.paneView
+class _Translations$gsh$paneView$pt_BR extends Translations$gsh$paneView$en {
+	_Translations$gsh$paneView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -512,9 +512,9 @@ class _Translations$cockpit$paneView$pt_BR extends Translations$cockpit$paneView
 	@override String get openAsHtml => 'Abrir como HTML';
 }
 
-// Path: cockpit.fileTreePanel
-class _Translations$cockpit$fileTreePanel$pt_BR extends Translations$cockpit$fileTreePanel$en {
-	_Translations$cockpit$fileTreePanel$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.fileTreePanel
+class _Translations$gsh$fileTreePanel$pt_BR extends Translations$gsh$fileTreePanel$en {
+	_Translations$gsh$fileTreePanel$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -634,9 +634,9 @@ class _Translations$cockpit$fileTreePanel$pt_BR extends Translations$cockpit$fil
 	@override String openInAgent({required Object harness}) => 'Abrir no ${harness}';
 }
 
-// Path: cockpit.fileViewer
-class _Translations$cockpit$fileViewer$pt_BR extends Translations$cockpit$fileViewer$en {
-	_Translations$cockpit$fileViewer$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.fileViewer
+class _Translations$gsh$fileViewer$pt_BR extends Translations$gsh$fileViewer$en {
+	_Translations$gsh$fileViewer$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -648,9 +648,9 @@ class _Translations$cockpit$fileViewer$pt_BR extends Translations$cockpit$fileVi
 	@override String get reload => 'Recarregar';
 }
 
-// Path: cockpit.workspaceSettingsDialog
-class _Translations$cockpit$workspaceSettingsDialog$pt_BR extends Translations$cockpit$workspaceSettingsDialog$en {
-	_Translations$cockpit$workspaceSettingsDialog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.workspaceSettingsDialog
+class _Translations$gsh$workspaceSettingsDialog$pt_BR extends Translations$gsh$workspaceSettingsDialog$en {
+	_Translations$gsh$workspaceSettingsDialog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -666,9 +666,9 @@ class _Translations$cockpit$workspaceSettingsDialog$pt_BR extends Translations$c
 	@override String get folder => 'Pasta';
 }
 
-// Path: cockpit.realmDialogs
-class _Translations$cockpit$realmDialogs$pt_BR extends Translations$cockpit$realmDialogs$en {
-	_Translations$cockpit$realmDialogs$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.realmDialogs
+class _Translations$gsh$realmDialogs$pt_BR extends Translations$gsh$realmDialogs$en {
+	_Translations$gsh$realmDialogs$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -689,9 +689,9 @@ class _Translations$cockpit$realmDialogs$pt_BR extends Translations$cockpit$real
 	);
 }
 
-// Path: cockpit.dbRedisTable
-class _Translations$cockpit$dbRedisTable$pt_BR extends Translations$cockpit$dbRedisTable$en {
-	_Translations$cockpit$dbRedisTable$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.dbRedisTable
+class _Translations$gsh$dbRedisTable$pt_BR extends Translations$gsh$dbRedisTable$en {
+	_Translations$gsh$dbRedisTable$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -720,9 +720,9 @@ class _Translations$cockpit$dbRedisTable$pt_BR extends Translations$cockpit$dbRe
 	@override String get searchHint => 'Buscar — padrão, ex.: user:*';
 }
 
-// Path: cockpit.dbQueryView
-class _Translations$cockpit$dbQueryView$pt_BR extends Translations$cockpit$dbQueryView$en {
-	_Translations$cockpit$dbQueryView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.dbQueryView
+class _Translations$gsh$dbQueryView$pt_BR extends Translations$gsh$dbQueryView$en {
+	_Translations$gsh$dbQueryView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -751,9 +751,9 @@ class _Translations$cockpit$dbQueryView$pt_BR extends Translations$cockpit$dbQue
 	@override String get copy => 'Copiar';
 }
 
-// Path: cockpit.httpView
-class _Translations$cockpit$httpView$pt_BR extends Translations$cockpit$httpView$en {
-	_Translations$cockpit$httpView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.httpView
+class _Translations$gsh$httpView$pt_BR extends Translations$gsh$httpView$en {
+	_Translations$gsh$httpView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -774,12 +774,12 @@ class _Translations$cockpit$httpView$pt_BR extends Translations$cockpit$httpView
 	@override String get headers => 'Headers';
 	@override String get raw => 'Text';
 	@override String get truncatedSuffix => ' · truncado (resposta grande demais)';
-	@override late final _Translations$cockpit$httpView$error$pt_BR error = _Translations$cockpit$httpView$error$pt_BR._(_root);
+	@override late final _Translations$gsh$httpView$error$pt_BR error = _Translations$gsh$httpView$error$pt_BR._(_root);
 }
 
-// Path: cockpit.kanbanView
-class _Translations$cockpit$kanbanView$pt_BR extends Translations$cockpit$kanbanView$en {
-	_Translations$cockpit$kanbanView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.kanbanView
+class _Translations$gsh$kanbanView$pt_BR extends Translations$gsh$kanbanView$en {
+	_Translations$gsh$kanbanView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -839,12 +839,12 @@ class _Translations$cockpit$kanbanView$pt_BR extends Translations$cockpit$kanban
 	@override String get startBoard => 'Começar um quadro';
 	@override String get couldNotSave => 'Não deu pra salvar o quadro';
 	@override String get unrecognizedBlock => 'Não reconhecido pelo parser — arrasta inteiro, sem edição inline.';
-	@override late final _Translations$cockpit$kanbanView$deleteColumnDialog$pt_BR deleteColumnDialog = _Translations$cockpit$kanbanView$deleteColumnDialog$pt_BR._(_root);
+	@override late final _Translations$gsh$kanbanView$deleteColumnDialog$pt_BR deleteColumnDialog = _Translations$gsh$kanbanView$deleteColumnDialog$pt_BR._(_root);
 }
 
-// Path: cockpit.dbPanel
-class _Translations$cockpit$dbPanel$pt_BR extends Translations$cockpit$dbPanel$en {
-	_Translations$cockpit$dbPanel$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.dbPanel
+class _Translations$gsh$dbPanel$pt_BR extends Translations$gsh$dbPanel$en {
+	_Translations$gsh$dbPanel$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -856,15 +856,15 @@ class _Translations$cockpit$dbPanel$pt_BR extends Translations$cockpit$dbPanel$e
 	@override String get browseKeys => 'Ver chaves';
 	@override String get deleteConnectionTitle => 'Excluir conexão';
 	@override String deleteConnectionMessage({required Object name}) => 'Remover "${name}" deste workspace? Qualquer senha salva será descartada. Arquivos .dbq que fazem referência a ela não são afetados.';
-	@override String footer({required Object n}) => '.cockpit/databases.json · ${n} conexões';
-	@override String get footerOne => '.cockpit/databases.json · 1 conexão';
+	@override String footer({required Object n}) => '.gsh/databases.json · ${n} conexões';
+	@override String get footerOne => '.gsh/databases.json · 1 conexão';
 	@override String get noConnections => 'Nenhuma conexão ainda.';
 	@override String get passwordRequired => 'Senha não encontrada no host. Abra esta conexão e digite-a de novo — ela fica salva na máquina que executa o banco, não nesta.';
 }
 
-// Path: cockpit.dbMongoView
-class _Translations$cockpit$dbMongoView$pt_BR extends Translations$cockpit$dbMongoView$en {
-	_Translations$cockpit$dbMongoView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.dbMongoView
+class _Translations$gsh$dbMongoView$pt_BR extends Translations$gsh$dbMongoView$en {
+	_Translations$gsh$dbMongoView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -885,9 +885,9 @@ class _Translations$cockpit$dbMongoView$pt_BR extends Translations$cockpit$dbMon
 	@override String get insert => 'Inserir';
 }
 
-// Path: cockpit.dbConnectionDialog
-class _Translations$cockpit$dbConnectionDialog$pt_BR extends Translations$cockpit$dbConnectionDialog$en {
-	_Translations$cockpit$dbConnectionDialog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.dbConnectionDialog
+class _Translations$gsh$dbConnectionDialog$pt_BR extends Translations$gsh$dbConnectionDialog$en {
+	_Translations$gsh$dbConnectionDialog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -921,9 +921,9 @@ class _Translations$cockpit$dbConnectionDialog$pt_BR extends Translations$cockpi
 	@override String get passwordOnHost => 'A senha fica salva no host, não nesta máquina.';
 }
 
-// Path: cockpit.sshPrompts
-class _Translations$cockpit$sshPrompts$pt_BR extends Translations$cockpit$sshPrompts$en {
-	_Translations$cockpit$sshPrompts$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.sshPrompts
+class _Translations$gsh$sshPrompts$pt_BR extends Translations$gsh$sshPrompts$en {
+	_Translations$gsh$sshPrompts$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -938,9 +938,9 @@ class _Translations$cockpit$sshPrompts$pt_BR extends Translations$cockpit$sshPro
 	@override String get unlock => 'Desbloquear';
 }
 
-// Path: cockpit.projectsRail
-class _Translations$cockpit$projectsRail$pt_BR extends Translations$cockpit$projectsRail$en {
-	_Translations$cockpit$projectsRail$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.projectsRail
+class _Translations$gsh$projectsRail$pt_BR extends Translations$gsh$projectsRail$en {
+	_Translations$gsh$projectsRail$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -976,9 +976,9 @@ class _Translations$cockpit$projectsRail$pt_BR extends Translations$cockpit$proj
 	@override String get collapseWorktrees => 'Recolher worktrees';
 }
 
-// Path: cockpit.findBar
-class _Translations$cockpit$findBar$pt_BR extends Translations$cockpit$findBar$en {
-	_Translations$cockpit$findBar$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.findBar
+class _Translations$gsh$findBar$pt_BR extends Translations$gsh$findBar$en {
+	_Translations$gsh$findBar$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -994,9 +994,9 @@ class _Translations$cockpit$findBar$pt_BR extends Translations$cockpit$findBar$e
 	@override String get noResults => 'Nenhum resultado';
 }
 
-// Path: cockpit.contentSearch
-class _Translations$cockpit$contentSearch$pt_BR extends Translations$cockpit$contentSearch$en {
-	_Translations$cockpit$contentSearch$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.contentSearch
+class _Translations$gsh$contentSearch$pt_BR extends Translations$gsh$contentSearch$en {
+	_Translations$gsh$contentSearch$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1012,9 +1012,9 @@ class _Translations$cockpit$contentSearch$pt_BR extends Translations$cockpit$con
 	@override String get noResults => 'Nenhum resultado.';
 }
 
-// Path: cockpit.topbar
-class _Translations$cockpit$topbar$pt_BR extends Translations$cockpit$topbar$en {
-	_Translations$cockpit$topbar$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.topbar
+class _Translations$gsh$topbar$pt_BR extends Translations$gsh$topbar$en {
+	_Translations$gsh$topbar$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1028,9 +1028,9 @@ class _Translations$cockpit$topbar$pt_BR extends Translations$cockpit$topbar$en 
 	@override String get openChat => 'Chat com o Claude (beta)';
 }
 
-// Path: cockpit.tasks
-class _Translations$cockpit$tasks$pt_BR extends Translations$cockpit$tasks$en {
-	_Translations$cockpit$tasks$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.tasks
+class _Translations$gsh$tasks$pt_BR extends Translations$gsh$tasks$en {
+	_Translations$gsh$tasks$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1042,9 +1042,9 @@ class _Translations$cockpit$tasks$pt_BR extends Translations$cockpit$tasks$en {
 	@override String get quit => 'Sair';
 }
 
-// Path: cockpit.notifications
-class _Translations$cockpit$notifications$pt_BR extends Translations$cockpit$notifications$en {
-	_Translations$cockpit$notifications$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.notifications
+class _Translations$gsh$notifications$pt_BR extends Translations$gsh$notifications$en {
+	_Translations$gsh$notifications$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1054,9 +1054,9 @@ class _Translations$cockpit$notifications$pt_BR extends Translations$cockpit$not
 	@override String get agentNeedsAction => 'Agente precisa de você';
 }
 
-// Path: cockpit.terminalLink
-class _Translations$cockpit$terminalLink$pt_BR extends Translations$cockpit$terminalLink$en {
-	_Translations$cockpit$terminalLink$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.terminalLink
+class _Translations$gsh$terminalLink$pt_BR extends Translations$gsh$terminalLink$en {
+	_Translations$gsh$terminalLink$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1070,20 +1070,20 @@ class _Translations$cockpit$terminalLink$pt_BR extends Translations$cockpit$term
 	@override String get copyLink => 'Copiar link';
 }
 
-// Path: cockpit.terminal
-class _Translations$cockpit$terminal$pt_BR extends Translations$cockpit$terminal$en {
-	_Translations$cockpit$terminal$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.terminal
+class _Translations$gsh$terminal$pt_BR extends Translations$gsh$terminal$en {
+	_Translations$gsh$terminal$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
 	// Translations
 	@override String cwdFallbackWarning({required Object requested, required Object path}) => 'Aviso: a pasta "${requested}" não existe. Este terminal abriu em "${path}".';
-	@override String workspaceEnvTracked({required Object keys}) => 'Aviso: o .env.cockpit está rastreado pelo git (veio com o repositório). Injetado: ${keys}';
+	@override String workspaceEnvTracked({required Object keys}) => 'Aviso: o .env.gsh está rastreado pelo git (veio com o repositório). Injetado: ${keys}';
 }
 
-// Path: cockpit.remoteHost
-class _Translations$cockpit$remoteHost$pt_BR extends Translations$cockpit$remoteHost$en {
-	_Translations$cockpit$remoteHost$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.remoteHost
+class _Translations$gsh$remoteHost$pt_BR extends Translations$gsh$remoteHost$en {
+	_Translations$gsh$remoteHost$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1138,9 +1138,9 @@ class _Translations$cockpit$remoteHost$pt_BR extends Translations$cockpit$remote
 	@override String get errIdentityUnreadable => 'Não foi possível ler esse arquivo.';
 }
 
-// Path: cockpit.browserPane
-class _Translations$cockpit$browserPane$pt_BR extends Translations$cockpit$browserPane$en {
-	_Translations$cockpit$browserPane$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.browserPane
+class _Translations$gsh$browserPane$pt_BR extends Translations$gsh$browserPane$en {
+	_Translations$gsh$browserPane$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1152,9 +1152,9 @@ class _Translations$cockpit$browserPane$pt_BR extends Translations$cockpit$brows
 	@override String get go => 'Ir';
 }
 
-// Path: cockpit.documentWindow
-class _Translations$cockpit$documentWindow$pt_BR extends Translations$cockpit$documentWindow$en {
-	_Translations$cockpit$documentWindow$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.documentWindow
+class _Translations$gsh$documentWindow$pt_BR extends Translations$gsh$documentWindow$en {
+	_Translations$gsh$documentWindow$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1163,29 +1163,29 @@ class _Translations$cockpit$documentWindow$pt_BR extends Translations$cockpit$do
 	@override String fileNotFound({required Object path}) => 'Arquivo não encontrado: ${path}';
 }
 
-// Path: cockpit.gallery
-class _Translations$cockpit$gallery$pt_BR extends Translations$cockpit$gallery$en {
-	_Translations$cockpit$gallery$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.gallery
+class _Translations$gsh$gallery$pt_BR extends Translations$gsh$gallery$en {
+	_Translations$gsh$gallery$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
 	// Translations
 	@override String get intro => 'Documentos especiais do GSH Desktop para que você tenha o visual do que o agente de IA esteja fazendo.';
 	@override String get createErrorTitle => 'Não foi possível criar o arquivo';
-	@override late final _Translations$cockpit$gallery$dbQuery$pt_BR dbQuery = _Translations$cockpit$gallery$dbQuery$pt_BR._(_root);
-	@override late final _Translations$cockpit$gallery$kanban$pt_BR kanban = _Translations$cockpit$gallery$kanban$pt_BR._(_root);
-	@override late final _Translations$cockpit$gallery$layout$pt_BR layout = _Translations$cockpit$gallery$layout$pt_BR._(_root);
-	@override late final _Translations$cockpit$gallery$httpRequest$pt_BR httpRequest = _Translations$cockpit$gallery$httpRequest$pt_BR._(_root);
-	@override late final _Translations$cockpit$gallery$html$pt_BR html = _Translations$cockpit$gallery$html$pt_BR._(_root);
-	@override late final _Translations$cockpit$gallery$tasks$pt_BR tasks = _Translations$cockpit$gallery$tasks$pt_BR._(_root);
-	@override late final _Translations$cockpit$gallery$notebook$pt_BR notebook = _Translations$cockpit$gallery$notebook$pt_BR._(_root);
-	@override late final _Translations$cockpit$gallery$workspaceEnv$pt_BR workspaceEnv = _Translations$cockpit$gallery$workspaceEnv$pt_BR._(_root);
-	@override late final _Translations$cockpit$gallery$panel$pt_BR panel = _Translations$cockpit$gallery$panel$pt_BR._(_root);
+	@override late final _Translations$gsh$gallery$dbQuery$pt_BR dbQuery = _Translations$gsh$gallery$dbQuery$pt_BR._(_root);
+	@override late final _Translations$gsh$gallery$kanban$pt_BR kanban = _Translations$gsh$gallery$kanban$pt_BR._(_root);
+	@override late final _Translations$gsh$gallery$layout$pt_BR layout = _Translations$gsh$gallery$layout$pt_BR._(_root);
+	@override late final _Translations$gsh$gallery$httpRequest$pt_BR httpRequest = _Translations$gsh$gallery$httpRequest$pt_BR._(_root);
+	@override late final _Translations$gsh$gallery$html$pt_BR html = _Translations$gsh$gallery$html$pt_BR._(_root);
+	@override late final _Translations$gsh$gallery$tasks$pt_BR tasks = _Translations$gsh$gallery$tasks$pt_BR._(_root);
+	@override late final _Translations$gsh$gallery$notebook$pt_BR notebook = _Translations$gsh$gallery$notebook$pt_BR._(_root);
+	@override late final _Translations$gsh$gallery$workspaceEnv$pt_BR workspaceEnv = _Translations$gsh$gallery$workspaceEnv$pt_BR._(_root);
+	@override late final _Translations$gsh$gallery$panel$pt_BR panel = _Translations$gsh$gallery$panel$pt_BR._(_root);
 }
 
-// Path: cockpit.notebook
-class _Translations$cockpit$notebook$pt_BR extends Translations$cockpit$notebook$en {
-	_Translations$cockpit$notebook$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.notebook
+class _Translations$gsh$notebook$pt_BR extends Translations$gsh$notebook$en {
+	_Translations$gsh$notebook$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1205,7 +1205,7 @@ class _Translations$cockpit$notebook$pt_BR extends Translations$cockpit$notebook
 	@override String get deleteNote => 'Apagar nota';
 	@override String deleteConfirm({required Object name}) => 'Mover “${name}” pra lixeira?';
 	@override String get imageFailed => 'Não foi possível salvar a imagem';
-	@override late final _Translations$cockpit$notebook$format$pt_BR format = _Translations$cockpit$notebook$format$pt_BR._(_root);
+	@override late final _Translations$gsh$notebook$format$pt_BR format = _Translations$gsh$notebook$format$pt_BR._(_root);
 	@override String get backlinks => 'Citada em';
 	@override String get renameTag => 'Renomear tag';
 	@override String get deleteTag => 'Apagar tag';
@@ -1214,15 +1214,15 @@ class _Translations$cockpit$notebook$pt_BR extends Translations$cockpit$notebook
 	@override String get hideList => 'Ocultar lista de notas';
 }
 
-// Path: cockpit.layoutPreview
-class _Translations$cockpit$layoutPreview$pt_BR extends Translations$cockpit$layoutPreview$en {
-	_Translations$cockpit$layoutPreview$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.layoutPreview
+class _Translations$gsh$layoutPreview$pt_BR extends Translations$gsh$layoutPreview$en {
+	_Translations$gsh$layoutPreview$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
 	// Translations
 	@override String get applyFailedTitle => 'Não foi possível aplicar o layout';
-	@override String get applyInCockpit => 'Aplicar no GSH Desktop';
+	@override String get applyInGsh => 'Aplicar no GSH Desktop';
 	@override String get applyNewWorkspace => 'Abrir como novo workspace';
 	@override String applyTo({required Object workspace}) => 'Aplicar em ${workspace}';
 	@override String get autorunWorktree => 'autorun: worktree. Este layout também é aplicado sozinho quando você cria uma worktree do workspace onde ele está.';
@@ -1239,9 +1239,9 @@ class _Translations$cockpit$layoutPreview$pt_BR extends Translations$cockpit$lay
 	@override String subtitle({required Object n}) => 'Este layout abre ${n} terminais. Leia os comandos antes de aplicar.';
 }
 
-// Path: cockpit.telemetry
-class _Translations$cockpit$telemetry$pt_BR extends Translations$cockpit$telemetry$en {
-	_Translations$cockpit$telemetry$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.telemetry
+class _Translations$gsh$telemetry$pt_BR extends Translations$gsh$telemetry$en {
+	_Translations$gsh$telemetry$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1263,7 +1263,7 @@ class _Translations$cockpit$telemetry$pt_BR extends Translations$cockpit$telemet
 	@override String get tagResolved => 'resolvido';
 	@override String get tagIgnored => 'ignorado';
 	@override String get srcTask => 'task';
-	@override String get srcWrapper => 'cockpit telemetry';
+	@override String get srcWrapper => 'gsh telemetry';
 	@override String run({required Object id}) => 'run ${id}';
 	@override String get resolve => 'Marcar resolvido';
 	@override String get ignore => 'Ignorar (some para os agentes também)';
@@ -1310,9 +1310,9 @@ class _Translations$cockpit$telemetry$pt_BR extends Translations$cockpit$telemet
 	@override String get chipApp => 'GSH Desktop';
 }
 
-// Path: cockpit.panelView
-class _Translations$cockpit$panelView$pt_BR extends Translations$cockpit$panelView$en {
-	_Translations$cockpit$panelView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.panelView
+class _Translations$gsh$panelView$pt_BR extends Translations$gsh$panelView$en {
+	_Translations$gsh$panelView$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1322,9 +1322,9 @@ class _Translations$cockpit$panelView$pt_BR extends Translations$cockpit$panelVi
 	@override String get openAsHtml => 'Abrir como HTML';
 }
 
-// Path: cockpit.chat
-class _Translations$cockpit$chat$pt_BR extends Translations$cockpit$chat$en {
-	_Translations$cockpit$chat$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.chat
+class _Translations$gsh$chat$pt_BR extends Translations$gsh$chat$en {
+	_Translations$gsh$chat$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1386,9 +1386,9 @@ class _Translations$cockpit$chat$pt_BR extends Translations$cockpit$chat$en {
 	@override String get stateFailed => 'Falhou';
 }
 
-// Path: cockpit.farm
-class _Translations$cockpit$farm$pt_BR extends Translations$cockpit$farm$en {
-	_Translations$cockpit$farm$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.farm
+class _Translations$gsh$farm$pt_BR extends Translations$gsh$farm$en {
+	_Translations$gsh$farm$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1406,12 +1406,12 @@ class _Translations$cockpit$farm$pt_BR extends Translations$cockpit$farm$en {
 	@override String get outsideGsh => 'Este agente está rodando fora do GSH Desktop. O terminal dele está em outra janela.';
 	@override String agents({required Object n}) => '${n} agentes';
 	@override String subagents({required Object n}) => '${n} subagentes';
-	@override late final _Translations$cockpit$farm$activity$pt_BR activity = _Translations$cockpit$farm$activity$pt_BR._(_root);
+	@override late final _Translations$gsh$farm$activity$pt_BR activity = _Translations$gsh$farm$activity$pt_BR._(_root);
 }
 
-// Path: cockpit.agentGraph
-class _Translations$cockpit$agentGraph$pt_BR extends Translations$cockpit$agentGraph$en {
-	_Translations$cockpit$agentGraph$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.agentGraph
+class _Translations$gsh$agentGraph$pt_BR extends Translations$gsh$agentGraph$en {
+	_Translations$gsh$agentGraph$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1436,7 +1436,7 @@ class _Translations$cockpit$agentGraph$pt_BR extends Translations$cockpit$agentG
 	@override String get tabAgent => 'Agente';
 	@override String get name => 'Nome do terminal';
 	@override String get namePlaceholder => 'ex.: Revisor';
-	@override String get nameTaken => 'Outra aba já usa este nome. Os nomes precisam ser únicos para o `cockpit msg --to` achar a aba.';
+	@override String get nameTaken => 'Outra aba já usa este nome. Os nomes precisam ser únicos para o `gsh msg --to` achar a aba.';
 	@override String get command => 'Comando';
 	@override String get commandPlaceholder => 'ex.: claude --model opus (vazio = shell)';
 	@override String get cwd => 'Diretório de trabalho';
@@ -1467,10 +1467,10 @@ class _Translations$cockpit$agentGraph$pt_BR extends Translations$cockpit$agentG
 	@override String queued({required Object n}) => '${n} na fila';
 	@override String get agentName => 'Nome';
 	@override String get integration => 'Integração';
-	@override String get integrationHint => 'O GSH Desktop adiciona um servidor MCP chamado "cockpit" a este arquivo e salva um backup ao lado. Os outros servidores não são tocados.';
+	@override String get integrationHint => 'O GSH Desktop adiciona um servidor MCP chamado "gsh" a este arquivo e salva um backup ao lado. Os outros servidores não são tocados.';
 	@override String integrationConsent({required Object app}) => 'Adicionar o servidor MCP do GSH Desktop ao config do ${app}';
 	@override String restartHint({required Object app}) => 'Reinicie o ${app} se ele já estava aberto, para carregar o servidor MCP do GSH Desktop; depois peça a ele para chamar wait_messages.';
-	@override late final _Translations$cockpit$agentGraph$integrationError$pt_BR integrationError = _Translations$cockpit$agentGraph$integrationError$pt_BR._(_root);
+	@override late final _Translations$gsh$agentGraph$integrationError$pt_BR integrationError = _Translations$gsh$agentGraph$integrationError$pt_BR._(_root);
 }
 
 // Path: settings.language
@@ -1550,7 +1550,7 @@ class _Translations$settings$remoteHosts$pt_BR extends Translations$settings$rem
 	@override String get statusOffline => 'Offline';
 	@override String get statusIdle => 'Não conectado';
 	@override String get helpTitle => 'Como funciona';
-	@override String get helpBody => 'O GSH Desktop conecta na sua máquina por SSH e fala com um servidor pequeno que roda os terminais, arquivos e git lá. O host precisa ter o GSH Desktop (desktop) ou o cockpit-server instalado e rodando, e a chave pública deste dispositivo adicionada no ~/.ssh/authorized_keys dele.';
+	@override String get helpBody => 'O GSH Desktop conecta na sua máquina por SSH e fala com um servidor pequeno que roda os terminais, arquivos e git lá. O host precisa ter o GSH Desktop (desktop) ou o gsh-server instalado e rodando, e a chave pública deste dispositivo adicionada no ~/.ssh/authorized_keys dele.';
 }
 
 // Path: automation.error
@@ -1627,9 +1627,9 @@ class _Translations$theme$error$pt_BR extends Translations$theme$error$en {
 	@override String get noVariants => 'O tema não declara nenhum variant. Adicione "dark", "light" ou os dois em "variants".';
 }
 
-// Path: cockpit.httpView.error
-class _Translations$cockpit$httpView$error$pt_BR extends Translations$cockpit$httpView$error$en {
-	_Translations$cockpit$httpView$error$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.httpView.error
+class _Translations$gsh$httpView$error$pt_BR extends Translations$gsh$httpView$error$en {
+	_Translations$gsh$httpView$error$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1646,9 +1646,9 @@ class _Translations$cockpit$httpView$error$pt_BR extends Translations$cockpit$ht
 	@override String responseTooLarge({required Object bytes}) => 'A resposta passou do limite de ${bytes} bytes.';
 }
 
-// Path: cockpit.kanbanView.deleteColumnDialog
-class _Translations$cockpit$kanbanView$deleteColumnDialog$pt_BR extends Translations$cockpit$kanbanView$deleteColumnDialog$en {
-	_Translations$cockpit$kanbanView$deleteColumnDialog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.kanbanView.deleteColumnDialog
+class _Translations$gsh$kanbanView$deleteColumnDialog$pt_BR extends Translations$gsh$kanbanView$deleteColumnDialog$en {
+	_Translations$gsh$kanbanView$deleteColumnDialog$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1660,9 +1660,9 @@ class _Translations$cockpit$kanbanView$deleteColumnDialog$pt_BR extends Translat
 	@override String get emptyMessage => 'Esta coluna está vazia.';
 }
 
-// Path: cockpit.gallery.dbQuery
-class _Translations$cockpit$gallery$dbQuery$pt_BR extends Translations$cockpit$gallery$dbQuery$en {
-	_Translations$cockpit$gallery$dbQuery$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.gallery.dbQuery
+class _Translations$gsh$gallery$dbQuery$pt_BR extends Translations$gsh$gallery$dbQuery$en {
+	_Translations$gsh$gallery$dbQuery$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1671,9 +1671,9 @@ class _Translations$cockpit$gallery$dbQuery$pt_BR extends Translations$cockpit$g
 	@override String get description => 'Editor SQL com grid de resultado, usando uma das conexões registradas.';
 }
 
-// Path: cockpit.gallery.kanban
-class _Translations$cockpit$gallery$kanban$pt_BR extends Translations$cockpit$gallery$kanban$en {
-	_Translations$cockpit$gallery$kanban$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.gallery.kanban
+class _Translations$gsh$gallery$kanban$pt_BR extends Translations$gsh$gallery$kanban$en {
+	_Translations$gsh$gallery$kanban$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1682,9 +1682,9 @@ class _Translations$cockpit$gallery$kanban$pt_BR extends Translations$cockpit$ga
 	@override String get description => 'Colunas e cards gravados como markdown puro. Arraste, edite e comente.';
 }
 
-// Path: cockpit.gallery.layout
-class _Translations$cockpit$gallery$layout$pt_BR extends Translations$cockpit$gallery$layout$en {
-	_Translations$cockpit$gallery$layout$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.gallery.layout
+class _Translations$gsh$gallery$layout$pt_BR extends Translations$gsh$gallery$layout$en {
+	_Translations$gsh$gallery$layout$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1693,9 +1693,9 @@ class _Translations$cockpit$gallery$layout$pt_BR extends Translations$cockpit$ga
 	@override String get description => 'Terminais e splits para abrir de uma vez, estilo tmuxinator. Pode rodar sozinho em worktrees novas.';
 }
 
-// Path: cockpit.gallery.httpRequest
-class _Translations$cockpit$gallery$httpRequest$pt_BR extends Translations$cockpit$gallery$httpRequest$en {
-	_Translations$cockpit$gallery$httpRequest$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.gallery.httpRequest
+class _Translations$gsh$gallery$httpRequest$pt_BR extends Translations$gsh$gallery$httpRequest$en {
+	_Translations$gsh$gallery$httpRequest$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1704,9 +1704,9 @@ class _Translations$cockpit$gallery$httpRequest$pt_BR extends Translations$cockp
 	@override String get description => 'Escreva requests num arquivo e execute com a resposta ao lado.';
 }
 
-// Path: cockpit.gallery.html
-class _Translations$cockpit$gallery$html$pt_BR extends Translations$cockpit$gallery$html$en {
-	_Translations$cockpit$gallery$html$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.gallery.html
+class _Translations$gsh$gallery$html$pt_BR extends Translations$gsh$gallery$html$en {
+	_Translations$gsh$gallery$html$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1715,20 +1715,20 @@ class _Translations$cockpit$gallery$html$pt_BR extends Translations$cockpit$gall
 	@override String get description => 'Uma página que o agente escreve e o GSH Desktop renderiza direto: mapa mental, diagrama, gráfico, o que precisar.';
 }
 
-// Path: cockpit.gallery.tasks
-class _Translations$cockpit$gallery$tasks$pt_BR extends Translations$cockpit$gallery$tasks$en {
-	_Translations$cockpit$gallery$tasks$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.gallery.tasks
+class _Translations$gsh$gallery$tasks$pt_BR extends Translations$gsh$gallery$tasks$en {
+	_Translations$gsh$gallery$tasks$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
 	// Translations
 	@override String get title => 'Tarefas';
-	@override String get description => 'Comandos para rodar pelo painel de Tasks, como dev server, testes e build. Fica em .cockpit/tasks.json.';
+	@override String get description => 'Comandos para rodar pelo painel de Tasks, como dev server, testes e build. Fica em .gsh/tasks.json.';
 }
 
-// Path: cockpit.gallery.notebook
-class _Translations$cockpit$gallery$notebook$pt_BR extends Translations$cockpit$gallery$notebook$en {
-	_Translations$cockpit$gallery$notebook$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.gallery.notebook
+class _Translations$gsh$gallery$notebook$pt_BR extends Translations$gsh$gallery$notebook$en {
+	_Translations$gsh$gallery$notebook$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1737,9 +1737,9 @@ class _Translations$cockpit$gallery$notebook$pt_BR extends Translations$cockpit$
 	@override String get description => 'Uma pasta de notas curtas com tags. O agente escreve, você lê e edita. Abre no Obsidian também.';
 }
 
-// Path: cockpit.gallery.workspaceEnv
-class _Translations$cockpit$gallery$workspaceEnv$pt_BR extends Translations$cockpit$gallery$workspaceEnv$en {
-	_Translations$cockpit$gallery$workspaceEnv$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.gallery.workspaceEnv
+class _Translations$gsh$gallery$workspaceEnv$pt_BR extends Translations$gsh$gallery$workspaceEnv$en {
+	_Translations$gsh$gallery$workspaceEnv$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1748,9 +1748,9 @@ class _Translations$cockpit$gallery$workspaceEnv$pt_BR extends Translations$cock
 	@override String get description => 'Variáveis injetadas em todo terminal deste workspace. Coloque tokens ou logins de API aqui em vez de colar no prompt do agente. Fica fora do git.';
 }
 
-// Path: cockpit.gallery.panel
-class _Translations$cockpit$gallery$panel$pt_BR extends Translations$cockpit$gallery$panel$en {
-	_Translations$cockpit$gallery$panel$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.gallery.panel
+class _Translations$gsh$gallery$panel$pt_BR extends Translations$gsh$gallery$panel$en {
+	_Translations$gsh$gallery$panel$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1759,9 +1759,9 @@ class _Translations$cockpit$gallery$panel$pt_BR extends Translations$cockpit$gal
 	@override String get description => 'Uma página HTML com ponte para o app: os botões rodam comandos da CLI do GSH Desktop e do shell nesta máquina. Um playground para dashboards rápidos.';
 }
 
-// Path: cockpit.notebook.format
-class _Translations$cockpit$notebook$format$pt_BR extends Translations$cockpit$notebook$format$en {
-	_Translations$cockpit$notebook$format$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.notebook.format
+class _Translations$gsh$notebook$format$pt_BR extends Translations$gsh$notebook$format$en {
+	_Translations$gsh$notebook$format$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1785,9 +1785,9 @@ class _Translations$cockpit$notebook$format$pt_BR extends Translations$cockpit$n
 	@override String get image => 'Inserir imagem…';
 }
 
-// Path: cockpit.farm.activity
-class _Translations$cockpit$farm$activity$pt_BR extends Translations$cockpit$farm$activity$en {
-	_Translations$cockpit$farm$activity$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.farm.activity
+class _Translations$gsh$farm$activity$pt_BR extends Translations$gsh$farm$activity$en {
+	_Translations$gsh$farm$activity$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1805,9 +1805,9 @@ class _Translations$cockpit$farm$activity$pt_BR extends Translations$cockpit$far
 	@override String get done => 'concluído';
 }
 
-// Path: cockpit.agentGraph.integrationError
-class _Translations$cockpit$agentGraph$integrationError$pt_BR extends Translations$cockpit$agentGraph$integrationError$en {
-	_Translations$cockpit$agentGraph$integrationError$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+// Path: gsh.agentGraph.integrationError
+class _Translations$gsh$agentGraph$integrationError$pt_BR extends Translations$gsh$agentGraph$integrationError$en {
+	_Translations$gsh$agentGraph$integrationError$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
 
 	final TranslationsPtBr _root; // ignore: unused_field
 
@@ -1873,13 +1873,13 @@ class _Translations$settings$page$general$pt_BR extends Translations$settings$pa
 	// Translations
 	@override String get sectionEditor => 'Editor';
 	@override String get editorEngineTitle => 'Motor';
-	@override String get editorEngineCockpit => 'GSH Desktop (padrão)';
+	@override String get editorEngineGsh => 'GSH Desktop (padrão)';
 	@override String get editorEngineNeovim => 'Neovim';
 	@override String get neovimChecking => 'Procurando o Neovim…';
 	@override String get neovimNotFound => 'O Neovim não foi encontrado na PATH do seu shell.';
 	@override String get neovimRefresh => 'Verificar novamente';
-	@override String get showCockpitTitle => 'Mostrar terminal do GSH Desktop';
-	@override String get showCockpitDesc => 'Mantém um workspace sem pasta, só de terminal, fixado no topo da barra lateral. Desligar fecha seus terminais.';
+	@override String get showGshTitle => 'Mostrar terminal do GSH Desktop';
+	@override String get showGshDesc => 'Mantém um workspace sem pasta, só de terminal, fixado no topo da barra lateral. Desligar fecha seus terminais.';
 	@override String get launchAtStartupTitle => 'Iniciar ao ligar';
 	@override String get launchAtStartupDesc => 'Inicia o GSH Desktop automaticamente quando você faz login no computador.';
 	@override String get sectionUpdates => 'Atualizações';
@@ -1934,7 +1934,7 @@ class _Translations$settings$page$storage$pt_BR extends Translations$settings$pa
 	@override String get restartUseDefaultMessage => 'O GSH Desktop usará o local padrão do sistema a partir da próxima abertura. Seus dados na pasta personalizada permanecem intactos.';
 	@override String get restartResetMessage => 'Todos os dados do GSH Desktop foram apagados. Reinicie para começar do zero.';
 	@override String get later => 'Mais tarde';
-	@override String get quitCockpit => 'Sair do GSH Desktop';
+	@override String get quitGsh => 'Sair do GSH Desktop';
 	@override String get chooseFolderDialogTitle => 'Escolha uma pasta para os dados do GSH Desktop';
 }
 
@@ -2621,845 +2621,845 @@ extension on TranslationsPtBr {
 			'common.copyCode' => 'Copiar código',
 			'common.search' => 'Buscar',
 			'common.noResults' => 'Nenhum resultado',
-			'cockpit.confirmDialog.unsavedChangesTitle' => 'Alterações não salvas',
-			'cockpit.confirmDialog.unsavedChangesMessage' => ({required Object fileName}) => '“${fileName}” tem alterações não salvas. Salvar antes de fechar?',
-			'cockpit.confirmDialog.dontSave' => 'Não salvar',
-			'cockpit.confirmDialog.saveAndClose' => 'Salvar e fechar',
-			'cockpit.neovim.unavailable' => 'O Neovim não está disponível. Abrindo no GSH Desktop.',
-			'cockpit.neovim.openFailed' => 'Não foi possível acessar o Neovim. Abrindo no GSH Desktop.',
-			'cockpit.neovim.unsavedTitle' => 'Buffers não salvos no Neovim',
-			'cockpit.neovim.unsavedMessage' => 'O Neovim tem buffers modificados. Fechar a aba e descartar essas alterações?',
-			'cockpit.neovim.closeAnyway' => 'Fechar mesmo assim',
-			'cockpit.worktreeCreateDialog.forkTitle' => 'Fork da worktree',
-			'cockpit.worktreeCreateDialog.createTitle' => 'Criar worktree',
-			'cockpit.worktreeCreateDialog.forkSubtitle' => ({required Object root}) => 'Nova worktree ramificada a partir de ${root}.',
-			'cockpit.worktreeCreateDialog.createSubtitle' => ({required Object root}) => 'Nova feature em ${root} — novo branch a partir do HEAD atual.',
-			'cockpit.worktreeCreateDialog.namePlaceholder' => 'feat/minha-feature',
-			'cockpit.worktreeCreateDialog.errorWhitespace' => 'Sem espaços no nome.',
-			'cockpit.worktreeCreateDialog.errorInvalidChar' => 'Caractere inválido para nome de branch.',
-			'cockpit.worktreeCreateDialog.errorInvalidSequence' => 'Sequência inválida (ex.: "..", "//", começar/terminar com "/").',
-			'cockpit.worktreeCreateDialog.errorReserved' => 'Posição reservada (não comece com "-"/"." nem termine com ".lock").',
-			'cockpit.worktreeCreateDialog.errorDuplicateBranch' => 'Já existe um branch com esse nome.',
-			'cockpit.worktreeCreateDialog.errorDuplicateWorktree' => 'Já existe uma worktree com esse nome.',
-			'cockpit.worktreeCreateDialog.errorBranchHierarchyConflict' => ({required Object target, required Object existing}) => 'Não é possível criar o branch \'${target}\' porque ele conflita com o branch \'${existing}\' já existente.',
-			'cockpit.worktreeCreateDialog.errorBranchHierarchicalConflictGeneral' => 'Já existe um branch com uma hierarquia conflitante.',
-			'cockpit.worktreeCreateDialog.fork' => 'Fork',
-			'cockpit.worktreeCreateDialog.postCheckoutHint' => 'Este repositório tem um hook post-checkout.',
-			'cockpit.worktreeCreateDialog.running' => 'Executando…',
-			'cockpit.worktreeCreateDialog.advancedSettings' => 'Configurações Avançadas',
-			'cockpit.worktreeCreateDialog.copyIgnored' => 'Copiar arquivos ignorados (.gitignore)',
-			'cockpit.worktreeCreateDialog.copyIgnoredDesc' => 'Copia arquivos ignorados pelo .gitignore (ex: .env, chaves locais) para a nova pasta.',
-			'cockpit.worktreeCreateDialog.copyUntracked' => 'Copiar arquivos não rastreados',
-			'cockpit.worktreeCreateDialog.copyUntrackedDesc' => 'Copia arquivos novos ou modificados que ainda não foram adicionados ao stage.',
-			'cockpit.worktreeCreateDialog.baseBranch' => 'Branch base',
-			'cockpit.worktreeCreateDialog.baseBranchDesc' => 'O branch de onde a nova worktree e branch serão ramificados.',
-			'cockpit.worktreeCreateDialog.fetchRemote' => 'Sincronizar branch remota (fetch)',
-			'cockpit.worktreeCreateDialog.fetchRemoteDesc' => 'Roda git fetch para garantir que a branch base esteja confirmada antes de criar a worktree.',
-			'cockpit.worktreeCreateDialog.searchBranch' => 'Buscar branch...',
-			'cockpit.worktreeCreateDialog.back' => 'Voltar',
-			'cockpit.commitMessageDialog.commitTitle' => 'Commit',
-			'cockpit.commitMessageDialog.stageAndCommitTitle' => 'Stage e Commit',
-			'cockpit.commitMessageDialog.scopeNote' => ({required Object fileName}) => 'Commit apenas de "${fileName}".',
-			'cockpit.commitMessageDialog.placeholder' => 'fix: resumo curto da mudança',
-			'cockpit.commitMessageDialog.errorEmptySubject' => 'A primeira linha (assunto) não pode ficar vazia.',
-			'cockpit.commitMessageDialog.errorTooShort' => ({required Object min}) => 'Assunto muito curto (mín. ${min} caracteres).',
-			'cockpit.commitMessageDialog.errorTooLong' => ({required Object max}) => 'Assunto muito longo (máx. ${max} caracteres).',
-			'cockpit.commitMessageDialog.errorTrailingPeriod' => 'O assunto não deve terminar com ponto.',
-			'cockpit.commitMessageDialog.errorControlChars' => 'O assunto contém caracteres de controle.',
-			'cockpit.commitMessageDialog.errorBlankSecondLine' => 'Deixe a segunda linha em branco (separador entre assunto e corpo do git).',
-			'cockpit.commitMessageDialog.generate' => 'Gerar mensagem de commit',
-			'cockpit.commitMessageDialog.generateWith' => ({required Object harness}) => 'Gerar com ${harness}',
-			'cockpit.commitMessageDialog.generating' => 'Gerando…',
-			'cockpit.commitMessageDialog.cancelGeneration' => 'Cancelar geração',
-			'cockpit.tasksPanel.reloadTasksTooltip' => 'Recarregar tasks',
-			'cockpit.tasksPanel.restartTooltip' => 'Reiniciar',
-			'cockpit.tasksPanel.stopTooltip' => 'Parar',
-			'cockpit.tasksPanel.runTooltip' => 'Executar',
-			'cockpit.tasksPanel.sendsKeyTooltip' => ({required Object label, required Object key}) => '${label} (envia \'${key}\')',
-			'cockpit.tasksPanel.startingTooltip' => 'Iniciando…',
-			'cockpit.tasksPanel.stoppingTooltip' => 'Parando…',
-			'cockpit.tasksPanel.switchProfileTooltip' => 'Trocar perfil',
-			'cockpit.tasksPanel.moreKeysTooltip' => 'Mais teclas',
-			'cockpit.tasksPanel.sectionTasks' => 'TAREFAS',
-			'cockpit.tasksPanel.noTasks' => 'Nenhuma tarefa detectada neste projeto.',
-			'cockpit.tasksPanel.createTasksJson' => 'Criar tasks.json',
-			'cockpit.tasksPanel.generateComposeTasks' => 'Gerar tasks do Compose',
-			'cockpit.tasksPanel.selectComposeEngine' => 'Escolha uma engine Compose',
-			'cockpit.tasksPanel.noComposeEngine' => 'Docker Compose ou Podman Compose não foi encontrado.',
-			'cockpit.tasksPanel.invalidComposeFile' => 'O arquivo ativo não é um Compose válido com services.',
-			'cockpit.tasksPanel.invalidTasksJson' => 'tasks.json é inválido. Nenhuma alteração foi gravada.',
-			'cockpit.tasksPanel.composeConflicts' => ({required Object labels}) => 'Tasks não Compose com rótulos conflitantes foram mantidas: ${labels}',
-			'cockpit.cockpitPage.chooseProjectFolderDialogTitle' => 'Escolha a pasta do projeto',
-			'cockpit.cockpitPage.chooseWorkspaceFolderDialogTitle' => 'Escolha a pasta do workspace',
-			'cockpit.cockpitPage.workspaceRenamedTitle' => 'Workspace renomeado',
-			'cockpit.cockpitPage.workspaceRenamedMessage' => ({required Object name}) => 'O novo nome "${name}" só será enviado aos agentes após reiniciar o workspace ou o aplicativo.',
-			'cockpit.cockpitPage.syncTitle' => ({required Object label}) => 'Sync — ${label}',
-			'cockpit.cockpitPage.pullTitle' => ({required Object label}) => 'Pull — ${label}',
-			'cockpit.cockpitPage.pushTitle' => ({required Object label}) => 'Push — ${label}',
-			'cockpit.cockpitPage.updateFromParentTitle' => ({required Object name}) => 'Atualizar a partir do Pai — ${name}',
-			'cockpit.cockpitPage.mergeToParentTitle' => ({required Object name}) => 'Merge para o Pai — ${name}',
-			'cockpit.cockpitPage.worktreeMergedAndRemoved' => 'Worktree mesclada e removida.',
-			'cockpit.cockpitPage.nothingWasChanged' => 'Nada foi alterado.',
-			'cockpit.cockpitPage.newRealmTitle' => 'Novo realm',
-			'cockpit.cockpitPage.closeWorkspaceTitle' => 'Fechar workspace',
-			'cockpit.cockpitPage.closeWorkspaceMessage' => ({required Object name}) => 'Fechar "${name}"? Os agentes deste workspace serão encerrados. A pasta no disco é mantida.',
-			'cockpit.cockpitPage.closeAction' => 'Fechar',
-			'cockpit.cockpitPage.removeWorktreeTitle' => 'Remover worktree',
-			'cockpit.cockpitPage.removeWorktreeMessage' => ({required Object name, required Object warn}) => 'Remover "${name}"? A pasta da worktree e o branch serão excluídos e os agentes deste fork serão encerrados.${warn}',
-			'cockpit.cockpitPage.removeWorktreeWarning' => ({required Object name}) => '\n\nAviso: o branch "${name}" ainda não foi mesclado — removê-lo (git branch -D) descarta o trabalho não mesclado.',
-			'cockpit.cockpitPage.failedToRemoveWorktreeTitle' => 'Falha ao remover a worktree',
-			'cockpit.cockpitPage.openLayoutTitle' => 'Abrir layout',
-			'cockpit.cockpitPage.replaceLayoutTitle' => 'Substituir o layout atual?',
-			'cockpit.cockpitPage.replaceLayoutMessage' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 aba será fechada, e ela tem um processo em execução.', other: '${n} abas serão fechadas, inclusive as com processos em execução.', ), 
-			'cockpit.cockpitPage.replaceLayoutConfirm' => 'Substituir',
-			'cockpit.cockpitPage.restartServerTooltip' => 'Reiniciar servidor',
-			'cockpit.cockpitPage.noLspAvailable' => 'Nenhum LSP disponível',
-			'cockpit.cockpitPage.lspRunning' => 'em execução',
-			'cockpit.cockpitPage.lspStopped' => 'parado',
-			'cockpit.welcomeView.title' => 'Bem-vindo ao GSH Desktop',
-			'cockpit.welcomeView.subtitle' => 'Abra uma pasta ou conecte a um host remoto para começar.',
-			'cockpit.welcomeView.createWorkspace' => 'Criar workspace',
-			'cockpit.welcomeView.openLocalFolder' => 'Abrir pasta local',
-			'cockpit.welcomeView.connectHost' => 'Conectar a um host',
-			'cockpit.welcomeView.configureHost' => 'Configurar host',
-			'cockpit.welcomeView.addWorkspace' => 'Adicionar workspace',
-			'cockpit.paneView.closePaneTitle' => 'Fechar painel?',
-			'cockpit.paneView.closePaneMessage' => ({required Object count}) => 'Isso fecha todas as ${count} aba(s) deste painel e encerra os agentes/terminais nele.',
-			'cockpit.paneView.close' => 'Fechar',
-			'cockpit.paneView.closeOtherTabs' => 'Fechar as outras',
-			'cockpit.paneView.closeTabsToTheRight' => 'Fechar à direita',
-			'cockpit.paneView.closeAllTabs' => 'Fechar todas',
-			'cockpit.paneView.closeTabsTitle' => 'Fechar abas?',
-			'cockpit.paneView.closeTabsMessage' => ({required Object count}) => 'Isso fecha ${count} aba(s) e encerra os agentes/terminais nelas.',
-			'cockpit.paneView.allTabs' => 'Todas as abas',
-			'cockpit.paneView.pinTab' => 'Fixar aba',
-			'cockpit.paneView.openInNewWindow' => 'Abrir em nova janela',
-			'cockpit.paneView.rename' => 'Renomear',
-			'cockpit.paneView.openAsMarkdown' => 'Abrir como markdown',
-			'cockpit.paneView.openAsBoard' => 'Abrir como quadro',
-			'cockpit.paneView.resetTitle' => 'Redefinir título',
-			'cockpit.paneView.copyId' => 'Copiar Id',
-			'cockpit.paneView.restartTab' => 'Reiniciar',
-			'cockpit.paneView.newTab' => 'Nova aba',
-			'cockpit.paneView.newTerminal' => 'Novo terminal…',
-			'cockpit.paneView.splitRight' => 'Dividir à direita',
-			'cockpit.paneView.splitDown' => 'Dividir abaixo',
-			'cockpit.paneView.closePane' => 'Fechar painel',
-			'cockpit.paneView.dropHereToMove' => 'Solte aqui para mover a aba',
-			'cockpit.paneView.dockAsTab' => 'Encaixar como aba',
-			'cockpit.paneView.openBrowser' => 'Abrir navegador',
-			'cockpit.paneView.openTerminal' => 'Abrir terminal',
-			'cockpit.paneView.openAsLayout' => 'Abrir como layout',
-			'cockpit.paneView.openAsYaml' => 'Abrir como YAML',
-			'cockpit.paneView.openAsPanel' => 'Abrir como painel',
-			'cockpit.paneView.openAsHtml' => 'Abrir como HTML',
-			'cockpit.fileTreePanel.viewDiff' => 'Ver Diff',
-			'cockpit.fileTreePanel.commit' => 'Commit',
-			'cockpit.fileTreePanel.stageAndCommit' => 'Stage e Commit',
-			'cockpit.fileTreePanel.unstage' => 'Tirar do stage',
-			'cockpit.fileTreePanel.stageChanges' => 'Colocar no stage',
-			'cockpit.fileTreePanel.discardChanges' => 'Descartar alterações',
-			'cockpit.fileTreePanel.enterCommitMessage' => 'Digite uma mensagem de commit.',
-			'cockpit.fileTreePanel.commitUnavailable' => 'Commit indisponível para este workspace.',
-			'cockpit.fileTreePanel.gitErrorTitle' => 'Erro do Git',
-			'cockpit.fileTreePanel.deleteNewFileTitle' => 'Excluir arquivo novo?',
-			'cockpit.fileTreePanel.discardChangesTitle' => 'Descartar alterações?',
-			'cockpit.fileTreePanel.deleteNewFileMessage' => ({required Object name}) => '"${name}" é um arquivo novo e não pode ser restaurado. Excluir?',
-			'cockpit.fileTreePanel.discardOneMessage' => ({required Object name}) => 'Descartar todas as alterações em "${name}"? Arquivos excluídos serão restaurados.',
-			'cockpit.fileTreePanel.discard' => 'Descartar',
-			'cockpit.fileTreePanel.deleteAllNewFilesTitle' => 'Excluir todos os arquivos novos?',
-			'cockpit.fileTreePanel.allNewFilesMessage' => ({required Object count}) => 'Todos os ${count} arquivos são novos e serão excluídos. Isso não pode ser desfeito.',
-			'cockpit.fileTreePanel.discardTrackedMessage' => ({required Object count, required Object extra}) => 'Descartar alterações em ${count} arquivo(s) rastreado(s)?${extra}',
-			'cockpit.fileTreePanel.discardTrackedExtra' => ({required Object count}) => ' ${count} arquivo(s) novo(s) será(ão) mantido(s).',
-			'cockpit.fileTreePanel.deleteAll' => 'Excluir tudo',
-			'cockpit.fileTreePanel.deleteQuestionTitle' => 'Excluir?',
-			'cockpit.fileTreePanel.moveToTrash' => ({required Object name}) => 'Mover “${name}” para a Lixeira?',
-			'cockpit.fileTreePanel.permanentlyDelete' => ({required Object name}) => 'Excluir “${name}” permanentemente? Isso não pode ser desfeito.',
-			'cockpit.fileTreePanel.couldNotDeleteTitle' => 'Não foi possível excluir',
-			'cockpit.fileTreePanel.moveQuestionTitle' => 'Mover?',
-			'cockpit.fileTreePanel.moveMessage' => ({required Object name, required Object dest}) => 'Mover “${name}” para “${dest}”?',
-			'cockpit.fileTreePanel.moveAction' => 'Mover',
-			'cockpit.fileTreePanel.couldNotMoveTitle' => 'Não foi possível mover',
-			'cockpit.fileTreePanel.couldNotPasteTitle' => 'Não foi possível colar',
-			'cockpit.fileTreePanel.filesTooltip' => 'Arquivos',
-			'cockpit.fileTreePanel.searchTooltip' => 'Buscar',
-			'cockpit.fileTreePanel.sourceControlTooltip' => 'Controle de versão',
-			'cockpit.fileTreePanel.databaseTooltip' => 'Banco de dados',
-			'cockpit.fileTreePanel.sectionFiles' => 'ARQUIVOS',
-			'cockpit.fileTreePanel.newFile' => 'Novo arquivo',
-			'cockpit.fileTreePanel.newFolder' => 'Nova pasta',
-			'cockpit.fileTreePanel.refreshTooltip' => 'Atualizar',
-			'cockpit.fileTreePanel.agentFilterTooltip' => 'Filtrar por agente',
-			'cockpit.fileTreePanel.allAgents' => 'Todos os agentes',
-			'cockpit.fileTreePanel.trackingUnavailable' => 'rastreio indisponível',
-			'cockpit.fileTreePanel.editedBy' => ({required Object label, required Object time}) => 'Editado por ${label} · ${time}',
-			'cockpit.fileTreePanel.inferredSuffix' => '(inferido)',
-			'cockpit.fileTreePanel.noTouchedFiles' => 'Nenhum arquivo tocado por este agente ainda',
-			'cockpit.fileTreePanel.concurrentAgentEdits' => 'Editado por 2+ agentes nos últimos 10 minutos',
-			'cockpit.fileTreePanel.collapseAll' => 'Recolher todas as pastas',
-			'cockpit.fileTreePanel.sectionSourceControl' => 'CONTROLE DE VERSÃO',
-			'cockpit.fileTreePanel.viewAsList' => 'Ver como lista',
-			'cockpit.fileTreePanel.viewAsTree' => 'Ver como árvore',
-			'cockpit.fileTreePanel.noFolderMessage' => 'Nenhuma pasta — abra um workspace.',
-			'cockpit.fileTreePanel.amend' => 'Amend',
-			'cockpit.fileTreePanel.commitMessagePlaceholder' => 'Mensagem do commit',
-			'cockpit.fileTreePanel.amendCommit' => 'Amend do commit',
-			'cockpit.fileTreePanel.lastCommit' => 'último commit',
-			'cockpit.fileTreePanel.openInFinder' => 'Abrir no Finder',
-			'cockpit.fileTreePanel.openInExplorer' => 'Abrir no Explorer',
-			'cockpit.fileTreePanel.openInFileManager' => 'Abrir no gerenciador de arquivos',
-			'cockpit.fileTreePanel.open' => 'Abrir',
-			'cockpit.fileTreePanel.openWith' => 'Abrir com',
-			'cockpit.fileTreePanel.openInNewWindow' => 'Abrir em nova janela',
-			'cockpit.fileTreePanel.openLayout' => 'Abrir layout',
-			'cockpit.fileTreePanel.openAsMarkdown' => 'Abrir como markdown',
-			'cockpit.fileTreePanel.showGitDiff' => 'Mostrar diff do git',
-			'cockpit.fileTreePanel.createTerminal' => 'Abrir no terminal',
-			'cockpit.fileTreePanel.rename' => 'Renomear',
-			'cockpit.fileTreePanel.copy' => 'Copiar',
-			'cockpit.fileTreePanel.cut' => 'Recortar',
-			'cockpit.fileTreePanel.paste' => 'Colar',
-			'cockpit.fileTreePanel.copyRelativePath' => 'Copiar caminho relativo',
-			'cockpit.fileTreePanel.copyAbsolutePath' => 'Copiar caminho absoluto',
-			'cockpit.fileTreePanel.renameFailed' => 'Falha ao renomear.',
-			'cockpit.fileTreePanel.noChanges' => 'Nenhuma alteração.',
-			'cockpit.fileTreePanel.stagedChangesHeader' => ({required Object count}) => 'ALTERAÇÕES EM STAGE (${count})',
-			'cockpit.fileTreePanel.changesHeader' => ({required Object count}) => 'ALTERAÇÕES (${count})',
-			'cockpit.fileTreePanel.discardAllChanges' => 'Descartar todas as alterações',
-			'cockpit.fileTreePanel.unstageAllChanges' => 'Tirar tudo do stage',
-			'cockpit.fileTreePanel.stageAllChanges' => 'Colocar tudo no stage',
-			'cockpit.fileTreePanel.discardFolderChanges' => 'Descartar alterações da pasta',
-			'cockpit.fileTreePanel.unstageFolderChanges' => 'Tirar pasta do stage',
-			'cockpit.fileTreePanel.stageFolderChanges' => 'Colocar pasta no stage',
-			'cockpit.fileTreePanel.generateCommitMessage' => 'Gerar mensagem de commit',
-			'cockpit.fileTreePanel.generateWith' => ({required Object harness}) => 'Gerar com ${harness}',
-			'cockpit.fileTreePanel.generateUnavailableWhileAmending' => 'Indisponível durante o amend de um commit',
-			'cockpit.fileTreePanel.cancelGeneration' => 'Cancelar geração',
-			'cockpit.fileTreePanel.changes' => 'Alteracoes',
-			'cockpit.fileTreePanel.history' => 'Historico',
-			'cockpit.fileTreePanel.historyRepository' => 'Repositorio',
-			'cockpit.fileTreePanel.historyNoRepository' => 'Nenhum repositorio Git disponivel.',
-			'cockpit.fileTreePanel.historyEmpty' => 'Nenhum commit encontrado.',
-			'cockpit.fileTreePanel.historyLoadFailed' => 'Nao foi possivel carregar o historico Git.',
-			'cockpit.fileTreePanel.historyUntitledCommit' => 'Commit sem titulo',
-			'cockpit.fileTreePanel.historyNow' => 'agora',
-			'cockpit.fileTreePanel.historyMinutesAgo' => ({required Object count}) => 'ha ${count} min',
-			'cockpit.fileTreePanel.historyHoursAgo' => ({required Object count}) => 'ha ${count} h',
-			'cockpit.fileTreePanel.historyYesterday' => 'ontem',
-			'cockpit.fileTreePanel.historyDayAgo' => 'ha 1 dia',
-			'cockpit.fileTreePanel.historyDaysAgo' => ({required Object count}) => 'ha ${count} dias',
-			'cockpit.fileTreePanel.historyFiles' => 'Arquivos alterados',
-			'cockpit.fileTreePanel.historyFilesEmpty' => 'Nenhum arquivo alterado.',
-			'cockpit.fileTreePanel.historyFilesLoadFailed' => 'Nao foi possivel carregar os arquivos alterados.',
-			'cockpit.fileTreePanel.diffEmptyTree' => 'Arvore vazia',
-			'cockpit.fileTreePanel.diffOriginal' => ({required Object ref}) => 'Original ${ref}',
-			'cockpit.fileTreePanel.diffModified' => ({required Object ref}) => 'Modificado ${ref}',
-			'cockpit.fileTreePanel.diffWorkingTree' => 'Diretorio de trabalho',
-			'cockpit.fileTreePanel.diffBinaryFile' => 'Arquivo binario - sem diff de texto.',
-			'cockpit.fileTreePanel.diffNoChanges' => 'Sem alteracoes.',
-			'cockpit.fileTreePanel.diffError' => ({required Object detail}) => 'Não foi possível ler o diff: ${detail}',
-			'cockpit.fileTreePanel.galleryTooltip' => 'Galeria',
-			'cockpit.fileTreePanel.sectionGallery' => 'GALERIA',
-			'cockpit.fileTreePanel.openAsHtml' => 'Abrir como HTML',
-			'cockpit.fileTreePanel.importQuestionTitle' => 'Copiar aqui?',
-			'cockpit.fileTreePanel.importMessage' => ({required Object count, required Object dest}) => 'Copiar ${count} itens para “${dest}”?',
-			'cockpit.fileTreePanel.importAction' => 'Copiar',
-			'cockpit.fileTreePanel.couldNotImportTitle' => 'Não foi possível copiar',
-			'cockpit.fileTreePanel.openInAgent' => ({required Object harness}) => 'Abrir no ${harness}',
-			'cockpit.fileViewer.cantOpen' => 'Não é possível abrir este arquivo.',
-			'cockpit.fileViewer.couldNotLoadImage' => 'Não foi possível carregar a imagem.',
-			'cockpit.fileViewer.preview' => 'Pré-visualização',
-			'cockpit.fileViewer.source' => 'Código-fonte',
-			'cockpit.fileViewer.reload' => 'Recarregar',
-			'cockpit.workspaceSettingsDialog.choosePhotoTitle' => 'Escolher foto do workspace',
-			'cockpit.workspaceSettingsDialog.title' => 'Configurações do workspace',
-			'cockpit.workspaceSettingsDialog.namePlaceholder' => 'Nome do workspace',
-			'cockpit.workspaceSettingsDialog.addPhoto' => 'Adicionar foto',
-			'cockpit.workspaceSettingsDialog.changePhoto' => 'Alterar foto',
-			'cockpit.workspaceSettingsDialog.remove' => 'Remover',
-			'cockpit.workspaceSettingsDialog.color' => 'Cor',
-			'cockpit.workspaceSettingsDialog.host' => 'Host',
-			'cockpit.workspaceSettingsDialog.folder' => 'Pasta',
-			'cockpit.realmDialogs.namePlaceholder' => 'Nome do realm',
-			'cockpit.realmDialogs.duplicateName' => 'Já existe um realm com esse nome.',
-			'cockpit.realmDialogs.newRealmTitle' => 'Novo realm',
-			'cockpit.realmDialogs.renameRealmTitle' => 'Renomear realm',
-			'cockpit.realmDialogs.rename' => 'Renomear',
-			'cockpit.realmDialogs.deleteRealmTitle' => 'Excluir realm',
-			'cockpit.realmDialogs.deleteMessage' => ({required Object name, required Object suffix}) => 'Excluir "${name}"? Nenhum workspace é excluído — só a lista de pastas muda.${suffix}',
-			'cockpit.realmDialogs.deleteSuffixOne' => ' O workspace dele irá para o Padrão.',
-			'cockpit.realmDialogs.deleteSuffixMany' => ({required Object count}) => ' Os ${count} workspaces dele irão para o Padrão.',
-			'cockpit.realmDialogs.manageRealmsTitle' => 'Gerenciar realms',
-			'cockpit.realmDialogs.workspaceCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 workspace', other: '${n} workspaces', ), 
-			'cockpit.dbRedisTable.deleteKeyTitle' => 'Excluir chave',
-			'cockpit.dbRedisTable.deleteKeyMessage' => ({required Object key}) => 'Excluir "${key}" deste banco Redis?',
-			'cockpit.dbRedisTable.refresh' => 'Atualizar',
-			'cockpit.dbRedisTable.newKey' => 'Nova chave',
-			'cockpit.dbRedisTable.columnKey' => 'CHAVE',
-			'cockpit.dbRedisTable.columnValue' => 'VALOR',
-			'cockpit.dbRedisTable.columnType' => 'TIPO',
-			'cockpit.dbRedisTable.columnTtl' => 'TTL',
-			'cockpit.dbRedisTable.keyCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 chave', other: '${n} chaves', ), 
-			'cockpit.dbRedisTable.noKeys' => 'Nenhuma chave neste banco de dados.',
-			'cockpit.dbRedisTable.noKeysMatch' => ({required Object pattern}) => 'Nenhuma chave corresponde a "${pattern}".',
-			'cockpit.dbRedisTable.loadMore' => 'Carregar mais',
-			'cockpit.dbRedisTable.loadingFullValue' => 'Carregando valor completo…',
-			'cockpit.dbRedisTable.ttlMustBeNumber' => 'TTL deve ser um número de segundos.',
-			'cockpit.dbRedisTable.addKey' => 'Adicionar chave',
-			'cockpit.dbRedisTable.keyFieldHint' => 'chave',
-			'cockpit.dbRedisTable.ttlFieldHint' => 'ttl (s, opcional)',
-			'cockpit.dbRedisTable.valueFieldHint' => 'valor',
-			'cockpit.dbRedisTable.searchHint' => 'Buscar — padrão, ex.: user:*',
-			'cockpit.dbQueryView.saveQueryAs' => 'Salvar query como',
-			'cockpit.dbQueryView.couldNotSave' => 'Não foi possível salvar',
-			'cockpit.dbQueryView.selectDatabase' => 'Selecionar banco de dados',
-			'cockpit.dbQueryView.noSqlConnections' => 'Nenhuma conexão SQL',
-			'cockpit.dbQueryView.running' => 'Executando…',
-			'cockpit.dbQueryView.runSelection' => 'Executar seleção',
-			'cockpit.dbQueryView.run' => 'Executar',
-			'cockpit.dbQueryView.pickDatabaseHint' => 'Escolha um banco de dados acima e depois Executar (⌘↵).',
-			'cockpit.dbQueryView.runQueryHint' => 'Execute a query (⌘↵) para ver os resultados aqui.',
-			'cockpit.dbQueryView.noRows' => 'Nenhuma linha.',
-			'cockpit.dbQueryView.rowsAffected' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 linha afetada', other: '${n} linhas afetadas', ), 
-			'cockpit.dbQueryView.rowsFooter' => ({required Object n}) => '${n} linhas',
-			'cockpit.dbQueryView.truncatedSuffix' => ' · truncado (aumente -- limit)',
-			'cockpit.dbQueryView.table' => 'Tabela',
-			'cockpit.dbQueryView.json' => 'JSON',
-			'cockpit.dbQueryView.unsaved' => 'não salvo',
-			'cockpit.dbQueryView.saved' => 'salvo',
-			'cockpit.dbQueryView.copied' => 'Copiado',
-			'cockpit.dbQueryView.copy' => 'Copiar',
-			'cockpit.httpView.saveRequestAs' => 'Salvar request como',
-			'cockpit.httpView.couldNotSave' => 'Não foi possível salvar',
-			'cockpit.httpView.run' => 'Executar',
-			'cockpit.httpView.running' => 'Executando…',
-			'cockpit.httpView.noRequests' => 'Nenhum request neste arquivo — escreva um, ex.: GET https://example.com',
-			'cockpit.httpView.selectRequest' => 'Selecionar request',
-			'cockpit.httpView.requestCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 request', other: '${n} requests', ), 
-			'cockpit.httpView.runHint' => 'Execute o request (⌘↵) para ver a resposta aqui.',
-			'cockpit.httpView.emptyBody' => 'Corpo da resposta vazio.',
-			'cockpit.httpView.body' => 'JSON',
-			'cockpit.httpView.headers' => 'Headers',
-			'cockpit.httpView.raw' => 'Text',
-			'cockpit.httpView.truncatedSuffix' => ' · truncado (resposta grande demais)',
-			'cockpit.httpView.error.title' => 'Falha no request',
-			'cockpit.httpView.error.noRequest' => 'Nenhum request encontrado na posição do cursor.',
-			'cockpit.httpView.error.invalidUrl' => ({required Object url}) => 'URL inválida: ${url}',
-			'cockpit.httpView.error.unresolvedVariable' => ({required Object name}) => 'A variável {{${name}}} não tem valor. Declare com @${name} = … neste arquivo.',
-			'cockpit.httpView.error.bodyFileMissing' => ({required Object path}) => 'Arquivo de corpo não encontrado: ${path}',
-			'cockpit.httpView.error.bodyFileUnreadable' => ({required Object path, required Object detail}) => 'Não foi possível ler o arquivo de corpo ${path}: ${detail}',
-			'cockpit.httpView.error.connectionFailed' => ({required Object detail}) => 'Não foi possível alcançar o servidor: ${detail}',
-			'cockpit.httpView.error.connectionFailedNoDetail' => 'Não foi possível alcançar o servidor.',
-			'cockpit.httpView.error.timeout' => ({required Object seconds}) => 'O request estourou o tempo limite de ${seconds}s.',
-			'cockpit.httpView.error.responseTooLarge' => ({required Object bytes}) => 'A resposta passou do limite de ${bytes} bytes.',
-			'cockpit.kanbanView.filter' => 'Filtrar',
-			'cockpit.kanbanView.filterTitlePlaceholder' => 'Buscar por título',
-			'cockpit.kanbanView.filterLabels' => 'Marcadores',
-			'cockpit.kanbanView.filterClear' => 'Limpar',
-			'cockpit.kanbanView.filterDependencies' => 'Dependências',
-			'cockpit.kanbanView.filterBlocked' => 'Bloqueado',
-			'cockpit.kanbanView.filterReady' => 'Pronto',
-			'cockpit.kanbanView.blockedBy' => 'Bloqueado por',
-			'cockpit.kanbanView.addBlocker' => 'Adicionar card bloqueador',
-			'cockpit.kanbanView.searchCards' => 'Buscar cards',
-			'cockpit.kanbanView.unknownCard' => 'desconhecido',
-			'cockpit.kanbanView.boardView' => 'Quadro',
-			'cockpit.kanbanView.listView' => 'Lista',
-			'cockpit.kanbanView.refresh' => 'Atualizar do disco',
-			'cockpit.kanbanView.manageLabels' => 'Marcadores',
-			'cockpit.kanbanView.labelsTitle' => 'Marcadores deste quadro',
-			'cockpit.kanbanView.labelNamePlaceholder' => 'nome do marcador',
-			'cockpit.kanbanView.labelUsage' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 card', other: '${n} cards', ), 
-			'cockpit.kanbanView.deleteLabel' => 'Apagar marcador',
-			'cockpit.kanbanView.newCard' => 'novo card',
-			'cockpit.kanbanView.newCardTitle' => 'Novo card',
-			'cockpit.kanbanView.newColumn' => 'Nova coluna',
-			'cockpit.kanbanView.columnNameTitle' => 'Nome da coluna',
-			'cockpit.kanbanView.dragColumn' => 'Arrastar coluna',
-			'cockpit.kanbanView.columnOptions' => 'Opções da coluna',
-			'cockpit.kanbanView.renameColumn' => 'Renomear coluna',
-			'cockpit.kanbanView.moveColumnLeft' => 'Mover pra esquerda',
-			'cockpit.kanbanView.moveColumnRight' => 'Mover pra direita',
-			'cockpit.kanbanView.deleteColumn' => 'Apagar coluna',
-			'cockpit.kanbanView.newCardHere' => 'Novo card aqui',
-			'cockpit.kanbanView.duplicateCard' => 'Duplicar',
-			'cockpit.kanbanView.cardLabels' => 'Marcadores',
-			'cockpit.kanbanView.deleteCard' => 'Apagar card',
-			'cockpit.kanbanView.advance' => 'Passar pra próxima coluna',
-			'cockpit.kanbanView.advanceHold' => 'Mover para a próxima coluna (segurar: mover para a última)',
-			'cockpit.kanbanView.advanceBack' => 'Voltar uma coluna',
-			'cockpit.kanbanView.emptyColumn' => 'Sem cards',
-			'cockpit.kanbanView.cardCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 card', other: '${n} cards', ), 
-			'cockpit.kanbanView.notes' => 'Nota',
-			'cockpit.kanbanView.notesPlaceholder' => 'Escreva uma nota',
-			'cockpit.kanbanView.comments' => 'Comentários',
-			'cockpit.kanbanView.addComment' => 'Adicionar comentário',
-			'cockpit.kanbanView.commentPlaceholder' => 'Escreva um comentário',
-			'cockpit.kanbanView.noComments' => 'Nenhum comentário ainda',
-			'cockpit.kanbanView.closeDetail' => 'Fechar',
-			'cockpit.kanbanView.notABoard' => 'Este arquivo ainda não tem colunas ## — ele abre como markdown.',
-			'cockpit.kanbanView.startBoard' => 'Começar um quadro',
-			'cockpit.kanbanView.couldNotSave' => 'Não deu pra salvar o quadro',
-			'cockpit.kanbanView.unrecognizedBlock' => 'Não reconhecido pelo parser — arrasta inteiro, sem edição inline.',
-			'cockpit.kanbanView.deleteColumnDialog.title' => ({required Object name}) => 'Apagar “${name}”?',
-			'cockpit.kanbanView.deleteColumnDialog.message' => ({required Object count}) => 'Esta coluna tem ${count}. Escolha o que acontece com eles.',
-			'cockpit.kanbanView.deleteColumnDialog.moveCards' => 'Mover pra coluna anterior',
-			'cockpit.kanbanView.deleteColumnDialog.deleteAll' => 'Apagar junto com a coluna',
-			'cockpit.kanbanView.deleteColumnDialog.emptyMessage' => 'Esta coluna está vazia.',
-			'cockpit.dbPanel.sectionDatabase' => 'BANCO DE DADOS',
-			'cockpit.dbPanel.edit' => 'Editar…',
-			'cockpit.dbPanel.copyName' => 'Copiar nome',
-			'cockpit.dbPanel.newQuery' => 'Nova query',
-			'cockpit.dbPanel.browseKeys' => 'Ver chaves',
-			'cockpit.dbPanel.deleteConnectionTitle' => 'Excluir conexão',
-			'cockpit.dbPanel.deleteConnectionMessage' => ({required Object name}) => 'Remover "${name}" deste workspace? Qualquer senha salva será descartada. Arquivos .dbq que fazem referência a ela não são afetados.',
-			'cockpit.dbPanel.footer' => ({required Object n}) => '.cockpit/databases.json · ${n} conexões',
-			'cockpit.dbPanel.footerOne' => '.cockpit/databases.json · 1 conexão',
-			'cockpit.dbPanel.noConnections' => 'Nenhuma conexão ainda.',
-			'cockpit.dbPanel.passwordRequired' => 'Senha não encontrada no host. Abra esta conexão e digite-a de novo — ela fica salva na máquina que executa o banco, não nesta.',
-			'cockpit.dbMongoView.deleteDocumentTitle' => 'Excluir documento',
-			'cockpit.dbMongoView.deleteDocumentMessage' => ({required Object id, required Object collection}) => 'Excluir o documento com _id ${id} de "${collection}"?',
-			'cockpit.dbMongoView.filterHint' => 'Filtro — JSON, ex.: {"status": "active"}',
-			'cockpit.dbMongoView.docCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 doc', other: '${n} docs', ), 
-			'cockpit.dbMongoView.refresh' => 'Atualizar',
-			'cockpit.dbMongoView.insertDocument' => 'Inserir documento',
-			'cockpit.dbMongoView.noDocuments' => 'Nenhum documento nesta coleção.',
-			'cockpit.dbMongoView.noDocumentsMatch' => 'Nenhum documento corresponde a este filtro.',
-			'cockpit.dbMongoView.loadMore' => 'Carregar mais',
-			'cockpit.dbMongoView.edit' => 'Editar',
-			'cockpit.dbMongoView.insert' => 'Inserir',
-			'cockpit.dbConnectionDialog.chooseFileTitle' => 'Escolher banco SQLite',
-			'cockpit.dbConnectionDialog.file' => 'Arquivo',
-			'cockpit.dbConnectionDialog.chooseFilePlaceholder' => 'Escolha um arquivo SQLite…',
-			'cockpit.dbConnectionDialog.name' => 'Nome',
-			'cockpit.dbConnectionDialog.password' => 'Senha',
-			'cockpit.dbConnectionDialog.savePassword' => 'Salvar senha',
-			'cockpit.dbConnectionDialog.allowWrites' => 'Permitir escrita (agentes)',
-			'cockpit.dbConnectionDialog.allowWritesHint' => 'desligado = agentes só leem via CLI',
-			'cockpit.dbConnectionDialog.visibleToAgents' => 'Visível para agentes',
-			'cockpit.dbConnectionDialog.visibleToAgentsHint' => 'desligado = oculto da CLI, só na GUI',
-			'cockpit.dbConnectionDialog.testing' => 'Testando conexão…',
-			'cockpit.dbConnectionDialog.connectionOk' => 'Conexão OK',
-			'cockpit.dbConnectionDialog.connectionFailed' => 'Falha na conexão',
-			'cockpit.dbConnectionDialog.editTitle' => 'Editar conexão',
-			'cockpit.dbConnectionDialog.newTitle' => 'Nova conexão',
-			'cockpit.dbConnectionDialog.connectionString' => 'Connection string',
-			'cockpit.dbConnectionDialog.invalidUrl' => 'URL de conexão inválida.',
-			'cockpit.dbConnectionDialog.sshTunnel' => 'Túnel SSH',
-			'cockpit.dbConnectionDialog.sshHost' => 'Host SSH',
-			'cockpit.dbConnectionDialog.sshPort' => 'Porta SSH',
-			'cockpit.dbConnectionDialog.sshUser' => 'Usuário SSH',
-			'cockpit.dbConnectionDialog.privateKey' => 'Chave privada',
-			'cockpit.dbConnectionDialog.choosePrivateKeyPlaceholder' => 'Escolha uma chave privada…',
-			'cockpit.dbConnectionDialog.choosePrivateKeyDialogTitle' => 'Escolher chave privada SSH',
-			'cockpit.dbConnectionDialog.keyPassphrase' => 'Senha da chave',
-			'cockpit.dbConnectionDialog.savePassphrase' => 'Salvar senha da chave',
+			'gsh.confirmDialog.unsavedChangesTitle' => 'Alterações não salvas',
+			'gsh.confirmDialog.unsavedChangesMessage' => ({required Object fileName}) => '“${fileName}” tem alterações não salvas. Salvar antes de fechar?',
+			'gsh.confirmDialog.dontSave' => 'Não salvar',
+			'gsh.confirmDialog.saveAndClose' => 'Salvar e fechar',
+			'gsh.neovim.unavailable' => 'O Neovim não está disponível. Abrindo no GSH Desktop.',
+			'gsh.neovim.openFailed' => 'Não foi possível acessar o Neovim. Abrindo no GSH Desktop.',
+			'gsh.neovim.unsavedTitle' => 'Buffers não salvos no Neovim',
+			'gsh.neovim.unsavedMessage' => 'O Neovim tem buffers modificados. Fechar a aba e descartar essas alterações?',
+			'gsh.neovim.closeAnyway' => 'Fechar mesmo assim',
+			'gsh.worktreeCreateDialog.forkTitle' => 'Fork da worktree',
+			'gsh.worktreeCreateDialog.createTitle' => 'Criar worktree',
+			'gsh.worktreeCreateDialog.forkSubtitle' => ({required Object root}) => 'Nova worktree ramificada a partir de ${root}.',
+			'gsh.worktreeCreateDialog.createSubtitle' => ({required Object root}) => 'Nova feature em ${root} — novo branch a partir do HEAD atual.',
+			'gsh.worktreeCreateDialog.namePlaceholder' => 'feat/minha-feature',
+			'gsh.worktreeCreateDialog.errorWhitespace' => 'Sem espaços no nome.',
+			'gsh.worktreeCreateDialog.errorInvalidChar' => 'Caractere inválido para nome de branch.',
+			'gsh.worktreeCreateDialog.errorInvalidSequence' => 'Sequência inválida (ex.: "..", "//", começar/terminar com "/").',
+			'gsh.worktreeCreateDialog.errorReserved' => 'Posição reservada (não comece com "-"/"." nem termine com ".lock").',
+			'gsh.worktreeCreateDialog.errorDuplicateBranch' => 'Já existe um branch com esse nome.',
+			'gsh.worktreeCreateDialog.errorDuplicateWorktree' => 'Já existe uma worktree com esse nome.',
+			'gsh.worktreeCreateDialog.errorBranchHierarchyConflict' => ({required Object target, required Object existing}) => 'Não é possível criar o branch \'${target}\' porque ele conflita com o branch \'${existing}\' já existente.',
+			'gsh.worktreeCreateDialog.errorBranchHierarchicalConflictGeneral' => 'Já existe um branch com uma hierarquia conflitante.',
+			'gsh.worktreeCreateDialog.fork' => 'Fork',
+			'gsh.worktreeCreateDialog.postCheckoutHint' => 'Este repositório tem um hook post-checkout.',
+			'gsh.worktreeCreateDialog.running' => 'Executando…',
+			'gsh.worktreeCreateDialog.advancedSettings' => 'Configurações Avançadas',
+			'gsh.worktreeCreateDialog.copyIgnored' => 'Copiar arquivos ignorados (.gitignore)',
+			'gsh.worktreeCreateDialog.copyIgnoredDesc' => 'Copia arquivos ignorados pelo .gitignore (ex: .env, chaves locais) para a nova pasta.',
+			'gsh.worktreeCreateDialog.copyUntracked' => 'Copiar arquivos não rastreados',
+			'gsh.worktreeCreateDialog.copyUntrackedDesc' => 'Copia arquivos novos ou modificados que ainda não foram adicionados ao stage.',
+			'gsh.worktreeCreateDialog.baseBranch' => 'Branch base',
+			'gsh.worktreeCreateDialog.baseBranchDesc' => 'O branch de onde a nova worktree e branch serão ramificados.',
+			'gsh.worktreeCreateDialog.fetchRemote' => 'Sincronizar branch remota (fetch)',
+			'gsh.worktreeCreateDialog.fetchRemoteDesc' => 'Roda git fetch para garantir que a branch base esteja confirmada antes de criar a worktree.',
+			'gsh.worktreeCreateDialog.searchBranch' => 'Buscar branch...',
+			'gsh.worktreeCreateDialog.back' => 'Voltar',
+			'gsh.commitMessageDialog.commitTitle' => 'Commit',
+			'gsh.commitMessageDialog.stageAndCommitTitle' => 'Stage e Commit',
+			'gsh.commitMessageDialog.scopeNote' => ({required Object fileName}) => 'Commit apenas de "${fileName}".',
+			'gsh.commitMessageDialog.placeholder' => 'fix: resumo curto da mudança',
+			'gsh.commitMessageDialog.errorEmptySubject' => 'A primeira linha (assunto) não pode ficar vazia.',
+			'gsh.commitMessageDialog.errorTooShort' => ({required Object min}) => 'Assunto muito curto (mín. ${min} caracteres).',
+			'gsh.commitMessageDialog.errorTooLong' => ({required Object max}) => 'Assunto muito longo (máx. ${max} caracteres).',
+			'gsh.commitMessageDialog.errorTrailingPeriod' => 'O assunto não deve terminar com ponto.',
+			'gsh.commitMessageDialog.errorControlChars' => 'O assunto contém caracteres de controle.',
+			'gsh.commitMessageDialog.errorBlankSecondLine' => 'Deixe a segunda linha em branco (separador entre assunto e corpo do git).',
+			'gsh.commitMessageDialog.generate' => 'Gerar mensagem de commit',
+			'gsh.commitMessageDialog.generateWith' => ({required Object harness}) => 'Gerar com ${harness}',
+			'gsh.commitMessageDialog.generating' => 'Gerando…',
+			'gsh.commitMessageDialog.cancelGeneration' => 'Cancelar geração',
+			'gsh.tasksPanel.reloadTasksTooltip' => 'Recarregar tasks',
+			'gsh.tasksPanel.restartTooltip' => 'Reiniciar',
+			'gsh.tasksPanel.stopTooltip' => 'Parar',
+			'gsh.tasksPanel.runTooltip' => 'Executar',
+			'gsh.tasksPanel.sendsKeyTooltip' => ({required Object label, required Object key}) => '${label} (envia \'${key}\')',
+			'gsh.tasksPanel.startingTooltip' => 'Iniciando…',
+			'gsh.tasksPanel.stoppingTooltip' => 'Parando…',
+			'gsh.tasksPanel.switchProfileTooltip' => 'Trocar perfil',
+			'gsh.tasksPanel.moreKeysTooltip' => 'Mais teclas',
+			'gsh.tasksPanel.sectionTasks' => 'TAREFAS',
+			'gsh.tasksPanel.noTasks' => 'Nenhuma tarefa detectada neste projeto.',
+			'gsh.tasksPanel.createTasksJson' => 'Criar tasks.json',
+			'gsh.tasksPanel.generateComposeTasks' => 'Gerar tasks do Compose',
+			'gsh.tasksPanel.selectComposeEngine' => 'Escolha uma engine Compose',
+			'gsh.tasksPanel.noComposeEngine' => 'Docker Compose ou Podman Compose não foi encontrado.',
+			'gsh.tasksPanel.invalidComposeFile' => 'O arquivo ativo não é um Compose válido com services.',
+			'gsh.tasksPanel.invalidTasksJson' => 'tasks.json é inválido. Nenhuma alteração foi gravada.',
+			'gsh.tasksPanel.composeConflicts' => ({required Object labels}) => 'Tasks não Compose com rótulos conflitantes foram mantidas: ${labels}',
+			'gsh.gshPage.chooseProjectFolderDialogTitle' => 'Escolha a pasta do projeto',
+			'gsh.gshPage.chooseWorkspaceFolderDialogTitle' => 'Escolha a pasta do workspace',
+			'gsh.gshPage.workspaceRenamedTitle' => 'Workspace renomeado',
+			'gsh.gshPage.workspaceRenamedMessage' => ({required Object name}) => 'O novo nome "${name}" só será enviado aos agentes após reiniciar o workspace ou o aplicativo.',
+			'gsh.gshPage.syncTitle' => ({required Object label}) => 'Sync — ${label}',
+			'gsh.gshPage.pullTitle' => ({required Object label}) => 'Pull — ${label}',
+			'gsh.gshPage.pushTitle' => ({required Object label}) => 'Push — ${label}',
+			'gsh.gshPage.updateFromParentTitle' => ({required Object name}) => 'Atualizar a partir do Pai — ${name}',
+			'gsh.gshPage.mergeToParentTitle' => ({required Object name}) => 'Merge para o Pai — ${name}',
+			'gsh.gshPage.worktreeMergedAndRemoved' => 'Worktree mesclada e removida.',
+			'gsh.gshPage.nothingWasChanged' => 'Nada foi alterado.',
+			'gsh.gshPage.newRealmTitle' => 'Novo realm',
+			'gsh.gshPage.closeWorkspaceTitle' => 'Fechar workspace',
+			'gsh.gshPage.closeWorkspaceMessage' => ({required Object name}) => 'Fechar "${name}"? Os agentes deste workspace serão encerrados. A pasta no disco é mantida.',
+			'gsh.gshPage.closeAction' => 'Fechar',
+			'gsh.gshPage.removeWorktreeTitle' => 'Remover worktree',
+			'gsh.gshPage.removeWorktreeMessage' => ({required Object name, required Object warn}) => 'Remover "${name}"? A pasta da worktree e o branch serão excluídos e os agentes deste fork serão encerrados.${warn}',
+			'gsh.gshPage.removeWorktreeWarning' => ({required Object name}) => '\n\nAviso: o branch "${name}" ainda não foi mesclado — removê-lo (git branch -D) descarta o trabalho não mesclado.',
+			'gsh.gshPage.failedToRemoveWorktreeTitle' => 'Falha ao remover a worktree',
+			'gsh.gshPage.openLayoutTitle' => 'Abrir layout',
+			'gsh.gshPage.replaceLayoutTitle' => 'Substituir o layout atual?',
+			'gsh.gshPage.replaceLayoutMessage' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 aba será fechada, e ela tem um processo em execução.', other: '${n} abas serão fechadas, inclusive as com processos em execução.', ), 
+			'gsh.gshPage.replaceLayoutConfirm' => 'Substituir',
+			'gsh.gshPage.restartServerTooltip' => 'Reiniciar servidor',
+			'gsh.gshPage.noLspAvailable' => 'Nenhum LSP disponível',
+			'gsh.gshPage.lspRunning' => 'em execução',
+			'gsh.gshPage.lspStopped' => 'parado',
+			'gsh.welcomeView.title' => 'Bem-vindo ao GSH Desktop',
+			'gsh.welcomeView.subtitle' => 'Abra uma pasta ou conecte a um host remoto para começar.',
+			'gsh.welcomeView.createWorkspace' => 'Criar workspace',
+			'gsh.welcomeView.openLocalFolder' => 'Abrir pasta local',
+			'gsh.welcomeView.connectHost' => 'Conectar a um host',
+			'gsh.welcomeView.configureHost' => 'Configurar host',
+			'gsh.welcomeView.addWorkspace' => 'Adicionar workspace',
+			'gsh.paneView.closePaneTitle' => 'Fechar painel?',
+			'gsh.paneView.closePaneMessage' => ({required Object count}) => 'Isso fecha todas as ${count} aba(s) deste painel e encerra os agentes/terminais nele.',
+			'gsh.paneView.close' => 'Fechar',
+			'gsh.paneView.closeOtherTabs' => 'Fechar as outras',
+			'gsh.paneView.closeTabsToTheRight' => 'Fechar à direita',
+			'gsh.paneView.closeAllTabs' => 'Fechar todas',
+			'gsh.paneView.closeTabsTitle' => 'Fechar abas?',
+			'gsh.paneView.closeTabsMessage' => ({required Object count}) => 'Isso fecha ${count} aba(s) e encerra os agentes/terminais nelas.',
+			'gsh.paneView.allTabs' => 'Todas as abas',
+			'gsh.paneView.pinTab' => 'Fixar aba',
+			'gsh.paneView.openInNewWindow' => 'Abrir em nova janela',
+			'gsh.paneView.rename' => 'Renomear',
+			'gsh.paneView.openAsMarkdown' => 'Abrir como markdown',
+			'gsh.paneView.openAsBoard' => 'Abrir como quadro',
+			'gsh.paneView.resetTitle' => 'Redefinir título',
+			'gsh.paneView.copyId' => 'Copiar Id',
+			'gsh.paneView.restartTab' => 'Reiniciar',
+			'gsh.paneView.newTab' => 'Nova aba',
+			'gsh.paneView.newTerminal' => 'Novo terminal…',
+			'gsh.paneView.splitRight' => 'Dividir à direita',
+			'gsh.paneView.splitDown' => 'Dividir abaixo',
+			'gsh.paneView.closePane' => 'Fechar painel',
+			'gsh.paneView.dropHereToMove' => 'Solte aqui para mover a aba',
+			'gsh.paneView.dockAsTab' => 'Encaixar como aba',
+			'gsh.paneView.openBrowser' => 'Abrir navegador',
+			'gsh.paneView.openTerminal' => 'Abrir terminal',
+			'gsh.paneView.openAsLayout' => 'Abrir como layout',
+			'gsh.paneView.openAsYaml' => 'Abrir como YAML',
+			'gsh.paneView.openAsPanel' => 'Abrir como painel',
+			'gsh.paneView.openAsHtml' => 'Abrir como HTML',
+			'gsh.fileTreePanel.viewDiff' => 'Ver Diff',
+			'gsh.fileTreePanel.commit' => 'Commit',
+			'gsh.fileTreePanel.stageAndCommit' => 'Stage e Commit',
+			'gsh.fileTreePanel.unstage' => 'Tirar do stage',
+			'gsh.fileTreePanel.stageChanges' => 'Colocar no stage',
+			'gsh.fileTreePanel.discardChanges' => 'Descartar alterações',
+			'gsh.fileTreePanel.enterCommitMessage' => 'Digite uma mensagem de commit.',
+			'gsh.fileTreePanel.commitUnavailable' => 'Commit indisponível para este workspace.',
+			'gsh.fileTreePanel.gitErrorTitle' => 'Erro do Git',
+			'gsh.fileTreePanel.deleteNewFileTitle' => 'Excluir arquivo novo?',
+			'gsh.fileTreePanel.discardChangesTitle' => 'Descartar alterações?',
+			'gsh.fileTreePanel.deleteNewFileMessage' => ({required Object name}) => '"${name}" é um arquivo novo e não pode ser restaurado. Excluir?',
+			'gsh.fileTreePanel.discardOneMessage' => ({required Object name}) => 'Descartar todas as alterações em "${name}"? Arquivos excluídos serão restaurados.',
+			'gsh.fileTreePanel.discard' => 'Descartar',
+			'gsh.fileTreePanel.deleteAllNewFilesTitle' => 'Excluir todos os arquivos novos?',
+			'gsh.fileTreePanel.allNewFilesMessage' => ({required Object count}) => 'Todos os ${count} arquivos são novos e serão excluídos. Isso não pode ser desfeito.',
+			'gsh.fileTreePanel.discardTrackedMessage' => ({required Object count, required Object extra}) => 'Descartar alterações em ${count} arquivo(s) rastreado(s)?${extra}',
+			'gsh.fileTreePanel.discardTrackedExtra' => ({required Object count}) => ' ${count} arquivo(s) novo(s) será(ão) mantido(s).',
+			'gsh.fileTreePanel.deleteAll' => 'Excluir tudo',
+			'gsh.fileTreePanel.deleteQuestionTitle' => 'Excluir?',
+			'gsh.fileTreePanel.moveToTrash' => ({required Object name}) => 'Mover “${name}” para a Lixeira?',
+			'gsh.fileTreePanel.permanentlyDelete' => ({required Object name}) => 'Excluir “${name}” permanentemente? Isso não pode ser desfeito.',
+			'gsh.fileTreePanel.couldNotDeleteTitle' => 'Não foi possível excluir',
+			'gsh.fileTreePanel.moveQuestionTitle' => 'Mover?',
+			'gsh.fileTreePanel.moveMessage' => ({required Object name, required Object dest}) => 'Mover “${name}” para “${dest}”?',
+			'gsh.fileTreePanel.moveAction' => 'Mover',
+			'gsh.fileTreePanel.couldNotMoveTitle' => 'Não foi possível mover',
+			'gsh.fileTreePanel.couldNotPasteTitle' => 'Não foi possível colar',
+			'gsh.fileTreePanel.filesTooltip' => 'Arquivos',
+			'gsh.fileTreePanel.searchTooltip' => 'Buscar',
+			'gsh.fileTreePanel.sourceControlTooltip' => 'Controle de versão',
+			'gsh.fileTreePanel.databaseTooltip' => 'Banco de dados',
+			'gsh.fileTreePanel.sectionFiles' => 'ARQUIVOS',
+			'gsh.fileTreePanel.newFile' => 'Novo arquivo',
+			'gsh.fileTreePanel.newFolder' => 'Nova pasta',
+			'gsh.fileTreePanel.refreshTooltip' => 'Atualizar',
+			'gsh.fileTreePanel.agentFilterTooltip' => 'Filtrar por agente',
+			'gsh.fileTreePanel.allAgents' => 'Todos os agentes',
+			'gsh.fileTreePanel.trackingUnavailable' => 'rastreio indisponível',
+			'gsh.fileTreePanel.editedBy' => ({required Object label, required Object time}) => 'Editado por ${label} · ${time}',
+			'gsh.fileTreePanel.inferredSuffix' => '(inferido)',
+			'gsh.fileTreePanel.noTouchedFiles' => 'Nenhum arquivo tocado por este agente ainda',
+			'gsh.fileTreePanel.concurrentAgentEdits' => 'Editado por 2+ agentes nos últimos 10 minutos',
+			'gsh.fileTreePanel.collapseAll' => 'Recolher todas as pastas',
+			'gsh.fileTreePanel.sectionSourceControl' => 'CONTROLE DE VERSÃO',
+			'gsh.fileTreePanel.viewAsList' => 'Ver como lista',
+			'gsh.fileTreePanel.viewAsTree' => 'Ver como árvore',
+			'gsh.fileTreePanel.noFolderMessage' => 'Nenhuma pasta — abra um workspace.',
+			'gsh.fileTreePanel.amend' => 'Amend',
+			'gsh.fileTreePanel.commitMessagePlaceholder' => 'Mensagem do commit',
+			'gsh.fileTreePanel.amendCommit' => 'Amend do commit',
+			'gsh.fileTreePanel.lastCommit' => 'último commit',
+			'gsh.fileTreePanel.openInFinder' => 'Abrir no Finder',
+			'gsh.fileTreePanel.openInExplorer' => 'Abrir no Explorer',
+			'gsh.fileTreePanel.openInFileManager' => 'Abrir no gerenciador de arquivos',
+			'gsh.fileTreePanel.open' => 'Abrir',
+			'gsh.fileTreePanel.openWith' => 'Abrir com',
+			'gsh.fileTreePanel.openInNewWindow' => 'Abrir em nova janela',
+			'gsh.fileTreePanel.openLayout' => 'Abrir layout',
+			'gsh.fileTreePanel.openAsMarkdown' => 'Abrir como markdown',
+			'gsh.fileTreePanel.showGitDiff' => 'Mostrar diff do git',
+			'gsh.fileTreePanel.createTerminal' => 'Abrir no terminal',
+			'gsh.fileTreePanel.rename' => 'Renomear',
+			'gsh.fileTreePanel.copy' => 'Copiar',
+			'gsh.fileTreePanel.cut' => 'Recortar',
+			'gsh.fileTreePanel.paste' => 'Colar',
+			'gsh.fileTreePanel.copyRelativePath' => 'Copiar caminho relativo',
+			'gsh.fileTreePanel.copyAbsolutePath' => 'Copiar caminho absoluto',
+			'gsh.fileTreePanel.renameFailed' => 'Falha ao renomear.',
+			'gsh.fileTreePanel.noChanges' => 'Nenhuma alteração.',
+			'gsh.fileTreePanel.stagedChangesHeader' => ({required Object count}) => 'ALTERAÇÕES EM STAGE (${count})',
+			'gsh.fileTreePanel.changesHeader' => ({required Object count}) => 'ALTERAÇÕES (${count})',
+			'gsh.fileTreePanel.discardAllChanges' => 'Descartar todas as alterações',
+			'gsh.fileTreePanel.unstageAllChanges' => 'Tirar tudo do stage',
+			'gsh.fileTreePanel.stageAllChanges' => 'Colocar tudo no stage',
+			'gsh.fileTreePanel.discardFolderChanges' => 'Descartar alterações da pasta',
+			'gsh.fileTreePanel.unstageFolderChanges' => 'Tirar pasta do stage',
+			'gsh.fileTreePanel.stageFolderChanges' => 'Colocar pasta no stage',
+			'gsh.fileTreePanel.generateCommitMessage' => 'Gerar mensagem de commit',
+			'gsh.fileTreePanel.generateWith' => ({required Object harness}) => 'Gerar com ${harness}',
+			'gsh.fileTreePanel.generateUnavailableWhileAmending' => 'Indisponível durante o amend de um commit',
+			'gsh.fileTreePanel.cancelGeneration' => 'Cancelar geração',
+			'gsh.fileTreePanel.changes' => 'Alteracoes',
+			'gsh.fileTreePanel.history' => 'Historico',
+			'gsh.fileTreePanel.historyRepository' => 'Repositorio',
+			'gsh.fileTreePanel.historyNoRepository' => 'Nenhum repositorio Git disponivel.',
+			'gsh.fileTreePanel.historyEmpty' => 'Nenhum commit encontrado.',
+			'gsh.fileTreePanel.historyLoadFailed' => 'Nao foi possivel carregar o historico Git.',
+			'gsh.fileTreePanel.historyUntitledCommit' => 'Commit sem titulo',
+			'gsh.fileTreePanel.historyNow' => 'agora',
+			'gsh.fileTreePanel.historyMinutesAgo' => ({required Object count}) => 'ha ${count} min',
+			'gsh.fileTreePanel.historyHoursAgo' => ({required Object count}) => 'ha ${count} h',
+			'gsh.fileTreePanel.historyYesterday' => 'ontem',
+			'gsh.fileTreePanel.historyDayAgo' => 'ha 1 dia',
+			'gsh.fileTreePanel.historyDaysAgo' => ({required Object count}) => 'ha ${count} dias',
+			'gsh.fileTreePanel.historyFiles' => 'Arquivos alterados',
+			'gsh.fileTreePanel.historyFilesEmpty' => 'Nenhum arquivo alterado.',
+			'gsh.fileTreePanel.historyFilesLoadFailed' => 'Nao foi possivel carregar os arquivos alterados.',
+			'gsh.fileTreePanel.diffEmptyTree' => 'Arvore vazia',
+			'gsh.fileTreePanel.diffOriginal' => ({required Object ref}) => 'Original ${ref}',
+			'gsh.fileTreePanel.diffModified' => ({required Object ref}) => 'Modificado ${ref}',
+			'gsh.fileTreePanel.diffWorkingTree' => 'Diretorio de trabalho',
+			'gsh.fileTreePanel.diffBinaryFile' => 'Arquivo binario - sem diff de texto.',
+			'gsh.fileTreePanel.diffNoChanges' => 'Sem alteracoes.',
+			'gsh.fileTreePanel.diffError' => ({required Object detail}) => 'Não foi possível ler o diff: ${detail}',
+			'gsh.fileTreePanel.galleryTooltip' => 'Galeria',
+			'gsh.fileTreePanel.sectionGallery' => 'GALERIA',
+			'gsh.fileTreePanel.openAsHtml' => 'Abrir como HTML',
+			'gsh.fileTreePanel.importQuestionTitle' => 'Copiar aqui?',
+			'gsh.fileTreePanel.importMessage' => ({required Object count, required Object dest}) => 'Copiar ${count} itens para “${dest}”?',
+			'gsh.fileTreePanel.importAction' => 'Copiar',
+			'gsh.fileTreePanel.couldNotImportTitle' => 'Não foi possível copiar',
+			'gsh.fileTreePanel.openInAgent' => ({required Object harness}) => 'Abrir no ${harness}',
+			'gsh.fileViewer.cantOpen' => 'Não é possível abrir este arquivo.',
+			'gsh.fileViewer.couldNotLoadImage' => 'Não foi possível carregar a imagem.',
+			'gsh.fileViewer.preview' => 'Pré-visualização',
+			'gsh.fileViewer.source' => 'Código-fonte',
+			'gsh.fileViewer.reload' => 'Recarregar',
+			'gsh.workspaceSettingsDialog.choosePhotoTitle' => 'Escolher foto do workspace',
+			'gsh.workspaceSettingsDialog.title' => 'Configurações do workspace',
+			'gsh.workspaceSettingsDialog.namePlaceholder' => 'Nome do workspace',
+			'gsh.workspaceSettingsDialog.addPhoto' => 'Adicionar foto',
+			'gsh.workspaceSettingsDialog.changePhoto' => 'Alterar foto',
+			'gsh.workspaceSettingsDialog.remove' => 'Remover',
+			'gsh.workspaceSettingsDialog.color' => 'Cor',
+			'gsh.workspaceSettingsDialog.host' => 'Host',
+			'gsh.workspaceSettingsDialog.folder' => 'Pasta',
+			'gsh.realmDialogs.namePlaceholder' => 'Nome do realm',
+			'gsh.realmDialogs.duplicateName' => 'Já existe um realm com esse nome.',
+			'gsh.realmDialogs.newRealmTitle' => 'Novo realm',
+			'gsh.realmDialogs.renameRealmTitle' => 'Renomear realm',
+			'gsh.realmDialogs.rename' => 'Renomear',
+			'gsh.realmDialogs.deleteRealmTitle' => 'Excluir realm',
+			'gsh.realmDialogs.deleteMessage' => ({required Object name, required Object suffix}) => 'Excluir "${name}"? Nenhum workspace é excluído — só a lista de pastas muda.${suffix}',
+			'gsh.realmDialogs.deleteSuffixOne' => ' O workspace dele irá para o Padrão.',
+			'gsh.realmDialogs.deleteSuffixMany' => ({required Object count}) => ' Os ${count} workspaces dele irão para o Padrão.',
+			'gsh.realmDialogs.manageRealmsTitle' => 'Gerenciar realms',
+			'gsh.realmDialogs.workspaceCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 workspace', other: '${n} workspaces', ), 
+			'gsh.dbRedisTable.deleteKeyTitle' => 'Excluir chave',
+			'gsh.dbRedisTable.deleteKeyMessage' => ({required Object key}) => 'Excluir "${key}" deste banco Redis?',
+			'gsh.dbRedisTable.refresh' => 'Atualizar',
+			'gsh.dbRedisTable.newKey' => 'Nova chave',
+			'gsh.dbRedisTable.columnKey' => 'CHAVE',
+			'gsh.dbRedisTable.columnValue' => 'VALOR',
+			'gsh.dbRedisTable.columnType' => 'TIPO',
+			'gsh.dbRedisTable.columnTtl' => 'TTL',
+			'gsh.dbRedisTable.keyCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 chave', other: '${n} chaves', ), 
+			'gsh.dbRedisTable.noKeys' => 'Nenhuma chave neste banco de dados.',
+			'gsh.dbRedisTable.noKeysMatch' => ({required Object pattern}) => 'Nenhuma chave corresponde a "${pattern}".',
+			'gsh.dbRedisTable.loadMore' => 'Carregar mais',
+			'gsh.dbRedisTable.loadingFullValue' => 'Carregando valor completo…',
+			'gsh.dbRedisTable.ttlMustBeNumber' => 'TTL deve ser um número de segundos.',
+			'gsh.dbRedisTable.addKey' => 'Adicionar chave',
+			'gsh.dbRedisTable.keyFieldHint' => 'chave',
+			'gsh.dbRedisTable.ttlFieldHint' => 'ttl (s, opcional)',
+			'gsh.dbRedisTable.valueFieldHint' => 'valor',
+			'gsh.dbRedisTable.searchHint' => 'Buscar — padrão, ex.: user:*',
+			'gsh.dbQueryView.saveQueryAs' => 'Salvar query como',
+			'gsh.dbQueryView.couldNotSave' => 'Não foi possível salvar',
+			'gsh.dbQueryView.selectDatabase' => 'Selecionar banco de dados',
+			'gsh.dbQueryView.noSqlConnections' => 'Nenhuma conexão SQL',
+			'gsh.dbQueryView.running' => 'Executando…',
+			'gsh.dbQueryView.runSelection' => 'Executar seleção',
+			'gsh.dbQueryView.run' => 'Executar',
+			'gsh.dbQueryView.pickDatabaseHint' => 'Escolha um banco de dados acima e depois Executar (⌘↵).',
+			'gsh.dbQueryView.runQueryHint' => 'Execute a query (⌘↵) para ver os resultados aqui.',
+			'gsh.dbQueryView.noRows' => 'Nenhuma linha.',
+			'gsh.dbQueryView.rowsAffected' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 linha afetada', other: '${n} linhas afetadas', ), 
+			'gsh.dbQueryView.rowsFooter' => ({required Object n}) => '${n} linhas',
+			'gsh.dbQueryView.truncatedSuffix' => ' · truncado (aumente -- limit)',
+			'gsh.dbQueryView.table' => 'Tabela',
+			'gsh.dbQueryView.json' => 'JSON',
+			'gsh.dbQueryView.unsaved' => 'não salvo',
+			'gsh.dbQueryView.saved' => 'salvo',
+			'gsh.dbQueryView.copied' => 'Copiado',
+			'gsh.dbQueryView.copy' => 'Copiar',
+			'gsh.httpView.saveRequestAs' => 'Salvar request como',
+			'gsh.httpView.couldNotSave' => 'Não foi possível salvar',
+			'gsh.httpView.run' => 'Executar',
+			'gsh.httpView.running' => 'Executando…',
+			'gsh.httpView.noRequests' => 'Nenhum request neste arquivo — escreva um, ex.: GET https://example.com',
+			'gsh.httpView.selectRequest' => 'Selecionar request',
+			'gsh.httpView.requestCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 request', other: '${n} requests', ), 
+			'gsh.httpView.runHint' => 'Execute o request (⌘↵) para ver a resposta aqui.',
+			'gsh.httpView.emptyBody' => 'Corpo da resposta vazio.',
+			'gsh.httpView.body' => 'JSON',
+			'gsh.httpView.headers' => 'Headers',
+			'gsh.httpView.raw' => 'Text',
+			'gsh.httpView.truncatedSuffix' => ' · truncado (resposta grande demais)',
+			'gsh.httpView.error.title' => 'Falha no request',
+			'gsh.httpView.error.noRequest' => 'Nenhum request encontrado na posição do cursor.',
+			'gsh.httpView.error.invalidUrl' => ({required Object url}) => 'URL inválida: ${url}',
+			'gsh.httpView.error.unresolvedVariable' => ({required Object name}) => 'A variável {{${name}}} não tem valor. Declare com @${name} = … neste arquivo.',
+			'gsh.httpView.error.bodyFileMissing' => ({required Object path}) => 'Arquivo de corpo não encontrado: ${path}',
+			'gsh.httpView.error.bodyFileUnreadable' => ({required Object path, required Object detail}) => 'Não foi possível ler o arquivo de corpo ${path}: ${detail}',
+			'gsh.httpView.error.connectionFailed' => ({required Object detail}) => 'Não foi possível alcançar o servidor: ${detail}',
+			'gsh.httpView.error.connectionFailedNoDetail' => 'Não foi possível alcançar o servidor.',
+			'gsh.httpView.error.timeout' => ({required Object seconds}) => 'O request estourou o tempo limite de ${seconds}s.',
+			'gsh.httpView.error.responseTooLarge' => ({required Object bytes}) => 'A resposta passou do limite de ${bytes} bytes.',
+			'gsh.kanbanView.filter' => 'Filtrar',
+			'gsh.kanbanView.filterTitlePlaceholder' => 'Buscar por título',
+			'gsh.kanbanView.filterLabels' => 'Marcadores',
+			'gsh.kanbanView.filterClear' => 'Limpar',
+			'gsh.kanbanView.filterDependencies' => 'Dependências',
+			'gsh.kanbanView.filterBlocked' => 'Bloqueado',
+			'gsh.kanbanView.filterReady' => 'Pronto',
+			'gsh.kanbanView.blockedBy' => 'Bloqueado por',
+			'gsh.kanbanView.addBlocker' => 'Adicionar card bloqueador',
+			'gsh.kanbanView.searchCards' => 'Buscar cards',
+			'gsh.kanbanView.unknownCard' => 'desconhecido',
+			'gsh.kanbanView.boardView' => 'Quadro',
+			'gsh.kanbanView.listView' => 'Lista',
+			'gsh.kanbanView.refresh' => 'Atualizar do disco',
+			'gsh.kanbanView.manageLabels' => 'Marcadores',
+			'gsh.kanbanView.labelsTitle' => 'Marcadores deste quadro',
+			'gsh.kanbanView.labelNamePlaceholder' => 'nome do marcador',
+			'gsh.kanbanView.labelUsage' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 card', other: '${n} cards', ), 
+			'gsh.kanbanView.deleteLabel' => 'Apagar marcador',
+			'gsh.kanbanView.newCard' => 'novo card',
+			'gsh.kanbanView.newCardTitle' => 'Novo card',
+			'gsh.kanbanView.newColumn' => 'Nova coluna',
+			'gsh.kanbanView.columnNameTitle' => 'Nome da coluna',
+			'gsh.kanbanView.dragColumn' => 'Arrastar coluna',
+			'gsh.kanbanView.columnOptions' => 'Opções da coluna',
+			'gsh.kanbanView.renameColumn' => 'Renomear coluna',
+			'gsh.kanbanView.moveColumnLeft' => 'Mover pra esquerda',
+			'gsh.kanbanView.moveColumnRight' => 'Mover pra direita',
+			'gsh.kanbanView.deleteColumn' => 'Apagar coluna',
+			'gsh.kanbanView.newCardHere' => 'Novo card aqui',
+			'gsh.kanbanView.duplicateCard' => 'Duplicar',
+			'gsh.kanbanView.cardLabels' => 'Marcadores',
+			'gsh.kanbanView.deleteCard' => 'Apagar card',
+			'gsh.kanbanView.advance' => 'Passar pra próxima coluna',
+			'gsh.kanbanView.advanceHold' => 'Mover para a próxima coluna (segurar: mover para a última)',
+			'gsh.kanbanView.advanceBack' => 'Voltar uma coluna',
+			'gsh.kanbanView.emptyColumn' => 'Sem cards',
+			'gsh.kanbanView.cardCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 card', other: '${n} cards', ), 
+			'gsh.kanbanView.notes' => 'Nota',
+			'gsh.kanbanView.notesPlaceholder' => 'Escreva uma nota',
+			'gsh.kanbanView.comments' => 'Comentários',
+			'gsh.kanbanView.addComment' => 'Adicionar comentário',
+			'gsh.kanbanView.commentPlaceholder' => 'Escreva um comentário',
+			'gsh.kanbanView.noComments' => 'Nenhum comentário ainda',
+			'gsh.kanbanView.closeDetail' => 'Fechar',
+			'gsh.kanbanView.notABoard' => 'Este arquivo ainda não tem colunas ## — ele abre como markdown.',
+			'gsh.kanbanView.startBoard' => 'Começar um quadro',
+			'gsh.kanbanView.couldNotSave' => 'Não deu pra salvar o quadro',
+			'gsh.kanbanView.unrecognizedBlock' => 'Não reconhecido pelo parser — arrasta inteiro, sem edição inline.',
+			'gsh.kanbanView.deleteColumnDialog.title' => ({required Object name}) => 'Apagar “${name}”?',
+			'gsh.kanbanView.deleteColumnDialog.message' => ({required Object count}) => 'Esta coluna tem ${count}. Escolha o que acontece com eles.',
+			'gsh.kanbanView.deleteColumnDialog.moveCards' => 'Mover pra coluna anterior',
+			'gsh.kanbanView.deleteColumnDialog.deleteAll' => 'Apagar junto com a coluna',
+			'gsh.kanbanView.deleteColumnDialog.emptyMessage' => 'Esta coluna está vazia.',
+			'gsh.dbPanel.sectionDatabase' => 'BANCO DE DADOS',
+			'gsh.dbPanel.edit' => 'Editar…',
+			'gsh.dbPanel.copyName' => 'Copiar nome',
+			'gsh.dbPanel.newQuery' => 'Nova query',
+			'gsh.dbPanel.browseKeys' => 'Ver chaves',
+			'gsh.dbPanel.deleteConnectionTitle' => 'Excluir conexão',
+			'gsh.dbPanel.deleteConnectionMessage' => ({required Object name}) => 'Remover "${name}" deste workspace? Qualquer senha salva será descartada. Arquivos .dbq que fazem referência a ela não são afetados.',
+			'gsh.dbPanel.footer' => ({required Object n}) => '.gsh/databases.json · ${n} conexões',
+			'gsh.dbPanel.footerOne' => '.gsh/databases.json · 1 conexão',
+			'gsh.dbPanel.noConnections' => 'Nenhuma conexão ainda.',
+			'gsh.dbPanel.passwordRequired' => 'Senha não encontrada no host. Abra esta conexão e digite-a de novo — ela fica salva na máquina que executa o banco, não nesta.',
+			'gsh.dbMongoView.deleteDocumentTitle' => 'Excluir documento',
+			'gsh.dbMongoView.deleteDocumentMessage' => ({required Object id, required Object collection}) => 'Excluir o documento com _id ${id} de "${collection}"?',
+			'gsh.dbMongoView.filterHint' => 'Filtro — JSON, ex.: {"status": "active"}',
+			'gsh.dbMongoView.docCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 doc', other: '${n} docs', ), 
+			'gsh.dbMongoView.refresh' => 'Atualizar',
+			'gsh.dbMongoView.insertDocument' => 'Inserir documento',
+			'gsh.dbMongoView.noDocuments' => 'Nenhum documento nesta coleção.',
+			'gsh.dbMongoView.noDocumentsMatch' => 'Nenhum documento corresponde a este filtro.',
+			'gsh.dbMongoView.loadMore' => 'Carregar mais',
+			'gsh.dbMongoView.edit' => 'Editar',
+			'gsh.dbMongoView.insert' => 'Inserir',
+			'gsh.dbConnectionDialog.chooseFileTitle' => 'Escolher banco SQLite',
+			'gsh.dbConnectionDialog.file' => 'Arquivo',
+			'gsh.dbConnectionDialog.chooseFilePlaceholder' => 'Escolha um arquivo SQLite…',
+			'gsh.dbConnectionDialog.name' => 'Nome',
+			'gsh.dbConnectionDialog.password' => 'Senha',
+			'gsh.dbConnectionDialog.savePassword' => 'Salvar senha',
+			'gsh.dbConnectionDialog.allowWrites' => 'Permitir escrita (agentes)',
+			'gsh.dbConnectionDialog.allowWritesHint' => 'desligado = agentes só leem via CLI',
+			'gsh.dbConnectionDialog.visibleToAgents' => 'Visível para agentes',
+			'gsh.dbConnectionDialog.visibleToAgentsHint' => 'desligado = oculto da CLI, só na GUI',
+			'gsh.dbConnectionDialog.testing' => 'Testando conexão…',
+			'gsh.dbConnectionDialog.connectionOk' => 'Conexão OK',
+			'gsh.dbConnectionDialog.connectionFailed' => 'Falha na conexão',
+			'gsh.dbConnectionDialog.editTitle' => 'Editar conexão',
+			'gsh.dbConnectionDialog.newTitle' => 'Nova conexão',
+			'gsh.dbConnectionDialog.connectionString' => 'Connection string',
+			'gsh.dbConnectionDialog.invalidUrl' => 'URL de conexão inválida.',
+			'gsh.dbConnectionDialog.sshTunnel' => 'Túnel SSH',
+			'gsh.dbConnectionDialog.sshHost' => 'Host SSH',
+			'gsh.dbConnectionDialog.sshPort' => 'Porta SSH',
+			'gsh.dbConnectionDialog.sshUser' => 'Usuário SSH',
+			'gsh.dbConnectionDialog.privateKey' => 'Chave privada',
+			'gsh.dbConnectionDialog.choosePrivateKeyPlaceholder' => 'Escolha uma chave privada…',
+			'gsh.dbConnectionDialog.choosePrivateKeyDialogTitle' => 'Escolher chave privada SSH',
+			'gsh.dbConnectionDialog.keyPassphrase' => 'Senha da chave',
+			'gsh.dbConnectionDialog.savePassphrase' => 'Salvar senha da chave',
 			_ => null,
 		} ?? switch (path) {
-			'cockpit.dbConnectionDialog.passwordOnHost' => 'A senha fica salva no host, não nesta máquina.',
-			'cockpit.sshPrompts.unknownSshHostTitle' => 'Host SSH desconhecido',
-			'cockpit.sshPrompts.neverConnected' => ({required Object endpoint}) => 'O GSH Desktop nunca se conectou a ${endpoint} antes.',
-			'cockpit.sshPrompts.trustHint' => 'Confie apenas se esta fingerprint corresponder ao servidor. Você pode verificar no servidor com:',
-			'cockpit.sshPrompts.trust' => 'Confiar',
-			'cockpit.sshPrompts.sshKeyPassphraseTitle' => 'Senha da chave SSH',
-			'cockpit.sshPrompts.unlockMessage' => ({required Object keyPath, required Object connectionName}) => 'Desbloqueie ${keyPath} para conectar "${connectionName}".',
-			'cockpit.sshPrompts.keptInMemoryHint' => 'Mantida em memória até o GSH Desktop fechar. Para permitir que agentes usem esta conexão, ative "Salvar senha da chave" na conexão.',
-			'cockpit.sshPrompts.unlock' => 'Desbloquear',
-			'cockpit.projectsRail.workspaces' => 'Workspaces',
-			'cockpit.projectsRail.keepAwakeOn' => 'Mantendo este computador acordado para acesso remoto. Clique para deixá-lo dormir de novo.',
-			'cockpit.projectsRail.keepAwakeOff' => 'Manter este computador acordado para acesso remoto. Desliga sozinho quando o GSH Desktop reinicia.',
-			'cockpit.projectsRail.keepAwakeBattery' => 'Acordado na bateria. Isso consome a bateria.',
-			'cockpit.projectsRail.keepAwakeLid' => 'Fechar a tampa do notebook continua colocando-o para dormir.',
-			'cockpit.projectsRail.newWorkspace' => 'Novo workspace',
-			'cockpit.projectsRail.settings' => 'Configurações',
-			'cockpit.projectsRail.mergeToParent' => 'Mesclar no pai',
-			'cockpit.projectsRail.updateFromParent' => 'Atualizar a partir do pai',
-			'cockpit.projectsRail.forkWorktree' => 'Criar worktree derivada',
-			'cockpit.projectsRail.copyBranch' => 'Copiar branch',
-			'cockpit.projectsRail.remove' => 'Remover',
-			'cockpit.projectsRail.moveToRealm' => 'Mover para realm',
-			'cockpit.projectsRail.copyWorkspaceId' => 'Copiar id do workspace',
-			'cockpit.projectsRail.rename' => 'Renomear',
-			'cockpit.projectsRail.close' => 'Fechar',
-			'cockpit.projectsRail.newRealm' => 'Novo realm…',
-			'cockpit.projectsRail.manageRealms' => 'Gerenciar realms…',
-			'cockpit.projectsRail.noWorkspaces' => 'Nenhum workspace ainda.',
-			'cockpit.projectsRail.sync' => 'Sincronizar',
-			'cockpit.projectsRail.pull' => 'Pull',
-			'cockpit.projectsRail.push' => 'Push',
-			'cockpit.projectsRail.createWorktree' => 'Criar worktree',
-			'cockpit.projectsRail.worktreeCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 worktree', other: '${n} worktrees', ), 
-			'cockpit.projectsRail.expandWorktrees' => 'Expandir worktrees',
-			'cockpit.projectsRail.collapseWorktrees' => 'Recolher worktrees',
-			'cockpit.findBar.find' => 'Buscar',
-			'cockpit.findBar.matchCase' => 'Diferenciar maiúsculas',
-			'cockpit.findBar.wholeWord' => 'Palavra inteira',
-			'cockpit.findBar.useRegex' => 'Usar expressão regular',
-			'cockpit.findBar.previous' => 'Anterior (⇧⏎)',
-			'cockpit.findBar.next' => 'Próximo (⏎)',
-			'cockpit.findBar.close' => 'Fechar (Esc)',
-			'cockpit.findBar.badPattern' => 'Padrão inválido',
-			'cockpit.findBar.noResults' => 'Nenhum resultado',
-			'cockpit.contentSearch.sectionSearch' => 'BUSCA',
-			'cockpit.contentSearch.searchInFiles' => 'Buscar nos arquivos',
-			'cockpit.contentSearch.matchCase' => 'Diferenciar maiúsculas',
-			'cockpit.contentSearch.wholeWord' => 'Palavra inteira',
-			'cockpit.contentSearch.useRegex' => 'Usar expressão regular',
-			'cockpit.contentSearch.invalidRegex' => 'Expressão regular inválida.',
-			'cockpit.contentSearch.typeToSearch' => 'Digite para buscar em todos os arquivos.',
-			'cockpit.contentSearch.searching' => 'Buscando…',
-			'cockpit.contentSearch.noResults' => 'Nenhum resultado.',
-			'cockpit.topbar.collapseSidebar' => 'Recolher barra lateral',
-			'cockpit.topbar.toggleFiles' => 'Mostrar/ocultar arquivos',
-			'cockpit.topbar.filesUnavailable' => 'Arquivos indisponíveis no GSH Desktop',
-			'cockpit.topbar.hideKeyboard' => 'Baixar teclado',
-			'cockpit.topbar.visualizeAgents' => 'Visualizar agentes',
-			'cockpit.topbar.openFarm' => 'Fazenda de agentes',
-			'cockpit.topbar.openChat' => 'Chat com o Claude (beta)',
-			'cockpit.tasks.hotReload' => 'Hot reload',
-			'cockpit.tasks.hotRestart' => 'Hot restart',
-			'cockpit.tasks.toggleDebugPaint' => 'Alternar debug paint',
-			'cockpit.tasks.togglePlatform' => 'Alternar plataforma',
-			'cockpit.tasks.quit' => 'Sair',
-			'cockpit.notifications.agentFinished' => 'Agente terminou',
-			'cockpit.notifications.open' => 'Abrir',
-			'cockpit.notifications.agentNeedsAction' => 'Agente precisa de você',
-			'cockpit.terminalLink.open' => 'Abrir',
-			'cockpit.terminalLink.revealFinder' => 'Mostrar no Finder',
-			'cockpit.terminalLink.revealExplorer' => 'Mostrar no Explorer',
-			'cockpit.terminalLink.revealFolder' => 'Abrir pasta',
-			'cockpit.terminalLink.copyPath' => 'Copiar caminho',
-			'cockpit.terminalLink.openLink' => 'Abrir link',
-			'cockpit.terminalLink.copyLink' => 'Copiar link',
-			'cockpit.terminal.cwdFallbackWarning' => ({required Object requested, required Object path}) => 'Aviso: a pasta "${requested}" não existe. Este terminal abriu em "${path}".',
-			'cockpit.terminal.workspaceEnvTracked' => ({required Object keys}) => 'Aviso: o .env.cockpit está rastreado pelo git (veio com o repositório). Injetado: ${keys}',
-			'cockpit.remoteHost.addHost' => 'Adicionar host remoto',
-			'cockpit.remoteHost.hostName' => 'Nome',
-			'cockpit.remoteHost.sshTarget' => 'Destino SSH (usuário@host)',
-			'cockpit.remoteHost.connecting' => ({required Object host}) => 'Conectando a ${host}…',
-			'cockpit.remoteHost.openingTunnel' => 'Túnel SSH',
-			'cockpit.remoteHost.installingServer' => 'Instalando servidor',
-			'cockpit.remoteHost.handshake' => ({required Object version}) => 'Servidor ${version}',
-			'cockpit.remoteHost.loadingWorkspace' => 'Carregando workspace…',
-			'cockpit.remoteHost.reconnecting' => ({required Object host}) => 'Reconectando a ${host}…',
-			'cockpit.remoteHost.offline' => ({required Object host}) => '${host} offline',
-			'cockpit.remoteHost.remove' => 'Remover',
-			'cockpit.remoteHost.reconnect' => 'Reconectar',
-			'cockpit.remoteHost.installServer' => 'Instalar servidor',
-			'cockpit.remoteHost.errSshUnreachable' => ({required Object host}) => 'Não foi possível alcançar ${host} via SSH. Está ligado e com o Login Remoto ativado?',
-			'cockpit.remoteHost.errInstallFailed' => ({required Object host}) => 'Não foi possível instalar o servidor em ${host}.',
-			'cockpit.remoteHost.errVersionMismatch' => 'Versão do servidor incompatível; atualize-o.',
-			'cockpit.remoteHost.errDetail' => ({required Object detail}) => 'Detalhes: ${detail}',
-			'cockpit.remoteHost.pickFolderTitle' => ({required Object host}) => 'Abrir pasta em ${host}',
-			'cockpit.remoteHost.openHere' => 'Abrir aqui',
-			'cockpit.remoteHost.emptyFolder' => 'Sem subpastas',
-			'cockpit.remoteHost.newLocal' => 'Local',
-			'cockpit.remoteHost.newRemote' => 'Remoto',
-			'cockpit.remoteHost.chooseHost' => 'Escolher um host',
-			'cockpit.remoteHost.newHostEntry' => 'Novo host…',
-			'cockpit.remoteHost.editHost' => 'Editar host',
-			'cockpit.remoteHost.userLabel' => 'Usuário',
-			'cockpit.remoteHost.hostLabel' => 'Host / IP',
-			'cockpit.remoteHost.portLabel' => 'Porta',
-			'cockpit.remoteHost.authLabel' => 'Autenticação',
-			'cockpit.remoteHost.authKey' => 'Chave SSH',
-			'cockpit.remoteHost.authPassword' => 'Senha',
-			'cockpit.remoteHost.passwordLabel' => 'Senha',
-			'cockpit.remoteHost.passwordKeep' => 'Deixe em branco para manter a atual',
-			'cockpit.remoteHost.errUser' => 'Usuário obrigatório',
-			'cockpit.remoteHost.errHost' => 'Host obrigatório',
-			'cockpit.remoteHost.errPassword' => 'Senha obrigatória',
-			'cockpit.remoteHost.identityChoose' => 'Escolher…',
-			'cockpit.remoteHost.identityEmpty' => 'Nenhuma chave selecionada',
-			'cockpit.remoteHost.identityDialogTitle' => 'Selecione a chave privada SSH',
-			'cockpit.remoteHost.errIdentity' => 'Escolha a chave privada para autenticar.',
-			'cockpit.remoteHost.errHostKeyUnknown' => ({required Object host}) => 'O GSH Desktop ainda não confia em ${host}. Conecte de novo e confirme o fingerprint.',
-			'cockpit.remoteHost.errHostKeyChanged' => ({required Object host}) => '${host} está apresentando uma chave SSH diferente da guardada. Se você não reinstalou essa máquina, pare e verifique — se reinstalou, remova a entrada antiga do ~/.ssh/known_hosts.',
-			'cockpit.remoteHost.errHostBundleMissing' => ({required Object host}) => '${host} é Windows mas não tem o GSH Desktop instalado. O servidor remoto é instalado a partir do bundle do GSH Desktop que já está naquela máquina — instale o GSH Desktop lá e tente de novo.',
-			'cockpit.remoteHost.errHostUnknownOs' => ({required Object host}) => 'Não foi possível identificar o sistema de ${host}. A conta pode ter shell restrito, ou nenhum shell.',
-			'cockpit.remoteHost.errIdentityPublic' => 'Só a chave pública está aqui. Isso só funciona se a privada estiver no seu agente SSH; senão, escolha a privada (mesmo nome, sem .pub).',
-			'cockpit.remoteHost.errIdentityNotKey' => 'Esse arquivo não parece uma chave privada.',
-			'cockpit.remoteHost.errIdentityMissingFile' => 'Esse arquivo não existe mais.',
-			'cockpit.remoteHost.errIdentityUnreadable' => 'Não foi possível ler esse arquivo.',
-			'cockpit.browserPane.back' => 'Voltar',
-			'cockpit.browserPane.forward' => 'Avançar',
-			'cockpit.browserPane.reload' => 'Recarregar',
-			'cockpit.browserPane.urlHint' => 'Digite a URL ou endereço',
-			'cockpit.browserPane.go' => 'Ir',
-			'cockpit.documentWindow.mediaNotSupported' => 'Áudio e vídeo abrem na janela principal do GSH Desktop.',
-			'cockpit.documentWindow.fileNotFound' => ({required Object path}) => 'Arquivo não encontrado: ${path}',
-			'cockpit.gallery.intro' => 'Documentos especiais do GSH Desktop para que você tenha o visual do que o agente de IA esteja fazendo.',
-			'cockpit.gallery.createErrorTitle' => 'Não foi possível criar o arquivo',
-			'cockpit.gallery.dbQuery.title' => 'Consulta de banco',
-			'cockpit.gallery.dbQuery.description' => 'Editor SQL com grid de resultado, usando uma das conexões registradas.',
-			'cockpit.gallery.kanban.title' => 'Quadro kanban',
-			'cockpit.gallery.kanban.description' => 'Colunas e cards gravados como markdown puro. Arraste, edite e comente.',
-			'cockpit.gallery.layout.title' => 'Layout de panes',
-			'cockpit.gallery.layout.description' => 'Terminais e splits para abrir de uma vez, estilo tmuxinator. Pode rodar sozinho em worktrees novas.',
-			'cockpit.gallery.httpRequest.title' => 'Requests HTTP',
-			'cockpit.gallery.httpRequest.description' => 'Escreva requests num arquivo e execute com a resposta ao lado.',
-			'cockpit.gallery.html.title' => 'Visual HTML',
-			'cockpit.gallery.html.description' => 'Uma página que o agente escreve e o GSH Desktop renderiza direto: mapa mental, diagrama, gráfico, o que precisar.',
-			'cockpit.gallery.tasks.title' => 'Tarefas',
-			'cockpit.gallery.tasks.description' => 'Comandos para rodar pelo painel de Tasks, como dev server, testes e build. Fica em .cockpit/tasks.json.',
-			'cockpit.gallery.notebook.title' => 'Caderno',
-			'cockpit.gallery.notebook.description' => 'Uma pasta de notas curtas com tags. O agente escreve, você lê e edita. Abre no Obsidian também.',
-			'cockpit.gallery.workspaceEnv.title' => 'Env do workspace',
-			'cockpit.gallery.workspaceEnv.description' => 'Variáveis injetadas em todo terminal deste workspace. Coloque tokens ou logins de API aqui em vez de colar no prompt do agente. Fica fora do git.',
-			'cockpit.gallery.panel.title' => 'Painel',
-			'cockpit.gallery.panel.description' => 'Uma página HTML com ponte para o app: os botões rodam comandos da CLI do GSH Desktop e do shell nesta máquina. Um playground para dashboards rápidos.',
-			'cockpit.notebook.notes' => 'Notas',
-			'cockpit.notebook.newNote' => 'Nova nota',
-			'cockpit.notebook.searchPlaceholder' => 'Buscar notas',
-			'cockpit.notebook.empty' => 'Nenhuma nota ainda. Crie uma, ou peça pro agente escrever aqui.',
-			'cockpit.notebook.noMatch' => 'Nenhuma nota bate com o filtro.',
-			'cockpit.notebook.selectNote' => 'Selecione uma nota',
-			'cockpit.notebook.reload' => 'Recarregar do disco',
-			'cockpit.notebook.untagged' => 'sem tag',
-			'cockpit.notebook.saveFailed' => 'Não foi possível salvar a nota',
-			'cockpit.notebook.createFailed' => 'Não foi possível criar a nota',
-			'cockpit.notebook.addTag' => 'adicionar tag',
-			'cockpit.notebook.untitled' => 'Sem título',
-			'cockpit.notebook.deleteNote' => 'Apagar nota',
-			'cockpit.notebook.deleteConfirm' => ({required Object name}) => 'Mover “${name}” pra lixeira?',
-			'cockpit.notebook.imageFailed' => 'Não foi possível salvar a imagem',
-			'cockpit.notebook.format.bold' => 'Negrito (⌘B)',
-			'cockpit.notebook.format.italic' => 'Itálico (⌘I)',
-			'cockpit.notebook.format.strike' => 'Riscado',
-			'cockpit.notebook.format.heading1' => 'Título 1',
-			'cockpit.notebook.format.heading2' => 'Título 2',
-			'cockpit.notebook.format.heading3' => 'Título 3',
-			'cockpit.notebook.format.bullets' => 'Lista',
-			'cockpit.notebook.format.numbered' => 'Lista numerada',
-			'cockpit.notebook.format.checklist' => 'Checklist',
-			'cockpit.notebook.format.quote' => 'Citação',
-			'cockpit.notebook.format.code' => 'Código inline (⌘E)',
-			'cockpit.notebook.format.codeBlock' => 'Bloco de código',
-			'cockpit.notebook.format.link' => 'Link (⌘K)',
-			'cockpit.notebook.format.rule' => 'Divisor',
-			'cockpit.notebook.format.noteLink' => 'Link pra uma nota ([[…]])',
-			'cockpit.notebook.format.noteLinkSearch' => 'Buscar notas',
-			'cockpit.notebook.format.image' => 'Inserir imagem…',
-			'cockpit.notebook.backlinks' => 'Citada em',
-			'cockpit.notebook.renameTag' => 'Renomear tag',
-			'cockpit.notebook.deleteTag' => 'Apagar tag',
-			'cockpit.notebook.deleteTagConfirm' => ({required Object name, required Object count}) => 'Remover “${name}” de ${count} notas? As notas ficam.',
-			'cockpit.notebook.showList' => 'Mostrar lista de notas',
-			'cockpit.notebook.hideList' => 'Ocultar lista de notas',
-			'cockpit.layoutPreview.applyFailedTitle' => 'Não foi possível aplicar o layout',
-			'cockpit.layoutPreview.applyInCockpit' => 'Aplicar no GSH Desktop',
-			'cockpit.layoutPreview.applyNewWorkspace' => 'Abrir como novo workspace',
-			'cockpit.layoutPreview.applyTo' => ({required Object workspace}) => 'Aplicar em ${workspace}',
-			'cockpit.layoutPreview.autorunWorktree' => 'autorun: worktree. Este layout também é aplicado sozinho quando você cria uma worktree do workspace onde ele está.',
-			'cockpit.layoutPreview.command' => 'Comando',
-			'cockpit.layoutPreview.folder' => 'Pasta',
-			'cockpit.layoutPreview.noCommand' => 'sem comando, abre um shell',
-			'cockpit.layoutPreview.replaceConfirm' => 'Substituir layout',
-			'cockpit.layoutPreview.replaceMessage' => ({required Object n}) => '${n} abas abertas deste workspace serão fechadas, inclusive as com trabalho em andamento.',
-			'cockpit.layoutPreview.replaceTitle' => ({required Object workspace}) => 'Substituir o layout de ${workspace}?',
-			'cockpit.layoutPreview.skippedTitle' => 'Não criados neste sistema',
-			'cockpit.layoutPreview.splitDown' => 'divide abaixo',
-			'cockpit.layoutPreview.splitRight' => 'divide à direita',
-			'cockpit.layoutPreview.splitTab' => 'aba',
-			'cockpit.layoutPreview.subtitle' => ({required Object n}) => 'Este layout abre ${n} terminais. Leia os comandos antes de aplicar.',
-			'cockpit.telemetry.tooltip' => 'Telemetria',
-			'cockpit.telemetry.title' => 'Telemetria',
-			'cockpit.telemetry.liveRuns' => ({required Object n}) => '${n} ativos',
-			'cockpit.telemetry.noWorkspace' => 'Abra um workspace para ver a telemetria dele.',
-			'cockpit.telemetry.empty' => 'Nada aqui ainda.',
-			'cockpit.telemetry.emptyFiltered' => 'Nada aqui ainda.',
-			'cockpit.telemetry.searchHint' => 'Filtrar casos',
-			'cockpit.telemetry.chipOpen' => 'Abertos',
-			'cockpit.telemetry.chipNew' => 'Novos',
-			'cockpit.telemetry.chipResolved' => 'Resolvidos',
-			'cockpit.telemetry.chipIgnored' => 'Ignorados',
-			'cockpit.telemetry.chipWarnings' => 'Avisos',
-			'cockpit.telemetry.tagNew' => 'novo',
-			'cockpit.telemetry.tagRegression' => 'regressão',
-			'cockpit.telemetry.tagResolved' => 'resolvido',
-			'cockpit.telemetry.tagIgnored' => 'ignorado',
-			'cockpit.telemetry.srcTask' => 'task',
-			'cockpit.telemetry.srcWrapper' => 'cockpit telemetry',
-			'cockpit.telemetry.run' => ({required Object id}) => 'run ${id}',
-			'cockpit.telemetry.resolve' => 'Marcar resolvido',
-			'cockpit.telemetry.ignore' => 'Ignorar (some para os agentes também)',
-			'cockpit.telemetry.reopen' => 'Reabrir',
-			'cockpit.telemetry.clear' => 'Limpar ocorrências',
-			'cockpit.telemetry.clearRun' => 'Limpar este run',
-			'cockpit.telemetry.clearProject' => 'Limpar projeto',
-			'cockpit.telemetry.openFile' => ({required Object location}) => 'Abrir ${location}',
-			'cockpit.telemetry.showInTerminal' => 'Ver no terminal',
-			'cockpit.telemetry.copyCommand' => 'Copiar comando da CLI',
-			'cockpit.telemetry.copied' => 'Copiado',
-			'cockpit.telemetry.statusOpen' => 'Aberto',
-			'cockpit.telemetry.statusResolved' => 'Resolvido',
-			'cockpit.telemetry.statusIgnored' => 'Ignorado',
-			'cockpit.telemetry.occurrences' => 'Ocorrências',
-			'cockpit.telemetry.inRuns' => ({required Object n}) => 'em ${n} runs',
-			'cockpit.telemetry.first' => 'Primeira',
-			'cockpit.telemetry.last' => 'Última',
-			'cockpit.telemetry.origin' => 'Origem',
-			'cockpit.telemetry.sectionStack' => 'Stack',
-			'cockpit.telemetry.stackHint' => 'frames do projeto em destaque · clique abre o arquivo',
-			'cockpit.telemetry.sectionCorrelated' => 'Log correlacionado',
-			'cockpit.telemetry.correlatedHint' => 'o JSON mais próximo antes do erro, no mesmo run',
-			'cockpit.telemetry.none' => 'nenhum',
-			'cockpit.telemetry.sectionRuns' => 'Ocorrências por run',
-			'cockpit.telemetry.runsHint' => 'mesma chave (cwd, comando): é assim que novo e regressão são calculados',
-			'cockpit.telemetry.sectionContext' => 'Contexto cru',
-			'cockpit.telemetry.contextHint' => 'linhas do terminal ao redor da última ocorrência',
-			'cockpit.telemetry.current' => 'atual',
-			'cockpit.telemetry.fingerprintHint' => ({required Object location}) => 'fingerprint = tipo + mensagem normalizada + ${location}',
-			'cockpit.telemetry.blameUncommitted' => 'alterado no working tree',
-			'cockpit.telemetry.blameCommit' => ({required Object ago, required Object sha}) => 'alterado ${ago} (${sha})',
-			'cockpit.telemetry.justNow' => 'agora',
-			'cockpit.telemetry.minutesAgo' => ({required Object n}) => 'há ${n} min',
-			'cockpit.telemetry.hoursAgo' => ({required Object n}) => 'há ${n} h',
-			'cockpit.telemetry.daysAgo' => ({required Object n}) => 'há ${n} d',
-			'cockpit.telemetry.resolvedToast' => 'Resolvido. Se voltar num run futuro, reaparece como regressão.',
-			'cockpit.telemetry.ignoredToast' => 'Ignorado. Os agentes não veem mais (salvo --include-ignored).',
-			'cockpit.telemetry.clearedToast' => 'Ocorrências apagadas. As regras de triagem ficam.',
-			'cockpit.telemetry.byHuman' => 'por você',
-			'cockpit.telemetry.byAgent' => 'pelo agente',
-			'cockpit.telemetry.caseTabTitle' => ({required Object type, required Object file}) => '${type} · ${file}',
-			'cockpit.telemetry.srcApp' => 'App',
-			'cockpit.telemetry.chipApp' => 'GSH Desktop',
-			'cockpit.panelView.unavailable' => 'Painéis precisam da web view embutida, que ainda não existe no Linux.',
-			'cockpit.panelView.openInBrowser' => 'Abrir no navegador',
-			'cockpit.panelView.openAsHtml' => 'Abrir como HTML',
-			'cockpit.chat.tabTitle' => 'Chat',
-			'cockpit.chat.emptyTitle' => 'Nova conversa',
-			'cockpit.chat.emptySubtitle' => ({required Object folder}) => 'Claude Code em ${folder}, com o seu login.',
-			'cockpit.chat.emptyHintSend' => 'Enter envia; Shift+Enter quebra linha.',
-			'cockpit.chat.emptyHintPaste' => 'Cole um print com Ctrl+V ou solte arquivos no chat.',
-			'cockpit.chat.emptyHintMode' => 'Escolha o modo de permissão embaixo do campo: pedir, aceitar edições, planejar ou ignorar.',
-			'cockpit.chat.placeholder' => 'Mensagem para o Claude… (Enter envia, Shift+Enter quebra linha)',
-			'cockpit.chat.send' => 'Enviar',
-			'cockpit.chat.stop' => 'Parar',
-			'cockpit.chat.working' => 'trabalhando…',
-			'cockpit.chat.waitingYou' => 'esperando você',
-			'cockpit.chat.cost' => ({required Object v}) => 'custo US\$ ${v}',
-			'cockpit.chat.askPermission' => ({required Object tool}) => 'Permitir ${tool}?',
-			'cockpit.chat.allow' => 'Permitir',
-			'cockpit.chat.deny' => 'Negar',
-			'cockpit.chat.allowed' => 'Permitido',
-			'cockpit.chat.denied' => 'Negado',
-			'cockpit.chat.startFailed' => ({required Object detail}) => 'Não consegui iniciar o claude: ${detail}',
-			'cockpit.chat.engineExited' => ({required Object code}) => 'O claude encerrou (código ${code}).',
-			'cockpit.chat.turnFailed' => ({required Object detail}) => 'O turno terminou com erro: ${detail}',
-			'cockpit.chat.handedOff' => 'A conversa continua num terminal com Remote Control: abra no celular ou em claude.ai/code. O chat aqui fica pausado.',
-			'cockpit.chat.remoteControl' => 'Remote Control',
-			'cockpit.chat.remoteControlHint' => 'Continuar esta conversa num terminal com Remote Control (celular, claude.ai/code). O motor do chat não suporta Remote Control.',
-			'cockpit.chat.attachmentTooLarge' => ({required Object name}) => '${name} é grande demais para enviar (imagem até 5 MB, PDF até 32 MB).',
-			'cockpit.chat.loadingHistory' => 'Carregando a conversa…',
-			'cockpit.chat.allowAlways' => ({required Object rule}) => 'Sempre permitir ${rule}',
-			'cockpit.chat.allowedAlways' => ({required Object rule}) => 'Sempre permitido: ${rule}',
-			'cockpit.chat.moreLines' => ({required Object n}) => '… mais ${n} linhas',
-			'cockpit.chat.questionTitle' => 'O agente está perguntando',
-			'cockpit.chat.other' => 'Outro…',
-			'cockpit.chat.answer' => 'Responder',
-			'cockpit.chat.planTitle' => 'Plano do agente',
-			'cockpit.chat.planApprove' => 'Aprovar e executar',
-			'cockpit.chat.planRefine' => 'Continuar planejando',
-			'cockpit.chat.planRefineHint' => 'O que mudar no plano?',
-			'cockpit.chat.planSendRefine' => 'Enviar ajuste',
-			'cockpit.chat.planApproved' => 'Plano aprovado',
-			'cockpit.chat.planRefined' => 'Pediu para continuar planejando',
-			'cockpit.chat.planRefinedWith' => ({required Object text}) => 'Ajuste: ${text}',
-			'cockpit.chat.newChat' => 'Nova conversa',
-			'cockpit.chat.attach' => 'Anexar arquivos',
-			'cockpit.chat.modeDefault' => 'Pedir permissão',
-			'cockpit.chat.modeAcceptEdits' => 'Aceitar edições',
-			'cockpit.chat.modePlan' => 'Planejar',
-			'cockpit.chat.modeBypass' => 'Ignorar permissões',
-			'cockpit.chat.editedFiles' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: 'Editou 1 arquivo', other: 'Editou ${n} arquivos', ), 
-			'cockpit.chat.thinkingTitle' => 'Raciocínio',
-			'cockpit.chat.thinkingLive' => 'Pensando…',
-			'cockpit.chat.stateCompleted' => 'Concluída',
-			'cockpit.chat.stateReviewReady' => 'Pronta para revisão',
-			'cockpit.chat.stateBlocked' => 'Bloqueada',
-			'cockpit.chat.stateFailed' => 'Falhou',
-			'cockpit.farm.tabTitle' => 'Fazenda',
-			'cockpit.farm.title' => 'Fazenda de agentes',
-			'cockpit.farm.emptyTitle' => 'Nenhum agente rodando',
-			'cockpit.farm.emptyHint' => 'Todo loop do Claude Code nesta máquina aparece aqui enquanto trabalha, inclusive subagentes e sessões fora do GSH Desktop.',
-			'cockpit.farm.working' => ({required Object n}) => '${n} trabalhando',
-			'cockpit.farm.waiting' => ({required Object n}) => '${n} precisam de você',
-			'cockpit.farm.idle' => ({required Object n}) => '${n} parados',
-			'cockpit.farm.tokens' => ({required Object n}) => '${n} tokens gerados',
-			'cockpit.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens gerados · contexto ${ctx}',
-			'cockpit.farm.clickToOpen' => 'Clique para abrir o terminal',
-			'cockpit.farm.outsideGsh' => 'Este agente está rodando fora do GSH Desktop. O terminal dele está em outra janela.',
-			'cockpit.farm.agents' => ({required Object n}) => '${n} agentes',
-			'cockpit.farm.subagents' => ({required Object n}) => '${n} subagentes',
-			'cockpit.farm.activity.thinking' => 'pensando',
-			'cockpit.farm.activity.reading' => 'lendo',
-			'cockpit.farm.activity.editing' => 'editando',
-			'cockpit.farm.activity.running' => 'rodando comando',
-			'cockpit.farm.activity.searching' => 'pesquisando na web',
-			'cockpit.farm.activity.delegating' => 'delegando',
-			'cockpit.farm.activity.tooling' => 'usando ferramenta',
-			'cockpit.farm.activity.waiting' => 'esperando você',
-			'cockpit.farm.activity.idle' => 'ocioso',
-			'cockpit.farm.activity.sleeping' => 'dormindo',
-			'cockpit.farm.activity.done' => 'concluído',
-			'cockpit.agentGraph.tabTitle' => 'Agentes',
-			'cockpit.agentGraph.newAgent' => 'Novo agente',
-			'cockpit.agentGraph.emptyTitle' => 'Nenhum agente neste workspace',
-			'cockpit.agentGraph.emptyHint' => 'Inicie um agente num terminal ou crie um aqui. Arraste da porta de um agente até outro para conectá-los.',
-			'cockpit.agentGraph.statusWorking' => 'Trabalhando',
-			'cockpit.agentGraph.statusWaiting' => 'Aguardando',
-			'cockpit.agentGraph.statusIdle' => 'Ocioso',
-			'cockpit.agentGraph.messageCount' => ({required Object n}) => 'Mensagens: ${n}',
-			'cockpit.agentGraph.lastMessage' => ({required Object preview}) => 'Última: ${preview}',
-			'cockpit.agentGraph.linked' => 'Conectado',
-			'cockpit.agentGraph.removeLinkHint' => 'Clique direito para remover a conexão',
-			'cockpit.agentGraph.removeLink' => 'Remover conexão',
-			'cockpit.agentGraph.connectHint' => 'Arraste até outro agente para conectar',
-			'cockpit.agentGraph.quickStart' => 'Início rápido',
-			'cockpit.agentGraph.shell' => 'Shell',
-			'cockpit.agentGraph.tabDetails' => 'Detalhes',
-			'cockpit.agentGraph.tabAppearance' => 'Aparência',
-			'cockpit.agentGraph.tabAgent' => 'Agente',
-			'cockpit.agentGraph.name' => 'Nome do terminal',
-			'cockpit.agentGraph.namePlaceholder' => 'ex.: Revisor',
-			'cockpit.agentGraph.nameTaken' => 'Outra aba já usa este nome. Os nomes precisam ser únicos para o `cockpit msg --to` achar a aba.',
-			'cockpit.agentGraph.command' => 'Comando',
-			'cockpit.agentGraph.commandPlaceholder' => 'ex.: claude --model opus (vazio = shell)',
-			'cockpit.agentGraph.cwd' => 'Diretório de trabalho',
-			'cockpit.agentGraph.browse' => 'Procurar…',
-			'cockpit.agentGraph.cwdMissing' => 'Esta pasta não existe.',
-			'cockpit.agentGraph.monitor' => 'Monitorar atividade',
-			'cockpit.agentGraph.monitorHint' => 'Badge, som e notificação quando um turno termina.',
-			'cockpit.agentGraph.maestro' => 'Maestro',
-			'cockpit.agentGraph.maestroTooltip' => 'Promove este agente a maestro: ele fica conectado a todos os agentes do canvas e os coordena.',
-			'cockpit.agentGraph.maestroReplaces' => ({required Object name}) => '${name} é o maestro atual e deixará de ser.',
-			'cockpit.agentGraph.color' => 'Cor',
-			'cockpit.agentGraph.colorAuto' => 'Automática',
-			'cockpit.agentGraph.role' => 'Papel / instruções',
-			'cockpit.agentGraph.rolePlaceholder' => 'Enviado como primeira mensagem assim que o agente estiver pronto.',
-			'cockpit.agentGraph.task' => 'Tarefa inicial',
-			'cockpit.agentGraph.taskPlaceholder' => 'Enviada logo depois do papel.',
-			'cockpit.agentGraph.focus' => 'Focar',
-			'cockpit.agentGraph.rename' => 'Renomear',
-			'cockpit.agentGraph.renameTitle' => 'Renomear agente',
-			'cockpit.agentGraph.makeMaestro' => 'Tornar maestro',
-			'cockpit.agentGraph.removeMaestro' => 'Remover maestro',
-			'cockpit.agentGraph.closeTab' => 'Fechar aba',
-			'cockpit.agentGraph.removeFromCanvas' => 'Remover do canvas',
-			'cockpit.agentGraph.desktopApps' => 'Apps desktop',
-			'cockpit.agentGraph.desktopBadge' => 'desktop',
-			'cockpit.agentGraph.statusOnline' => 'Online',
-			'cockpit.agentGraph.statusOffline' => 'Offline',
-			'cockpit.agentGraph.queued' => ({required Object n}) => '${n} na fila',
-			'cockpit.agentGraph.agentName' => 'Nome',
-			'cockpit.agentGraph.integration' => 'Integração',
-			'cockpit.agentGraph.integrationHint' => 'O GSH Desktop adiciona um servidor MCP chamado "cockpit" a este arquivo e salva um backup ao lado. Os outros servidores não são tocados.',
-			'cockpit.agentGraph.integrationConsent' => ({required Object app}) => 'Adicionar o servidor MCP do GSH Desktop ao config do ${app}',
-			'cockpit.agentGraph.restartHint' => ({required Object app}) => 'Reinicie o ${app} se ele já estava aberto, para carregar o servidor MCP do GSH Desktop; depois peça a ele para chamar wait_messages.',
-			'cockpit.agentGraph.integrationError.invalidConfig' => ({required Object path}) => '${path} não é um JSON/TOML simples que o GSH Desktop consiga editar com segurança (comentários ou outro formato). Nada foi alterado.',
-			'cockpit.agentGraph.integrationError.cliMissing' => ({required Object path}) => 'A CLI do GSH Desktop ainda não foi instalada (${path}). Reinicie o GSH Desktop e tente de novo.',
-			'cockpit.agentGraph.integrationError.writeFailed' => ({required Object detail}) => 'Não foi possível atualizar o config: ${detail}',
+			'gsh.dbConnectionDialog.passwordOnHost' => 'A senha fica salva no host, não nesta máquina.',
+			'gsh.sshPrompts.unknownSshHostTitle' => 'Host SSH desconhecido',
+			'gsh.sshPrompts.neverConnected' => ({required Object endpoint}) => 'O GSH Desktop nunca se conectou a ${endpoint} antes.',
+			'gsh.sshPrompts.trustHint' => 'Confie apenas se esta fingerprint corresponder ao servidor. Você pode verificar no servidor com:',
+			'gsh.sshPrompts.trust' => 'Confiar',
+			'gsh.sshPrompts.sshKeyPassphraseTitle' => 'Senha da chave SSH',
+			'gsh.sshPrompts.unlockMessage' => ({required Object keyPath, required Object connectionName}) => 'Desbloqueie ${keyPath} para conectar "${connectionName}".',
+			'gsh.sshPrompts.keptInMemoryHint' => 'Mantida em memória até o GSH Desktop fechar. Para permitir que agentes usem esta conexão, ative "Salvar senha da chave" na conexão.',
+			'gsh.sshPrompts.unlock' => 'Desbloquear',
+			'gsh.projectsRail.workspaces' => 'Workspaces',
+			'gsh.projectsRail.keepAwakeOn' => 'Mantendo este computador acordado para acesso remoto. Clique para deixá-lo dormir de novo.',
+			'gsh.projectsRail.keepAwakeOff' => 'Manter este computador acordado para acesso remoto. Desliga sozinho quando o GSH Desktop reinicia.',
+			'gsh.projectsRail.keepAwakeBattery' => 'Acordado na bateria. Isso consome a bateria.',
+			'gsh.projectsRail.keepAwakeLid' => 'Fechar a tampa do notebook continua colocando-o para dormir.',
+			'gsh.projectsRail.newWorkspace' => 'Novo workspace',
+			'gsh.projectsRail.settings' => 'Configurações',
+			'gsh.projectsRail.mergeToParent' => 'Mesclar no pai',
+			'gsh.projectsRail.updateFromParent' => 'Atualizar a partir do pai',
+			'gsh.projectsRail.forkWorktree' => 'Criar worktree derivada',
+			'gsh.projectsRail.copyBranch' => 'Copiar branch',
+			'gsh.projectsRail.remove' => 'Remover',
+			'gsh.projectsRail.moveToRealm' => 'Mover para realm',
+			'gsh.projectsRail.copyWorkspaceId' => 'Copiar id do workspace',
+			'gsh.projectsRail.rename' => 'Renomear',
+			'gsh.projectsRail.close' => 'Fechar',
+			'gsh.projectsRail.newRealm' => 'Novo realm…',
+			'gsh.projectsRail.manageRealms' => 'Gerenciar realms…',
+			'gsh.projectsRail.noWorkspaces' => 'Nenhum workspace ainda.',
+			'gsh.projectsRail.sync' => 'Sincronizar',
+			'gsh.projectsRail.pull' => 'Pull',
+			'gsh.projectsRail.push' => 'Push',
+			'gsh.projectsRail.createWorktree' => 'Criar worktree',
+			'gsh.projectsRail.worktreeCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '1 worktree', other: '${n} worktrees', ), 
+			'gsh.projectsRail.expandWorktrees' => 'Expandir worktrees',
+			'gsh.projectsRail.collapseWorktrees' => 'Recolher worktrees',
+			'gsh.findBar.find' => 'Buscar',
+			'gsh.findBar.matchCase' => 'Diferenciar maiúsculas',
+			'gsh.findBar.wholeWord' => 'Palavra inteira',
+			'gsh.findBar.useRegex' => 'Usar expressão regular',
+			'gsh.findBar.previous' => 'Anterior (⇧⏎)',
+			'gsh.findBar.next' => 'Próximo (⏎)',
+			'gsh.findBar.close' => 'Fechar (Esc)',
+			'gsh.findBar.badPattern' => 'Padrão inválido',
+			'gsh.findBar.noResults' => 'Nenhum resultado',
+			'gsh.contentSearch.sectionSearch' => 'BUSCA',
+			'gsh.contentSearch.searchInFiles' => 'Buscar nos arquivos',
+			'gsh.contentSearch.matchCase' => 'Diferenciar maiúsculas',
+			'gsh.contentSearch.wholeWord' => 'Palavra inteira',
+			'gsh.contentSearch.useRegex' => 'Usar expressão regular',
+			'gsh.contentSearch.invalidRegex' => 'Expressão regular inválida.',
+			'gsh.contentSearch.typeToSearch' => 'Digite para buscar em todos os arquivos.',
+			'gsh.contentSearch.searching' => 'Buscando…',
+			'gsh.contentSearch.noResults' => 'Nenhum resultado.',
+			'gsh.topbar.collapseSidebar' => 'Recolher barra lateral',
+			'gsh.topbar.toggleFiles' => 'Mostrar/ocultar arquivos',
+			'gsh.topbar.filesUnavailable' => 'Arquivos indisponíveis no GSH Desktop',
+			'gsh.topbar.hideKeyboard' => 'Baixar teclado',
+			'gsh.topbar.visualizeAgents' => 'Visualizar agentes',
+			'gsh.topbar.openFarm' => 'Fazenda de agentes',
+			'gsh.topbar.openChat' => 'Chat com o Claude (beta)',
+			'gsh.tasks.hotReload' => 'Hot reload',
+			'gsh.tasks.hotRestart' => 'Hot restart',
+			'gsh.tasks.toggleDebugPaint' => 'Alternar debug paint',
+			'gsh.tasks.togglePlatform' => 'Alternar plataforma',
+			'gsh.tasks.quit' => 'Sair',
+			'gsh.notifications.agentFinished' => 'Agente terminou',
+			'gsh.notifications.open' => 'Abrir',
+			'gsh.notifications.agentNeedsAction' => 'Agente precisa de você',
+			'gsh.terminalLink.open' => 'Abrir',
+			'gsh.terminalLink.revealFinder' => 'Mostrar no Finder',
+			'gsh.terminalLink.revealExplorer' => 'Mostrar no Explorer',
+			'gsh.terminalLink.revealFolder' => 'Abrir pasta',
+			'gsh.terminalLink.copyPath' => 'Copiar caminho',
+			'gsh.terminalLink.openLink' => 'Abrir link',
+			'gsh.terminalLink.copyLink' => 'Copiar link',
+			'gsh.terminal.cwdFallbackWarning' => ({required Object requested, required Object path}) => 'Aviso: a pasta "${requested}" não existe. Este terminal abriu em "${path}".',
+			'gsh.terminal.workspaceEnvTracked' => ({required Object keys}) => 'Aviso: o .env.gsh está rastreado pelo git (veio com o repositório). Injetado: ${keys}',
+			'gsh.remoteHost.addHost' => 'Adicionar host remoto',
+			'gsh.remoteHost.hostName' => 'Nome',
+			'gsh.remoteHost.sshTarget' => 'Destino SSH (usuário@host)',
+			'gsh.remoteHost.connecting' => ({required Object host}) => 'Conectando a ${host}…',
+			'gsh.remoteHost.openingTunnel' => 'Túnel SSH',
+			'gsh.remoteHost.installingServer' => 'Instalando servidor',
+			'gsh.remoteHost.handshake' => ({required Object version}) => 'Servidor ${version}',
+			'gsh.remoteHost.loadingWorkspace' => 'Carregando workspace…',
+			'gsh.remoteHost.reconnecting' => ({required Object host}) => 'Reconectando a ${host}…',
+			'gsh.remoteHost.offline' => ({required Object host}) => '${host} offline',
+			'gsh.remoteHost.remove' => 'Remover',
+			'gsh.remoteHost.reconnect' => 'Reconectar',
+			'gsh.remoteHost.installServer' => 'Instalar servidor',
+			'gsh.remoteHost.errSshUnreachable' => ({required Object host}) => 'Não foi possível alcançar ${host} via SSH. Está ligado e com o Login Remoto ativado?',
+			'gsh.remoteHost.errInstallFailed' => ({required Object host}) => 'Não foi possível instalar o servidor em ${host}.',
+			'gsh.remoteHost.errVersionMismatch' => 'Versão do servidor incompatível; atualize-o.',
+			'gsh.remoteHost.errDetail' => ({required Object detail}) => 'Detalhes: ${detail}',
+			'gsh.remoteHost.pickFolderTitle' => ({required Object host}) => 'Abrir pasta em ${host}',
+			'gsh.remoteHost.openHere' => 'Abrir aqui',
+			'gsh.remoteHost.emptyFolder' => 'Sem subpastas',
+			'gsh.remoteHost.newLocal' => 'Local',
+			'gsh.remoteHost.newRemote' => 'Remoto',
+			'gsh.remoteHost.chooseHost' => 'Escolher um host',
+			'gsh.remoteHost.newHostEntry' => 'Novo host…',
+			'gsh.remoteHost.editHost' => 'Editar host',
+			'gsh.remoteHost.userLabel' => 'Usuário',
+			'gsh.remoteHost.hostLabel' => 'Host / IP',
+			'gsh.remoteHost.portLabel' => 'Porta',
+			'gsh.remoteHost.authLabel' => 'Autenticação',
+			'gsh.remoteHost.authKey' => 'Chave SSH',
+			'gsh.remoteHost.authPassword' => 'Senha',
+			'gsh.remoteHost.passwordLabel' => 'Senha',
+			'gsh.remoteHost.passwordKeep' => 'Deixe em branco para manter a atual',
+			'gsh.remoteHost.errUser' => 'Usuário obrigatório',
+			'gsh.remoteHost.errHost' => 'Host obrigatório',
+			'gsh.remoteHost.errPassword' => 'Senha obrigatória',
+			'gsh.remoteHost.identityChoose' => 'Escolher…',
+			'gsh.remoteHost.identityEmpty' => 'Nenhuma chave selecionada',
+			'gsh.remoteHost.identityDialogTitle' => 'Selecione a chave privada SSH',
+			'gsh.remoteHost.errIdentity' => 'Escolha a chave privada para autenticar.',
+			'gsh.remoteHost.errHostKeyUnknown' => ({required Object host}) => 'O GSH Desktop ainda não confia em ${host}. Conecte de novo e confirme o fingerprint.',
+			'gsh.remoteHost.errHostKeyChanged' => ({required Object host}) => '${host} está apresentando uma chave SSH diferente da guardada. Se você não reinstalou essa máquina, pare e verifique — se reinstalou, remova a entrada antiga do ~/.ssh/known_hosts.',
+			'gsh.remoteHost.errHostBundleMissing' => ({required Object host}) => '${host} é Windows mas não tem o GSH Desktop instalado. O servidor remoto é instalado a partir do bundle do GSH Desktop que já está naquela máquina — instale o GSH Desktop lá e tente de novo.',
+			'gsh.remoteHost.errHostUnknownOs' => ({required Object host}) => 'Não foi possível identificar o sistema de ${host}. A conta pode ter shell restrito, ou nenhum shell.',
+			'gsh.remoteHost.errIdentityPublic' => 'Só a chave pública está aqui. Isso só funciona se a privada estiver no seu agente SSH; senão, escolha a privada (mesmo nome, sem .pub).',
+			'gsh.remoteHost.errIdentityNotKey' => 'Esse arquivo não parece uma chave privada.',
+			'gsh.remoteHost.errIdentityMissingFile' => 'Esse arquivo não existe mais.',
+			'gsh.remoteHost.errIdentityUnreadable' => 'Não foi possível ler esse arquivo.',
+			'gsh.browserPane.back' => 'Voltar',
+			'gsh.browserPane.forward' => 'Avançar',
+			'gsh.browserPane.reload' => 'Recarregar',
+			'gsh.browserPane.urlHint' => 'Digite a URL ou endereço',
+			'gsh.browserPane.go' => 'Ir',
+			'gsh.documentWindow.mediaNotSupported' => 'Áudio e vídeo abrem na janela principal do GSH Desktop.',
+			'gsh.documentWindow.fileNotFound' => ({required Object path}) => 'Arquivo não encontrado: ${path}',
+			'gsh.gallery.intro' => 'Documentos especiais do GSH Desktop para que você tenha o visual do que o agente de IA esteja fazendo.',
+			'gsh.gallery.createErrorTitle' => 'Não foi possível criar o arquivo',
+			'gsh.gallery.dbQuery.title' => 'Consulta de banco',
+			'gsh.gallery.dbQuery.description' => 'Editor SQL com grid de resultado, usando uma das conexões registradas.',
+			'gsh.gallery.kanban.title' => 'Quadro kanban',
+			'gsh.gallery.kanban.description' => 'Colunas e cards gravados como markdown puro. Arraste, edite e comente.',
+			'gsh.gallery.layout.title' => 'Layout de panes',
+			'gsh.gallery.layout.description' => 'Terminais e splits para abrir de uma vez, estilo tmuxinator. Pode rodar sozinho em worktrees novas.',
+			'gsh.gallery.httpRequest.title' => 'Requests HTTP',
+			'gsh.gallery.httpRequest.description' => 'Escreva requests num arquivo e execute com a resposta ao lado.',
+			'gsh.gallery.html.title' => 'Visual HTML',
+			'gsh.gallery.html.description' => 'Uma página que o agente escreve e o GSH Desktop renderiza direto: mapa mental, diagrama, gráfico, o que precisar.',
+			'gsh.gallery.tasks.title' => 'Tarefas',
+			'gsh.gallery.tasks.description' => 'Comandos para rodar pelo painel de Tasks, como dev server, testes e build. Fica em .gsh/tasks.json.',
+			'gsh.gallery.notebook.title' => 'Caderno',
+			'gsh.gallery.notebook.description' => 'Uma pasta de notas curtas com tags. O agente escreve, você lê e edita. Abre no Obsidian também.',
+			'gsh.gallery.workspaceEnv.title' => 'Env do workspace',
+			'gsh.gallery.workspaceEnv.description' => 'Variáveis injetadas em todo terminal deste workspace. Coloque tokens ou logins de API aqui em vez de colar no prompt do agente. Fica fora do git.',
+			'gsh.gallery.panel.title' => 'Painel',
+			'gsh.gallery.panel.description' => 'Uma página HTML com ponte para o app: os botões rodam comandos da CLI do GSH Desktop e do shell nesta máquina. Um playground para dashboards rápidos.',
+			'gsh.notebook.notes' => 'Notas',
+			'gsh.notebook.newNote' => 'Nova nota',
+			'gsh.notebook.searchPlaceholder' => 'Buscar notas',
+			'gsh.notebook.empty' => 'Nenhuma nota ainda. Crie uma, ou peça pro agente escrever aqui.',
+			'gsh.notebook.noMatch' => 'Nenhuma nota bate com o filtro.',
+			'gsh.notebook.selectNote' => 'Selecione uma nota',
+			'gsh.notebook.reload' => 'Recarregar do disco',
+			'gsh.notebook.untagged' => 'sem tag',
+			'gsh.notebook.saveFailed' => 'Não foi possível salvar a nota',
+			'gsh.notebook.createFailed' => 'Não foi possível criar a nota',
+			'gsh.notebook.addTag' => 'adicionar tag',
+			'gsh.notebook.untitled' => 'Sem título',
+			'gsh.notebook.deleteNote' => 'Apagar nota',
+			'gsh.notebook.deleteConfirm' => ({required Object name}) => 'Mover “${name}” pra lixeira?',
+			'gsh.notebook.imageFailed' => 'Não foi possível salvar a imagem',
+			'gsh.notebook.format.bold' => 'Negrito (⌘B)',
+			'gsh.notebook.format.italic' => 'Itálico (⌘I)',
+			'gsh.notebook.format.strike' => 'Riscado',
+			'gsh.notebook.format.heading1' => 'Título 1',
+			'gsh.notebook.format.heading2' => 'Título 2',
+			'gsh.notebook.format.heading3' => 'Título 3',
+			'gsh.notebook.format.bullets' => 'Lista',
+			'gsh.notebook.format.numbered' => 'Lista numerada',
+			'gsh.notebook.format.checklist' => 'Checklist',
+			'gsh.notebook.format.quote' => 'Citação',
+			'gsh.notebook.format.code' => 'Código inline (⌘E)',
+			'gsh.notebook.format.codeBlock' => 'Bloco de código',
+			'gsh.notebook.format.link' => 'Link (⌘K)',
+			'gsh.notebook.format.rule' => 'Divisor',
+			'gsh.notebook.format.noteLink' => 'Link pra uma nota ([[…]])',
+			'gsh.notebook.format.noteLinkSearch' => 'Buscar notas',
+			'gsh.notebook.format.image' => 'Inserir imagem…',
+			'gsh.notebook.backlinks' => 'Citada em',
+			'gsh.notebook.renameTag' => 'Renomear tag',
+			'gsh.notebook.deleteTag' => 'Apagar tag',
+			'gsh.notebook.deleteTagConfirm' => ({required Object name, required Object count}) => 'Remover “${name}” de ${count} notas? As notas ficam.',
+			'gsh.notebook.showList' => 'Mostrar lista de notas',
+			'gsh.notebook.hideList' => 'Ocultar lista de notas',
+			'gsh.layoutPreview.applyFailedTitle' => 'Não foi possível aplicar o layout',
+			'gsh.layoutPreview.applyInGsh' => 'Aplicar no GSH Desktop',
+			'gsh.layoutPreview.applyNewWorkspace' => 'Abrir como novo workspace',
+			'gsh.layoutPreview.applyTo' => ({required Object workspace}) => 'Aplicar em ${workspace}',
+			'gsh.layoutPreview.autorunWorktree' => 'autorun: worktree. Este layout também é aplicado sozinho quando você cria uma worktree do workspace onde ele está.',
+			'gsh.layoutPreview.command' => 'Comando',
+			'gsh.layoutPreview.folder' => 'Pasta',
+			'gsh.layoutPreview.noCommand' => 'sem comando, abre um shell',
+			'gsh.layoutPreview.replaceConfirm' => 'Substituir layout',
+			'gsh.layoutPreview.replaceMessage' => ({required Object n}) => '${n} abas abertas deste workspace serão fechadas, inclusive as com trabalho em andamento.',
+			'gsh.layoutPreview.replaceTitle' => ({required Object workspace}) => 'Substituir o layout de ${workspace}?',
+			'gsh.layoutPreview.skippedTitle' => 'Não criados neste sistema',
+			'gsh.layoutPreview.splitDown' => 'divide abaixo',
+			'gsh.layoutPreview.splitRight' => 'divide à direita',
+			'gsh.layoutPreview.splitTab' => 'aba',
+			'gsh.layoutPreview.subtitle' => ({required Object n}) => 'Este layout abre ${n} terminais. Leia os comandos antes de aplicar.',
+			'gsh.telemetry.tooltip' => 'Telemetria',
+			'gsh.telemetry.title' => 'Telemetria',
+			'gsh.telemetry.liveRuns' => ({required Object n}) => '${n} ativos',
+			'gsh.telemetry.noWorkspace' => 'Abra um workspace para ver a telemetria dele.',
+			'gsh.telemetry.empty' => 'Nada aqui ainda.',
+			'gsh.telemetry.emptyFiltered' => 'Nada aqui ainda.',
+			'gsh.telemetry.searchHint' => 'Filtrar casos',
+			'gsh.telemetry.chipOpen' => 'Abertos',
+			'gsh.telemetry.chipNew' => 'Novos',
+			'gsh.telemetry.chipResolved' => 'Resolvidos',
+			'gsh.telemetry.chipIgnored' => 'Ignorados',
+			'gsh.telemetry.chipWarnings' => 'Avisos',
+			'gsh.telemetry.tagNew' => 'novo',
+			'gsh.telemetry.tagRegression' => 'regressão',
+			'gsh.telemetry.tagResolved' => 'resolvido',
+			'gsh.telemetry.tagIgnored' => 'ignorado',
+			'gsh.telemetry.srcTask' => 'task',
+			'gsh.telemetry.srcWrapper' => 'gsh telemetry',
+			'gsh.telemetry.run' => ({required Object id}) => 'run ${id}',
+			'gsh.telemetry.resolve' => 'Marcar resolvido',
+			'gsh.telemetry.ignore' => 'Ignorar (some para os agentes também)',
+			'gsh.telemetry.reopen' => 'Reabrir',
+			'gsh.telemetry.clear' => 'Limpar ocorrências',
+			'gsh.telemetry.clearRun' => 'Limpar este run',
+			'gsh.telemetry.clearProject' => 'Limpar projeto',
+			'gsh.telemetry.openFile' => ({required Object location}) => 'Abrir ${location}',
+			'gsh.telemetry.showInTerminal' => 'Ver no terminal',
+			'gsh.telemetry.copyCommand' => 'Copiar comando da CLI',
+			'gsh.telemetry.copied' => 'Copiado',
+			'gsh.telemetry.statusOpen' => 'Aberto',
+			'gsh.telemetry.statusResolved' => 'Resolvido',
+			'gsh.telemetry.statusIgnored' => 'Ignorado',
+			'gsh.telemetry.occurrences' => 'Ocorrências',
+			'gsh.telemetry.inRuns' => ({required Object n}) => 'em ${n} runs',
+			'gsh.telemetry.first' => 'Primeira',
+			'gsh.telemetry.last' => 'Última',
+			'gsh.telemetry.origin' => 'Origem',
+			'gsh.telemetry.sectionStack' => 'Stack',
+			'gsh.telemetry.stackHint' => 'frames do projeto em destaque · clique abre o arquivo',
+			'gsh.telemetry.sectionCorrelated' => 'Log correlacionado',
+			'gsh.telemetry.correlatedHint' => 'o JSON mais próximo antes do erro, no mesmo run',
+			'gsh.telemetry.none' => 'nenhum',
+			'gsh.telemetry.sectionRuns' => 'Ocorrências por run',
+			'gsh.telemetry.runsHint' => 'mesma chave (cwd, comando): é assim que novo e regressão são calculados',
+			'gsh.telemetry.sectionContext' => 'Contexto cru',
+			'gsh.telemetry.contextHint' => 'linhas do terminal ao redor da última ocorrência',
+			'gsh.telemetry.current' => 'atual',
+			'gsh.telemetry.fingerprintHint' => ({required Object location}) => 'fingerprint = tipo + mensagem normalizada + ${location}',
+			'gsh.telemetry.blameUncommitted' => 'alterado no working tree',
+			'gsh.telemetry.blameCommit' => ({required Object ago, required Object sha}) => 'alterado ${ago} (${sha})',
+			'gsh.telemetry.justNow' => 'agora',
+			'gsh.telemetry.minutesAgo' => ({required Object n}) => 'há ${n} min',
+			'gsh.telemetry.hoursAgo' => ({required Object n}) => 'há ${n} h',
+			'gsh.telemetry.daysAgo' => ({required Object n}) => 'há ${n} d',
+			'gsh.telemetry.resolvedToast' => 'Resolvido. Se voltar num run futuro, reaparece como regressão.',
+			'gsh.telemetry.ignoredToast' => 'Ignorado. Os agentes não veem mais (salvo --include-ignored).',
+			'gsh.telemetry.clearedToast' => 'Ocorrências apagadas. As regras de triagem ficam.',
+			'gsh.telemetry.byHuman' => 'por você',
+			'gsh.telemetry.byAgent' => 'pelo agente',
+			'gsh.telemetry.caseTabTitle' => ({required Object type, required Object file}) => '${type} · ${file}',
+			'gsh.telemetry.srcApp' => 'App',
+			'gsh.telemetry.chipApp' => 'GSH Desktop',
+			'gsh.panelView.unavailable' => 'Painéis precisam da web view embutida, que ainda não existe no Linux.',
+			'gsh.panelView.openInBrowser' => 'Abrir no navegador',
+			'gsh.panelView.openAsHtml' => 'Abrir como HTML',
+			'gsh.chat.tabTitle' => 'Chat',
+			'gsh.chat.emptyTitle' => 'Nova conversa',
+			'gsh.chat.emptySubtitle' => ({required Object folder}) => 'Claude Code em ${folder}, com o seu login.',
+			'gsh.chat.emptyHintSend' => 'Enter envia; Shift+Enter quebra linha.',
+			'gsh.chat.emptyHintPaste' => 'Cole um print com Ctrl+V ou solte arquivos no chat.',
+			'gsh.chat.emptyHintMode' => 'Escolha o modo de permissão embaixo do campo: pedir, aceitar edições, planejar ou ignorar.',
+			'gsh.chat.placeholder' => 'Mensagem para o Claude… (Enter envia, Shift+Enter quebra linha)',
+			'gsh.chat.send' => 'Enviar',
+			'gsh.chat.stop' => 'Parar',
+			'gsh.chat.working' => 'trabalhando…',
+			'gsh.chat.waitingYou' => 'esperando você',
+			'gsh.chat.cost' => ({required Object v}) => 'custo US\$ ${v}',
+			'gsh.chat.askPermission' => ({required Object tool}) => 'Permitir ${tool}?',
+			'gsh.chat.allow' => 'Permitir',
+			'gsh.chat.deny' => 'Negar',
+			'gsh.chat.allowed' => 'Permitido',
+			'gsh.chat.denied' => 'Negado',
+			'gsh.chat.startFailed' => ({required Object detail}) => 'Não consegui iniciar o claude: ${detail}',
+			'gsh.chat.engineExited' => ({required Object code}) => 'O claude encerrou (código ${code}).',
+			'gsh.chat.turnFailed' => ({required Object detail}) => 'O turno terminou com erro: ${detail}',
+			'gsh.chat.handedOff' => 'A conversa continua num terminal com Remote Control: abra no celular ou em claude.ai/code. O chat aqui fica pausado.',
+			'gsh.chat.remoteControl' => 'Remote Control',
+			'gsh.chat.remoteControlHint' => 'Continuar esta conversa num terminal com Remote Control (celular, claude.ai/code). O motor do chat não suporta Remote Control.',
+			'gsh.chat.attachmentTooLarge' => ({required Object name}) => '${name} é grande demais para enviar (imagem até 5 MB, PDF até 32 MB).',
+			'gsh.chat.loadingHistory' => 'Carregando a conversa…',
+			'gsh.chat.allowAlways' => ({required Object rule}) => 'Sempre permitir ${rule}',
+			'gsh.chat.allowedAlways' => ({required Object rule}) => 'Sempre permitido: ${rule}',
+			'gsh.chat.moreLines' => ({required Object n}) => '… mais ${n} linhas',
+			'gsh.chat.questionTitle' => 'O agente está perguntando',
+			'gsh.chat.other' => 'Outro…',
+			'gsh.chat.answer' => 'Responder',
+			'gsh.chat.planTitle' => 'Plano do agente',
+			'gsh.chat.planApprove' => 'Aprovar e executar',
+			'gsh.chat.planRefine' => 'Continuar planejando',
+			'gsh.chat.planRefineHint' => 'O que mudar no plano?',
+			'gsh.chat.planSendRefine' => 'Enviar ajuste',
+			'gsh.chat.planApproved' => 'Plano aprovado',
+			'gsh.chat.planRefined' => 'Pediu para continuar planejando',
+			'gsh.chat.planRefinedWith' => ({required Object text}) => 'Ajuste: ${text}',
+			'gsh.chat.newChat' => 'Nova conversa',
+			'gsh.chat.attach' => 'Anexar arquivos',
+			'gsh.chat.modeDefault' => 'Pedir permissão',
+			'gsh.chat.modeAcceptEdits' => 'Aceitar edições',
+			'gsh.chat.modePlan' => 'Planejar',
+			'gsh.chat.modeBypass' => 'Ignorar permissões',
+			'gsh.chat.editedFiles' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: 'Editou 1 arquivo', other: 'Editou ${n} arquivos', ), 
+			'gsh.chat.thinkingTitle' => 'Raciocínio',
+			'gsh.chat.thinkingLive' => 'Pensando…',
+			'gsh.chat.stateCompleted' => 'Concluída',
+			'gsh.chat.stateReviewReady' => 'Pronta para revisão',
+			'gsh.chat.stateBlocked' => 'Bloqueada',
+			'gsh.chat.stateFailed' => 'Falhou',
+			'gsh.farm.tabTitle' => 'Fazenda',
+			'gsh.farm.title' => 'Fazenda de agentes',
+			'gsh.farm.emptyTitle' => 'Nenhum agente rodando',
+			'gsh.farm.emptyHint' => 'Todo loop do Claude Code nesta máquina aparece aqui enquanto trabalha, inclusive subagentes e sessões fora do GSH Desktop.',
+			'gsh.farm.working' => ({required Object n}) => '${n} trabalhando',
+			'gsh.farm.waiting' => ({required Object n}) => '${n} precisam de você',
+			'gsh.farm.idle' => ({required Object n}) => '${n} parados',
+			'gsh.farm.tokens' => ({required Object n}) => '${n} tokens gerados',
+			'gsh.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens gerados · contexto ${ctx}',
+			'gsh.farm.clickToOpen' => 'Clique para abrir o terminal',
+			'gsh.farm.outsideGsh' => 'Este agente está rodando fora do GSH Desktop. O terminal dele está em outra janela.',
+			'gsh.farm.agents' => ({required Object n}) => '${n} agentes',
+			'gsh.farm.subagents' => ({required Object n}) => '${n} subagentes',
+			'gsh.farm.activity.thinking' => 'pensando',
+			'gsh.farm.activity.reading' => 'lendo',
+			'gsh.farm.activity.editing' => 'editando',
+			'gsh.farm.activity.running' => 'rodando comando',
+			'gsh.farm.activity.searching' => 'pesquisando na web',
+			'gsh.farm.activity.delegating' => 'delegando',
+			'gsh.farm.activity.tooling' => 'usando ferramenta',
+			'gsh.farm.activity.waiting' => 'esperando você',
+			'gsh.farm.activity.idle' => 'ocioso',
+			'gsh.farm.activity.sleeping' => 'dormindo',
+			'gsh.farm.activity.done' => 'concluído',
+			'gsh.agentGraph.tabTitle' => 'Agentes',
+			'gsh.agentGraph.newAgent' => 'Novo agente',
+			'gsh.agentGraph.emptyTitle' => 'Nenhum agente neste workspace',
+			'gsh.agentGraph.emptyHint' => 'Inicie um agente num terminal ou crie um aqui. Arraste da porta de um agente até outro para conectá-los.',
+			'gsh.agentGraph.statusWorking' => 'Trabalhando',
+			'gsh.agentGraph.statusWaiting' => 'Aguardando',
+			'gsh.agentGraph.statusIdle' => 'Ocioso',
+			'gsh.agentGraph.messageCount' => ({required Object n}) => 'Mensagens: ${n}',
+			'gsh.agentGraph.lastMessage' => ({required Object preview}) => 'Última: ${preview}',
+			'gsh.agentGraph.linked' => 'Conectado',
+			'gsh.agentGraph.removeLinkHint' => 'Clique direito para remover a conexão',
+			'gsh.agentGraph.removeLink' => 'Remover conexão',
+			'gsh.agentGraph.connectHint' => 'Arraste até outro agente para conectar',
+			'gsh.agentGraph.quickStart' => 'Início rápido',
+			'gsh.agentGraph.shell' => 'Shell',
+			'gsh.agentGraph.tabDetails' => 'Detalhes',
+			'gsh.agentGraph.tabAppearance' => 'Aparência',
+			'gsh.agentGraph.tabAgent' => 'Agente',
+			'gsh.agentGraph.name' => 'Nome do terminal',
+			'gsh.agentGraph.namePlaceholder' => 'ex.: Revisor',
+			'gsh.agentGraph.nameTaken' => 'Outra aba já usa este nome. Os nomes precisam ser únicos para o `gsh msg --to` achar a aba.',
+			'gsh.agentGraph.command' => 'Comando',
+			'gsh.agentGraph.commandPlaceholder' => 'ex.: claude --model opus (vazio = shell)',
+			'gsh.agentGraph.cwd' => 'Diretório de trabalho',
+			'gsh.agentGraph.browse' => 'Procurar…',
+			'gsh.agentGraph.cwdMissing' => 'Esta pasta não existe.',
+			'gsh.agentGraph.monitor' => 'Monitorar atividade',
+			'gsh.agentGraph.monitorHint' => 'Badge, som e notificação quando um turno termina.',
+			'gsh.agentGraph.maestro' => 'Maestro',
+			'gsh.agentGraph.maestroTooltip' => 'Promove este agente a maestro: ele fica conectado a todos os agentes do canvas e os coordena.',
+			'gsh.agentGraph.maestroReplaces' => ({required Object name}) => '${name} é o maestro atual e deixará de ser.',
+			'gsh.agentGraph.color' => 'Cor',
+			'gsh.agentGraph.colorAuto' => 'Automática',
+			'gsh.agentGraph.role' => 'Papel / instruções',
+			'gsh.agentGraph.rolePlaceholder' => 'Enviado como primeira mensagem assim que o agente estiver pronto.',
+			'gsh.agentGraph.task' => 'Tarefa inicial',
+			'gsh.agentGraph.taskPlaceholder' => 'Enviada logo depois do papel.',
+			'gsh.agentGraph.focus' => 'Focar',
+			'gsh.agentGraph.rename' => 'Renomear',
+			'gsh.agentGraph.renameTitle' => 'Renomear agente',
+			'gsh.agentGraph.makeMaestro' => 'Tornar maestro',
+			'gsh.agentGraph.removeMaestro' => 'Remover maestro',
+			'gsh.agentGraph.closeTab' => 'Fechar aba',
+			'gsh.agentGraph.removeFromCanvas' => 'Remover do canvas',
+			'gsh.agentGraph.desktopApps' => 'Apps desktop',
+			'gsh.agentGraph.desktopBadge' => 'desktop',
+			'gsh.agentGraph.statusOnline' => 'Online',
+			'gsh.agentGraph.statusOffline' => 'Offline',
+			'gsh.agentGraph.queued' => ({required Object n}) => '${n} na fila',
+			'gsh.agentGraph.agentName' => 'Nome',
+			'gsh.agentGraph.integration' => 'Integração',
+			'gsh.agentGraph.integrationHint' => 'O GSH Desktop adiciona um servidor MCP chamado "gsh" a este arquivo e salva um backup ao lado. Os outros servidores não são tocados.',
+			'gsh.agentGraph.integrationConsent' => ({required Object app}) => 'Adicionar o servidor MCP do GSH Desktop ao config do ${app}',
+			'gsh.agentGraph.restartHint' => ({required Object app}) => 'Reinicie o ${app} se ele já estava aberto, para carregar o servidor MCP do GSH Desktop; depois peça a ele para chamar wait_messages.',
+			'gsh.agentGraph.integrationError.invalidConfig' => ({required Object path}) => '${path} não é um JSON/TOML simples que o GSH Desktop consiga editar com segurança (comentários ou outro formato). Nada foi alterado.',
+			'gsh.agentGraph.integrationError.cliMissing' => ({required Object path}) => 'A CLI do GSH Desktop ainda não foi instalada (${path}). Reinicie o GSH Desktop e tente de novo.',
+			'gsh.agentGraph.integrationError.writeFailed' => ({required Object detail}) => 'Não foi possível atualizar o config: ${detail}',
 			'settings.language.title' => 'Idioma',
 			'settings.language.system' => 'Sistema',
 			'settings.language.english' => 'Inglês',
@@ -3500,13 +3500,13 @@ extension on TranslationsPtBr {
 			'settings.page.nav.groups.app' => 'GSH Desktop',
 			'settings.page.general.sectionEditor' => 'Editor',
 			'settings.page.general.editorEngineTitle' => 'Motor',
-			'settings.page.general.editorEngineCockpit' => 'GSH Desktop (padrão)',
+			'settings.page.general.editorEngineGsh' => 'GSH Desktop (padrão)',
 			'settings.page.general.editorEngineNeovim' => 'Neovim',
 			'settings.page.general.neovimChecking' => 'Procurando o Neovim…',
 			'settings.page.general.neovimNotFound' => 'O Neovim não foi encontrado na PATH do seu shell.',
 			'settings.page.general.neovimRefresh' => 'Verificar novamente',
-			'settings.page.general.showCockpitTitle' => 'Mostrar terminal do GSH Desktop',
-			'settings.page.general.showCockpitDesc' => 'Mantém um workspace sem pasta, só de terminal, fixado no topo da barra lateral. Desligar fecha seus terminais.',
+			'settings.page.general.showGshTitle' => 'Mostrar terminal do GSH Desktop',
+			'settings.page.general.showGshDesc' => 'Mantém um workspace sem pasta, só de terminal, fixado no topo da barra lateral. Desligar fecha seus terminais.',
 			'settings.page.general.launchAtStartupTitle' => 'Iniciar ao ligar',
 			'settings.page.general.launchAtStartupDesc' => 'Inicia o GSH Desktop automaticamente quando você faz login no computador.',
 			'settings.page.general.sectionUpdates' => 'Atualizações',
@@ -3546,7 +3546,7 @@ extension on TranslationsPtBr {
 			'settings.page.storage.restartUseDefaultMessage' => 'O GSH Desktop usará o local padrão do sistema a partir da próxima abertura. Seus dados na pasta personalizada permanecem intactos.',
 			'settings.page.storage.restartResetMessage' => 'Todos os dados do GSH Desktop foram apagados. Reinicie para começar do zero.',
 			'settings.page.storage.later' => 'Mais tarde',
-			'settings.page.storage.quitCockpit' => 'Sair do GSH Desktop',
+			'settings.page.storage.quitGsh' => 'Sair do GSH Desktop',
 			'settings.page.storage.chooseFolderDialogTitle' => 'Escolha uma pasta para os dados do GSH Desktop',
 			'settings.page.terminal.sectionDefaultTerminal' => 'Terminal padrão',
 			'settings.page.terminal.engineTitle' => 'Motor',
@@ -3911,7 +3911,7 @@ extension on TranslationsPtBr {
 			'settings.remoteHosts.statusOffline' => 'Offline',
 			'settings.remoteHosts.statusIdle' => 'Não conectado',
 			'settings.remoteHosts.helpTitle' => 'Como funciona',
-			'settings.remoteHosts.helpBody' => 'O GSH Desktop conecta na sua máquina por SSH e fala com um servidor pequeno que roda os terminais, arquivos e git lá. O host precisa ter o GSH Desktop (desktop) ou o cockpit-server instalado e rodando, e a chave pública deste dispositivo adicionada no ~/.ssh/authorized_keys dele.',
+			'settings.remoteHosts.helpBody' => 'O GSH Desktop conecta na sua máquina por SSH e fala com um servidor pequeno que roda os terminais, arquivos e git lá. O host precisa ter o GSH Desktop (desktop) ou o gsh-server instalado e rodando, e a chave pública deste dispositivo adicionada no ~/.ssh/authorized_keys dele.',
 			'automation.error.unavailable' => ({required Object harness}) => '${harness} não está instalado ou não está no PATH.',
 			'automation.error.modelUnavailable' => ({required Object model, required Object harness}) => 'O modelo "${model}" não está disponível para ${harness}. Escolha outro modelo em Configurações.',
 			'automation.error.authentication' => ({required Object harness, required Object detail}) => '${harness}: ${detail}',

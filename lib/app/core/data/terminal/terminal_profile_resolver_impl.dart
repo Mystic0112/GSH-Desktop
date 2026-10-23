@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/domain/contracts/terminal_profile_resolver.dart';
-import 'package:cockpit/app/core/domain/entities/terminal_profile.dart';
-import 'package:cockpit/app/core/utils/executable_resolver.dart';
-import 'package:cockpit/app/core/utils/login_shell.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/terminal_profile_resolver.dart';
+import 'package:gsh_desktop/app/core/domain/entities/terminal_profile.dart';
+import 'package:gsh_desktop/app/core/utils/executable_resolver.dart';
+import 'package:gsh_desktop/app/core/utils/login_shell.dart';
 
 /// Roda um processo devolvendo o stdout **cru** (bytes) — ponto de injeção pros
 /// testes. Bytes, não String: a saída do `wsl.exe -l -q` é UTF-16LE e deixar o

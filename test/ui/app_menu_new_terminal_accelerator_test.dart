@@ -1,13 +1,13 @@
 import 'dart:io' show Platform;
 
-import 'package:cockpit/app/core/domain/contracts/settings_store.dart';
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/core/ui/menu/app_menu_bar.dart';
-import 'package:cockpit/app/core/ui/menu/editor_menu_bridge.dart';
-import 'package:cockpit/app/core/ui/menu/menu_model.dart';
-import 'package:cockpit/app/core/ui/menu/workspace_menu_bridge.dart';
-import 'package:cockpit/app/core/ui/settings_controller.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/settings_store.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/ui/menu/app_menu_bar.dart';
+import 'package:gsh_desktop/app/core/ui/menu/editor_menu_bridge.dart';
+import 'package:gsh_desktop/app/core/ui/menu/menu_model.dart';
+import 'package:gsh_desktop/app/core/ui/menu/workspace_menu_bridge.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter/services.dart' show LogicalKeyboardKey;
 import 'package:flutter_test/flutter_test.dart';
 

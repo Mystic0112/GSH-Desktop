@@ -1,6 +1,6 @@
 # `lib/app/` — features verticais + módulos
 
-Tudo do cockpit mora aqui. Cada **feature** é um mini-app auto-contido; o
+Tudo do gsh mora aqui. Cada **feature** é um mini-app auto-contido; o
 `core/` é o kernel transversal (ver [`core/CLAUDE.md`](core/CLAUDE.md)).
 
 ## Anatomia de uma feature
@@ -61,7 +61,7 @@ Module buildFooModule(/* deps async resolvidas no main */) => createModule(
   - dependência **factory** ("um X novo por uso"): interface
     `XFactory { X create(); }` (impl no `data/`), **nunca** `X Function()` — o `=>`
     quebra o parser e dois params factory seguidos fundem. Ver
-    `TerminalGatewayFactory` + `CockpitViewModel`.
+    `TerminalGatewayFactory` + `GshViewModel`.
   - **vários primitivos** ambíguos (`String`...): um **value object injetável**
     (ex.: `UpdateTarget`).
 - **Valores async** (stores JSON, perfis de terminal, versão) são resolvidos no `main`

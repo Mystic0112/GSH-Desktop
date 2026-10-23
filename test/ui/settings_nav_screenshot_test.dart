@@ -1,18 +1,18 @@
-import 'package:cockpit/app/core/app_intents.dart' as intents;
-import 'package:cockpit/app/core/domain/contracts/claude_code_settings.dart';
-import 'package:cockpit/app/core/domain/contracts/neovim_gateway.dart';
-import 'package:cockpit/app/core/domain/contracts/settings_store.dart';
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/core/domain/result.dart';
-import 'package:cockpit/app/core/ui/keep_awake_controller.dart';
-import 'package:cockpit/app/core/ui/settings_controller.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/settings/domain/claude_info.dart';
-import 'package:cockpit/app/settings/ui/claude_info_viewmodel.dart';
-import 'package:cockpit/app/settings/ui/neovim_settings_viewmodel.dart';
-import 'package:cockpit/app/settings/ui/settings_nav.dart';
-import 'package:cockpit/app/settings/ui/settings_page.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/app_intents.dart' as intents;
+import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/neovim_gateway.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/settings_store.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/ui/keep_awake_controller.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/settings/ui/claude_info_viewmodel.dart';
+import 'package:gsh_desktop/app/settings/ui/neovim_settings_viewmodel.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_nav.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_page.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter/services.dart' show MethodChannel;
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -117,8 +117,8 @@ class _Claude implements ClaudeInfoSource {
           statusText: 'Needs authentication',
         ),
         McpServerInfo(
-          name: 'cockpit',
-          target: '/home/dev/.cockpit/bin/cockpit mcp --agent claude-desktop',
+          name: 'gsh',
+          target: '/home/dev/.gsh/bin/gsh mcp --agent claude-desktop',
           status: McpStatus.connected,
           statusText: 'Connected',
         ),

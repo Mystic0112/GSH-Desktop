@@ -23,14 +23,14 @@ std::wstring Utf16FromUtf8(const std::string& utf8) {
   return out;
 }
 
-// Canal "cockpit/document_window" das JANELAS DE DOCUMENTO (desktop_multi_window):
+// Canal "gsh/document_window" das JANELAS DE DOCUMENTO (desktop_multi_window):
 // a janela nasce 800x600 e sem título; o Dart manda `present` com título e
 // tamanho, e aqui aplicamos na janela raiz (pai da view), centralizando no
 // monitor. Espelha DocumentWindows.swift no macOS.
 void RegisterDocumentWindowChannel(flutter::FlutterViewController* controller) {
   auto channel =
       std::make_shared<flutter::MethodChannel<flutter::EncodableValue>>(
-          controller->engine()->messenger(), "cockpit/document_window",
+          controller->engine()->messenger(), "gsh/document_window",
           &flutter::StandardMethodCodec::GetInstance());
   HWND view = controller->view()->GetNativeWindow();
   // `channel` capturado no próprio handler: vive enquanto o engine da janela.
@@ -86,7 +86,7 @@ FlutterWindow::FlutterWindow(const flutter::DartProject& project)
     : project_(project) {}
 
 FlutterWindow::~FlutterWindow() {
-  // Fechamento limpo do Cockpit: o Dart chama `windowManager.destroy()`, que
+  // Fechamento limpo do GSH: o Dart chama `windowManager.destroy()`, que
   // no window_manager (Windows) é só `PostQuitMessage(0)`. O loop de mensagens
   // sai com a janela top-level AINDA VIVA e o controller ainda de pé, e o
   // destrutor padrão do membro `unique_ptr` deletaria o controller SEM zerar

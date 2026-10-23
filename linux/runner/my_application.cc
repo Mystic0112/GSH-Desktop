@@ -9,7 +9,7 @@
 
 #include "desktop_multi_window/desktop_multi_window_plugin.h"
 
-// Canal "cockpit/document_window" das JANELAS DE DOCUMENTO
+// Canal "gsh/document_window" das JANELAS DE DOCUMENTO
 // (desktop_multi_window): a janela nasce sem título; o Dart manda `present`
 // com título e tamanho e aplicamos na GtkWindow de cima da view. Espelha
 // DocumentWindows.swift no macOS.
@@ -57,12 +57,12 @@ static void document_window_created_cb(FlPluginRegistry* registry) {
   fl_register_plugins(registry);
   g_autoptr(FlPluginRegistrar) registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry,
-                                                  "CockpitDocumentWindow");
+                                                  "GshDocumentWindow");
   FlView* view = fl_plugin_registrar_get_view(registrar);
   if (view == nullptr) return;
   g_autoptr(FlStandardMethodCodec) codec = fl_standard_method_codec_new();
   FlMethodChannel* channel = fl_method_channel_new(
-      fl_plugin_registrar_get_messenger(registrar), "cockpit/document_window",
+      fl_plugin_registrar_get_messenger(registrar), "gsh/document_window",
       FL_METHOD_CODEC(codec));
   fl_method_channel_set_method_call_handler(channel, document_window_method_cb,
                                             g_object_ref(view), g_object_unref);

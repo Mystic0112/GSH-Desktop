@@ -26,7 +26,7 @@ class CommitMessagePrompt {
         .where((value) => value.isNotEmpty)
         .map(
           (value) => _sensitiveAssignment.hasMatch(value)
-              ? '[sensitive subject redacted by Cockpit]'
+              ? '[sensitive subject redacted by GSH]'
               : value,
         )
         .take(8)
@@ -69,7 +69,7 @@ class CommitMessagePrompt {
   static String _prepareDiff(String input) {
     var value = _redactSensitiveDiff(input);
     if (value.length <= maxDiffChars) return value;
-    const marker = '\n... [diff truncated by Cockpit] ...\n';
+    const marker = '\n... [diff truncated by GSH] ...\n';
     final remaining = maxDiffChars - marker.length;
     final head = (remaining * .7).floor();
     final tail = remaining - head;
@@ -92,7 +92,7 @@ class CommitMessagePrompt {
           '.key ',
         ].any(lower.contains);
         output.add(
-          skipSensitiveFile ? '$line\n[content redacted by Cockpit]' : line,
+          skipSensitiveFile ? '$line\n[content redacted by GSH]' : line,
         );
         continue;
       }
@@ -101,7 +101,7 @@ class CommitMessagePrompt {
       output.add(
         _sensitiveAssignment.hasMatch(line) ||
                 lower.contains('begin private key')
-            ? '[sensitive line redacted by Cockpit]'
+            ? '[sensitive line redacted by GSH]'
             : line,
       );
     }

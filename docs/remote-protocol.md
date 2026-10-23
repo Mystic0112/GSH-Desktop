@@ -1,10 +1,10 @@
-# Protocolo Cockpit Remote (v1, rascunho da Wave 0)
+# Protocolo GSH Remote (v1, rascunho da Wave 0)
 
-Protocolo cliente ↔ `cockpit-server` do plano 58. Nesta wave cobre o
+Protocolo cliente ↔ `gsh-server` do plano 58. Nesta wave cobre o
 **handshake** e o **domínio Terminais**; arquivos, git e databases entram nas
 waves seguintes com o mesmo envelope.
 
-As mensagens são classes Dart em `packages/cockpit_protocol` — a mesma classe
+As mensagens são classes Dart em `packages/gsh_protocol` — a mesma classe
 serializa e desserializa nos dois lados do fio. Este documento descreve o
 formato no fio para debugging e para futuros clientes.
 
@@ -55,11 +55,11 @@ de loopback (Windows) e ausente sobre UDS/túnel SSH; token errado responde
 `loc: true` diz "estou na mesma máquina que você" (sidecar), e não é derivável
 do transporte — a ponta de um `ssh -L` também é um socket local, e ali o
 servidor é remoto. Ele muda uma coisa: as PTYs de um cliente local mantêm o
-`COCKPIT_STATUS_SOCK` que o cliente injetou, porque aquele socket é a via da
-CLI interna (`cockpit send`, `list-tabs`, `db`) além do status de turno. Para
+`GSH_STATUS_SOCK` que o cliente injetou, porque aquele socket é a via da
+CLI interna (`gsh send`, `list-tabs`, `db`) além do status de turno. Para
 um cliente remoto o servidor troca esse endereço pelo do seu próprio receptor
 (o socket do cliente é inalcançável do host), removendo junto as chaves do
-outro transporte — o hook lê `COCKPIT_STATUS_SOCK` antes de porta+token, e uma
+outro transporte — o hook lê `GSH_STATUS_SOCK` antes de porta+token, e uma
 sobra do cliente venceria o endereço certo.
 
 `v` é comparado por igualdade nesta fase. Incompatível → o cliente oferece
@@ -106,7 +106,7 @@ Query, schema e comandos NoSQL executam **no host** (`db.query`, `db.redis`,
 `db.redisMany`, `db.mongo`), e o descritor de conexão viaja em `params.conn`.
 
 A senha **não** viaja junto. O cofre de senhas é do host — arquivo `0600` em
-`~/.cockpit/db-secrets.json`, chaveado por `(raiz do workspace, nome da
+`~/.gsh/db-secrets.json`, chaveado por `(raiz do workspace, nome da
 conexão)` — e o cliente o alimenta por dois métodos **write-only**:
 
 | Método | `params` | Efeito |
@@ -136,7 +136,7 @@ cifrado, então não há passo de migração.
 LOCAL: a chave é derivada da raiz do workspace (nunca do `workspaceId`, que é
 gerado por máquina), então digitar a senha sentado no host ou a partir de um
 cliente remoto grava na MESMA entrada. Era o contrário antes, e a senha
-digitada no host não valia para cliente nenhum — o `cockpit-server` é headless
+digitada no host não valia para cliente nenhum — o `gsh-server` é headless
 e nunca teve como ler o cofre do SO. O que ficou lá migra sozinho na primeira
 leitura.
 

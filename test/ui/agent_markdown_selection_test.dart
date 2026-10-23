@@ -1,5 +1,5 @@
-import 'package:cockpit/app/cockpit/ui/widgets/agent_markdown.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/agent_markdown.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:flutter/material.dart' show SelectionArea;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gpt_markdown/custom_widgets/selectable_adapter.dart';
@@ -7,7 +7,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 /// O `gpt_markdown` desreferencia `DefaultSelectionStyle.of(context)
 /// .selectionColor!` ao montar (`_SelectableAdapter.createRenderObject`), e o
-/// fallback do Flutter traz NULO. Como o Cockpit roda em `ShadcnApp`, e não em
+/// fallback do Flutter traz NULO. Como o GSH roda em `ShadcnApp`, e não em
 /// `MaterialApp`, ninguém preenchia essa cor: montar o markdown derrubava a
 /// árvore inteira.
 ///
@@ -22,7 +22,7 @@ void main() {
     await tester.pumpWidget(
       ShadcnApp(
         theme: buildTheme(brightness: Brightness.dark),
-        home: CockpitTheme(
+        home: GshTheme(
           colors: tokens.colors,
           typo: tokens.typo,
           syntax: tokens.syntax,

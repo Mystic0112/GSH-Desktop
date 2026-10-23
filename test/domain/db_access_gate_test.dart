@@ -1,5 +1,5 @@
-import 'package:cockpit/app/cockpit/domain/entities/db_connection.dart';
-import 'package:cockpit/app/cockpit/domain/services/db_access_gate.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/db_connection.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/db_access_gate.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

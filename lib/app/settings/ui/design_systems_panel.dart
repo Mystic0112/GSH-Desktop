@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/ui/settings_controller.dart';
-import 'package:cockpit/app/core/ui/theme_store_error_message.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/core/ui/widgets/app_menu.dart';
-import 'package:cockpit/app/settings/ui/settings_catalog.dart';
-import 'package:cockpit/app/settings/ui/settings_widgets.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
+import 'package:gsh_desktop/app/core/ui/theme_store_error_message.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/app_menu.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_catalog.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_widgets.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
@@ -36,7 +36,7 @@ class _DesignSystemsPanelState extends State<DesignSystemsPanel> {
     super.dispose();
   }
 
-  Future<void> _menu(BuildContext context, CockpitThemeSpec theme) async {
+  Future<void> _menu(BuildContext context, GshThemeSpec theme) async {
     final controller = context.read<SettingsController>();
     final tr = context.t.settings.page.designSystems;
     final custom = controller.isCustomTheme(theme.id);

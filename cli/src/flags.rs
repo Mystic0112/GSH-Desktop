@@ -30,7 +30,7 @@ fn int_value(flag: &str, raw: &str) -> u64 {
     match raw.parse::<u64>() {
         Ok(v) => v,
         Err(_) => die(
-            &format!("cockpit: {flag} requires a non-negative integer"),
+            &format!("gsh: {flag} requires a non-negative integer"),
             2,
         ),
     }
@@ -44,7 +44,7 @@ impl Flags {
             let a = args[i].as_str();
             if a == "--lines" || a == "-n" {
                 if i + 1 >= args.len() {
-                    die("cockpit: --lines requires a value", 2);
+                    die("gsh: --lines requires a value", 2);
                 }
                 i += 1;
                 f.lines = Some(int_value("--lines", &args[i]));
@@ -52,7 +52,7 @@ impl Flags {
                 f.lines = Some(int_value("--lines", v));
             } else if a == "--offset" {
                 if i + 1 >= args.len() {
-                    die("cockpit: --offset requires a value", 2);
+                    die("gsh: --offset requires a value", 2);
                 }
                 i += 1;
                 f.offset = Some(int_value("--offset", &args[i]));
@@ -62,7 +62,7 @@ impl Flags {
                 f.from_start = true;
             } else if a == "--tab-id" || a == "-t" {
                 if i + 1 >= args.len() {
-                    die("cockpit: --tab-id requires a value", 2);
+                    die("gsh: --tab-id requires a value", 2);
                 }
                 i += 1;
                 f.tab_id = Some(args[i].clone());

@@ -96,7 +96,7 @@
     "search": "Buscar",
     "noResults": "Nenhum resultado"
   },
-  "cockpit": {
+  "gsh": {
     "confirmDialog": {
       "unsavedChangesTitle": "Alterações não salvas",
       "unsavedChangesMessage": "“${fileName}” tem alterações não salvas. Salvar antes de fechar?",
@@ -175,7 +175,7 @@
       "invalidTasksJson": "tasks.json é inválido. Nenhuma alteração foi gravada.",
       "composeConflicts": "Tasks não Compose com rótulos conflitantes foram mantidas: ${labels}"
     },
-    "cockpitPage": {
+    "gshPage": {
       "chooseProjectFolderDialogTitle": "Escolha a pasta do projeto",
       "chooseWorkspaceFolderDialogTitle": "Escolha a pasta do workspace",
       "workspaceRenamedTitle": "Workspace renomeado",
@@ -547,8 +547,8 @@
       "browseKeys": "Ver chaves",
       "deleteConnectionTitle": "Excluir conexão",
       "deleteConnectionMessage": "Remover \"${name}\" deste workspace? Qualquer senha salva será descartada. Arquivos .dbq que fazem referência a ela não são afetados.",
-      "footer": ".cockpit/databases.json · ${n} conexões",
-      "footerOne": ".cockpit/databases.json · 1 conexão",
+      "footer": ".gsh/databases.json · ${n} conexões",
+      "footerOne": ".gsh/databases.json · 1 conexão",
       "noConnections": "Nenhuma conexão ainda.",
       "passwordRequired": "Senha não encontrada no host. Abra esta conexão e digite-a de novo — ela fica salva na máquina que executa o banco, não nesta."
     },
@@ -692,7 +692,7 @@
     },
     "terminal": {
       "cwdFallbackWarning": "Aviso: a pasta \"${requested}\" não existe. Este terminal abriu em \"${path}\".",
-      "workspaceEnvTracked": "Aviso: o .env.cockpit está rastreado pelo git (veio com o repositório). Injetado: ${keys}"
+      "workspaceEnvTracked": "Aviso: o .env.gsh está rastreado pelo git (veio com o repositório). Injetado: ${keys}"
     },
     "remoteHost": {
       "addHost": "Adicionar host remoto",
@@ -780,7 +780,7 @@
       },
       "tasks": {
         "title": "Tarefas",
-        "description": "Comandos para rodar pelo painel de Tasks, como dev server, testes e build. Fica em .cockpit/tasks.json."
+        "description": "Comandos para rodar pelo painel de Tasks, como dev server, testes e build. Fica em .gsh/tasks.json."
       },
       "notebook": {
         "title": "Caderno",
@@ -839,7 +839,7 @@
     },
     "layoutPreview": {
       "applyFailedTitle": "Não foi possível aplicar o layout",
-      "applyInCockpit": "Aplicar no GSH Desktop",
+      "applyInGsh": "Aplicar no GSH Desktop",
       "applyNewWorkspace": "Abrir como novo workspace",
       "applyTo": "Aplicar em ${workspace}",
       "autorunWorktree": "autorun: worktree. Este layout também é aplicado sozinho quando você cria uma worktree do workspace onde ele está.",
@@ -873,7 +873,7 @@
       "tagResolved": "resolvido",
       "tagIgnored": "ignorado",
       "srcTask": "task",
-      "srcWrapper": "cockpit telemetry",
+      "srcWrapper": "gsh telemetry",
       "run": "run ${id}",
       "resolve": "Marcar resolvido",
       "ignore": "Ignorar (some para os agentes também)",
@@ -1030,7 +1030,7 @@
       "tabAgent": "Agente",
       "name": "Nome do terminal",
       "namePlaceholder": "ex.: Revisor",
-      "nameTaken": "Outra aba já usa este nome. Os nomes precisam ser únicos para o `cockpit msg --to` achar a aba.",
+      "nameTaken": "Outra aba já usa este nome. Os nomes precisam ser únicos para o `gsh msg --to` achar a aba.",
       "command": "Comando",
       "commandPlaceholder": "ex.: claude --model opus (vazio = shell)",
       "cwd": "Diretório de trabalho",
@@ -1061,7 +1061,7 @@
       "queued": "${n} na fila",
       "agentName": "Nome",
       "integration": "Integração",
-      "integrationHint": "O GSH Desktop adiciona um servidor MCP chamado \"cockpit\" a este arquivo e salva um backup ao lado. Os outros servidores não são tocados.",
+      "integrationHint": "O GSH Desktop adiciona um servidor MCP chamado \"gsh\" a este arquivo e salva um backup ao lado. Os outros servidores não são tocados.",
       "integrationConsent": "Adicionar o servidor MCP do GSH Desktop ao config do ${app}",
       "restartHint": "Reinicie o ${app} se ele já estava aberto, para carregar o servidor MCP do GSH Desktop; depois peça a ele para chamar wait_messages.",
       "integrationError": {
@@ -1122,13 +1122,13 @@
       "general": {
         "sectionEditor": "Editor",
         "editorEngineTitle": "Motor",
-        "editorEngineCockpit": "GSH Desktop (padrão)",
+        "editorEngineGsh": "GSH Desktop (padrão)",
         "editorEngineNeovim": "Neovim",
         "neovimChecking": "Procurando o Neovim…",
         "neovimNotFound": "O Neovim não foi encontrado na PATH do seu shell.",
         "neovimRefresh": "Verificar novamente",
-        "showCockpitTitle": "Mostrar terminal do GSH Desktop",
-        "showCockpitDesc": "Mantém um workspace sem pasta, só de terminal, fixado no topo da barra lateral. Desligar fecha seus terminais.",
+        "showGshTitle": "Mostrar terminal do GSH Desktop",
+        "showGshDesc": "Mantém um workspace sem pasta, só de terminal, fixado no topo da barra lateral. Desligar fecha seus terminais.",
         "launchAtStartupTitle": "Iniciar ao ligar",
         "launchAtStartupDesc": "Inicia o GSH Desktop automaticamente quando você faz login no computador.",
         "sectionUpdates": "Atualizações",
@@ -1174,7 +1174,7 @@
         "restartUseDefaultMessage": "O GSH Desktop usará o local padrão do sistema a partir da próxima abertura. Seus dados na pasta personalizada permanecem intactos.",
         "restartResetMessage": "Todos os dados do GSH Desktop foram apagados. Reinicie para começar do zero.",
         "later": "Mais tarde",
-        "quitCockpit": "Sair do GSH Desktop",
+        "quitGsh": "Sair do GSH Desktop",
         "chooseFolderDialogTitle": "Escolha uma pasta para os dados do GSH Desktop"
       },
       "terminal": {
@@ -1590,7 +1590,7 @@
       "statusOffline": "Offline",
       "statusIdle": "Não conectado",
       "helpTitle": "Como funciona",
-      "helpBody": "O GSH Desktop conecta na sua máquina por SSH e fala com um servidor pequeno que roda os terminais, arquivos e git lá. O host precisa ter o GSH Desktop (desktop) ou o cockpit-server instalado e rodando, e a chave pública deste dispositivo adicionada no ~/.ssh/authorized_keys dele."
+      "helpBody": "O GSH Desktop conecta na sua máquina por SSH e fala com um servidor pequeno que roda os terminais, arquivos e git lá. O host precisa ter o GSH Desktop (desktop) ou o gsh-server instalado e rodando, e a chave pública deste dispositivo adicionada no ~/.ssh/authorized_keys dele."
     }
   },
   "automation": {

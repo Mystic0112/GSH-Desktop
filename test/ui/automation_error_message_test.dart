@@ -1,6 +1,6 @@
-import 'package:cockpit/app/core/domain/exceptions/automation_error.dart';
-import 'package:cockpit/app/core/ui/automation_error_message.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/domain/exceptions/automation_error.dart';
+import 'package:gsh_desktop/app/core/ui/automation_error_message.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

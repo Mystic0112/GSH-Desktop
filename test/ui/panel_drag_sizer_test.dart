@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/ui/states/panel_drag_sizer.dart';
+import 'package:gsh_desktop/app/gsh/ui/states/panel_drag_sizer.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

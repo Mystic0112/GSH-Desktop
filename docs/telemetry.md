@@ -2,7 +2,7 @@
 
 Base local, por workspace, do que os processos do workspace imprimem. O humano
 vê casos agrupados na aba Telemetry (painel direito) e abre cada um numa aba do
-pane central; o agente consulta a mesma base via `cockpit telemetry ...`.
+pane central; o agente consulta a mesma base via `gsh telemetry ...`.
 Produção continua no Sentry/Datadog: isto é o loop de dev.
 
 ## Unidade: o run
@@ -13,9 +13,9 @@ comando ao longo dos dias (é daí que saem `new` e `regressão`).
 
 | Origem | Como entra | `source` |
 |---|---|---|
-| Task (`.cockpit/tasks.json`) | `PtyTaskRunner` abre a sessão antes do spawn, alimenta cada chunk, fecha com o exit code. Default ligado; `"telemetry": false` desliga | `task` |
-| Terminal solto / Bash do agente | wrapper `cockpit telemetry <cmd>` (crate `cli/`, `telemetry.rs`): PTY aninhado com TTY, pipes sem TTY; manda linhas em lotes via socket (`telemetry-open/ingest/close`) | `wrapper` |
-| Proxy HTTP | `.cockpit/telemetry.json` com `proxy` → run `name:proxy` por workspace | `wrapper` |
+| Task (`.gsh/tasks.json`) | `PtyTaskRunner` abre a sessão antes do spawn, alimenta cada chunk, fecha com o exit code. Default ligado; `"telemetry": false` desliga | `task` |
+| Terminal solto / Bash do agente | wrapper `gsh telemetry <cmd>` (crate `cli/`, `telemetry.rs`): PTY aninhado com TTY, pipes sem TTY; manda linhas em lotes via socket (`telemetry-open/ingest/close`) | `wrapper` |
+| Proxy HTTP | `.gsh/telemetry.json` com `proxy` → run `name:proxy` por workspace | `wrapper` |
 
 Nada é capturado automaticamente de terminais: a intenção é explícita (decisão
 3 do plano). O Bash do Claude sai por pipe, fora do PTY, por isso o wrapper é a
@@ -39,7 +39,7 @@ data/telemetry/
   vm_service_ingest.dart                         Dart VM Service (Logging, Flutter.Error, PauseException)
   otlp_receiver.dart                             OTLP/HTTP JSON em loopback, porta efêmera
   http_proxy.dart                                proxy local + replay
-  telemetry_workspace_config.dart                .cockpit/telemetry.json
+  telemetry_workspace_config.dart                .gsh/telemetry.json
 ui/
   widgets/telemetry_panel.dart                   modo do painel direito
   widgets/telemetry_case_view.dart               corpo da aba de caso
@@ -90,24 +90,24 @@ mesmo bloco que sai no console).
 
 ## Erros do próprio app (plano 68)
 
-O Cockpit é também uma fonte: um run por boot (`source: app`, nome
-"Cockpit"), num store fixo (`__cockpit__`, fora dos workspaces). O
+O GSH é também uma fonte: um run por boot (`source: app`, nome
+"GSH"), num store fixo (`__gsh__`, fora dos workspaces). O
 `DiagnosticsLog` espelha nele o que os handlers globais capturam
 (`FlutterError.onError`, `PlatformDispatcher.onError`, zona, isolates) e os
 `warn` que os fallbacks do código passaram a emitir no lugar do antigo
-`catch (_) {}` mudo. Frames `package:cockpit/` viram `lib/...` e são "do
+`catch (_) {}` mudo. Frames `package:gsh_desktop/` viram `lib/...` e são "do
 projeto": fingerprint e location apontam pro nosso código.
 
 Ligado só com **Settings → General → Developer mode** (desligado por
-padrão: serve a quem mantém o app). Consulta: chip **Cockpit** no painel
-Telemetry, ou `cockpit telemetry errors --app` (`--app` vale pra qualquer
+padrão: serve a quem mantém o app). Consulta: chip **GSH** no painel
+Telemetry, ou `gsh telemetry errors --app` (`--app` vale pra qualquer
 verbo). Sem envio para fora.
 
 ## Métricas de performance (dev, opt-in)
 
 `PerformanceDiagnostics` (`core/data/diagnostics/`) liga junto com o
-**Developer mode** (ou por `COCKPIT_PERF=1`, alias legado
-`COCKPIT_PERF_DIAGNOSTICS=1`, para quem sobe pelo terminal) em qualquer SO e
+**Developer mode** (ou por `GSH_PERF=1`, alias legado
+`GSH_PERF_DIAGNOSTICS=1`, para quem sobe pelo terminal) em qualquer SO e
 grava, no run do app, eventos `info` com `metric` + campos numéricos (só
 enums fechados: nenhum path, comando ou output). Desligada por padrão por
 decisão: sem Datadog, o número só serve a quem lê, e quem lê é o dono na
@@ -134,7 +134,7 @@ própria máquina.
 | `terminalResizeFrame` | durationUs, tabs | primeiro delta do divisor → callback pós-frame; deltas no mesmo frame são agrupados |
 | `windowControl` | action, phase, durationUs | Windows: 1/2/3 = minimizar/maximizar/fechar; phase 0/1/2 = clique/conclusão/erro |
 
-`cockpit telemetry perf [--run r_xx] [--metric m]` agrega P50/P95/máx por
+`gsh telemetry perf [--run r_xx] [--metric m]` agrega P50/P95/máx por
 campo. Baseline oficial: medido no `.dmg` instalado (nunca em `debug`, o JIT
 distorce), registrado no plano 68.
 
@@ -145,7 +145,7 @@ turno foi removido: o agente consulta a base quando quer.
 
 
 `TelemetryIngest.notices` emite os fingerprints de erro de cada lote gravado.
-O `CockpitViewModel` filtra os novos/regressões, enfileira por pane (wrapper:
+O `GshViewModel` filtra os novos/regressões, enfileira por pane (wrapper:
 o pane do run; task: os terminais do workspace com agente) e entrega UMA linha
 quando o agente não está `working` (status hooks), com throttle de 30 s por
 pane. Setting `telemetryPush` (General → "Notify agents about new errors").
@@ -158,8 +158,8 @@ teto de 16 KiB com `truncated` + `hint`.
 
 ## O que ainda não existe
 
-- Remoto (plano 58): ingest/store no host via `cockpit-server` (o parser e o
-  store precisam migrar pro `cockpit_core` antes).
+- Remoto (plano 58): ingest/store no host via `gsh-server` (o parser e o
+  store precisam migrar pro `gsh_core` antes).
 - OTLP protobuf (só JSON hoje).
 - Badge de erros na linha da task e na aba do terminal de origem.
 - Sondas ao vivo (logpoints via CDP/VM Service) e waterfall de trace.

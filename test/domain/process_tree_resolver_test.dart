@@ -1,6 +1,6 @@
-import 'package:cockpit/app/cockpit/domain/entities/process_snapshot.dart';
-import 'package:cockpit/app/core/domain/entities/harness.dart';
-import 'package:cockpit/app/cockpit/domain/services/process_tree_resolver.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/process_snapshot.dart';
+import 'package:gsh_desktop/app/core/domain/entities/harness.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/process_tree_resolver.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

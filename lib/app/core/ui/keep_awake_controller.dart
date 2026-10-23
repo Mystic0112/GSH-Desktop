@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cockpit_keepawake/cockpit_keepawake.dart';
+import 'package:gsh_keepawake/gsh_keepawake.dart';
 import 'package:flutter/foundation.dart';
 
 /// Estado do botão "Keep awake" do rodapé do rail: segura o sleep por

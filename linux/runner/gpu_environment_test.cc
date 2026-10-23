@@ -8,7 +8,7 @@ int main() {
   setenv("__GLX_VENDOR_LIBRARY_NAME", "nvidia", 1);
   setenv("__NV_PRIME_RENDER_OFFLOAD", "1", 1);
   setenv("LIBVA_DRIVER_NAME", "nvidia", 1);
-  unsetenv("COCKPIT_USE_NVIDIA");
+  unsetenv("GSH_USE_NVIDIA");
   unsetenv("GDK_BACKEND");
   assert(configure_linux_gpu_environment() == "integrated-x11-default");
   assert(std::getenv("__GLX_VENDOR_LIBRARY_NAME") == nullptr);
@@ -21,7 +21,7 @@ int main() {
   assert(configure_linux_gpu_environment() == "integrated-x11-default");
   assert(std::string(std::getenv("GDK_BACKEND")) == "wayland");
 
-  setenv("COCKPIT_USE_NVIDIA", "1", 1);
+  setenv("GSH_USE_NVIDIA", "1", 1);
   unsetenv("GDK_BACKEND");
   unsetenv("__GLX_VENDOR_LIBRARY_NAME");
   unsetenv("__NV_PRIME_RENDER_OFFLOAD");

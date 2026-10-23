@@ -1,13 +1,13 @@
-import 'package:cockpit/app/core/ui/clamping_scroll_behavior.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/core/ui/widgets/app_menu.dart';
-import 'package:cockpit/app/core/ui/widgets/hover_tap.dart';
+import 'package:gsh_desktop/app/core/ui/clamping_scroll_behavior.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/app_menu.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/hover_tap.dart';
 import 'package:flutter/services.dart' show LogicalKeyboardKey;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 /// Mockup navegável da **tab de base de dados** (estudo do plano file-tabs,
 /// fase SQLite viewer). NÃO faz parte do app: entrypoint separado, dados 100%
-/// fake, nenhum banco é aberto. Usa o tema real do Cockpit pra avaliar o visual
+/// fake, nenhum banco é aberto. Usa o tema real do GSH pra avaliar o visual
 /// como ele ficaria de verdade.
 ///
 /// Rodar: `flutter run -d macos -t lib/mockups/db_tab_mockup.dart`
@@ -20,11 +20,11 @@ class DbTabMockupApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final tokens = buildTokens(brightness: Brightness.dark);
     return ShadcnApp(
-      title: 'Cockpit — DB Tab (mockup)',
+      title: 'GSH — DB Tab (mockup)',
       debugShowCheckedModeBanner: false,
       scrollBehavior: const ClampingScrollBehavior(),
       theme: buildTheme(brightness: Brightness.dark),
-      builder: (context, child) => CockpitTheme(
+      builder: (context, child) => GshTheme(
         colors: tokens.colors,
         typo: tokens.typo,
         syntax: tokens.syntax,
@@ -36,7 +36,7 @@ class DbTabMockupApp extends StatelessWidget {
   }
 }
 
-/// Simula o pane central do Cockpit: uma tab strip fake com a tab `app.db`
+/// Simula o pane central do GSH: uma tab strip fake com a tab `app.db`
 /// ativa, e o corpo da tab de banco embaixo.
 class _MockupShell extends StatelessWidget {
   const _MockupShell();
@@ -170,7 +170,7 @@ final _conns = <_MockConn>[
 ];
 
 /// Painel lateral direito, no lugar de Files/Search/Source Control: a aba
-/// **Database** com as conexões do workspace (`.cockpit/databases.json` +
+/// **Database** com as conexões do workspace (`.gsh/databases.json` +
 /// sqlites detectados no repo).
 class _DbPanel extends StatefulWidget {
   const _DbPanel();
@@ -347,7 +347,7 @@ class _DbPanelState extends State<_DbPanel> {
               border: Border(top: BorderSide(color: colors.border)),
             ),
             child: Text(
-              '.cockpit/databases.json · 3 connections',
+              '.gsh/databases.json · 3 connections',
               style: typo.label.copyWith(fontSize: 10.5, color: colors.text4),
             ),
           ),
@@ -376,7 +376,7 @@ _Engine _engineOf(_MockConn c) {
 
 /// Cadastro de conexão: engine → campos (SQLite = só o arquivo; Postgres/MySQL
 /// = host/porta/database/usuário + env da senha). Read-only default ON.
-/// No app real isso persiste em `.cockpit/databases.json` como
+/// No app real isso persiste em `.gsh/databases.json` como
 /// `{name, url, passwordSource?}`.
 class _ConnDialog extends StatefulWidget {
   const _ConnDialog({required this.engine, this.initial});

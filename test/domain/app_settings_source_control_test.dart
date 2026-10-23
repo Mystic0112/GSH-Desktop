@@ -1,7 +1,7 @@
-import 'package:cockpit/app/core/domain/contracts/settings_store.dart';
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/core/domain/entities/automation.dart';
-import 'package:cockpit/app/core/ui/settings_controller.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/settings_store.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/domain/entities/automation.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _Store implements SettingsStore {

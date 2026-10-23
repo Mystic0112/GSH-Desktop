@@ -1,23 +1,23 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/setup/remote_pi_resolver.dart';
+import 'package:gsh_desktop/app/core/data/setup/remote_pi_resolver.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
-/// Subdiretório raiz do estado do Cockpit (JSONs de estado, .hive legados de
-/// backup e o cache de scrollback). Em debug usa `cockpit-debug` para não
+/// Subdiretório raiz do estado do GSH (JSONs de estado, .hive legados de
+/// backup e o cache de scrollback). Em debug usa `gsh-debug` para não
 /// colidir com a build de produção (que costuma ficar aberta em paralelo
 /// durante o desenvolvimento).
-const String storageSubdir = kDebugMode ? 'cockpit-debug' : 'cockpit';
+const String storageSubdir = kDebugMode ? 'gsh-debug' : 'gsh';
 
-/// Resolve — e deixa o usuário escolher — a pasta onde o Cockpit guarda seu
+/// Resolve — e deixa o usuário escolher — a pasta onde o GSH guarda seu
 /// estado (JSONs em `state/`: settings/projects/layouts/realms/window_state;
 /// e o cache de scrollback dos terminais).
 ///
 /// **Ovo-e-galinha do bootstrap**: a pasta escolhida precisa ser lida *antes* de
 /// o app saber qual é. Por isso o "ponteiro" mora num lugar fixo e
-/// **não-relocável** (`~/.cockpit/storage_root`) — um único caminho absoluto (a
+/// **não-relocável** (`~/.gsh/storage_root`) — um único caminho absoluto (a
 /// raiz escolhida) ou ausente = usar o padrão do sistema.
 ///
 /// **Paths sempre via `package:path`** (`p.join`/`p.normalize`): no Windows os
@@ -49,7 +49,7 @@ class StorageLocation {
   static String? get _pointerPath {
     final home = remotePiHome();
     if (home == null) return null;
-    return p.join(home, '.cockpit', 'storage_root');
+    return p.join(home, '.gsh', 'storage_root');
   }
 
   /// Raiz escolhida pelo usuário (o que ele selecionou no picker), ou `null`
@@ -84,7 +84,7 @@ class StorageLocation {
   }
 
   /// Raiz efetiva (override ou o padrão da plataforma) — a pasta que o usuário
-  /// "vê" como local do Cockpit. É sob ela que fica o subdiretório
+  /// "vê" como local do GSH. É sob ela que fica o subdiretório
   /// [storageSubdir].
   ///
   /// **Windows**: o padrão é `getApplicationSupportDirectory()` (AppData), e
@@ -151,7 +151,7 @@ class StorageLocation {
   /// `<targetRoot>/<storageSubdir>`), pra que a nova pasta já nasça com os
   /// dados — evita a surpresa de "meus projetos sumiram" ao trocar de pasta.
   /// Só copia se o destino ainda **não** tiver dados (não sobrescreve um
-  /// Cockpit existente naquela pasta). Retorna `true` se copiou.
+  /// GSH existente naquela pasta). Retorna `true` se copiou.
   static Future<bool> migrateStateTo(String targetRoot) async {
     final src = Directory(await dataDir());
     final dst = Directory(dataDirUnder(targetRoot));
@@ -184,7 +184,7 @@ class StorageLocation {
     }
   }
 
-  /// Apaga TODO o estado do Cockpit (JSONs + .hive legados + scrollback) e
+  /// Apaga TODO o estado do GSH (JSONs + .hive legados + scrollback) e
   /// limpa o override — volta pro padrão de fábrica. A UI força reinício logo
   /// em seguida (os stores seguem em memória até o processo morrer).
   static Future<void> resetAll() async {

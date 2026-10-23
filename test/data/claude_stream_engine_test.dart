@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:cockpit/app/cockpit/data/chat/claude_stream_engine.dart';
+import 'package:gsh_desktop/app/gsh/data/chat/claude_stream_engine.dart';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cockpit/app/cockpit/domain/contracts/chat_engine.dart';
-import 'package:cockpit/app/cockpit/domain/entities/chat_attachment.dart';
-import 'package:cockpit/app/cockpit/domain/entities/chat_event.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/chat_viewmodel.dart';
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/chat_engine.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/chat_attachment.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/chat_event.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // Formatos reais do `claude -p --output-format stream-json` (2.1.309),

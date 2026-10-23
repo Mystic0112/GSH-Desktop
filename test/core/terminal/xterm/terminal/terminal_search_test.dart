@@ -1,13 +1,13 @@
 // import 'package:flutter_test/flutter_test.dart';
 // import 'package:mockito/annotations.dart';
 // import 'package:mockito/mockito.dart';
-// import 'package:cockpit/app/core/terminal/xterm/buffer/buffer.dart';
-// import 'package:cockpit/app/core/terminal/xterm/buffer/line/line.dart';
-// import 'package:cockpit/app/core/terminal/xterm/terminal/cursor.dart';
-// import 'package:cockpit/app/core/terminal/xterm/terminal/terminal_search.dart';
-// import 'package:cockpit/app/core/terminal/xterm/terminal/terminal_search_interaction.dart';
-// import 'package:cockpit/app/core/terminal/xterm/util/circular_list.dart';
-// import 'package:cockpit/app/core/terminal/xterm/util/unicode_v11.dart';
+// import 'package:gsh_desktop/app/core/terminal/xterm/buffer/buffer.dart';
+// import 'package:gsh_desktop/app/core/terminal/xterm/buffer/line/line.dart';
+// import 'package:gsh_desktop/app/core/terminal/xterm/terminal/cursor.dart';
+// import 'package:gsh_desktop/app/core/terminal/xterm/terminal/terminal_search.dart';
+// import 'package:gsh_desktop/app/core/terminal/xterm/terminal/terminal_search_interaction.dart';
+// import 'package:gsh_desktop/app/core/terminal/xterm/util/circular_list.dart';
+// import 'package:gsh_desktop/app/core/terminal/xterm/util/unicode_v11.dart';
 
 // import 'terminal_search_test.mocks.dart';
 

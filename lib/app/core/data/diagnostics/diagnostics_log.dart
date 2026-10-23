@@ -1,16 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/utils/user_home.dart';
+import 'package:gsh_desktop/app/core/utils/user_home.dart';
 import 'package:flutter/foundation.dart';
 
 /// Log de diagnóstico em arquivo + detector de encerramento sujo.
 ///
 /// **Por que arquivo, e não só `debugPrint`**: um app GUI aberto pelo Finder/
 /// Dock não tem stdout visível — todo `debugPrint` em produção cai no vazio. Sem
-/// isso, "o Cockpit fechou sozinho" chega como relato sem nenhuma pista.
+/// isso, "o GSH fechou sozinho" chega como relato sem nenhuma pista.
 ///
-/// **Por que fora da pasta relocável**: mora em `~/.cockpit/logs/`, o mesmo lugar
+/// **Por que fora da pasta relocável**: mora em `~/.gsh/logs/`, o mesmo lugar
 /// fixo do ponteiro `storage_root`. O log precisa existir *antes* de o
 /// `StorageLocation` resolver (falha de boot é justamente o que queremos
 /// registrar), e log de crash não deve viajar junto quando o usuário troca a
@@ -73,7 +73,7 @@ class DiagnosticsLog {
   File? get currentFile {
     final dir = _dir;
     if (dir == null) return null;
-    return File('${dir.path}/cockpit-${_stamp(DateTime.now())}.log');
+    return File('${dir.path}/gsh-${_stamp(DateTime.now())}.log');
   }
 
   /// Prepara a pasta, rotaciona logs velhos, detecta encerramento sujo da
@@ -82,7 +82,7 @@ class DiagnosticsLog {
   /// Nunca lança: diagnóstico que quebra o boot é pior que diagnóstico ausente.
   ///
   /// [baseDir] existe só para teste — em produção o caminho é sempre
-  /// `~/.cockpit/logs`, que não pode depender de configuração (é justamente
+  /// `~/.gsh/logs`, que não pode depender de configuração (é justamente
   /// onde se olha quando o resto do app não subiu).
   Future<void> init({
     required String appVersion,
@@ -93,7 +93,7 @@ class DiagnosticsLog {
     try {
       final home = baseDir ?? userHome();
       if (home == null) return;
-      final dir = Directory(baseDir != null ? home : '$home/.cockpit/logs');
+      final dir = Directory(baseDir != null ? home : '$home/.gsh/logs');
       await dir.create(recursive: true);
       _dir = dir;
       _sessionFile = File('${dir.path}/session.json');
@@ -110,7 +110,7 @@ class DiagnosticsLog {
               'iniciada em ${previousCrash!.startedAt.toIso8601String()})',
         );
       }
-      log('boot', 'Cockpit $appVersion — ${_platformLine()}');
+      log('boot', 'GSH $appVersion — ${_platformLine()}');
     } on Object catch (e) {
       debugPrint('[diagnostics] init falhou: $e');
     }
@@ -241,7 +241,7 @@ class DiagnosticsLog {
     await for (final entity in dir.list(followLinks: false)) {
       if (entity is! File) continue;
       final name = entity.uri.pathSegments.last;
-      if (!name.startsWith('cockpit-') || !name.endsWith('.log')) continue;
+      if (!name.startsWith('gsh-') || !name.endsWith('.log')) continue;
       try {
         if ((await entity.lastModified()).isBefore(cutoff)) {
           await entity.delete();

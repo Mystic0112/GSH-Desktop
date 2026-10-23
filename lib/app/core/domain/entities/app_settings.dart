@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/domain/entities/automation.dart';
-import 'package:cockpit/app/core/domain/entities/sound_event.dart';
+import 'package:gsh_desktop/app/core/domain/entities/automation.dart';
+import 'package:gsh_desktop/app/core/domain/entities/sound_event.dart';
 
 /// Modo de tema escolhido pelo usuário (mapeado pro `ThemeMode` do Flutter na
 /// camada de UI; o domínio não importa Flutter).
@@ -9,7 +9,7 @@ enum AppThemeMode { system, light, dark }
 enum TerminalEngine { ghostty, xterm }
 
 /// Motor usado para abrir arquivos de texto editáveis.
-enum FileEditorEngine { cockpit, neovim }
+enum FileEditorEngine { gsh, neovim }
 
 /// Peso do traço da fonte do terminal.
 ///
@@ -64,7 +64,7 @@ class AppSettings {
     this.lspFormatters = const <String, String>{},
     this.formatOnSave = false,
     this.closeTabOnShellExit = false,
-    this.fileEditorEngine = FileEditorEngine.cockpit,
+    this.fileEditorEngine = FileEditorEngine.gsh,
     this.notificationsEnabled = true,
     this.soundEvents = const <SoundEvent, bool>{},
     this.soundOverrides = const <SoundEvent, String>{},
@@ -75,7 +75,7 @@ class AppSettings {
     this.swapSidePanels = false,
     this.railVisible = false,
     this.treeVisible = false,
-    this.showCockpit = true,
+    this.showGsh = true,
     this.developerMode = false,
     this.launchAtStartup = false,
     this.defaultTerminalProfileId,
@@ -154,7 +154,7 @@ class AppSettings {
   final bool closeTabOnShellExit;
 
   /// Motor global de arquivos comuns. Visualizações especializadas e arquivos
-  /// remotos continuam no Cockpit, independentemente desta preferência.
+  /// remotos continuam no GSH, independentemente desta preferência.
   final FileEditorEngine fileEditorEngine;
 
   /// Disparar notificações do SO quando um agente termina um turno com a janela
@@ -204,13 +204,13 @@ class AppSettings {
   /// sessões; fechado por padrão em instalações novas.
   final bool treeVisible;
 
-  /// Mostra o workspace de sistema "Cockpit" (terminal-only, sem pasta) fixo no
+  /// Mostra o workspace de sistema "GSH" (terminal-only, sem pasta) fixo no
   /// topo do rail. Ligado por padrão; desligar remove o slot e mata seus PTYs.
   /// Persistido; migração liga automático para quem já usava (ver
   /// `HiveSettingsStore.load`).
-  final bool showCockpit;
+  final bool showGsh;
 
-  /// Modo desenvolvedor (plano 68): o próprio Cockpit vira um run na
+  /// Modo desenvolvedor (plano 68): o próprio GSH vira um run na
   /// Telemetria (erros globais, warnings) e as métricas de performance ligam.
   /// Desligado por padrão: só serve a quem dá manutenção no app.
   final bool developerMode;
@@ -218,7 +218,7 @@ class AppSettings {
   /// Telemetria (plano 66): avisar o agente da aba quando surgem casos novos
   /// no run dele, entregue só quando o turno termina.
 
-  /// Inicia o Cockpit junto com o login do sistema (item de login do SO).
+  /// Inicia o GSH junto com o login do sistema (item de login do SO).
   /// Persistido; a aplicação real no SO é feita pelo [LaunchAtStartupService]
   /// quando o valor muda.
   final bool launchAtStartup;
@@ -331,7 +331,7 @@ class AppSettings {
     bool? swapSidePanels,
     bool? railVisible,
     bool? treeVisible,
-    bool? showCockpit,
+    bool? showGsh,
     bool? developerMode,
     bool? launchAtStartup,
     String? defaultTerminalProfileId,
@@ -392,7 +392,7 @@ class AppSettings {
       swapSidePanels: swapSidePanels ?? this.swapSidePanels,
       railVisible: railVisible ?? this.railVisible,
       treeVisible: treeVisible ?? this.treeVisible,
-      showCockpit: showCockpit ?? this.showCockpit,
+      showGsh: showGsh ?? this.showGsh,
       developerMode: developerMode ?? this.developerMode,
       launchAtStartup: launchAtStartup ?? this.launchAtStartup,
       defaultTerminalProfileId: clearDefaultTerminalProfileId
@@ -468,7 +468,7 @@ class AppSettings {
     if (treeVisible) 'treeVisible': true,
     // Sempre gravado: a migração distingue "install novo" (chave presente) de
     // "upgrade sem a flag" (chave ausente → liga automático).
-    'showCockpit': showCockpit,
+    'showGsh': showGsh,
     'developerMode': developerMode,
     'launchAtStartup': launchAtStartup,
     // Só quando escolhido: a AUSÊNCIA da chave é o "sem padrão" → fallback de
@@ -542,7 +542,7 @@ class AppSettings {
         json['editor.engine'],
         json['editor.neovim.enabled'] == true
             ? FileEditorEngine.neovim
-            : FileEditorEngine.cockpit,
+            : FileEditorEngine.gsh,
       ),
       notificationsEnabled: json['notificationsEnabled'] as bool? ?? true,
       soundEvents: _migrateSoundEvents(json),
@@ -557,7 +557,7 @@ class AppSettings {
       swapSidePanels: json['swapSidePanels'] as bool? ?? false,
       railVisible: json['railVisible'] as bool? ?? false,
       treeVisible: json['treeVisible'] as bool? ?? false,
-      showCockpit: json['showCockpit'] as bool? ?? true,
+      showGsh: json['showGsh'] as bool? ?? true,
       developerMode: json['developerMode'] as bool? ?? false,
       launchAtStartup: json['launchAtStartup'] as bool? ?? false,
       defaultTerminalProfileId: str(json['terminal.default_profile_id']),

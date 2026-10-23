@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/terminal/pty_output_scheduler.dart';
+import 'package:gsh_desktop/app/core/terminal/pty_output_scheduler.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';

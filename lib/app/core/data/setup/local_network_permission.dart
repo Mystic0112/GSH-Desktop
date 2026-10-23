@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart' show debugPrint;
 
-/// Dispara cedo o diálogo de **rede local** do iOS ("Cockpit gostaria de
+/// Dispara cedo o diálogo de **rede local** do iOS ("GSH gostaria de
 /// encontrar dispositivos na sua rede local").
 ///
 /// Por que existe: o iOS só pede essa permissão quando o app **tenta** falar

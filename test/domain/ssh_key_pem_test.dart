@@ -1,4 +1,4 @@
-import 'package:cockpit_core/cockpit_core.dart';
+import 'package:gsh_core/gsh_core.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Detecção de chave encriptada (plano 54, passo 4). É o que decide se o

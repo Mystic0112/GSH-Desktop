@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/data/lsp/lsp_text_edit.dart';
-import 'package:cockpit/app/core/domain/entities/lsp_diagnostic.dart';
+import 'package:gsh_desktop/app/core/data/lsp/lsp_text_edit.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_diagnostic.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 LspTextEdit edit(int sl, int sc, int el, int ec, String newText) => LspTextEdit(

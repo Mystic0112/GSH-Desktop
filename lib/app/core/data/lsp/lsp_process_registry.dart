@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/data/process/owned_process_registry.dart';
-import 'package:cockpit/app/core/utils/user_home.dart';
+import 'package:gsh_desktop/app/core/data/process/owned_process_registry.dart';
+import 'package:gsh_desktop/app/core/utils/user_home.dart';
 
 /// Registro persistente de PIDs dos language servers (LSP) ativos.
 ///
@@ -14,7 +14,7 @@ class LspProcessRegistry {
 
   static String get _legacyPath {
     final home = userHome() ?? '';
-    return '$home/.pi/cockpit/lsp-pids';
+    return '$home/.pi/gsh/lsp-pids';
   }
 
   static final OwnedProcessRegistry _registry = OwnedProcessRegistry(

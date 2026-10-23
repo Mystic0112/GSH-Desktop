@@ -1,11 +1,11 @@
 import 'dart:math' show min;
 import 'dart:typed_data';
 
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/cell.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/cursor.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/utils/circular_buffer.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/utils/unicode_v11.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/cell.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/cursor.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/utils/circular_buffer.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/utils/unicode_v11.dart';
 
 const _cellSize = 4;
 

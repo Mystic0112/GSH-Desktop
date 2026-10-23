@@ -1,5 +1,5 @@
-import 'package:cockpit/app/settings/data/claude_info_parsers.dart';
-import 'package:cockpit/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/settings/data/claude_info_parsers.dart';
+import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // Fixtures copiadas da saída real do `claude` 2.1.309 (dados pessoais trocados).
@@ -209,8 +209,8 @@ rea: npx -y rea-agents@4.0.1 mcp - ✓ Connected
       statusText: '',
     );
     const local = McpServerInfo(
-      name: 'cockpit',
-      target: '/h/.cockpit/bin/cockpit mcp --agent claude-desktop',
+      name: 'gsh',
+      target: '/h/.gsh/bin/gsh mcp --agent claude-desktop',
       status: McpStatus.connected,
       statusText: '',
     );
@@ -222,11 +222,11 @@ rea: npx -y rea-agents@4.0.1 mcp - ✓ Connected
       [
         (McpOrigin.claudeAi, 'Notion', true),
         (McpOrigin.plugin, 'rankedin', true),
-        (McpOrigin.local, 'cockpit', false),
+        (McpOrigin.local, 'gsh', false),
       ],
     );
     expect(local.commandLine, (
-      '/h/.cockpit/bin/cockpit',
+      '/h/.gsh/bin/gsh',
       'mcp --agent claude-desktop',
     ));
   });

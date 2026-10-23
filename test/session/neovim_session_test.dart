@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:cockpit/app/cockpit/domain/contracts/terminal_gateway.dart';
-import 'package:cockpit/app/cockpit/ui/session/neovim_session.dart';
-import 'package:cockpit/app/core/domain/contracts/neovim_gateway.dart';
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/core/domain/entities/terminal_profile.dart';
-import 'package:cockpit/app/core/domain/exceptions/neovim_error.dart';
-import 'package:cockpit/app/core/domain/result.dart';
-import 'package:cockpit/app/core/terminal/terminal_controller.dart';
-import 'package:cockpit/app/core/utils/spawn_directory.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/terminal_gateway.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/neovim_session.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/neovim_gateway.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/domain/entities/terminal_profile.dart';
+import 'package:gsh_desktop/app/core/domain/exceptions/neovim_error.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/terminal/terminal_controller.dart';
+import 'package:gsh_desktop/app/core/utils/spawn_directory.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _TerminalGateway implements TerminalGateway {
@@ -138,7 +138,7 @@ void main() {
     final controller = session.terminal as XtermTerminalController;
 
     controller.terminal.write(
-      '\u001b]2;cockpit-nvim:${jsonEncode(path)}\u0007',
+      '\u001b]2;gsh-nvim:${jsonEncode(path)}\u0007',
     );
 
     expect(paths, [path]);

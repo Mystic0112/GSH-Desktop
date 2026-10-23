@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/terminal.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/controller.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/selection_mode.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/terminal.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/controller.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/selection_mode.dart';
 
 class TerminalActions extends StatelessWidget {
   const TerminalActions({

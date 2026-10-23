@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/domain/value_objects/semver.dart';
+import 'package:gsh_desktop/app/gsh/domain/value_objects/semver.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

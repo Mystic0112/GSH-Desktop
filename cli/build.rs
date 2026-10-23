@@ -1,10 +1,10 @@
 //! Assa no binário (1) o flavor e (2) a árvore de skills.
 //!
 //! Flavor: o app namespaceia o socket por flavor (`status.sock` x
-//! `status-debug.sock`) porque um Cockpit de dev e um instalado rodam lado a
+//! `status-debug.sock`) porque um GSH de dev e um instalado rodam lado a
 //! lado. A CLI é materializada junto do app que a empacotou, então ela deve
 //! procurar PRIMEIRO o socket do seu próprio flavor. Quem define é quem
-//! compila: `macos/build_cli.sh` e os CMakeLists passam `COCKPIT_FLAVOR=debug`.
+//! compila: `macos/build_cli.sh` e os CMakeLists passam `GSH_FLAVOR=debug`.
 //!
 //! Skills (plano 69): tudo sob `cli/skills/<nome>/...` vira uma tabela
 //! `(caminho relativo, bytes)` em `$OUT_DIR/skills_gen.rs`, que o
@@ -16,7 +16,7 @@ use std::fs;
 use std::path::Path;
 
 fn main() {
-    println!("cargo:rerun-if-env-changed=COCKPIT_FLAVOR");
+    println!("cargo:rerun-if-env-changed=GSH_FLAVOR");
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("skills");
     println!("cargo:rerun-if-changed={}", root.display());
     let mut files = Vec::new();

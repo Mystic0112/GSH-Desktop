@@ -1,11 +1,11 @@
-import 'package:cockpit/app/cockpit/ui/remote/remote_hosts_controller.dart';
-import 'package:cockpit/app/settings/data/claude_cli_info_source.dart';
-import 'package:cockpit/app/settings/domain/claude_info.dart';
-import 'package:cockpit/app/settings/ui/claude_info_viewmodel.dart';
-import 'package:cockpit/app/settings/ui/notifications_viewmodel.dart';
-import 'package:cockpit/app/settings/ui/neovim_settings_viewmodel.dart';
-import 'package:cockpit/app/settings/ui/settings_page.dart';
-import 'package:cockpit/app/core/routes.dart';
+import 'package:gsh_desktop/app/gsh/ui/remote/remote_hosts_controller.dart';
+import 'package:gsh_desktop/app/settings/data/claude_cli_info_source.dart';
+import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/settings/ui/claude_info_viewmodel.dart';
+import 'package:gsh_desktop/app/settings/ui/notifications_viewmodel.dart';
+import 'package:gsh_desktop/app/settings/ui/neovim_settings_viewmodel.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_page.dart';
+import 'package:gsh_desktop/app/core/routes.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 /// Feature **Configurações** — `path: '/settings'` (rota empilhada por cima do
@@ -23,13 +23,13 @@ Module buildSettingsModule() => createModule(
         '/',
         transition: TransitionType.fade,
         provide: (s) => s
-          // Hosts remotos (plano 58): singleton do cockpit_module (já carregado
-          // — cockpit é a rota inicial). Observado aqui pela aba "Remote hosts"
+          // Hosts remotos (plano 58): singleton do gsh_module (já carregado
+          // — gsh é a rota inicial). Observado aqui pela aba "Remote hosts"
           // (a MESMA instância que a rail). Usa addListenable com **dispose
           // no-op**: `addChangeNotifier` daria `vm.dispose()` no pop desta rota
           // e mataria o singleton compartilhado ("used after disposed" ao
           // reabrir Settings ou no próximo rebuild da rail). O dono é o
-          // cockpit_module (rota base, nunca sai da pilha).
+          // gsh_module (rota base, nunca sai da pilha).
           ..addListenable<RemoteHostsController>(
             () => inject<RemoteHostsController>(),
             (vm) => vm,

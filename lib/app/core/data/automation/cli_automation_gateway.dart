@@ -2,13 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/setup/remote_pi_resolver.dart';
-import 'package:cockpit/app/core/domain/contracts/automation_gateway.dart';
-import 'package:cockpit/app/core/domain/entities/automation.dart';
-import 'package:cockpit/app/core/domain/exceptions/automation_error.dart';
-import 'package:cockpit/app/core/domain/services/automation_model_catalog.dart';
-import 'package:cockpit/app/core/domain/services/commit_message_prompt.dart';
-import 'package:cockpit/app/core/utils/executable_resolver.dart';
+import 'package:gsh_desktop/app/core/data/setup/remote_pi_resolver.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/automation_gateway.dart';
+import 'package:gsh_desktop/app/core/domain/entities/automation.dart';
+import 'package:gsh_desktop/app/core/domain/exceptions/automation_error.dart';
+import 'package:gsh_desktop/app/core/domain/services/automation_model_catalog.dart';
+import 'package:gsh_desktop/app/core/domain/services/commit_message_prompt.dart';
+import 'package:gsh_desktop/app/core/utils/executable_resolver.dart';
 
 class CliAutomationGateway implements AutomationGateway {
   CliAutomationGateway({this.timeout = const Duration(seconds: 60)});
@@ -169,7 +169,7 @@ class CliAutomationGateway implements AutomationGateway {
         'method': 'initialize',
         'id': 1,
         'params': {
-          'clientInfo': {'name': 'Cockpit', 'version': '1'},
+          'clientInfo': {'name': 'GSH', 'version': '1'},
         },
       }),
     );
@@ -210,7 +210,7 @@ class CliAutomationGateway implements AutomationGateway {
     final environment = Map<String, String>.of(await envWithNodeOnPath());
     if (harnessId == HarnessKind.codex ||
         harnessId == HarnessKind.gitHubCopilot) {
-      scratch = await Directory.systemTemp.createTemp('cockpit_commit_');
+      scratch = await Directory.systemTemp.createTemp('gsh_commit_');
       if (harnessId == HarnessKind.codex) {
         final systemPromptFile = File(
           '${scratch.path}${Platform.pathSeparator}SYSTEM.md',

@@ -1,6 +1,6 @@
-import 'package:cockpit/app/core/ui/overlay/app_popover_handler.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/core/ui/widgets/app_tooltip.dart';
+import 'package:gsh_desktop/app/core/ui/overlay/app_popover_handler.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/app_tooltip.dart';
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';

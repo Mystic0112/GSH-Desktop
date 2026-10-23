@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/segment.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/segment.dart';
 
 abstract class BufferRange {
   final CellOffset begin;

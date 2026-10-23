@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/domain/contracts/claude_code_settings.dart';
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 
 /// [ClaudeCodeSettings] sobre o `~/.claude/settings.json` do usuário.
 ///

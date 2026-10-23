@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/lsp/lsp_command.dart';
+import 'package:gsh_desktop/app/core/data/lsp/lsp_command.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

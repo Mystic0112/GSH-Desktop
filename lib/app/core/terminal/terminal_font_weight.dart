@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:flutter/widgets.dart';
 
 /// Abaixo disto a tela conta como baixa densidade. Fica no meio do caminho

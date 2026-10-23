@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 
 /// Chaves do `~/.claude/settings.json` que o GSH expõe nas próprias
 /// configurações (aba Claude Code).

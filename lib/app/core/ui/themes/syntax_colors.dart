@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/domain/entities/lsp_diagnostic.dart';
-import 'package:cockpit/app/core/ui/themes/theme_codec.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_diagnostic.dart';
+import 'package:gsh_desktop/app/core/ui/themes/theme_codec.dart';
 import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/widgets.dart';
 
@@ -354,7 +354,7 @@ class SyntaxColors {
     }
   }
 
-  /// Igualdade por valor. Não é conveniência de teste: o [CockpitTheme] decide
+  /// Igualdade por valor. Não é conveniência de teste: o [GshTheme] decide
   /// se repinta a árvore comparando estes objetos, e `buildTokens` devolve uma
   /// instância **nova** a cada build da raiz. Sem `==`, qualquer rebuild da raiz
   /// (troca de aba focada, estado do editor) invalidava todo consumidor de

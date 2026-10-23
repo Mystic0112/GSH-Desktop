@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/setup/launch_at_startup_service.dart';
-import 'package:cockpit/app/core/data/setup/sound_library.dart';
-import 'package:cockpit/app/core/data/theme_store.dart';
-import 'package:cockpit/app/core/domain/contracts/settings_store.dart';
-import 'package:cockpit/app/core/domain/result.dart';
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/core/domain/entities/automation.dart';
-import 'package:cockpit/app/core/domain/entities/sound_event.dart';
-import 'package:cockpit/app/core/ui/themes/theme_registry.dart';
-import 'package:cockpit/app/core/ui/themes/theme_spec.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/data/setup/launch_at_startup_service.dart';
+import 'package:gsh_desktop/app/core/data/setup/sound_library.dart';
+import 'package:gsh_desktop/app/core/data/theme_store.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/settings_store.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/domain/entities/automation.dart';
+import 'package:gsh_desktop/app/core/domain/entities/sound_event.dart';
+import 'package:gsh_desktop/app/core/ui/themes/theme_registry.dart';
+import 'package:gsh_desktop/app/core/ui/themes/theme_spec.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter/foundation.dart';
 
 /// Estado global das preferências do app. Vive **acima do `ShadcnApp`** pra
@@ -114,10 +114,10 @@ class SettingsController extends ChangeNotifier {
 
   /// Temas importados pelo usuário. Somam-se aos built-in no [availableThemes]
   /// e são preenchidos no [load] a partir do disco.
-  List<CockpitThemeSpec> _customThemes = const [];
+  List<GshThemeSpec> _customThemes = const [];
 
   /// Catálogo completo: built-in primeiro, importados depois.
-  List<CockpitThemeSpec> get availableThemes => [
+  List<GshThemeSpec> get availableThemes => [
     ...builtInThemes,
     ..._customThemes,
   ];
@@ -125,7 +125,7 @@ class SettingsController extends ChangeNotifier {
   /// O tema ativo. Id desconhecido (tema importado que foi removido do disco,
   /// ou arquivo de preferências vindo de outra máquina) cai no default em vez
   /// de deixar o app sem paleta.
-  CockpitThemeSpec get activeTheme {
+  GshThemeSpec get activeTheme {
     for (final theme in availableThemes) {
       if (theme.id == _settings.themeId) return theme;
     }
@@ -136,7 +136,7 @@ class SettingsController extends ChangeNotifier {
 
   /// Importa um tema de [file] e já o **ativa** — quem acabou de escolher um
   /// arquivo quer ver o resultado, não ir procurar no dropdown depois.
-  Future<Result<CockpitThemeSpec, ThemeStoreError>> importTheme(
+  Future<Result<GshThemeSpec, ThemeStoreError>> importTheme(
     File file,
   ) async {
     final result = await _themeStore.import(file);
@@ -268,8 +268,8 @@ class SettingsController extends ChangeNotifier {
   void setTasksPanelHeight(double value) =>
       _apply(_settings.copyWith(tasksPanelHeight: value));
 
-  void setShowCockpit(bool value) =>
-      _apply(_settings.copyWith(showCockpit: value));
+  void setShowGsh(bool value) =>
+      _apply(_settings.copyWith(showGsh: value));
 
   /// Modo desenvolvedor (plano 68): telemetria do próprio app + métricas.
   void setDeveloperMode(bool value) =>
@@ -335,7 +335,7 @@ class SettingsController extends ChangeNotifier {
 
   /// Persiste a visibilidade dos painéis do shell (rail de projetos + árvore de
   /// arquivos) para restaurar no próximo boot. Não faz `notifyListeners` porque
-  /// a fonte de verdade em runtime é a `CockpitViewModel` — aqui só grava.
+  /// a fonte de verdade em runtime é a `GshViewModel` — aqui só grava.
   void setPanelVisibility({required bool rail, required bool tree}) {
     final next = _settings.copyWith(railVisible: rail, treeVisible: tree);
     _settings = next;

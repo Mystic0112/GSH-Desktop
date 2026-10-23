@@ -1,18 +1,18 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/utils/remote_path.dart';
+import 'package:gsh_desktop/app/core/utils/remote_path.dart';
 
 /// Nome do arquivo de variáveis de ambiente por workspace.
 ///
 /// Um `KEY=VALUE` por linha, injetado no ambiente de **todo terminal** que o
-/// Cockpit abre naquele workspace (local). Mora na raiz do workspace de
+/// GSH abre naquele workspace (local). Mora na raiz do workspace de
 /// propósito: o sufixo faz a maioria dos `.gitignore` (`.env*`) já ignorá-lo
 /// e nenhuma lib de dotenv o lê por engano. Segredos de uso rápido (token,
 /// e-mail/senha de uma API) entram aqui em vez de serem colados no prompt do
 /// agente.
-const kWorkspaceEnvFileName = '.env.cockpit';
+const kWorkspaceEnvFileName = '.env.gsh';
 
-/// Faz o parse de um `.env.cockpit`.
+/// Faz o parse de um `.env.gsh`.
 ///
 /// Gramática **deliberadamente burra**, pra não haver duas semânticas de
 /// dotenv na mesma máquina:
@@ -24,7 +24,7 @@ const kWorkspaceEnvFileName = '.env.cockpit';
 ///   interpolação (`$OUTRA`) nem multiline;
 /// - chave inválida (vazia ou fora de `[A-Za-z_][A-Za-z0-9_]*`) é ignorada;
 /// - chave em [kBlockedWorkspaceEnvKeys] (ou prefixo `DYLD_`/`LD_`) é
-///   ignorada: são as que trocam QUEM executa o quê, e um `.env.cockpit`
+///   ignorada: são as que trocam QUEM executa o quê, e um `.env.gsh`
 ///   vindo de um repo clonado não pode redirecionar o shell da máquina;
 /// - chave repetida: a última vence.
 Map<String, String> parseWorkspaceEnv(String source) {
@@ -52,7 +52,7 @@ Map<String, String> parseWorkspaceEnv(String source) {
 
 final _kKeyPattern = RegExp(r'^[A-Za-z_][A-Za-z0-9_]*$');
 
-/// Chaves que o `.env.cockpit` NUNCA injeta, mesmo escritas pelo usuário:
+/// Chaves que o `.env.gsh` NUNCA injeta, mesmo escritas pelo usuário:
 /// mudam qual binário roda, qual shell sobe ou de onde vem o rc, e um
 /// arquivo comitado num repo clonado executaria código no primeiro terminal.
 /// Segredo de API não precisa de nenhuma delas.
@@ -80,7 +80,7 @@ bool isBlockedWorkspaceEnvKey(String key) =>
     key.startsWith('DYLD_') ||
     key.startsWith('LD_');
 
-/// Pastas de [roots] que têm um `.env.cockpit` legível (na ordem dada). A
+/// Pastas de [roots] que têm um `.env.gsh` legível (na ordem dada). A
 /// VM usa pra avisar no terminal quando um deles está rastreado pelo git.
 List<String> workspaceEnvRootsWithFile(Iterable<String> roots) => [
   for (final root in roots)
@@ -91,7 +91,7 @@ List<String> workspaceEnvRootsWithFile(Iterable<String> roots) => [
       root,
 ];
 
-/// Lê e faz o parse do `.env.cockpit` de cada pasta em [roots], fundindo na
+/// Lê e faz o parse do `.env.gsh` de cada pasta em [roots], fundindo na
 /// ordem dada (a última root vence em chave repetida). Pasta sem o arquivo,
 /// ou arquivo ilegível, contribui com nada — o terminal abre igual.
 ///
@@ -116,7 +116,7 @@ Map<String, String> loadWorkspaceEnvSync(Iterable<String> roots) {
 }
 
 /// Versão remota de [loadWorkspaceEnvSync]: mesma fusão por root, mas o
-/// arquivo é lido no HOST por [readText] (a `fs.read` do `cockpit-server`).
+/// arquivo é lido no HOST por [readText] (a `fs.read` do `gsh-server`).
 /// [readText] devolve `null` quando o arquivo não existe ou falhou — a root
 /// contribui com nada, igual ao local. Separado da I/O pra ser testável.
 Future<Map<String, String>> loadWorkspaceEnvRemote(

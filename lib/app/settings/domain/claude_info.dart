@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 
 /// Informações do Claude Code da máquina (CLI `claude` e `~/.claude`) que as
 /// abas Conta, Uso, Memória, Skills, Conectores, Plugins e Desenvolvedor

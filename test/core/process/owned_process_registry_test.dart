@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/process/owned_process_registry.dart';
+import 'package:gsh_desktop/app/core/data/process/owned_process_registry.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -70,7 +70,7 @@ void main() {
     expect(await ownerFile('tasks', 303).exists(), isFalse);
   });
 
-  test('Cockpit filho preserva a task do Cockpit pai vivo', () async {
+  test('GSH filho preserva a task do GSH pai vivo', () async {
     final parent = OwnedProcessRegistry(
       category: 'tasks',
       rootPath: tmp.path,

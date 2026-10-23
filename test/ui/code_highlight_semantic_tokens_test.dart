@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/domain/entities/lsp_semantic_tokens.dart';
-import 'package:cockpit/app/core/ui/widgets/code_highlight.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_semantic_tokens.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/code_highlight.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

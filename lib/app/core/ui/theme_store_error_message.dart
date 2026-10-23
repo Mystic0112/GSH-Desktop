@@ -1,6 +1,6 @@
-import 'package:cockpit/app/core/data/theme_store.dart';
-import 'package:cockpit/app/core/ui/themes/theme_codec.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/data/theme_store.dart';
+import 'package:gsh_desktop/app/core/ui/themes/theme_codec.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter/widgets.dart';
 
 /// Traduz um [ThemeStoreError] para a frase mostrada ao usuário.

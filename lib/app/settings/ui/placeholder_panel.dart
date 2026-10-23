@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/settings/ui/settings_widgets.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_widgets.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 /// Aba sem equivalente no GSH (Cowork, Extensões): o título e as linhas que

@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/domain/entities/automation.dart';
-import 'package:cockpit/app/core/domain/services/automation_model_catalog.dart';
+import 'package:gsh_desktop/app/core/domain/entities/automation.dart';
+import 'package:gsh_desktop/app/core/domain/services/automation_model_catalog.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 List<String> _ids(List<AutomationModel> models) =>

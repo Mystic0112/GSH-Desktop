@@ -31,7 +31,7 @@ target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION=\"${FLUTTER_V
 # appcast `1.8.4` parece mais novo que o app `1.8.4+21` pra sempre, e o updater
 # reoferece a mesma versão em loop.
 #
-# O appcast do Windows publica a versão marketing (ver cockpit-release.yml), então
+# O appcast do Windows publica a versão marketing (ver gsh-release.yml), então
 # o VERSIONINFO precisa publicar a mesma coisa. O build number não se perde: segue
 # no 4º campo do FILEVERSION numérico (`1,8,4,21`), que é o lugar convencional
 # dele no Windows.

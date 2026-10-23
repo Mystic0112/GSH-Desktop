@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:cockpit/app/cockpit/domain/entities/agent_message.dart';
-import 'package:cockpit/app/cockpit/ui/actions/agent_graph_actions.dart';
-import 'package:cockpit/app/core/ui/themes/agent_colors.dart';
-import 'package:cockpit/app/cockpit/ui/session/pane_item.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/agent_graph_store.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/agent_message_delivery.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/agent_graph_painter.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/agent_message.dart';
+import 'package:gsh_desktop/app/gsh/ui/actions/agent_graph_actions.dart';
+import 'package:gsh_desktop/app/core/ui/themes/agent_colors.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/pane_item.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_graph_store.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_message_delivery.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/agent_graph_painter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _Tab extends PaneItem {
@@ -139,9 +139,9 @@ void main() {
     expect(
       linkIntroText(_Tab('t2', 'Reviewer')),
       'You are now connected to Reviewer. '
-      'Talk to it with: cockpit msg --to Reviewer "..."',
+      'Talk to it with: gsh msg --to Reviewer "..."',
     );
-    expect(linkIntroText(_Tab('t5')), contains('cockpit msg --to t5 "..."'));
+    expect(linkIntroText(_Tab('t5')), contains('gsh msg --to t5 "..."'));
   });
 
   group('maestro', () {
@@ -181,8 +181,8 @@ void main() {
     test('apresentação do maestro lista os pares e os comandos', () {
       final text = maestroIntroText([_Tab('t2', 'Reviewer'), _Tab('t3')]);
       expect(text, contains('Agents: Reviewer, t3.'));
-      expect(text, contains('cockpit msg --to <label>'));
-      expect(text, contains('cockpit peers'));
+      expect(text, contains('gsh msg --to <label>'));
+      expect(text, contains('gsh peers'));
     });
   });
 

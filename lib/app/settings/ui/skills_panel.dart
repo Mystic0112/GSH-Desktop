@@ -1,13 +1,13 @@
-import 'package:cockpit/app/cockpit/ui/widgets/realm_dialogs.dart';
-import 'package:cockpit/app/core/app_intents.dart' as intents;
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/core/ui/widgets/app_menu.dart';
-import 'package:cockpit/app/settings/domain/claude_info.dart';
-import 'package:cockpit/app/settings/ui/claude_info_viewmodel.dart';
-import 'package:cockpit/app/settings/ui/plugin_directory.dart';
-import 'package:cockpit/app/settings/ui/settings_catalog.dart';
-import 'package:cockpit/app/settings/ui/settings_widgets.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/realm_dialogs.dart';
+import 'package:gsh_desktop/app/core/app_intents.dart' as intents;
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/app_menu.dart';
+import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/settings/ui/claude_info_viewmodel.dart';
+import 'package:gsh_desktop/app/settings/ui/plugin_directory.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_catalog.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_widgets.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 

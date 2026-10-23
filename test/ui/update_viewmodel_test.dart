@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:cockpit/app/cockpit/domain/contracts/dismissed_update_store.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/self_updater.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/update_checker.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/url_opener.dart';
-import 'package:cockpit/app/cockpit/domain/entities/update_info.dart';
-import 'package:cockpit/app/cockpit/domain/value_objects/update_target.dart';
-import 'package:cockpit/app/core/domain/contracts/settings_store.dart';
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/core/ui/settings_controller.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/update_viewmodel.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/dismissed_update_store.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/self_updater.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/update_checker.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/url_opener.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/update_info.dart';
+import 'package:gsh_desktop/app/gsh/domain/value_objects/update_target.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/settings_store.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/update_viewmodel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _FakeSettingsStore implements SettingsStore {

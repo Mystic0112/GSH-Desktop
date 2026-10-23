@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/db/anaki_db_driver.dart';
-import 'package:cockpit/app/cockpit/domain/entities/db_connection.dart';
-import 'package:cockpit/app/cockpit/domain/entities/db_result.dart';
+import 'package:gsh_desktop/app/gsh/data/db/anaki_db_driver.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/db_connection.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/db_result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Exercita o [AnakiDbDriver] contra um sqlite REAL em arquivo temporário —
@@ -11,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// O binário nativo é responsabilidade do pacote `anaki_sqlite` (native
 /// assets). Se o loader não encontrar a lib (pacote sem binário empacotado),
 /// os testes são **pulados**, não quebrados — o problema, nesse caso, é do
-/// pacote anaki (issue #4), não do Cockpit.
+/// pacote anaki (issue #4), não do GSH.
 void main() {
   const driver = AnakiDbDriver();
   late Directory dir;
@@ -39,7 +39,7 @@ void main() {
   });
 
   setUp(() async {
-    dir = await Directory.systemTemp.createTemp('cockpit_anaki_test');
+    dir = await Directory.systemTemp.createTemp('gsh_anaki_test');
     dbPath = '${dir.path}/test.db';
     if (!libAvailable) return;
     // Seed via o próprio driver (o sqlx abre com mode=rwc — cria o arquivo).
@@ -98,7 +98,7 @@ void main() {
 
   // Regressão (2026-09-23, produção da Masterclass): o rewriter de `@param`
   // do anaki trocava `@gmail` dentro do literal por um parâmetro posicional e
-  // gravava `thalya?.com`. O Cockpit não passa parâmetros: `@` é sempre texto.
+  // gravava `thalya?.com`. O GSH não passa parâmetros: `@` é sempre texto.
   test('@ dentro de literal SQL é gravado e buscado intacto', () async {
     if (!libAvailable) return markTestSkipped('libanaki_sqlite.dylib ausente');
     await driver.execute(

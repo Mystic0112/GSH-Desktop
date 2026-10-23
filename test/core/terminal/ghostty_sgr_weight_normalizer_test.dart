@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/terminal/ghostty_sgr_weight_normalizer.dart';
+import 'package:gsh_desktop/app/core/terminal/ghostty_sgr_weight_normalizer.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

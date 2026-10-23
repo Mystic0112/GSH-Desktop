@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/diagnostics/diagnostics_log.dart';
-import 'package:cockpit/app/core/data/setup/storage_location.dart';
-import 'package:cockpit/app/core/ui/keep_awake_controller.dart';
-import 'package:cockpit/app/core/ui/settings_controller.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/core/utils/native_folder_picker.dart';
-import 'package:cockpit/app/settings/ui/settings_widgets.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
+import 'package:gsh_desktop/app/core/data/setup/storage_location.dart';
+import 'package:gsh_desktop/app/core/ui/keep_awake_controller.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/utils/native_folder_picker.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_widgets.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
@@ -111,7 +111,7 @@ class _StorageSectionState extends State<StorageSection> {
     final tr = context.t.settings.page.storage;
     final picked = await NativeFolderPicker.pick(
       dialogTitle: tr.chooseFolderDialogTitle,
-      initialDirectory: _root, // abre na pasta atual do Cockpit
+      initialDirectory: _root, // abre na pasta atual do GSH
     );
     if (picked == null || !mounted) return;
     setState(() => _busy = true);
@@ -273,7 +273,7 @@ class _StorageSectionState extends State<StorageSection> {
                 DiagnosticsLog.instance.markCleanExit();
                 exit(0);
               },
-              child: Text(tr.quitCockpit),
+              child: Text(tr.quitGsh),
             ),
           ],
         );

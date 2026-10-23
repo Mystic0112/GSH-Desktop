@@ -15,7 +15,7 @@ void set_default(const char* name, const char* value) {
 }  // namespace
 
 std::string configure_linux_gpu_environment() {
-  if (is_enabled(std::getenv("COCKPIT_USE_NVIDIA"))) {
+  if (is_enabled(std::getenv("GSH_USE_NVIDIA"))) {
     set_default("__NV_PRIME_RENDER_OFFLOAD", "1");
     set_default("__GLX_VENDOR_LIBRARY_NAME", "nvidia");
     set_default("__VK_LAYER_NV_optimus", "NVIDIA_only");
@@ -24,8 +24,8 @@ std::string configure_linux_gpu_environment() {
 
   // Omarchy/Hyprland sessions can export these globally for the compositor.
   // Letting them leak into Flutter silently selected NVIDIA EGL despite the
-  // Cockpit launcher claiming to prefer Intel, and recent cores ended inside
-  // libnvidia-eglcore. This changes only Cockpit and its descendants.
+  // GSH launcher claiming to prefer Intel, and recent cores ended inside
+  // libnvidia-eglcore. This changes only GSH and its descendants.
   unsetenv("__NV_PRIME_RENDER_OFFLOAD");
   unsetenv("__GLX_VENDOR_LIBRARY_NAME");
   unsetenv("__VK_LAYER_NV_optimus");
@@ -36,7 +36,7 @@ std::string configure_linux_gpu_environment() {
   setenv("DRI_PRIME", "0", 1);
 
   // Selecting the integrated GPU is not enough to keep NVIDIA's EGL vendor
-  // out of a Wayland client on hybrid systems. Default Cockpit to XWayland,
+  // out of a Wayland client on hybrid systems. Default GSH to XWayland,
   // which avoids the crashing NVIDIA/EGL path, while still honoring an
   // explicit GDK_BACKEND supplied by the user for diagnostics or rollback.
   set_default("GDK_BACKEND", "x11");

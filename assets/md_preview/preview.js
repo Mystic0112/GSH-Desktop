@@ -1,8 +1,8 @@
 /* Pipeline do preview de markdown (plano 58) — receita VS Code:
    markdown-it (GFM) → DOMPurify (allowlist) → rewrite de imagens relativas
    pro scheme controlado → morphdom (diff de DOM, preserva scroll).
-   API chamada pelo Dart: window.__cockpit.setContent(md, docDir) e
-   window.__cockpit.setTheme(vars). */
+   API chamada pelo Dart: window.__gsh.setContent(md, docDir) e
+   window.__gsh.setTheme(vars). */
 (function () {
   "use strict";
 
@@ -136,7 +136,7 @@
     window.morphdom(cur, next);
   }
 
-  window.__cockpit = {
+  window.__gsh = {
     setContent: function (markdown, docDir) {
       try {
         render(markdown, docDir || "");
@@ -159,8 +159,8 @@
     // chama `captureScroll()` uma vez, que bloqueia a roda nativa (senão a roda
     // rolaria duas vezes), e depois `scrollBy(dx, dy)` a cada evento.
     captureScroll: function () {
-      if (window.__cockpitScrollCaptured) return;
-      window.__cockpitScrollCaptured = true;
+      if (window.__gshScrollCaptured) return;
+      window.__gshScrollCaptured = true;
       window.addEventListener(
         "wheel",
         function (e) {

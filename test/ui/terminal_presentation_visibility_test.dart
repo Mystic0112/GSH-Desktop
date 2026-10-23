@@ -1,5 +1,5 @@
-import 'package:cockpit/app/cockpit/ui/widgets/terminal_pane.dart';
-import 'package:cockpit/app/core/terminal/xterm/xterm.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/terminal_pane.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/xterm.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

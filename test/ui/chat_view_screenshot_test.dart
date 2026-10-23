@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cockpit/app/cockpit/domain/contracts/chat_engine.dart';
-import 'package:cockpit/app/cockpit/domain/entities/chat_attachment.dart';
-import 'package:cockpit/app/cockpit/domain/entities/chat_event.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/chat_viewmodel.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/chat/chat_composer.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/chat/chat_pane.dart';
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/chat_engine.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/chat_attachment.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/chat_event.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_composer.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_pane.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
@@ -91,7 +91,7 @@ Future<(ChatController, _Factory)> _script(
   }, result: '00:04 +12: All tests passed!');
   tool('Read', {
     'file_path':
-        '/home/dev/GSH-Desktop/lib/app/cockpit/ui/widgets/chat_view.dart',
+        '/home/dev/GSH-Desktop/lib/app/gsh/ui/widgets/chat_view.dart',
   }, result: '...');
   tool('Edit', {
     'file_path': '/home/dev/GSH-Desktop/lib/chat_view.dart',

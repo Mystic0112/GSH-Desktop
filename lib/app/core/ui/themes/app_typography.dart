@@ -35,7 +35,7 @@ class AppTypography {
   /// JetBrains Mono — código, args de tool, métricas.
   final TextStyle mono;
 
-  /// Igualdade por valor, pela mesma razão do [AppColors]: o `CockpitTheme`
+  /// Igualdade por valor, pela mesma razão do [AppColors]: o `GshTheme`
   /// compara estes objetos para decidir se repinta a árvore.
   List<Object?> get _props => [display, title, body, label, tab, mono];
 

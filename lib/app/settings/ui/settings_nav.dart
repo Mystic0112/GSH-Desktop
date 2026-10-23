@@ -1,8 +1,8 @@
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/core/ui/widgets/hover_tap.dart';
-import 'package:cockpit/app/core/utils/platform_kind.dart';
-import 'package:cockpit/app/settings/ui/settings_widgets.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/hover_tap.dart';
+import 'package:gsh_desktop/app/core/utils/platform_kind.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_widgets.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 

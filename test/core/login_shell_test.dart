@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/utils/login_shell.dart';
+import 'package:gsh_desktop/app/core/utils/login_shell.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Runner falso: casa por `exe + args` e conta as invocações.

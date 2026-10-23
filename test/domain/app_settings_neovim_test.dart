@@ -1,6 +1,6 @@
-import 'package:cockpit/app/core/domain/contracts/settings_store.dart';
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/core/ui/settings_controller.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/settings_store.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _Store implements SettingsStore {
@@ -14,10 +14,10 @@ class _Store implements SettingsStore {
 }
 
 void main() {
-  test('Cockpit editor is the default and uses the stable engine key', () {
+  test('GSH editor is the default and uses the stable engine key', () {
     const settings = AppSettings();
-    expect(settings.fileEditorEngine, FileEditorEngine.cockpit);
-    expect(settings.toJson()['editor.engine'], 'cockpit');
+    expect(settings.fileEditorEngine, FileEditorEngine.gsh);
+    expect(settings.toJson()['editor.engine'], 'gsh');
     expect(settings.toJson(), isNot(contains('editor.neovim.enabled')));
   });
 
@@ -38,17 +38,17 @@ void main() {
     );
     expect(
       AppSettings.fromJson({
-        'editor.engine': 'cockpit',
+        'editor.engine': 'gsh',
         'editor.neovim.enabled': true,
       }).fileEditorEngine,
-      FileEditorEngine.cockpit,
+      FileEditorEngine.gsh,
     );
   });
 
-  test('unknown editor engine falls back to Cockpit', () {
+  test('unknown editor engine falls back to GSH', () {
     expect(
       AppSettings.fromJson({'editor.engine': 'flack'}).fileEditorEngine,
-      FileEditorEngine.cockpit,
+      FileEditorEngine.gsh,
     );
   });
 

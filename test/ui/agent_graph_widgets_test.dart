@@ -1,12 +1,12 @@
-import 'package:cockpit/app/cockpit/domain/entities/agent_message.dart';
-import 'package:cockpit/app/cockpit/domain/entities/desktop_agent_app.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/agent_graph_store.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/agent_graph_painter.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/agent_graph_parts.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/new_agent_dialog.dart';
-import 'package:cockpit/app/core/domain/entities/harness.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/agent_message.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/desktop_agent_app.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_graph_store.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/agent_graph_painter.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/agent_graph_parts.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/new_agent_dialog.dart';
+import 'package:gsh_desktop/app/core/domain/entities/harness.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
@@ -123,7 +123,7 @@ void main() {
     const cursor = DesktopAppIntegration(
       app: DesktopAgentApp.cursor,
       configPath: '/home/u/.cursor/mcp.json',
-      entry: '"cockpit": {}',
+      entry: '"gsh": {}',
     );
     await tester.pumpWidget(
       TranslationProvider(
@@ -156,7 +156,7 @@ void main() {
     await tester.tap(find.text('Create'));
     await tester.pumpAndSettle();
     expect(draft, isNull, reason: 'sem o aceite não cria');
-    await tester.tap(find.textContaining('Add the Cockpit MCP server'));
+    await tester.tap(find.textContaining('Add the GSH MCP server'));
     await tester.pump();
     await tester.tap(find.text('Create'));
     await tester.pumpAndSettle();

@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/range.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/segment.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/range.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/segment.dart';
 
 class BufferRangeBlock extends BufferRange {
   BufferRangeBlock(super.begin, super.end);

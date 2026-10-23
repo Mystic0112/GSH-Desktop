@@ -27,10 +27,10 @@ fn unique_dir(prefix: &str) -> std::path::PathBuf {
     ))
 }
 
-/// Sobe um listener num caminho temporário, roda `cockpit <args>` apontado pra
+/// Sobe um listener num caminho temporário, roda `gsh <args>` apontado pra
 /// ele e devolve `(requisição recebida, stdout, stderr, exit code)`.
 fn run_against_fake_app(args: &[&str], response: &str) -> (Value, String, String, i32) {
-    let dir = unique_dir("cockpit-wire");
+    let dir = unique_dir("gsh-wire");
     std::fs::create_dir_all(&dir).unwrap();
     let sock_path = dir.join("status.sock");
     let listener = UnixListener::bind(&sock_path).unwrap();
@@ -49,12 +49,12 @@ fn run_against_fake_app(args: &[&str], response: &str) -> (Value, String, String
         line
     });
 
-    let out = Command::new(env!("CARGO_BIN_EXE_cockpit"))
+    let out = Command::new(env!("CARGO_BIN_EXE_gsh"))
         .args(args)
-        .env("COCKPIT_STATUS_SOCK", &sock_path)
-        .env("COCKPIT_TAB_ID", "t7")
-        .env_remove("COCKPIT_STATUS_PORT")
-        .env_remove("COCKPIT_STATUS_TOKEN")
+        .env("GSH_STATUS_SOCK", &sock_path)
+        .env("GSH_TAB_ID", "t7")
+        .env_remove("GSH_STATUS_PORT")
+        .env_remove("GSH_STATUS_TOKEN")
         .output()
         .unwrap();
 
@@ -75,7 +75,7 @@ fn send_manda_texto_em_base64_com_type_cmd() {
     assert_eq!(req["cmd"], "write");
     assert_eq!(
         req["tabId"], "t7",
-        "cai no COCKPIT_TAB_ID quando não passam --tab-id"
+        "cai no GSH_TAB_ID quando não passam --tab-id"
     );
     // "olá mundo" em base64
     assert_eq!(req["args"]["data"], "b2zDoSBtdW5kbw==");
@@ -132,7 +132,7 @@ fn erro_do_app_vira_exit_1_no_stderr() {
     let (_, stdout, stderr, code) =
         run_against_fake_app(&["list-tabs"], r#"{"ok":false,"error":"boom"}"#);
     assert_eq!(stdout, "");
-    assert_eq!(stderr, "cockpit: boom\n");
+    assert_eq!(stderr, "gsh: boom\n");
     assert_eq!(code, 1);
 }
 
@@ -231,7 +231,7 @@ fn browse_json_ecoa_o_data() {
 
 #[test]
 fn close_tab_sem_alvo_nao_manda_target() {
-    // Sem posicional o app cai na própria tab ($COCKPIT_TAB_ID) — mandar
+    // Sem posicional o app cai na própria tab ($GSH_TAB_ID) — mandar
     // `target` vazio faria o app tentar resolvê-lo como label.
     let (req, stdout, _, code) =
         run_against_fake_app(&["close-tab"], r#"{"ok":true,"data":{"tabId":"t7"}}"#);
@@ -290,7 +290,7 @@ fn arquivo_solto_e_atalho_de_open() {
 #[test]
 fn hook_reporta_status_pelo_mesmo_socket() {
     // O hook lê o evento do stdin; aqui exercitamos o caminho completo.
-    let dir = unique_dir("cockpit-hook");
+    let dir = unique_dir("gsh-hook");
     std::fs::create_dir_all(&dir).unwrap();
     let sock_path = dir.join("status.sock");
     let listener = UnixListener::bind(&sock_path).unwrap();
@@ -301,12 +301,12 @@ fn hook_reporta_status_pelo_mesmo_socket() {
         line
     });
 
-    let mut child = Command::new(env!("CARGO_BIN_EXE_cockpit"))
+    let mut child = Command::new(env!("CARGO_BIN_EXE_gsh"))
         .arg("hook")
-        // O hook grava o status da fazenda em ~/.cockpit/farm: HOME isolado.
+        // O hook grava o status da fazenda em ~/.gsh/farm: HOME isolado.
         .env("HOME", &dir)
-        .env("COCKPIT_STATUS_SOCK", &sock_path)
-        .env("COCKPIT_PANE_ID", "t3")
+        .env("GSH_STATUS_SOCK", &sock_path)
+        .env("GSH_PANE_ID", "t3")
         .stdin(std::process::Stdio::piped())
         .stdout(std::process::Stdio::piped())
         .spawn()
@@ -332,12 +332,12 @@ fn hook_reporta_status_pelo_mesmo_socket() {
 }
 
 #[test]
-fn hook_fora_do_cockpit_e_noop_silencioso() {
-    let out = Command::new(env!("CARGO_BIN_EXE_cockpit"))
+fn hook_fora_do_gsh_e_noop_silencioso() {
+    let out = Command::new(env!("CARGO_BIN_EXE_gsh"))
         .arg("hook")
-        .env_remove("COCKPIT_PANE_ID")
-        .env_remove("COCKPIT_STATUS_SOCK")
-        .env_remove("COCKPIT_STATUS_PORT")
+        .env_remove("GSH_PANE_ID")
+        .env_remove("GSH_STATUS_SOCK")
+        .env_remove("GSH_STATUS_PORT")
         .stdin(std::process::Stdio::null())
         .output()
         .unwrap();
@@ -351,7 +351,7 @@ fn send_com_enter_manda_o_retorno_numa_segunda_escrita() {
     // O Enter vai numa escrita SEPARADA de propósito: TUIs distinguem "digitou e
     // submeteu" de "colou um bloco com \r no meio". Este teste é o que trava
     // essa decisão — se alguém "otimizar" pra um write só, ele quebra.
-    let dir = unique_dir("cockpit-enter");
+    let dir = unique_dir("gsh-enter");
     std::fs::create_dir_all(&dir).unwrap();
     let sock_path = dir.join("status.sock");
     let listener = UnixListener::bind(&sock_path).unwrap();
@@ -372,9 +372,9 @@ fn send_com_enter_manda_o_retorno_numa_segunda_escrita() {
         requests
     });
 
-    let out = Command::new(env!("CARGO_BIN_EXE_cockpit"))
+    let out = Command::new(env!("CARGO_BIN_EXE_gsh"))
         .args(["send", "--tab-id", "t4", "--enter", "npm", "test"])
-        .env("COCKPIT_STATUS_SOCK", &sock_path)
+        .env("GSH_STATUS_SOCK", &sock_path)
         .output()
         .unwrap();
 
@@ -419,7 +419,7 @@ fn focused_manda_o_sentinela_para_o_app_resolver() {
 
 #[test]
 fn focused_ignora_o_tab_id_do_ambiente() {
-    // COCKPIT_TAB_ID está setado no helper; --focused tem que vencer, senão o
+    // GSH_TAB_ID está setado no helper; --focused tem que vencer, senão o
     // texto iria pra aba que chamou em vez da que o usuário está vendo.
     let (req, _, _, _) = run_against_fake_app(&["send", "--focused", "oi"], r#"{"ok":true}"#);
     assert_ne!(req["tabId"], "t7");
@@ -429,11 +429,11 @@ fn focused_ignora_o_tab_id_do_ambiente() {
 #[test]
 fn acha_o_socket_bem_conhecido_sem_env_nenhuma() {
     // O caso da ferramenta externa: nenhuma env herdada. A CLI cai no
-    // ~/.cockpit/status.sock. Aqui apontamos HOME pro temp pra não depender do
+    // ~/.gsh/status.sock. Aqui apontamos HOME pro temp pra não depender do
     // app real estar rodando.
-    let dir = unique_dir("cockpit-discovery");
-    std::fs::create_dir_all(dir.join(".cockpit")).unwrap();
-    let sock_path = dir.join(".cockpit/status.sock");
+    let dir = unique_dir("gsh-discovery");
+    std::fs::create_dir_all(dir.join(".gsh")).unwrap();
+    let sock_path = dir.join(".gsh/status.sock");
     let listener = UnixListener::bind(&sock_path).unwrap();
     let server = std::thread::spawn(move || {
         let (stream, _) = listener.accept().unwrap();
@@ -447,13 +447,13 @@ fn acha_o_socket_bem_conhecido_sem_env_nenhuma() {
         line
     });
 
-    let out = Command::new(env!("CARGO_BIN_EXE_cockpit"))
+    let out = Command::new(env!("CARGO_BIN_EXE_gsh"))
         .args(["send", "--focused", "ditado"])
         .env("HOME", &dir)
-        .env_remove("COCKPIT_STATUS_SOCK")
-        .env_remove("COCKPIT_STATUS_PORT")
-        .env_remove("COCKPIT_TAB_ID")
-        .env_remove("COCKPIT_PANE_ID")
+        .env_remove("GSH_STATUS_SOCK")
+        .env_remove("GSH_STATUS_PORT")
+        .env_remove("GSH_TAB_ID")
+        .env_remove("GSH_PANE_ID")
         .output()
         .unwrap();
 
@@ -472,13 +472,13 @@ fn acha_o_socket_bem_conhecido_sem_env_nenhuma() {
 
 #[test]
 fn sem_app_nenhum_falha_com_exit_3() {
-    let dir = unique_dir("cockpit-noapp");
+    let dir = unique_dir("gsh-noapp");
     std::fs::create_dir_all(&dir).unwrap();
-    let out = Command::new(env!("CARGO_BIN_EXE_cockpit"))
+    let out = Command::new(env!("CARGO_BIN_EXE_gsh"))
         .args(["list-tabs"])
         .env("HOME", &dir)
-        .env_remove("COCKPIT_STATUS_SOCK")
-        .env_remove("COCKPIT_STATUS_PORT")
+        .env_remove("GSH_STATUS_SOCK")
+        .env_remove("GSH_STATUS_PORT")
         .output()
         .unwrap();
     let _ = std::fs::remove_dir_all(&dir);

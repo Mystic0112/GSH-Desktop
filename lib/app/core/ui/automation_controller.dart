@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:cockpit/app/core/domain/contracts/automation_gateway.dart';
-import 'package:cockpit/app/core/domain/entities/automation.dart';
-import 'package:cockpit/app/core/domain/exceptions/automation_error.dart';
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/automation_gateway.dart';
+import 'package:gsh_desktop/app/core/domain/entities/automation.dart';
+import 'package:gsh_desktop/app/core/domain/exceptions/automation_error.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:flutter/foundation.dart';
 
 class AutomationController extends ChangeNotifier {

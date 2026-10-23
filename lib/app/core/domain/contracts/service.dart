@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/domain/contracts/disposable.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/disposable.dart';
 
 /// Serviço de infraestrutura (singleton preguiçoso no injector). O `dispose`
 /// é encadeado pelo `CustomInjector` no descarte — para o gateway RPC, é onde

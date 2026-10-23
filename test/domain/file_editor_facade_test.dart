@@ -1,5 +1,5 @@
-import 'package:cockpit/app/cockpit/domain/services/file_editor_facade.dart';
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/file_editor_facade.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -24,8 +24,8 @@ void main() {
     calls = [];
     facade = FileEditorFacade(
       FileEditorRegistry({
-        FileEditorEngine.cockpit: (request) async {
-          calls.add(FileEditorEngine.cockpit);
+        FileEditorEngine.gsh: (request) async {
+          calls.add(FileEditorEngine.gsh);
           return FileOpenOutcome.opened;
         },
         FileEditorEngine.neovim: (request) async {
@@ -41,7 +41,7 @@ void main() {
     expect(calls, [FileEditorEngine.neovim]);
   });
 
-  test('keeps remote and specialized content in Cockpit', () async {
+  test('keeps remote and specialized content in GSH', () async {
     for (final value in [
       request('/repo/main.dart', remote: true),
       request('/repo/request.http'),
@@ -53,7 +53,7 @@ void main() {
     ]) {
       calls.clear();
       await facade.open(value);
-      expect(calls, [FileEditorEngine.cockpit]);
+      expect(calls, [FileEditorEngine.gsh]);
     }
   });
 
@@ -65,8 +65,8 @@ void main() {
   test('falls back exactly once when external engine cannot open', () async {
     facade = FileEditorFacade(
       FileEditorRegistry({
-        FileEditorEngine.cockpit: (request) async {
-          calls.add(FileEditorEngine.cockpit);
+        FileEditorEngine.gsh: (request) async {
+          calls.add(FileEditorEngine.gsh);
           return FileOpenOutcome.opened;
         },
         FileEditorEngine.neovim: (request) async {
@@ -77,8 +77,8 @@ void main() {
     )..engine = FileEditorEngine.neovim;
 
     final result = await facade.open(request('/repo/main.dart'));
-    expect(result.engine, FileEditorEngine.cockpit);
+    expect(result.engine, FileEditorEngine.gsh);
     expect(result.outcome, FileOpenOutcome.opened);
-    expect(calls, [FileEditorEngine.neovim, FileEditorEngine.cockpit]);
+    expect(calls, [FileEditorEngine.neovim, FileEditorEngine.gsh]);
   });
 }

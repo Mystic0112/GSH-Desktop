@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/data/setup/storage_location.dart';
+import 'package:gsh_desktop/app/core/data/setup/storage_location.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
 
