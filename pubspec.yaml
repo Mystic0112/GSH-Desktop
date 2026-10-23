@@ -238,7 +238,7 @@ dependencies:
   launch_at_startup: ^0.5.1
   pinenacl: ^0.6.0
   desktop_multi_window: ^0.3.1
-  sqlite3: ^3.6.0
+  sqlite3: ^3.5.2
   sqlite3_flutter_libs: ^0.6.0+eol
   vm_service: ^15.3.0
 
