@@ -187,6 +187,7 @@ class Translations$cockpit$en {
 	late final Translations$cockpit$layoutPreview$en layoutPreview = Translations$cockpit$layoutPreview$en.internal(_root);
 	late final Translations$cockpit$telemetry$en telemetry = Translations$cockpit$telemetry$en.internal(_root);
 	late final Translations$cockpit$panelView$en panelView = Translations$cockpit$panelView$en.internal(_root);
+	late final Translations$cockpit$chat$en chat = Translations$cockpit$chat$en.internal(_root);
 	late final Translations$cockpit$farm$en farm = Translations$cockpit$farm$en.internal(_root);
 	late final Translations$cockpit$agentGraph$en agentGraph = Translations$cockpit$agentGraph$en.internal(_root);
 }
@@ -2140,6 +2141,9 @@ class Translations$cockpit$topbar$en {
 
 	/// en: 'Agent farm'
 	String get openFarm => 'Agent farm';
+
+	/// en: 'Chat with Claude (beta)'
+	String get openChat => 'Chat with Claude (beta)';
 }
 
 // Path: cockpit.tasks
@@ -2788,6 +2792,66 @@ class Translations$cockpit$panelView$en {
 
 	/// en: 'Open as HTML'
 	String get openAsHtml => 'Open as HTML';
+}
+
+// Path: cockpit.chat
+class Translations$cockpit$chat$en {
+	Translations$cockpit$chat$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Chat'
+	String get tabTitle => 'Chat';
+
+	/// en: 'Chat with Claude Code'
+	String get emptyTitle => 'Chat with Claude Code';
+
+	/// en: 'Uses the claude installed on this machine, with your own login. Folder: ${cwd}'
+	String emptyHint({required Object cwd}) => 'Uses the claude installed on this machine, with your own login. Folder: ${cwd}';
+
+	/// en: 'Message Claude… (Enter sends, Shift+Enter for a new line)'
+	String get placeholder => 'Message Claude… (Enter sends, Shift+Enter for a new line)';
+
+	/// en: 'Send'
+	String get send => 'Send';
+
+	/// en: 'Stop'
+	String get stop => 'Stop';
+
+	/// en: 'working…'
+	String get working => 'working…';
+
+	/// en: 'waiting for you'
+	String get waitingYou => 'waiting for you';
+
+	/// en: 'cost US$ ${v}'
+	String cost({required Object v}) => 'cost US\$ ${v}';
+
+	/// en: 'Allow ${tool}?'
+	String askPermission({required Object tool}) => 'Allow ${tool}?';
+
+	/// en: 'Allow'
+	String get allow => 'Allow';
+
+	/// en: 'Deny'
+	String get deny => 'Deny';
+
+	/// en: 'Allowed'
+	String get allowed => 'Allowed';
+
+	/// en: 'Denied'
+	String get denied => 'Denied';
+
+	/// en: 'Couldn't start claude: ${detail}'
+	String startFailed({required Object detail}) => 'Couldn\'t start claude: ${detail}';
+
+	/// en: 'claude exited (code ${code}).'
+	String engineExited({required Object code}) => 'claude exited (code ${code}).';
+
+	/// en: 'The turn ended with an error: ${detail}'
+	String turnFailed({required Object detail}) => 'The turn ended with an error: ${detail}';
 }
 
 // Path: cockpit.farm
@@ -4843,6 +4907,7 @@ extension on Translations {
 			'cockpit.topbar.hideKeyboard' => 'Hide keyboard',
 			'cockpit.topbar.visualizeAgents' => 'Visualize agents',
 			'cockpit.topbar.openFarm' => 'Agent farm',
+			'cockpit.topbar.openChat' => 'Chat with Claude (beta)',
 			'cockpit.tasks.hotReload' => 'Hot reload',
 			'cockpit.tasks.hotRestart' => 'Hot restart',
 			'cockpit.tasks.toggleDebugPaint' => 'Toggle debug paint',
@@ -5054,6 +5119,23 @@ extension on Translations {
 			'cockpit.panelView.unavailable' => 'Panels need the embedded web view, which is not available on Linux yet.',
 			'cockpit.panelView.openInBrowser' => 'Open in browser',
 			'cockpit.panelView.openAsHtml' => 'Open as HTML',
+			'cockpit.chat.tabTitle' => 'Chat',
+			'cockpit.chat.emptyTitle' => 'Chat with Claude Code',
+			'cockpit.chat.emptyHint' => ({required Object cwd}) => 'Uses the claude installed on this machine, with your own login. Folder: ${cwd}',
+			'cockpit.chat.placeholder' => 'Message Claude… (Enter sends, Shift+Enter for a new line)',
+			'cockpit.chat.send' => 'Send',
+			'cockpit.chat.stop' => 'Stop',
+			'cockpit.chat.working' => 'working…',
+			'cockpit.chat.waitingYou' => 'waiting for you',
+			'cockpit.chat.cost' => ({required Object v}) => 'cost US\$ ${v}',
+			'cockpit.chat.askPermission' => ({required Object tool}) => 'Allow ${tool}?',
+			'cockpit.chat.allow' => 'Allow',
+			'cockpit.chat.deny' => 'Deny',
+			'cockpit.chat.allowed' => 'Allowed',
+			'cockpit.chat.denied' => 'Denied',
+			'cockpit.chat.startFailed' => ({required Object detail}) => 'Couldn\'t start claude: ${detail}',
+			'cockpit.chat.engineExited' => ({required Object code}) => 'claude exited (code ${code}).',
+			'cockpit.chat.turnFailed' => ({required Object detail}) => 'The turn ended with an error: ${detail}',
 			'cockpit.farm.tabTitle' => 'Farm',
 			'cockpit.farm.title' => 'Agent farm',
 			'cockpit.farm.emptyTitle' => 'No agents running',
@@ -5278,6 +5360,8 @@ extension on Translations {
 			'settings.page.notifications.soundTurnDone' => 'Turn completed',
 			'settings.page.notifications.soundTurnDoneDesc' => 'An agent finished its turn.',
 			'settings.page.notifications.soundActionRequired' => 'Action required',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.notifications.soundActionRequiredDesc' => 'An agent is waiting for your approval or answer.',
 			'settings.page.notifications.soundDefault' => 'Default',
 			'settings.page.notifications.soundCustom' => ({required Object name}) => 'Custom: ${name}',
@@ -5296,8 +5380,6 @@ extension on Translations {
 			'settings.page.languages.formatterHint' => 'External formatter with %FILE% placeholder. Takes precedence over the LSP formatter when set.',
 			'settings.page.languages.resetToDefault' => 'Reset to default',
 			'settings.page.languages.saveAndRestart' => 'Save & restart',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.languages.statusResponds' => 'Server responds',
 			'settings.page.languages.statusNotFound' => 'Server not found or command invalid',
 			'settings.page.automations.sectionCommitMessages' => 'Commit messages',

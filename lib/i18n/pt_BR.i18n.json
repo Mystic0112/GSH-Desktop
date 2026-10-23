@@ -666,7 +666,8 @@
       "filesUnavailable": "Arquivos indisponíveis no GSH Desktop",
       "hideKeyboard": "Baixar teclado",
       "visualizeAgents": "Visualizar agentes",
-      "openFarm": "Fazenda de agentes"
+      "openFarm": "Fazenda de agentes",
+      "openChat": "Chat com o Claude (beta)"
     },
     "tasks": {
       "hotReload": "Hot reload",
@@ -922,6 +923,25 @@
       "unavailable": "Painéis precisam da web view embutida, que ainda não existe no Linux.",
       "openInBrowser": "Abrir no navegador",
       "openAsHtml": "Abrir como HTML"
+    },
+    "chat": {
+      "tabTitle": "Chat",
+      "emptyTitle": "Chat com o Claude Code",
+      "emptyHint": "Usa o claude instalado nesta máquina, com o seu login. Pasta: ${cwd}",
+      "placeholder": "Mensagem para o Claude… (Enter envia, Shift+Enter quebra linha)",
+      "send": "Enviar",
+      "stop": "Parar",
+      "working": "trabalhando…",
+      "waitingYou": "esperando você",
+      "cost": "custo US$ ${v}",
+      "askPermission": "Permitir ${tool}?",
+      "allow": "Permitir",
+      "deny": "Negar",
+      "allowed": "Permitido",
+      "denied": "Negado",
+      "startFailed": "Não consegui iniciar o claude: ${detail}",
+      "engineExited": "O claude encerrou (código ${code}).",
+      "turnFailed": "O turno terminou com erro: ${detail}"
     },
     "farm": {
       "tabTitle": "Fazenda",

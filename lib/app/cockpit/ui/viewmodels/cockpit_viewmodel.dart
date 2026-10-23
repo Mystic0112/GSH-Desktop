@@ -113,6 +113,7 @@ import 'package:cockpit/app/cockpit/ui/states/pane_node.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/agent_file_activity.dart';
 import 'package:cockpit/app/cockpit/ui/session/agent_graph_session.dart';
 import 'package:cockpit/app/cockpit/ui/session/farm_session.dart';
+import 'package:cockpit/app/cockpit/ui/session/chat_session.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/agent_graph_store.dart';
 import 'package:cockpit/app/cockpit/domain/contracts/desktop_agent_apps.dart';
 import 'package:cockpit/app/cockpit/ui/viewmodels/agent_message_log.dart';
@@ -1981,6 +1982,17 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
             ),
           )
           as AgentGraphSession?;
+
+  /// Abre uma aba de chat com o Claude Code na pasta do workspace (protótipo
+  /// do harness). Cada clique abre uma conversa nova.
+  ChatSession? openChat({String? projectId}) =>
+      _openBrowserTab(
+            projectId,
+            matches: (_) => false,
+            make: (id, pid, path) =>
+                ChatSession(id: id, projectId: pid, workingDirectory: path),
+          )
+          as ChatSession?;
 
   /// Abre (ou foca) a aba da fazenda de agentes. Uma por workspace; o
   /// conteúdo é o mesmo em todas (todos os loops da máquina).
@@ -6608,6 +6620,13 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
           workingDirectory: project.path,
         );
         return true;
+      case 'chat':
+        _sessions[id] = ChatSession(
+          id: id,
+          projectId: project.id,
+          workingDirectory: project.path,
+        );
+        return true;
       case 'farm':
         _sessions[id] = FarmSession(
           id: id,
@@ -6919,6 +6938,7 @@ class CockpitViewModel extends ChangeNotifier implements DocumentHost {
     }
     if (s is AgentGraphSession) return <String, dynamic>{'type': 'agent_graph'};
     if (s is FarmSession) return <String, dynamic>{'type': 'farm'};
+    if (s is ChatSession) return <String, dynamic>{'type': 'chat'};
     if (s is MongoBrowserSession) {
       return <String, dynamic>{
         'type': 'mongo',

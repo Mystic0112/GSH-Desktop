@@ -8,6 +8,8 @@ import 'package:cockpit/app/cockpit/ui/actions/tab_actions.dart';
 import 'package:cockpit/app/cockpit/ui/document/document_windows.dart';
 import 'package:cockpit/app/cockpit/ui/session/agent_graph_session.dart';
 import 'package:cockpit/app/cockpit/ui/session/farm_session.dart';
+import 'package:cockpit/app/cockpit/ui/session/chat_session.dart';
+import 'package:cockpit/app/cockpit/ui/widgets/chat_view.dart';
 import 'package:cockpit/app/cockpit/ui/session/browser_session.dart';
 import 'package:cockpit/app/cockpit/ui/session/diff_viewer_session.dart';
 import 'package:cockpit/app/cockpit/ui/session/empty_tab.dart';
@@ -219,6 +221,7 @@ IconData _tabIcon(PaneItem? item) {
   if (item is NotebookSession) return Icons.menu_book_outlined;
   if (item is AgentGraphSession) return Icons.hub_outlined;
   if (item is FarmSession) return Icons.grass_outlined;
+  if (item is ChatSession) return Icons.chat_bubble_outline;
   if (item is EmptyTab) return Icons.edit_outlined;
   return Icons.auto_awesome;
 }
@@ -1698,6 +1701,9 @@ class _PaneBodyState extends State<_PaneBody> {
     if (item is AgentGraphSession) {
       return AgentGraphView(session: item);
     }
+
+    // Chat com o Claude Code (protótipo do harness).
+    if (item is ChatSession) return ChatView(session: item);
 
     // Fazenda: todos os loops de agente da máquina. A animação para quando a
     // aba não é a ativa (o `IndexedStack` mantém todas montadas).

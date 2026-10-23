@@ -785,6 +785,7 @@ class _CockpitPageState extends State<CockpitPage> {
                       ? null
                       : _vm.openAgentGraph,
                   onOpenFarm: shell.title == null ? null : _vm.openFarm,
+                  onOpenChat: shell.title == null ? null : _vm.openChat,
                 ),
                 // Host remoto fora do ar: faixa com o estado + botão de
                 // reconectar. Não ocupa espaço em workspace local.

@@ -26,6 +26,7 @@ class CockpitTopbar extends StatelessWidget {
     this.filesEnabled = true,
     this.onVisualizeAgents,
     this.onOpenFarm,
+    this.onOpenChat,
   });
 
   final String projectName;
@@ -44,6 +45,9 @@ class CockpitTopbar extends StatelessWidget {
 
   /// Abre/foca a fazenda de agentes. `null` = botão oculto.
   final VoidCallback? onOpenFarm;
+
+  /// Abre uma conversa nova com o Claude Code. `null` = botão oculto.
+  final VoidCallback? onOpenChat;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +84,14 @@ class CockpitTopbar extends StatelessWidget {
           style: context.typo.title.copyWith(fontSize: 14, color: colors.text),
         ),
         const Spacer(),
+        if (onOpenChat case final onTap?) ...[
+          _IconBtn(
+            icon: Icons.chat_bubble_outline,
+            tooltip: context.t.cockpit.topbar.openChat,
+            onTap: onTap,
+          ),
+          const SizedBox(width: 4),
+        ],
         if (onOpenFarm case final onTap?) ...[
           _IconBtn(
             icon: Icons.grass_outlined,

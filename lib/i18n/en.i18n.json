@@ -666,7 +666,8 @@
       "filesUnavailable": "Files unavailable in GSH Desktop",
       "hideKeyboard": "Hide keyboard",
       "visualizeAgents": "Visualize agents",
-      "openFarm": "Agent farm"
+      "openFarm": "Agent farm",
+      "openChat": "Chat with Claude (beta)"
     },
     "tasks": {
       "hotReload": "Hot reload",
@@ -922,6 +923,25 @@
       "unavailable": "Panels need the embedded web view, which is not available on Linux yet.",
       "openInBrowser": "Open in browser",
       "openAsHtml": "Open as HTML"
+    },
+    "chat": {
+      "tabTitle": "Chat",
+      "emptyTitle": "Chat with Claude Code",
+      "emptyHint": "Uses the claude installed on this machine, with your own login. Folder: ${cwd}",
+      "placeholder": "Message Claude… (Enter sends, Shift+Enter for a new line)",
+      "send": "Send",
+      "stop": "Stop",
+      "working": "working…",
+      "waitingYou": "waiting for you",
+      "cost": "cost US$ ${v}",
+      "askPermission": "Allow ${tool}?",
+      "allow": "Allow",
+      "deny": "Deny",
+      "allowed": "Allowed",
+      "denied": "Denied",
+      "startFailed": "Couldn't start claude: ${detail}",
+      "engineExited": "claude exited (code ${code}).",
+      "turnFailed": "The turn ended with an error: ${detail}"
     },
     "farm": {
       "tabTitle": "Farm",

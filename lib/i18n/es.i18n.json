@@ -666,7 +666,8 @@
       "filesUnavailable": "Archivos no disponibles en GSH Desktop",
       "hideKeyboard": "Ocultar teclado",
       "visualizeAgents": "Visualizar agentes",
-      "openFarm": "Granja de agentes"
+      "openFarm": "Granja de agentes",
+      "openChat": "Chat con Claude (beta)"
     },
     "tasks": {
       "hotReload": "Hot reload",
@@ -922,6 +923,25 @@
       "unavailable": "Los paneles necesitan la web view integrada, que todavía no existe en Linux.",
       "openInBrowser": "Abrir en el navegador",
       "openAsHtml": "Abrir como HTML"
+    },
+    "chat": {
+      "tabTitle": "Chat",
+      "emptyTitle": "Chat con Claude Code",
+      "emptyHint": "Usa el claude instalado en esta máquina, con tu propio login. Carpeta: ${cwd}",
+      "placeholder": "Mensaje para Claude… (Enter envía, Shift+Enter nueva línea)",
+      "send": "Enviar",
+      "stop": "Detener",
+      "working": "trabajando…",
+      "waitingYou": "esperándote",
+      "cost": "costo US$ ${v}",
+      "askPermission": "¿Permitir ${tool}?",
+      "allow": "Permitir",
+      "deny": "Denegar",
+      "allowed": "Permitido",
+      "denied": "Denegado",
+      "startFailed": "No pude iniciar claude: ${detail}",
+      "engineExited": "claude terminó (código ${code}).",
+      "turnFailed": "El turno terminó con error: ${detail}"
     },
     "farm": {
       "tabTitle": "Granja",

@@ -139,6 +139,7 @@ class _Translations$cockpit$pt_BR extends Translations$cockpit$en {
 	@override late final _Translations$cockpit$layoutPreview$pt_BR layoutPreview = _Translations$cockpit$layoutPreview$pt_BR._(_root);
 	@override late final _Translations$cockpit$telemetry$pt_BR telemetry = _Translations$cockpit$telemetry$pt_BR._(_root);
 	@override late final _Translations$cockpit$panelView$pt_BR panelView = _Translations$cockpit$panelView$pt_BR._(_root);
+	@override late final _Translations$cockpit$chat$pt_BR chat = _Translations$cockpit$chat$pt_BR._(_root);
 	@override late final _Translations$cockpit$farm$pt_BR farm = _Translations$cockpit$farm$pt_BR._(_root);
 	@override late final _Translations$cockpit$agentGraph$pt_BR agentGraph = _Translations$cockpit$agentGraph$pt_BR._(_root);
 }
@@ -1024,6 +1025,7 @@ class _Translations$cockpit$topbar$pt_BR extends Translations$cockpit$topbar$en 
 	@override String get hideKeyboard => 'Baixar teclado';
 	@override String get visualizeAgents => 'Visualizar agentes';
 	@override String get openFarm => 'Fazenda de agentes';
+	@override String get openChat => 'Chat com o Claude (beta)';
 }
 
 // Path: cockpit.tasks
@@ -1318,6 +1320,32 @@ class _Translations$cockpit$panelView$pt_BR extends Translations$cockpit$panelVi
 	@override String get unavailable => 'Painéis precisam da web view embutida, que ainda não existe no Linux.';
 	@override String get openInBrowser => 'Abrir no navegador';
 	@override String get openAsHtml => 'Abrir como HTML';
+}
+
+// Path: cockpit.chat
+class _Translations$cockpit$chat$pt_BR extends Translations$cockpit$chat$en {
+	_Translations$cockpit$chat$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get tabTitle => 'Chat';
+	@override String get emptyTitle => 'Chat com o Claude Code';
+	@override String emptyHint({required Object cwd}) => 'Usa o claude instalado nesta máquina, com o seu login. Pasta: ${cwd}';
+	@override String get placeholder => 'Mensagem para o Claude… (Enter envia, Shift+Enter quebra linha)';
+	@override String get send => 'Enviar';
+	@override String get stop => 'Parar';
+	@override String get working => 'trabalhando…';
+	@override String get waitingYou => 'esperando você';
+	@override String cost({required Object v}) => 'custo US\$ ${v}';
+	@override String askPermission({required Object tool}) => 'Permitir ${tool}?';
+	@override String get allow => 'Permitir';
+	@override String get deny => 'Negar';
+	@override String get allowed => 'Permitido';
+	@override String get denied => 'Negado';
+	@override String startFailed({required Object detail}) => 'Não consegui iniciar o claude: ${detail}';
+	@override String engineExited({required Object code}) => 'O claude encerrou (código ${code}).';
+	@override String turnFailed({required Object detail}) => 'O turno terminou com erro: ${detail}';
 }
 
 // Path: cockpit.farm
@@ -2604,6 +2632,7 @@ extension on TranslationsPtBr {
 			'cockpit.topbar.hideKeyboard' => 'Baixar teclado',
 			'cockpit.topbar.visualizeAgents' => 'Visualizar agentes',
 			'cockpit.topbar.openFarm' => 'Fazenda de agentes',
+			'cockpit.topbar.openChat' => 'Chat com o Claude (beta)',
 			'cockpit.tasks.hotReload' => 'Hot reload',
 			'cockpit.tasks.hotRestart' => 'Hot restart',
 			'cockpit.tasks.toggleDebugPaint' => 'Alternar debug paint',
@@ -2815,6 +2844,23 @@ extension on TranslationsPtBr {
 			'cockpit.panelView.unavailable' => 'Painéis precisam da web view embutida, que ainda não existe no Linux.',
 			'cockpit.panelView.openInBrowser' => 'Abrir no navegador',
 			'cockpit.panelView.openAsHtml' => 'Abrir como HTML',
+			'cockpit.chat.tabTitle' => 'Chat',
+			'cockpit.chat.emptyTitle' => 'Chat com o Claude Code',
+			'cockpit.chat.emptyHint' => ({required Object cwd}) => 'Usa o claude instalado nesta máquina, com o seu login. Pasta: ${cwd}',
+			'cockpit.chat.placeholder' => 'Mensagem para o Claude… (Enter envia, Shift+Enter quebra linha)',
+			'cockpit.chat.send' => 'Enviar',
+			'cockpit.chat.stop' => 'Parar',
+			'cockpit.chat.working' => 'trabalhando…',
+			'cockpit.chat.waitingYou' => 'esperando você',
+			'cockpit.chat.cost' => ({required Object v}) => 'custo US\$ ${v}',
+			'cockpit.chat.askPermission' => ({required Object tool}) => 'Permitir ${tool}?',
+			'cockpit.chat.allow' => 'Permitir',
+			'cockpit.chat.deny' => 'Negar',
+			'cockpit.chat.allowed' => 'Permitido',
+			'cockpit.chat.denied' => 'Negado',
+			'cockpit.chat.startFailed' => ({required Object detail}) => 'Não consegui iniciar o claude: ${detail}',
+			'cockpit.chat.engineExited' => ({required Object code}) => 'O claude encerrou (código ${code}).',
+			'cockpit.chat.turnFailed' => ({required Object detail}) => 'O turno terminou com erro: ${detail}',
 			'cockpit.farm.tabTitle' => 'Fazenda',
 			'cockpit.farm.title' => 'Fazenda de agentes',
 			'cockpit.farm.emptyTitle' => 'Nenhum agente rodando',
@@ -3039,6 +3085,8 @@ extension on TranslationsPtBr {
 			'settings.page.notifications.soundTurnDone' => 'Turno concluído',
 			'settings.page.notifications.soundTurnDoneDesc' => 'Um agente terminou o turno.',
 			'settings.page.notifications.soundActionRequired' => 'Ação necessária',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.notifications.soundActionRequiredDesc' => 'Um agente está esperando sua aprovação ou resposta.',
 			'settings.page.notifications.soundDefault' => 'Padrão',
 			'settings.page.notifications.soundCustom' => ({required Object name}) => 'Personalizado: ${name}',
@@ -3057,8 +3105,6 @@ extension on TranslationsPtBr {
 			'settings.page.languages.formatterHint' => 'Formatador externo com o placeholder %FILE%. Tem prioridade sobre o formatador do LSP quando definido.',
 			'settings.page.languages.resetToDefault' => 'Redefinir para o padrão',
 			'settings.page.languages.saveAndRestart' => 'Salvar e reiniciar',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.languages.statusResponds' => 'Servidor responde',
 			'settings.page.languages.statusNotFound' => 'Servidor não encontrado ou comando inválido',
 			'settings.page.automations.sectionCommitMessages' => 'Mensagens de commit',
