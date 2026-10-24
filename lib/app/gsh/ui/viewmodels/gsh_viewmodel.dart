@@ -2015,8 +2015,16 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
       _openBrowserTab(
             projectId,
             matches: (_) => false,
-            make: (id, pid, path) =>
-                ChatSession(id: id, projectId: pid, workingDirectory: path),
+            // Workspace de sistema (sem pasta): o claude roda na home.
+            make: (id, pid, path) => ChatSession(
+              id: id,
+              projectId: pid,
+              workingDirectory: path.isEmpty
+                  ? (Platform.environment['HOME'] ??
+                        Platform.environment['USERPROFILE'] ??
+                        '')
+                  : path,
+            ),
           )
           as ChatSession?;
 

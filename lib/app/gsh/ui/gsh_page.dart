@@ -794,11 +794,8 @@ class _GshPageState extends State<GshPage> {
                   onOpenFarm: shell.title == null || !showFarm
                       ? null
                       : _vm.openFarm,
-                  // Chat precisa de uma pasta (cwd do claude): o workspace de
-                  // sistema, sem pasta, não tem o botão.
-                  onOpenChat: shell.hasFileTree && showChat
-                      ? _vm.openChat
-                      : null,
+                  // Chat em todo workspace: sem pasta, o claude roda na home.
+                  onOpenChat: showChat ? _vm.openChat : null,
                 ),
                 // Host remoto fora do ar: faixa com o estado + botão de
                 // reconectar. Não ocupa espaço em workspace local.
