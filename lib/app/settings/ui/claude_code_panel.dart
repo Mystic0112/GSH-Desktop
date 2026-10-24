@@ -2,12 +2,12 @@ import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart'
 import 'package:gsh_desktop/app/core/domain/contracts/protected_hosts.dart';
 import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
-import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/app_menu.dart';
 import 'package:gsh_desktop/app/settings/ui/claude_code_setting_switch.dart';
 import 'package:gsh_desktop/app/settings/ui/claude_info_viewmodel.dart';
 import 'package:gsh_desktop/app/settings/ui/code_theme_picker.dart';
 import 'package:gsh_desktop/app/settings/ui/settings_widgets.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_text_field.dart';
 import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
@@ -67,7 +67,7 @@ class ClaudeCodePanel extends StatelessWidget {
             SettingsRow(
               title: tr.codeFontTitle,
               description: tr.codeFontDesc,
-              trailing: _TextSettingField(
+              trailing: SettingsTextField(
                 value: s.codeFont,
                 placeholder: tr.codeFontPlaceholder,
                 onChanged: controller.setCodeFont,
@@ -213,7 +213,7 @@ class _ProtectedHostsFieldState extends State<_ProtectedHostsField> {
   Widget build(BuildContext context) {
     final value = _value;
     if (value == null) return const SizedBox(width: 240);
-    return _TextSettingField(
+    return SettingsTextField(
       value: value,
       placeholder: 'prod, homolog.gorila.com',
       onChanged: (text) {
@@ -321,78 +321,6 @@ class _OutputStyleDropdownState extends State<_OutputStyleDropdown> {
         setState(() => _value = next);
         await _settings.setValue(ClaudeCodeKeys.outputStyle, next);
       },
-    );
-  }
-}
-
-/// Nome de fonte digitado à mão; grava ao confirmar ou sair do campo. Vazio
-/// volta ao padrão.
-class _TextSettingField extends StatefulWidget {
-  const _TextSettingField({
-    required this.value,
-    required this.placeholder,
-    required this.onChanged,
-  });
-  final String? value;
-  final String placeholder;
-  final ValueChanged<String?> onChanged;
-
-  @override
-  State<_TextSettingField> createState() => _TextSettingFieldState();
-}
-
-class _TextSettingFieldState extends State<_TextSettingField> {
-  late final _text = TextEditingController(text: widget.value ?? '');
-  final _focus = FocusNode();
-
-  @override
-  void initState() {
-    super.initState();
-    _focus.addListener(() {
-      if (!_focus.hasFocus) _commit();
-    });
-  }
-
-  @override
-  void didUpdateWidget(_TextSettingField old) {
-    super.didUpdateWidget(old);
-    // Mudou por fora (aba Aparência): reflete, a menos que esteja digitando.
-    if (old.value != widget.value && !_focus.hasFocus) {
-      _text.text = widget.value ?? '';
-    }
-  }
-
-  @override
-  void dispose() {
-    _focus.dispose();
-    _text.dispose();
-    super.dispose();
-  }
-
-  void _commit() {
-    final v = _text.text.trim();
-    if (v != (widget.value ?? '')) widget.onChanged(v.isEmpty ? null : v);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return SizedBox(
-      width: 224,
-      child: TextField(
-        controller: _text,
-        focusNode: _focus,
-        onSubmitted: (_) => _commit(),
-        style: context.typo.body.copyWith(fontSize: 13.5, color: colors.text),
-        placeholder: Text(
-          widget.placeholder,
-          style: context.typo.body.copyWith(
-            fontSize: 13.5,
-            color: colors.text3,
-          ),
-        ),
-        borderRadius: BorderRadius.circular(7),
-      ),
     );
   }
 }

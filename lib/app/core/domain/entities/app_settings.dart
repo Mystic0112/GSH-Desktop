@@ -99,6 +99,11 @@ class AppSettings {
     this.hiddenFeatures = const <AppFeature>{},
     this.openLinksInApp = false,
     this.farmScenery = FarmScenery.farm,
+    this.teamFarmEnabled = false,
+    this.teamFarmTeam = '',
+    this.teamFarmName = '',
+    this.teamFarmShowTitles = false,
+    this.teamFarmNetwork = '',
   });
 
   final AppThemeMode themeMode;
@@ -310,6 +315,22 @@ class AppSettings {
   /// Cenário em que a fazenda de agentes é desenhada.
   final FarmScenery farmScenery;
 
+  /// Fazenda do time: anuncia e mostra as fazendas dos colegas na rede
+  /// local (multicast, sem servidor). Desligada por padrão.
+  final bool teamFarmEnabled;
+
+  /// Só GSHs com o mesmo nome de time se enxergam.
+  final String teamFarmTeam;
+
+  /// Nome que os colegas veem em cima da sua fazenda (vazio = usuário do SO).
+  final String teamFarmName;
+
+  /// Manda os títulos das sessões (podem ter trecho de prompt).
+  final bool teamFarmShowTitles;
+
+  /// Faixa da rede do trabalho (`192.168.10.0/24`); fora dela nada sai.
+  final String teamFarmNetwork;
+
   bool showsFeature(AppFeature f) => !hiddenFeatures.contains(f);
 
   AppSettings copyWith({
@@ -372,6 +393,11 @@ class AppSettings {
     Set<AppFeature>? hiddenFeatures,
     bool? openLinksInApp,
     FarmScenery? farmScenery,
+    bool? teamFarmEnabled,
+    String? teamFarmTeam,
+    String? teamFarmName,
+    bool? teamFarmShowTitles,
+    String? teamFarmNetwork,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -441,6 +467,11 @@ class AppSettings {
       hiddenFeatures: hiddenFeatures ?? this.hiddenFeatures,
       openLinksInApp: openLinksInApp ?? this.openLinksInApp,
       farmScenery: farmScenery ?? this.farmScenery,
+      teamFarmEnabled: teamFarmEnabled ?? this.teamFarmEnabled,
+      teamFarmTeam: teamFarmTeam ?? this.teamFarmTeam,
+      teamFarmName: teamFarmName ?? this.teamFarmName,
+      teamFarmShowTitles: teamFarmShowTitles ?? this.teamFarmShowTitles,
+      teamFarmNetwork: teamFarmNetwork ?? this.teamFarmNetwork,
     );
   }
 
@@ -513,6 +544,11 @@ class AppSettings {
       'features.hidden': [for (final f in hiddenFeatures) f.name],
     if (openLinksInApp) 'links.openInApp': true,
     if (farmScenery != FarmScenery.farm) 'farm.scenery': farmScenery.name,
+    if (teamFarmEnabled) 'farm.team.enabled': true,
+    if (teamFarmTeam.isNotEmpty) 'farm.team.name': teamFarmTeam,
+    if (teamFarmName.isNotEmpty) 'farm.team.me': teamFarmName,
+    if (teamFarmShowTitles) 'farm.team.showTitles': true,
+    if (teamFarmNetwork.isNotEmpty) 'farm.team.network': teamFarmNetwork,
   };
 
   factory AppSettings.fromJson(Map<dynamic, dynamic> json) {
@@ -626,6 +662,11 @@ class AppSettings {
         json['farm.scenery'],
         FarmScenery.farm,
       ),
+      teamFarmEnabled: json['farm.team.enabled'] as bool? ?? false,
+      teamFarmTeam: json['farm.team.name'] as String? ?? '',
+      teamFarmName: json['farm.team.me'] as String? ?? '',
+      teamFarmShowTitles: json['farm.team.showTitles'] as bool? ?? false,
+      teamFarmNetwork: json['farm.team.network'] as String? ?? '',
     );
   }
 }

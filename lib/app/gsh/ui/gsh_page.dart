@@ -3,6 +3,8 @@ import 'package:gsh_core/gsh_core.dart';
 import 'dart:async' show StreamSubscription, unawaited;
 import 'dart:io';
 
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
 import 'package:gsh_desktop/app/gsh/ui/actions/remote_workspace_actions.dart';
 import 'package:gsh_desktop/app/gsh/ui/actions/tab_actions.dart';
 import 'package:gsh_desktop/app/gsh/ui/actions/workspace_actions.dart';
@@ -508,7 +510,36 @@ class _GshPageState extends State<GshPage> {
   /// Espelha o toggle de Notificações (aba das Configurações) para a VM, que
   /// gateia o disparo de fim de turno. A VM é page-scoped e não vê o
   /// `SettingsController` app-scoped, então a página empurra o valor.
+  /// Fazenda do time: só reabre o canal quando a config muda de fato.
+  TeamFarmConfig? _teamFarm;
+  void _syncTeamFarm() {
+    final s = _settings!.settings;
+    final next = TeamFarmConfig(
+      enabled: s.teamFarmEnabled,
+      team: s.teamFarmTeam,
+      name: s.teamFarmName.trim().isNotEmpty
+          ? s.teamFarmName
+          : (Platform.environment['USER'] ??
+                Platform.environment['USERNAME'] ??
+                Platform.localHostname),
+      showTitles: s.teamFarmShowTitles,
+      network: s.teamFarmNetwork,
+    );
+    final prev = _teamFarm;
+    if (prev != null &&
+        prev.enabled == next.enabled &&
+        prev.team == next.team &&
+        prev.name == next.name &&
+        prev.showTitles == next.showTitles &&
+        prev.network == next.network) {
+      return;
+    }
+    _teamFarm = next;
+    unawaited(context.read<FarmViewModel>().configureTeam(next));
+  }
+
   void _syncNotifications() {
+    _syncTeamFarm();
     _vm.setNotificationsEnabled(_settings!.settings.notificationsEnabled);
     _vm.setSoundPrefs(
       events: _settings!.settings.soundEvents,

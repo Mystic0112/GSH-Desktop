@@ -303,6 +303,23 @@ class SettingsController extends ChangeNotifier {
   void setFarmScenery(FarmScenery scenery) =>
       _apply(_settings.copyWith(farmScenery: scenery));
 
+  /// Fazenda do time: qualquer campo `null` fica como está.
+  void setTeamFarm({
+    bool? enabled,
+    String? team,
+    String? name,
+    bool? showTitles,
+    String? network,
+  }) => _apply(
+    _settings.copyWith(
+      teamFarmEnabled: enabled,
+      teamFarmTeam: team,
+      teamFarmName: name,
+      teamFarmShowTitles: showTitles,
+      teamFarmNetwork: network,
+    ),
+  );
+
   /// Paleta de código do modo claro; `null` = a do tema ativo.
   void setCodeThemeLight(String? id) => _apply(
     _settings.copyWith(codeThemeLight: id, clearCodeThemeLight: id == null),

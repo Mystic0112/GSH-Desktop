@@ -1413,6 +1413,8 @@ class _Translations$gsh$farm$pt_BR extends Translations$gsh$farm$en {
 	@override String waiting({required Object n}) => '${n} precisam de você';
 	@override String get waitingOne => '1 precisa de você';
 	@override String idle({required Object n}) => '${n} parados';
+	@override String peerOf({required Object name}) => 'de ${name}';
+	@override String peerBanner({required Object name}) => 'Fazenda de ${name}';
 	@override String spent({required Object total}) => 'Gastou ${total} tokens';
 	@override String spentDetail({required Object input, required Object cache, required Object out}) => '${input} entrada · ${cache} cache · ${out} gerados';
 	@override String context({required Object ctx}) => 'contexto ${ctx}';
@@ -2465,6 +2467,19 @@ class _Translations$settings$page$resources$pt_BR extends Translations$settings$
 	@override String get chatDesc => 'Botão de chat na barra do workspace (Claude Code em stream-json).';
 	@override String get farm => 'Fazenda';
 	@override String get farmDesc => 'Loops de agente lidos dos transcripts do Claude Code.';
+	@override String get sectionTeamFarm => 'Fazenda do time';
+	@override String get teamFarm => 'Ver a fazenda dos colegas';
+	@override String get teamFarmDesc => 'Na mesma rede (ex.: no escritório), cada GSH anuncia a própria fazenda e mostra a dos colegas ao lado da sua — diminua o zoom para ver. Sem servidor: nada sai da rede local. Desligado, nada sai do seu GSH.';
+	@override String get teamName => 'Time';
+	@override String get teamNameDesc => 'Só quem usar o mesmo nome de time se enxerga.';
+	@override String get teamNamePlaceholder => 'ex.: gorila';
+	@override String get teamMe => 'Seu nome';
+	@override String get teamMeDesc => 'Aparece em cima da sua fazenda para os colegas.';
+	@override String get teamShowTitles => 'Mostrar títulos das sessões';
+	@override String get teamShowTitlesDesc => 'Os títulos podem ter trechos dos seus prompts. Desligado, os colegas veem só a pasta, o status e os tokens de cada agente.';
+	@override String get teamNetwork => 'Rede do trabalho';
+	@override String get teamNetworkDesc => 'Faixa de IP da rede do escritório (ex.: 192.168.10.0/24). Preenchida, o GSH só anuncia e escuta quando você está nela.';
+	@override String get teamNetworkPlaceholder => 'qualquer rede local';
 	@override String get farmScenery => 'Cenário da fazenda';
 	@override String get farmSceneryDesc => 'Onde os agentes ficam: a fazenda ou um escritório em pixel art.';
 	@override String get sceneryFarm => 'Fazenda';
@@ -3429,6 +3444,8 @@ extension on TranslationsPtBr {
 			'gsh.farm.waiting' => ({required Object n}) => '${n} precisam de você',
 			'gsh.farm.waitingOne' => '1 precisa de você',
 			'gsh.farm.idle' => ({required Object n}) => '${n} parados',
+			'gsh.farm.peerOf' => ({required Object name}) => 'de ${name}',
+			'gsh.farm.peerBanner' => ({required Object name}) => 'Fazenda de ${name}',
 			'gsh.farm.spent' => ({required Object total}) => 'Gastou ${total} tokens',
 			'gsh.farm.spentDetail' => ({required Object input, required Object cache, required Object out}) => '${input} entrada · ${cache} cache · ${out} gerados',
 			'gsh.farm.context' => ({required Object ctx}) => 'contexto ${ctx}',
@@ -3596,10 +3613,10 @@ extension on TranslationsPtBr {
 			'settings.page.terminal.sectionDefaultTerminal' => 'Terminal padrão',
 			'settings.page.terminal.engineTitle' => 'Motor',
 			'settings.page.terminal.engineDesc' => 'Usado por novas abas de terminal e buffers de saída de tasks. Abas abertas mantêm o motor atual.',
-			'settings.page.terminal.shellTitle' => 'Shell',
-			'settings.page.terminal.shellDesc' => 'Qual shell novas abas de terminal abrem. A seta ao lado do + ainda abre qualquer outro, só para aquela aba.',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.terminal.shellTitle' => 'Shell',
+			'settings.page.terminal.shellDesc' => 'Qual shell novas abas de terminal abrem. A seta ao lado do + ainda abre qualquer outro, só para aquela aba.',
 			'settings.page.terminal.noWslMessage' => 'Nenhuma distro WSL encontrada. Instale uma (wsl.exe --install) e reinicie o GSH Desktop para vê-la listada aqui.',
 			'settings.page.terminal.sectionBehavior' => 'Comportamento',
 			'settings.page.terminal.closeOnExitTitle' => 'Fechar a aba quando o shell encerrar',
@@ -3929,6 +3946,19 @@ extension on TranslationsPtBr {
 			'settings.page.resources.chatDesc' => 'Botão de chat na barra do workspace (Claude Code em stream-json).',
 			'settings.page.resources.farm' => 'Fazenda',
 			'settings.page.resources.farmDesc' => 'Loops de agente lidos dos transcripts do Claude Code.',
+			'settings.page.resources.sectionTeamFarm' => 'Fazenda do time',
+			'settings.page.resources.teamFarm' => 'Ver a fazenda dos colegas',
+			'settings.page.resources.teamFarmDesc' => 'Na mesma rede (ex.: no escritório), cada GSH anuncia a própria fazenda e mostra a dos colegas ao lado da sua — diminua o zoom para ver. Sem servidor: nada sai da rede local. Desligado, nada sai do seu GSH.',
+			'settings.page.resources.teamName' => 'Time',
+			'settings.page.resources.teamNameDesc' => 'Só quem usar o mesmo nome de time se enxerga.',
+			'settings.page.resources.teamNamePlaceholder' => 'ex.: gorila',
+			'settings.page.resources.teamMe' => 'Seu nome',
+			'settings.page.resources.teamMeDesc' => 'Aparece em cima da sua fazenda para os colegas.',
+			'settings.page.resources.teamShowTitles' => 'Mostrar títulos das sessões',
+			'settings.page.resources.teamShowTitlesDesc' => 'Os títulos podem ter trechos dos seus prompts. Desligado, os colegas veem só a pasta, o status e os tokens de cada agente.',
+			'settings.page.resources.teamNetwork' => 'Rede do trabalho',
+			'settings.page.resources.teamNetworkDesc' => 'Faixa de IP da rede do escritório (ex.: 192.168.10.0/24). Preenchida, o GSH só anuncia e escuta quando você está nela.',
+			'settings.page.resources.teamNetworkPlaceholder' => 'qualquer rede local',
 			'settings.page.resources.farmScenery' => 'Cenário da fazenda',
 			'settings.page.resources.farmSceneryDesc' => 'Onde os agentes ficam: a fazenda ou um escritório em pixel art.',
 			'settings.page.resources.sceneryFarm' => 'Fazenda',

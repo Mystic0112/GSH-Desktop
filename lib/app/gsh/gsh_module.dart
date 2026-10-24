@@ -44,6 +44,8 @@ import 'package:gsh_desktop/app/gsh/domain/contracts/session_directory.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/codex_rollout_farm_source.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/multi_farm_source.dart';
 import 'package:gsh_desktop/app/core/domain/contracts/settings_store.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/lan_team_farm_channel.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/data/chat/chat_engine_router.dart';
 import 'package:gsh_desktop/app/gsh/data/chat/claude_cli_engine.dart';
 import 'package:gsh_desktop/app/gsh/data/chat/claude_stream_engine.dart';
@@ -270,6 +272,8 @@ Future<Module> buildGshModule({
         ..addLazySingleton<TerminalStatusServer>(TerminalStatusServerImpl.new)
         // Fazenda: loops de agente lidos dos transcripts do Claude Code.
         ..addInstance<SessionDirectory>(ClaudeSessionDirectory())
+        // Fazenda do time: multicast na rede local, sem servidor.
+        ..addInstance<TeamFarmChannel>(LanTeamFarmChannel())
         ..addInstance<FarmSource>(
           MultiFarmSource([
             ClaudeTranscriptFarmSource(),

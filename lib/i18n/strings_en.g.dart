@@ -3030,6 +3030,12 @@ class Translations$gsh$farm$en {
 	/// en: '${n} idle'
 	String idle({required Object n}) => '${n} idle';
 
+	/// en: '${name}'s'
+	String peerOf({required Object name}) => '${name}\'s';
+
+	/// en: '${name}'s farm'
+	String peerBanner({required Object name}) => '${name}\'s farm';
+
 	/// en: 'Spent ${total} tokens'
 	String spent({required Object total}) => 'Spent ${total} tokens';
 
@@ -5279,6 +5285,45 @@ class Translations$settings$page$resources$en {
 	/// en: 'Agent loops read from Claude Code transcripts.'
 	String get farmDesc => 'Agent loops read from Claude Code transcripts.';
 
+	/// en: 'Team farm'
+	String get sectionTeamFarm => 'Team farm';
+
+	/// en: 'See your teammates' farms'
+	String get teamFarm => 'See your teammates\' farms';
+
+	/// en: 'On the same network (e.g. at the office), each GSH announces its own farm and shows your teammates' next to yours — zoom out to see them. No server: nothing leaves the local network. Off, nothing leaves your GSH.'
+	String get teamFarmDesc => 'On the same network (e.g. at the office), each GSH announces its own farm and shows your teammates\' next to yours — zoom out to see them. No server: nothing leaves the local network. Off, nothing leaves your GSH.';
+
+	/// en: 'Team'
+	String get teamName => 'Team';
+
+	/// en: 'Only people using the same team name see each other.'
+	String get teamNameDesc => 'Only people using the same team name see each other.';
+
+	/// en: 'e.g. gorila'
+	String get teamNamePlaceholder => 'e.g. gorila';
+
+	/// en: 'Your name'
+	String get teamMe => 'Your name';
+
+	/// en: 'Shown above your farm to your teammates.'
+	String get teamMeDesc => 'Shown above your farm to your teammates.';
+
+	/// en: 'Show session titles'
+	String get teamShowTitles => 'Show session titles';
+
+	/// en: 'Titles may contain bits of your prompts. Off, teammates only see each agent's folder, status and tokens.'
+	String get teamShowTitlesDesc => 'Titles may contain bits of your prompts. Off, teammates only see each agent\'s folder, status and tokens.';
+
+	/// en: 'Work network'
+	String get teamNetwork => 'Work network';
+
+	/// en: 'The office network's IP range (e.g. 192.168.10.0/24). When set, GSH only announces and listens while you're on it.'
+	String get teamNetworkDesc => 'The office network\'s IP range (e.g. 192.168.10.0/24). When set, GSH only announces and listens while you\'re on it.';
+
+	/// en: 'any local network'
+	String get teamNetworkPlaceholder => 'any local network';
+
 	/// en: 'Farm scenery'
 	String get farmScenery => 'Farm scenery';
 
@@ -6328,6 +6373,8 @@ extension on Translations {
 			'gsh.farm.waiting' => ({required Object n}) => '${n} need you',
 			'gsh.farm.waitingOne' => '1 needs you',
 			'gsh.farm.idle' => ({required Object n}) => '${n} idle',
+			'gsh.farm.peerOf' => ({required Object name}) => '${name}\'s',
+			'gsh.farm.peerBanner' => ({required Object name}) => '${name}\'s farm',
 			'gsh.farm.spent' => ({required Object total}) => 'Spent ${total} tokens',
 			'gsh.farm.spentDetail' => ({required Object input, required Object cache, required Object out}) => '${input} input · ${cache} cache · ${out} out',
 			'gsh.farm.context' => ({required Object ctx}) => 'context ${ctx}',
@@ -6495,10 +6542,10 @@ extension on Translations {
 			'settings.page.terminal.sectionDefaultTerminal' => 'Default terminal',
 			'settings.page.terminal.engineTitle' => 'Engine',
 			'settings.page.terminal.engineDesc' => 'Used by new terminal tabs and task output buffers. Open tabs keep their current engine.',
-			'settings.page.terminal.shellTitle' => 'Shell',
-			'settings.page.terminal.shellDesc' => 'Which shell new terminal tabs open. The arrow next to + still opens any other one, just for that tab.',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.terminal.shellTitle' => 'Shell',
+			'settings.page.terminal.shellDesc' => 'Which shell new terminal tabs open. The arrow next to + still opens any other one, just for that tab.',
 			'settings.page.terminal.noWslMessage' => 'No WSL distros found. Install one (wsl.exe --install) and restart GSH Desktop to see it listed here.',
 			'settings.page.terminal.sectionBehavior' => 'Behavior',
 			'settings.page.terminal.closeOnExitTitle' => 'Close tab when the shell exits',
@@ -6828,6 +6875,19 @@ extension on Translations {
 			'settings.page.resources.chatDesc' => 'Chat button in the workspace bar (Claude Code in stream-json).',
 			'settings.page.resources.farm' => 'Farm',
 			'settings.page.resources.farmDesc' => 'Agent loops read from Claude Code transcripts.',
+			'settings.page.resources.sectionTeamFarm' => 'Team farm',
+			'settings.page.resources.teamFarm' => 'See your teammates\' farms',
+			'settings.page.resources.teamFarmDesc' => 'On the same network (e.g. at the office), each GSH announces its own farm and shows your teammates\' next to yours — zoom out to see them. No server: nothing leaves the local network. Off, nothing leaves your GSH.',
+			'settings.page.resources.teamName' => 'Team',
+			'settings.page.resources.teamNameDesc' => 'Only people using the same team name see each other.',
+			'settings.page.resources.teamNamePlaceholder' => 'e.g. gorila',
+			'settings.page.resources.teamMe' => 'Your name',
+			'settings.page.resources.teamMeDesc' => 'Shown above your farm to your teammates.',
+			'settings.page.resources.teamShowTitles' => 'Show session titles',
+			'settings.page.resources.teamShowTitlesDesc' => 'Titles may contain bits of your prompts. Off, teammates only see each agent\'s folder, status and tokens.',
+			'settings.page.resources.teamNetwork' => 'Work network',
+			'settings.page.resources.teamNetworkDesc' => 'The office network\'s IP range (e.g. 192.168.10.0/24). When set, GSH only announces and listens while you\'re on it.',
+			'settings.page.resources.teamNetworkPlaceholder' => 'any local network',
 			'settings.page.resources.farmScenery' => 'Farm scenery',
 			'settings.page.resources.farmSceneryDesc' => 'Where the agents live: the farm or a pixel art office.',
 			'settings.page.resources.sceneryFarm' => 'Farm',

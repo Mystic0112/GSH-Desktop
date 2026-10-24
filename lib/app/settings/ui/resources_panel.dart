@@ -1,9 +1,12 @@
+import 'dart:io' show Platform;
+
 import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
 import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/hover_tap.dart';
 import 'package:gsh_desktop/app/settings/ui/claude_code_setting_switch.dart';
+import 'package:gsh_desktop/app/settings/ui/settings_text_field.dart';
 import 'package:gsh_desktop/app/settings/ui/settings_widgets.dart';
 import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -70,6 +73,60 @@ class ResourcesPanel extends StatelessWidget {
             feature(AppFeature.browser, tr.browser, tr.browserDesc),
           ],
         ),
+        if (s.showsFeature(AppFeature.farm))
+          SettingsSection(
+            title: tr.sectionTeamFarm,
+            rows: [
+              SettingsRow(
+                title: tr.teamFarm,
+                description: tr.teamFarmDesc,
+                trailing: Switch(
+                  value: s.teamFarmEnabled,
+                  onChanged: (v) => controller.setTeamFarm(enabled: v),
+                ),
+              ),
+              if (s.teamFarmEnabled) ...[
+                SettingsRow(
+                  title: tr.teamName,
+                  description: tr.teamNameDesc,
+                  trailing: SettingsTextField(
+                    value: s.teamFarmTeam,
+                    placeholder: tr.teamNamePlaceholder,
+                    onChanged: (v) => controller.setTeamFarm(team: v ?? ''),
+                  ),
+                ),
+                SettingsRow(
+                  title: tr.teamMe,
+                  description: tr.teamMeDesc,
+                  trailing: SettingsTextField(
+                    value: s.teamFarmName,
+                    placeholder:
+                        Platform.environment['USER'] ??
+                        Platform.environment['USERNAME'] ??
+                        '',
+                    onChanged: (v) => controller.setTeamFarm(name: v ?? ''),
+                  ),
+                ),
+                SettingsRow(
+                  title: tr.teamShowTitles,
+                  description: tr.teamShowTitlesDesc,
+                  trailing: Switch(
+                    value: s.teamFarmShowTitles,
+                    onChanged: (v) => controller.setTeamFarm(showTitles: v),
+                  ),
+                ),
+                SettingsRow(
+                  title: tr.teamNetwork,
+                  description: tr.teamNetworkDesc,
+                  trailing: SettingsTextField(
+                    value: s.teamFarmNetwork,
+                    placeholder: tr.teamNetworkPlaceholder,
+                    onChanged: (v) => controller.setTeamFarm(network: v ?? ''),
+                  ),
+                ),
+              ],
+            ],
+          ),
         SettingsSection(
           title: context.t.settings.page.nav.skills,
           rows: [

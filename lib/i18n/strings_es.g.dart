@@ -1413,6 +1413,8 @@ class _Translations$gsh$farm$es extends Translations$gsh$farm$en {
 	@override String waiting({required Object n}) => '${n} te necesitan';
 	@override String get waitingOne => '1 te necesita';
 	@override String idle({required Object n}) => '${n} inactivos';
+	@override String peerOf({required Object name}) => 'de ${name}';
+	@override String peerBanner({required Object name}) => 'Granja de ${name}';
 	@override String spent({required Object total}) => 'Gastó ${total} tokens';
 	@override String spentDetail({required Object input, required Object cache, required Object out}) => '${input} entrada · ${cache} caché · ${out} generados';
 	@override String context({required Object ctx}) => 'contexto ${ctx}';
@@ -2465,6 +2467,19 @@ class _Translations$settings$page$resources$es extends Translations$settings$pag
 	@override String get chatDesc => 'Botón de chat en la barra del workspace (Claude Code en stream-json).';
 	@override String get farm => 'Granja';
 	@override String get farmDesc => 'Loops de agentes leídos de las transcripciones de Claude Code.';
+	@override String get sectionTeamFarm => 'Granja del equipo';
+	@override String get teamFarm => 'Ver la granja de los compañeros';
+	@override String get teamFarmDesc => 'En la misma red (p. ej., en la oficina), cada GSH anuncia su granja y muestra la de los compañeros al lado de la tuya: aleja el zoom para verlas. Sin servidor: nada sale de la red local. Desactivado, nada sale de tu GSH.';
+	@override String get teamName => 'Equipo';
+	@override String get teamNameDesc => 'Solo se ven quienes usan el mismo nombre de equipo.';
+	@override String get teamNamePlaceholder => 'p. ej.: gorila';
+	@override String get teamMe => 'Tu nombre';
+	@override String get teamMeDesc => 'Aparece sobre tu granja para los compañeros.';
+	@override String get teamShowTitles => 'Mostrar títulos de las sesiones';
+	@override String get teamShowTitlesDesc => 'Los títulos pueden tener partes de tus prompts. Desactivado, los compañeros solo ven la carpeta, el estado y los tokens de cada agente.';
+	@override String get teamNetwork => 'Red del trabajo';
+	@override String get teamNetworkDesc => 'Rango de IP de la red de la oficina (p. ej., 192.168.10.0/24). Si se completa, GSH solo anuncia y escucha cuando estás en ella.';
+	@override String get teamNetworkPlaceholder => 'cualquier red local';
 	@override String get farmScenery => 'Escenario de la granja';
 	@override String get farmSceneryDesc => 'Dónde viven los agentes: la granja o una oficina en pixel art.';
 	@override String get sceneryFarm => 'Granja';
@@ -3429,6 +3444,8 @@ extension on TranslationsEs {
 			'gsh.farm.waiting' => ({required Object n}) => '${n} te necesitan',
 			'gsh.farm.waitingOne' => '1 te necesita',
 			'gsh.farm.idle' => ({required Object n}) => '${n} inactivos',
+			'gsh.farm.peerOf' => ({required Object name}) => 'de ${name}',
+			'gsh.farm.peerBanner' => ({required Object name}) => 'Granja de ${name}',
 			'gsh.farm.spent' => ({required Object total}) => 'Gastó ${total} tokens',
 			'gsh.farm.spentDetail' => ({required Object input, required Object cache, required Object out}) => '${input} entrada · ${cache} caché · ${out} generados',
 			'gsh.farm.context' => ({required Object ctx}) => 'contexto ${ctx}',
@@ -3596,10 +3613,10 @@ extension on TranslationsEs {
 			'settings.page.terminal.sectionDefaultTerminal' => 'Terminal predeterminado',
 			'settings.page.terminal.engineTitle' => 'Motor',
 			'settings.page.terminal.engineDesc' => 'Usado por nuevas pestañas de terminal y buffers de salida de tasks. Las pestañas abiertas mantienen su motor actual.',
-			'settings.page.terminal.shellTitle' => 'Shell',
-			'settings.page.terminal.shellDesc' => 'Qué shell abren las nuevas pestañas de terminal. La flecha junto al + sigue abriendo cualquier otro, solo para esa pestaña.',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.terminal.shellTitle' => 'Shell',
+			'settings.page.terminal.shellDesc' => 'Qué shell abren las nuevas pestañas de terminal. La flecha junto al + sigue abriendo cualquier otro, solo para esa pestaña.',
 			'settings.page.terminal.noWslMessage' => 'No se encontraron distros de WSL. Instala una (wsl.exe --install) y reinicia GSH Desktop para verla listada aquí.',
 			'settings.page.terminal.sectionBehavior' => 'Comportamiento',
 			'settings.page.terminal.closeOnExitTitle' => 'Cerrar la pestaña cuando el shell termine',
@@ -3929,6 +3946,19 @@ extension on TranslationsEs {
 			'settings.page.resources.chatDesc' => 'Botón de chat en la barra del workspace (Claude Code en stream-json).',
 			'settings.page.resources.farm' => 'Granja',
 			'settings.page.resources.farmDesc' => 'Loops de agentes leídos de las transcripciones de Claude Code.',
+			'settings.page.resources.sectionTeamFarm' => 'Granja del equipo',
+			'settings.page.resources.teamFarm' => 'Ver la granja de los compañeros',
+			'settings.page.resources.teamFarmDesc' => 'En la misma red (p. ej., en la oficina), cada GSH anuncia su granja y muestra la de los compañeros al lado de la tuya: aleja el zoom para verlas. Sin servidor: nada sale de la red local. Desactivado, nada sale de tu GSH.',
+			'settings.page.resources.teamName' => 'Equipo',
+			'settings.page.resources.teamNameDesc' => 'Solo se ven quienes usan el mismo nombre de equipo.',
+			'settings.page.resources.teamNamePlaceholder' => 'p. ej.: gorila',
+			'settings.page.resources.teamMe' => 'Tu nombre',
+			'settings.page.resources.teamMeDesc' => 'Aparece sobre tu granja para los compañeros.',
+			'settings.page.resources.teamShowTitles' => 'Mostrar títulos de las sesiones',
+			'settings.page.resources.teamShowTitlesDesc' => 'Los títulos pueden tener partes de tus prompts. Desactivado, los compañeros solo ven la carpeta, el estado y los tokens de cada agente.',
+			'settings.page.resources.teamNetwork' => 'Red del trabajo',
+			'settings.page.resources.teamNetworkDesc' => 'Rango de IP de la red de la oficina (p. ej., 192.168.10.0/24). Si se completa, GSH solo anuncia y escucha cuando estás en ella.',
+			'settings.page.resources.teamNetworkPlaceholder' => 'cualquier red local',
 			'settings.page.resources.farmScenery' => 'Escenario de la granja',
 			'settings.page.resources.farmSceneryDesc' => 'Dónde viven los agentes: la granja o una oficina en pixel art.',
 			'settings.page.resources.sceneryFarm' => 'Granja',
