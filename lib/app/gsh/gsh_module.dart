@@ -263,7 +263,7 @@ Future<Module> buildGshModule({
         // Fazenda: loops de agente lidos dos transcripts do Claude Code.
         ..addInstance<FarmSource>(ClaudeTranscriptFarmSource())
         // Chat (protótipo do harness): Claude Code em stream-json.
-        ..addInstance<ChatEngineFactory>(const ClaudeStreamEngineFactory())
+        ..add<ChatEngineFactory>(ClaudeStreamEngineFactory.new)
         // Telemetria (plano 66): um store por workspace no cache local, parser
         // único compartilhado por task/wrapper, ingest resolve pelo cwd.
         ..addInstance<TelemetryStoreProvider>(TelemetryStoreRegistry())
@@ -333,8 +333,7 @@ Future<Module> buildGshModule({
 }
 
 /// Base do rp-s3 onde moram `latest.json` (notify) e os appcasts (self-update).
-const String _kDownloadsBase =
-    'https://rp-s3.jacobmoura.work/downloads/gsh';
+const String _kDownloadsBase = 'https://rp-s3.jacobmoura.work/downloads/gsh';
 
 /// [UpdateTarget] da máquina atual: versão do app + plataforma/formato/arch do
 /// manifest + URL do appcast de self-update (macOS/Windows; `null` no Linux).

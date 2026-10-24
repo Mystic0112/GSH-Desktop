@@ -28,6 +28,11 @@ abstract final class ClaudeCodeKeys {
   /// `~/.claude/output-styles`). Ausente = padrão.
   static const outputStyle = 'outputStyle';
 
+  /// Mensagens de outras sessões (SendMessage): `accept` entrega, `hold`
+  /// segura para você aprovar, `refuse` recusa. Ausente = entrega só quando
+  /// as duas sessões estão no mesmo tipo de modo de permissão.
+  static const crossSessionInbound = 'crossSessionInbound';
+
   /// Bash dentro do sandbox. Ausente = desligado.
   static const sandboxEnabled = 'sandbox.enabled';
 

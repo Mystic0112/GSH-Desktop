@@ -2865,6 +2865,18 @@ class Translations$gsh$chat$en {
 	/// en: 'This conversation continues in a terminal with Remote Control: open it on your phone or at claude.ai/code. The chat here is paused.'
 	String get handedOff => 'This conversation continues in a terminal with Remote Control: open it on your phone or at claude.ai/code. The chat here is paused.';
 
+	/// en: 'Message from ${name}'
+	String peerMessageFrom({required Object name}) => 'Message from ${name}';
+
+	/// en: 'Sessions'
+	String get sessions => 'Sessions';
+
+	/// en: 'No other Claude Code session is running right now.'
+	String get noSessions => 'No other Claude Code session is running right now.';
+
+	/// en: 'Send this message to the session "${name}" with SendMessage and wait for its reply: '
+	String sendToSession({required Object name}) => 'Send this message to the session "${name}" with SendMessage and wait for its reply: ';
+
 	/// en: 'Remote Control'
 	String get remoteControl => 'Remote Control';
 
@@ -4577,6 +4589,24 @@ class Translations$settings$page$claudeCode$en {
 	/// en: 'Default'
 	String get outputStyleDefault => 'Default';
 
+	/// en: 'Messages from other sessions'
+	String get crossSessionTitle => 'Messages from other sessions';
+
+	/// en: 'What to do when another Claude Code session sends this one a message (SendMessage). Default: deliver only when both sessions use the same kind of permission mode; otherwise it is held for your approval. Saved as crossSessionInbound.'
+	String get crossSessionDesc => 'What to do when another Claude Code session sends this one a message (SendMessage). Default: deliver only when both sessions use the same kind of permission mode; otherwise it is held for your approval. Saved as crossSessionInbound.';
+
+	/// en: 'Default'
+	String get crossSessionDefault => 'Default';
+
+	/// en: 'Accept'
+	String get crossSessionAccept => 'Accept';
+
+	/// en: 'Hold for approval'
+	String get crossSessionHold => 'Hold for approval';
+
+	/// en: 'Refuse'
+	String get crossSessionRefuse => 'Refuse';
+
 	/// en: 'Local sandbox'
 	String get sandboxTitle => 'Local sandbox';
 
@@ -6187,6 +6217,10 @@ extension on Translations {
 			'gsh.chat.engineExited' => ({required Object code}) => 'claude exited (code ${code}).',
 			'gsh.chat.turnFailed' => ({required Object detail}) => 'The turn ended with an error: ${detail}',
 			'gsh.chat.handedOff' => 'This conversation continues in a terminal with Remote Control: open it on your phone or at claude.ai/code. The chat here is paused.',
+			'gsh.chat.peerMessageFrom' => ({required Object name}) => 'Message from ${name}',
+			'gsh.chat.sessions' => 'Sessions',
+			'gsh.chat.noSessions' => 'No other Claude Code session is running right now.',
+			'gsh.chat.sendToSession' => ({required Object name}) => 'Send this message to the session "${name}" with SendMessage and wait for its reply: ',
 			'gsh.chat.remoteControl' => 'Remote Control',
 			'gsh.chat.remoteControlHint' => 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat\'s engine doesn\'t support Remote Control.',
 			'gsh.chat.attachmentTooLarge' => ({required Object name}) => '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).',
@@ -6403,12 +6437,12 @@ extension on Translations {
 			'settings.page.appearance.modeDesc' => 'Which variant of the theme to use.',
 			'settings.page.appearance.modeOnlyDark' => ({required Object theme}) => '"${theme}" only ships a dark variant, so this has no effect.',
 			'settings.page.appearance.modeOnlyLight' => ({required Object theme}) => '"${theme}" only ships a light variant, so this has no effect.',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.appearance.themeFileTitle' => 'Theme file',
 			'settings.page.appearance.themeFileDesc' => 'Import a theme from a JSON file, or export the active one.',
 			'settings.page.appearance.previewCode' => 'Code',
 			'settings.page.appearance.previewTerminal' => 'Terminal',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.appearance.themeSystem' => 'System',
 			'settings.page.appearance.themeLight' => 'Light',
 			'settings.page.appearance.themeDark' => 'Dark',
@@ -6536,6 +6570,12 @@ extension on Translations {
 			'settings.page.claudeCode.outputStyleTitle' => 'Output style',
 			'settings.page.claudeCode.outputStyleDesc' => 'How Claude structures answers in Code sessions. Applies to new sessions.',
 			'settings.page.claudeCode.outputStyleDefault' => 'Default',
+			'settings.page.claudeCode.crossSessionTitle' => 'Messages from other sessions',
+			'settings.page.claudeCode.crossSessionDesc' => 'What to do when another Claude Code session sends this one a message (SendMessage). Default: deliver only when both sessions use the same kind of permission mode; otherwise it is held for your approval. Saved as crossSessionInbound.',
+			'settings.page.claudeCode.crossSessionDefault' => 'Default',
+			'settings.page.claudeCode.crossSessionAccept' => 'Accept',
+			'settings.page.claudeCode.crossSessionHold' => 'Hold for approval',
+			'settings.page.claudeCode.crossSessionRefuse' => 'Refuse',
 			'settings.page.claudeCode.sandboxTitle' => 'Local sandbox',
 			'settings.page.claudeCode.sandboxDesc' => 'Runs Claude Code bash commands inside an isolated sandbox. Applies to new sessions.',
 			'settings.page.claudeCode.sandboxStrictTitle' => 'Strict sandbox mode',

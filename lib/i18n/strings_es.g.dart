@@ -1350,6 +1350,10 @@ class _Translations$gsh$chat$es extends Translations$gsh$chat$en {
 	@override String engineExited({required Object code}) => 'claude terminó (código ${code}).';
 	@override String turnFailed({required Object detail}) => 'El turno terminó con error: ${detail}';
 	@override String get handedOff => 'La conversación sigue en una terminal con Remote Control: ábrela en el celular o en claude.ai/code. El chat aquí queda en pausa.';
+	@override String peerMessageFrom({required Object name}) => 'Mensaje de ${name}';
+	@override String get sessions => 'Sesiones';
+	@override String get noSessions => 'Ninguna otra sesión de Claude Code en ejecución ahora.';
+	@override String sendToSession({required Object name}) => 'Envía este mensaje a la sesión "${name}" con SendMessage y espera su respuesta: ';
 	@override String get remoteControl => 'Remote Control';
 	@override String get remoteControlHint => 'Continuar esta conversación en una terminal con Remote Control (celular, claude.ai/code). El motor del chat no soporta Remote Control.';
 	@override String attachmentTooLarge({required Object name}) => '${name} es demasiado grande para enviar (imágenes hasta 5 MB, PDF hasta 32 MB).';
@@ -2146,6 +2150,12 @@ class _Translations$settings$page$claudeCode$es extends Translations$settings$pa
 	@override String get outputStyleTitle => 'Estilo de salida';
 	@override String get outputStyleDesc => 'Cómo Claude estructura sus respuestas en las sesiones de Code. Se aplica a sesiones nuevas.';
 	@override String get outputStyleDefault => 'Predeterminado';
+	@override String get crossSessionTitle => 'Mensajes de otras sesiones';
+	@override String get crossSessionDesc => 'Qué hacer cuando otra sesión de Claude Code le envía un mensaje a esta (SendMessage). Por defecto: se entrega solo cuando ambas usan el mismo tipo de modo de permiso; si no, queda retenido para tu aprobación. Se guarda en crossSessionInbound.';
+	@override String get crossSessionDefault => 'Por defecto';
+	@override String get crossSessionAccept => 'Aceptar';
+	@override String get crossSessionHold => 'Retener para aprobar';
+	@override String get crossSessionRefuse => 'Rechazar';
 	@override String get sandboxTitle => 'Sandbox local';
 	@override String get sandboxDesc => 'Ejecuta los comandos bash de Claude Code en un sandbox aislado. Se aplica a sesiones nuevas.';
 	@override String get sandboxStrictTitle => 'Modo sandbox estricto';
@@ -3348,6 +3358,10 @@ extension on TranslationsEs {
 			'gsh.chat.engineExited' => ({required Object code}) => 'claude terminó (código ${code}).',
 			'gsh.chat.turnFailed' => ({required Object detail}) => 'El turno terminó con error: ${detail}',
 			'gsh.chat.handedOff' => 'La conversación sigue en una terminal con Remote Control: ábrela en el celular o en claude.ai/code. El chat aquí queda en pausa.',
+			'gsh.chat.peerMessageFrom' => ({required Object name}) => 'Mensaje de ${name}',
+			'gsh.chat.sessions' => 'Sesiones',
+			'gsh.chat.noSessions' => 'Ninguna otra sesión de Claude Code en ejecución ahora.',
+			'gsh.chat.sendToSession' => ({required Object name}) => 'Envía este mensaje a la sesión "${name}" con SendMessage y espera su respuesta: ',
 			'gsh.chat.remoteControl' => 'Remote Control',
 			'gsh.chat.remoteControlHint' => 'Continuar esta conversación en una terminal con Remote Control (celular, claude.ai/code). El motor del chat no soporta Remote Control.',
 			'gsh.chat.attachmentTooLarge' => ({required Object name}) => '${name} es demasiado grande para enviar (imágenes hasta 5 MB, PDF hasta 32 MB).',
@@ -3564,12 +3578,12 @@ extension on TranslationsEs {
 			'settings.page.appearance.modeDesc' => 'Qué variante del tema usar.',
 			'settings.page.appearance.modeOnlyDark' => ({required Object theme}) => '"${theme}" solo trae la variante oscura, así que esto no tiene efecto.',
 			'settings.page.appearance.modeOnlyLight' => ({required Object theme}) => '"${theme}" solo trae la variante clara, así que esto no tiene efecto.',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.appearance.themeFileTitle' => 'Archivo de tema',
 			'settings.page.appearance.themeFileDesc' => 'Importa un tema desde un archivo JSON, o exporta el activo.',
 			'settings.page.appearance.previewCode' => 'Código',
 			'settings.page.appearance.previewTerminal' => 'Terminal',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.appearance.themeSystem' => 'Sistema',
 			'settings.page.appearance.themeLight' => 'Claro',
 			'settings.page.appearance.themeDark' => 'Oscuro',
@@ -3697,6 +3711,12 @@ extension on TranslationsEs {
 			'settings.page.claudeCode.outputStyleTitle' => 'Estilo de salida',
 			'settings.page.claudeCode.outputStyleDesc' => 'Cómo Claude estructura sus respuestas en las sesiones de Code. Se aplica a sesiones nuevas.',
 			'settings.page.claudeCode.outputStyleDefault' => 'Predeterminado',
+			'settings.page.claudeCode.crossSessionTitle' => 'Mensajes de otras sesiones',
+			'settings.page.claudeCode.crossSessionDesc' => 'Qué hacer cuando otra sesión de Claude Code le envía un mensaje a esta (SendMessage). Por defecto: se entrega solo cuando ambas usan el mismo tipo de modo de permiso; si no, queda retenido para tu aprobación. Se guarda en crossSessionInbound.',
+			'settings.page.claudeCode.crossSessionDefault' => 'Por defecto',
+			'settings.page.claudeCode.crossSessionAccept' => 'Aceptar',
+			'settings.page.claudeCode.crossSessionHold' => 'Retener para aprobar',
+			'settings.page.claudeCode.crossSessionRefuse' => 'Rechazar',
 			'settings.page.claudeCode.sandboxTitle' => 'Sandbox local',
 			'settings.page.claudeCode.sandboxDesc' => 'Ejecuta los comandos bash de Claude Code en un sandbox aislado. Se aplica a sesiones nuevas.',
 			'settings.page.claudeCode.sandboxStrictTitle' => 'Modo sandbox estricto',

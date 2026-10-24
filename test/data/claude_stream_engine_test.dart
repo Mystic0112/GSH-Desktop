@@ -530,4 +530,67 @@ void main() {
       expect(chat.items.last, isA<ChatNoticeItem>());
     },
   );
+
+  group('mensagens entre sessões', () {
+    final peer = {
+      'type': 'user',
+      'isReplay': true,
+      'isSynthetic': true,
+      'origin': {
+        'kind': 'peer',
+        'from': 'uds:/run/user/1000/cc-socks/1.sock',
+        'name': 'Fazenda',
+      },
+      'message': {
+        'role': 'user',
+        'content':
+            'Another Claude session sent a message:\n'
+            '<cross-session-message from="uds:/x" from-name="Fazenda">\n'
+            'Terminei o build.\n'
+            '</cross-session-message>\n\nThis came from another Claude session…',
+      },
+    };
+
+    test('turno injetado por outra sessão vira ChatPeerMessage limpo', () {
+      final e = parseClaudeStreamLine(peer).single as ChatPeerMessage;
+      expect((e.fromName, e.text), ('Fazenda', 'Terminei o build.'));
+    });
+
+    test('eco do nosso próprio envio é ignorado', () {
+      expect(
+        parseClaudeStreamLine({
+          'type': 'user',
+          'isReplay': true,
+          'message': {'role': 'user', 'content': 'oi'},
+        }),
+        isEmpty,
+      );
+    });
+
+    test('aviso informational vira ChatInfo', () {
+      final e =
+          parseClaudeStreamLine({
+                'type': 'system',
+                'subtype': 'informational',
+                'level': 'warning',
+                'content':
+                    'Cross-session message held by the receiving session.',
+              }).single
+              as ChatInfo;
+      expect(e.warning, isTrue);
+    });
+
+    test('controller: mensagem de outra sessão abre um turno', () async {
+      final f = _FakeFactory();
+      final chat = ChatController(f, cwd: '/repo');
+      await chat.send('oi');
+      f.engine.emit(_result);
+      await Future<void>.delayed(Duration.zero);
+      expect(chat.busy, isFalse);
+      f.engine.emit(peer);
+      await Future<void>.delayed(Duration.zero);
+      expect(chat.busy, isTrue);
+      expect(chat.items.last, isA<ChatPeerItem>());
+    });
+  });
 }

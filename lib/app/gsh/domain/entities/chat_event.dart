@@ -56,6 +56,30 @@ class ChatSessionClassified extends ChatEvent {
   final String detail;
 }
 
+/// Mensagem de OUTRA sessão do Claude Code (SendMessage entre sessões): o
+/// Claude Code a injeta como turno do usuário; o host só vê porque o motor
+/// roda com `--replay-user-messages`.
+class ChatPeerMessage extends ChatEvent {
+  const ChatPeerMessage({
+    required this.fromName,
+    required this.from,
+    required this.text,
+  });
+  final String fromName;
+
+  /// Endereço (socket) da sessão que mandou.
+  final String from;
+  final String text;
+}
+
+/// Aviso do próprio Claude Code (`system/informational`), ex.: mensagem
+/// para outra sessão ficou retida.
+class ChatInfo extends ChatEvent {
+  const ChatInfo(this.text, {required this.warning});
+  final String text;
+  final bool warning;
+}
+
 /// Mensagem do usuário lida do histórico (retomar conversa).
 class ChatUserText extends ChatEvent {
   const ChatUserText(this.text);

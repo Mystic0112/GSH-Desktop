@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:gsh_desktop/app/gsh/domain/contracts/chat_engine.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_attachment.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_event.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
 import 'package:gsh_desktop/app/core/utils/executable_resolver.dart';
 
 /// Claude Code como motor de chat: `claude -p` com entrada e saída em
@@ -15,7 +16,9 @@ import 'package:gsh_desktop/app/core/utils/executable_resolver.dart';
 /// Roda com a assinatura/login de quem usa o GSH: nenhuma chave de API passa
 /// por aqui.
 class ClaudeStreamEngineFactory implements ChatEngineFactory {
-  const ClaudeStreamEngineFactory();
+  const ClaudeStreamEngineFactory(this._settings);
+
+  final ClaudeCodeSettings _settings;
 
   @override
   Future<ChatEngine> start({
@@ -24,6 +27,14 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
     bool showThinking = false,
   }) async {
     final exe = await resolveExecutable('claude');
+    // Sem escolha explícita em ~/.claude/settings.json, o Claude Code segura a
+    // mensagem de outra sessão quando os modos de permissão diferem — e no
+    // modo headless ela expira sem ninguém ver. O chat do GSH entrega por
+    // padrão: a sessão continua pedindo permissão para o que o peer pedir.
+    final inbound = await _settings.getValue(
+      ClaudeCodeKeys.crossSessionInbound,
+    );
+    final acceptPeers = inbound == null;
     final proc = await Process.start(
       exe,
       [
@@ -38,6 +49,13 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
         '--permission-prompt-tool',
         'stdio',
         '--include-partial-messages',
+        // Ecoa os turnos de usuário: é o único jeito de ver as mensagens que
+        // outras sessões injetam (SendMessage entre sessões).
+        '--replay-user-messages',
+        if (acceptPeers) ...[
+          '--settings',
+          '{"${ClaudeCodeKeys.crossSessionInbound}":"accept"}',
+        ],
         // Só deixa "Ignorar permissões" disponível no seletor de modo; a
         // sessão continua começando em `default` (pedindo permissão).
         '--allow-dangerously-skip-permissions',
@@ -290,6 +308,11 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
           detail: (o['status_detail'] as String? ?? '').trim(),
         ),
       ];
+    case 'system' when o['subtype'] == 'informational':
+      final text = o['content'] as String? ?? '';
+      return text.isEmpty
+          ? const []
+          : [ChatInfo(text, warning: o['level'] == 'warning')];
     case 'system' when o['subtype'] == 'status':
       final mode = o['permissionMode'];
       return mode is String ? [ChatModeChanged(mode)] : const [];
@@ -312,6 +335,21 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
       ];
     case 'user':
       final content = (o['message'] as Map?)?['content'];
+      if (o['isReplay'] == true) {
+        // Eco do que nós mesmos mandamos: ignora. Só interessa o turno que
+        // outra sessão injetou (origin.kind == peer).
+        final origin = o['origin'];
+        if (origin is! Map || origin['kind'] != 'peer' || content is! String) {
+          return const [];
+        }
+        return [
+          ChatPeerMessage(
+            fromName: origin['name'] as String? ?? '',
+            from: origin['from'] as String? ?? '',
+            text: peerMessageText(content),
+          ),
+        ];
+      }
       if (content is! List) return const [];
       return [
         for (final c in content.whereType<Map>())
@@ -382,6 +420,16 @@ String? _ruleLabel(Map<String, dynamic>? sugg) {
   final tool = r['toolName'] as String? ?? '';
   final content = r['ruleContent'] as String?;
   return content == null || content.isEmpty ? tool : '$tool($content)';
+}
+
+/// O texto que a outra sessão escreveu, sem o envelope
+/// `<cross-session-message …>…</cross-session-message>` nem o aviso que o
+/// Claude Code acrescenta para o modelo.
+String peerMessageText(String content) {
+  final m = RegExp(
+    r'<cross-session-message[^>]*>\s*([\s\S]*?)\s*</cross-session-message>',
+  ).firstMatch(content);
+  return (m?.group(1) ?? content).trim();
 }
 
 String _resultText(Object? content) {

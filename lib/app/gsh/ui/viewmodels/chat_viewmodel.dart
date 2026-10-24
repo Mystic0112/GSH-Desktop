@@ -130,6 +130,20 @@ class ChatPlanItem extends ChatItem {
   String feedback = '';
 }
 
+/// Mensagem vinda de outra sessão do Claude Code.
+class ChatPeerItem extends ChatItem {
+  ChatPeerItem({required this.fromName, required this.text});
+  final String fromName;
+  final String text;
+}
+
+/// Aviso do Claude Code no meio da conversa (não é erro).
+class ChatInfoItem extends ChatItem {
+  ChatInfoItem(this.text, {required this.warning});
+  final String text;
+  final bool warning;
+}
+
 enum ChatNoticeKind {
   /// A conversa foi para um terminal com Remote Control (não é erro).
   handedOff,
@@ -391,6 +405,12 @@ class ChatController extends ChangeNotifier {
         permissionMode = mode;
       case ChatUserText(:final text):
         items.add(ChatUserItem(text));
+      case ChatPeerMessage(:final fromName, :final text):
+        // A outra sessão abriu um turno: o agente vai responder a ela.
+        busy = true;
+        items.add(ChatPeerItem(fromName: fromName, text: text));
+      case ChatInfo(:final text, :final warning):
+        items.add(ChatInfoItem(text, warning: warning));
       case ChatTextDelta(:final text):
         final live = _streaming;
         if (live != null) {

@@ -1,4 +1,6 @@
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat_attachments.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/app_menu.dart';
@@ -145,14 +147,15 @@ class ChatComposer extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        _BottomBar(chat: chat),
+        _BottomBar(chat: chat, input: controller),
       ],
     );
   }
 }
 
 class _BottomBar extends StatelessWidget {
-  const _BottomBar({required this.chat});
+  const _BottomBar({required this.chat, required this.input});
+  final TextEditingController input;
   final ChatController chat;
 
   @override
@@ -191,6 +194,14 @@ class _BottomBar extends StatelessWidget {
           tooltip: tr.attach,
           icon: Icons.add,
           onTap: () => pickChatAttachments(chat),
+        ),
+        const SizedBox(width: 2),
+        Builder(
+          builder: (anchor) => _IconAction(
+            tooltip: tr.sessions,
+            icon: Icons.forum_outlined,
+            onTap: () => pickPeerSession(anchor, chat, input),
+          ),
         ),
         const SizedBox(width: 2),
         Builder(
@@ -257,6 +268,42 @@ class _IconAction extends StatelessWidget {
       borderRadius: BorderRadius.circular(6),
       padding: const EdgeInsets.all(5),
       child: Icon(icon, size: 17, color: context.colors.text2),
+    ),
+  );
+}
+
+/// Seletor de sessões: lista os loops principais do Claude Code rodando
+/// nesta máquina (menos esta conversa) e, ao escolher um, põe no campo o
+/// pedido para o agente mandar a mensagem via SendMessage.
+Future<void> pickPeerSession(
+  BuildContext context,
+  ChatController chat,
+  TextEditingController input,
+) async {
+  final tr = context.t.gsh.chat;
+  final loops = await context.read<FarmViewModel>().scanOnce();
+  if (!context.mounted) return;
+  final peers = loops
+      .where((l) => !l.isSubagent && l.id != chat.sessionId)
+      .toList();
+  if (peers.isEmpty) {
+    await showAppMenu<void>(
+      context,
+      items: [AppMenuItem(value: null, label: tr.noSessions)],
+    );
+    return;
+  }
+  final picked = await showAppMenu<String>(
+    context,
+    minWidth: 280,
+    items: [for (final p in peers) AppMenuItem(value: p.title, label: p.title)],
+  );
+  if (picked == null) return;
+  final prefix = tr.sendToSession(name: picked);
+  input.value = TextEditingValue(
+    text: '$prefix${input.text}',
+    selection: TextSelection.collapsed(
+      offset: prefix.length + input.text.length,
     ),
   );
 }

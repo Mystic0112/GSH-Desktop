@@ -60,6 +60,16 @@ class ChatRowView extends StatelessWidget {
       final ChatPermissionItem ask => ChatPermissionCard(ask: ask, chat: chat),
       final ChatQuestionItem q => ChatQuestionCard(item: q, chat: chat),
       final ChatPlanItem plan => ChatPlanCard(item: plan, chat: chat),
+      ChatPeerItem(:final fromName, :final text) => _PeerCard(
+        fromName: fromName,
+        text: text,
+      ),
+      ChatInfoItem(:final text, :final warning) => SelectableText(
+        text,
+        style: context.typo.label.copyWith(
+          color: warning ? colors.warn : colors.text3,
+        ),
+      ),
       ChatNoticeItem(kind: ChatNoticeKind.handedOff) => SelectableText(
         tr.handedOff,
         style: context.typo.label.copyWith(color: colors.text2),
@@ -353,5 +363,45 @@ class ChatSessionStateBadge extends StatelessWidget {
       ),
     );
     return detail.isEmpty ? badge : AppTooltip(message: detail, child: badge);
+  }
+}
+
+/// Mensagem de outra sessão: cartão à esquerda com o nome de quem mandou.
+class _PeerCard extends StatelessWidget {
+  const _PeerCard({required this.fromName, required this.text});
+  final String fromName;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Container(
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 10),
+      decoration: BoxDecoration(
+        color: colors.panel2,
+        border: Border(left: BorderSide(color: colors.accent, width: 2)),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.forum_outlined, size: 14, color: colors.text3),
+              const SizedBox(width: 6),
+              Text(
+                context.t.gsh.chat.peerMessageFrom(name: fromName),
+                style: context.typo.label.copyWith(color: colors.text3),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          SelectableText(
+            text,
+            style: context.typo.body.copyWith(color: colors.text),
+          ),
+        ],
+      ),
+    );
   }
 }

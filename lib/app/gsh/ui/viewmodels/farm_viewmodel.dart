@@ -58,6 +58,10 @@ class FarmViewModel extends ChangeNotifier {
     _timer = null;
   }
 
+  /// Uma varredura avulsa, sem ligar o polling (o seletor de sessões do
+  /// chat usa para listar quem está rodando agora).
+  Future<List<FarmLoop>> scanOnce() => _source.scan(DateTime.now());
+
   Future<void> _tick() async {
     if (_scanning) return;
     _scanning = true;
