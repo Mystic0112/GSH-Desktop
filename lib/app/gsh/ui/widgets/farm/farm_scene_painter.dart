@@ -6,6 +6,8 @@ import 'dart:ui' as ui;
 import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart'
     show FarmScenery;
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_courier.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_squad_looks.dart';
@@ -61,11 +63,15 @@ class FarmScenePainter extends CustomPainter {
     required Listenable repaint,
     this.peers = const [],
     this.banner,
+    this.couriers = const [],
   }) : super(repaint: repaint);
 
   final FarmScene scene;
   final FarmWorld? world;
   final List<FarmLot> peers;
+
+  /// Mensageiros do time andando entre os lotes neste quadro.
+  final List<CourierRun> couriers;
 
   /// O texto da faixa do colega (vem traduzido da view).
   final String Function(String name)? banner;
@@ -142,9 +148,17 @@ class FarmScenePainter extends CustomPainter {
       canvas.restore();
       shown.add((lot, sc, wd, v, list));
     }
+    // mensageiros por cima dos lotes (passam de um para o outro)
+    final gv = (x0: gx0, y0: gy0, x1: gx1, y1: gy1);
+    for (final c in couriers) {
+      _courier(canvas, c, gv);
+    }
     canvas.restore();
     for (final (lot, sc, wd, v, list) in shown) {
       _overlay(canvas, sc, wd, lot, list, r.z, v);
+    }
+    for (final c in couriers) {
+      _delivered(canvas, c, r.z, gv);
     }
   }
 

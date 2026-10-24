@@ -73,6 +73,10 @@ enum FarmIcon {
   tasks,
   heart,
   flame,
+
+  /// O que o mensageiro do time carrega: mensagem e arquivo.
+  envelope,
+  parcel,
 }
 
 const _icons = <FarmIcon, (List<String>, Map<String, int>)>{
@@ -165,6 +169,20 @@ const _icons = <FarmIcon, (List<String>, Map<String, int>)>{
       '.orryrrrro', 'orryyyrrro', 'orryyyyrro', '.orryyyro.', '..oooooo..',
     ],
     {'o': 0xFF6b1a10, 'r': 0xFFe0513c, 'y': 0xFFf5c542},
+  ),
+  FarmIcon.envelope: (
+    [
+      '..........', 'oooooooooo', 'oowwwwwwoo', 'owowwwwowo', 'owwowwowwo', //
+      'owwwoowwwo', 'owwwwwwrro', 'owwwwwwrro', 'oooooooooo', '..........',
+    ],
+    {'o': 0xFF3a4a6b, 'w': 0xFFf6f1e3, 'r': 0xFFe0513c},
+  ),
+  FarmIcon.parcel: (
+    [
+      '..........', '.oooooooo.', '.obbbtbbo.', 'oooootoooo', 'obbbbtbbbo', //
+      'obbbbtbbbo', 'obbbbbbbbo', 'oblllbbbbo', 'obbbbbbbbo', 'oooooooooo',
+    ],
+    {'o': 0xFF5a3d1e, 'b': 0xFFc9964a, 't': 0xFFe8d2a0, 'l': 0xFFf6ecd0},
   ),
 };
 

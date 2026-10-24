@@ -190,3 +190,71 @@ extension _Overlay on FarmScenePainter {
     _draw(c, iconSprite(icon), left + 3 * u, top + 3 * u, 10 * u, 10 * u);
   }
 }
+
+/// O mensageiro do time: o gorila de boné de carteiro com a carta ou a
+/// caixa acima da cabeça, e o balão de "recebido" no gorila de destino.
+extension _Courier on FarmScenePainter {
+  static final _skin = FarmSkin.of(
+    'courier',
+    0xFF2f5fb3,
+    fixed: true,
+    hat: FarmHat.cap,
+  );
+
+  static FarmIcon _icon(TeamKnockKind k) =>
+      k == TeamKnockKind.file ? FarmIcon.parcel : FarmIcon.envelope;
+
+  /// No mundo (canvas já com a câmera).
+  void _courier(Canvas canvas, CourierRun c, _View v) {
+    final p = c.pose;
+    if (p.stage == CourierStage.done) return;
+    final x = FarmScenePainter._hx(p.at.dx), y = FarmScenePainter._hx(p.at.dy);
+    if (!_seen(v, x, y)) return;
+    final sh = shadowSprite(7, 2);
+    _draw(
+      canvas,
+      sh,
+      x - sh.width / 4,
+      y - sh.height / 4,
+      sh.width / 2,
+      sh.height / 2,
+      p.fade * 0.35,
+    );
+    final walking = p.stage == CourierStage.walk;
+    final img = _skin.frame(look: p.dir, legs: p.legs, arms: walking ? 1 : 0);
+    _draw(canvas, img, x - 8, y - 17 + p.hop, 16, 18, p.fade);
+    if (walking) {
+      _draw(canvas, iconSprite(_icon(c.kind)), x - 2.5, y - 20 + p.hop, 5, 5);
+    }
+    if (p.stage == CourierStage.vanish) {
+      // o brilho do sumiço: quatro estrelinhas se abrindo
+      final k = 1 - p.fade;
+      for (var i = 0; i < 4; i++) {
+        final a = i * math.pi / 2 + 0.6;
+        _draw(
+          canvas,
+          sparkles[i % sparkles.length],
+          FarmScenePainter._hx(x - 1.75 + math.cos(a) * (3 + k * 9)),
+          FarmScenePainter._hx(y - 10 - 1.75 + math.sin(a) * (3 + k * 7)),
+          3.5,
+          3.5,
+          p.fade,
+        );
+      }
+    }
+  }
+
+  /// Em pixels de tela: o balão com o que chegou, sobre quem recebeu (ou
+  /// sobre o mensageiro, quando o destino é a porta), enquanto entrega.
+  void _delivered(Canvas canvas, CourierRun c, double z, _View v) {
+    final p = c.pose;
+    if (p.stage != CourierStage.deliver) return;
+    final t = c.target;
+    final (wx, wy) = t != null && t.gone == null
+        ? (t.x + c.targetAt.dx + 7, t.y + c.targetAt.dy - (t.mini ? 13 : 25))
+        : (p.at.dx, p.at.dy - 25);
+    if (!_seen(v, wx, wy)) return;
+    final at = cam.toScreen(wx, wy);
+    _bubble(canvas, at, _icon(c.kind), false, z >= 3 ? 2 : 1, scene.t);
+  }
+}

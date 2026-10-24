@@ -141,6 +141,47 @@ extension _TeamLots on _FarmViewState {
     return (null, null);
   }
 
+  /// Resolve os mensageiros do `TeamPost` para este quadro: pontos de
+  /// partida e chegada (gorila ou porta de cada lote), só os à vista e só
+  /// com o lote do colega no mundo. Devolve se algum ficou.
+  bool _syncCouriers() {
+    _runs.clear();
+    final mine = _world;
+    if (_team.isEmpty || mine == null) return false;
+    final post = _post ??= context.read<GshViewModel>().teamPost;
+    final now = DateTime.now(), view = _onScreen;
+    for (final c in post.couriers) {
+      final lot = _team
+          .where((l) => l.id == c.peerId && l.world != null)
+          .firstOrNull;
+      if (lot == null) continue;
+      final (a, ca) = courierEndpoint(
+        _scene,
+        mine,
+        Offset.zero,
+        c.localSessionId,
+      );
+      final (b, cb) = courierEndpoint(
+        lot.scene,
+        lot.world!,
+        lot.at,
+        c.remoteSessionId,
+      );
+      final run = CourierRun(
+        from: c.outgoing ? a : b,
+        to: c.outgoing ? b : a,
+        age: now.difference(c.startedAt).inMicroseconds / 1e6,
+        kind: c.kind,
+        target: c.outgoing ? cb : ca,
+        targetAt: c.outgoing ? lot.at : Offset.zero,
+      );
+      if (run.pose.stage != CourierStage.done && run.seen(view)) {
+        _runs.add(run);
+      }
+    }
+    return _runs.isNotEmpty;
+  }
+
   void _disposeTeam() {
     for (final lot in _team) {
       lot.gen++;

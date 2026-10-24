@@ -10,6 +10,8 @@ import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/agent_status_dot.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_post.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_courier.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_strip.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene_painter.dart';
@@ -73,6 +75,11 @@ class _FarmViewState extends State<FarmView> {
   final _team = <FarmLot>[];
   FarmLot? _hoverLot;
 
+  /// Mensageiros do time à vista neste quadro (o painter lê esta lista).
+  final _runs = <CourierRun>[];
+  bool _hadRuns = false;
+  TeamPost? _post;
+
   @override
   void initState() {
     super.initState();
@@ -128,7 +135,7 @@ class _FarmViewState extends State<FarmView> {
   void _schedule() {
     final want = !_live
         ? null
-        : _scene.busy || _hover.value != null || _peersBusy
+        : _scene.busy || _hover.value != null || _peersBusy || _runs.isNotEmpty
         ? _busyEvery
         : _calmEvery;
     if (want == _every) return;
@@ -140,7 +147,10 @@ class _FarmViewState extends State<FarmView> {
   void _tick() {
     final now = _clock.elapsedMicroseconds;
     final dt = math.min(0.1, (now - _lastUs) / 1e6);
-    final dirty = _scene.update(dt) | _updatePeers(dt);
+    // mensageiro à vista anda a cada quadro; o último que some limpa a tela
+    final runs = _syncCouriers();
+    final dirty = _scene.update(dt) | _updatePeers(dt) | runs | _hadRuns;
+    _hadRuns = runs;
     _lastUs = now;
     // quadro igual ao anterior (ninguém andou, nada piscou): nem repinta
     final view = Object.hash(_cam.x, _cam.y, _cam.z, _world);
@@ -316,6 +326,7 @@ class _FarmViewState extends State<FarmView> {
                             hover: _hover,
                             repaint: _frame,
                             peers: _team,
+                            couriers: _runs,
                             banner: scenery == FarmScenery.office
                                 ? null
                                 : (n) => context.t.gsh.farm.peerBanner(name: n),

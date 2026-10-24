@@ -9,6 +9,8 @@ import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene_painter.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_courier.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_team.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_world.dart';
 import 'package:gsh_desktop/i18n/strings.g.dart';
@@ -92,6 +94,7 @@ void main() {
       _preview(scenery, zoom);
     }
     _teamPreview(scenery);
+    _teamPreview(scenery, couriers: true);
   }
 }
 
@@ -146,8 +149,11 @@ List<(String, String, List<FarmLoop>)> _peers() => [
 ];
 
 /// A minha fazenda com dois colegas ao lado, no zoom que mostra todas.
-void _teamPreview(FarmScenery scenery) => testWidgets(
-  'preview: time no ${scenery.name}',
+/// Com [couriers]: três mensageiros falsos, um no meio do caminho (carta
+/// minha para a Bianca), um entregando (caixa do Rafael para mim) e um
+/// saindo da porta da Bianca.
+void _teamPreview(FarmScenery scenery, {bool couriers = false}) => testWidgets(
+  'preview: time no ${scenery.name}${couriers ? ' com mensageiros' : ''}',
   (tester) async {
     const size = Size(1200, 600);
     tester.view
@@ -211,6 +217,9 @@ void _teamPreview(FarmScenery scenery) => testWidgets(
                 hover: ValueNotifier(null),
                 repaint: ChangeNotifier(),
                 peers: lots,
+                couriers: couriers
+                    ? _fakeCouriers(scene, world, lots)
+                    : const [],
                 banner: scenery == FarmScenery.office
                     ? null
                     : (n) => context.t.gsh.farm.peerBanner(name: n),
@@ -220,7 +229,10 @@ void _teamPreview(FarmScenery scenery) => testWidgets(
         ),
       ),
     );
-    await takeShot(tester, 'team_preview_${scenery.name}');
+    await takeShot(
+      tester,
+      '${couriers ? 'team_courier' : 'team_preview'}_${scenery.name}',
+    );
   },
 );
 
@@ -286,3 +298,54 @@ void _preview(FarmScenery scenery, double zoom) =>
       final name = scenery == FarmScenery.farm ? 'farm2' : 'office';
       await takeShot(tester, '${name}_${zoom.toInt()}');
     });
+
+List<CourierRun> _fakeCouriers(
+  FarmScene scene,
+  FarmWorld world,
+  List<FarmLot> lots,
+) {
+  /// [at] em fração da caminhada; negativo = segundos já entregando.
+  CourierRun run(
+    (Offset, Critter?) a,
+    (Offset, Critter?) b,
+    double at,
+    TeamKnockKind kind, {
+    Offset targetAt = Offset.zero,
+  }) {
+    final walk = ((b.$1 - a.$1).distance / courierSpeed).clamp(
+      0.6,
+      courierWalkMax,
+    );
+    return CourierRun(
+      from: a.$1,
+      to: b.$1,
+      age: at < 0 ? walk - at : walk * at,
+      kind: kind,
+      target: b.$2,
+      targetAt: targetAt,
+    );
+  }
+
+  final (bianca, rafael) = (lots[0], lots[1]);
+  return [
+    run(
+      courierEndpoint(scene, world, Offset.zero, 'm'),
+      courierEndpoint(bianca.scene, bianca.world!, bianca.at, 'b1'),
+      0.45,
+      TeamKnockKind.message,
+      targetAt: bianca.at,
+    ),
+    run(
+      courierEndpoint(rafael.scene, rafael.world!, rafael.at, 'r0'),
+      courierEndpoint(scene, world, Offset.zero, 'k'),
+      -0.8,
+      TeamKnockKind.file,
+    ),
+    run(
+      courierEndpoint(bianca.scene, bianca.world!, bianca.at, null),
+      courierEndpoint(scene, world, Offset.zero, 'cx'),
+      0.2,
+      TeamKnockKind.file,
+    ),
+  ];
+}
