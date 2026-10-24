@@ -310,6 +310,9 @@ class SettingsController extends ChangeNotifier {
     String? name,
     bool? showTitles,
     String? network,
+    String? secret,
+    bool? doorAsk,
+    String? doorAllow,
   }) => _apply(
     _settings.copyWith(
       teamFarmEnabled: enabled,
@@ -317,6 +320,9 @@ class SettingsController extends ChangeNotifier {
       teamFarmName: name,
       teamFarmShowTitles: showTitles,
       teamFarmNetwork: network,
+      teamFarmSecret: secret,
+      teamDoorAsk: doorAsk,
+      teamDoorAllow: doorAllow,
     ),
   );
 

@@ -104,6 +104,9 @@ class AppSettings {
     this.teamFarmName = '',
     this.teamFarmShowTitles = false,
     this.teamFarmNetwork = '',
+    this.teamFarmSecret = '',
+    this.teamDoorAsk = false,
+    this.teamDoorAllow = '',
   });
 
   final AppThemeMode themeMode;
@@ -331,6 +334,15 @@ class AppSettings {
   /// Faixa da rede do trabalho (`192.168.10.0/24`); fora dela nada sai.
   final String teamFarmNetwork;
 
+  /// Senha do time: assina presença e mensagens; sem ela não há correio.
+  final String teamFarmSecret;
+
+  /// A porta pergunta antes de entregar ao agente o que um colega mandou.
+  final bool teamDoorAsk;
+
+  /// Quem pode bater na porta (nomes, vírgula). Vazio = todo o time.
+  final String teamDoorAllow;
+
   bool showsFeature(AppFeature f) => !hiddenFeatures.contains(f);
 
   AppSettings copyWith({
@@ -398,6 +410,9 @@ class AppSettings {
     String? teamFarmName,
     bool? teamFarmShowTitles,
     String? teamFarmNetwork,
+    String? teamFarmSecret,
+    bool? teamDoorAsk,
+    String? teamDoorAllow,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -472,6 +487,9 @@ class AppSettings {
       teamFarmName: teamFarmName ?? this.teamFarmName,
       teamFarmShowTitles: teamFarmShowTitles ?? this.teamFarmShowTitles,
       teamFarmNetwork: teamFarmNetwork ?? this.teamFarmNetwork,
+      teamFarmSecret: teamFarmSecret ?? this.teamFarmSecret,
+      teamDoorAsk: teamDoorAsk ?? this.teamDoorAsk,
+      teamDoorAllow: teamDoorAllow ?? this.teamDoorAllow,
     );
   }
 
@@ -549,6 +567,9 @@ class AppSettings {
     if (teamFarmName.isNotEmpty) 'farm.team.me': teamFarmName,
     if (teamFarmShowTitles) 'farm.team.showTitles': true,
     if (teamFarmNetwork.isNotEmpty) 'farm.team.network': teamFarmNetwork,
+    if (teamFarmSecret.isNotEmpty) 'farm.team.secret': teamFarmSecret,
+    if (teamDoorAsk) 'farm.team.doorAsk': true,
+    if (teamDoorAllow.isNotEmpty) 'farm.team.doorAllow': teamDoorAllow,
   };
 
   factory AppSettings.fromJson(Map<dynamic, dynamic> json) {
@@ -667,6 +688,9 @@ class AppSettings {
       teamFarmName: json['farm.team.me'] as String? ?? '',
       teamFarmShowTitles: json['farm.team.showTitles'] as bool? ?? false,
       teamFarmNetwork: json['farm.team.network'] as String? ?? '',
+      teamFarmSecret: json['farm.team.secret'] as String? ?? '',
+      teamDoorAsk: json['farm.team.doorAsk'] as bool? ?? false,
+      teamDoorAllow: json['farm.team.doorAllow'] as String? ?? '',
     );
   }
 }

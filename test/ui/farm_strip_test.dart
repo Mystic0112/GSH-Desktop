@@ -1,5 +1,8 @@
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/lan_team_farm_channel.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/lan_team_mail.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/team_mail.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_post.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/farm_source.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
@@ -131,6 +134,8 @@ Future<List<int>> _mount(WidgetTester tester, _Source source) async {
     register: (c) => c
       ..addInstance<FarmSource>(source)
       ..addInstance<TeamFarmChannel>(LanTeamFarmChannel())
+      ..addInstance<TeamMail>(LanTeamMail())
+      ..addLazySingleton<TeamPost>(TeamPost.new)
       ..route(
         '/',
         provide: (s) => s..addChangeNotifier<FarmViewModel>(FarmViewModel.new),

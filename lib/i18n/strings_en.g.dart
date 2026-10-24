@@ -3030,6 +3030,21 @@ class Translations$gsh$farm$en {
 	/// en: '${n} idle'
 	String idle({required Object n}) => '${n} idle';
 
+	/// en: 'Knocking on your door'
+	String get doorTitle => 'Knocking on your door';
+
+	/// en: '${name} (agent ${agent}) wants to talk to your agent ${target}'
+	String doorMessage({required Object name, required Object agent, required Object target}) => '${name} (agent ${agent}) wants to talk to your agent ${target}';
+
+	/// en: '${name} (agent ${agent}) wants to hand ${file} to your agent ${target}'
+	String doorFile({required Object name, required Object agent, required Object file, required Object target}) => '${name} (agent ${agent}) wants to hand ${file} to your agent ${target}';
+
+	/// en: 'Open the door'
+	String get doorOpen => 'Open the door';
+
+	/// en: 'Refuse'
+	String get doorRefuse => 'Refuse';
+
 	/// en: '${name}'s'
 	String peerOf({required Object name}) => '${name}\'s';
 
@@ -5315,6 +5330,30 @@ class Translations$settings$page$resources$en {
 	/// en: 'Titles may contain bits of your prompts. Off, teammates only see each agent's folder, status and tokens.'
 	String get teamShowTitlesDesc => 'Titles may contain bits of your prompts. Off, teammates only see each agent\'s folder, status and tokens.';
 
+	/// en: 'Team password'
+	String get teamSecret => 'Team password';
+
+	/// en: 'Turns on agent-to-agent messaging: your agent can send messages and files to your teammates' agents, and theirs to yours. Everyone on the team uses the same password; without it, nobody knocks on your door (and farms without it don't show up).'
+	String get teamSecretDesc => 'Turns on agent-to-agent messaging: your agent can send messages and files to your teammates\' agents, and theirs to yours. Everyone on the team uses the same password; without it, nobody knocks on your door (and farms without it don\'t show up).';
+
+	/// en: 'agree on a password'
+	String get teamSecretPlaceholder => 'agree on a password';
+
+	/// en: 'Who can knock'
+	String get teamDoorAllow => 'Who can knock';
+
+	/// en: 'Teammates' names, comma separated. Empty = the whole team.'
+	String get teamDoorAllowDesc => 'Teammates\' names, comma separated. Empty = the whole team.';
+
+	/// en: 'whole team'
+	String get teamDoorAllowPlaceholder => 'whole team';
+
+	/// en: 'Ask before opening the door'
+	String get teamDoorAsk => 'Ask before opening the door';
+
+	/// en: 'When a teammate sends something to one of your agents, GSH asks you before handing it over. Off, your agent gets it directly, marked as information from a teammate (not as an order from you).'
+	String get teamDoorAskDesc => 'When a teammate sends something to one of your agents, GSH asks you before handing it over. Off, your agent gets it directly, marked as information from a teammate (not as an order from you).';
+
 	/// en: 'Work network'
 	String get teamNetwork => 'Work network';
 
@@ -6373,6 +6412,11 @@ extension on Translations {
 			'gsh.farm.waiting' => ({required Object n}) => '${n} need you',
 			'gsh.farm.waitingOne' => '1 needs you',
 			'gsh.farm.idle' => ({required Object n}) => '${n} idle',
+			'gsh.farm.doorTitle' => 'Knocking on your door',
+			'gsh.farm.doorMessage' => ({required Object name, required Object agent, required Object target}) => '${name} (agent ${agent}) wants to talk to your agent ${target}',
+			'gsh.farm.doorFile' => ({required Object name, required Object agent, required Object file, required Object target}) => '${name} (agent ${agent}) wants to hand ${file} to your agent ${target}',
+			'gsh.farm.doorOpen' => 'Open the door',
+			'gsh.farm.doorRefuse' => 'Refuse',
 			'gsh.farm.peerOf' => ({required Object name}) => '${name}\'s',
 			'gsh.farm.peerBanner' => ({required Object name}) => '${name}\'s farm',
 			'gsh.farm.spent' => ({required Object total}) => 'Spent ${total} tokens',
@@ -6537,13 +6581,13 @@ extension on Translations {
 			'settings.page.storage.restartUseDefaultMessage' => 'GSH Desktop will use the default system location from the next launch. Your data in the custom folder is left untouched.',
 			'settings.page.storage.restartResetMessage' => 'All GSH Desktop data was cleared. Restart to start fresh.',
 			'settings.page.storage.later' => 'Later',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.storage.quitGsh' => 'Quit GSH Desktop',
 			'settings.page.storage.chooseFolderDialogTitle' => 'Choose a folder for GSH Desktop data',
 			'settings.page.terminal.sectionDefaultTerminal' => 'Default terminal',
 			'settings.page.terminal.engineTitle' => 'Engine',
 			'settings.page.terminal.engineDesc' => 'Used by new terminal tabs and task output buffers. Open tabs keep their current engine.',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.terminal.shellTitle' => 'Shell',
 			'settings.page.terminal.shellDesc' => 'Which shell new terminal tabs open. The arrow next to + still opens any other one, just for that tab.',
 			'settings.page.terminal.noWslMessage' => 'No WSL distros found. Install one (wsl.exe --install) and restart GSH Desktop to see it listed here.',
@@ -6885,6 +6929,14 @@ extension on Translations {
 			'settings.page.resources.teamMeDesc' => 'Shown above your farm to your teammates.',
 			'settings.page.resources.teamShowTitles' => 'Show session titles',
 			'settings.page.resources.teamShowTitlesDesc' => 'Titles may contain bits of your prompts. Off, teammates only see each agent\'s folder, status and tokens.',
+			'settings.page.resources.teamSecret' => 'Team password',
+			'settings.page.resources.teamSecretDesc' => 'Turns on agent-to-agent messaging: your agent can send messages and files to your teammates\' agents, and theirs to yours. Everyone on the team uses the same password; without it, nobody knocks on your door (and farms without it don\'t show up).',
+			'settings.page.resources.teamSecretPlaceholder' => 'agree on a password',
+			'settings.page.resources.teamDoorAllow' => 'Who can knock',
+			'settings.page.resources.teamDoorAllowDesc' => 'Teammates\' names, comma separated. Empty = the whole team.',
+			'settings.page.resources.teamDoorAllowPlaceholder' => 'whole team',
+			'settings.page.resources.teamDoorAsk' => 'Ask before opening the door',
+			'settings.page.resources.teamDoorAskDesc' => 'When a teammate sends something to one of your agents, GSH asks you before handing it over. Off, your agent gets it directly, marked as information from a teammate (not as an order from you).',
 			'settings.page.resources.teamNetwork' => 'Work network',
 			'settings.page.resources.teamNetworkDesc' => 'The office network\'s IP range (e.g. 192.168.10.0/24). When set, GSH only announces and listens while you\'re on it.',
 			'settings.page.resources.teamNetworkPlaceholder' => 'any local network',

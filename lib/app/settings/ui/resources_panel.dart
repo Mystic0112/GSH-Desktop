@@ -116,6 +116,36 @@ class ResourcesPanel extends StatelessWidget {
                   ),
                 ),
                 SettingsRow(
+                  title: tr.teamSecret,
+                  description: tr.teamSecretDesc,
+                  trailing: SettingsTextField(
+                    value: s.teamFarmSecret,
+                    placeholder: tr.teamSecretPlaceholder,
+                    obscure: true,
+                    onChanged: (v) => controller.setTeamFarm(secret: v ?? ''),
+                  ),
+                ),
+                if (s.teamFarmSecret.isNotEmpty) ...[
+                  SettingsRow(
+                    title: tr.teamDoorAllow,
+                    description: tr.teamDoorAllowDesc,
+                    trailing: SettingsTextField(
+                      value: s.teamDoorAllow,
+                      placeholder: tr.teamDoorAllowPlaceholder,
+                      onChanged: (v) =>
+                          controller.setTeamFarm(doorAllow: v ?? ''),
+                    ),
+                  ),
+                  SettingsRow(
+                    title: tr.teamDoorAsk,
+                    description: tr.teamDoorAskDesc,
+                    trailing: Switch(
+                      value: s.teamDoorAsk,
+                      onChanged: (v) => controller.setTeamFarm(doorAsk: v),
+                    ),
+                  ),
+                ],
+                SettingsRow(
                   title: tr.teamNetwork,
                   description: tr.teamNetworkDesc,
                   trailing: SettingsTextField(

@@ -11,6 +11,8 @@ import 'dart:io'
         Platform;
 import 'dart:math' show max;
 
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_post.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_shell_bridge.dart';
 import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
 import 'package:gsh_desktop/app/core/data/diagnostics/performance_diagnostics.dart';
 import 'package:gsh_desktop/app/core/data/setup/remote_pi_resolver.dart';
@@ -189,7 +191,9 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
     this._telemetryStores,
     this._telemetryIngest,
     this.desktopApps,
+    this.teamPost,
   ) {
+    wireTeamPost(teamPost, sessions: () => allSessions, session: session);
     _fileEditorFacade = FileEditorFacade(
       FileEditorRegistry({
         FileEditorEngine.gsh: _openWithGshEditor,
@@ -819,6 +823,9 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
   /// Apps desktop de agente (nós externos do grafo via MCP): detecção,
   /// integração do config e launch.
   final DesktopAgentApps desktopApps;
+
+  /// Correio do time (agentes de colegas na rede local).
+  final TeamPost teamPost;
   final _lastEditAt = <String, DateTime>{};
 
   /// Último save do editor no projeto (`null` = nenhum nesta sessão).

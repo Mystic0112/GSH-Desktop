@@ -9,10 +9,14 @@ class SettingsTextField extends StatefulWidget {
     required this.value,
     required this.placeholder,
     required this.onChanged,
+    this.obscure = false,
   });
   final String? value;
   final String placeholder;
   final ValueChanged<String?> onChanged;
+
+  /// Campo de senha (mostra pontos).
+  final bool obscure;
 
   @override
   State<SettingsTextField> createState() => _SettingsTextFieldState();
@@ -60,6 +64,7 @@ class _SettingsTextFieldState extends State<SettingsTextField> {
         controller: _text,
         focusNode: _focus,
         onSubmitted: (_) => _commit(),
+        obscureText: widget.obscure,
         style: context.typo.body.copyWith(fontSize: 13.5, color: colors.text),
         placeholder: Text(
           widget.placeholder,

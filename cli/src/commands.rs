@@ -108,8 +108,55 @@ const MSG_HELP: &str = "gsh msg --to <label|tab-id> [--json] <text...>
   into the target tab and presses Enter. The sender is this tab
   ($GSH_TAB_ID), so it only works inside a GSH terminal.
   --to   stable tab label (exact, case-insensitive) or tab-id; an ambiguous
-         label is an error (see `gsh list-tabs`)
+         label is an error (see `gsh list-tabs`). A teammate's agent on the
+         office network is `<Name>/<agent>` (see `gsh peers`): it knocks on
+         their door and their agent decides what to do with it.
   Prints the target tab id (--json: {\"from\": …, \"to\": …}).";
+
+const DELIVER_HELP: &str = "gsh deliver --to <Name/agent> [--json] <file> [note...]
+  Delivers a file (report, .md, .pdf...) to a teammate's agent on the office
+  network: it lands in `.gsh/inbox/<your name>/` inside that agent's folder
+  and the agent is told it arrived (with the optional note). Needs the team
+  farm on with the same team name and password on both sides (see
+  `gsh peers` for the addresses). Max 25 MB.";
+
+pub fn deliver(args: &[String]) -> ! {
+    if args.iter().any(|a| a == "--help" || a == "-h") {
+        println!("{DELIVER_HELP}");
+        std::process::exit(0);
+    }
+    let (to, rest) = split_msg_args(args);
+    let parsed = Flags::parse(&rest);
+    let to = to
+        .filter(|t| !t.is_empty())
+        .unwrap_or_else(|| die(&format!("gsh deliver: missing --to\n{DELIVER_HELP}"), 2));
+    let Some((file, note)) = parsed.positionals.split_first() else {
+        die("gsh deliver: missing file", 2);
+    };
+    let from = self_tab_id().unwrap_or_else(|| {
+        die(
+            "gsh deliver: GSH_TAB_ID is unset — run it inside a GSH terminal",
+            2,
+        )
+    });
+    // O app tem cwd próprio: manda o caminho absoluto.
+    let abs = resolve_path(file);
+    let resp = transport::request(
+        json!({"cmd": "deliver", "tabId": from,
+               "args": {"to": to, "path": abs, "text": note.join(" ")}}),
+        DEFAULT_TIMEOUT,
+    );
+    if !is_ok(&resp) {
+        fail_with(&resp);
+    }
+    let data = resp.get("data").cloned().unwrap_or_else(|| json!({}));
+    if parsed.json {
+        println!("{}", data);
+    } else {
+        println!("{}", data.get("to").and_then(|v| v.as_str()).unwrap_or(""));
+    }
+    std::process::exit(0)
+}
 
 /// `--to` sai dos argumentos; o resto vai pro [Flags::parse] (texto + `--json`).
 fn split_msg_args(args: &[String]) -> (Option<String>, Vec<String>) {

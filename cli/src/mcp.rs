@@ -382,6 +382,22 @@ and desktop), including ones you are not connected to: label, harness or app, \
 working, maestro, linked. Useful when you are the maestro. {FROM_HINT}"),
             "inputSchema": schema(json!({}), &[]),
         },
+        {
+            "name": "deliver",
+            "description": format!("Deliver a file (report, .md, .pdf...) to a teammate's agent on the \
+office network (`Name/agent` from peers). It lands in `.gsh/inbox/<your name>/` in that \
+agent's folder and the agent is told; it treats it as information from a teammate, \
+not as an order. Needs the team farm with the same team name and password on both \
+sides. Max 25 MB. {FROM_HINT}"),
+            "inputSchema": schema(
+                json!({
+                    "to": {"type": "string", "description": "Teammate agent: `Name/agent` (see peers)."},
+                    "path": {"type": "string", "description": "Absolute path of the file to send."},
+                    "note": {"type": "string", "description": "Optional note that goes with it."}
+                }),
+                &["to", "path"],
+            ),
+        },
     ])
 }
 
@@ -416,6 +432,21 @@ fn call_tool(params: &Value, tab: &str, call: Call) -> Option<Value> {
                 })
             }
             _ => Err("send needs `to` (an agent label) and `text`".to_string()),
+        },
+        "deliver" => match (str_arg("to"), str_arg("path")) {
+            (Some(to), Some(path)) => {
+                let note = str_arg("note").unwrap_or_default();
+                app(
+                    call,
+                    req("deliver", json!({"to": to, "path": path, "text": note})),
+                    CALL_TIMEOUT,
+                )
+                .map(|d| {
+                    let to = d.get("to").and_then(Value::as_str).unwrap_or("");
+                    format!("Delivered to {to}. Their agent was told it arrived.")
+                })
+            }
+            _ => Err("deliver needs `to` (Name/agent from peers) and an absolute `path`".to_string()),
         },
         "wait_messages" => {
             let secs = args
@@ -508,7 +539,7 @@ mod tests {
         let r = handle(&req(json!({"id": 1, "method": "tools/list"})), "ext:x", "", none).unwrap();
         let tools = r["result"]["tools"].as_array().unwrap();
         let names: Vec<&str> = tools.iter().map(|t| t["name"].as_str().unwrap()).collect();
-        assert_eq!(names, ["peers", "send", "wait_messages", "list_agents"]);
+        assert_eq!(names, ["peers", "send", "wait_messages", "list_agents", "deliver"]);
         assert!(tools.iter().all(|t| t["inputSchema"]["type"] == "object"));
         assert!(tools[1]["description"].as_str().unwrap().contains("wait_messages"));
     }

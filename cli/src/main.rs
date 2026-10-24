@@ -56,6 +56,7 @@ fn main() {
         "send" => commands::send(args),
         "send-key" | "send-keys" => commands::send_key(args),
         "msg" => commands::msg(args),
+        "deliver" => commands::deliver(args),
         "peers" => commands::list("peers", args),
         // Servidor MCP (stdio) de um app desktop no grafo de agentes.
         "mcp" => mcp::run(args),

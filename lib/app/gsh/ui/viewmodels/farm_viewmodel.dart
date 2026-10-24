@@ -5,6 +5,7 @@ import 'package:gsh_desktop/app/gsh/domain/contracts/farm_source.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_post.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 
@@ -43,12 +44,13 @@ class FarmPeer {
 /// Com a fazenda do time ligada ([configureTeam]), a cada varredura anuncia
 /// os loops locais no [TeamFarmChannel] e guarda os dos colegas em [peers].
 class FarmViewModel extends ChangeNotifier {
-  FarmViewModel(this._source, this._team) {
+  FarmViewModel(this._source, this._team, this._post) {
     _teamSub = _team.packets.listen(_onPeer);
   }
 
   final FarmSource _source;
   final TeamFarmChannel _team;
+  final TeamPost _post;
   late final StreamSubscription<TeamFarmPacket> _teamSub;
   TeamFarmConfig _teamConfig = const TeamFarmConfig();
   final _peers = <String, (TeamFarmPacket, DateTime)>{};
@@ -68,6 +70,7 @@ class FarmViewModel extends ChangeNotifier {
   /// Aplica as preferências do time (chamado pela página quando mudam).
   Future<void> configureTeam(TeamFarmConfig config) async {
     _teamConfig = config;
+    await _post.configure(config);
     try {
       await _team.open(config);
     } on SocketException catch (e) {
@@ -109,6 +112,9 @@ class FarmViewModel extends ChangeNotifier {
           lastSeen: l.lastSeen,
         ),
     ],
+    // Só com correio ligado (senha do time): sem ele ninguém entrega nada.
+    agents: _post.mailPort == null ? const [] : _post.localAgents(),
+    mailPort: _post.mailPort,
   );
 
   static const interval = Duration(seconds: 2);

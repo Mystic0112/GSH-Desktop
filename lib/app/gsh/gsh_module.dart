@@ -44,6 +44,9 @@ import 'package:gsh_desktop/app/gsh/domain/contracts/session_directory.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/codex_rollout_farm_source.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/multi_farm_source.dart';
 import 'package:gsh_desktop/app/core/domain/contracts/settings_store.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/lan_team_mail.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/team_mail.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_post.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/lan_team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/data/chat/chat_engine_router.dart';
@@ -274,6 +277,10 @@ Future<Module> buildGshModule({
         ..addInstance<SessionDirectory>(ClaudeSessionDirectory())
         // Fazenda do time: multicast na rede local, sem servidor.
         ..addInstance<TeamFarmChannel>(LanTeamFarmChannel())
+        // Correio do time: TCP direto e assinado; o TeamPost é a mesma
+        // instância para a fazenda (presença) e o shell (abas, CLI).
+        ..addInstance<TeamMail>(LanTeamMail())
+        ..addLazySingleton<TeamPost>(TeamPost.new)
         ..addInstance<FarmSource>(
           MultiFarmSource([
             ClaudeTranscriptFarmSource(),

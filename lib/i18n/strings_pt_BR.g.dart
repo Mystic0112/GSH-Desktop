@@ -1413,6 +1413,11 @@ class _Translations$gsh$farm$pt_BR extends Translations$gsh$farm$en {
 	@override String waiting({required Object n}) => '${n} precisam de você';
 	@override String get waitingOne => '1 precisa de você';
 	@override String idle({required Object n}) => '${n} parados';
+	@override String get doorTitle => 'Batendo na porta';
+	@override String doorMessage({required Object name, required Object agent, required Object target}) => '${name} (agente ${agent}) quer falar com o seu agente ${target}';
+	@override String doorFile({required Object name, required Object agent, required Object file, required Object target}) => '${name} (agente ${agent}) quer entregar ${file} ao seu agente ${target}';
+	@override String get doorOpen => 'Abrir a porta';
+	@override String get doorRefuse => 'Recusar';
 	@override String peerOf({required Object name}) => 'de ${name}';
 	@override String peerBanner({required Object name}) => 'Fazenda de ${name}';
 	@override String spent({required Object total}) => 'Gastou ${total} tokens';
@@ -2477,6 +2482,14 @@ class _Translations$settings$page$resources$pt_BR extends Translations$settings$
 	@override String get teamMeDesc => 'Aparece em cima da sua fazenda para os colegas.';
 	@override String get teamShowTitles => 'Mostrar títulos das sessões';
 	@override String get teamShowTitlesDesc => 'Os títulos podem ter trechos dos seus prompts. Desligado, os colegas veem só a pasta, o status e os tokens de cada agente.';
+	@override String get teamSecret => 'Senha do time';
+	@override String get teamSecretDesc => 'Liga a conversa entre agentes: o seu agente pode mandar mensagens e arquivos para os agentes dos colegas, e os deles para o seu. Todo mundo do time usa a mesma senha; sem ela, ninguém bate na sua porta (e a fazenda de quem não tem a senha não aparece).';
+	@override String get teamSecretPlaceholder => 'combinem uma senha';
+	@override String get teamDoorAllow => 'Quem pode bater na porta';
+	@override String get teamDoorAllowDesc => 'Nomes dos colegas, separados por vírgula. Vazio = todo o time.';
+	@override String get teamDoorAllowPlaceholder => 'todo o time';
+	@override String get teamDoorAsk => 'Perguntar antes de abrir a porta';
+	@override String get teamDoorAskDesc => 'Quando um colega mandar algo para um agente seu, o GSH pergunta a você antes de entregar. Desligado, o seu agente recebe direto, marcado como informação de colega (não como ordem sua).';
 	@override String get teamNetwork => 'Rede do trabalho';
 	@override String get teamNetworkDesc => 'Faixa de IP da rede do escritório (ex.: 192.168.10.0/24). Preenchida, o GSH só anuncia e escuta quando você está nela.';
 	@override String get teamNetworkPlaceholder => 'qualquer rede local';
@@ -3444,6 +3457,11 @@ extension on TranslationsPtBr {
 			'gsh.farm.waiting' => ({required Object n}) => '${n} precisam de você',
 			'gsh.farm.waitingOne' => '1 precisa de você',
 			'gsh.farm.idle' => ({required Object n}) => '${n} parados',
+			'gsh.farm.doorTitle' => 'Batendo na porta',
+			'gsh.farm.doorMessage' => ({required Object name, required Object agent, required Object target}) => '${name} (agente ${agent}) quer falar com o seu agente ${target}',
+			'gsh.farm.doorFile' => ({required Object name, required Object agent, required Object file, required Object target}) => '${name} (agente ${agent}) quer entregar ${file} ao seu agente ${target}',
+			'gsh.farm.doorOpen' => 'Abrir a porta',
+			'gsh.farm.doorRefuse' => 'Recusar',
 			'gsh.farm.peerOf' => ({required Object name}) => 'de ${name}',
 			'gsh.farm.peerBanner' => ({required Object name}) => 'Fazenda de ${name}',
 			'gsh.farm.spent' => ({required Object total}) => 'Gastou ${total} tokens',
@@ -3608,13 +3626,13 @@ extension on TranslationsPtBr {
 			'settings.page.storage.restartUseDefaultMessage' => 'O GSH Desktop usará o local padrão do sistema a partir da próxima abertura. Seus dados na pasta personalizada permanecem intactos.',
 			'settings.page.storage.restartResetMessage' => 'Todos os dados do GSH Desktop foram apagados. Reinicie para começar do zero.',
 			'settings.page.storage.later' => 'Mais tarde',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.storage.quitGsh' => 'Sair do GSH Desktop',
 			'settings.page.storage.chooseFolderDialogTitle' => 'Escolha uma pasta para os dados do GSH Desktop',
 			'settings.page.terminal.sectionDefaultTerminal' => 'Terminal padrão',
 			'settings.page.terminal.engineTitle' => 'Motor',
 			'settings.page.terminal.engineDesc' => 'Usado por novas abas de terminal e buffers de saída de tasks. Abas abertas mantêm o motor atual.',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.terminal.shellTitle' => 'Shell',
 			'settings.page.terminal.shellDesc' => 'Qual shell novas abas de terminal abrem. A seta ao lado do + ainda abre qualquer outro, só para aquela aba.',
 			'settings.page.terminal.noWslMessage' => 'Nenhuma distro WSL encontrada. Instale uma (wsl.exe --install) e reinicie o GSH Desktop para vê-la listada aqui.',
@@ -3956,6 +3974,14 @@ extension on TranslationsPtBr {
 			'settings.page.resources.teamMeDesc' => 'Aparece em cima da sua fazenda para os colegas.',
 			'settings.page.resources.teamShowTitles' => 'Mostrar títulos das sessões',
 			'settings.page.resources.teamShowTitlesDesc' => 'Os títulos podem ter trechos dos seus prompts. Desligado, os colegas veem só a pasta, o status e os tokens de cada agente.',
+			'settings.page.resources.teamSecret' => 'Senha do time',
+			'settings.page.resources.teamSecretDesc' => 'Liga a conversa entre agentes: o seu agente pode mandar mensagens e arquivos para os agentes dos colegas, e os deles para o seu. Todo mundo do time usa a mesma senha; sem ela, ninguém bate na sua porta (e a fazenda de quem não tem a senha não aparece).',
+			'settings.page.resources.teamSecretPlaceholder' => 'combinem uma senha',
+			'settings.page.resources.teamDoorAllow' => 'Quem pode bater na porta',
+			'settings.page.resources.teamDoorAllowDesc' => 'Nomes dos colegas, separados por vírgula. Vazio = todo o time.',
+			'settings.page.resources.teamDoorAllowPlaceholder' => 'todo o time',
+			'settings.page.resources.teamDoorAsk' => 'Perguntar antes de abrir a porta',
+			'settings.page.resources.teamDoorAskDesc' => 'Quando um colega mandar algo para um agente seu, o GSH pergunta a você antes de entregar. Desligado, o seu agente recebe direto, marcado como informação de colega (não como ordem sua).',
 			'settings.page.resources.teamNetwork' => 'Rede do trabalho',
 			'settings.page.resources.teamNetworkDesc' => 'Faixa de IP da rede do escritório (ex.: 192.168.10.0/24). Preenchida, o GSH só anuncia e escuta quando você está nela.',
 			'settings.page.resources.teamNetworkPlaceholder' => 'qualquer rede local',

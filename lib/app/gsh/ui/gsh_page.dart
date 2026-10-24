@@ -3,6 +3,8 @@ import 'package:gsh_core/gsh_core.dart';
 import 'dart:async' show StreamSubscription, unawaited;
 import 'dart:io';
 
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_shell_bridge.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/team_door_cards.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
 import 'package:gsh_desktop/app/gsh/ui/actions/remote_workspace_actions.dart';
@@ -524,6 +526,9 @@ class _GshPageState extends State<GshPage> {
                 Platform.localHostname),
       showTitles: s.teamFarmShowTitles,
       network: s.teamFarmNetwork,
+      secret: s.teamFarmSecret,
+      askBeforeOpening: s.teamDoorAsk,
+      allowedKnockers: s.teamDoorAllow,
     );
     final prev = _teamFarm;
     if (prev != null &&
@@ -531,7 +536,10 @@ class _GshPageState extends State<GshPage> {
         prev.team == next.team &&
         prev.name == next.name &&
         prev.showTitles == next.showTitles &&
-        prev.network == next.network) {
+        prev.network == next.network &&
+        prev.secret == next.secret &&
+        prev.askBeforeOpening == next.askBeforeOpening &&
+        prev.allowedKnockers == next.allowedKnockers) {
       return;
     }
     _teamFarm = next;
@@ -809,110 +817,128 @@ class _GshPageState extends State<GshPage> {
         // workspace recém-aberto (nada focado ainda).
         child: Focus(
           autofocus: true,
-          child: Scaffold(
-            backgroundColor: colors.bg,
-            child: Column(
-              children: [
-                GshTopbar(
-                  projectName: shell.title ?? 'GSH Desktop',
-                  // No modo estreito os toggles abrem/fecham os drawers; no largo
-                  // seguem alternando a visibilidade inline da VM.
-                  railVisible: railVisibleEff,
-                  treeVisible: treeVisibleEff,
-                  onToggleRail: narrow
-                      ? () => setState(() => _leftDrawer = !_leftDrawer)
-                      : _vm.toggleRail,
-                  onToggleTree: narrow
-                      ? () => setState(() => _rightDrawer = !_rightDrawer)
-                      : _vm.toggleTree,
-                  // Remoto TEM árvore (a pasta do host); só o GSH
-                  // (systemTerminal) não. `activeHasFileTree` cobre os dois —
-                  // `!isPathless` desabilitava indevidamente o remoto (path='').
-                  filesEnabled: shell.hasFileTree,
-                  onVisualizeAgents: shell.title == null || !showGraph
-                      ? null
-                      : _vm.openAgentGraph,
-                  onOpenFarm: shell.title == null || !showFarm
-                      ? null
-                      : _vm.openFarm,
-                  // Chat em todo workspace: sem pasta, o claude roda na home.
-                  onOpenChat: showChat ? _vm.openChat : null,
-                ),
-                // Host remoto fora do ar: faixa com o estado + botão de
-                // reconectar. Não ocupa espaço em workspace local.
-                const RemoteDisconnectedBanner(),
-                Expanded(
-                  // Cursor de resize enquanto o arraste dura, na área inteira:
-                  // o ponteiro passa da faixa de 8px no primeiro overshoot e
-                  // o cursor tem que continuar o mesmo até soltar.
-                  child: MouseRegion(
-                    cursor: _resizingPanel
-                        ? SystemMouseCursors.resizeLeftRight
-                        : MouseCursor.defer,
-                    child: _PanelScaffold(
-                      narrow: narrow,
-                      railOpen: railVisibleEff,
-                      treeOpen: treeVisibleEff,
-                      onDismiss: _dismissDrawers,
-                      swapped: swapped,
-                      rail: _RailPanel(
-                        width: _railWidth,
-                        handleOnLeft: swapped,
-                        onDismiss: _dismissDrawers,
-                        onResizeStart: () => _beginPanelDrag(_railWidth),
-                        // Invertido, arrastar para a ESQUERDA é que alarga — o
-                        // painel cresce sempre em direção ao centro.
-                        onResize: (dx) => setState(() {
-                          _railWidth = _panelDrag.update(
-                            swapped ? -dx : dx,
-                            min: _railMin,
-                            max: _railMax,
-                          );
-                        }),
-                        onResizeEnd: _endPanelDrag,
-                      ),
-                      center: _CenterPanel(centerKey: _centerKey),
-                      tree: _TreePanel(
-                        handleOnLeft: !swapped,
-                        treeWidth: _treeWidth,
-                        tasksHeight: _tasksHeight,
-                        sourceControlViewMode: _sourceControlViewMode,
-                        searchFocusSignal: _searchFocusSignal,
-                        onDismiss: _dismissDrawers,
-                        onResizeTreeStart: () => _beginPanelDrag(_treeWidth),
-                        onResizeTree: (dx) => setState(() {
-                          _treeWidth = _panelDrag.update(
-                            swapped ? dx : -dx,
-                            min: _treeMin,
-                            max: _treeMax,
-                          );
-                        }),
-                        onResizeTreeEnd: _endPanelDrag,
-                        onTasksResize: (dy) => setState(() {
-                          _tasksHeight = (_tasksHeight - dy).clamp(
-                            _tasksMin,
-                            _tasksMax,
-                          );
-                        }),
-                        onTasksResizeEnd: () => context
-                            .read<SettingsController>()
-                            .setTasksPanelHeight(_tasksHeight),
+          child: Stack(
+            children: [
+              Scaffold(
+                backgroundColor: colors.bg,
+                child: Column(
+                  children: [
+                    GshTopbar(
+                      projectName: shell.title ?? 'GSH Desktop',
+                      // No modo estreito os toggles abrem/fecham os drawers; no largo
+                      // seguem alternando a visibilidade inline da VM.
+                      railVisible: railVisibleEff,
+                      treeVisible: treeVisibleEff,
+                      onToggleRail: narrow
+                          ? () => setState(() => _leftDrawer = !_leftDrawer)
+                          : _vm.toggleRail,
+                      onToggleTree: narrow
+                          ? () => setState(() => _rightDrawer = !_rightDrawer)
+                          : _vm.toggleTree,
+                      // Remoto TEM árvore (a pasta do host); só o GSH
+                      // (systemTerminal) não. `activeHasFileTree` cobre os dois —
+                      // `!isPathless` desabilitava indevidamente o remoto (path='').
+                      filesEnabled: shell.hasFileTree,
+                      onVisualizeAgents: shell.title == null || !showGraph
+                          ? null
+                          : _vm.openAgentGraph,
+                      onOpenFarm: shell.title == null || !showFarm
+                          ? null
+                          : _vm.openFarm,
+                      // Chat em todo workspace: sem pasta, o claude roda na home.
+                      onOpenChat: showChat ? _vm.openChat : null,
+                    ),
+                    // Host remoto fora do ar: faixa com o estado + botão de
+                    // reconectar. Não ocupa espaço em workspace local.
+                    const RemoteDisconnectedBanner(),
+                    Expanded(
+                      // Cursor de resize enquanto o arraste dura, na área inteira:
+                      // o ponteiro passa da faixa de 8px no primeiro overshoot e
+                      // o cursor tem que continuar o mesmo até soltar.
+                      child: MouseRegion(
+                        cursor: _resizingPanel
+                            ? SystemMouseCursors.resizeLeftRight
+                            : MouseCursor.defer,
+                        child: _PanelScaffold(
+                          narrow: narrow,
+                          railOpen: railVisibleEff,
+                          treeOpen: treeVisibleEff,
+                          onDismiss: _dismissDrawers,
+                          swapped: swapped,
+                          rail: _RailPanel(
+                            width: _railWidth,
+                            handleOnLeft: swapped,
+                            onDismiss: _dismissDrawers,
+                            onResizeStart: () => _beginPanelDrag(_railWidth),
+                            // Invertido, arrastar para a ESQUERDA é que alarga — o
+                            // painel cresce sempre em direção ao centro.
+                            onResize: (dx) => setState(() {
+                              _railWidth = _panelDrag.update(
+                                swapped ? -dx : dx,
+                                min: _railMin,
+                                max: _railMax,
+                              );
+                            }),
+                            onResizeEnd: _endPanelDrag,
+                          ),
+                          center: _CenterPanel(centerKey: _centerKey),
+                          tree: _TreePanel(
+                            handleOnLeft: !swapped,
+                            treeWidth: _treeWidth,
+                            tasksHeight: _tasksHeight,
+                            sourceControlViewMode: _sourceControlViewMode,
+                            searchFocusSignal: _searchFocusSignal,
+                            onDismiss: _dismissDrawers,
+                            onResizeTreeStart: () =>
+                                _beginPanelDrag(_treeWidth),
+                            onResizeTree: (dx) => setState(() {
+                              _treeWidth = _panelDrag.update(
+                                swapped ? dx : -dx,
+                                min: _treeMin,
+                                max: _treeMax,
+                              );
+                            }),
+                            onResizeTreeEnd: _endPanelDrag,
+                            onTasksResize: (dy) => setState(() {
+                              _tasksHeight = (_tasksHeight - dy).clamp(
+                                _tasksMin,
+                                _tasksMax,
+                              );
+                            }),
+                            onTasksResizeEnd: () => context
+                                .read<SettingsController>()
+                                .setTasksPanelHeight(_tasksHeight),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    // Barra de teclas do terminal (mobile): aparece acima do teclado
+                    // virtual quando a aba ativa é terminal (plano 60, Wave F).
+                    if (isMobilePlatform &&
+                        MediaQuery.viewInsetsOf(context).bottom > 0 &&
+                        shell.terminalActive)
+                      TerminalKeyBar(
+                        onKeys: _vm.sendKeysToActiveTerminal,
+                        onCopy: _vm.copyFromActiveTerminal,
+                        onPaste: _vm.pasteToActiveTerminal,
+                      ),
+                  ],
                 ),
-                // Barra de teclas do terminal (mobile): aparece acima do teclado
-                // virtual quando a aba ativa é terminal (plano 60, Wave F).
-                if (isMobilePlatform &&
-                    MediaQuery.viewInsetsOf(context).bottom > 0 &&
-                    shell.terminalActive)
-                  TerminalKeyBar(
-                    onKeys: _vm.sendKeysToActiveTerminal,
-                    onCopy: _vm.copyFromActiveTerminal,
-                    onPaste: _vm.pasteToActiveTerminal,
-                  ),
-              ],
-            ),
+              ),
+              // A porta do time ("perguntar antes de abrir"): batidas de
+              // colegas esperando o humano.
+              Positioned(
+                right: 16,
+                bottom: 16,
+                child: TeamDoorCards(
+                  post: _vm.teamPost,
+                  agentLabel: (id) => switch (_vm.session(id)) {
+                    final TerminalSession t => teamAgentLabel(t),
+                    _ => id,
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),

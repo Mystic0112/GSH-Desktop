@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:io' show Directory, File, FileSystemException, Platform;
 
 import 'package:gsh_remote/gsh_remote.dart' show RemoteRpcException;
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_post.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_shell_bridge.dart';
 import 'package:gsh_desktop/app/gsh/data/remote/remote_host_connector.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/layout_spec.dart';
 import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
@@ -187,9 +189,7 @@ class GshCliHandler {
         try {
           text = utf8.decode(base64.decode(raw));
         } catch (_) {
-          return const GshCommandResult.fail(
-            'invalid data (base64 expected)',
-          );
+          return const GshCommandResult.fail('invalid data (base64 expected)');
         }
         s.insertText(text);
         return const GshCommandResult.ok();
@@ -231,19 +231,45 @@ class GshCliHandler {
       case 'msg':
         return _sendAgentMessage(c);
 
+      // `gsh deliver --to <Fulano/aba> <arquivo> [nota]` — entrega um arquivo
+      // ao agente de um colega do time (cai na caixa de entrada da pasta dele).
+      case 'deliver':
+        final sender = _agentCaller(c.tabId);
+        if (sender == null) return _unknownCaller(c.tabId);
+        final to = (c.args['to'] ?? '').toString();
+        final path = (c.args['path'] ?? '').toString();
+        if (to.isEmpty) return const GshCommandResult.fail('missing --to');
+        if (path.isEmpty) return const GshCommandResult.fail('missing file');
+        return _teamSend(
+          sender,
+          to,
+          (c.args['text'] ?? '').toString(),
+          filePath: path,
+        );
+
       // `gsh peers` — links definidos no grafo de agentes da aba emissora
       // (ou do nó externo `ext:<app>`, pelo `peers` do MCP).
       // `agents` — todo agente do workspace (o `list_agents` do MCP).
       case 'peers' || 'agents':
         final caller = _agentCaller(c.tabId);
         if (caller == null) return _unknownCaller(c.tabId);
-        return GshCommandResult.ok(
-          (c.cmd == 'peers' ? agentPeers : workspaceAgentList)(
+        return GshCommandResult.ok([
+          ...(c.cmd == 'peers' ? agentPeers : workspaceAgentList)(
             _vm.agentGraph,
             caller,
             _vm.allSessions,
           ),
-        );
+          // Agentes de colegas do time na rede (`--to Fulano/aba`).
+          for (final t in _vm.teamPost.contacts)
+            {
+              'id': t.address,
+              'label': t.address,
+              'title': t.agent.project,
+              'harness': t.agent.harness,
+              'working': false,
+              'team': true,
+            },
+        ]);
 
       // Servidor MCP de app desktop (`gsh mcp`): batimento de presença e
       // long-poll da fila do nó externo `tabId` = `ext:<app>`.
@@ -290,9 +316,7 @@ class GshCliHandler {
         );
         final tab = id == null ? null : _vm.session(id);
         if (tab is! TerminalSession) {
-          return const GshCommandResult.fail(
-            'not inside a GSH terminal',
-          );
+          return const GshCommandResult.fail('not inside a GSH terminal');
         }
         _vm.agentMessages.markRead(tab.id);
         return GshCommandResult.ok({
@@ -859,9 +883,7 @@ class GshCliHandler {
               _ => 'exec failed on host: ${e.detail ?? e.code}',
             });
           } on RemoteHostException catch (e) {
-            return GshCommandResult.fail(
-              'host unreachable: ${e.kind.name}',
-            );
+            return GshCommandResult.fail('host unreachable: ${e.kind.name}');
           }
         }
         if (cwd.isNotEmpty && !await Directory(cwd).exists()) {
@@ -933,10 +955,7 @@ class GshCliHandler {
               );
         await file.parent.create(recursive: true);
         await file.writeAsBytes(png, flush: true);
-        return GshCommandResult.ok({
-          'path': file.path,
-          'bytes': png.length,
-        });
+        return GshCommandResult.ok({'path': file.path, 'bytes': png.length});
 
       // `gsh list-tasks` — tasks do workspace do pane emissor (tabId,
       // default da CLI = a própria tab; fallback: workspace selecionado).
@@ -945,9 +964,7 @@ class GshCliHandler {
       case 'list-tasks':
         final ctx = _taskContext(c);
         if (ctx == null) {
-          return const GshCommandResult.fail(
-            'no workspace to list tasks for',
-          );
+          return const GshCommandResult.fail('no workspace to list tasks for');
         }
         final defs = await ctx.discovery.discover(ctx.root);
         final tasks = defs
@@ -1134,9 +1151,7 @@ class GshCliHandler {
           try {
             content = await File(path).readAsString();
           } on FileSystemException catch (e) {
-            return GshCommandResult.fail(
-              'cannot read "$path": ${e.message}',
-            );
+            return GshCommandResult.fail('cannot read "$path": ${e.message}');
           }
           final doc = DbqDocument.parse(content);
           if (doc.db == null) {
@@ -1569,9 +1584,7 @@ class GshCliHandler {
     }
     final root = project.effectiveRoot;
     if (project.isSystemTerminal || root.isEmpty) {
-      return const GshCommandResult.fail(
-        'this pane has no workspace folder',
-      );
+      return const GshCommandResult.fail('this pane has no workspace folder');
     }
     final result = await action(project, root);
     final crossing = _machineWarning(c, project);
@@ -1657,13 +1670,46 @@ class GshCliHandler {
         : 'unknown tab (run inside a GSH terminal)',
   );
 
-  GshCommandResult _sendAgentMessage(GshCommand c) {
+  /// Mensagem ou arquivo para o agente de um colega (ver [TeamPost.send]).
+  Future<GshCommandResult> _teamSend(
+    PaneItem sender,
+    String to,
+    String text, {
+    String? filePath,
+  }) async {
+    final r = await _vm.teamPost.send(
+      from: TeamSender(
+        tabId: sender.id,
+        label: sender is TerminalSession
+            ? teamAgentLabel(sender)
+            : (sender.manualLabel ?? sender.id),
+        sessionId: sender is TerminalSession ? sender.claudeSessionId : null,
+      ),
+      target: to,
+      text: text,
+      filePath: filePath,
+    );
+    return switch (r) {
+      Success(:final value) => GshCommandResult.ok({
+        'from': sender.id,
+        'to': value,
+        'team': true,
+      }),
+      Failure(:final error) => GshCommandResult.fail(error),
+    };
+  }
+
+  Future<GshCommandResult> _sendAgentMessage(GshCommand c) async {
     final sender = _agentCaller(c.tabId);
     if (sender == null) return _unknownCaller(c.tabId);
     final to = (c.args['to'] ?? '').toString();
     final text = (c.args['text'] ?? '').toString();
     if (to.isEmpty) return const GshCommandResult.fail('missing --to');
     if (text.isEmpty) return const GshCommandResult.fail('missing text');
+    // `Fulano/aba` de um colega do time: vai pelo correio da rede local.
+    if (to.contains('/') && _vm.teamPost.resolve(to) is Success) {
+      return _teamSend(sender, to, text);
+    }
     final reachable = [..._vm.allSessions, ..._vm.agentGraph.externals];
     final PaneItem target;
     switch (resolveTabTarget(to, reachable)) {
@@ -1875,7 +1921,13 @@ Result<GshCommand, String> actAsMcpFrom(
   Iterable<PaneItem> sessions,
 ) {
   final from = c.args['from'];
-  if (!const {'msg', 'peers', 'agents', 'ext-wait'}.contains(c.cmd) ||
+  if (!const {
+        'msg',
+        'deliver',
+        'peers',
+        'agents',
+        'ext-wait',
+      }.contains(c.cmd) ||
       from is! String ||
       from.trim().isEmpty) {
     return Success(c);

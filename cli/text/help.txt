@@ -12,8 +12,11 @@ USAGE:
   gsh send-key  [--tab-id <id>] <Key>...   press named key(s)
   gsh msg --to <label|tab-id> <text>       message another agent's tab
                                                (typed + Enter, signed with your tab)
+  gsh deliver --to <Name/agent> <file> [note]  hand a file to a teammate's
+                                               agent on the office network
   gsh peers     [--json]                   agents linked to your tab in the
                                                Agents graph (id, label, harness)
+                                               + teammates' agents (Name/agent)
   gsh open      [--tab-id <id>] <file>     open the file in the app's viewer
   gsh <file>                               shortcut for `open` (e.g. gsh .zprofile)
   gsh read-tab  [<label|tab-id>]           read a tab's rendered output (alias: read-pane)
@@ -113,11 +116,22 @@ MSG:
   A desktop app on the graph (Claude Desktop, Cursor…) is messaged the same
   way; its message is queued until the app calls its `wait_messages` tool.
 
+TEAM (office network):
+  gsh msg --to "Bianca/financeiro" "I changed the payments table, check your side"
+  gsh deliver --to "Bianca/financeiro" report.pdf "weekly report"
+  With the team farm on (same team name and password on both GSHs), `gsh
+  peers` also lists teammates' agents as `Name/agent`. The message knocks on
+  their door: their agent receives it as information from a teammate (not an
+  order from their user) and decides what to do; deliveries land in
+  `.gsh/inbox/<your name>/` in their agent's folder. When a teammate knocks
+  on yours, reply with the `gsh msg --to ...` line shown in the message.
+
 MCP:
   gsh mcp --agent claude-desktop   (the app runs it; you normally don't)
   Desktop agent apps join the Agents graph through this server: GSH's New
   agent dialog → Desktop apps writes the `gsh` entry into the app's MCP
-  config (backup kept). Tools: peers, send {to, text}, wait_messages
+  config (backup kept). Tools: peers, send {to, text}, deliver {to, path,
+  note?}, wait_messages
   {timeout_seconds?: 45, max 55; call again to keep waiting}, list_agents.
   Pull model: nothing is pushed to the app — messages to it are queued and
   returned by wait_messages.
