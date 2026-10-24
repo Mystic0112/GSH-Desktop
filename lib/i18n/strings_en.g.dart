@@ -4604,8 +4604,8 @@ class Translations$settings$page$claudeCode$en {
 	/// en: 'Messages from other sessions'
 	String get crossSessionTitle => 'Messages from other sessions';
 
-	/// en: 'What to do when another Claude Code session sends this one a message (SendMessage). Default: deliver only when both sessions use the same kind of permission mode; otherwise it is held for your approval. Saved as crossSessionInbound.'
-	String get crossSessionDesc => 'What to do when another Claude Code session sends this one a message (SendMessage). Default: deliver only when both sessions use the same kind of permission mode; otherwise it is held for your approval. Saved as crossSessionInbound.';
+	/// en: 'What to do when another Claude Code session sends this one a message (SendMessage). GSH sets Accept for every session on this machine; Hold parks it for your approval, Refuse drops it. Saved as crossSessionInbound.'
+	String get crossSessionDesc => 'What to do when another Claude Code session sends this one a message (SendMessage). GSH sets Accept for every session on this machine; Hold parks it for your approval, Refuse drops it. Saved as crossSessionInbound.';
 
 	/// en: 'Default'
 	String get crossSessionDefault => 'Default';
@@ -6596,7 +6596,7 @@ extension on Translations {
 			'settings.page.claudeCode.outputStyleDesc' => 'How Claude structures answers in Code sessions. Applies to new sessions.',
 			'settings.page.claudeCode.outputStyleDefault' => 'Default',
 			'settings.page.claudeCode.crossSessionTitle' => 'Messages from other sessions',
-			'settings.page.claudeCode.crossSessionDesc' => 'What to do when another Claude Code session sends this one a message (SendMessage). Default: deliver only when both sessions use the same kind of permission mode; otherwise it is held for your approval. Saved as crossSessionInbound.',
+			'settings.page.claudeCode.crossSessionDesc' => 'What to do when another Claude Code session sends this one a message (SendMessage). GSH sets Accept for every session on this machine; Hold parks it for your approval, Refuse drops it. Saved as crossSessionInbound.',
 			'settings.page.claudeCode.crossSessionDefault' => 'Default',
 			'settings.page.claudeCode.crossSessionAccept' => 'Accept',
 			'settings.page.claudeCode.crossSessionHold' => 'Hold for approval',

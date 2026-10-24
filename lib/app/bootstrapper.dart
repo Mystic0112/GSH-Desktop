@@ -9,6 +9,8 @@ import 'package:gsh_desktop/app/gsh/data/hooks/codex_hook_installer_impl.dart';
 import 'package:gsh_desktop/app/gsh/data/terminal/sidecar/sidecar_terminal_connector.dart';
 import 'package:gsh_desktop/app/gsh/data/tasks/task_process_registry.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/hook_installer.dart';
+import 'package:gsh_desktop/app/core/data/claude_code_settings_file.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
 import 'package:gsh_desktop/app/gsh/data/telemetry/app_telemetry_bridge.dart';
 import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
 import 'package:gsh_desktop/app/core/data/lsp/lsp_process_registry.dart';
@@ -210,6 +212,12 @@ class _GshBootstrapperState extends State<GshBootstrapper> {
               }),
             );
           }
+          // Padrão do GSH: toda sessão do Claude Code desta máquina aceita
+          // mensagem de outra sessão (SendMessage). Sem isso o Claude Code
+          // segura a mensagem quando os modos de permissão diferem, e no
+          // chat (headless) ela expira sem ninguém ver. Só grava quando o
+          // usuário nunca escolheu (hold/refuse ficam como estão).
+          unawaited(_defaultCrossSessionToAccept());
         }
 
         _appModule = await buildAppModule(windowActivity: _windowActivity);
@@ -704,4 +712,19 @@ class WindowStateKeeperState extends State<WindowStateKeeper>
   @override
   Widget build(BuildContext context) =>
       WindowActivityBoundary(activity: widget.activity, child: widget.child);
+}
+
+Future<void> _defaultCrossSessionToAccept() async {
+  final settings = ClaudeCodeSettingsFile();
+  if (await settings.getValue(ClaudeCodeKeys.crossSessionInbound) != null) {
+    return;
+  }
+  final r = await settings.setValue(
+    ClaudeCodeKeys.crossSessionInbound,
+    'accept',
+  );
+  r.fold(
+    (_) {},
+    (e) => debugPrint('[claude-settings] crossSessionInbound: $e'),
+  );
 }

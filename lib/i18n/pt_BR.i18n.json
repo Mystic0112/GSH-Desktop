@@ -1346,7 +1346,7 @@
         "outputStyleDesc": "Como o Claude estrutura suas respostas nas sessões do Code. Aplica-se a novas sessões.",
         "outputStyleDefault": "Padrão",
         "crossSessionTitle": "Mensagens de outras sessões",
-        "crossSessionDesc": "O que fazer quando outra sessão do Claude Code manda mensagem para esta (SendMessage). Padrão: entrega só quando as duas usam o mesmo tipo de modo de permissão; senão fica retida para você aprovar. Fica em crossSessionInbound.",
+        "crossSessionDesc": "O que fazer quando outra sessão do Claude Code manda mensagem para esta (SendMessage). O GSH deixa Aceitar para toda sessão da máquina; Segurar guarda para você aprovar, Recusar descarta. Fica em crossSessionInbound.",
         "crossSessionDefault": "Padrão",
         "crossSessionAccept": "Aceitar",
         "crossSessionHold": "Segurar para aprovar",

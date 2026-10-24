@@ -242,29 +242,28 @@ class _CrossSessionDropdownState extends State<_CrossSessionDropdown> {
   Widget build(BuildContext context) {
     final tr = context.t.settings.page.claudeCode;
     final labels = <String?, String>{
-      null: tr.crossSessionDefault,
       'accept': tr.crossSessionAccept,
       'hold': tr.crossSessionHold,
       'refuse': tr.crossSessionRefuse,
     };
     return SettingsDropdown(
-      label: labels[_value] ?? _value!,
+      // Ausente = o GSH grava "accept" no boot; mostra como Aceitar.
+      label: labels[_value ?? 'accept'] ?? _value!,
       onTap: () async {
         final picked = await showAppMenu<String>(
           context,
           items: [
             for (final e in labels.entries)
               AppMenuItem(
-                value: e.key ?? '',
+                value: e.key!,
                 label: e.value,
-                selected: _value == e.key,
+                selected: (_value ?? 'accept') == e.key,
               ),
           ],
         );
         if (picked == null || !mounted) return;
-        final next = picked.isEmpty ? null : picked;
-        setState(() => _value = next);
-        await _settings.setValue(ClaudeCodeKeys.crossSessionInbound, next);
+        setState(() => _value = picked);
+        await _settings.setValue(ClaudeCodeKeys.crossSessionInbound, picked);
       },
     );
   }

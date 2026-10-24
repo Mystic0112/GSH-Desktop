@@ -1346,7 +1346,7 @@
         "outputStyleDesc": "Cómo Claude estructura sus respuestas en las sesiones de Code. Se aplica a sesiones nuevas.",
         "outputStyleDefault": "Predeterminado",
         "crossSessionTitle": "Mensajes de otras sesiones",
-        "crossSessionDesc": "Qué hacer cuando otra sesión de Claude Code le envía un mensaje a esta (SendMessage). Por defecto: se entrega solo cuando ambas usan el mismo tipo de modo de permiso; si no, queda retenido para tu aprobación. Se guarda en crossSessionInbound.",
+        "crossSessionDesc": "Qué hacer cuando otra sesión de Claude Code le envía un mensaje a esta (SendMessage). GSH deja Aceptar para toda sesión de la máquina; Retener la guarda para tu aprobación, Rechazar la descarta. Se guarda en crossSessionInbound.",
         "crossSessionDefault": "Por defecto",
         "crossSessionAccept": "Aceptar",
         "crossSessionHold": "Retener para aprobar",

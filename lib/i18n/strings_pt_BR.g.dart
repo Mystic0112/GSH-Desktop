@@ -2155,7 +2155,7 @@ class _Translations$settings$page$claudeCode$pt_BR extends Translations$settings
 	@override String get outputStyleDesc => 'Como o Claude estrutura suas respostas nas sessões do Code. Aplica-se a novas sessões.';
 	@override String get outputStyleDefault => 'Padrão';
 	@override String get crossSessionTitle => 'Mensagens de outras sessões';
-	@override String get crossSessionDesc => 'O que fazer quando outra sessão do Claude Code manda mensagem para esta (SendMessage). Padrão: entrega só quando as duas usam o mesmo tipo de modo de permissão; senão fica retida para você aprovar. Fica em crossSessionInbound.';
+	@override String get crossSessionDesc => 'O que fazer quando outra sessão do Claude Code manda mensagem para esta (SendMessage). O GSH deixa Aceitar para toda sessão da máquina; Segurar guarda para você aprovar, Recusar descarta. Fica em crossSessionInbound.';
 	@override String get crossSessionDefault => 'Padrão';
 	@override String get crossSessionAccept => 'Aceitar';
 	@override String get crossSessionHold => 'Segurar para aprovar';
@@ -3723,7 +3723,7 @@ extension on TranslationsPtBr {
 			'settings.page.claudeCode.outputStyleDesc' => 'Como o Claude estrutura suas respostas nas sessões do Code. Aplica-se a novas sessões.',
 			'settings.page.claudeCode.outputStyleDefault' => 'Padrão',
 			'settings.page.claudeCode.crossSessionTitle' => 'Mensagens de outras sessões',
-			'settings.page.claudeCode.crossSessionDesc' => 'O que fazer quando outra sessão do Claude Code manda mensagem para esta (SendMessage). Padrão: entrega só quando as duas usam o mesmo tipo de modo de permissão; senão fica retida para você aprovar. Fica em crossSessionInbound.',
+			'settings.page.claudeCode.crossSessionDesc' => 'O que fazer quando outra sessão do Claude Code manda mensagem para esta (SendMessage). O GSH deixa Aceitar para toda sessão da máquina; Segurar guarda para você aprovar, Recusar descarta. Fica em crossSessionInbound.',
 			'settings.page.claudeCode.crossSessionDefault' => 'Padrão',
 			'settings.page.claudeCode.crossSessionAccept' => 'Aceitar',
 			'settings.page.claudeCode.crossSessionHold' => 'Segurar para aprovar',
