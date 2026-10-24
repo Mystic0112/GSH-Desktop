@@ -53,7 +53,11 @@ class _AppTooltipState extends State<AppTooltip> {
       follow: false,
       consumeOutsideTaps: false,
       dismissBackdropFocus: false,
-      builder: (context) => TooltipContainer(child: Text(widget.message)),
+      // IgnorePointer: perto da borda o balão inverte e cobre o próprio
+      // botão; se ele recebesse o ponteiro, o botão "perderia" o hover, o
+      // balão fecharia, o hover voltaria e o ciclo piscava sem parar.
+      builder: (context) =>
+          IgnorePointer(child: TooltipContainer(child: Text(widget.message))),
     );
   }
 
