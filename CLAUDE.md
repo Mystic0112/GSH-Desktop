@@ -1,11 +1,12 @@
-# Remote Pi — GSH (Flutter Desktop)
+# GSH Desktop (Flutter Desktop)
 
-Cliente **desktop** (macOS first) do Remote Pi. GUI multi-pane **terminal-first**:
-workspaces à esquerda, panes de terminal/arquivos/bancos no centro, árvore de
-arquivos à direita. Os agentes (Claude Code, Codex, Pi) rodam **como processos
-dentro de terminais**, com status de turno via hooks. Plano de origem:
-[`../plan/37-desktop-gsh.md`](../plan/37-desktop-gsh.md); remoto:
-[`../plan/58-gsh-remote.md`](../plan/58-gsh-remote.md).
+Harness/IDE da Gorila para agentes de código — fork do Cockpit (Remote Pi,
+MIT). GUI multi-pane **terminal-first**: workspaces à esquerda, panes de
+terminal/chat/arquivos/bancos no centro, árvore de arquivos à direita. Os
+agentes (Claude Code, Codex, Pi) rodam **como processos dentro de terminais**,
+com status de turno via hooks; o **chat** nativo roda o `claude` em
+`stream-json` (`lib/app/gsh/data/chat/`). Visão geral em [`README.md`](README.md).
+Referências a "plano N" abaixo são do upstream (não estão neste repo).
 
 ## Escopo atual
 
