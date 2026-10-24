@@ -1402,10 +1402,8 @@ class _Translations$gsh$farm$pt_BR extends Translations$gsh$farm$en {
 	@override String get emptyTitle => 'Nenhum agente rodando';
 	@override String get emptyHint => 'Todo loop do Claude Code nesta máquina aparece aqui enquanto trabalha, inclusive subagentes e sessões fora do GSH Desktop.';
 	@override String working({required Object n}) => '${n} trabalhando';
-	@override String waiting({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n,
-		one: '${n} precisa de você',
-		other: '${n} precisam de você',
-	);
+	@override String waiting({required Object n}) => '${n} precisam de você';
+	@override String get waitingOne => '1 precisa de você';
 	@override String idle({required Object n}) => '${n} parados';
 	@override String tokens({required Object n}) => '${n} tokens gerados';
 	@override String tokensDetail({required Object out, required Object ctx}) => '${out} tokens gerados · contexto ${ctx}';
@@ -3404,7 +3402,8 @@ extension on TranslationsPtBr {
 			'gsh.farm.emptyTitle' => 'Nenhum agente rodando',
 			'gsh.farm.emptyHint' => 'Todo loop do Claude Code nesta máquina aparece aqui enquanto trabalha, inclusive subagentes e sessões fora do GSH Desktop.',
 			'gsh.farm.working' => ({required Object n}) => '${n} trabalhando',
-			'gsh.farm.waiting' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('pt'))(n, one: '${n} precisa de você', other: '${n} precisam de você', ), 
+			'gsh.farm.waiting' => ({required Object n}) => '${n} precisam de você',
+			'gsh.farm.waitingOne' => '1 precisa de você',
 			'gsh.farm.idle' => ({required Object n}) => '${n} parados',
 			'gsh.farm.tokens' => ({required Object n}) => '${n} tokens gerados',
 			'gsh.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens gerados · contexto ${ctx}',
@@ -3583,9 +3582,9 @@ extension on TranslationsPtBr {
 			'settings.page.appearance.modeTitle' => 'Modo',
 			'settings.page.appearance.modeDesc' => 'Qual variante do tema usar.',
 			'settings.page.appearance.modeOnlyDark' => ({required Object theme}) => '"${theme}" só traz a variante escura, então isto não tem efeito.',
-			'settings.page.appearance.modeOnlyLight' => ({required Object theme}) => '"${theme}" só traz a variante clara, então isto não tem efeito.',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.appearance.modeOnlyLight' => ({required Object theme}) => '"${theme}" só traz a variante clara, então isto não tem efeito.',
 			'settings.page.appearance.themeFileTitle' => 'Arquivo de tema',
 			'settings.page.appearance.themeFileDesc' => 'Importe um tema de um arquivo JSON, ou exporte o tema ativo.',
 			'settings.page.appearance.previewCode' => 'Código',

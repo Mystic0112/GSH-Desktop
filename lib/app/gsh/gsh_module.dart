@@ -37,6 +37,7 @@ import 'package:gsh_desktop/app/gsh/data/repositories/json_realm_repository.dart
 import 'package:gsh_desktop/app/gsh/data/repositories/json_workspace_layout_store.dart';
 import 'package:gsh_desktop/app/gsh/data/repositories/project_schema_migrator.dart';
 import 'package:gsh_desktop/app/gsh/data/hooks/terminal_status_server_impl.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/antigravity_farm_source.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/claude_transcript_farm_source.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/codex_rollout_farm_source.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/multi_farm_source.dart';
@@ -267,6 +268,7 @@ Future<Module> buildGshModule({
           MultiFarmSource([
             ClaudeTranscriptFarmSource(),
             CodexRolloutFarmSource(),
+            AntigravityFarmSource(),
           ]),
         )
         // Chat (protótipo do harness): Claude Code em stream-json.

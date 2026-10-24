@@ -2997,11 +2997,11 @@ class Translations$gsh$farm$en {
 	/// en: '${n} working'
 	String working({required Object n}) => '${n} working';
 
-	/// en: '(one) {${n} needs you} (other) {${n} need you}'
-	String waiting({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-		one: '${n} needs you',
-		other: '${n} need you',
-	);
+	/// en: '${n} need you'
+	String waiting({required Object n}) => '${n} need you';
+
+	/// en: '1 needs you'
+	String get waitingOne => '1 needs you';
 
 	/// en: '${n} idle'
 	String idle({required Object n}) => '${n} idle';
@@ -6269,7 +6269,8 @@ extension on Translations {
 			'gsh.farm.emptyTitle' => 'No agents running',
 			'gsh.farm.emptyHint' => 'Every Claude Code loop on this machine shows up here while it works, including subagents and sessions outside GSH Desktop.',
 			'gsh.farm.working' => ({required Object n}) => '${n} working',
-			'gsh.farm.waiting' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '${n} needs you', other: '${n} need you', ), 
+			'gsh.farm.waiting' => ({required Object n}) => '${n} need you',
+			'gsh.farm.waitingOne' => '1 needs you',
 			'gsh.farm.idle' => ({required Object n}) => '${n} idle',
 			'gsh.farm.tokens' => ({required Object n}) => '${n} tokens out',
 			'gsh.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens out · context ${ctx}',
@@ -6448,9 +6449,9 @@ extension on Translations {
 			'settings.page.appearance.modeTitle' => 'Mode',
 			'settings.page.appearance.modeDesc' => 'Which variant of the theme to use.',
 			'settings.page.appearance.modeOnlyDark' => ({required Object theme}) => '"${theme}" only ships a dark variant, so this has no effect.',
-			'settings.page.appearance.modeOnlyLight' => ({required Object theme}) => '"${theme}" only ships a light variant, so this has no effect.',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.appearance.modeOnlyLight' => ({required Object theme}) => '"${theme}" only ships a light variant, so this has no effect.',
 			'settings.page.appearance.themeFileTitle' => 'Theme file',
 			'settings.page.appearance.themeFileDesc' => 'Import a theme from a JSON file, or export the active one.',
 			'settings.page.appearance.previewCode' => 'Code',

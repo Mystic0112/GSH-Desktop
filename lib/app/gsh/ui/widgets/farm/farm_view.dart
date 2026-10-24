@@ -8,6 +8,7 @@ import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/agent_status_dot.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_strip.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene_painter.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_world.dart';
@@ -438,7 +439,7 @@ class _Hud extends StatelessWidget {
               ),
               status(
                 FarmStatus.waiting,
-                tr.waiting(n: vm.countBy(FarmStatus.waiting)),
+                needYou(tr, vm.countBy(FarmStatus.waiting)),
               ),
               status(FarmStatus.idle, tr.idle(n: vm.countBy(FarmStatus.idle))),
             ],

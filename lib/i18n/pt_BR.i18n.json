@@ -991,10 +991,8 @@
       "emptyTitle": "Nenhum agente rodando",
       "emptyHint": "Todo loop do Claude Code nesta máquina aparece aqui enquanto trabalha, inclusive subagentes e sessões fora do GSH Desktop.",
       "working": "${n} trabalhando",
-      "waiting(plural)": {
-        "one": "${n} precisa de você",
-        "other": "${n} precisam de você"
-      },
+      "waiting": "${n} precisam de você",
+      "waitingOne": "1 precisa de você",
       "idle": "${n} parados",
       "tokens": "${n} tokens gerados",
       "tokensDetail": "${out} tokens gerados · contexto ${ctx}",

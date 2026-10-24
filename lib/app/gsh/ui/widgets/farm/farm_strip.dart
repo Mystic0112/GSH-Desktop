@@ -56,7 +56,7 @@ class _FarmStripState extends State<FarmStrip> {
         AppTooltip(
           message: [
             tr.working(n: working),
-            tr.waiting(n: waiting),
+            needYou(tr, waiting),
             tr.idle(n: idle),
           ].join(' · '),
           child: HoverTap(
@@ -83,7 +83,7 @@ class _FarmStripState extends State<FarmStrip> {
           const SizedBox(width: 4),
           Builder(
             builder: (anchor) => _NeedYouPill(
-              label: tr.waiting(n: queue.length),
+              label: needYou(tr, queue.length),
               onTap: () => _openQueue(anchor, queue),
             ),
           ),
@@ -114,6 +114,10 @@ class _FarmStripState extends State<FarmStrip> {
     showOutsideGshToast(context);
   }
 }
+
+/// "N precisam de você" com o singular certo (slang não tem plural de `pt`).
+String needYou(Translations$gsh$farm$en tr, int n) =>
+    n == 1 ? tr.waitingOne : tr.waiting(n: n);
 
 class _Count extends StatelessWidget {
   const _Count({required this.status, required this.n});
