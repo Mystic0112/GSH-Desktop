@@ -2883,6 +2883,15 @@ class Translations$gsh$chat$en {
 	/// en: 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat's engine doesn't support Remote Control.'
 	String get remoteControlHint => 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat\'s engine doesn\'t support Remote Control.';
 
+	/// en: 'Send a message first: Remote Control continues an existing conversation.'
+	String get remoteControlNoSession => 'Send a message first: Remote Control continues an existing conversation.';
+
+	/// en: 'Wait for the agent to finish this turn, then try again.'
+	String get remoteControlBusy => 'Wait for the agent to finish this turn, then try again.';
+
+	/// en: 'Couldn't open the terminal in this workspace.'
+	String get remoteControlFailed => 'Couldn\'t open the terminal in this workspace.';
+
 	/// en: '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).'
 	String attachmentTooLarge({required Object name}) => '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).';
 
@@ -6235,6 +6244,9 @@ extension on Translations {
 			'gsh.chat.sendToSession' => ({required Object name}) => 'Send this message to the session "${name}" with SendMessage and wait for its reply: ',
 			'gsh.chat.remoteControl' => 'Remote Control',
 			'gsh.chat.remoteControlHint' => 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat\'s engine doesn\'t support Remote Control.',
+			'gsh.chat.remoteControlNoSession' => 'Send a message first: Remote Control continues an existing conversation.',
+			'gsh.chat.remoteControlBusy' => 'Wait for the agent to finish this turn, then try again.',
+			'gsh.chat.remoteControlFailed' => 'Couldn\'t open the terminal in this workspace.',
 			'gsh.chat.attachmentTooLarge' => ({required Object name}) => '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).',
 			'gsh.chat.loadingHistory' => 'Loading the conversation…',
 			'gsh.chat.allowAlways' => ({required Object rule}) => 'Always allow ${rule}',
@@ -6446,11 +6458,11 @@ extension on Translations {
 			'settings.page.appearance.sectionTheme' => 'Theme',
 			'settings.page.appearance.themeTitle' => 'Theme',
 			'settings.page.appearance.themeDesc' => 'App colors, code highlighting and terminal palette.',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.appearance.modeTitle' => 'Mode',
 			'settings.page.appearance.modeDesc' => 'Which variant of the theme to use.',
 			'settings.page.appearance.modeOnlyDark' => ({required Object theme}) => '"${theme}" only ships a dark variant, so this has no effect.',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.appearance.modeOnlyLight' => ({required Object theme}) => '"${theme}" only ships a light variant, so this has no effect.',
 			'settings.page.appearance.themeFileTitle' => 'Theme file',
 			'settings.page.appearance.themeFileDesc' => 'Import a theme from a JSON file, or export the active one.',

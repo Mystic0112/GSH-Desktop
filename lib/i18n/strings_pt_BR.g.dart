@@ -1356,6 +1356,9 @@ class _Translations$gsh$chat$pt_BR extends Translations$gsh$chat$en {
 	@override String sendToSession({required Object name}) => 'Mande esta mensagem para a sessão "${name}" com SendMessage e espere a resposta: ';
 	@override String get remoteControl => 'Remote Control';
 	@override String get remoteControlHint => 'Continuar esta conversa num terminal com Remote Control (celular, claude.ai/code). O motor do chat não suporta Remote Control.';
+	@override String get remoteControlNoSession => 'Mande uma mensagem primeiro: o Remote Control continua uma conversa que já existe.';
+	@override String get remoteControlBusy => 'Espere o agente terminar este turno e tente de novo.';
+	@override String get remoteControlFailed => 'Não consegui abrir o terminal neste workspace.';
 	@override String attachmentTooLarge({required Object name}) => '${name} é grande demais para enviar (imagem até 5 MB, PDF até 32 MB).';
 	@override String get loadingHistory => 'Carregando a conversa…';
 	@override String allowAlways({required Object rule}) => 'Sempre permitir ${rule}';
@@ -3368,6 +3371,9 @@ extension on TranslationsPtBr {
 			'gsh.chat.sendToSession' => ({required Object name}) => 'Mande esta mensagem para a sessão "${name}" com SendMessage e espere a resposta: ',
 			'gsh.chat.remoteControl' => 'Remote Control',
 			'gsh.chat.remoteControlHint' => 'Continuar esta conversa num terminal com Remote Control (celular, claude.ai/code). O motor do chat não suporta Remote Control.',
+			'gsh.chat.remoteControlNoSession' => 'Mande uma mensagem primeiro: o Remote Control continua uma conversa que já existe.',
+			'gsh.chat.remoteControlBusy' => 'Espere o agente terminar este turno e tente de novo.',
+			'gsh.chat.remoteControlFailed' => 'Não consegui abrir o terminal neste workspace.',
 			'gsh.chat.attachmentTooLarge' => ({required Object name}) => '${name} é grande demais para enviar (imagem até 5 MB, PDF até 32 MB).',
 			'gsh.chat.loadingHistory' => 'Carregando a conversa…',
 			'gsh.chat.allowAlways' => ({required Object rule}) => 'Sempre permitir ${rule}',
@@ -3579,11 +3585,11 @@ extension on TranslationsPtBr {
 			'settings.page.appearance.sectionTheme' => 'Tema',
 			'settings.page.appearance.themeTitle' => 'Tema',
 			'settings.page.appearance.themeDesc' => 'Cores do app, realce de código e paleta do terminal.',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.appearance.modeTitle' => 'Modo',
 			'settings.page.appearance.modeDesc' => 'Qual variante do tema usar.',
 			'settings.page.appearance.modeOnlyDark' => ({required Object theme}) => '"${theme}" só traz a variante escura, então isto não tem efeito.',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.appearance.modeOnlyLight' => ({required Object theme}) => '"${theme}" só traz a variante clara, então isto não tem efeito.',
 			'settings.page.appearance.themeFileTitle' => 'Arquivo de tema',
 			'settings.page.appearance.themeFileDesc' => 'Importe um tema de um arquivo JSON, ou exporte o tema ativo.',

@@ -3,6 +3,8 @@ import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_pane.dart';
 import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
@@ -76,8 +78,30 @@ class _ChatViewState extends State<ChatView> {
   /// Leva a conversa para um terminal com Remote Control: fecha o motor do
   /// chat e abre `claude --resume <sessão> --remote-control` na mesma pasta.
   Future<void> _continueInRemoteControl() async {
+    final tr = context.t.gsh.chat;
+    // O botão fica sempre clicável: quando não dá, o clique explica.
+    if (_chat.sessionId == null) return _toast(tr.remoteControlNoSession);
+    if (_chat.busy) return _toast(tr.remoteControlBusy);
     final sid = await _chat.handOff();
     if (sid == null || !mounted) return;
-    _shell.continueInRemoteControl(sid, cwd: widget.session.workingDirectory);
+    final ok = _shell.continueInRemoteControl(
+      sid,
+      cwd: widget.session.workingDirectory,
+    );
+    if (!ok) _toast(tr.remoteControlFailed);
+  }
+
+  void _toast(String message) {
+    if (!mounted) return;
+    showToast(
+      context: context,
+      location: ToastLocation.bottomRight,
+      builder: (context, overlay) => SurfaceCard(
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(message, style: context.typo.label),
+        ),
+      ),
+    );
   }
 }

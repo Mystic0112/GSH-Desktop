@@ -251,7 +251,7 @@ class _Header extends StatelessWidget {
               message: context.t.gsh.chat.remoteControlHint,
               child: GhostButton(
                 size: ButtonSize.small,
-                onPressed: chat.canHandOff ? open : null,
+                onPressed: open,
                 leading: Icon(
                   Icons.phone_iphone,
                   size: 14,
