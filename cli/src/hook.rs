@@ -71,6 +71,20 @@ fn try_run(harness: String) -> Option<()> {
     }
 
     let event = str_field(&decoded, "hook_event_name");
+    // Hosts protegidos: comando que cite um deles é bloqueado antes de rodar,
+    // em qualquer sessão da máquina (não só numa aba do GSH).
+    if event == "PreToolUse" {
+        if let Some(home) = home_dir() {
+            let hosts = protected_hosts(&Path::new(&home).join(".gsh").join("protected-hosts.json"));
+            if let Some(host) = guard_hit(&decoded, &hosts) {
+                eprintln!(
+                    "GSH Desktop bloqueou este comando: ele cita o host protegido \"{host}\". \
+                     Peça ao usuário para rodar à mão ou remover o host em Configurações > Claude Code > Segurança."
+                );
+                std::process::exit(2);
+            }
+        }
+    }
     let status = status_for(&event, &decoded);
     if let Some(home) = home_dir() {
         let dir = Path::new(&home).join(".gsh").join("farm");
@@ -136,6 +150,51 @@ fn try_run(harness: String) -> Option<()> {
     s.write_all(line.as_bytes()).ok()?;
     let _ = s.flush();
     Some(())
+}
+
+/// Lista de hosts protegidos (`~/.gsh/protected-hosts.json`, array de
+/// strings). Arquivo ausente ou inválido = nenhum.
+fn protected_hosts(path: &Path) -> Vec<String> {
+    let Ok(raw) = std::fs::read_to_string(path) else { return Vec::new() };
+    let Ok(v) = serde_json::from_str::<Value>(&raw) else { return Vec::new() };
+    v.as_array()
+        .map(|a| {
+            a.iter()
+                .filter_map(|x| x.as_str())
+                .map(|s| s.trim().to_lowercase())
+                .filter(|s| !s.is_empty())
+                .collect()
+        })
+        .unwrap_or_default()
+}
+
+/// Ferramentas que executam comando: o guard olha só o input delas (um
+/// `Read` de um arquivo chamado prod.md não é acesso ao host).
+const SHELL_TOOLS: [&str; 3] = ["Bash", "shell", "exec_command"];
+
+/// O host protegido que o input da ferramenta cita, se algum. O host conta
+/// como palavra: "prod" casa com "ssh prod", "user@prod" e "prod.x.com", mas
+/// não com "production" nem "--prod".
+pub fn guard_hit(json: &Value, hosts: &[String]) -> Option<String> {
+    if hosts.is_empty() || !SHELL_TOOLS.contains(&str_field(json, "tool_name").as_str()) {
+        return None;
+    }
+    let input = json.get("tool_input").map(|v| v.to_string()).unwrap_or_default().to_lowercase();
+    let is_word = |c: char| c.is_ascii_alphanumeric() || c == '_' || c == '-';
+    for host in hosts {
+        let mut from = 0;
+        while let Some(i) = input[from..].find(host.as_str()) {
+            let start = from + i;
+            let end = start + host.len();
+            let before_ok = start == 0 || !is_word(input[..start].chars().next_back().unwrap());
+            let after_ok = end == input.len() || !is_word(input[end..].chars().next().unwrap());
+            if before_ok && after_ok {
+                return Some(host.clone());
+            }
+            from = end;
+        }
+    }
+    None
 }
 
 /// Grava o último status da sessão em `<dir>/<sid>.json` (`st`, `ev`, `ts` em
@@ -317,6 +376,24 @@ pub fn status_for(event: &str, json: &Value) -> Option<&'static str> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn hosts_protegidos_bloqueiam_so_comando_que_cita_o_host() {
+        let hosts = vec!["prod".to_string(), "homolog.gorila.com".to_string()];
+        let cmd = |c: &str| json!({"tool_name": "Bash", "tool_input": {"command": c}});
+        assert_eq!(guard_hit(&cmd("ssh prod"), &hosts).as_deref(), Some("prod"));
+        assert_eq!(guard_hit(&cmd("scp a.txt deploy@prod.gorila.com:/x"), &hosts).as_deref(), Some("prod"));
+        assert_eq!(guard_hit(&cmd("gsh new-workspace . --host homolog.gorila.com"), &hosts).as_deref(), Some("homolog.gorila.com"));
+        assert_eq!(guard_hit(&cmd("npm run build --prod"), &hosts), None);
+        assert_eq!(guard_hit(&cmd("echo production"), &hosts), None);
+        // Só ferramentas de shell: ler um arquivo com o nome não é acesso.
+        let read = json!({"tool_name": "Read", "tool_input": {"file_path": "/docs/prod.md"}});
+        assert_eq!(guard_hit(&read, &hosts), None);
+        // Codex: input com argv.
+        let codex = json!({"tool_name": "shell", "tool_input": {"argv": ["ssh", "prod"]}});
+        assert_eq!(guard_hit(&codex, &hosts).as_deref(), Some("prod"));
+        assert_eq!(guard_hit(&cmd("ssh prod"), &[]), None);
+    }
 
     #[test]
     fn fazenda_grava_status_e_apaga_no_fim_da_sessao() {

@@ -1351,6 +1351,9 @@
         "sandboxDesc": "Executa os comandos bash do Claude Code num sandbox isolado. Aplica-se a novas sessões.",
         "sandboxStrictTitle": "Modo sandbox estrito",
         "sandboxStrictDesc": "Bloqueia comandos que não podem ser executados dentro do sandbox em vez de executá-los fora dele.",
+        "sectionSecurity": "Segurança",
+        "protectedHostsTitle": "Hosts protegidos",
+        "protectedHostsDesc": "Hosts que nenhum agente pode tocar num comando: ssh, scp, workspace remoto, qualquer coisa que cite o nome. O GSH bloqueia o comando antes de rodar, em toda sessão do Claude Code e do Codex nesta máquina, e manda o agente pedir a você. Separe por vírgula; vale a palavra inteira (prod bloqueia \"ssh prod\" e \"prod.x.com\", não \"production\"). Fica em ~/.gsh/protected-hosts.json.",
         "sectionBrowser": "Navegador",
         "linksInAppTitle": "Abrir links no navegador integrado",
         "linksInAppDesc": "Links clicados nos terminais abrem numa aba de navegador do GSH em vez do seu navegador padrão."

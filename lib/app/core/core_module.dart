@@ -1,4 +1,6 @@
 import 'package:gsh_desktop/app/core/data/claude_code_settings_file.dart';
+import 'package:gsh_desktop/app/core/data/protected_hosts_file.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/protected_hosts.dart';
 import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
 import 'package:gsh_desktop/app/core/data/automation/cli_automation_gateway.dart';
 import 'package:gsh_desktop/app/core/data/lsp/lsp_client_impl.dart';
@@ -46,6 +48,8 @@ Module buildCoreModule({required TerminalProfileResolver terminalProfiles}) {
       ..addLazySingleton<LspServerPool>(LspServerPool.new)
       ..addInstance<SystemPermissions>(SystemPermissionsImpl())
       // ~/.claude/settings.json (Remote Control ao iniciar).
-      ..addInstance<ClaudeCodeSettings>(ClaudeCodeSettingsFile()),
+      ..addInstance<ClaudeCodeSettings>(ClaudeCodeSettingsFile())
+      // ~/.gsh/protected-hosts.json (hosts que o agente não pode citar).
+      ..addInstance<ProtectedHosts>(ProtectedHostsFile()),
   );
 }

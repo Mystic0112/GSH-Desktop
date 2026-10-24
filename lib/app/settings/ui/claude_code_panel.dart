@@ -1,4 +1,5 @@
 import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/protected_hosts.dart';
 import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
@@ -66,7 +67,7 @@ class ClaudeCodePanel extends StatelessWidget {
             SettingsRow(
               title: tr.codeFontTitle,
               description: tr.codeFontDesc,
-              trailing: _FontNameField(
+              trailing: _TextSettingField(
                 value: s.codeFont,
                 placeholder: tr.codeFontPlaceholder,
                 onChanged: controller.setCodeFont,
@@ -152,6 +153,16 @@ class ClaudeCodePanel extends StatelessWidget {
           ],
         ),
         SettingsSection(
+          title: tr.sectionSecurity,
+          rows: [
+            SettingsRow(
+              title: tr.protectedHostsTitle,
+              description: tr.protectedHostsDesc,
+              trailing: const _ProtectedHostsField(),
+            ),
+          ],
+        ),
+        SettingsSection(
           title: tr.sectionBrowser,
           rows: [
             SettingsRow(
@@ -165,6 +176,43 @@ class ClaudeCodePanel extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+/// "Hosts protegidos": lista separada por vírgula, gravada em
+/// `~/.gsh/protected-hosts.json` ao confirmar ou sair do campo.
+class _ProtectedHostsField extends StatefulWidget {
+  const _ProtectedHostsField();
+
+  @override
+  State<_ProtectedHostsField> createState() => _ProtectedHostsFieldState();
+}
+
+class _ProtectedHostsFieldState extends State<_ProtectedHostsField> {
+  final _store = inject<ProtectedHosts>();
+  String? _value;
+
+  @override
+  void initState() {
+    super.initState();
+    _store.read().then((hosts) {
+      if (mounted) setState(() => _value = hosts.join(', '));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final value = _value;
+    if (value == null) return const SizedBox(width: 240);
+    return _TextSettingField(
+      value: value,
+      placeholder: 'prod, homolog.gorila.com',
+      onChanged: (text) {
+        final hosts = (text ?? '').split(RegExp(r'[,\s]+'));
+        _value = hosts.where((h) => h.isNotEmpty).join(', ');
+        _store.write(hosts);
+      },
     );
   }
 }
@@ -272,8 +320,8 @@ class _OutputStyleDropdownState extends State<_OutputStyleDropdown> {
 
 /// Nome de fonte digitado à mão; grava ao confirmar ou sair do campo. Vazio
 /// volta ao padrão.
-class _FontNameField extends StatefulWidget {
-  const _FontNameField({
+class _TextSettingField extends StatefulWidget {
+  const _TextSettingField({
     required this.value,
     required this.placeholder,
     required this.onChanged,
@@ -283,10 +331,10 @@ class _FontNameField extends StatefulWidget {
   final ValueChanged<String?> onChanged;
 
   @override
-  State<_FontNameField> createState() => _FontNameFieldState();
+  State<_TextSettingField> createState() => _TextSettingFieldState();
 }
 
-class _FontNameFieldState extends State<_FontNameField> {
+class _TextSettingFieldState extends State<_TextSettingField> {
   late final _text = TextEditingController(text: widget.value ?? '');
   final _focus = FocusNode();
 
@@ -299,7 +347,7 @@ class _FontNameFieldState extends State<_FontNameField> {
   }
 
   @override
-  void didUpdateWidget(_FontNameField old) {
+  void didUpdateWidget(_TextSettingField old) {
     super.didUpdateWidget(old);
     // Mudou por fora (aba Aparência): reflete, a menos que esteja digitando.
     if (old.value != widget.value && !_focus.hasFocus) {

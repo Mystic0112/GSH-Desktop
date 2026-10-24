@@ -4619,6 +4619,15 @@ class Translations$settings$page$claudeCode$en {
 	/// en: 'Blocks commands that cannot run inside the sandbox instead of running them outside it.'
 	String get sandboxStrictDesc => 'Blocks commands that cannot run inside the sandbox instead of running them outside it.';
 
+	/// en: 'Security'
+	String get sectionSecurity => 'Security';
+
+	/// en: 'Protected hosts'
+	String get protectedHostsTitle => 'Protected hosts';
+
+	/// en: 'Hosts no agent may touch from a command: ssh, scp, remote workspace, anything that names them. GSH blocks the command before it runs, in every Claude Code and Codex session on this machine, and tells the agent to ask you. Comma-separated; whole words (prod blocks "ssh prod" and "prod.x.com", not "production"). Saved in ~/.gsh/protected-hosts.json.'
+	String get protectedHostsDesc => 'Hosts no agent may touch from a command: ssh, scp, remote workspace, anything that names them. GSH blocks the command before it runs, in every Claude Code and Codex session on this machine, and tells the agent to ask you. Comma-separated; whole words (prod blocks "ssh prod" and "prod.x.com", not "production"). Saved in ~/.gsh/protected-hosts.json.';
+
 	/// en: 'Browser'
 	String get sectionBrowser => 'Browser';
 
@@ -6580,6 +6589,9 @@ extension on Translations {
 			'settings.page.claudeCode.sandboxDesc' => 'Runs Claude Code bash commands inside an isolated sandbox. Applies to new sessions.',
 			'settings.page.claudeCode.sandboxStrictTitle' => 'Strict sandbox mode',
 			'settings.page.claudeCode.sandboxStrictDesc' => 'Blocks commands that cannot run inside the sandbox instead of running them outside it.',
+			'settings.page.claudeCode.sectionSecurity' => 'Security',
+			'settings.page.claudeCode.protectedHostsTitle' => 'Protected hosts',
+			'settings.page.claudeCode.protectedHostsDesc' => 'Hosts no agent may touch from a command: ssh, scp, remote workspace, anything that names them. GSH blocks the command before it runs, in every Claude Code and Codex session on this machine, and tells the agent to ask you. Comma-separated; whole words (prod blocks "ssh prod" and "prod.x.com", not "production"). Saved in ~/.gsh/protected-hosts.json.',
 			'settings.page.claudeCode.sectionBrowser' => 'Browser',
 			'settings.page.claudeCode.linksInAppTitle' => 'Open links in the built-in browser',
 			'settings.page.claudeCode.linksInAppDesc' => 'Links clicked in terminals open in a GSH browser tab instead of your default browser.',

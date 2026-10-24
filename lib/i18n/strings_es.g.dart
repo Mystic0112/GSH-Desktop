@@ -2160,6 +2160,9 @@ class _Translations$settings$page$claudeCode$es extends Translations$settings$pa
 	@override String get sandboxDesc => 'Ejecuta los comandos bash de Claude Code en un sandbox aislado. Se aplica a sesiones nuevas.';
 	@override String get sandboxStrictTitle => 'Modo sandbox estricto';
 	@override String get sandboxStrictDesc => 'Bloquea los comandos que no pueden ejecutarse dentro del sandbox en lugar de ejecutarlos fuera.';
+	@override String get sectionSecurity => 'Seguridad';
+	@override String get protectedHostsTitle => 'Hosts protegidos';
+	@override String get protectedHostsDesc => 'Hosts que ningún agente puede tocar desde un comando: ssh, scp, workspace remoto, cualquier cosa que los nombre. GSH bloquea el comando antes de ejecutarlo, en toda sesión de Claude Code y Codex en esta máquina, y le dice al agente que te pregunte. Separados por coma; palabra completa (prod bloquea "ssh prod" y "prod.x.com", no "production"). Se guarda en ~/.gsh/protected-hosts.json.';
 	@override String get sectionBrowser => 'Navegador';
 	@override String get linksInAppTitle => 'Abrir enlaces en el navegador integrado';
 	@override String get linksInAppDesc => 'Los enlaces de las terminales se abren en una pestaña de navegador de GSH en lugar de tu navegador predeterminado.';
@@ -3721,6 +3724,9 @@ extension on TranslationsEs {
 			'settings.page.claudeCode.sandboxDesc' => 'Ejecuta los comandos bash de Claude Code en un sandbox aislado. Se aplica a sesiones nuevas.',
 			'settings.page.claudeCode.sandboxStrictTitle' => 'Modo sandbox estricto',
 			'settings.page.claudeCode.sandboxStrictDesc' => 'Bloquea los comandos que no pueden ejecutarse dentro del sandbox en lugar de ejecutarlos fuera.',
+			'settings.page.claudeCode.sectionSecurity' => 'Seguridad',
+			'settings.page.claudeCode.protectedHostsTitle' => 'Hosts protegidos',
+			'settings.page.claudeCode.protectedHostsDesc' => 'Hosts que ningún agente puede tocar desde un comando: ssh, scp, workspace remoto, cualquier cosa que los nombre. GSH bloquea el comando antes de ejecutarlo, en toda sesión de Claude Code y Codex en esta máquina, y le dice al agente que te pregunte. Separados por coma; palabra completa (prod bloquea "ssh prod" y "prod.x.com", no "production"). Se guarda en ~/.gsh/protected-hosts.json.',
 			'settings.page.claudeCode.sectionBrowser' => 'Navegador',
 			'settings.page.claudeCode.linksInAppTitle' => 'Abrir enlaces en el navegador integrado',
 			'settings.page.claudeCode.linksInAppDesc' => 'Los enlaces de las terminales se abren en una pestaña de navegador de GSH en lugar de tu navegador predeterminado.',
