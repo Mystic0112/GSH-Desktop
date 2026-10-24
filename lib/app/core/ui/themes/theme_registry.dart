@@ -785,12 +785,16 @@ final GshThemeSpec gshTheme = GshThemeSpec(
   ),
   light: _variant(
     ui: AppColors.light.copyWith(
-      bg: const Color(0xFFEEF1F2),
-      panel: const Color(0xFFFFFFFF),
-      panel2: const Color(0xFFF4F6F7),
-      panel3: const Color(0xFFE3E8E9),
-      border: const Color(0xFFDDE2E3),
-      border2: const Color(0xFFC7CED0),
+      // Sem branco puro: o conteúdo fica um cinza-claro frio e o chrome um
+      // degrau abaixo. Branco (#F8FAFA) só no elevado (cards, composer), para
+      // continuar lendo como elevação. Feedback do Hélio: o claro anterior,
+      // com painel #FFFFFF, "parecia flashbang".
+      bg: const Color(0xFFE3E7E8),
+      panel: const Color(0xFFEDF0F1),
+      panel2: const Color(0xFFF8FAFA),
+      panel3: const Color(0xFFDADFE0),
+      border: const Color(0xFFD3D8DA),
+      border2: const Color(0xFFBEC5C8),
       text: const Color(0xFF1A1A1A), // texto do site claro
       text2: const Color(0xFF4A5456),
       text3: const Color(0xFF6B7578),
