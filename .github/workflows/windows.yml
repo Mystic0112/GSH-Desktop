@@ -1,0 +1,79 @@
+# Build do GSH Desktop para Windows (x64, não assinado).
+# Gera dois artefatos: a pasta Release (portátil, roda direto do gsh.exe) e o
+# instalador Inno Setup via Fastforge (windows/packaging/exe/make_config.yaml).
+name: windows
+
+on:
+  push:
+    branches: [helio]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  workflow_dispatch:
+
+concurrency:
+  group: windows-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      # Fixado: o projeto não compila na 3.47 (pins como sqlite3 ^3.5.2).
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.44.1
+          channel: stable
+          cache: true
+
+      # cli/ (crate Rust) vira gsh-cli.exe no CMake.
+      - name: Rust
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup default stable
+          rustup target add x86_64-pc-windows-msvc
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: cli
+
+      # libghostty com `source: compile` exige exatamente Zig 0.16.0.
+      - uses: mlugg/setup-zig@v2
+        with:
+          version: 0.16.0
+
+      - run: flutter pub get
+      - run: flutter build windows --release
+
+      - name: Upload (portátil)
+        uses: actions/upload-artifact@v4
+        with:
+          name: gsh-windows-x64-portable
+          path: build/windows/x64/runner/Release
+          retention-days: 14
+
+      - name: Inno Setup
+        shell: pwsh
+        run: |
+          if (-not (Test-Path 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe')) {
+            choco install innosetup -y --no-progress
+          }
+
+      # --skip-clean: reaproveita o build acima (o Fastforge rebuilda incremental).
+      - name: Instalador (Fastforge)
+        run: |
+          dart pub global activate fastforge
+          dart pub global run fastforge package --platform windows --targets exe --skip-clean
+
+      - name: Upload (instalador)
+        uses: actions/upload-artifact@v4
+        with:
+          name: gsh-windows-x64-setup
+          path: dist/**/*.exe
+          retention-days: 14
+          if-no-files-found: error
