@@ -80,6 +80,10 @@ class _ChatViewState extends State<ChatView> {
   Future<void> _continueInRemoteControl() async {
     final tr = context.t.gsh.chat;
     // O botão fica sempre clicável: quando não dá, o clique explica.
+    // Motor CLI: a conversa já está no Remote Control, sem terminal novo.
+    if (_chat.remoteControlUrl case final url?) {
+      return _toast(tr.remoteControlActive(url: url));
+    }
     if (_chat.sessionId == null) return _toast(tr.remoteControlNoSession);
     if (_chat.busy) return _toast(tr.remoteControlBusy);
     final sid = await _chat.handOff();

@@ -87,6 +87,7 @@ class AppSettings {
     this.updateCheckFrequency = UpdateCheckFrequency.daily,
     this.lastUpdateCheckTime,
     this.classifySessionStates = true,
+    this.chatRemoteControl = false,
     this.codeThemeLight,
     this.codeThemeDark,
     this.transcriptView = TranscriptView.normal,
@@ -277,6 +278,10 @@ class AppSettings {
   /// de cada turno (concluída / pronta para revisão / bloqueada).
   final bool classifySessionStates;
 
+  /// Motor do chat: `true` roda o `claude` interativo (com Remote Control) num
+  /// terminal escondido; `false` (padrão) usa o `stream-json`.
+  final bool chatRemoteControl;
+
   /// Paleta de syntax no modo claro / escuro (nome do `SyntaxPalette` da UI).
   /// `null` = a paleta do tema ativo.
   final String? codeThemeLight;
@@ -348,6 +353,7 @@ class AppSettings {
     UpdateCheckFrequency? updateCheckFrequency,
     DateTime? lastUpdateCheckTime,
     bool? classifySessionStates,
+    bool? chatRemoteControl,
     String? codeThemeLight,
     bool clearCodeThemeLight = false,
     String? codeThemeDark,
@@ -414,6 +420,7 @@ class AppSettings {
       lastUpdateCheckTime: lastUpdateCheckTime ?? this.lastUpdateCheckTime,
       classifySessionStates:
           classifySessionStates ?? this.classifySessionStates,
+      chatRemoteControl: chatRemoteControl ?? this.chatRemoteControl,
       codeThemeLight: clearCodeThemeLight
           ? null
           : (codeThemeLight ?? this.codeThemeLight),
@@ -487,6 +494,7 @@ class AppSettings {
     if (lastUpdateCheckTime != null)
       'lastUpdateCheckTime': lastUpdateCheckTime!.toIso8601String(),
     if (!classifySessionStates) 'chat.classifySessionStates': false,
+    if (chatRemoteControl) 'chat.remoteControl': true,
     if (codeThemeLight != null) 'code.themeLight': codeThemeLight,
     if (codeThemeDark != null) 'code.themeDark': codeThemeDark,
     'chat.transcriptView': transcriptView.name,
@@ -584,6 +592,7 @@ class AppSettings {
           : null,
       classifySessionStates:
           json['chat.classifySessionStates'] as bool? ?? true,
+      chatRemoteControl: json['chat.remoteControl'] as bool? ?? false,
       codeThemeLight: str(json['code.themeLight']),
       codeThemeDark: str(json['code.themeDark']),
       transcriptView: _enumByName(

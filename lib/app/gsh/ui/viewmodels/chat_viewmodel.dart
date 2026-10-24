@@ -223,6 +223,9 @@ class ChatController extends ChangeNotifier {
   double costUsd = 0;
   bool busy = false;
 
+  /// Link do Remote Control quando a sessão já nasce nele (motor CLI).
+  String? remoteControlUrl;
+
   ChatEngine? _engine;
   StreamSubscription<ChatEvent>? _sub;
   bool _disposed = false;
@@ -411,6 +414,10 @@ class ChatController extends ChangeNotifier {
         items.add(ChatPeerItem(fromName: fromName, text: text));
       case ChatInfo(:final text, :final warning):
         items.add(ChatInfoItem(text, warning: warning));
+        // Motor CLI: a própria sessão já está no Remote Control.
+        remoteControlUrl ??= RegExp(
+          r'https://claude\.ai/code/session_\w+',
+        ).firstMatch(text)?.group(0);
       case ChatTextDelta(:final text):
         final live = _streaming;
         if (live != null) {

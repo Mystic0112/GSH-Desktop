@@ -65,55 +65,66 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
         if (resumeSessionId != null) ...['--resume', resumeSessionId],
       ],
       workingDirectory: cwd,
-      environment: _withDirOnPath(exe),
+      environment: claudeEnvWithDirOnPath(exe),
     );
     return ClaudeStreamEngine(proc);
   }
 
-  /// Lê o transcript que o próprio Claude Code grava em
-  /// `~/.claude/projects/<cwd com não-alfanuméricos trocados por ->/<id>.jsonl`.
-  /// As linhas `user`/`assistant` têm o mesmo formato do stream.
   @override
   Future<List<ChatEvent>> history({
     required String cwd,
     required String sessionId,
-  }) async {
-    final home =
-        Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'];
-    if (home == null || !RegExp(r'^[A-Za-z0-9-]+$').hasMatch(sessionId)) {
-      return const [];
+  }) => readClaudeHistory(cwd: cwd, sessionId: sessionId);
+}
+
+/// O transcript que o próprio Claude Code grava em
+/// `~/.claude/projects/<cwd com não-alfanuméricos trocados por ->/<id>.jsonl`.
+/// `null` se o id não tem o formato esperado ou não há HOME.
+File? claudeTranscriptFile(String cwd, String sessionId) {
+  final home =
+      Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'];
+  if (home == null || !RegExp(r'^[A-Za-z0-9-]+$').hasMatch(sessionId)) {
+    return null;
+  }
+  final dir = cwd.replaceAll(RegExp('[^A-Za-z0-9]'), '-');
+  return File('$home/.claude/projects/$dir/$sessionId.jsonl');
+}
+
+/// A conversa já gravada: as linhas `user`/`assistant` do transcript têm o
+/// mesmo formato do stream.
+Future<List<ChatEvent>> readClaudeHistory({
+  required String cwd,
+  required String sessionId,
+}) async {
+  final file = claudeTranscriptFile(cwd, sessionId);
+  if (file == null || !await file.exists()) return const [];
+  final out = <ChatEvent>[];
+  for (final line in await file.readAsLines()) {
+    final Object? o;
+    try {
+      o = jsonDecode(line);
+    } on FormatException {
+      continue;
     }
-    final dir = cwd.replaceAll(RegExp('[^A-Za-z0-9]'), '-');
-    final file = File('$home/.claude/projects/$dir/$sessionId.jsonl');
-    if (!await file.exists()) return const [];
-    final out = <ChatEvent>[];
-    for (final line in await file.readAsLines()) {
-      final Object? o;
-      try {
-        o = jsonDecode(line);
-      } on FormatException {
+    if (o is! Map<String, dynamic> || o['isSidechain'] == true) continue;
+    if (o['type'] == 'user' && o['isMeta'] != true) {
+      final content = (o['message'] as Map?)?['content'];
+      if (content is String && !content.startsWith('<')) {
+        out.add(ChatUserText(content));
         continue;
       }
-      if (o is! Map<String, dynamic> || o['isSidechain'] == true) continue;
-      if (o['type'] == 'user' && o['isMeta'] != true) {
-        final content = (o['message'] as Map?)?['content'];
-        if (content is String && !content.startsWith('<')) {
-          out.add(ChatUserText(content));
-          continue;
-        }
-      }
-      if (o['type'] == 'user' || o['type'] == 'assistant') {
-        out.addAll(parseClaudeStreamLine(o));
-      }
     }
-    return out;
+    if (o['type'] == 'user' || o['type'] == 'assistant') {
+      out.addAll(parseClaudeStreamLine(o));
+    }
   }
+  return out;
 }
 
 /// O `claude` do npm é um script `#!/usr/bin/env node`. Aberto pelo launcher
 /// (sem o PATH do shell, ex.: nvm), o `env` não acha o `node`: põe a pasta do
 /// executável — onde o nvm/npm deixa os dois — na frente do PATH.
-Map<String, String> _withDirOnPath(String exe) {
+Map<String, String> claudeEnvWithDirOnPath(String exe) {
   final sep = Platform.isWindows ? ';' : ':';
   final dir = File(exe).parent.path;
   final path = Platform.environment['PATH'] ?? '';
@@ -158,7 +169,7 @@ class ClaudeStreamEngine implements ChatEngine {
     if (o is! Map<String, dynamic>) return;
     for (final e in parseClaudeStreamLine(o)) {
       if (e is ChatPermissionAsk) {
-        _asked[e.requestId] = (e.input, _addRules(o['request']));
+        _asked[e.requestId] = (e.input, claudeAddRules(o['request']));
       }
       _events.add(e);
     }
@@ -381,7 +392,7 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
           toolName: req['tool_name'] as String? ?? '',
           input: (req['input'] as Map?)?.cast<String, dynamic>() ?? const {},
           description: req['description'] as String?,
-          alwaysRule: _ruleLabel(_addRules(req)),
+          alwaysRule: claudeRuleLabel(claudeAddRules(req)),
         ),
       ];
     case 'result':
@@ -400,7 +411,7 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
 
 /// A primeira sugestão `addRules` de um `can_use_tool` (o que o Claude Code
 /// gravaria com "sempre permitir").
-Map<String, dynamic>? _addRules(Object? req) {
+Map<String, dynamic>? claudeAddRules(Object? req) {
   if (req is! Map) return null;
   final list = req['permission_suggestions'];
   if (list is! List) return null;
@@ -413,7 +424,7 @@ Map<String, dynamic>? _addRules(Object? req) {
 }
 
 /// `Bash(npm test *)`: a regra como o settings.json escreve.
-String? _ruleLabel(Map<String, dynamic>? sugg) {
+String? claudeRuleLabel(Map<String, dynamic>? sugg) {
   final rules = sugg?['rules'];
   if (rules is! List || rules.isEmpty || rules.first is! Map) return null;
   final r = rules.first as Map;

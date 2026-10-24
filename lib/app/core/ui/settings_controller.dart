@@ -136,9 +136,7 @@ class SettingsController extends ChangeNotifier {
 
   /// Importa um tema de [file] e já o **ativa** — quem acabou de escolher um
   /// arquivo quer ver o resultado, não ir procurar no dropdown depois.
-  Future<Result<GshThemeSpec, ThemeStoreError>> importTheme(
-    File file,
-  ) async {
+  Future<Result<GshThemeSpec, ThemeStoreError>> importTheme(File file) async {
     final result = await _themeStore.import(file);
     if (result case Success(:final value)) {
       _customThemes = await _themeStore.loadAll();
@@ -268,8 +266,7 @@ class SettingsController extends ChangeNotifier {
   void setTasksPanelHeight(double value) =>
       _apply(_settings.copyWith(tasksPanelHeight: value));
 
-  void setShowGsh(bool value) =>
-      _apply(_settings.copyWith(showGsh: value));
+  void setShowGsh(bool value) => _apply(_settings.copyWith(showGsh: value));
 
   /// Modo desenvolvedor (plano 68): telemetria do próprio app + métricas.
   void setDeveloperMode(bool value) =>
@@ -299,6 +296,9 @@ class SettingsController extends ChangeNotifier {
 
   void setClassifySessionStates(bool value) =>
       _apply(_settings.copyWith(classifySessionStates: value));
+
+  void setChatRemoteControl(bool value) =>
+      _apply(_settings.copyWith(chatRemoteControl: value));
 
   /// Paleta de código do modo claro; `null` = a do tema ativo.
   void setCodeThemeLight(String? id) => _apply(

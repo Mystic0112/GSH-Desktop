@@ -97,6 +97,14 @@ class ClaudeCodePanel extends StatelessWidget {
           title: tr.sectionRemoteControl,
           rows: [
             SettingsRow(
+              title: tr.chatRemoteControlTitle,
+              description: tr.chatRemoteControlDesc,
+              trailing: Switch(
+                value: s.chatRemoteControl,
+                onChanged: controller.setChatRemoteControl,
+              ),
+            ),
+            SettingsRow(
               title: tr.remoteControlTitle,
               description: tr.remoteControlDesc,
               trailing: const ClaudeCodeSettingSwitch(

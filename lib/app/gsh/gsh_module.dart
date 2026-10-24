@@ -43,6 +43,9 @@ import 'package:gsh_desktop/app/gsh/data/farm/claude_transcript_farm_source.dart
 import 'package:gsh_desktop/app/gsh/domain/contracts/session_directory.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/codex_rollout_farm_source.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/multi_farm_source.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/settings_store.dart';
+import 'package:gsh_desktop/app/gsh/data/chat/chat_engine_router.dart';
+import 'package:gsh_desktop/app/gsh/data/chat/claude_cli_engine.dart';
 import 'package:gsh_desktop/app/gsh/data/chat/claude_stream_engine.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/chat_engine.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
@@ -274,8 +277,14 @@ Future<Module> buildGshModule({
             AntigravityFarmSource(),
           ]),
         )
-        // Chat (protótipo do harness): Claude Code em stream-json.
-        ..add<ChatEngineFactory>(ClaudeStreamEngineFactory.new)
+        // Chat: Claude Code em stream-json ou, com a preferência
+        // `chatRemoteControl`, o CLI interativo (Remote Control) num PTY.
+        ..addInstance<SettingsStore>(JsonSettingsStore(settingsStore))
+        ..addLazySingleton<ClaudeStreamEngineFactory>(
+          ClaudeStreamEngineFactory.new,
+        )
+        ..addInstance<ClaudeCliEngineFactory>(const ClaudeCliEngineFactory())
+        ..add<ChatEngineFactory>(ChatEngineRouter.new)
         // Telemetria (plano 66): um store por workspace no cache local, parser
         // único compartilhado por task/wrapper, ingest resolve pelo cwd.
         ..addInstance<TelemetryStoreProvider>(TelemetryStoreRegistry())

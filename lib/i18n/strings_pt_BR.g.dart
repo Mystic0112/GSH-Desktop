@@ -1360,6 +1360,7 @@ class _Translations$gsh$chat$pt_BR extends Translations$gsh$chat$en {
 	@override String sendToSession({required Object name}) => 'Mande esta mensagem para a sessão "${name}" com SendMessage e espere a resposta: ';
 	@override String get remoteControl => 'Remote Control';
 	@override String get remoteControlHint => 'Continuar esta conversa num terminal com Remote Control (celular, claude.ai/code). O motor do chat não suporta Remote Control.';
+	@override String remoteControlActive({required Object url}) => 'Esta conversa já está no Remote Control: continue no celular ou em ${url}';
 	@override String get remoteControlNoSession => 'Mande uma mensagem primeiro: o Remote Control continua uma conversa que já existe.';
 	@override String get remoteControlBusy => 'Espere o agente terminar este turno e tente de novo.';
 	@override String get remoteControlFailed => 'Não consegui abrir o terminal neste workspace.';
@@ -2149,6 +2150,8 @@ class _Translations$settings$page$claudeCode$pt_BR extends Translations$settings
 	@override String get viewThinking => 'Raciocínio';
 	@override String get viewVerbose => 'Detalhado';
 	@override String get sectionRemoteControl => 'Remote Control';
+	@override String get chatRemoteControlTitle => 'Chat com Remote Control (experimental)';
+	@override String get chatRemoteControlDesc => 'O chat do GSH roda o claude interativo num terminal escondido, conectado ao Remote Control: a conversa aparece no celular e em claude.ai/code, e sessões de outras máquinas enxergam ela. A resposta chega por mensagem (sem aparecer letra a letra). Vale para chats abertos depois da troca; desligue para voltar ao motor rápido.';
 	@override String get remoteControlTitle => 'Conectar novas sessões ao Remote Control';
 	@override String get remoteControlDesc => 'Toda sessão do claude que você iniciar num terminal se conecta ao Remote Control, para continuar no celular ou em claude.ai/code. Fica no ~/.claude/settings.json (remoteControlAtStartup). Exige login claude.ai (Pro, Max, Team ou Enterprise).';
 	@override String saveFailed({required Object detail}) => 'Não consegui salvar: ${detail}';
@@ -3379,6 +3382,7 @@ extension on TranslationsPtBr {
 			'gsh.chat.sendToSession' => ({required Object name}) => 'Mande esta mensagem para a sessão "${name}" com SendMessage e espere a resposta: ',
 			'gsh.chat.remoteControl' => 'Remote Control',
 			'gsh.chat.remoteControlHint' => 'Continuar esta conversa num terminal com Remote Control (celular, claude.ai/code). O motor do chat não suporta Remote Control.',
+			'gsh.chat.remoteControlActive' => ({required Object url}) => 'Esta conversa já está no Remote Control: continue no celular ou em ${url}',
 			'gsh.chat.remoteControlNoSession' => 'Mande uma mensagem primeiro: o Remote Control continua uma conversa que já existe.',
 			'gsh.chat.remoteControlBusy' => 'Espere o agente terminar este turno e tente de novo.',
 			'gsh.chat.remoteControlFailed' => 'Não consegui abrir o terminal neste workspace.',
@@ -3588,9 +3592,9 @@ extension on TranslationsPtBr {
 			'settings.page.terminal.shellDesc' => 'Qual shell novas abas de terminal abrem. A seta ao lado do + ainda abre qualquer outro, só para aquela aba.',
 			'settings.page.terminal.noWslMessage' => 'Nenhuma distro WSL encontrada. Instale uma (wsl.exe --install) e reinicie o GSH Desktop para vê-la listada aqui.',
 			'settings.page.terminal.sectionBehavior' => 'Comportamento',
-			'settings.page.terminal.closeOnExitTitle' => 'Fechar a aba quando o shell encerrar',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.terminal.closeOnExitTitle' => 'Fechar a aba quando o shell encerrar',
 			'settings.page.terminal.closeOnExitDesc' => 'Quando um shell termina sozinho (exit, Ctrl-D), fecha a aba em vez de deixar um terminal morto.',
 			'settings.page.appearance.sectionTheme' => 'Tema',
 			'settings.page.appearance.themeTitle' => 'Tema',
@@ -3721,6 +3725,8 @@ extension on TranslationsPtBr {
 			'settings.page.claudeCode.viewThinking' => 'Raciocínio',
 			'settings.page.claudeCode.viewVerbose' => 'Detalhado',
 			'settings.page.claudeCode.sectionRemoteControl' => 'Remote Control',
+			'settings.page.claudeCode.chatRemoteControlTitle' => 'Chat com Remote Control (experimental)',
+			'settings.page.claudeCode.chatRemoteControlDesc' => 'O chat do GSH roda o claude interativo num terminal escondido, conectado ao Remote Control: a conversa aparece no celular e em claude.ai/code, e sessões de outras máquinas enxergam ela. A resposta chega por mensagem (sem aparecer letra a letra). Vale para chats abertos depois da troca; desligue para voltar ao motor rápido.',
 			'settings.page.claudeCode.remoteControlTitle' => 'Conectar novas sessões ao Remote Control',
 			'settings.page.claudeCode.remoteControlDesc' => 'Toda sessão do claude que você iniciar num terminal se conecta ao Remote Control, para continuar no celular ou em claude.ai/code. Fica no ~/.claude/settings.json (remoteControlAtStartup). Exige login claude.ai (Pro, Max, Team ou Enterprise).',
 			'settings.page.claudeCode.saveFailed' => ({required Object detail}) => 'Não consegui salvar: ${detail}',
