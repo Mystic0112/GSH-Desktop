@@ -72,13 +72,17 @@ class _Root extends StatelessWidget {
   Widget build(BuildContext context) => TranslationProvider(
     child: RepaintBoundary(
       key: shotKey,
-      child: ShadcnApp.router(
-        debugShowCheckedModeBanner: false,
-        theme: buildTheme(
-          brightness: Brightness.dark,
-          settings: shotSettings,
-        ).copyWith(platform: () => TargetPlatform.linux),
-        routerConfig: ModularApp.routerConfigOf(context),
+      // Tema acima do router (como no app): o popover da fila mora no
+      // overlay, fora da rota.
+      child: shotTheme(
+        ShadcnApp.router(
+          debugShowCheckedModeBanner: false,
+          theme: buildTheme(
+            brightness: Brightness.dark,
+            settings: shotSettings,
+          ).copyWith(platform: () => TargetPlatform.linux),
+          routerConfig: ModularApp.routerConfigOf(context),
+        ),
       ),
     ),
   );
@@ -127,7 +131,7 @@ Future<List<int>> _mount(WidgetTester tester, _Source source) async {
       ..route(
         '/',
         provide: (s) => s..addChangeNotifier<FarmViewModel>(FarmViewModel.new),
-        child: (context, state) => shotTheme(_Bar(opened)),
+        child: (context, state) => _Bar(opened),
       ),
   );
   await tester.pumpWidget(ModularApp(module: module, child: const _Root()));

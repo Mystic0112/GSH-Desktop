@@ -104,7 +104,13 @@ class _FarmStripState extends State<FarmStrip> {
           AppMenuItem(
             value: w.sessionId,
             label: w.title,
-            leading: const AgentStatusDot(status: FarmStatus.waiting),
+            // Center: o slot do MenuButton estica o filho.
+            leading: const SizedBox.square(
+              dimension: 15,
+              child: Center(
+                child: AgentStatusDot(status: FarmStatus.waiting, pulse: false),
+              ),
+            ),
             labelWidget: _QueueRow(w),
           ),
       ],

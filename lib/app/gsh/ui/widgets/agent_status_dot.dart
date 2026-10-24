@@ -31,7 +31,8 @@ FarmStatus? workspaceAgentStatus(Iterable<TerminalSession> tabs) {
   return working ? FarmStatus.working : null;
 }
 
-/// Bolinha de status de agente. Amarelo (esperando) pisca. [hollow] desenha só
+/// Bolinha de status de agente. Amarelo (esperando) pisca, salvo [pulse]
+/// `false` (lista onde todo mundo é amarelo). [hollow] desenha só
 /// o contorno (aba parada já vista, para não confundir com o ponto de
 /// "terminou e você não viu").
 class AgentStatusDot extends StatelessWidget {
@@ -40,11 +41,13 @@ class AgentStatusDot extends StatelessWidget {
     required this.status,
     this.size = 7,
     this.hollow = false,
+    this.pulse = true,
   });
 
   final FarmStatus status;
   final double size;
   final bool hollow;
+  final bool pulse;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +61,7 @@ class AgentStatusDot extends StatelessWidget {
         shape: BoxShape.circle,
       ),
     );
-    return status == FarmStatus.waiting ? AgentPulse(child: dot) : dot;
+    return pulse && status == FarmStatus.waiting ? AgentPulse(child: dot) : dot;
   }
 }
 
