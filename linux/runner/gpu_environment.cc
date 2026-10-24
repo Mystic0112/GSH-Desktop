@@ -3,6 +3,10 @@
 #include <unistd.h>
 
 #include <cstdlib>
+#include <cstring>
+#include <vector>
+
+extern char** environ;
 
 namespace {
 
@@ -56,4 +60,22 @@ std::string configure_linux_gpu_environment() {
   }
   set_default("GDK_BACKEND", "x11");
   return "integrated-x11-default";
+}
+
+int drop_inherited_claude_session() {
+  // Aberto de dentro de uma sessão do Claude Code (ex.: `flutter run` num
+  // terminal com o claude), o GSH herdava CLAUDECODE/CLAUDE_CODE_* e passava
+  // para todo terminal: o `claude` lá dentro se achava sessão-filha e não
+  // gravava o transcript, e a fazenda ficava cega.
+  std::vector<std::string> names;
+  for (char** e = environ; *e != nullptr; ++e) {
+    const char* eq = std::strchr(*e, '=');
+    if (eq == nullptr) continue;
+    const std::string name(*e, eq - *e);
+    if (name == "CLAUDECODE" || name.rfind("CLAUDE_CODE_", 0) == 0) {
+      names.push_back(name);
+    }
+  }
+  for (const auto& name : names) unsetenv(name.c_str());
+  return static_cast<int>(names.size());
 }

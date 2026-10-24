@@ -47,5 +47,13 @@ int main() {
   assert(std::string(std::getenv("__GLX_VENDOR_LIBRARY_NAME")) == "nvidia");
   assert(std::string(std::getenv("__NV_PRIME_RENDER_OFFLOAD")) == "1");
   assert(std::getenv("GDK_BACKEND") == nullptr);
+
+  setenv("CLAUDECODE", "1", 1);
+  setenv("CLAUDE_CODE_CHILD_SESSION", "1", 1);
+  setenv("CLAUDE_EFFORT", "high", 1);
+  assert(drop_inherited_claude_session() >= 2);
+  assert(std::getenv("CLAUDECODE") == nullptr);
+  assert(std::getenv("CLAUDE_CODE_CHILD_SESSION") == nullptr);
+  assert(std::string(std::getenv("CLAUDE_EFFORT")) == "high");
   return 0;
 }
