@@ -5,221 +5,33 @@ import 'dart:ui' as ui;
 
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_critter.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_squad_looks.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_world.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/pix.dart';
 import 'package:gsh_desktop/app/core/ui/themes/agent_colors.dart';
 import 'package:path/path.dart' as p;
 
-/// O que o bicho está fazendo na cena (não é a [FarmActivity]: é a pose).
-enum CritterMode {
-  /// No canteiro, digitando no laptop.
-  work,
-
-  /// No canteiro, parado, com o balão de alerta: precisa de alguém.
-  wait,
-
-  /// Passeando em volta do celeiro.
-  wander,
-
-  /// Sentado no curral, olhos fechados.
-  sleep,
-
-  /// Subagente que terminou: comemora e apaga.
-  done,
-}
-
-/// Um bicho da fazenda (o `Critter` do clodfarm): um Clawd por loop
-/// principal ou um mini por subagente.
-class Critter {
-  Critter(this.loop, this.x, this.y, this.born, math.Random rnd)
-    : tx = x,
-      ty = y,
-      wait = rnd.nextDouble() * 2,
-      blinkT = 2 + rnd.nextDouble() * 3,
-      lookT = 1 + rnd.nextDouble() * 4,
-      speed = 20 + rnd.nextDouble() * 6,
-      seed = (hashStr(loop.id) % 97) / 7;
-
-  FarmLoop loop;
-  double x, y, tx, ty, wait, blinkT, lookT, speed;
-  final double seed;
-  double born;
-  double blink = 0, phaseT = 0, hop = 0;
-  double? gone, strollT, cheerUntil;
-  int dir = 0, phase = 0, step = 0, look = 0;
-  bool moving = false;
-  ui.Offset? spot, home, stroll;
-  CritterMode mode = CritterMode.wander;
-  late FarmSkin skin;
-  int color = 0;
-
-  bool get mini => loop.isSubagent;
-
-  void update(double dt, FarmScene scene) {
-    final rnd = scene.rnd;
-    blinkT -= dt;
-    if (blinkT < 0) {
-      blink = 0.14;
-      blinkT = 2 + rnd.nextDouble() * 4;
-    }
-    blink = math.max(0, blink - dt);
-    ui.Offset? goal;
-    final s = spot;
-    if (mini && s != null) {
-      goal = s;
-    } else if (mode == CritterMode.work && s != null) {
-      // trabalhando ele não fica parado: de vez em quando dá uma volta no
-      // canteiro para olhar a plantação e volta
-      strollT = (strollT ?? 4 + rnd.nextDouble() * 10) - dt;
-      if (strollT! < 0) {
-        if (stroll != null) {
-          stroll = null;
-          strollT = 6 + rnd.nextDouble() * 12;
-        } else {
-          stroll = ui.Offset(
-            s.dx + 4 + rnd.nextDouble() * 30,
-            s.dy - 2 - rnd.nextDouble() * 24,
-          );
-          strollT = 2 + rnd.nextDouble() * 2.5;
-        }
-      }
-      goal = stroll ?? s;
-    } else if (mode == CritterMode.wait && s != null) {
-      goal = s;
-    } else if (mode == CritterMode.sleep) {
-      goal = home;
-    }
-    lookT -= dt;
-    if (lookT < 0) {
-      look = look != 0 ? 0 : (rnd.nextBool() ? -1 : 1);
-      lookT = look != 0
-          ? 0.8 + rnd.nextDouble()
-          : (mode == CritterMode.wait ? 0.6 : 2) + rnd.nextDouble() * 4;
-    }
-    if (goal != null) {
-      tx = goal.dx;
-      ty = goal.dy;
-    } else if ((tx - x).abs() + (ty - y).abs() < 1.5) {
-      wait -= dt;
-      if (wait <= 0) {
-        final p = scene.randomSpot();
-        tx = p.dx;
-        ty = p.dy;
-        wait = 1 + rnd.nextDouble() * 4;
-      }
-    }
-    final dx = tx - x, dy = ty - y;
-    if (dx.abs() + dy.abs() < 1.2) {
-      moving = false;
-      phase = 0;
-      step = 0;
-      if (mode == CritterMode.work) dir = 1;
-    } else {
-      final dist = math.sqrt(dx * dx + dy * dy);
-      moving = true;
-      final sp = (mode == CritterMode.work ? 34 : speed) * dt;
-      final nx = x + dx / dist * math.min(sp, dist);
-      final ny = y + dy / dist * math.min(sp, dist);
-      final l = scene.layout;
-      if (goal == null && l != null && l.blocked(nx, ny) && !l.blocked(x, y)) {
-        // passeando, não atravessa lago nem celeiro: escolhe outro lugar
-        tx = x;
-        ty = y;
-        wait = 0;
-      } else {
-        x = nx;
-        y = ny;
-      }
-      if (dx.abs() > 0.5) dir = dx.sign.toInt();
-      phaseT += dt; // o passo: pisa, passa, pisa o outro, passa
-      if (phaseT > 0.11) {
-        phaseT = 0;
-        step = (step + 1) % 4;
-        phase = const [1, 0, 2, 0][step];
-      }
-    }
-    if (mode == CritterMode.wait) hop = (hop + dt * 4) % (math.pi * 2);
-  }
-
-  bool cheering(double now) =>
-      (cheerUntil != null && now < cheerUntil!) || now - born < 1.8;
-
-  ui.Image sprite(double t, double now) {
-    final blinking = blink > 0;
-    if (mini) {
-      final done = mode == CritterMode.done;
-      return miniHD(
-        done && !cheering(now) ? 0xFF9aa3b2 : color,
-        legs: phase,
-        blink: blinking || mode == CritterMode.sleep,
-        arms:
-            (mode == CritterMode.work &&
-                    !moving &&
-                    (t * 6 + seed).floor().isOdd) ||
-                (done && cheering(now) && (t * 5).floor().isOdd)
-            ? 1
-            : 0,
-      );
-    }
-    final sleep = mode == CritterMode.sleep && !moving;
-    final typing = mode == CritterMode.work && !moving && stroll == null;
-    final cheer = cheering(now);
-    return skin.frame(
-      look: moving || typing ? dir : look,
-      legs: phase,
-      blink: blinking,
-      sleep: sleep,
-      arms: typing
-          ? ((t * 7 + seed).floor().isOdd ? 2 : 3)
-          : cheer && !moving
-          ? ((t * 5).floor().isOdd ? 1 : 0)
-          : 0,
-      happy: cheer && !sleep,
-    );
-  }
-
-  /// Quanto ele sobe neste quadro, em pixels de mundo (meios: a grade HD).
-  double bob(double t, double now) {
-    if (mode == CritterMode.wait && !moving) {
-      return -(math.sin(hop).abs() * 2.5 * 2).round() / 2;
-    }
-    if (!moving && cheering(now)) {
-      return -((math.sin(t * 8).abs() * 5).round()) / 2;
-    }
-    if (moving) return step.isOdd ? -0.5 : 0;
-    if (mini) return 0;
-    if (mode == CritterMode.sleep) {
-      return math.sin(t * 1.6 + seed) > 0.2 ? 0.5 : 0;
-    }
-    return math.sin(t * 2 + seed) > 0.7 ? -0.5 : 0;
-  }
-
-  /// Ícone do balão sobre a cabeça.
-  FarmIcon get icon => switch (loop.activity) {
-    FarmActivity.thinking => FarmIcon.dots,
-    FarmActivity.reading => FarmIcon.scroll,
-    FarmActivity.editing => FarmIcon.quill,
-    FarmActivity.running => FarmIcon.terminal,
-    FarmActivity.searching => FarmIcon.globe,
-    FarmActivity.delegating => FarmIcon.tasks,
-    FarmActivity.tooling => FarmIcon.gear,
-    FarmActivity.waiting => FarmIcon.alert,
-    FarmActivity.idle => FarmIcon.pause,
-    FarmActivity.sleeping => FarmIcon.zzz,
-    FarmActivity.done => FarmIcon.heart,
-  };
-}
+export 'farm_critter.dart';
 
 /// O que está plantado num canteiro.
 class FarmPlotInfo {
   const FarmPlotInfo({
     required this.main,
+    required this.title,
     required this.project,
     required this.stage,
     required this.more,
+    required this.minis,
   });
+
+  /// O dono do canteiro; `null` no canteiro dos órfãos (subagentes cujo pai
+  /// saiu da janela).
   final FarmLoop? main;
+
+  /// A etiqueta embaixo do canteiro.
+  final String title;
 
   /// Nome da pasta, só no primeiro canteiro de cada projeto.
   final String? project;
@@ -227,7 +39,28 @@ class FarmPlotInfo {
 
   /// Subagentes além dos [subSpots] (a plaquinha "+N").
   final int more;
+
+  /// Minis desenhados em volta (do 3º em diante há minis embaixo).
+  final int minis;
+
+  FarmPlotInfo get unlabeled => FarmPlotInfo(
+    main: main,
+    title: title,
+    project: null,
+    stage: stage,
+    more: more,
+    minis: minis,
+  );
 }
+
+/// Dono de um canteiro: um loop principal com os subagentes dele, ou só os
+/// subagentes de um pai que saiu da janela ([main] `null`, [id] = o pai).
+typedef _Owner = ({
+  String id,
+  String project,
+  FarmLoop? main,
+  List<FarmLoop> subs,
+});
 
 /// A cena viva (o `Scene` + `reconcile` do clodfarm, sem DOM): os bichos, os
 /// canteiros de cada loop e as faíscas. Não desenha: o painter lê daqui.
@@ -244,9 +77,22 @@ class FarmScene {
   /// Relógio da cena em segundos.
   double t = 0;
   bool _first = true;
+
+  /// Algum principal trabalhando (o espantalho acorda).
   bool working = false;
 
-  /// Quanto a fazenda precisa caber: canteiros (principais) e vagas no curral.
+  /// Algum bicho desenhado trabalhando: a fazenda anima no ritmo cheio.
+  bool busy = false;
+
+  bool _dirty = true;
+  int _key = 0;
+
+  /// Relógio lento (degraus de 1/4 s) das animações de fundo: plantação
+  /// balançando, "z" de quem dorme, respiração. Em degraus, os quadros entre
+  /// um degrau e outro saem iguais e não precisam ser repintados.
+  double get calm => (t * 4).floor() / 4;
+
+  /// Quanto a fazenda precisa caber: canteiros e vagas no curral.
   ({int plots, int yard}) need = (plots: 0, yard: 0);
 
   /// O layout atual não comporta [need]: reconstruir o mundo.
@@ -263,26 +109,45 @@ class FarmScene {
   /// Põe a cena de acordo com os loops do ViewModel.
   void sync(List<FarmPlot> plots) {
     _last = plots;
+    _dirty = true;
     final mains = [for (final pl in plots) ...pl.mains];
+    final mainIds = {for (final m in mains) m.id};
+    final subsOf = <String, List<FarmLoop>>{};
+    for (final pl in plots) {
+      for (final l in pl.loops) {
+        if (l.isSubagent) (subsOf[l.parentId!] ??= []).add(l);
+      }
+    }
+    final owners = <_Owner>[
+      for (final pl in plots) ...[
+        for (final m in pl.mains)
+          (id: m.id, project: m.project, main: m, subs: subsOf[m.id] ?? []),
+        // órfãos: o pai saiu da janela, mas eles seguem trabalhando
+        for (final MapEntry(key: pid, value: subs) in subsOf.entries)
+          if (!mainIds.contains(pid) && subs.first.project == pl.project)
+            (id: pid, project: pl.project, main: null, subs: subs),
+      ],
+    ];
     final sleepers =
         mains
             .where((m) => m.activity == FarmActivity.sleeping)
             .map((m) => m.id)
             .toList()
           ..sort();
-    need = (plots: mains.length, yard: sleepers.length);
+    need = (plots: owners.length, yard: sleepers.length);
     final l = layout;
     if (l == null) return;
-    // canteiros ficam: um loop guarda o seu enquanto existe; um novo pega o
-    // primeiro livre depois dos do mesmo projeto
-    final ids = mains.map((m) => m.id).toSet();
+    // canteiros ficam: um loop guarda o seu enquanto existe (e os órfãos
+    // herdam o do pai); um novo pega o primeiro livre depois dos do mesmo
+    // projeto
+    final ids = owners.map((o) => o.id).toSet();
     _plotOf.removeWhere((id, i) => !ids.contains(id) || i >= l.plots.length);
     final taken = _plotOf.values.toSet();
-    for (final m in mains) {
-      if (_plotOf.containsKey(m.id)) continue;
-      final sib = mains
-          .where((o) => o.project == m.project && _plotOf.containsKey(o.id))
-          .map((o) => _plotOf[o.id]!);
+    for (final o in owners) {
+      if (_plotOf.containsKey(o.id)) continue;
+      final sib = owners
+          .where((x) => x.project == o.project && _plotOf.containsKey(x.id))
+          .map((x) => _plotOf[x.id]!);
       var free = sib.isEmpty ? 0 : sib.reduce(math.max) + 1;
       while (taken.contains(free)) {
         free++;
@@ -294,25 +159,30 @@ class FarmScene {
         }
       }
       if (free >= l.plots.length) break;
-      _plotOf[m.id] = free;
+      _plotOf[o.id] = free;
       taken.add(free);
     }
     final info = List<FarmPlotInfo?>.filled(l.plots.length, null);
     final want = <String, (CritterMode, ui.Offset?, ui.Offset?)>{};
     final loops = <String, FarmLoop>{};
-    for (final pl in plots) {
-      for (final m in pl.mains) {
-        final pi = _plotOf[m.id];
-        if (pi == null) continue;
-        final plot = l.plots[pi];
-        final subs = pl.subagentsOf(m.id).toList()
-          ..sort((a, b) => _rank(a).compareTo(_rank(b)));
-        info[pi] = FarmPlotInfo(
-          main: m,
-          project: p.basename(m.project),
-          stage: _stage(m),
-          more: math.max(0, subs.length - subSpots.length),
-        );
+    final room = <String, double>{};
+    for (final o in owners) {
+      final pi = _plotOf[o.id];
+      if (pi == null) continue;
+      final plot = l.plots[pi];
+      final m = o.main;
+      final subs = [...o.subs]..sort((a, b) => _rank(a).compareTo(_rank(b)));
+      info[pi] = FarmPlotInfo(
+        main: m,
+        title: m?.title ?? subs.first.title,
+        project: p.basename(o.project),
+        stage: _stage(
+          m?.outputTokens ?? subs.fold(0, (n, s) => n + s.outputTokens),
+        ),
+        more: math.max(0, subs.length - subSpots.length),
+        minis: math.min(subs.length, subSpots.length),
+      );
+      if (m != null) {
         final yi = sleepers.indexOf(m.id);
         loops[m.id] = m;
         want[m.id] = (
@@ -325,20 +195,22 @@ class FarmScene {
           ui.Offset(plot.left - 7, plot.bottom),
           yi < 0 ? null : l.yardSpot(yi),
         );
-        for (var n = 0; n < subs.length && n < subSpots.length; n++) {
-          final s = subs[n];
-          loops[s.id] = s;
-          want[s.id] = (
-            switch (s.activity) {
-              FarmActivity.done => CritterMode.done,
-              FarmActivity.waiting => CritterMode.wait,
-              FarmActivity.idle || FarmActivity.sleeping => CritterMode.sleep,
-              _ => CritterMode.work,
-            },
-            ui.Offset(plot.left + subSpots[n].$1, plot.top + subSpots[n].$2),
-            null,
-          );
-        }
+      }
+      for (var n = 0; n < subs.length && n < subSpots.length; n++) {
+        final s = subs[n];
+        loops[s.id] = s;
+        // até 4, um mini a cada 20 px de mundo; mais que isso, a cada 10
+        room[s.id] = subs.length > 4 ? 10 : 20;
+        want[s.id] = (
+          switch (s.activity) {
+            FarmActivity.done => CritterMode.done,
+            FarmActivity.waiting => CritterMode.wait,
+            FarmActivity.idle || FarmActivity.sleeping => CritterMode.sleep,
+            _ => CritterMode.work,
+          },
+          ui.Offset(plot.left + subSpots[n].$1, plot.top + subSpots[n].$2),
+          null,
+        );
       }
     }
     // o nome da pasta só no primeiro canteiro de cada projeto
@@ -346,14 +218,10 @@ class FarmScene {
       for (var i = 0; i < info.length; i++)
         info[i] == null || i == 0 || info[i - 1]?.project != info[i]!.project
             ? info[i]
-            : FarmPlotInfo(
-                main: info[i]!.main,
-                project: null,
-                stage: info[i]!.stage,
-                more: info[i]!.more,
-              ),
+            : info[i]!.unlabeled,
     ];
     working = mains.any((m) => m.activity.status == FarmStatus.working);
+    busy = loops.values.any((m) => m.activity.status == FarmStatus.working);
     want.forEach((id, w) {
       final (mode, spot, home) = w;
       final loop = loops[id]!;
@@ -378,14 +246,27 @@ class FarmScene {
         c.cheerUntil = t + 2.5;
         sparkle(c.x, c.y - 6, 10);
       }
+      final squad = squadLookOf(loop);
       c
         ..loop = loop
         ..gone = null
         ..mode = mode
         ..spot = spot
         ..home = home
-        ..color = argbOf(agentColorFor(loop.agentType ?? loop.id));
-      if (!loop.isSubagent) c.skin = FarmSkin.of(loop.id, c.color);
+        ..squad = squad
+        ..room = room[id] ?? 20
+        ..color = squad?.color ?? argbOf(agentColorFor(loop.agentType ?? id));
+      if (!loop.isSubagent) {
+        c.skin = squad == null
+            ? FarmSkin.of(id, c.color)
+            : FarmSkin.of(
+                id,
+                squad.color,
+                fixed: true,
+                hat: squad.hat,
+                body: squad.body,
+              );
+      }
       if (mode != CritterMode.work) c.stroll = null;
     });
     for (final c in critters.values) {
@@ -432,11 +313,11 @@ class FarmScene {
   };
 
   /// A plantação mostra o trabalho: cresce com os tokens gerados.
-  static CropStage _stage(FarmLoop m) => m.outputTokens < 5000
+  static CropStage _stage(int tokens) => tokens < 5000
       ? CropStage.seed
-      : m.outputTokens < 30000
+      : tokens < 30000
       ? CropStage.sprout
-      : m.outputTokens < 150000
+      : tokens < 150000
       ? CropStage.grow
       : CropStage.ripe;
 
@@ -475,8 +356,9 @@ class FarmScene {
     }
   }
 
-  /// Avança a cena [dt] segundos.
-  void update(double dt) {
+  /// Avança a cena [dt] segundos. Devolve se o quadro mudou (senão, nem
+  /// precisa repintar).
+  bool update(double dt) {
     t += dt;
     for (final c in critters.values) {
       c.update(dt, this);
@@ -501,6 +383,22 @@ class FarmScene {
         ..y += s.vy * dt
         ..vy += 40 * dt;
     }
+    final key = _frameKey();
+    final dirty = _dirty || sparks.isNotEmpty || key != _key;
+    _key = key;
+    _dirty = false;
+    return dirty;
+  }
+
+  /// Tudo o que muda de um quadro para outro, num número: plantação e
+  /// espantalho (pelos relógios deles) e cada bicho ([Critter.frameKey]).
+  int _frameKey() {
+    final c = calm;
+    var h = Object.hash(c, working ? (t * 2.8).floor() : -1);
+    for (final b in critters.values) {
+      h = Object.hash(h, b.frameKey(t, c));
+    }
+    return h;
   }
 
   /// O bicho sob o ponto (em pixels de mundo), o da frente primeiro.

@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:gsh_desktop/app/core/domain/entities/harness.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
@@ -19,6 +20,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:path/path.dart' as p;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
+
+part 'farm_hud.dart';
 
 /// A fazenda de agentes, no visual do clodfarm: celeiro, curral, lago e um
 /// cercado com um canteiro por loop principal. Quem trabalha digita no laptop
@@ -49,6 +52,9 @@ class _FarmViewState extends State<FarmView> {
   final _mouse = ValueNotifier<Offset?>(null);
   final _clock = Stopwatch()..start();
   Timer? _anim;
+  Duration? _every;
+  bool _live = false;
+  int _viewKey = 0;
   FarmWorld? _world;
   Size _size = Size.zero;
   Timer? _resize;
@@ -62,6 +68,7 @@ class _FarmViewState extends State<FarmView> {
     _vm
       ..attach()
       ..addListener(_sync);
+    _hover.addListener(_frame.tick);
     _sync();
   }
 
@@ -69,13 +76,10 @@ class _FarmViewState extends State<FarmView> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     // aba escondida (TickerMode desligado pelo pane) = fazenda parada
-    if (TickerMode.valuesOf(context).enabled) {
-      _anim ??= Timer.periodic(_frameEvery, (_) => _tick());
-      _lastUs = _clock.elapsedMicroseconds;
-    } else {
-      _anim?.cancel();
-      _anim = null;
-    }
+    final live = TickerMode.valuesOf(context).enabled;
+    if (live && !_live) _lastUs = _clock.elapsedMicroseconds;
+    _live = live;
+    _schedule();
   }
 
   @override
@@ -84,6 +88,7 @@ class _FarmViewState extends State<FarmView> {
       ..removeListener(_sync)
       ..detach();
     _anim?.cancel();
+    _hover.removeListener(_frame.tick);
     _resize?.cancel();
     _world?.dispose();
     _labels.dispose();
@@ -98,17 +103,38 @@ class _FarmViewState extends State<FarmView> {
     if (_world != null && _scene.outgrown) unawaited(_rebuild());
   }
 
-  /// 20 quadros por segundo, num Timer e não num Ticker: o Ticker faz o
+  /// 20 quadros por segundo com alguém trabalhando (ou o mouse em cima),
+  /// 12 com a fazenda parada; num Timer e não num Ticker: o Ticker faz o
   /// Flutter compor um quadro a cada vsync (60 Hz), e cada quadro composto
   /// custa CPU (medido no Linux: ~0,5% por fps). A animação é em passos de
   /// pixel e a aba pode ficar aberta por horas.
-  static const _frameEvery = Duration(milliseconds: 50);
+  static const _busyEvery = Duration(milliseconds: 50);
+  static const _calmEvery = Duration(milliseconds: 83);
+
+  /// Liga, desliga ou troca o ritmo do Timer da animação.
+  void _schedule() {
+    final want = !_live
+        ? null
+        : _scene.busy || _hover.value != null
+        ? _busyEvery
+        : _calmEvery;
+    if (want == _every) return;
+    _anim?.cancel();
+    _every = want;
+    _anim = want == null ? null : Timer.periodic(want, (_) => _tick());
+  }
 
   void _tick() {
     final now = _clock.elapsedMicroseconds;
-    _scene.update(math.min(0.1, (now - _lastUs) / 1e6));
+    final dirty = _scene.update(math.min(0.1, (now - _lastUs) / 1e6));
     _lastUs = now;
-    _frame.tick();
+    // quadro igual ao anterior (ninguém andou, nada piscou): nem repinta
+    final view = Object.hash(_cam.x, _cam.y, _cam.z, _world);
+    if (dirty || view != _viewKey) {
+      _viewKey = view;
+      _frame.tick();
+    }
+    _schedule();
   }
 
   /// A janela e o pedaço que o HUD cobre: largo, ele fica ao lado da
@@ -204,6 +230,7 @@ class _FarmViewState extends State<FarmView> {
                       world.layout,
                       size,
                     );
+                    _frame.tick();
                   },
                   child: MouseRegion(
                     onHover: (e) => _hoverAt(e.localPosition),
@@ -219,7 +246,10 @@ class _FarmViewState extends State<FarmView> {
                             ),
                       onDoubleTap: world == null
                           ? null
-                          : () => _cam.fit(world.layout, _viewport(size)),
+                          : () {
+                              _cam.fit(world.layout, _viewport(size));
+                              _frame.tick();
+                            },
                       onScaleStart: (_) => _pinch = 1,
                       onScaleUpdate: (d) {
                         if (world == null) return;
@@ -233,6 +263,8 @@ class _FarmViewState extends State<FarmView> {
                           _pinch = d.scale;
                         }
                         _cam.pan(d.focalPointDelta, world.layout, size);
+                        // arrastar é imediato, não espera o Timer
+                        _frame.tick();
                       },
                       // camada própria: o quadro da fazenda não repinta o
                       // resto da janela
@@ -297,7 +329,7 @@ class _FarmViewState extends State<FarmView> {
     final activity = _activityLabel(tr, l.activity);
     final text = [
       l.title,
-      if (!l.isSubagent) p.basename(l.project),
+      if (!l.isSubagent) '${p.basename(l.project)} · ${_harnessLabel(l)}',
       if (l.agentType != null) l.agentType!,
       if (l.tool != null) '$activity · ${l.tool}' else activity,
       tr.tokensDetail(
@@ -341,153 +373,19 @@ class _Frame extends ChangeNotifier {
   void tick() => notifyListeners();
 }
 
+/// Nome do harness do loop (`claude` → "Claude Code"): nome próprio, não se
+/// traduz.
+String _harnessLabel(FarmLoop l) =>
+    HarnessCatalog.specs.values
+        .where((s) => s.allEntryPoints.contains(l.harness))
+        .firstOrNull
+        ?.label ??
+    l.harness;
+
 String _compact(int n) {
   if (n >= 1000000) return '${(n / 1000000).toStringAsFixed(1)}M';
   if (n >= 1000) return '${(n / 1000).toStringAsFixed(1)}k';
   return '$n';
-}
-
-/// 1234567 → "1,234,567" (o contador grande do HUD).
-String _grouped(int n) =>
-    n.toString().replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ',');
-
-/// Caixa de pixel do HUD: fundo escuro, borda de tinta, cantos retos.
-class _HudBox extends StatelessWidget {
-  const _HudBox({required this.child});
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-    decoration: BoxDecoration(
-      color: _hudBg,
-      border: Border.all(color: _hudInk, width: 2),
-    ),
-    child: child,
-  );
-}
-
-class _Hud extends StatelessWidget {
-  const _Hud({required this.vm});
-  final FarmViewModel vm;
-
-  @override
-  Widget build(BuildContext context) {
-    final tr = context.t.gsh.farm;
-    final colors = context.colors;
-    final mono = context.typo.mono.copyWith(
-      fontWeight: FontWeight.w700,
-      height: 1.2,
-    );
-    final small = mono.copyWith(fontSize: 11, color: _hudText);
-    final loops = vm.loops.toList();
-    final subs = loops.where((l) => l.isSubagent).length;
-    Widget chip(Widget child) => Padding(
-      padding: const EdgeInsets.only(top: 4),
-      child: _HudBox(child: child),
-    );
-    Widget status(FarmStatus s, String text) => Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(
-            color: farmStatusColor(colors, s),
-            border: Border.all(color: _hudInk),
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(text.toUpperCase(), style: small),
-      ],
-    );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _HudBox(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RawImage(
-                image: iconSprite(FarmIcon.flame),
-                width: 20,
-                height: 20,
-                filterQuality: FilterQuality.none,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                tr.tokens(n: _grouped(vm.outputTokens)).toUpperCase(),
-                style: mono.copyWith(fontSize: 16, color: _hudText),
-              ),
-            ],
-          ),
-        ),
-        chip(
-          Text(
-            '${tr.agents(n: loops.length - subs)} · ${tr.subagents(n: subs)}'
-                .toUpperCase(),
-            style: small,
-          ),
-        ),
-        chip(
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              status(
-                FarmStatus.working,
-                tr.working(n: vm.countBy(FarmStatus.working)),
-              ),
-              status(
-                FarmStatus.waiting,
-                needYou(tr, vm.countBy(FarmStatus.waiting)),
-              ),
-              status(FarmStatus.idle, tr.idle(n: vm.countBy(FarmStatus.idle))),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _FarmEmpty extends StatelessWidget {
-  const _FarmEmpty();
-
-  @override
-  Widget build(BuildContext context) {
-    final tr = context.t.gsh.farm;
-    final mono = context.typo.mono.copyWith(color: _hudText, height: 1.4);
-    return IgnorePointer(
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 380),
-          child: _HudBox(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    tr.emptyTitle.toUpperCase(),
-                    style: mono.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    tr.emptyHint,
-                    textAlign: TextAlign.center,
-                    style: mono.copyWith(fontSize: 11, color: _hudMuted),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
 
 String _activityLabel(Translations$gsh$farm$en tr, FarmActivity a) {

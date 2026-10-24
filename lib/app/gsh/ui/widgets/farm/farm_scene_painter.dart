@@ -3,8 +3,10 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_squad_looks.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_world.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/pix.dart';
 import 'package:flutter/widgets.dart';
@@ -87,7 +89,7 @@ class FarmLabels {
   final _cache = <String, TextPainter>{};
 
   TextPainter of(String text, TextStyle style) => _cache.putIfAbsent(
-    '${style.color?.toARGB32()}|$text',
+    '${style.color?.toARGB32()}|${style.fontSize}|$text',
     () => TextPainter(
       text: TextSpan(text: text, style: style),
       textDirection: TextDirection.ltr,
@@ -124,8 +126,10 @@ class FarmScenePainter extends CustomPainter {
   final TextStyle label;
   final ValueNotifier<Critter?> hover;
 
-  /// Zoom (px por pixel de mundo) a partir do qual etiquetas e balões aparecem.
+  /// Zoom (px por pixel de mundo) a partir do qual a etiqueta fica grande
+  /// (e a plaquinha da pasta aparece), os balões e os nomes dos minis.
   static const tagsAt = 2.0, bubblesAt = 1.9, miniBubblesAt = 3.6;
+  static const miniNamesAt = 4.0;
 
   static final _img = Paint()..filterQuality = FilterQuality.none;
   static final _fill = Paint()..isAntiAlias = false;
@@ -158,7 +162,7 @@ class FarmScenePainter extends CustomPainter {
     final w = world;
     _rect(canvas, 0, 0, size.width, size.height, t0);
     if (w == null) return;
-    final l = w.layout, t = scene.t, r = cam.rt;
+    final l = w.layout, t = scene.t, calm = scene.calm, r = cam.rt;
     canvas
       ..save()
       ..clipRect(Offset.zero & size)
@@ -202,7 +206,7 @@ class FarmScenePainter extends CustomPainter {
         for (var k = 0; k < 3; k++) {
           final x = p.left + 6 + k * 9 + row * 4;
           final y = row == 1 ? p.bottom - 1 : p.top + 8;
-          final s = (math.sin(t * 1.6 + x * 0.7) * 0.9).round() + 1;
+          final s = (math.sin(calm * 1.6 + x * 0.7) * 0.9).round() + 1;
           _draw(canvas, frames[s], x - 2.5, y - 9, 5, 9);
         }
       }
@@ -249,11 +253,8 @@ class FarmScenePainter extends CustomPainter {
     final shC = shadowSprite(7, 2), shM = shadowSprite(4, 1);
     for (final c in list) {
       if (!seen(c.x, c.y)) continue;
-      final s = c.sprite(t, t), bob = c.bob(t, t), x = _hx(c.x), y = _hx(c.y);
-      var fade = c.gone != null
-          ? clampD(1 - (t - c.gone!) / 0.5, 0, 1)
-          : clampD((t - c.born) / 0.35, 0, 1);
-      if (c.mode == CritterMode.done && !c.cheering(t)) fade *= 0.45;
+      final s = c.sprite(t, t), bob = c.bob(t, t, calm);
+      final x = _hx(c.x), y = _hx(c.y), fade = c.fade(t);
       final sh = c.mini ? shM : shC;
       _draw(
         canvas,
@@ -266,7 +267,9 @@ class FarmScenePainter extends CustomPainter {
       );
       final still = !c.moving;
       if (c.mini) {
-        _draw(canvas, s, x - 5, y - 8 + bob, 10, 8, fade);
+        // o mini do squad é mais alto (chapéu): os pés ficam no lugar
+        final mw = s.width / hd, mh = s.height / hd;
+        _draw(canvas, s, x - mw / 2, y - mh + bob, mw, mh, fade);
         if (c.mode == CritterMode.work && still) {
           _rect(canvas, x + 3, y - 4, 4.5, 3, 0xFF1b1f2a);
           _rect(
@@ -275,7 +278,7 @@ class FarmScenePainter extends CustomPainter {
             y - 3.5,
             3.5,
             1,
-            (t * 3 + c.seed).floor().isOdd ? 0xFF7cfc9a : 0xFF2c4a3c,
+            c.typingFrame(t) == 1 ? 0xFF7cfc9a : 0xFF2c4a3c,
           );
           _rect(canvas, x + 3.5, y - 2.5, 2, 0.5, 0xFFd97757);
           _rect(canvas, x + 2.5, y - 1, 5.5, 1, 0xFF9aa3b2);
@@ -283,16 +286,11 @@ class FarmScenePainter extends CustomPainter {
         continue;
       }
       _draw(canvas, s, x - 8, y - 17 + bob, 16, 18, fade);
+      // Codex e Antigravity levam um selo no peito (Claude é o padrão)
+      final badge = _badge(c.loop.harness);
+      if (badge != null) _draw(canvas, badge, x - 9, y - 7 + bob, 5, 7, fade);
       if (still && c.stroll == null && c.mode == CritterMode.work) {
-        _draw(
-          canvas,
-          laptopHD[(t * 3 + c.seed).floor() % 2],
-          x + 4,
-          y - 6,
-          9,
-          7,
-          fade,
-        );
+        _draw(canvas, laptopHD[c.typingFrame(t)], x + 4, y - 6, 9, 7, fade);
       } else if (still && c.mode == CritterMode.wait) {
         _draw(canvas, laptopHD[2], x + 4, y - 6, 9, 7, fade);
         _draw(
@@ -306,7 +304,7 @@ class FarmScenePainter extends CustomPainter {
         );
       } else if (still && c.mode == CritterMode.sleep) {
         for (var k = 0; k < 2; k++) {
-          final ph = (t * 0.4 + k * 0.5 + c.seed) % 1;
+          final ph = c.zPhase(calm, k);
           _draw(
             canvas,
             zed,
@@ -360,55 +358,70 @@ class FarmScenePainter extends CustomPainter {
     double z,
     bool Function(double, double, [double]) seen,
   ) {
-    final l = world!.layout, t = scene.t;
-    if (z >= tagsAt) {
-      // até o bicho do canteiro vizinho (que fica 15 px à esquerda dele)
-      final maxW = (plotCx - 17) * z;
-      for (var i = 0; i < l.plots.length && i < scene.plotInfo.length; i++) {
-        final info = scene.plotInfo[i], m = info?.main;
-        if (m == null) continue;
-        final p = l.plots[i];
-        if (!seen(p.left, p.top, 40)) continue;
-        // alinhada à esquerda do canteiro: o balão do bicho da fileira de
-        // baixo fica à esquerda dele, e não cobre o título
-        final at = cam.toScreen(p.left, p.bottom + 9.5);
-        labels
-            .of(_clip(m.title, (maxW / 6.2).floor()), label)
-            .paint(canvas, at);
-        // o nome da pasta numa plaquinha de madeira no canto do primeiro
-        // canteiro de cada projeto
-        if (info!.project != null) {
-          final corner = cam.toScreen(p.left, p.top);
-          final pw = p.width * z - 6;
-          final sp = labels.of(
-            _clip(info.project!, (pw / 5.6).floor()),
-            _plank,
-          );
-          final box = Rect.fromLTWH(
-            corner.dx - 2,
-            corner.dy - 2,
-            sp.width + 6,
-            sp.height + 2,
-          );
-          _rect(canvas, box.left, box.top, box.width, box.height, 0xFF3a2616);
-          _rect(
-            canvas,
-            box.left + 1,
-            box.top + 1,
-            box.width - 2,
-            box.height - 2,
-            0xFFc9964a,
-          );
-          _rect(
-            canvas,
-            box.left + 1,
-            box.top + 1,
-            box.width - 2,
-            1,
-            0xFFdcae62,
-          );
-          sp.paint(canvas, Offset(box.left + 3, box.top + 1));
-        }
+    final l = world!.layout, t = scene.t, calm = scene.calm;
+    final names = z >= miniNamesAt;
+    // o nome de cada mini embaixo dos pés (o do squad, se ele é um)
+    if (names) {
+      for (final c in list) {
+        if (!c.mini || c.gone != null || !seen(c.x, c.y)) continue;
+        final tp = labels.of(
+          _clip(miniName(c.loop), ((c.room * z - 6) / 4.9).floor()),
+          _name,
+        );
+        final at = cam.toScreen(c.x, c.y + 0.5);
+        _plate(
+          canvas,
+          tp,
+          Offset((at.dx - tp.width / 2).roundToDouble(), at.dy),
+        );
+      }
+    }
+    // o título embaixo de cada canteiro, em todo zoom: numa plaquinha escura
+    // para ler em cima da grama. Vai até o título do canteiro vizinho.
+    final small = z < tagsAt;
+    final style = small ? _small : label;
+    final maxW = (plotCx - 6) * z - 6;
+    for (var i = 0; i < l.plots.length && i < scene.plotInfo.length; i++) {
+      final info = scene.plotInfo[i];
+      if (info == null) continue;
+      final p = l.plots[i];
+      if (!seen(p.left, p.top, 40)) continue;
+      // alinhada à esquerda do canteiro: o balão do bicho da fileira de
+      // baixo fica à esquerda dele, e não cobre o título; com os nomes dos
+      // minis de baixo à mostra, desce uma linha
+      final tp = labels.of(
+        _clip(info.title, (maxW / (style.fontSize! * 0.62)).floor()),
+        style,
+      );
+      final at = cam.toScreen(p.left, p.bottom + (small ? 9 : 9.5));
+      final drop = names && info.minis >= 3 ? _nameH + 2 : 0.0;
+      _plate(canvas, tp, at.translate(0, drop));
+      // o nome da pasta numa plaquinha de madeira no canto do primeiro
+      // canteiro de cada projeto
+      if (info.project != null && !small) {
+        // com os nomes dos minis de cima à mostra, desce para não cobrir
+        final corner = cam
+            .toScreen(p.left, p.top)
+            .translate(0, names && info.minis > 0 ? _nameH + 3 : 0);
+        final pw = p.width * z - 6;
+        final sp = labels.of(_clip(info.project!, (pw / 5.6).floor()), _plank);
+        final box = Rect.fromLTWH(
+          corner.dx - 2,
+          corner.dy - 2,
+          sp.width + 6,
+          sp.height + 2,
+        );
+        _rect(canvas, box.left, box.top, box.width, box.height, 0xFF3a2616);
+        _rect(
+          canvas,
+          box.left + 1,
+          box.top + 1,
+          box.width - 2,
+          box.height - 2,
+          0xFFc9964a,
+        );
+        _rect(canvas, box.left + 1, box.top + 1, box.width - 2, 1, 0xFFdcae62);
+        sp.paint(canvas, Offset(box.left + 3, box.top + 1));
       }
     }
     final hov = hover.value;
@@ -419,13 +432,37 @@ class FarmScenePainter extends CustomPainter {
       final far = z < (c.mini ? miniBubblesAt : bubblesAt);
       if (!alert && !focus && far) continue;
       if (c.mode == CritterMode.done && !focus) continue;
-      final bob = c.bob(t, t);
-      final at = cam.toScreen(c.x, c.y - (c.mini ? 13 : 25) + bob);
+      final bob = c.bob(t, t, calm);
+      final top = c.mini ? (c.squad?.hat == null ? 13 : 15) : 25;
+      final at = cam.toScreen(c.x, c.y - top + bob);
       // balões crescem com o zoom (1 ou 2 px por pixel do ícone)
       final big = c.mini && !focus ? z >= 5 : z >= 3;
       _bubble(canvas, at, c.icon, alert, big ? 2 : 1, t);
     }
   }
+
+  /// Texto numa plaquinha escura, canto superior esquerdo em [at].
+  void _plate(Canvas canvas, TextPainter tp, Offset at) {
+    _rect(canvas, at.dx - 2, at.dy, tp.width + 4, tp.height, 0xC014100c);
+    tp.paint(canvas, at);
+  }
+
+  /// O que vai embaixo do mini: o nome do agente do squad, senão o tipo
+  /// (`Explore`, `Plan`...), senão o título.
+  static String miniName(FarmLoop l) =>
+      squadNameOf(l)?.toUpperCase() ?? l.agentType ?? l.title;
+
+  static ui.Image? _badge(String harness) => switch (harness) {
+    'codex' => badgeSprite('C', 0xFF10a37f),
+    'antigravity' => badgeSprite('A', 0xFF4285f4),
+    _ => null,
+  };
+
+  static const _nameH = 8.0 * 1.2;
+
+  TextStyle get _small => label.copyWith(fontSize: 9);
+
+  TextStyle get _name => label.copyWith(fontSize: 8, height: 1.2);
 
   TextStyle get _plank => label.copyWith(
     fontSize: 9,

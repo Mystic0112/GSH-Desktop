@@ -16,6 +16,8 @@ const _digits = {
   '8': '111101111101111',
   '9': '111101111001111',
   '+': '000010111010000',
+  'A': '010101111101101',
+  'C': '011100100100011',
 };
 
 /// Plaquinha de madeira com "+N" (minis que o canteiro não desenha), em
@@ -36,6 +38,24 @@ ui.Image signSprite(String text) => _signs[text] ??= () {
   }
   return p.toImage();
 }();
+
+/// Selo de harness ao lado do Clawd (Codex = "C", Antigravity = "A"): letra
+/// clara numa plaquinha da cor [fill]. HD, 10 x 14 (5 x 7 pixels de mundo).
+final _badges = <String, ui.Image>{};
+ui.Image badgeSprite(String letter, int fill) =>
+    _badges['$letter|$fill'] ??= () {
+      final p = Pix(10, 14)
+        ..rect(0, 0, 10, 14, 0xFF1b1420)
+        ..rect(1, 1, 8, 12, fill)
+        ..rect(1, 1, 8, 1, shade(fill, 0.15));
+      final bits = _digits[letter]!;
+      for (var k = 0; k < 15; k++) {
+        if (bits[k] == '1') {
+          p.rect(2 + (k % 3) * 2, 2 + (k ~/ 3) * 2, 2, 2, 0xFFfff8e8);
+        }
+      }
+      return p.toImage();
+    }();
 
 // ------------------------------------------------------------------ ícones
 

@@ -4,6 +4,7 @@ import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:gsh_desktop/app/gsh/data/farm/farm_hook_status.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/farm_scan_cache.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/transcript_tail.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/farm_source.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
@@ -15,8 +16,10 @@ import 'package:path/path.dart' as p;
 /// terminal, `claude -p`, subagentes em `<sid>/subagents/`), e não depende de
 /// qual versão da CLI `gsh` está em `~/.gsh/bin`.
 ///
-/// ponytail: polling com `stat` em todos os `.jsonl` (~200 aqui). Se a pasta
-/// crescer para milhares, trocar por watcher (inotify) só nos projetos ativos.
+/// Polling: a listagem das pastas sai do [FarmScanCache] (a cada 15 s ou
+/// quando uma pasta ativa muda); entre listagens só os transcripts recentes
+/// levam `stat`. ponytail: se a pasta crescer para milhares, trocar por
+/// watcher (inotify) só nos projetos ativos.
 ///
 /// Pedido de permissão não aparece no transcript. Ele vem do hook: o
 /// `gsh hook` grava o último status de cada sessão em
@@ -51,8 +54,13 @@ class ClaudeTranscriptFarmSource implements FarmSource {
   final _tails = <String, TranscriptTail>{};
   final _meta = <String, Map<String, dynamic>>{};
 
-  /// Quando o hook marcou a sessão como `waiting` (pedido de permissão,
-  /// pergunta), ou `null` se o último status do hook é outro.
+  /// Transcripts principais da última listagem completa, os que estavam na
+  /// janela na última varredura (os únicos olhados entre listagens) e os
+  /// subagentes de cada um.
+  List<File> _mains = const [];
+  Set<String> _recent = const {};
+  final _subs = <String, List<File>>{};
+  final _cache = FarmScanCache();
 
   @override
   Future<List<FarmLoop>> scan(DateTime now) async {
@@ -60,60 +68,88 @@ class ClaudeTranscriptFarmSource implements FarmSource {
     if (!await root.exists()) return const [];
     final loops = <FarmLoop>[];
     final live = <String>{};
+    final full = await _cache.due(now);
+    if (full) {
+      _mains = [
+        await for (final dir in root.list(followLinks: false))
+          if (dir is Directory)
+            await for (final f in dir.list(followLinks: false))
+              if (f is File && f.path.endsWith('.jsonl')) f,
+      ];
+      _subs.clear();
+    }
+    final recent = <File>[];
 
-    await for (final dir in root.list(followLinks: false)) {
-      if (dir is! Directory) continue;
-      await for (final f in dir.list(followLinks: false)) {
-        if (f is! File || !f.path.endsWith('.jsonl')) continue;
-        final main = await _read(f, now, isSubagent: false);
-        if (main == null) continue;
-        live.add(f.path);
-        final sid = p.basenameWithoutExtension(f.path);
-        final project = main.cwd ?? p.basename(dir.path);
-        loops.add(
-          _loop(
-            main,
-            id: sid,
-            project: project,
-            now: now,
-            waitingAt: await _hook.waitingAt(sid),
-          ),
+    for (final f
+        in full ? _mains : _mains.where((f) => _recent.contains(f.path))) {
+      final main = await _read(f, now, isSubagent: false);
+      if (main == null) continue;
+      live.add(f.path);
+      recent.add(f);
+      final sid = p.basenameWithoutExtension(f.path);
+      final project = main.cwd ?? p.basename(f.parent.path);
+      loops.add(
+        _loop(
+          main,
+          id: sid,
+          project: project,
+          now: now,
+          waitingAt: await _hook.waitingAt(sid),
+        ),
+      );
+
+      for (final s in _subs[f.path] ??= await _listSubs(_subsDir(f))) {
+        final tail = await _read(s, now, isSubagent: true);
+        if (tail == null) continue;
+        live.add(s.path);
+        final meta = await _metaOf(s.path);
+        final loop = _loop(
+          tail,
+          id: p.basenameWithoutExtension(s.path).substring('agent-'.length),
+          parentId: sid,
+          project: tail.cwd ?? project,
+          now: now,
+          agentType: meta['agentType'] as String?,
+          title: (meta['name'] ?? meta['description']) as String?,
         );
-
-        final subs = Directory(p.join(dir.path, sid, 'subagents'));
-        if (!await subs.exists()) continue;
-        await for (final s in subs.list(followLinks: false)) {
-          final name = p.basename(s.path);
-          if (s is! File ||
-              !name.startsWith('agent-') ||
-              !name.endsWith('.jsonl')) {
-            continue;
-          }
-          final tail = await _read(s, now, isSubagent: true);
-          if (tail == null) continue;
-          live.add(s.path);
-          final meta = await _metaOf(s.path);
-          final loop = _loop(
-            tail,
-            id: p.basenameWithoutExtension(name).substring('agent-'.length),
-            parentId: sid,
-            project: tail.cwd ?? project,
-            now: now,
-            agentType: meta['agentType'] as String?,
-            title: (meta['name'] ?? meta['description']) as String?,
-          );
-          if (loop.activity == FarmActivity.done &&
-              now.difference(loop.lastSeen) > doneLinger) {
-            continue;
-          }
-          loops.add(loop);
+        if (loop.activity == FarmActivity.done &&
+            now.difference(loop.lastSeen) > doneLinger) {
+          continue;
         }
+        loops.add(loop);
       }
+    }
+    _recent = {for (final f in recent) f.path};
+    // Sessão nova numa pasta ativa, ou subagente novo de uma sessão ativa,
+    // muda o mtime de uma destas e força a próxima listagem.
+    if (full) {
+      await _cache.watch([
+        _root,
+        for (final f in recent) ...[f.parent.path, _subsDir(f)],
+      ]);
     }
     await _hook.sweep(now);
     _tails.removeWhere((path, _) => !live.contains(path));
     _meta.removeWhere((path, _) => !live.contains(path));
     return loops;
+  }
+
+  static String _subsDir(File main) => p.join(
+    main.parent.path,
+    p.basenameWithoutExtension(main.path),
+    'subagents',
+  );
+
+  static Future<List<File>> _listSubs(String dir) async {
+    final d = Directory(dir);
+    if (!await d.exists()) return const [];
+    return [
+      await for (final s in d.list(followLinks: false))
+        if (s is File &&
+            p.basename(s.path).startsWith('agent-') &&
+            s.path.endsWith('.jsonl'))
+          s,
+    ];
   }
 
   Future<TranscriptTail?> _read(

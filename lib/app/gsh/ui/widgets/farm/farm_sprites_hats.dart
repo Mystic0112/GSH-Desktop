@@ -26,19 +26,68 @@ class _Hat {
   final bool tint;
 }
 
-final _hats = <_Hat>[
-  _Hat(_straw, base: 0xFFf0cf7a, band: 0xFFc0392b),
-  const _Hat(_beanie, band: 0xFFf7f3ea, tint: true),
-  const _Hat(_cap, band: 0xFFf7f3ea, tint: true),
-  _Hat(_flower, base: 0xFFffd0dc, band: 0xFFf5c542),
-  const _Hat(_headphones, band: 0xFF5b6272, tint: true),
-  _Hat(_bow, base: 0xFFe0508a, band: 0xFFf59cc0),
-  _Hat(_crown, base: 0xFFf5c542, band: 0xFFd63a3a),
-  _Hat(_sprout, base: 0xFF6fcf5b, band: 0xFF3f8f35),
-  _Hat(_leaf, base: 0xFF63a93f, band: 0xFF8a5a2b),
-  _Hat(_wizard, base: 0xFF5b4bb7, band: 0xFFf5c542),
-  _Hat(_chef, base: 0xFFf7f3ea, band: 0xFFd8d2c4),
-];
+/// Os chapéus da fazenda (a ordem é a do sorteio por id: não reordene).
+enum FarmHat {
+  straw,
+  beanie,
+  cap,
+  flower,
+  headphones,
+  bow,
+  crown,
+  sprout,
+  leaf,
+  wizard,
+  chef,
+}
+
+final _hats = <FarmHat, _Hat>{
+  FarmHat.straw: _Hat(_straw, base: 0xFFf0cf7a, band: 0xFFc0392b),
+  FarmHat.beanie: const _Hat(_beanie, band: 0xFFf7f3ea, tint: true),
+  FarmHat.cap: const _Hat(_cap, band: 0xFFf7f3ea, tint: true),
+  FarmHat.flower: _Hat(_flower, base: 0xFFffd0dc, band: 0xFFf5c542),
+  FarmHat.headphones: const _Hat(_headphones, band: 0xFF5b6272, tint: true),
+  FarmHat.bow: _Hat(_bow, base: 0xFFe0508a, band: 0xFFf59cc0),
+  FarmHat.crown: _Hat(_crown, base: 0xFFf5c542, band: 0xFFd63a3a),
+  FarmHat.sprout: _Hat(_sprout, base: 0xFF6fcf5b, band: 0xFF3f8f35),
+  FarmHat.leaf: _Hat(_leaf, base: 0xFF63a93f, band: 0xFF8a5a2b),
+  FarmHat.wizard: _Hat(_wizard, base: 0xFF5b4bb7, band: 0xFFf5c542),
+  FarmHat.chef: _Hat(_chef, base: 0xFFf7f3ea, band: 0xFFd8d2c4),
+};
+
+/// Cor do chapéu: os tingíveis vestem [color], os outros a cor própria.
+int _hatColor(FarmHat hat, int color) {
+  final def = _hats[hat]!;
+  return def.tint ? color : def.base;
+}
+
+/// O chapéu numa grade 32 x 36 (a do Clawd), sem contorno.
+Pix _hatPix(FarmHat hat, int hc) {
+  final def = _hats[hat]!, p = Pix(32, 36);
+  def.draw(p, HatPal(hc, def.band));
+  return p;
+}
+
+/// Tinta do contorno de um chapéu da cor [hc].
+int _hatInk(int hc) => mix(hc, 0xFF1b1420, 0.74);
+
+/// O chapéu na metade do tamanho (para os minis), com uma borda de folga
+/// para o contorno: 18 x 19, o meio da aba na linha 7.
+Pix _hatMini(FarmHat hat, int hc) {
+  final s = _hatPix(hat, hc), d = Pix(18, 19);
+  for (var y = 0; y < 18; y++) {
+    for (var x = 0; x < 16; x++) {
+      final c = [
+        s.get(2 * x, 2 * y),
+        s.get(2 * x + 1, 2 * y),
+        s.get(2 * x, 2 * y + 1),
+        s.get(2 * x + 1, 2 * y + 1),
+      ].firstWhere((c) => c != 0, orElse: () => 0);
+      d.set(x + 1, y + 1, c);
+    }
+  }
+  return d..outline(_hatInk(hc));
+}
 
 void _straw(Pix p, HatPal c) {
   void brim(int from) => p.ovalFn(

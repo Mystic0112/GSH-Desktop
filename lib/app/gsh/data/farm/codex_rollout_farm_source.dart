@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:gsh_desktop/app/gsh/data/farm/farm_hook_status.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/farm_scan_cache.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/farm_source.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:path/path.dart' as p;
@@ -12,8 +13,8 @@ import 'package:path/path.dart' as p;
 /// `session_meta`, `turn_context`, `event_msg`, `response_item`,
 /// `token_count`). Sem subagentes: cada rollout é um loop.
 ///
-/// ponytail: mesma estratégia da fonte do Claude (stat em todos os arquivos
-/// recentes a cada varredura); trocar por watcher se a pasta crescer.
+/// Mesma estratégia da fonte do Claude: listagem pelo [FarmScanCache], `stat`
+/// só nos rollouts recentes entre listagens.
 class CodexRolloutFarmSource implements FarmSource {
   CodexRolloutFarmSource({String? root, FarmHookStatus? hookStatus})
     : _root =
@@ -34,20 +35,31 @@ class CodexRolloutFarmSource implements FarmSource {
   final FarmHookStatus _hook;
   final _tails = <String, CodexTail>{};
 
+  /// Rollouts da última listagem completa; entre listagens só os que estão
+  /// em [_tails] (os recentes) levam `stat`.
+  List<File> _files = const [];
+  final _cache = FarmScanCache();
+
   @override
   Future<List<FarmLoop>> scan(DateTime now) async {
     final root = Directory(_root);
     if (!await root.exists()) return const [];
     final loops = <FarmLoop>[];
     final live = <String>{};
+    final full = await _cache.due(now);
+    if (full) {
+      _files = [
+        await for (final f in root.list(recursive: true, followLinks: false))
+          if (f is File &&
+              p.basename(f.path).startsWith('rollout-') &&
+              f.path.endsWith('.jsonl'))
+            f,
+      ];
+    }
     // Só os últimos dias: um rollout mais velho que a janela não interessa.
-    await for (final f in root.list(recursive: true, followLinks: false)) {
+    for (final f
+        in full ? _files : _files.where((f) => _tails.containsKey(f.path))) {
       final name = p.basename(f.path);
-      if (f is! File ||
-          !name.startsWith('rollout-') ||
-          !name.endsWith('.jsonl')) {
-        continue;
-      }
       final FileStat stat;
       try {
         stat = await f.stat();
@@ -100,6 +112,16 @@ class CodexRolloutFarmSource implements FarmSource {
       );
     }
     _tails.removeWhere((path, _) => !live.contains(path));
+    // Rollout novo cai na pasta do dia (ou cria a do dia/mês): vigia a raiz
+    // e as pastas acima dos rollouts recentes.
+    if (full) {
+      await _cache.watch([
+        _root,
+        for (final path in live)
+          for (var d = p.dirname(path); p.isWithin(_root, d); d = p.dirname(d))
+            d,
+      ]);
+    }
     return loops;
   }
 

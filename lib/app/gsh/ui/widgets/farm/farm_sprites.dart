@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/pix.dart';
 
 part 'farm_sprites_hats.dart';
+part 'farm_sprites_crops.dart';
 part 'farm_sprites_icons.dart';
 
 /// Sprites HD da fazenda (grade 2x: um pixel de mundo = 2x2 pixels de arte).
@@ -135,25 +136,37 @@ Pix clawdHD(
 
 // ------------------------------------------------------------------- skins
 
-/// O visual de um Clawd: chapéu (sorteado pelo id) na cor do agente, corpo
-/// de argila. Guarda as poses já rasterizadas.
+/// O visual de um Clawd: chapéu (sorteado pelo id, ou o fixo do agente do
+/// squad) na cor do agente e corpo de argila (tingido, no squad). Guarda as
+/// poses já rasterizadas.
 class FarmSkin {
-  FarmSkin._(this.hat, this.hatColor);
+  FarmSkin._(this.hat, this.hatColor, this.body);
 
   static final _cache = <String, FarmSkin>{};
 
-  /// Chapéu estável por [id]; os chapéus "tingíveis" usam [color].
-  factory FarmSkin.of(String id, int color) {
-    final hat = hashStr(id) % _hats.length;
-    final def = _hats[hat];
-    final hc = def.tint ? color : def.base;
-    return _cache.putIfAbsent('$hat|$hc', () => FarmSkin._(hat, hc));
+  /// Chapéu estável por [id]; os chapéus "tingíveis" usam [color]. Com
+  /// [hat]/[body] (o visual do squad), o chapéu é esse (`null` = careca) e o
+  /// corpo vem tingido.
+  factory FarmSkin.of(
+    String id,
+    int color, {
+    bool fixed = false,
+    FarmHat? hat,
+    int body = clay,
+  }) {
+    final h = fixed ? hat : FarmHat.values[hashStr(id) % FarmHat.values.length];
+    final hc = h == null ? 0 : _hatColor(h, color);
+    return _cache.putIfAbsent(
+      '${h?.index}|$hc|$body',
+      () => FarmSkin._(h, hc, body),
+    );
   }
 
-  final int hat;
+  final FarmHat? hat;
   final int hatColor;
+  final int body;
   final _frames = List<ui.Image?>.filled(288, null);
-  Pix? _hatPix;
+  Pix? _hat;
 
   ui.Image frame({
     int look = 0,
@@ -173,7 +186,7 @@ class FarmSkin {
         144 * (happy ? 1 : 0);
     return _frames[code] ??= () {
       final p = clawdHD(
-        BodyPal.of(clay),
+        BodyPal.of(body),
         look: look,
         legs: legs,
         blink: blink,
@@ -181,23 +194,33 @@ class FarmSkin {
         arms: arms,
         happy: happy,
       );
-      final hat = _hatPix ??= () {
-        final def = _hats[this.hat];
-        final h = Pix(32, 36);
-        def.draw(h, HatPal(hatColor, def.band));
-        return h..outline(mix(hatColor, 0xFF1b1420, 0.74));
-      }();
-      return (p..stamp(hat, 0, sleep ? 5 : 0)).toImage();
+      final hat = this.hat;
+      if (hat != null) {
+        _hat ??= _hatPix(hat, hatColor)..outline(_hatInk(hatColor));
+        p.stamp(_hat!, 0, sleep ? 5 : 0);
+      }
+      return p.toImage();
     }();
   }
 }
 
-/// Subagente em HD: um Claude pequeno com faixa na cor dele, 20 x 16.
-final _miniCache = <int, ui.Image>{};
-ui.Image miniHD(int color, {int legs = 0, int arms = 0, bool blink = false}) {
-  final code = (color & 0xFFFFFF) * 16 + legs + 3 * arms + 6 * (blink ? 1 : 0);
+/// Subagente em HD: um Claude pequeno com faixa na cor dele, 20 x 16. Com
+/// [hat]/[body] (o visual do squad) o corpo vem tingido e ganha o chapéu
+/// em miniatura: 20 x 21, os pés na mesma linha.
+final _miniCache = <String, ui.Image>{};
+ui.Image miniHD(
+  int color, {
+  int legs = 0,
+  int arms = 0,
+  bool blink = false,
+  FarmHat? hat,
+  int body = clay,
+}) {
+  final code =
+      '$color|$legs|$arms|$blink|${hat?.index}|$body'
+      '|${hat == null ? 0 : _hatColor(hat, color)}';
   return _miniCache[code] ??= () {
-    final p = Pix(20, 16), pal = BodyPal.of(clay);
+    final p = Pix(20, 16), pal = BodyPal.of(body);
     for (var y = 2; y <= 11; y++) {
       for (var x = 3; x <= 16; x++) {
         if ((x == 3 || x == 16) && (y == 2 || y == 11)) continue;
@@ -238,7 +261,12 @@ ui.Image miniHD(int color, {int legs = 0, int arms = 0, bool blink = false}) {
           ..set(ex, 7, _shine);
       }
     }
-    return p.toImage();
+    if (hat == null) return p.toImage();
+    // o meio da aba (linha 7 do chapéu) cobre o topo da cabeça (linha 2)
+    return (Pix(20, 21)
+          ..stamp(p, 0, 5)
+          ..stamp(_hatMini(hat, _hatColor(hat, color)), 1, 0))
+        .toImage();
   }();
 }
 
@@ -376,88 +404,6 @@ final List<ui.Image> scarecrowHD = List.generate(3, (f) {
   }
   return p.toImage();
 });
-
-/// A faísca do Claude (catavento, pedras, colheita madura).
-const spark = [
-  '....o....',
-  '.o..o..o.',
-  '..o.o.o..',
-  '...ooo...',
-  'oooowoooo',
-  '...ooo...',
-  '..o.o.o..',
-  '.o..o..o.',
-  '....o....',
-];
-
-enum CropStage { seed, sprout, grow, ripe, wilt }
-
-/// Plantas do canteiro, 10 x 18 HD, três quadros de balanço por estágio.
-final Map<CropStage, List<ui.Image>> crops = {
-  for (final stage in CropStage.values)
-    stage: [
-      for (final sw in [-1, 0, 1]) _crop(stage, sw),
-    ],
-};
-
-ui.Image _crop(CropStage stage, int sw) {
-  final p = Pix(10, 18);
-  const g1 = 0xFF3f8f35, g2 = 0xFF6fcf5b, g3 = 0xFFa6e27a;
-  switch (stage) {
-    case CropStage.seed:
-      p
-        ..rect(3, 15, 4, 1, 0xFF4a3220)
-        ..set(4, 14, g2)
-        ..set(5, 13, g2)
-        ..set(3, 13, g1)
-        ..set(6, 14, g3);
-    case CropStage.wilt:
-      p
-        ..line(4, 16, 4, 10, 0xFF7a6a3a)
-        ..line(4, 10, 7, 11, 0xFF7a6a3a)
-        ..set(7, 12, 0xFF5c4b27)
-        ..line(3, 13, 1, 14, 0xFF8a7a45)
-        ..set(8, 12, 0xFF5c4b27);
-    default:
-      final top = stage == CropStage.sprout ? 10 : 6;
-      for (var y = top; y <= 16; y++) {
-        p.set(4 + (y < top + 3 ? sw : 0), y, g1);
-      }
-      p
-        ..rect(1 + sw, top + 3, 3, 1, g2)
-        ..set(1 + sw, top + 2, g3)
-        ..rect(5 + sw, top + 5, 3, 1, g2)
-        ..set(7 + sw, top + 4, g3);
-      if (stage != CropStage.sprout) {
-        p
-          ..rect(1, top + 8, 3, 1, g2)
-          ..rect(5, top + 9, 3, 1, g1);
-      }
-      if (stage == CropStage.grow) {
-        p
-          ..rect(3 + sw, top - 2, 3, 2, 0xFFd97757)
-          ..set(4 + sw, top - 2, 0xFFf2a07a);
-      }
-      if (stage == CropStage.ripe) {
-        for (var y = 0; y < spark.length; y++) {
-          for (var x = 0; x < spark[y].length; x++) {
-            final ch = spark[y][x];
-            if (ch == '.') continue;
-            p.set(
-              x + sw - 0.5,
-              y - 1,
-              ch == 'w'
-                  ? 0xFFfff1cf
-                  : (x == 4 || y == 4)
-                  ? 0xFFe8845f
-                  : 0xFFd97757,
-            );
-          }
-        }
-      }
-  }
-  return p.toImage();
-}
 
 final _shadows = <int, ui.Image>{};
 ui.Image shadowSprite(int rx, int ry) => _shadows[rx * 100 + ry] ??= (Pix(
