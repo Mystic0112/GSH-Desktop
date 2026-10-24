@@ -14,6 +14,7 @@ import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_strip.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene_painter.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_team.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_world.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:gsh_desktop/i18n/strings.g.dart';
@@ -24,13 +25,15 @@ import 'package:path/path.dart' as p;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 part 'farm_hud.dart';
+part 'farm_view_team.dart';
 
 /// A fazenda de agentes, no visual do clodfarm: celeiro, curral, lago e um
 /// cercado com um canteiro por loop principal. Quem trabalha digita no laptop
 /// do seu canteiro, quem espera acena com o balão de alerta, quem está ocioso
 /// passeia pelo celeiro e quem dorme cochila no curral; subagentes são minis
-/// em volta do canteiro do pai. Arraste para mover, roda para zoom, duplo
-/// clique para enquadrar.
+/// em volta do canteiro do pai. Com a fazenda do time ligada, as fazendas
+/// dos colegas ficam ao lado da minha (afaste o zoom para ver todas). Arraste
+/// para mover, roda para zoom, duplo clique para enquadrar a minha.
 class FarmView extends StatefulWidget {
   const FarmView({super.key});
 
@@ -65,6 +68,11 @@ class _FarmViewState extends State<FarmView> {
   FarmScenery? _scenery;
   double _pinch = 1;
 
+  /// As fazendas dos colegas (ver `farm_view_team.dart`) e de quem é o bicho
+  /// sob o mouse (`null` = meu).
+  final _team = <FarmLot>[];
+  FarmLot? _hoverLot;
+
   @override
   void initState() {
     super.initState();
@@ -94,6 +102,7 @@ class _FarmViewState extends State<FarmView> {
     _hover.removeListener(_frame.tick);
     _resize?.cancel();
     _world?.dispose();
+    _disposeTeam();
     _labels.dispose();
     _frame.dispose();
     _hover.dispose();
@@ -104,6 +113,7 @@ class _FarmViewState extends State<FarmView> {
   void _sync() {
     _scene.sync(_vm.plots);
     if (_world != null && _scene.outgrown) unawaited(_rebuild());
+    _syncPeers();
   }
 
   /// 20 quadros por segundo com alguém trabalhando (ou o mouse em cima),
@@ -118,7 +128,7 @@ class _FarmViewState extends State<FarmView> {
   void _schedule() {
     final want = !_live
         ? null
-        : _scene.busy || _hover.value != null
+        : _scene.busy || _hover.value != null || _peersBusy
         ? _busyEvery
         : _calmEvery;
     if (want == _every) return;
@@ -129,7 +139,8 @@ class _FarmViewState extends State<FarmView> {
 
   void _tick() {
     final now = _clock.elapsedMicroseconds;
-    final dirty = _scene.update(math.min(0.1, (now - _lastUs) / 1e6));
+    final dt = math.min(0.1, (now - _lastUs) / 1e6);
+    final dirty = _scene.update(dt) | _updatePeers(dt);
     _lastUs = now;
     // quadro igual ao anterior (ninguém andou, nada piscou): nem repinta
     final view = Object.hash(_cam.x, _cam.y, _cam.z, _world);
@@ -179,11 +190,14 @@ class _FarmViewState extends State<FarmView> {
       _cam.fit(layout, view);
     } else {
       _cam
-        ..z = math.max(_cam.z, layout.z)
+        ..z = math.max(_cam.z, _cam.minZ(layout))
         ..clampTo(layout, _size);
     }
     setState(() => _world = world);
     SchedulerBinding.instance.addPostFrameCallback((_) => old?.dispose());
+    // os colegas acompanham o tamanho do meu mundo e o cenário
+    _arrange();
+    _syncPeers();
   }
 
   void _onSize(Size s) {
@@ -198,7 +212,9 @@ class _FarmViewState extends State<FarmView> {
 
   void _hoverAt(Offset local) {
     _mouse.value = local;
-    _hover.value = _world == null ? null : _scene.hit(_cam.toWorld(local));
+    final (c, lot) = _hitAt(local);
+    _hoverLot = lot;
+    _hover.value = c;
   }
 
   @override
@@ -256,9 +272,12 @@ class _FarmViewState extends State<FarmView> {
                     child: GestureDetector(
                       onTapUp: world == null
                           ? null
-                          : (d) => _open(
-                              _scene.hit(_cam.toWorld(d.localPosition)),
-                            ),
+                          : (d) {
+                              // bicho de colega: o terminal está na máquina
+                              // dele, clique não faz nada
+                              final (c, lot) = _hitAt(d.localPosition);
+                              if (lot == null) _open(c);
+                            },
                       onDoubleTap: world == null
                           ? null
                           : () {
@@ -296,6 +315,10 @@ class _FarmViewState extends State<FarmView> {
                             label: label,
                             hover: _hover,
                             repaint: _frame,
+                            peers: _team,
+                            banner: scenery == FarmScenery.office
+                                ? null
+                                : (n) => context.t.gsh.farm.peerBanner(name: n),
                           ),
                         ),
                       ),
@@ -304,7 +327,8 @@ class _FarmViewState extends State<FarmView> {
                 ),
               ),
               Positioned(left: 10, top: 10, child: _Hud(vm: vm)),
-              if (vm.plots.isEmpty) const Positioned.fill(child: _FarmEmpty()),
+              if (vm.plots.isEmpty && _team.isEmpty)
+                const Positioned.fill(child: _FarmEmpty()),
               Positioned.fill(
                 child: IgnorePointer(
                   child: ListenableBuilder(
@@ -342,9 +366,12 @@ class _FarmViewState extends State<FarmView> {
     final tr = context.t.gsh.farm;
     final l = c.loop;
     final activity = _activityLabel(tr, l.activity);
+    final peer = _hoverLot?.name;
+    final of = peer == null ? '' : ' · ${tr.peerOf(name: peer)}';
     final text = [
       l.title,
-      if (!l.isSubagent) '${p.basename(l.project)} · ${_harnessLabel(l)}',
+      if (!l.isSubagent) '${p.basename(l.project)} · ${_harnessLabel(l)}$of',
+      if (l.isSubagent && peer != null) tr.peerOf(name: peer),
       if (l.agentType != null) l.agentType!,
       if (l.tool != null) '$activity · ${l.tool}' else activity,
       tr.spent(total: _compact(l.spentTokens)),
@@ -354,7 +381,7 @@ class _FarmViewState extends State<FarmView> {
         out: _compact(l.outputTokens),
       ),
       tr.context(ctx: _compact(l.contextTokens)),
-      tr.clickToOpen,
+      if (peer == null) tr.clickToOpen,
     ].join('\n');
     final right = at.dx > size.width - 280, below = at.dy < size.height - 140;
     return Stack(

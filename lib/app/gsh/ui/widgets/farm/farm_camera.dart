@@ -14,6 +14,17 @@ class FarmCamera {
   double x = 0, y = 0, z = 3, dpr = 1;
   bool auto = true;
 
+  /// O mundo todo com as fazendas dos colegas e o zoom que o mostra inteiro;
+  /// `null` = só a minha fazenda (os limites de sempre).
+  Rect? team;
+  double? teamZ;
+
+  Rect _bounds(FarmLayout l) =>
+      team ?? Rect.fromLTWH(0, 0, l.w.toDouble(), l.h.toDouble());
+
+  /// Zoom mínimo: o que enquadra a minha fazenda ou, com colegas, o conjunto.
+  double minZ(FarmLayout l) => math.min(l.z, teamZ ?? l.z);
+
   double snap(double z, {bool down = false}) {
     final zr = z * dpr;
     if (zr < 2) return z;
@@ -57,13 +68,18 @@ class FarmCamera {
 
   void clampTo(FarmLayout l, Size view) {
     final dz = snap(z), vw = view.width / dz, vh = view.height / dz;
-    x = l.w <= vw ? (l.w - vw) / 2 : clampD(x, 0, l.w - vw);
-    y = l.h <= vh ? (l.h - vh) / 2 : clampD(y, 0, l.h - vh);
+    final b = _bounds(l);
+    x = b.width <= vw
+        ? b.left + (b.width - vw) / 2
+        : clampD(x, b.left, b.right - vw);
+    y = b.height <= vh
+        ? b.top + (b.height - vh) / 2
+        : clampD(y, b.top, b.bottom - vh);
   }
 
   void zoomAt(Offset s, double factor, FarmLayout l, Size view) {
     final z0 = snap(z), wx = x + s.dx / z0, wy = y + s.dy / z0;
-    z = clampD(z * factor, l.z, math.max(8, l.z * 3));
+    z = clampD(z * factor, minZ(l), math.max(8, l.z * 3));
     final z1 = snap(z);
     x = wx - s.dx / z1;
     y = wy - s.dy / z1;

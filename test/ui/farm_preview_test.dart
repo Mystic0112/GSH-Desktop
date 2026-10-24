@@ -9,7 +9,9 @@ import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene_painter.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_team.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_world.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
@@ -89,8 +91,138 @@ void main() {
     for (final zoom in [0.0, 1.0, 3.0, 5.0]) {
       _preview(scenery, zoom);
     }
+    _teamPreview(scenery);
   }
 }
+
+/// Colegas falsos, como chegam pela rede: `project` só com o nome da pasta
+/// e, para quem não libera títulos, o título igual à pasta.
+List<(String, String, List<FarmLoop>)> _peers() => [
+  (
+    'm1',
+    'Bianca',
+    [
+      _loop(
+        'b1',
+        FarmActivity.editing,
+        project: 'app-mobile',
+        title: 'Tela de perfil',
+        tokens: 40000,
+      ),
+      _loop(
+        'b2',
+        FarmActivity.running,
+        project: 'app-mobile',
+        parent: 'b1',
+        agentType: 'levi',
+      ),
+      _loop(
+        'b3',
+        FarmActivity.waiting,
+        project: 'chatbot',
+        title: 'Prompt novo',
+      ),
+      _loop('b4', FarmActivity.sleeping, project: 'chatbot', title: 'Docs'),
+    ],
+  ),
+  (
+    'm2',
+    'Rafael',
+    [
+      for (final (i, a) in const [
+        FarmActivity.thinking,
+        FarmActivity.reading,
+        FarmActivity.idle,
+      ].indexed)
+        _loop(
+          'r$i',
+          a,
+          project: 'loja-api',
+          title: 'loja-api',
+          tokens: i * 90000,
+        ),
+    ],
+  ),
+];
+
+/// A minha fazenda com dois colegas ao lado, no zoom que mostra todas.
+void _teamPreview(FarmScenery scenery) => testWidgets(
+  'preview: time no ${scenery.name}',
+  (tester) async {
+    const size = Size(1200, 600);
+    tester.view
+      ..physicalSize = size
+      ..devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final scene = FarmScene(rnd: math.Random(4))..sync(groupFarm(_loops()));
+    const view = FarmViewport(w: 1200, h: 600);
+    final layout = layoutFarm(
+      plots: scene.need.plots + 1,
+      yard: scene.need.yard + 2,
+      view: view,
+      snap: (z) => z,
+    );
+    final world = (await tester.runAsync(
+      () => buildWorld(layout, scenery: scenery),
+    ))!;
+    scene.relayout(layout);
+    final lots = <FarmLot>[];
+    for (final (id, name, loops) in _peers()) {
+      final lot = FarmLot(id, name)..scene.sync(groupFarm(loops));
+      final ll = layoutLot(layout, lot.scene.need);
+      lot.world = await tester.runAsync(
+        () => buildWorld(ll, seed: lot.seed, scenery: scenery),
+      );
+      lot.scene.relayout(ll);
+      lots.add(lot);
+    }
+    final b = arrangeLots(Size(layout.w.toDouble(), layout.h.toDouble()), lots);
+    for (var i = 0; i < 40; i++) {
+      scene.update(0.05);
+      for (final l in lots) {
+        l.scene.update(0.05);
+      }
+    }
+    final cam = FarmCamera()
+      ..team = b
+      ..teamZ = math.min(size.width / b.width, size.height / b.height)
+      ..fit(layout, view);
+    cam
+      ..z = cam.minZ(layout)
+      ..clampTo(layout, size);
+    await tester.pumpWidget(
+      shotHost(
+        RepaintBoundary(
+          key: shotKey,
+          child: Builder(
+            builder: (context) => CustomPaint(
+              size: size,
+              painter: FarmScenePainter(
+                scene: scene,
+                world: world,
+                cam: cam,
+                labels: FarmLabels(),
+                label: context.typo.mono.copyWith(
+                  fontSize: 10,
+                  height: 1.2,
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFFfff8e8),
+                ),
+                hover: ValueNotifier(null),
+                repaint: ChangeNotifier(),
+                peers: lots,
+                banner: scenery == FarmScenery.office
+                    ? null
+                    : (n) => context.t.gsh.farm.peerBanner(name: n),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await takeShot(tester, 'team_preview_${scenery.name}');
+  },
+);
 
 void _preview(FarmScenery scenery, double zoom) =>
     testWidgets('preview: ${scenery.name} no zoom $zoom', (tester) async {
