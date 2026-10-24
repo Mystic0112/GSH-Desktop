@@ -277,6 +277,8 @@ class _Translations$core$menu$pt_BR extends Translations$core$menu$en {
 	@override String get checkForUpdates => 'Verificar Atualizações…';
 	@override String get file => 'Arquivo';
 	@override String get newTerminal => 'Novo Terminal';
+	@override String get newChat => 'Novo Chat';
+	@override String get newChatRight => 'Novo Chat à Direita';
 	@override String get openWorkspace => 'Abrir Workspace';
 	@override String get save => 'Salvar';
 	@override String get discard => 'Descartar';
@@ -2591,6 +2593,8 @@ extension on TranslationsPtBr {
 			'core.menu.checkForUpdates' => 'Verificar Atualizações…',
 			'core.menu.file' => 'Arquivo',
 			'core.menu.newTerminal' => 'Novo Terminal',
+			'core.menu.newChat' => 'Novo Chat',
+			'core.menu.newChatRight' => 'Novo Chat à Direita',
 			'core.menu.openWorkspace' => 'Abrir Workspace',
 			'core.menu.save' => 'Salvar',
 			'core.menu.discard' => 'Descartar',
@@ -3071,10 +3075,10 @@ extension on TranslationsPtBr {
 			'gsh.dbConnectionDialog.privateKey' => 'Chave privada',
 			'gsh.dbConnectionDialog.choosePrivateKeyPlaceholder' => 'Escolha uma chave privada…',
 			'gsh.dbConnectionDialog.choosePrivateKeyDialogTitle' => 'Escolher chave privada SSH',
-			'gsh.dbConnectionDialog.keyPassphrase' => 'Senha da chave',
-			'gsh.dbConnectionDialog.savePassphrase' => 'Salvar senha da chave',
 			_ => null,
 		} ?? switch (path) {
+			'gsh.dbConnectionDialog.keyPassphrase' => 'Senha da chave',
+			'gsh.dbConnectionDialog.savePassphrase' => 'Salvar senha da chave',
 			'gsh.dbConnectionDialog.passwordOnHost' => 'A senha fica salva no host, não nesta máquina.',
 			'gsh.sshPrompts.unknownSshHostTitle' => 'Host SSH desconhecido',
 			'gsh.sshPrompts.neverConnected' => ({required Object endpoint}) => 'O GSH Desktop nunca se conectou a ${endpoint} antes.',
@@ -3585,10 +3589,10 @@ extension on TranslationsPtBr {
 			'settings.page.terminal.noWslMessage' => 'Nenhuma distro WSL encontrada. Instale uma (wsl.exe --install) e reinicie o GSH Desktop para vê-la listada aqui.',
 			'settings.page.terminal.sectionBehavior' => 'Comportamento',
 			'settings.page.terminal.closeOnExitTitle' => 'Fechar a aba quando o shell encerrar',
-			'settings.page.terminal.closeOnExitDesc' => 'Quando um shell termina sozinho (exit, Ctrl-D), fecha a aba em vez de deixar um terminal morto.',
-			'settings.page.appearance.sectionTheme' => 'Tema',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.terminal.closeOnExitDesc' => 'Quando um shell termina sozinho (exit, Ctrl-D), fecha a aba em vez de deixar um terminal morto.',
+			'settings.page.appearance.sectionTheme' => 'Tema',
 			'settings.page.appearance.themeTitle' => 'Tema',
 			'settings.page.appearance.themeDesc' => 'Cores do app, realce de código e paleta do terminal.',
 			'settings.page.appearance.modeTitle' => 'Modo',

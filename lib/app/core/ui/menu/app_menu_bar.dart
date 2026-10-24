@@ -84,6 +84,26 @@ List<MenuBarMenu> buildAppMenus(
           accelerator: const MenuAccelerator(LogicalKeyboardKey.keyT),
           onSelected: workspace.hasWorkspace ? workspace.newTerminal : null,
         ),
+      // Chat nativo (Claude Code): ⌘⇧L abre na pane focada; ⌘⇧J numa pane nova
+      // à direita da focada (o terminal fica ao lado do chat).
+      if (!isMobilePlatform)
+        MenuAction(
+          tr.newChat,
+          accelerator: const MenuAccelerator(
+            LogicalKeyboardKey.keyL,
+            shift: true,
+          ),
+          onSelected: workspace.hasWorkspace ? workspace.newChat : null,
+        ),
+      if (!isMobilePlatform)
+        MenuAction(
+          tr.newChatRight,
+          accelerator: const MenuAccelerator(
+            LogicalKeyboardKey.keyJ,
+            shift: true,
+          ),
+          onSelected: workspace.hasWorkspace ? workspace.newChatRight : null,
+        ),
       if (!isMobilePlatform) const MenuSeparator(),
       if (!isMobilePlatform)
         MenuAction(

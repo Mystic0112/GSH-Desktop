@@ -277,6 +277,8 @@ class _Translations$core$menu$es extends Translations$core$menu$en {
 	@override String get checkForUpdates => 'Buscar Actualizaciones…';
 	@override String get file => 'Archivo';
 	@override String get newTerminal => 'Nueva Terminal';
+	@override String get newChat => 'Nuevo Chat';
+	@override String get newChatRight => 'Nuevo Chat a la Derecha';
 	@override String get openWorkspace => 'Abrir Workspace';
 	@override String get save => 'Guardar';
 	@override String get discard => 'Descartar';
@@ -2591,6 +2593,8 @@ extension on TranslationsEs {
 			'core.menu.checkForUpdates' => 'Buscar Actualizaciones…',
 			'core.menu.file' => 'Archivo',
 			'core.menu.newTerminal' => 'Nueva Terminal',
+			'core.menu.newChat' => 'Nuevo Chat',
+			'core.menu.newChatRight' => 'Nuevo Chat a la Derecha',
 			'core.menu.openWorkspace' => 'Abrir Workspace',
 			'core.menu.save' => 'Guardar',
 			'core.menu.discard' => 'Descartar',
@@ -3071,10 +3075,10 @@ extension on TranslationsEs {
 			'gsh.dbConnectionDialog.privateKey' => 'Clave privada',
 			'gsh.dbConnectionDialog.choosePrivateKeyPlaceholder' => 'Elige una clave privada…',
 			'gsh.dbConnectionDialog.choosePrivateKeyDialogTitle' => 'Elegir clave privada SSH',
-			'gsh.dbConnectionDialog.keyPassphrase' => 'Frase de contraseña de la clave',
-			'gsh.dbConnectionDialog.savePassphrase' => 'Guardar frase de contraseña',
 			_ => null,
 		} ?? switch (path) {
+			'gsh.dbConnectionDialog.keyPassphrase' => 'Frase de contraseña de la clave',
+			'gsh.dbConnectionDialog.savePassphrase' => 'Guardar frase de contraseña',
 			'gsh.dbConnectionDialog.passwordOnHost' => 'La contraseña se guarda en el host, no en esta máquina.',
 			'gsh.sshPrompts.unknownSshHostTitle' => 'Host SSH desconocido',
 			'gsh.sshPrompts.neverConnected' => ({required Object endpoint}) => 'GSH Desktop nunca se ha conectado a ${endpoint} antes.',
@@ -3585,10 +3589,10 @@ extension on TranslationsEs {
 			'settings.page.terminal.noWslMessage' => 'No se encontraron distros de WSL. Instala una (wsl.exe --install) y reinicia GSH Desktop para verla listada aquí.',
 			'settings.page.terminal.sectionBehavior' => 'Comportamiento',
 			'settings.page.terminal.closeOnExitTitle' => 'Cerrar la pestaña cuando el shell termine',
-			'settings.page.terminal.closeOnExitDesc' => 'Cuando un shell termina por sí solo (exit, Ctrl-D), cierra su pestaña en lugar de dejar un terminal muerto.',
-			'settings.page.appearance.sectionTheme' => 'Tema',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.terminal.closeOnExitDesc' => 'Cuando un shell termina por sí solo (exit, Ctrl-D), cierra su pestaña en lugar de dejar un terminal muerto.',
+			'settings.page.appearance.sectionTheme' => 'Tema',
 			'settings.page.appearance.themeTitle' => 'Tema',
 			'settings.page.appearance.themeDesc' => 'Colores de la app, resaltado de código y paleta del terminal.',
 			'settings.page.appearance.modeTitle' => 'Modo',

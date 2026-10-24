@@ -386,6 +386,12 @@ class Translations$core$menu$en {
 	/// en: 'New Terminal'
 	String get newTerminal => 'New Terminal';
 
+	/// en: 'New Chat'
+	String get newChat => 'New Chat';
+
+	/// en: 'New Chat to the Right'
+	String get newChatRight => 'New Chat to the Right';
+
 	/// en: 'Open Workspace'
 	String get openWorkspace => 'Open Workspace';
 
@@ -5468,6 +5474,8 @@ extension on Translations {
 			'core.menu.checkForUpdates' => 'Check for Updates…',
 			'core.menu.file' => 'File',
 			'core.menu.newTerminal' => 'New Terminal',
+			'core.menu.newChat' => 'New Chat',
+			'core.menu.newChatRight' => 'New Chat to the Right',
 			'core.menu.openWorkspace' => 'Open Workspace',
 			'core.menu.save' => 'Save',
 			'core.menu.discard' => 'Discard',
@@ -5948,10 +5956,10 @@ extension on Translations {
 			'gsh.dbConnectionDialog.privateKey' => 'Private key',
 			'gsh.dbConnectionDialog.choosePrivateKeyPlaceholder' => 'Choose a private key…',
 			'gsh.dbConnectionDialog.choosePrivateKeyDialogTitle' => 'Choose SSH private key',
-			'gsh.dbConnectionDialog.keyPassphrase' => 'Key passphrase',
-			'gsh.dbConnectionDialog.savePassphrase' => 'Save passphrase',
 			_ => null,
 		} ?? switch (path) {
+			'gsh.dbConnectionDialog.keyPassphrase' => 'Key passphrase',
+			'gsh.dbConnectionDialog.savePassphrase' => 'Save passphrase',
 			'gsh.dbConnectionDialog.passwordOnHost' => 'The password is stored on the host, not on this machine.',
 			'gsh.sshPrompts.unknownSshHostTitle' => 'Unknown SSH host',
 			'gsh.sshPrompts.neverConnected' => ({required Object endpoint}) => 'GSH Desktop has never connected to ${endpoint} before.',
@@ -6462,10 +6470,10 @@ extension on Translations {
 			'settings.page.terminal.noWslMessage' => 'No WSL distros found. Install one (wsl.exe --install) and restart GSH Desktop to see it listed here.',
 			'settings.page.terminal.sectionBehavior' => 'Behavior',
 			'settings.page.terminal.closeOnExitTitle' => 'Close tab when the shell exits',
-			'settings.page.terminal.closeOnExitDesc' => 'When a shell ends on its own (exit, Ctrl-D), close its tab instead of leaving a dead terminal.',
-			'settings.page.appearance.sectionTheme' => 'Theme',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.terminal.closeOnExitDesc' => 'When a shell ends on its own (exit, Ctrl-D), close its tab instead of leaving a dead terminal.',
+			'settings.page.appearance.sectionTheme' => 'Theme',
 			'settings.page.appearance.themeTitle' => 'Theme',
 			'settings.page.appearance.themeDesc' => 'App colors, code highlighting and terminal palette.',
 			'settings.page.appearance.modeTitle' => 'Mode',

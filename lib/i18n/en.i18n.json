@@ -43,6 +43,8 @@
       "checkForUpdates": "Check for Updates…",
       "file": "File",
       "newTerminal": "New Terminal",
+      "newChat": "New Chat",
+      "newChatRight": "New Chat to the Right",
       "openWorkspace": "Open Workspace",
       "save": "Save",
       "discard": "Discard",

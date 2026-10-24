@@ -2012,21 +2012,40 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
   /// Abre uma aba de chat com o Claude Code na pasta do workspace (protótipo
   /// do harness). Cada clique abre uma conversa nova.
   ChatSession? openChat({String? projectId}) =>
-      _openBrowserTab(
-            projectId,
-            matches: (_) => false,
-            // Workspace de sistema (sem pasta): o claude roda na home.
-            make: (id, pid, path) => ChatSession(
-              id: id,
-              projectId: pid,
-              workingDirectory: path.isEmpty
-                  ? (Platform.environment['HOME'] ??
-                        Platform.environment['USERPROFILE'] ??
-                        '')
-                  : path,
-            ),
-          )
+      _openBrowserTab(projectId, matches: (_) => false, make: _newChat)
           as ChatSession?;
+
+  /// Workspace de sistema (sem pasta): o claude roda na home.
+  ChatSession _newChat(String id, String pid, String path) => ChatSession(
+    id: id,
+    projectId: pid,
+    workingDirectory: path.isEmpty
+        ? (Platform.environment['HOME'] ??
+              Platform.environment['USERPROFILE'] ??
+              '')
+        : path,
+  );
+
+  /// Abre um chat novo numa pane **ao lado/abaixo** da focada (o terminal
+  /// continua onde estava).
+  ChatSession? openChatSplit(SplitDir dir) {
+    final pid = _selectedProjectId;
+    final tree = _activeTree;
+    if (pid == null || tree == null) return null;
+    final paneId = _focused[pid] ?? leaves(tree).firstOrNull?.id;
+    if (paneId == null) return null;
+    final session = _newChat(_nid('v'), pid, _projectById(pid)?.path ?? '');
+    _sessions[session.id] = session;
+    final leaf = LeafPane(
+      id: _nid('pane'),
+      tabs: [session.id],
+      active: session.id,
+    );
+    _setActiveTree(splitLeaf(tree, paneId, dir, leaf, splitId: _nid('sp')));
+    _focused[pid] = leaf.id;
+    notifyListeners();
+    return session;
+  }
 
   /// Continua a sessão [sessionId] do Claude Code num terminal novo com
   /// Remote Control (celular, claude.ai/code): o modo `stream-json` do chat

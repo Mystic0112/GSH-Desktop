@@ -459,12 +459,22 @@ class _GshPageState extends State<GshPage> {
   /// Espelha "há workspace ativo?" no menu; os callbacks abrem uma aba nova no
   /// workspace ativo (root do projeto). `setWorkspace` só notifica quando o
   /// booleano muda, então chamar a cada evento da VM é barato.
+  bool get _chatEnabled =>
+      _settings?.settings.showsFeature(AppFeature.chat) ?? true;
+
   void _syncWorkspaceMenu() {
     final vm = _menuVm;
     if (vm == null) return;
     _workspaceMenu?.setWorkspace(
       hasWorkspace: vm.selectedProject != null,
       onNewTerminal: () => vm.newTabIn(''),
+      // Lê a preferência na hora do atalho: o usuário pode ter escondido o chat.
+      onNewChat: () {
+        if (_chatEnabled) vm.openChat();
+      },
+      onNewChatRight: () {
+        if (_chatEnabled) vm.openChatSplit(SplitDir.vertical);
+      },
       onSplitRight: () => _splitFocused(SplitDir.vertical),
       onSplitDown: () => _splitFocused(SplitDir.horizontal),
       onToggleRail: vm.toggleRail,

@@ -43,6 +43,8 @@
       "checkForUpdates": "Buscar Actualizaciones…",
       "file": "Archivo",
       "newTerminal": "Nueva Terminal",
+      "newChat": "Nuevo Chat",
+      "newChatRight": "Nuevo Chat a la Derecha",
       "openWorkspace": "Abrir Workspace",
       "save": "Guardar",
       "discard": "Descartar",
