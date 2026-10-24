@@ -27,6 +27,7 @@ final _oShadow = rgba(40, 36, 30, .18);
 ) {
   final p = l.play, c = l.content;
   _building(g, p, rnd);
+  _entrance(g, l.pondCx, p.bottom);
   for (final pts in l.paths) {
     _runner(g, pts);
   }

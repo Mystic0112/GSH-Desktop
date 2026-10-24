@@ -176,7 +176,7 @@ void _teamPreview(FarmScenery scenery) => testWidgets(
       lot.scene.relayout(ll);
       lots.add(lot);
     }
-    final b = arrangeLots(Size(layout.w.toDouble(), layout.h.toDouble()), lots);
+    final b = arrangeLots(layout, lots, joined: scenery == FarmScenery.office);
     for (var i = 0; i < 40; i++) {
       scene.update(0.05);
       for (final l in lots) {

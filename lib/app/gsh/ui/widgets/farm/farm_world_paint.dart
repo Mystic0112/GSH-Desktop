@@ -66,6 +66,19 @@ double Function(double, double) _valueNoise(int seed) {
 _Built _paintWorld(FarmLayout l, int seed, FarmScenery scenery) {
   final w = l.w, h = l.h, rnd = mulberry32(seed);
   final g = Raster(w * hd, h * hd);
+  if (scenery == FarmScenery.office) {
+    // escritório: rua e calçada em volta, nada de mato (e nada passa por
+    // cima dos bichos: a faixa da frente fica vazia)
+    _street(g, l, rnd);
+    final (rocks, decor) = _officeProps(g, l, rnd);
+    return (
+      bg: g.toRgba(),
+      fg: Raster(w * hd, hd).toRgba(),
+      fgY: h - 1,
+      rocks: rocks,
+      decor: decor,
+    );
+  }
   // grama: duas oitavas de ruído, dithering ordenado entre cinco tons e uma
   // clareira gasta em volta da fazenda
   final n1 = _valueNoise(seed + 1), n2 = _valueNoise(seed + 2);
@@ -106,9 +119,7 @@ _Built _paintWorld(FarmLayout l, int seed, FarmScenery scenery) {
         ..fill(x, y, 1, 1, 0xFFf5e27a);
     }
   }
-  // na fazenda as árvores passam por cima do campo; no escritório o prédio
-  // é pintado depois e cobre a borda delas
-  final farm = scenery == FarmScenery.farm ? _farmProps(g, l, rnd) : null;
+  final (rocks, decor) = _farmProps(g, l, rnd);
   // árvores na borda: as de trás no fundo, a fileira de baixo na frente de
   // tudo (faixa própria)
   final trees = <(double, double, double)>[];
@@ -132,7 +143,6 @@ _Built _paintWorld(FarmLayout l, int seed, FarmScenery scenery) {
   for (final (x, y, r) in trees) {
     _tree(g, (x * hd).round(), (y * hd).round(), (r * hd).round(), rnd);
   }
-  final (rocks, decor) = farm ?? _officeProps(g, l, rnd);
   final fgY = math.max(0, h - t - 8);
   final f = Raster(w * hd, (h - fgY) * hd);
   front.sort((a, b) => a.$2.compareTo(b.$2));

@@ -201,12 +201,14 @@ class FarmLayout {
 /// principal (o espantalho fica no canto), o celeiro com o curral de quem
 /// dorme, o lago e os caminhos. Testa larguras de cercado e curral e fica com
 /// a que mostra a fazenda maior na janela. [snap] arredonda o zoom para
-/// pixels inteiros.
+/// pixels inteiros. [margin] fixa a borda (a do colega igual à minha, para
+/// os prédios do escritório alinharem).
 FarmLayout layoutFarm({
   required int plots,
   required int yard,
   required FarmViewport view,
   required double Function(double z) snap,
+  int? margin,
 }) {
   final nP = math.max(6, plots), nY = math.max(5, yard);
   final avW = math.max(120.0, view.w - view.left - view.right);
@@ -236,7 +238,9 @@ FarmLayout layoutFarm({
   }
   final b = best!;
   final z = snap(math.min(view.s.toDouble(), b.z));
-  final t = (math.min(view.w, view.h) / view.s * 0.14).round().clamp(20, 40);
+  final t =
+      margin ??
+      (math.min(view.w, view.h) / view.s * 0.14).round().clamp(20, 40);
   final x0 = math
       .max(t + 4, (view.left / z + (avW / z - b.cw) / 2).round())
       .toDouble();

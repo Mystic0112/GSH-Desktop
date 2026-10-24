@@ -108,7 +108,9 @@ class FarmScenePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final w = world;
-    _rect(canvas, 0, 0, size.width, size.height, t0);
+    // fora do mundo: mata na fazenda, asfalto no escritório
+    final office = w?.scenery == FarmScenery.office;
+    _rect(canvas, 0, 0, size.width, size.height, office ? 0xFF4a4d55 : t0);
     if (w == null) return;
     final r = cam.rt;
     canvas
@@ -136,7 +138,7 @@ class FarmScenePainter extends CustomPainter {
       canvas
         ..save()
         ..translate(at.dx, at.dy);
-      final list = _lot(canvas, sc, wd, v);
+      final list = _lot(canvas, sc, wd, v, lot?.clip ?? 0);
       canvas.restore();
       shown.add((lot, sc, wd, v, list));
     }
@@ -148,28 +150,26 @@ class FarmScenePainter extends CustomPainter {
 
   /// Um lote (fundo, plantação, bichos, árvores da frente, faíscas) em
   /// coordenadas dele; devolve os bichos em ordem de profundidade.
-  List<Critter> _lot(Canvas canvas, FarmScene scene, FarmWorld w, _View v) {
+  List<Critter> _lot(
+    Canvas canvas,
+    FarmScene scene,
+    FarmWorld w,
+    _View v,
+    double clip,
+  ) {
     final l = w.layout, t = scene.t, calm = scene.calm;
     final vx0 = v.x0, vy0 = v.y0, vx1 = v.x1, vy1 = v.y1;
     final sx = math.max(0, vx0.floor()), sy = math.max(0, vy0.floor());
     final sw = math.min(l.w, vx1.ceil() + 1) - sx;
     final sh = math.min(l.h, vy1.ceil() + 1) - sy;
     _img.color = const Color(0xFF000000);
-    if (sw > 0 && sh > 0) {
+    // [clip]: a margem da esquerda do lote colado no vizinho não é desenhada
+    final bx = math.max(sx.toDouble(), clip), bw = sx + sw - bx;
+    if (bw > 0 && sh > 0) {
       canvas.drawImageRect(
         w.bg,
-        Rect.fromLTWH(
-          sx * hd.toDouble(),
-          sy * hd.toDouble(),
-          sw * hd.toDouble(),
-          sh * hd.toDouble(),
-        ),
-        Rect.fromLTWH(
-          sx.toDouble(),
-          sy.toDouble(),
-          sw.toDouble(),
-          sh.toDouble(),
-        ),
+        Rect.fromLTWH(bx * hd, sy * hd.toDouble(), bw * hd, sh * hd.toDouble()),
+        Rect.fromLTWH(bx, sy.toDouble(), bw, sh.toDouble()),
         _img,
       );
     }

@@ -194,3 +194,107 @@ void _clock(Raster g, num x, num y) {
     ..fill(cx, cy - 3, 1, 3, 0xFF3a404c)
     ..fill(cx, cy, 3, 1, 0xFFd94b3c);
 }
+
+// ------------------------------------------------- a rua em volta do prédio
+
+const _walk0 = 0xFFc9cbcf, _walk1 = 0xFFbcbfc4, _asph0 = 0xFF4a4d55;
+const _asph1 = 0xFF53565e, _asph2 = 0xFF42454c;
+
+/// O entorno urbano: calçada de placas em volta do prédio, floreiras na
+/// frente da parede de cima, e embaixo meio-fio, rua com faixa tracejada e
+/// postes. Pintado antes do prédio (que cobre o miolo).
+void _street(Raster g, FarmLayout l, double Function() rnd) {
+  final w = l.w * hd, h = l.h * hd, p = l.play;
+  g.fill(0, 0, w, h, _walk0);
+  for (var y = 0; y < h; y += 20) {
+    g.fill(0, y, w, 1, _walk1);
+  }
+  for (var x = 0; x < w; x += 20) {
+    g.fill(x, 0, 1, h, _walk1);
+  }
+  // rua: do meio-fio até o fim do mundo embaixo
+  final curb = (p.bottom + 12) * hd;
+  g
+    ..fill(0, curb, w, h - curb, _asph0)
+    ..fill(0, curb, w, 2, 0xFFe6e7ea)
+    ..fill(0, curb + 2, w, 2, 0xFF8d9097);
+  for (var i = 0; i < (w * (h - curb)) / 14; i++) {
+    g.fill(
+      (rnd() * w).round(),
+      (curb + 4 + rnd() * (h - curb - 4)).round(),
+      1,
+      1,
+      rnd() < 0.5 ? _asph1 : _asph2,
+    );
+  }
+  final mid = ((curb + 4 + h) / 2).round();
+  if (h - curb > 16) {
+    for (var x = 4; x < w; x += 24) {
+      g.fill(x, mid - 1, 12, 2, 0xFFe8d27a);
+    }
+  }
+  // sombra do prédio na calçada (direita e embaixo)
+  g
+    ..fill(
+      (p.right + 2) * hd,
+      (p.top - 7) * hd,
+      4,
+      (p.height + 9) * hd,
+      _oShadow,
+    )
+    ..fill(
+      (p.left - 1) * hd,
+      (p.bottom + 2) * hd - 2,
+      (p.width + 3) * hd,
+      4,
+      _oShadow,
+    );
+  // postes na calçada de baixo, floreiras na de cima
+  for (var x = p.left + 24; x < p.right - 8; x += 56) {
+    _streetLamp(g, x * hd, (p.bottom + 11) * hd);
+  }
+  final top = (p.top - 10) * hd;
+  if (top > 14) {
+    for (var x = p.left + 10; x < p.right - 20; x += 44) {
+      _planter(g, x * hd, top - 2);
+    }
+  }
+}
+
+/// Poste de rua: base, haste e luminária com um halo quente no chão.
+void _streetLamp(Raster g, num x, num y) => g
+  ..ellipse(x + 2, y, 5, 2, _oShadow)
+  ..fill(x - 2, y - 3, 4, 3, 0xFF3a404c)
+  ..fill(x - 1, y - 30, 2, 28, 0xFF4b5261)
+  ..fill(x - 1, y - 31, 9, 2, 0xFF4b5261)
+  ..fill(x + 5, y - 30, 6, 3, 0xFF3a404c)
+  ..fill(x + 6, y - 28, 4, 1, 0xFFffe29a);
+
+/// Floreira de calçada: caixa de concreto com arbusto.
+void _planter(Raster g, num x, num y) {
+  g
+    ..fill(x + 2, y, 24, 2, _oShadow)
+    ..fill(x, y - 7, 24, 7, 0xFF8d9097)
+    ..fill(x + 1, y - 6, 22, 5, 0xFFa9acb2)
+    ..fill(x + 1, y - 7, 22, 1, 0xFFd5d7db);
+  for (final (dx, r) in const [(5, 5), (12, 6), (19, 5)]) {
+    g.circle(x + dx, y - 9, r + 1, t0);
+  }
+  for (final (dx, r) in const [(5, 5), (12, 6), (19, 5)]) {
+    g
+      ..circle(x + dx, y - 9, r, _t2)
+      ..circle(x + dx - 1, y - 11, r * 0.5, _t3);
+  }
+}
+
+/// Porta de vidro na parede de baixo (a entrada pela calçada).
+void _entrance(Raster g, num x, num y) {
+  final dx = x * hd, dy = y * hd;
+  g
+    ..fill(dx - 18, dy - 1, 36, 6, 0xFF7d8592)
+    ..fill(dx - 16, dy, 15, 4, 0xFF9fd0ee)
+    ..fill(dx + 1, dy, 15, 4, 0xFF9fd0ee)
+    ..fill(dx - 14, dy + 1, 3, 1, 0xFFe6f5fd)
+    ..fill(dx + 3, dy + 1, 3, 1, 0xFFe6f5fd)
+    ..fill(dx - 12, dy + 6, 24, 4, 0xFF8a6a4a);
+}

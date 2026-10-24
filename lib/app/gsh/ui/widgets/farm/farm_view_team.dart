@@ -83,7 +83,11 @@ extension _TeamLots on _FarmViewState {
         ..team = null
         ..teamZ = null;
     } else {
-      final b = arrangeLots(Size(l.w.toDouble(), l.h.toDouble()), _team);
+      final b = arrangeLots(
+        l,
+        _team,
+        joined: _world!.scenery == FarmScenery.office,
+      );
       _cam
         ..team = b
         ..teamZ = math.min(_size.width / b.width, _size.height / b.height);

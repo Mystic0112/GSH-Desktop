@@ -115,7 +115,7 @@ extension _Overlay on FarmScenePainter {
   }
 
   /// A faixa com o nome do colega, no alto da fazenda dele: tábua de
-  /// madeira na fazenda, placa de porta no escritório. Tamanho fixo em
+  /// madeira na fazenda, placa na parede da sala no escritório. Tamanho fixo em
   /// pixels de tela, para ler com o zoom afastado.
   void _banner(
     Canvas canvas,
@@ -133,7 +133,8 @@ extension _Overlay on FarmScenePainter {
         shadows: const [],
       ),
     );
-    final at = scr(l.content.center.dx, l.t + (office ? -1.0 : 2.0));
+    // no escritório, na face da parede de cima, como placa da sala
+    final at = scr(l.content.center.dx, office ? l.play.top - 4.5 : l.t + 2.0);
     final box = Rect.fromLTWH(
       (at.dx - tp.width / 2 - 8).roundToDouble(),
       (at.dy - tp.height / 2 - 4).roundToDouble(),
