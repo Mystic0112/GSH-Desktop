@@ -51,6 +51,22 @@ target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION_MINOR=${FLUTT
 target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION_PATCH=${FLUTTER_VERSION_PATCH}")
 target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION_BUILD=${FLUTTER_VERSION_BUILD}")
 
+# `DartProject::set_impeller_switch` só existe a partir do Flutter 3.47 (quando
+# o Impeller virou default no Windows). Em SDK mais antigo o Skia já é o padrão
+# e a chamada não compila, então o main.cpp só a usa se o header a declarar.
+# Lê o header do cache do SDK: a cópia em ephemeral/ só nasce no build, depois
+# do configure. Sem achar o header, assume SDK novo (falha alto, não em silêncio).
+set(GSH_DART_PROJECT_H
+  "$ENV{FLUTTER_ROOT}/bin/cache/artifacts/engine/windows-x64/cpp_client_wrapper/include/flutter/dart_project.h")
+set(GSH_IMPELLER_SWITCH_DECL TRUE)
+if(DEFINED ENV{FLUTTER_ROOT} AND EXISTS "${GSH_DART_PROJECT_H}")
+  file(STRINGS "${GSH_DART_PROJECT_H}" GSH_IMPELLER_SWITCH_DECL
+    REGEX "set_impeller_switch")
+endif()
+if(GSH_IMPELLER_SWITCH_DECL)
+  target_compile_definitions(${BINARY_NAME} PRIVATE "GSH_HAS_IMPELLER_SWITCH")
+endif()
+
 # Disable Windows macros that collide with C++ standard library functions.
 target_compile_definitions(${BINARY_NAME} PRIVATE "NOMINMAX")
 
