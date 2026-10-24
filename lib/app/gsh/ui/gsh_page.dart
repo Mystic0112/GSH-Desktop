@@ -921,6 +921,7 @@ class _RailPanel extends StatelessWidget {
           onWorktreesExpanded: vm.setWorktreesExpanded,
           selectedId: vm.selectedProjectId,
           notificationCounts: vm.notificationCounts,
+          agentTabs: vm.terminalsByWorkspace,
           gitInfo: vm.gitInfo,
           rootsSummary: vm.rootsGitSummary,
           forkOriginName: vm.forkOriginName,

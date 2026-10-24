@@ -6,6 +6,7 @@ import 'dart:math' as math;
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/agent_status_dot.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene_painter.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart';
@@ -283,21 +284,9 @@ class _FarmViewState extends State<FarmView> {
     final ok = context.read<GshViewModel>().revealAgentSession(
       sid,
       resumeCwd: parked ? main.project : null,
+      harness: main.harness,
     );
-    if (ok) return;
-    showToast(
-      context: context,
-      location: ToastLocation.bottomRight,
-      builder: (context, overlay) => SurfaceCard(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Text(
-            context.t.gsh.farm.outsideGsh,
-            style: context.typo.label,
-          ),
-        ),
-      ),
-    );
+    if (!ok) showOutsideGshToast(context);
   }
 
   Widget _tip(BuildContext context, Size size, Critter? c, Offset? at) {
@@ -333,6 +322,18 @@ class _FarmViewState extends State<FarmView> {
     );
   }
 }
+
+/// Aviso de que o agente roda fora do GSH (o terminal dele é outra janela).
+void showOutsideGshToast(BuildContext context) => showToast(
+  context: context,
+  location: ToastLocation.bottomRight,
+  builder: (context, overlay) => SurfaceCard(
+    child: Padding(
+      padding: const EdgeInsets.all(12),
+      child: Text(context.t.gsh.farm.outsideGsh, style: context.typo.label),
+    ),
+  ),
+);
 
 /// Avisa o painter que há um quadro novo.
 class _Frame extends ChangeNotifier {
@@ -391,11 +392,7 @@ class _Hud extends StatelessWidget {
           width: 8,
           height: 8,
           decoration: BoxDecoration(
-            color: switch (s) {
-              FarmStatus.working => colors.online,
-              FarmStatus.waiting => colors.warn,
-              FarmStatus.idle => colors.gitUntracked,
-            },
+            color: farmStatusColor(colors, s),
             border: Border.all(color: _hudInk),
           ),
         ),

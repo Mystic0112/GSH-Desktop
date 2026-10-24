@@ -6,6 +6,7 @@ import 'package:gsh_desktop/app/core/ui/menu/workspace_menu_bridge.dart';
 import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/window_controls.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_strip.dart';
 import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/hover_tap.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -84,6 +85,8 @@ class GshTopbar extends StatelessWidget {
           style: context.typo.title.copyWith(fontSize: 14, color: colors.text),
         ),
         const Spacer(),
+        // Mini-fazenda: status dos agentes sem abrir a aba da fazenda.
+        if (onOpenFarm case final onTap?) FarmStrip(onOpenFarm: onTap),
         if (onOpenChat case final onTap?) ...[
           _IconBtn(
             icon: Icons.chat_bubble_outline,

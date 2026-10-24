@@ -1362,9 +1362,7 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
     );
   }
 
-  Future<FileOpenOutcome> _openWithGshEditor(
-    FileOpenRequest request,
-  ) async {
+  Future<FileOpenOutcome> _openWithGshEditor(FileOpenRequest request) async {
     if (request.isNotebook) {
       openNotebook(request.path);
       return FileOpenOutcome.opened;
@@ -3092,6 +3090,17 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
       }
     }
     return counts;
+  }
+
+  /// Abas de terminal **por workspace**, para o ponto de status de agente da
+  /// rail. Mapa pelo mesmo motivo de [notificationCounts]. O status muda sem
+  /// passar pelo VM, então a rail escuta as próprias sessões.
+  Map<String, List<TerminalSession>> get terminalsByWorkspace {
+    final byWorkspace = <String, List<TerminalSession>>{};
+    for (final s in _sessions.values) {
+      if (s is TerminalSession) (byWorkspace[s.projectId] ??= []).add(s);
+    }
+    return byWorkspace;
   }
 
   // ---- init -----------------------------------------------------------------
@@ -4833,7 +4842,11 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
   /// [sessionId] (o `session_id` que o hook trouxe), trocando de workspace se
   /// preciso. Sem aba no GSH e com [resumeCwd], abre uma no workspace ativo
   /// retomando a sessão (`claude --resume`). `false` = nada foi feito.
-  bool revealAgentSession(String sessionId, {String? resumeCwd}) {
+  bool revealAgentSession(
+    String sessionId, {
+    String? resumeCwd,
+    String harness = 'claude',
+  }) {
     for (final s in _sessions.values) {
       if (s is! TerminalSession || s.claudeSessionId != sessionId) continue;
       selectProject(s.projectId);
@@ -4848,7 +4861,10 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
     }
     return newTerminalTab(
       cwd: resumeCwd,
-      startupCommand: 'claude --resume $sessionId',
+      // Cada harness retoma do seu jeito.
+      startupCommand: harness == 'codex'
+          ? 'codex resume $sessionId'
+          : 'claude --resume $sessionId',
     ).isSuccess;
   }
 

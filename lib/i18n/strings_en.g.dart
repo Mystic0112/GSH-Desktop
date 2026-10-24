@@ -2997,8 +2997,11 @@ class Translations$gsh$farm$en {
 	/// en: '${n} working'
 	String working({required Object n}) => '${n} working';
 
-	/// en: '${n} need you'
-	String waiting({required Object n}) => '${n} need you';
+	/// en: '(one) {${n} needs you} (other) {${n} need you}'
+	String waiting({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '${n} needs you',
+		other: '${n} need you',
+	);
 
 	/// en: '${n} idle'
 	String idle({required Object n}) => '${n} idle';
@@ -6266,7 +6269,7 @@ extension on Translations {
 			'gsh.farm.emptyTitle' => 'No agents running',
 			'gsh.farm.emptyHint' => 'Every Claude Code loop on this machine shows up here while it works, including subagents and sessions outside GSH Desktop.',
 			'gsh.farm.working' => ({required Object n}) => '${n} working',
-			'gsh.farm.waiting' => ({required Object n}) => '${n} need you',
+			'gsh.farm.waiting' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '${n} needs you', other: '${n} need you', ), 
 			'gsh.farm.idle' => ({required Object n}) => '${n} idle',
 			'gsh.farm.tokens' => ({required Object n}) => '${n} tokens out',
 			'gsh.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens out · context ${ctx}',

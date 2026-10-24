@@ -38,6 +38,8 @@ import 'package:gsh_desktop/app/gsh/data/repositories/json_workspace_layout_stor
 import 'package:gsh_desktop/app/gsh/data/repositories/project_schema_migrator.dart';
 import 'package:gsh_desktop/app/gsh/data/hooks/terminal_status_server_impl.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/claude_transcript_farm_source.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/codex_rollout_farm_source.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/multi_farm_source.dart';
 import 'package:gsh_desktop/app/gsh/data/chat/claude_stream_engine.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/chat_engine.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
@@ -261,7 +263,12 @@ Future<Module> buildGshModule({
         )
         ..addLazySingleton<TerminalStatusServer>(TerminalStatusServerImpl.new)
         // Fazenda: loops de agente lidos dos transcripts do Claude Code.
-        ..addInstance<FarmSource>(ClaudeTranscriptFarmSource())
+        ..addInstance<FarmSource>(
+          MultiFarmSource([
+            ClaudeTranscriptFarmSource(),
+            CodexRolloutFarmSource(),
+          ]),
+        )
         // Chat (protótipo do harness): Claude Code em stream-json.
         ..add<ChatEngineFactory>(ClaudeStreamEngineFactory.new)
         // Telemetria (plano 66): um store por workspace no cache local, parser

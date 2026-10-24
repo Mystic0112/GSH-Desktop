@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 
+import 'package:gsh_desktop/app/gsh/data/farm/farm_hook_status.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/transcript_tail.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/farm_source.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
@@ -26,17 +27,12 @@ import 'package:path/path.dart' as p;
 class ClaudeTranscriptFarmSource implements FarmSource {
   ClaudeTranscriptFarmSource({String? root, String? statusDir})
     : _root = root ?? p.join(_home, '.claude', 'projects'),
-      statusDir = statusDir ?? p.join(_home, '.gsh', 'farm');
+      _hook = FarmHookStatus(dir: statusDir);
 
   static String get _home =>
       Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'] ?? '';
 
-  /// Onde o `gsh hook` grava o último status de cada sessão.
-  final String statusDir;
-
-  /// Status de hook mais velho que isso é lixo de sessão que morreu sem
-  /// `SessionEnd`: apagado na varredura.
-  static const statusTtl = Duration(days: 1);
+  final FarmHookStatus _hook;
 
   /// Transcript sem escrita há mais que isso sai da fazenda.
   static const window = Duration(minutes: 30);
@@ -54,36 +50,9 @@ class ClaudeTranscriptFarmSource implements FarmSource {
   final String _root;
   final _tails = <String, TranscriptTail>{};
   final _meta = <String, Map<String, dynamic>>{};
-  DateTime _lastSweep = DateTime.fromMillisecondsSinceEpoch(0);
 
   /// Quando o hook marcou a sessão como `waiting` (pedido de permissão,
   /// pergunta), ou `null` se o último status do hook é outro.
-  Future<DateTime?> _waitingAt(String sid) async {
-    try {
-      final v = jsonDecode(
-        await File(p.join(statusDir, '$sid.json')).readAsString(),
-      );
-      if (v is! Map || v['st'] != 'waiting') return null;
-      final ts = v['ts'];
-      return ts is int ? DateTime.fromMillisecondsSinceEpoch(ts) : null;
-    } on Object {
-      return null; // sem arquivo (hook antigo, sessão sem evento) ou meio escrito
-    }
-  }
-
-  Future<void> _sweepStatus(DateTime now) async {
-    final dir = Directory(statusDir);
-    try {
-      if (!await dir.exists()) return;
-      await for (final f in dir.list(followLinks: false)) {
-        if (f is! File) continue;
-        final stat = await f.stat();
-        if (now.difference(stat.modified) > statusTtl) await f.delete();
-      }
-    } on FileSystemException {
-      // Varredura é faxina: falhar não importa.
-    }
-  }
 
   @override
   Future<List<FarmLoop>> scan(DateTime now) async {
@@ -107,7 +76,7 @@ class ClaudeTranscriptFarmSource implements FarmSource {
             id: sid,
             project: project,
             now: now,
-            waitingAt: await _waitingAt(sid),
+            waitingAt: await _hook.waitingAt(sid),
           ),
         );
 
@@ -141,10 +110,7 @@ class ClaudeTranscriptFarmSource implements FarmSource {
         }
       }
     }
-    if (now.difference(_lastSweep) > const Duration(minutes: 10)) {
-      _lastSweep = now;
-      await _sweepStatus(now);
-    }
+    await _hook.sweep(now);
     _tails.removeWhere((path, _) => !live.contains(path));
     _meta.removeWhere((path, _) => !live.contains(path));
     return loops;

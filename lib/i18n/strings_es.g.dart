@@ -1402,7 +1402,10 @@ class _Translations$gsh$farm$es extends Translations$gsh$farm$en {
 	@override String get emptyTitle => 'Ningún agente en ejecución';
 	@override String get emptyHint => 'Cada loop de Claude Code en esta máquina aparece aquí mientras trabaja, incluidos subagentes y sesiones fuera de GSH Desktop.';
 	@override String working({required Object n}) => '${n} trabajando';
-	@override String waiting({required Object n}) => '${n} te necesitan';
+	@override String waiting({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('es'))(n,
+		one: '${n} te necesita',
+		other: '${n} te necesitan',
+	);
 	@override String idle({required Object n}) => '${n} inactivos';
 	@override String tokens({required Object n}) => '${n} tokens generados';
 	@override String tokensDetail({required Object out, required Object ctx}) => '${out} tokens generados · contexto ${ctx}';
@@ -3401,7 +3404,7 @@ extension on TranslationsEs {
 			'gsh.farm.emptyTitle' => 'Ningún agente en ejecución',
 			'gsh.farm.emptyHint' => 'Cada loop de Claude Code en esta máquina aparece aquí mientras trabaja, incluidos subagentes y sesiones fuera de GSH Desktop.',
 			'gsh.farm.working' => ({required Object n}) => '${n} trabajando',
-			'gsh.farm.waiting' => ({required Object n}) => '${n} te necesitan',
+			'gsh.farm.waiting' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('es'))(n, one: '${n} te necesita', other: '${n} te necesitan', ), 
 			'gsh.farm.idle' => ({required Object n}) => '${n} inactivos',
 			'gsh.farm.tokens' => ({required Object n}) => '${n} tokens generados',
 			'gsh.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens generados · contexto ${ctx}',

@@ -27,6 +27,8 @@ import 'package:gsh_desktop/app/gsh/ui/states/pane_node.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/active_listenable_builder.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/adaptive_terminal_pane.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/agent_status_dot.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/agent_graph_view.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_view.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/browser_pane.dart';
@@ -947,6 +949,9 @@ class _TabState extends State<_Tab> {
         final isFocusedActive = widget.active && widget.focused;
         final isEmpty = s is EmptyTab;
         final streaming = s.isWorking;
+        final agent = s is TerminalSession && s.claudeSessionId != null
+            ? terminalFarmStatus(s.status)
+            : null;
         final dirty = s is FileViewerSession && s.dirty;
 
         final icon = _tabIcon(s);
@@ -1034,6 +1039,8 @@ class _TabState extends State<_Tab> {
               const SizedBox(width: 7),
               Expanded(child: titleWidget),
               const SizedBox(width: 10),
+              // Aba de agente (hook trouxe session-id): verde girando,
+              // amarelo piscando, azul vazado; "não visto" segue o accent.
               if (streaming) ...[
                 SizedBox(
                   width: 10,
@@ -1041,9 +1048,12 @@ class _TabState extends State<_Tab> {
                   child: CircularProgressIndicator(
                     size: 10,
                     strokeWidth: 1.5,
-                    color: colors.accent,
+                    color: agent == null ? colors.accent : colors.online,
                   ),
                 ),
+                const SizedBox(width: 7),
+              ] else if (agent == FarmStatus.waiting) ...[
+                const AgentStatusDot(status: FarmStatus.waiting),
                 const SizedBox(width: 7),
               ] else if (s.unseenFinish) ...[
                 Container(
@@ -1054,6 +1064,9 @@ class _TabState extends State<_Tab> {
                     shape: BoxShape.circle,
                   ),
                 ),
+                const SizedBox(width: 7),
+              ] else if (agent == FarmStatus.idle) ...[
+                const AgentStatusDot(status: FarmStatus.idle, hollow: true),
                 const SizedBox(width: 7),
               ],
               _TabClose(onTap: _requestClose, dirty: dirty),

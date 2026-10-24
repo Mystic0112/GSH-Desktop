@@ -46,6 +46,9 @@ class FarmViewModel extends ChangeNotifier {
 
   int get outputTokens => loops.fold(0, (sum, l) => sum + l.outputTokens);
 
+  /// Fila "precisa de mim" (ver [farmWaitingQueue]).
+  List<FarmWaiting> get waiting => farmWaitingQueue(loops);
+
   void attach() {
     if (_viewers++ > 0) return;
     unawaited(_tick());
@@ -83,6 +86,59 @@ class FarmViewModel extends ChangeNotifier {
     _timer?.cancel();
     super.dispose();
   }
+}
+
+/// Uma linha da fila "precisa de mim": uma sessão principal com alguém
+/// esperando um humano — ela mesma e/ou subagentes dela.
+class FarmWaiting {
+  const FarmWaiting({
+    required this.sessionId,
+    required this.title,
+    required this.project,
+    required this.since,
+    this.subagents = const [],
+  });
+
+  /// Sessão principal a focar (subagente não tem aba própria).
+  final String sessionId;
+  final String title;
+  final String project;
+
+  /// Desde quando o mais antigo do grupo espera (`lastSeen` dele).
+  final DateTime since;
+
+  /// Tipo (ou título) dos subagentes esperando sob esta sessão.
+  final List<String> subagents;
+}
+
+/// Loops esperando um humano, agrupados pela sessão principal (subagente
+/// aparece sob o título do pai), quem espera há mais tempo primeiro.
+List<FarmWaiting> farmWaitingQueue(Iterable<FarmLoop> loops) {
+  final mains = {
+    for (final l in loops)
+      if (!l.isSubagent) l.id: l,
+  };
+  final groups = <String, List<FarmLoop>>{};
+  for (final l in loops) {
+    if (l.activity != FarmActivity.waiting) continue;
+    (groups[l.parentId ?? l.id] ??= []).add(l);
+  }
+  return [
+    for (final MapEntry(key: sid, value: group) in groups.entries)
+      FarmWaiting(
+        sessionId: sid,
+        // Pai fora da janela do scan: o próprio subagente dá nome à linha.
+        title: (mains[sid] ?? group.first).title,
+        project: (mains[sid] ?? group.first).project,
+        since: group
+            .map((l) => l.lastSeen)
+            .reduce((a, b) => a.isBefore(b) ? a : b),
+        subagents: [
+          for (final l in group)
+            if (l.isSubagent) l.agentType ?? l.title,
+        ],
+      ),
+  ]..sort((a, b) => a.since.compareTo(b.since));
 }
 
 /// Agrupa por pasta, canteiro mais recente primeiro; dentro dele, cada

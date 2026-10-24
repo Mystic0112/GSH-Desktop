@@ -4,6 +4,8 @@ import 'package:gsh_desktop/app/gsh/domain/entities/git_info.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/project.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/realm.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/app_menu.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/terminal_session.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/agent_status_dot.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/update_card.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/workspace_avatar.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
@@ -64,6 +66,7 @@ class ProjectsRail extends StatefulWidget {
     required this.onWorktreesExpanded,
     required this.selectedId,
     required this.notificationCounts,
+    this.agentTabs = const {},
     required this.gitInfo,
     required this.rootsSummary,
     required this.rootsOf,
@@ -141,6 +144,10 @@ class ProjectsRail extends StatefulWidget {
   /// de callback por id: a rail lê isso uma vez por item a cada build, e no VM
   /// a consulta por id varria todas as sessões — O(itens × sessões) por frame.
   final Map<String, int> notificationCounts;
+
+  /// Abas de terminal por workspace/worktree: o ponto de status de agente
+  /// (amarelo esperando, verde trabalhando). Ausente = sem ponto.
+  final Map<String, List<TerminalSession>> agentTabs;
   final GitInfo? Function(String projectId) gitInfo;
 
   /// Agregado multi-root: (nº de roots, roots sujas). Só é lido quando
@@ -329,6 +336,7 @@ class _ProjectsRailState extends State<ProjectsRail> {
             project: project,
             selected: id == widget.selectedId,
             notifications: widget.notificationCounts[id] ?? 0,
+            agentTabs: widget.agentTabs[id] ?? const [],
             git: git,
             rootsSummary: rootsSummary,
             worktreeCount: forks.length,
@@ -374,6 +382,7 @@ class _ProjectsRailState extends State<ProjectsRail> {
           isLast: i == forks.length - 1,
           selected: forks[i].id == widget.selectedId,
           notifications: widget.notificationCounts[forks[i].id] ?? 0,
+          agentTabs: widget.agentTabs[forks[i].id] ?? const [],
           git: widget.gitInfo(forks[i].id),
           onTap: () => widget.onSelect(forks[i].id),
           onRemove: () => widget.onRemoveWorktree(forks[i]),
@@ -397,6 +406,7 @@ class _ProjectsRailState extends State<ProjectsRail> {
           isLast: i == forks.length - 1,
           selected: forks[i].id == widget.selectedId,
           notifications: widget.notificationCounts[forks[i].id] ?? 0,
+          agentTabs: widget.agentTabs[forks[i].id] ?? const [],
           git: widget.remoteGitInfoOf(forks[i].id),
           onTap: () => widget.onSelectRemote(forks[i].id),
           onRemove: () => widget.onRemoveWorktree(forks[i]),
@@ -1029,6 +1039,7 @@ class _ProjectItem extends StatelessWidget {
     required this.project,
     required this.selected,
     required this.notifications,
+    required this.agentTabs,
     required this.git,
     required this.rootsSummary,
     required this.rootsOf,
@@ -1051,6 +1062,7 @@ class _ProjectItem extends StatelessWidget {
   final Project project;
   final bool selected;
   final int notifications;
+  final List<TerminalSession> agentTabs;
   final GitInfo? git;
 
   /// Agregado multi-root (nº de roots, roots sujas) — usado no lugar do
@@ -1165,6 +1177,7 @@ class _ProjectItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 6),
+                  WorkspaceAgentDot(tabs: agentTabs),
                   if (notifications > 0) ...[
                     _AbsorbCardTap(
                       child: Container(
@@ -1229,6 +1242,7 @@ class _WorktreeItem extends StatelessWidget {
     required this.isLast,
     required this.selected,
     required this.notifications,
+    required this.agentTabs,
     required this.git,
     required this.onTap,
     required this.onRemove,
@@ -1248,6 +1262,7 @@ class _WorktreeItem extends StatelessWidget {
   final bool isLast;
   final bool selected;
   final int notifications;
+  final List<TerminalSession> agentTabs;
   final GitInfo? git;
   final VoidCallback onTap;
   final VoidCallback onRemove;
@@ -1331,6 +1346,7 @@ class _WorktreeItem extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 6),
+                      WorkspaceAgentDot(tabs: agentTabs),
                       _WorktreeSignal(
                         dirtyCount: git?.dirtyCount ?? 0,
                         hasNotification: notifications > 0,
