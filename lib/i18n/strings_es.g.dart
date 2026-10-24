@@ -1353,6 +1353,8 @@ class _Translations$gsh$chat$es extends Translations$gsh$chat$en {
 	@override String peerMessageFrom({required Object name}) => 'Mensaje de ${name}';
 	@override String get sessions => 'Sesiones';
 	@override String get noSessions => 'Ninguna otra sesión de Claude Code en ejecución ahora.';
+	@override String get listAllSessions => 'Listar todas las sesiones (pregunta al agente)…';
+	@override String get askListSessions => 'Lista las sesiones a las que puedo enviar mensaje, con ListAgents, y espera a que elija una. ';
 	@override String sendToSession({required Object name}) => 'Envía este mensaje a la sesión "${name}" con SendMessage y espera su respuesta: ';
 	@override String get remoteControl => 'Remote Control';
 	@override String get remoteControlHint => 'Continuar esta conversación en una terminal con Remote Control (celular, claude.ai/code). El motor del chat no soporta Remote Control.';
@@ -3368,6 +3370,8 @@ extension on TranslationsEs {
 			'gsh.chat.peerMessageFrom' => ({required Object name}) => 'Mensaje de ${name}',
 			'gsh.chat.sessions' => 'Sesiones',
 			'gsh.chat.noSessions' => 'Ninguna otra sesión de Claude Code en ejecución ahora.',
+			'gsh.chat.listAllSessions' => 'Listar todas las sesiones (pregunta al agente)…',
+			'gsh.chat.askListSessions' => 'Lista las sesiones a las que puedo enviar mensaje, con ListAgents, y espera a que elija una. ',
 			'gsh.chat.sendToSession' => ({required Object name}) => 'Envía este mensaje a la sesión "${name}" con SendMessage y espera su respuesta: ',
 			'gsh.chat.remoteControl' => 'Remote Control',
 			'gsh.chat.remoteControlHint' => 'Continuar esta conversación en una terminal con Remote Control (celular, claude.ai/code). El motor del chat no soporta Remote Control.',
@@ -3583,10 +3587,10 @@ extension on TranslationsEs {
 			'settings.page.terminal.closeOnExitTitle' => 'Cerrar la pestaña cuando el shell termine',
 			'settings.page.terminal.closeOnExitDesc' => 'Cuando un shell termina por sí solo (exit, Ctrl-D), cierra su pestaña en lugar de dejar un terminal muerto.',
 			'settings.page.appearance.sectionTheme' => 'Tema',
-			'settings.page.appearance.themeTitle' => 'Tema',
-			'settings.page.appearance.themeDesc' => 'Colores de la app, resaltado de código y paleta del terminal.',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.appearance.themeTitle' => 'Tema',
+			'settings.page.appearance.themeDesc' => 'Colores de la app, resaltado de código y paleta del terminal.',
 			'settings.page.appearance.modeTitle' => 'Modo',
 			'settings.page.appearance.modeDesc' => 'Qué variante del tema usar.',
 			'settings.page.appearance.modeOnlyDark' => ({required Object theme}) => '"${theme}" solo trae la variante oscura, así que esto no tiene efecto.',

@@ -38,7 +38,9 @@ import 'package:gsh_desktop/app/gsh/data/repositories/json_workspace_layout_stor
 import 'package:gsh_desktop/app/gsh/data/repositories/project_schema_migrator.dart';
 import 'package:gsh_desktop/app/gsh/data/hooks/terminal_status_server_impl.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/antigravity_farm_source.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/claude_session_directory.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/claude_transcript_farm_source.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/session_directory.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/codex_rollout_farm_source.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/multi_farm_source.dart';
 import 'package:gsh_desktop/app/gsh/data/chat/claude_stream_engine.dart';
@@ -264,6 +266,7 @@ Future<Module> buildGshModule({
         )
         ..addLazySingleton<TerminalStatusServer>(TerminalStatusServerImpl.new)
         // Fazenda: loops de agente lidos dos transcripts do Claude Code.
+        ..addInstance<SessionDirectory>(ClaudeSessionDirectory())
         ..addInstance<FarmSource>(
           MultiFarmSource([
             ClaudeTranscriptFarmSource(),

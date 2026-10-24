@@ -1,5 +1,6 @@
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
-import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/session_directory.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/telemetry_case_view.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat_attachments.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
@@ -272,34 +273,40 @@ class _IconAction extends StatelessWidget {
   );
 }
 
-/// Seletor de sessões: lista os loops principais do Claude Code rodando
-/// nesta máquina (menos esta conversa) e, ao escolher um, põe no campo o
-/// pedido para o agente mandar a mensagem via SendMessage.
+/// Seletor de sessões: as sessões do Claude Code das últimas 24 h nesta
+/// máquina (menos esta conversa), mais recente primeiro; escolher uma põe no
+/// campo o pedido para o agente mandar a mensagem via SendMessage. Sessões na
+/// nuvem ou em outra máquina não estão no disco: o último item pede a lista
+/// completa ao agente (ListAgents).
 Future<void> pickPeerSession(
   BuildContext context,
   ChatController chat,
   TextEditingController input,
 ) async {
   final tr = context.t.gsh.chat;
-  final loops = await context.read<FarmViewModel>().scanOnce();
+  final all = await inject<SessionDirectory>().recent();
   if (!context.mounted) return;
-  final peers = loops
-      .where((l) => !l.isSubagent && l.id != chat.sessionId)
-      .toList();
-  if (peers.isEmpty) {
-    await showAppMenu<void>(
-      context,
-      items: [AppMenuItem(value: null, label: tr.noSessions)],
-    );
-    return;
-  }
+  final peers = all.where((s) => s.id != chat.sessionId).take(15).toList();
+  const listAll = '\u0000list-all';
   final picked = await showAppMenu<String>(
     context,
-    minWidth: 280,
-    items: [for (final p in peers) AppMenuItem(value: p.title, label: p.title)],
+    minWidth: 320,
+    items: [
+      for (final s in peers)
+        AppMenuItem(
+          value: s.title,
+          label:
+              '${s.title}  ·  ${basenameOf(s.project)}  ·  '
+              '${telemetryRelative(context, s.lastSeen)}',
+        ),
+      if (peers.isEmpty) AppMenuItem(value: '', label: tr.noSessions),
+      AppMenuItem(value: listAll, label: tr.listAllSessions),
+    ],
   );
-  if (picked == null) return;
-  final prefix = tr.sendToSession(name: picked);
+  if (picked == null || picked.isEmpty || !context.mounted) return;
+  final prefix = picked == listAll
+      ? tr.askListSessions
+      : tr.sendToSession(name: picked);
   input.value = TextEditingValue(
     text: '$prefix${input.text}',
     selection: TextSelection.collapsed(

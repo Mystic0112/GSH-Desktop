@@ -1353,6 +1353,8 @@ class _Translations$gsh$chat$pt_BR extends Translations$gsh$chat$en {
 	@override String peerMessageFrom({required Object name}) => 'Mensagem de ${name}';
 	@override String get sessions => 'Sessões';
 	@override String get noSessions => 'Nenhuma outra sessão do Claude Code rodando agora.';
+	@override String get listAllSessions => 'Listar todas as sessões (pergunta ao agente)…';
+	@override String get askListSessions => 'Liste as sessões para as quais posso mandar mensagem, com ListAgents, e espere eu escolher uma. ';
 	@override String sendToSession({required Object name}) => 'Mande esta mensagem para a sessão "${name}" com SendMessage e espere a resposta: ';
 	@override String get remoteControl => 'Remote Control';
 	@override String get remoteControlHint => 'Continuar esta conversa num terminal com Remote Control (celular, claude.ai/code). O motor do chat não suporta Remote Control.';
@@ -3368,6 +3370,8 @@ extension on TranslationsPtBr {
 			'gsh.chat.peerMessageFrom' => ({required Object name}) => 'Mensagem de ${name}',
 			'gsh.chat.sessions' => 'Sessões',
 			'gsh.chat.noSessions' => 'Nenhuma outra sessão do Claude Code rodando agora.',
+			'gsh.chat.listAllSessions' => 'Listar todas as sessões (pergunta ao agente)…',
+			'gsh.chat.askListSessions' => 'Liste as sessões para as quais posso mandar mensagem, com ListAgents, e espere eu escolher uma. ',
 			'gsh.chat.sendToSession' => ({required Object name}) => 'Mande esta mensagem para a sessão "${name}" com SendMessage e espere a resposta: ',
 			'gsh.chat.remoteControl' => 'Remote Control',
 			'gsh.chat.remoteControlHint' => 'Continuar esta conversa num terminal com Remote Control (celular, claude.ai/code). O motor do chat não suporta Remote Control.',
@@ -3583,10 +3587,10 @@ extension on TranslationsPtBr {
 			'settings.page.terminal.closeOnExitTitle' => 'Fechar a aba quando o shell encerrar',
 			'settings.page.terminal.closeOnExitDesc' => 'Quando um shell termina sozinho (exit, Ctrl-D), fecha a aba em vez de deixar um terminal morto.',
 			'settings.page.appearance.sectionTheme' => 'Tema',
-			'settings.page.appearance.themeTitle' => 'Tema',
-			'settings.page.appearance.themeDesc' => 'Cores do app, realce de código e paleta do terminal.',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.appearance.themeTitle' => 'Tema',
+			'settings.page.appearance.themeDesc' => 'Cores do app, realce de código e paleta do terminal.',
 			'settings.page.appearance.modeTitle' => 'Modo',
 			'settings.page.appearance.modeDesc' => 'Qual variante do tema usar.',
 			'settings.page.appearance.modeOnlyDark' => ({required Object theme}) => '"${theme}" só traz a variante escura, então isto não tem efeito.',

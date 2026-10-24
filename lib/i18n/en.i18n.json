@@ -949,6 +949,8 @@
       "peerMessageFrom": "Message from ${name}",
       "sessions": "Sessions",
       "noSessions": "No other Claude Code session is running right now.",
+      "listAllSessions": "List every session (asks the agent)…",
+      "askListSessions": "List the sessions I can message, with ListAgents, and wait for me to pick one. ",
       "sendToSession": "Send this message to the session \"${name}\" with SendMessage and wait for its reply: ",
       "remoteControl": "Remote Control",
       "remoteControlHint": "Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat's engine doesn't support Remote Control.",

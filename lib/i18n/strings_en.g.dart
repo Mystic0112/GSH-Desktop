@@ -2874,6 +2874,12 @@ class Translations$gsh$chat$en {
 	/// en: 'No other Claude Code session is running right now.'
 	String get noSessions => 'No other Claude Code session is running right now.';
 
+	/// en: 'List every session (asks the agent)…'
+	String get listAllSessions => 'List every session (asks the agent)…';
+
+	/// en: 'List the sessions I can message, with ListAgents, and wait for me to pick one. '
+	String get askListSessions => 'List the sessions I can message, with ListAgents, and wait for me to pick one. ';
+
 	/// en: 'Send this message to the session "${name}" with SendMessage and wait for its reply: '
 	String sendToSession({required Object name}) => 'Send this message to the session "${name}" with SendMessage and wait for its reply: ';
 
@@ -6241,6 +6247,8 @@ extension on Translations {
 			'gsh.chat.peerMessageFrom' => ({required Object name}) => 'Message from ${name}',
 			'gsh.chat.sessions' => 'Sessions',
 			'gsh.chat.noSessions' => 'No other Claude Code session is running right now.',
+			'gsh.chat.listAllSessions' => 'List every session (asks the agent)…',
+			'gsh.chat.askListSessions' => 'List the sessions I can message, with ListAgents, and wait for me to pick one. ',
 			'gsh.chat.sendToSession' => ({required Object name}) => 'Send this message to the session "${name}" with SendMessage and wait for its reply: ',
 			'gsh.chat.remoteControl' => 'Remote Control',
 			'gsh.chat.remoteControlHint' => 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat\'s engine doesn\'t support Remote Control.',
@@ -6456,10 +6464,10 @@ extension on Translations {
 			'settings.page.terminal.closeOnExitTitle' => 'Close tab when the shell exits',
 			'settings.page.terminal.closeOnExitDesc' => 'When a shell ends on its own (exit, Ctrl-D), close its tab instead of leaving a dead terminal.',
 			'settings.page.appearance.sectionTheme' => 'Theme',
-			'settings.page.appearance.themeTitle' => 'Theme',
-			'settings.page.appearance.themeDesc' => 'App colors, code highlighting and terminal palette.',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.appearance.themeTitle' => 'Theme',
+			'settings.page.appearance.themeDesc' => 'App colors, code highlighting and terminal palette.',
 			'settings.page.appearance.modeTitle' => 'Mode',
 			'settings.page.appearance.modeDesc' => 'Which variant of the theme to use.',
 			'settings.page.appearance.modeOnlyDark' => ({required Object theme}) => '"${theme}" only ships a dark variant, so this has no effect.',
