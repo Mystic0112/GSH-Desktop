@@ -1413,8 +1413,10 @@ class _Translations$gsh$farm$pt_BR extends Translations$gsh$farm$en {
 	@override String waiting({required Object n}) => '${n} precisam de você';
 	@override String get waitingOne => '1 precisa de você';
 	@override String idle({required Object n}) => '${n} parados';
-	@override String tokens({required Object n}) => '${n} tokens gerados';
-	@override String tokensDetail({required Object out, required Object ctx}) => '${out} tokens gerados · contexto ${ctx}';
+	@override String spent({required Object total}) => 'Gastou ${total} tokens';
+	@override String spentDetail({required Object input, required Object cache, required Object out}) => '${input} entrada · ${cache} cache · ${out} gerados';
+	@override String context({required Object ctx}) => 'contexto ${ctx}';
+	@override String spentHud({required Object n}) => '${n} tokens gastos';
 	@override String get clickToOpen => 'Clique para abrir o terminal';
 	@override String get outsideGsh => 'Este agente está rodando fora do GSH Desktop. O terminal dele está em outra janela.';
 	@override String agents({required Object n}) => '${n} agentes';
@@ -3423,8 +3425,10 @@ extension on TranslationsPtBr {
 			'gsh.farm.waiting' => ({required Object n}) => '${n} precisam de você',
 			'gsh.farm.waitingOne' => '1 precisa de você',
 			'gsh.farm.idle' => ({required Object n}) => '${n} parados',
-			'gsh.farm.tokens' => ({required Object n}) => '${n} tokens gerados',
-			'gsh.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens gerados · contexto ${ctx}',
+			'gsh.farm.spent' => ({required Object total}) => 'Gastou ${total} tokens',
+			'gsh.farm.spentDetail' => ({required Object input, required Object cache, required Object out}) => '${input} entrada · ${cache} cache · ${out} gerados',
+			'gsh.farm.context' => ({required Object ctx}) => 'contexto ${ctx}',
+			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens gastos',
 			'gsh.farm.clickToOpen' => 'Clique para abrir o terminal',
 			'gsh.farm.outsideGsh' => 'Este agente está rodando fora do GSH Desktop. O terminal dele está em outra janela.',
 			'gsh.farm.agents' => ({required Object n}) => '${n} agentes',
@@ -3590,10 +3594,10 @@ extension on TranslationsPtBr {
 			'settings.page.terminal.engineDesc' => 'Usado por novas abas de terminal e buffers de saída de tasks. Abas abertas mantêm o motor atual.',
 			'settings.page.terminal.shellTitle' => 'Shell',
 			'settings.page.terminal.shellDesc' => 'Qual shell novas abas de terminal abrem. A seta ao lado do + ainda abre qualquer outro, só para aquela aba.',
-			'settings.page.terminal.noWslMessage' => 'Nenhuma distro WSL encontrada. Instale uma (wsl.exe --install) e reinicie o GSH Desktop para vê-la listada aqui.',
-			'settings.page.terminal.sectionBehavior' => 'Comportamento',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.terminal.noWslMessage' => 'Nenhuma distro WSL encontrada. Instale uma (wsl.exe --install) e reinicie o GSH Desktop para vê-la listada aqui.',
+			'settings.page.terminal.sectionBehavior' => 'Comportamento',
 			'settings.page.terminal.closeOnExitTitle' => 'Fechar a aba quando o shell encerrar',
 			'settings.page.terminal.closeOnExitDesc' => 'Quando um shell termina sozinho (exit, Ctrl-D), fecha a aba em vez de deixar um terminal morto.',
 			'settings.page.appearance.sectionTheme' => 'Tema',

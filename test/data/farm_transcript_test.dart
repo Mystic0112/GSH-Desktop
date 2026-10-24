@@ -74,6 +74,9 @@ void main() {
       expect(t.activity, FarmActivity.idle);
       expect(t.totalOutputTokens, 57);
       expect(t.contextTokens, 102);
+      // Gasto: entrada (2) e cache (100) também uma vez por mensagem.
+      expect(t.totalInputTokens, 4);
+      expect(t.totalCacheReadTokens, 200);
       expect(t.cwd, '/repo');
     });
 

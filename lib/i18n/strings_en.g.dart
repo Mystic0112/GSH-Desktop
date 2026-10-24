@@ -3030,11 +3030,17 @@ class Translations$gsh$farm$en {
 	/// en: '${n} idle'
 	String idle({required Object n}) => '${n} idle';
 
-	/// en: '${n} tokens out'
-	String tokens({required Object n}) => '${n} tokens out';
+	/// en: 'Spent ${total} tokens'
+	String spent({required Object total}) => 'Spent ${total} tokens';
 
-	/// en: '${out} tokens out · context ${ctx}'
-	String tokensDetail({required Object out, required Object ctx}) => '${out} tokens out · context ${ctx}';
+	/// en: '${input} input · ${cache} cache · ${out} out'
+	String spentDetail({required Object input, required Object cache, required Object out}) => '${input} input · ${cache} cache · ${out} out';
+
+	/// en: 'context ${ctx}'
+	String context({required Object ctx}) => 'context ${ctx}';
+
+	/// en: '${n} tokens spent'
+	String spentHud({required Object n}) => '${n} tokens spent';
 
 	/// en: 'Click to open its terminal'
 	String get clickToOpen => 'Click to open its terminal';
@@ -6310,8 +6316,10 @@ extension on Translations {
 			'gsh.farm.waiting' => ({required Object n}) => '${n} need you',
 			'gsh.farm.waitingOne' => '1 needs you',
 			'gsh.farm.idle' => ({required Object n}) => '${n} idle',
-			'gsh.farm.tokens' => ({required Object n}) => '${n} tokens out',
-			'gsh.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens out · context ${ctx}',
+			'gsh.farm.spent' => ({required Object total}) => 'Spent ${total} tokens',
+			'gsh.farm.spentDetail' => ({required Object input, required Object cache, required Object out}) => '${input} input · ${cache} cache · ${out} out',
+			'gsh.farm.context' => ({required Object ctx}) => 'context ${ctx}',
+			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens spent',
 			'gsh.farm.clickToOpen' => 'Click to open its terminal',
 			'gsh.farm.outsideGsh' => 'This agent is running outside GSH Desktop. Its terminal is in another window.',
 			'gsh.farm.agents' => ({required Object n}) => '${n} agents',
@@ -6477,10 +6485,10 @@ extension on Translations {
 			'settings.page.terminal.engineDesc' => 'Used by new terminal tabs and task output buffers. Open tabs keep their current engine.',
 			'settings.page.terminal.shellTitle' => 'Shell',
 			'settings.page.terminal.shellDesc' => 'Which shell new terminal tabs open. The arrow next to + still opens any other one, just for that tab.',
-			'settings.page.terminal.noWslMessage' => 'No WSL distros found. Install one (wsl.exe --install) and restart GSH Desktop to see it listed here.',
-			'settings.page.terminal.sectionBehavior' => 'Behavior',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.terminal.noWslMessage' => 'No WSL distros found. Install one (wsl.exe --install) and restart GSH Desktop to see it listed here.',
+			'settings.page.terminal.sectionBehavior' => 'Behavior',
 			'settings.page.terminal.closeOnExitTitle' => 'Close tab when the shell exits',
 			'settings.page.terminal.closeOnExitDesc' => 'When a shell ends on its own (exit, Ctrl-D), close its tab instead of leaving a dead terminal.',
 			'settings.page.appearance.sectionTheme' => 'Theme',

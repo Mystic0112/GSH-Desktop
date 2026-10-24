@@ -75,6 +75,8 @@ class FarmLoop {
     this.tool,
     this.outputTokens = 0,
     this.contextTokens = 0,
+    this.inputTokens = 0,
+    this.cacheReadTokens = 0,
   });
 
   /// `session_id` (principal) ou `agentId` (subagente).
@@ -104,6 +106,16 @@ class FarmLoop {
 
   /// Tamanho do contexto no último turno (input + cache).
   final int contextTokens;
+
+  /// Entrada processada no loop todo (input + escrita de cache), somada por
+  /// mensagem.
+  final int inputTokens;
+
+  /// Contexto relido do cache no loop todo (mais barato, mas conta).
+  final int cacheReadTokens;
+
+  /// Tudo que o loop gastou: entrada + cache + saída.
+  int get spentTokens => inputTokens + cacheReadTokens + outputTokens;
 
   final DateTime lastSeen;
 

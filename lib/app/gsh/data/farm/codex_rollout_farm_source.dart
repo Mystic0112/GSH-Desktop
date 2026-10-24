@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -107,6 +108,8 @@ class CodexRolloutFarmSource implements FarmSource {
           tool: tail.tool,
           outputTokens: tail.outputTokens,
           contextTokens: tail.contextTokens,
+          inputTokens: tail.inputTokens,
+          cacheReadTokens: tail.cacheReadTokens,
           lastSeen: lastSeen,
         ),
       );
@@ -142,6 +145,8 @@ class CodexTail {
   String? tool;
   int outputTokens = 0;
   int contextTokens = 0;
+  int inputTokens = 0;
+  int cacheReadTokens = 0;
   DateTime? lastTs;
 
   void consume(Uint8List bytes) {
@@ -190,6 +195,12 @@ class CodexTail {
             final total = (pl['info'] as Map?)?['total_token_usage'];
             if (total is Map) {
               outputTokens = _int(total['output_tokens']);
+              // Total acumulado; o `input_tokens` do Codex já inclui o cache.
+              cacheReadTokens = _int(total['cached_input_tokens']);
+              inputTokens = max(
+                0,
+                _int(total['input_tokens']) - cacheReadTokens,
+              );
               contextTokens =
                   _int(total['input_tokens']) +
                   _int(total['cached_input_tokens']);

@@ -1413,8 +1413,10 @@ class _Translations$gsh$farm$es extends Translations$gsh$farm$en {
 	@override String waiting({required Object n}) => '${n} te necesitan';
 	@override String get waitingOne => '1 te necesita';
 	@override String idle({required Object n}) => '${n} inactivos';
-	@override String tokens({required Object n}) => '${n} tokens generados';
-	@override String tokensDetail({required Object out, required Object ctx}) => '${out} tokens generados · contexto ${ctx}';
+	@override String spent({required Object total}) => 'Gastó ${total} tokens';
+	@override String spentDetail({required Object input, required Object cache, required Object out}) => '${input} entrada · ${cache} caché · ${out} generados';
+	@override String context({required Object ctx}) => 'contexto ${ctx}';
+	@override String spentHud({required Object n}) => '${n} tokens gastados';
 	@override String get clickToOpen => 'Haz clic para abrir su terminal';
 	@override String get outsideGsh => 'Este agente se ejecuta fuera de GSH Desktop. Su terminal está en otra ventana.';
 	@override String agents({required Object n}) => '${n} agentes';
@@ -3423,8 +3425,10 @@ extension on TranslationsEs {
 			'gsh.farm.waiting' => ({required Object n}) => '${n} te necesitan',
 			'gsh.farm.waitingOne' => '1 te necesita',
 			'gsh.farm.idle' => ({required Object n}) => '${n} inactivos',
-			'gsh.farm.tokens' => ({required Object n}) => '${n} tokens generados',
-			'gsh.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens generados · contexto ${ctx}',
+			'gsh.farm.spent' => ({required Object total}) => 'Gastó ${total} tokens',
+			'gsh.farm.spentDetail' => ({required Object input, required Object cache, required Object out}) => '${input} entrada · ${cache} caché · ${out} generados',
+			'gsh.farm.context' => ({required Object ctx}) => 'contexto ${ctx}',
+			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens gastados',
 			'gsh.farm.clickToOpen' => 'Haz clic para abrir su terminal',
 			'gsh.farm.outsideGsh' => 'Este agente se ejecuta fuera de GSH Desktop. Su terminal está en otra ventana.',
 			'gsh.farm.agents' => ({required Object n}) => '${n} agentes',
@@ -3590,10 +3594,10 @@ extension on TranslationsEs {
 			'settings.page.terminal.engineDesc' => 'Usado por nuevas pestañas de terminal y buffers de salida de tasks. Las pestañas abiertas mantienen su motor actual.',
 			'settings.page.terminal.shellTitle' => 'Shell',
 			'settings.page.terminal.shellDesc' => 'Qué shell abren las nuevas pestañas de terminal. La flecha junto al + sigue abriendo cualquier otro, solo para esa pestaña.',
-			'settings.page.terminal.noWslMessage' => 'No se encontraron distros de WSL. Instala una (wsl.exe --install) y reinicia GSH Desktop para verla listada aquí.',
-			'settings.page.terminal.sectionBehavior' => 'Comportamiento',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.terminal.noWslMessage' => 'No se encontraron distros de WSL. Instala una (wsl.exe --install) y reinicia GSH Desktop para verla listada aquí.',
+			'settings.page.terminal.sectionBehavior' => 'Comportamiento',
 			'settings.page.terminal.closeOnExitTitle' => 'Cerrar la pestaña cuando el shell termine',
 			'settings.page.terminal.closeOnExitDesc' => 'Cuando un shell termina por sí solo (exit, Ctrl-D), cierra su pestaña en lugar de dejar un terminal muerto.',
 			'settings.page.appearance.sectionTheme' => 'Tema',

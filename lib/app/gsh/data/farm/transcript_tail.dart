@@ -22,6 +22,8 @@ class TranscriptTail {
   String? tool;
   int outputTokens = 0;
   int contextTokens = 0;
+  int inputTokens = 0;
+  int cacheReadTokens = 0;
   DateTime? lastTs;
 
   // O Claude grava uma linha por bloco de conteúdo da mesma mensagem, todas
@@ -29,8 +31,12 @@ class TranscriptTail {
   // a mensagem corrente e só soma quando o id muda.
   String? _msgId;
   int _msgOut = 0;
+  int _msgIn = 0;
+  int _msgCache = 0;
 
   int get totalOutputTokens => outputTokens + _msgOut;
+  int get totalInputTokens => inputTokens + _msgIn;
+  int get totalCacheReadTokens => cacheReadTokens + _msgCache;
 
   /// Consome as linhas completas de [bytes] e avança [offset]. O resto (linha
   /// pela metade, ainda sendo escrita) fica para a próxima leitura.
@@ -89,9 +95,15 @@ class TranscriptTail {
       final id = msg['id'] as String?;
       if (id != _msgId) {
         outputTokens += _msgOut;
+        inputTokens += _msgIn;
+        cacheReadTokens += _msgCache;
         _msgId = id;
       }
       _msgOut = _int(usage['output_tokens']);
+      _msgIn =
+          _int(usage['input_tokens']) +
+          _int(usage['cache_creation_input_tokens']);
+      _msgCache = _int(usage['cache_read_input_tokens']);
       contextTokens =
           _int(usage['input_tokens']) +
           _int(usage['cache_read_input_tokens']) +

@@ -332,10 +332,13 @@ class _FarmViewState extends State<FarmView> {
       if (!l.isSubagent) '${p.basename(l.project)} · ${_harnessLabel(l)}',
       if (l.agentType != null) l.agentType!,
       if (l.tool != null) '$activity · ${l.tool}' else activity,
-      tr.tokensDetail(
+      tr.spent(total: _compact(l.spentTokens)),
+      tr.spentDetail(
+        input: _compact(l.inputTokens),
+        cache: _compact(l.cacheReadTokens),
         out: _compact(l.outputTokens),
-        ctx: _compact(l.contextTokens),
       ),
+      tr.context(ctx: _compact(l.contextTokens)),
       tr.clickToOpen,
     ].join('\n');
     final right = at.dx > size.width - 280, below = at.dy < size.height - 140;

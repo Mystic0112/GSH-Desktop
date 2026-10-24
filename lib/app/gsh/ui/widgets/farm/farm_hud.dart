@@ -71,7 +71,7 @@ class _Hud extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                tr.tokens(n: _grouped(vm.outputTokens)).toUpperCase(),
+                tr.spentHud(n: _grouped(vm.spentTokens)).toUpperCase(),
                 style: mono.copyWith(fontSize: 16, color: _hudText),
               ),
             ],

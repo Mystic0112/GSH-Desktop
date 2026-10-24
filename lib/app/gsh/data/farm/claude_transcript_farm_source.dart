@@ -240,6 +240,8 @@ class ClaudeTranscriptFarmSource implements FarmSource {
       tool: t.tool,
       outputTokens: t.totalOutputTokens,
       contextTokens: t.contextTokens,
+      inputTokens: t.totalInputTokens,
+      cacheReadTokens: t.totalCacheReadTokens,
       lastSeen: lastSeen,
     );
   }

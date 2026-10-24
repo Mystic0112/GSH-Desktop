@@ -46,6 +46,9 @@ class FarmViewModel extends ChangeNotifier {
 
   int get outputTokens => loops.fold(0, (sum, l) => sum + l.outputTokens);
 
+  /// Tudo que os loops na tela gastaram (entrada + cache + saída).
+  int get spentTokens => loops.fold(0, (sum, l) => sum + l.spentTokens);
+
   /// Fila "precisa de mim" (ver [farmWaitingQueue]).
   List<FarmWaiting> get waiting => farmWaitingQueue(loops);
 
