@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/lan_team_farm_channel.dart';
