@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:gsh_desktop/app/core/domain/contracts/settings_store.dart';
 import 'package:gsh_desktop/app/gsh/data/chat/claude_cli_engine.dart';
 import 'package:gsh_desktop/app/gsh/data/chat/claude_stream_engine.dart';
@@ -20,7 +22,10 @@ class ChatEngineRouter implements ChatEngineFactory {
     String? resumeSessionId,
     bool showThinking = false,
   }) async {
-    final useCli = (await _settings.load()).chatRemoteControl;
+    // O motor CLI usa `/usr/bin/env` e um hook em sh: só macOS/Linux. No
+    // Windows fica o stream-json mesmo com a preferência ligada.
+    final useCli =
+        !Platform.isWindows && (await _settings.load()).chatRemoteControl;
     return (useCli ? _cli : _stream).start(
       cwd: cwd,
       resumeSessionId: resumeSessionId,

@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
 import 'package:gsh_desktop/app/core/domain/contracts/protected_hosts.dart';
 import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
@@ -96,14 +98,16 @@ class ClaudeCodePanel extends StatelessWidget {
         SettingsSection(
           title: tr.sectionRemoteControl,
           rows: [
-            SettingsRow(
-              title: tr.chatRemoteControlTitle,
-              description: tr.chatRemoteControlDesc,
-              trailing: Switch(
-                value: s.chatRemoteControl,
-                onChanged: controller.setChatRemoteControl,
+            // Motor CLI só em macOS/Linux (ver ChatEngineRouter).
+            if (!Platform.isWindows)
+              SettingsRow(
+                title: tr.chatRemoteControlTitle,
+                description: tr.chatRemoteControlDesc,
+                trailing: Switch(
+                  value: s.chatRemoteControl,
+                  onChanged: controller.setChatRemoteControl,
+                ),
               ),
-            ),
             SettingsRow(
               title: tr.remoteControlTitle,
               description: tr.remoteControlDesc,
