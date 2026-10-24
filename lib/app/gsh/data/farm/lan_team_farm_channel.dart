@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:gsh_desktop/app/gsh/data/farm/team_signing.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
@@ -49,7 +50,12 @@ class LanTeamFarmChannel implements TeamFarmChannel {
         if (ev != RawSocketEvent.read) return;
         final d = s.receive();
         if (d == null) return;
-        final p = decodeTeamPacket(d.data);
+        final p = decodeTeamPacket(
+          d.data,
+          team: _config.team,
+          secret: _config.secret,
+          address: d.address.address,
+        );
         if (p == null || p.machineId == machineId) return;
         if (p.team != _config.team.trim()) return;
         _packets.add(p);
@@ -61,7 +67,7 @@ class LanTeamFarmChannel implements TeamFarmChannel {
   Future<void> publish(TeamFarmPacket packet) async {
     final s = _socket;
     if (s == null) return;
-    s.send(encodeTeamPacket(packet), group, port);
+    s.send(encodeTeamPacket(packet, secret: _config.secret), group, port);
   }
 
   @override
@@ -120,27 +126,50 @@ String _randomId() {
 /// Teto do datagrama: o resto dos loops (os mais antigos) fica de fora.
 const _maxLoops = 80;
 
-Uint8List encodeTeamPacket(TeamFarmPacket p) {
+/// Com [secret], o corpo vai assinado (`{"b": corpo, "m": hmac}`); sem,
+/// vai o corpo puro.
+Uint8List encodeTeamPacket(TeamFarmPacket p, {String secret = ''}) {
   final loops = [...p.loops]..sort((a, b) => b.lastSeen.compareTo(a.lastSeen));
-  return Uint8List.fromList(
-    gzip.encode(
-      utf8.encode(
-        jsonEncode({
-          'v': 1,
-          'id': p.machineId,
-          'n': p.name,
-          't': p.team,
-          'l': [for (final l in loops.take(_maxLoops)) _loopToJson(l)],
-        }),
-      ),
-    ),
-  );
+  final body = jsonEncode({
+    'v': 1,
+    'id': p.machineId,
+    'n': p.name,
+    't': p.team,
+    'l': [for (final l in loops.take(_maxLoops)) _loopToJson(l)],
+    if (p.agents.isNotEmpty) 'ag': [for (final a in p.agents) _agentToJson(a)],
+    if (p.mailPort != null) 'mp': p.mailPort,
+  });
+  final wire = secret.isEmpty
+      ? body
+      : jsonEncode({
+          'b': body,
+          'm': teamMac(p.team, secret, utf8.encode(body)),
+        });
+  return Uint8List.fromList(gzip.encode(utf8.encode(wire)));
 }
 
-/// `null` para lixo, versão desconhecida ou pacote de outro programa.
-TeamFarmPacket? decodeTeamPacket(List<int> bytes) {
+/// `null` para lixo, versão desconhecida, pacote de outro programa ou
+/// assinatura que não bate. Com [secret], só aceita pacote assinado com ela;
+/// sem, só aceita pacote sem assinatura (times com e sem senha não se
+/// misturam).
+TeamFarmPacket? decodeTeamPacket(
+  List<int> bytes, {
+  String team = '',
+  String secret = '',
+  String? address,
+}) {
   try {
-    final o = jsonDecode(utf8.decode(gzip.decode(bytes)));
+    var o = jsonDecode(utf8.decode(gzip.decode(bytes)));
+    if (o is Map && o.containsKey('m')) {
+      final body = o['b'] as String;
+      if (secret.isEmpty ||
+          !teamMacOk(team, secret, utf8.encode(body), o['m'] as String?)) {
+        return null;
+      }
+      o = jsonDecode(body);
+    } else if (secret.isNotEmpty) {
+      return null;
+    }
     if (o is! Map || o['v'] != 1) return null;
     return TeamFarmPacket(
       machineId: o['id'] as String,
@@ -150,10 +179,36 @@ TeamFarmPacket? decodeTeamPacket(List<int> bytes) {
         for (final l in (o['l'] as List? ?? const []).whereType<Map>())
           ?_loopFromJson(l),
       ],
+      agents: [
+        for (final a in (o['ag'] as List? ?? const []).whereType<Map>())
+          ?_agentFromJson(a),
+      ],
+      mailPort: o['mp'] as int?,
+      address: address,
     );
   } on Object {
     return null; // FormatException, gzip inválido, tipo errado
   }
+}
+
+Map<String, Object?> _agentToJson(TeamAgent a) => {
+  'id': a.tabId,
+  'l': a.label,
+  'h': a.harness,
+  'p': a.project,
+  if (a.sessionId != null) 's': a.sessionId,
+};
+
+TeamAgent? _agentFromJson(Map a) {
+  final id = a['id'];
+  if (id is! String) return null;
+  return TeamAgent(
+    tabId: id,
+    label: a['l'] as String? ?? id,
+    harness: a['h'] as String? ?? '',
+    project: a['p'] as String? ?? '',
+    sessionId: a['s'] as String?,
+  );
 }
 
 Map<String, Object?> _loopToJson(FarmLoop l) => {
