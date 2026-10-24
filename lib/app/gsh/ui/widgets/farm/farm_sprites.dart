@@ -8,6 +8,7 @@ import 'package:gsh_desktop/app/gsh/ui/widgets/farm/pix.dart';
 part 'farm_sprites_hats.dart';
 part 'farm_sprites_crops.dart';
 part 'farm_sprites_icons.dart';
+part 'office_sprites.dart';
 
 /// Sprites HD da fazenda (grade 2x: um pixel de mundo = 2x2 pixels de arte).
 /// Cada pose é rasterizada uma vez e guardada: o loop de frame nunca monta

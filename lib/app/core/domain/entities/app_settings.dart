@@ -45,6 +45,9 @@ enum TranscriptWidth {
 /// Recursos do shell que o usuário pode tirar da barra (aba Recursos).
 enum AppFeature { chat, farm, agentGraph, browser }
 
+/// Cenário da fazenda de agentes: o campo do clodfarm ou um escritório.
+enum FarmScenery { farm, office }
+
 /// Preferências do app, persistidas localmente (Hive). Imutável; mudanças via
 /// [copyWith]. Fontes vazias (`null`) = usar os defaults do design.
 class AppSettings {
@@ -95,6 +98,7 @@ class AppSettings {
     this.transcriptWidth = TranscriptWidth.medium,
     this.hiddenFeatures = const <AppFeature>{},
     this.openLinksInApp = false,
+    this.farmScenery = FarmScenery.farm,
   });
 
   final AppThemeMode themeMode;
@@ -303,6 +307,9 @@ class AppSettings {
   /// plataforma tem webview inline) em vez do navegador do SO.
   final bool openLinksInApp;
 
+  /// Cenário em que a fazenda de agentes é desenhada.
+  final FarmScenery farmScenery;
+
   bool showsFeature(AppFeature f) => !hiddenFeatures.contains(f);
 
   AppSettings copyWith({
@@ -364,6 +371,7 @@ class AppSettings {
     TranscriptWidth? transcriptWidth,
     Set<AppFeature>? hiddenFeatures,
     bool? openLinksInApp,
+    FarmScenery? farmScenery,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -432,6 +440,7 @@ class AppSettings {
       transcriptWidth: transcriptWidth ?? this.transcriptWidth,
       hiddenFeatures: hiddenFeatures ?? this.hiddenFeatures,
       openLinksInApp: openLinksInApp ?? this.openLinksInApp,
+      farmScenery: farmScenery ?? this.farmScenery,
     );
   }
 
@@ -503,6 +512,7 @@ class AppSettings {
     if (hiddenFeatures.isNotEmpty)
       'features.hidden': [for (final f in hiddenFeatures) f.name],
     if (openLinksInApp) 'links.openInApp': true,
+    if (farmScenery != FarmScenery.farm) 'farm.scenery': farmScenery.name,
   };
 
   factory AppSettings.fromJson(Map<dynamic, dynamic> json) {
@@ -611,6 +621,11 @@ class AppSettings {
           for (final n in names) ?_nullableEnumByName(AppFeature.values, n),
       },
       openLinksInApp: json['links.openInApp'] as bool? ?? false,
+      farmScenery: _enumByName(
+        FarmScenery.values,
+        json['farm.scenery'],
+        FarmScenery.farm,
+      ),
     );
   }
 }

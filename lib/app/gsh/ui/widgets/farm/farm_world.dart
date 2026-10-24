@@ -5,12 +5,16 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart'
+    show FarmScenery;
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart'
     show hd, spark;
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/pix.dart';
 
 part 'farm_world_paint.dart';
 part 'farm_world_props.dart';
+part 'office_world_paint.dart';
+part 'office_world_props.dart';
 
 /// O mundo da fazenda: o layout (onde fica celeiro, curral, lago, cercado e
 /// canteiros) e o fundo estático pintado uma vez (grama com ruído, árvores,

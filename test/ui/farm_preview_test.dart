@@ -3,6 +3,7 @@ library;
 
 import 'dart:math' as math;
 
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
@@ -83,8 +84,16 @@ List<FarmLoop> _loops() => [
 void main() {
   setUpAll(loadShotFonts);
 
-  for (final zoom in [1.0, 3.0, 5.0]) {
-    testWidgets('preview: fazenda no zoom $zoom', (tester) async {
+  // zoom 0 = enquadra o mundo inteiro (o duplo clique)
+  for (final scenery in FarmScenery.values) {
+    for (final zoom in [0.0, 1.0, 3.0, 5.0]) {
+      _preview(scenery, zoom);
+    }
+  }
+}
+
+void _preview(FarmScenery scenery, double zoom) =>
+    testWidgets('preview: ${scenery.name} no zoom $zoom', (tester) async {
       const size = Size(960, 600);
       tester.view
         ..physicalSize = size
@@ -98,7 +107,9 @@ void main() {
         view: FarmViewport(w: size.width, h: size.height),
         snap: (z) => z,
       );
-      final world = (await tester.runAsync(() => buildWorld(layout)))!;
+      final world = (await tester.runAsync(
+        () => buildWorld(layout, scenery: scenery),
+      ))!;
       scene.relayout(layout);
       for (var i = 0; i < 40; i++) {
         scene.update(0.05);
@@ -107,11 +118,13 @@ void main() {
       // zoom 3: enquadra o canteiro dos minis
       final main =
           layout.plots[scene.plotInfo.indexWhere((p) => p?.main?.id == 'm')];
-      cam
-        ..z = zoom
-        ..x = main.center.dx - size.width / 2 / zoom
-        ..y = main.center.dy - size.height / 2 / zoom
-        ..clampTo(layout, size);
+      if (zoom > 0) {
+        cam
+          ..z = zoom
+          ..x = main.center.dx - size.width / 2 / zoom
+          ..y = main.center.dy - size.height / 2 / zoom
+          ..clampTo(layout, size);
+      }
       await tester.pumpWidget(
         shotHost(
           RepaintBoundary(
@@ -138,7 +151,6 @@ void main() {
           ),
         ),
       );
-      await takeShot(tester, 'farm2_${zoom.toInt()}');
+      final name = scenery == FarmScenery.farm ? 'farm2' : 'office';
+      await takeShot(tester, '${name}_${zoom.toInt()}');
     });
-  }
-}

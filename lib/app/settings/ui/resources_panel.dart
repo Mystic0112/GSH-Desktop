@@ -53,6 +53,19 @@ class ResourcesPanel extends StatelessWidget {
           rows: [
             feature(AppFeature.chat, tr.chat, tr.chatDesc),
             feature(AppFeature.farm, tr.farm, tr.farmDesc),
+            if (s.showsFeature(AppFeature.farm))
+              SettingsRow(
+                title: tr.farmScenery,
+                description: tr.farmSceneryDesc,
+                trailing: SettingsSegmented<FarmScenery>(
+                  value: s.farmScenery,
+                  onChanged: controller.setFarmScenery,
+                  options: {
+                    FarmScenery.farm: tr.sceneryFarm,
+                    FarmScenery.office: tr.sceneryOffice,
+                  },
+                ),
+              ),
             feature(AppFeature.agentGraph, tr.graph, tr.graphDesc),
             feature(AppFeature.browser, tr.browser, tr.browserDesc),
           ],

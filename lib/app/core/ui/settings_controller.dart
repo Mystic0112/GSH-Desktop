@@ -300,6 +300,9 @@ class SettingsController extends ChangeNotifier {
   void setChatRemoteControl(bool value) =>
       _apply(_settings.copyWith(chatRemoteControl: value));
 
+  void setFarmScenery(FarmScenery scenery) =>
+      _apply(_settings.copyWith(farmScenery: scenery));
+
   /// Paleta de código do modo claro; `null` = a do tema ativo.
   void setCodeThemeLight(String? id) => _apply(
     _settings.copyWith(codeThemeLight: id, clearCodeThemeLight: id == null),

@@ -3,7 +3,9 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:gsh_desktop/app/core/domain/entities/harness.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
@@ -60,6 +62,7 @@ class _FarmViewState extends State<FarmView> {
   Timer? _resize;
   int _gen = 0;
   int _lastUs = 0;
+  FarmScenery? _scenery;
   double _pinch = 1;
 
   @override
@@ -162,7 +165,10 @@ class _FarmViewState extends State<FarmView> {
       view: view,
       snap: (z) => _cam.snap(z, down: true),
     );
-    final world = await buildWorld(layout);
+    final world = await buildWorld(
+      layout,
+      scenery: _scenery ?? FarmScenery.farm,
+    );
     if (!mounted || gen != _gen) {
       world.dispose();
       return;
@@ -198,6 +204,15 @@ class _FarmViewState extends State<FarmView> {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<FarmViewModel>();
+    // trocar o cenário nas configurações refaz o mundo
+    final scenery = context.select<SettingsController, FarmScenery>(
+      (c) => c.settings.farmScenery,
+    );
+    if (scenery != _scenery) {
+      final first = _scenery == null;
+      _scenery = scenery;
+      if (!first) unawaited(_rebuild());
+    }
     _cam.dpr = MediaQuery.devicePixelRatioOf(context);
     final label = context.typo.mono.copyWith(
       fontSize: 10,

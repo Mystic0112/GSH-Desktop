@@ -7,8 +7,12 @@ part of 'farm_world.dart';
 /// Fundo pronto: a imagem HD do mundo e a faixa de árvores da frente (que
 /// passa por cima dos bichos), mais pedras e decoração (eles desviam delas).
 class FarmWorld {
-  FarmWorld(this.layout, this.bg, this.fg, this.fgY);
+  FarmWorld(this.layout, this.bg, this.fg, this.fgY, this.scenery);
   final FarmLayout layout;
+
+  /// O cenário pintado: o painter troca plantação/espantalho por monitores
+  /// e impressora no escritório.
+  final FarmScenery scenery;
   final ui.Image bg;
   final ui.Image fg;
   final int fgY;
@@ -28,14 +32,18 @@ typedef _Built = ({
 });
 
 /// Pinta o fundo num isolate (é o passo caro) e sobe as imagens.
-Future<FarmWorld> buildWorld(FarmLayout l, {int seed = 7}) async {
-  final built = await Isolate.run(() => _paintWorld(l, seed));
+Future<FarmWorld> buildWorld(
+  FarmLayout l, {
+  int seed = 7,
+  FarmScenery scenery = FarmScenery.farm,
+}) async {
+  final built = await Isolate.run(() => _paintWorld(l, seed, scenery));
   l
     ..rocks = built.rocks
     ..decor = built.decor;
   final bg = await imageFromRgba(built.bg, l.w * hd, l.h * hd);
   final fg = await imageFromRgba(built.fg, l.w * hd, (l.h - built.fgY) * hd);
-  return FarmWorld(l, bg, fg, built.fgY);
+  return FarmWorld(l, bg, fg, built.fgY, scenery);
 }
 
 double Function(double, double) _valueNoise(int seed) {
@@ -55,7 +63,7 @@ double Function(double, double) _valueNoise(int seed) {
   };
 }
 
-_Built _paintWorld(FarmLayout l, int seed) {
+_Built _paintWorld(FarmLayout l, int seed, FarmScenery scenery) {
   final w = l.w, h = l.h, rnd = mulberry32(seed);
   final g = Raster(w * hd, h * hd);
   // grama: duas oitavas de ruído, dithering ordenado entre cinco tons e uma
@@ -98,6 +106,50 @@ _Built _paintWorld(FarmLayout l, int seed) {
         ..fill(x, y, 1, 1, 0xFFf5e27a);
     }
   }
+  // na fazenda as árvores passam por cima do campo; no escritório o prédio
+  // é pintado depois e cobre a borda delas
+  final farm = scenery == FarmScenery.farm ? _farmProps(g, l, rnd) : null;
+  // árvores na borda: as de trás no fundo, a fileira de baixo na frente de
+  // tudo (faixa própria)
+  final trees = <(double, double, double)>[];
+  final t = l.t;
+  for (var x = -6.0; x < w + 12; x += 12 + rnd() * 9) {
+    trees.add((x, 2 + rnd() * (t - 16), 10 + rnd() * 5));
+    if (rnd() < 0.6) trees.add((x + 6, -6 + rnd() * 8, 11 + rnd() * 4));
+  }
+  for (var y = t - 4.0; y < h - t + 6; y += 12 + rnd() * 8) {
+    trees
+      ..add((2 + rnd() * (t - 14), y, 9 + rnd() * 5))
+      ..add((w - 2 - rnd() * (t - 14), y, 9 + rnd() * 5));
+    if (rnd() < 0.5) trees.add((-4, y + 6, 11));
+    if (rnd() < 0.5) trees.add((w + 4.0, y + 6, 11));
+  }
+  final front = <(double, double, double)>[];
+  for (var x = -6.0; x < w + 12; x += 12 + rnd() * 9) {
+    front.add((x, h - t + 12 + rnd() * 10, 11 + rnd() * 5));
+  }
+  trees.sort((a, b) => a.$2.compareTo(b.$2));
+  for (final (x, y, r) in trees) {
+    _tree(g, (x * hd).round(), (y * hd).round(), (r * hd).round(), rnd);
+  }
+  final (rocks, decor) = farm ?? _officeProps(g, l, rnd);
+  final fgY = math.max(0, h - t - 8);
+  final f = Raster(w * hd, (h - fgY) * hd);
+  front.sort((a, b) => a.$2.compareTo(b.$2));
+  for (final (x, y, r) in front) {
+    _tree(f, (x * hd).round(), ((y - fgY) * hd).round(), (r * hd).round(), rnd);
+  }
+  return (bg: g.toRgba(), fg: f.toRgba(), fgY: fgY, rocks: rocks, decor: decor);
+}
+
+/// O miolo da fazenda: caminhos, lago, pedras, decoração, curral, cercado,
+/// canteiros, celeiro e placa.
+(List<ui.Rect>, List<FarmDecor>) _farmProps(
+  Raster g,
+  FarmLayout l,
+  double Function() rnd,
+) {
+  final w = l.w, h = l.h, c = l.content;
   for (final pts in l.paths) {
     _path(g, pts, rnd);
   }
@@ -178,36 +230,7 @@ _Built _paintWorld(FarmLayout l, int seed) {
   }
   _barn(g, l.barn);
   _sign(g, l.sign);
-  // árvores na borda: as de trás no fundo, a fileira de baixo na frente de
-  // tudo (faixa própria)
-  final trees = <(double, double, double)>[];
-  final t = l.t;
-  for (var x = -6.0; x < w + 12; x += 12 + rnd() * 9) {
-    trees.add((x, 2 + rnd() * (t - 16), 10 + rnd() * 5));
-    if (rnd() < 0.6) trees.add((x + 6, -6 + rnd() * 8, 11 + rnd() * 4));
-  }
-  for (var y = t - 4.0; y < h - t + 6; y += 12 + rnd() * 8) {
-    trees
-      ..add((2 + rnd() * (t - 14), y, 9 + rnd() * 5))
-      ..add((w - 2 - rnd() * (t - 14), y, 9 + rnd() * 5));
-    if (rnd() < 0.5) trees.add((-4, y + 6, 11));
-    if (rnd() < 0.5) trees.add((w + 4.0, y + 6, 11));
-  }
-  final front = <(double, double, double)>[];
-  for (var x = -6.0; x < w + 12; x += 12 + rnd() * 9) {
-    front.add((x, h - t + 12 + rnd() * 10, 11 + rnd() * 5));
-  }
-  trees.sort((a, b) => a.$2.compareTo(b.$2));
-  for (final (x, y, r) in trees) {
-    _tree(g, (x * hd).round(), (y * hd).round(), (r * hd).round(), rnd);
-  }
-  final fgY = math.max(0, h - t - 8);
-  final f = Raster(w * hd, (h - fgY) * hd);
-  front.sort((a, b) => a.$2.compareTo(b.$2));
-  for (final (x, y, r) in front) {
-    _tree(f, (x * hd).round(), ((y - fgY) * hd).round(), (r * hd).round(), rnd);
-  }
-  return (bg: g.toRgba(), fg: f.toRgba(), fgY: fgY, rocks: rocks, decor: decor);
+  return (rocks, decor);
 }
 
 void _tree(Raster g, int x, int y, int r, double Function() rnd) {

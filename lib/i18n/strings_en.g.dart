@@ -5279,6 +5279,18 @@ class Translations$settings$page$resources$en {
 	/// en: 'Agent loops read from Claude Code transcripts.'
 	String get farmDesc => 'Agent loops read from Claude Code transcripts.';
 
+	/// en: 'Farm scenery'
+	String get farmScenery => 'Farm scenery';
+
+	/// en: 'Where the agents live: the farm or a pixel art office.'
+	String get farmSceneryDesc => 'Where the agents live: the farm or a pixel art office.';
+
+	/// en: 'Farm'
+	String get sceneryFarm => 'Farm';
+
+	/// en: 'Office'
+	String get sceneryOffice => 'Office';
+
 	/// en: 'Agent graph'
 	String get graph => 'Agent graph';
 
@@ -6816,6 +6828,10 @@ extension on Translations {
 			'settings.page.resources.chatDesc' => 'Chat button in the workspace bar (Claude Code in stream-json).',
 			'settings.page.resources.farm' => 'Farm',
 			'settings.page.resources.farmDesc' => 'Agent loops read from Claude Code transcripts.',
+			'settings.page.resources.farmScenery' => 'Farm scenery',
+			'settings.page.resources.farmSceneryDesc' => 'Where the agents live: the farm or a pixel art office.',
+			'settings.page.resources.sceneryFarm' => 'Farm',
+			'settings.page.resources.sceneryOffice' => 'Office',
 			'settings.page.resources.graph' => 'Agent graph',
 			'settings.page.resources.graphDesc' => 'Visualize the agents of the workspace and who talks to whom.',
 			'settings.page.resources.browser' => 'Built-in browser',

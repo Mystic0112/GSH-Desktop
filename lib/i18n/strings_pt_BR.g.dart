@@ -2465,6 +2465,10 @@ class _Translations$settings$page$resources$pt_BR extends Translations$settings$
 	@override String get chatDesc => 'Botão de chat na barra do workspace (Claude Code em stream-json).';
 	@override String get farm => 'Fazenda';
 	@override String get farmDesc => 'Loops de agente lidos dos transcripts do Claude Code.';
+	@override String get farmScenery => 'Cenário da fazenda';
+	@override String get farmSceneryDesc => 'Onde os agentes ficam: a fazenda ou um escritório em pixel art.';
+	@override String get sceneryFarm => 'Fazenda';
+	@override String get sceneryOffice => 'Escritório';
 	@override String get graph => 'Grafo de agentes';
 	@override String get graphDesc => 'Visualiza os agentes do workspace e quem fala com quem.';
 	@override String get browser => 'Navegador embutido';
@@ -3925,6 +3929,10 @@ extension on TranslationsPtBr {
 			'settings.page.resources.chatDesc' => 'Botão de chat na barra do workspace (Claude Code em stream-json).',
 			'settings.page.resources.farm' => 'Fazenda',
 			'settings.page.resources.farmDesc' => 'Loops de agente lidos dos transcripts do Claude Code.',
+			'settings.page.resources.farmScenery' => 'Cenário da fazenda',
+			'settings.page.resources.farmSceneryDesc' => 'Onde os agentes ficam: a fazenda ou um escritório em pixel art.',
+			'settings.page.resources.sceneryFarm' => 'Fazenda',
+			'settings.page.resources.sceneryOffice' => 'Escritório',
 			'settings.page.resources.graph' => 'Grafo de agentes',
 			'settings.page.resources.graphDesc' => 'Visualiza os agentes do workspace e quem fala com quem.',
 			'settings.page.resources.browser' => 'Navegador embutido',
