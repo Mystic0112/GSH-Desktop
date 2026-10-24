@@ -4,7 +4,7 @@ import 'dart:io';
 /// issue já preenchida no repositório do Remote Pi.
 ///
 /// Não há envio automático nem telemetria: o relatório só sai da máquina se o
-/// usuário clicar. É o que mantém o Cockpit local-only — ele enxerga caminhos de
+/// usuário clicar. É o que mantém o GSH local-only — ele enxerga caminhos de
 /// arquivo, connection strings e prompts de agente, e nada disso deve viajar sem
 /// o usuário ter visto o texto antes.
 class IssueReport {
@@ -39,7 +39,7 @@ class IssueReport {
       ..writeln()
       ..writeln('### Environment')
       ..writeln()
-      ..writeln('- Cockpit: $appVersion')
+      ..writeln('- GSH: $appVersion')
       ..writeln(
         '- OS: ${Platform.operatingSystem} '
         '${Platform.operatingSystemVersion}',

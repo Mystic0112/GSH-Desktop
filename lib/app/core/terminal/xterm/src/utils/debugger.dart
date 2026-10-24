@@ -1,7 +1,7 @@
-import 'package:cockpit/app/core/terminal/xterm/src/core/escape/handler.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/escape/parser.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/mouse/mode.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/base/observable.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/escape/handler.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/escape/parser.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/mouse/mode.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/base/observable.dart';
 
 class TerminalCommand {
   TerminalCommand(

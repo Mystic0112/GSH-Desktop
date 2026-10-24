@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/base/disposable.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/line.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/range.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/range_block.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/range_line.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/pointer_input.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/selection_mode.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/base/disposable.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/line.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/range.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/range_block.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/range_line.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/pointer_input.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/selection_mode.dart';
 
 class TerminalController with ChangeNotifier {
   TerminalController({

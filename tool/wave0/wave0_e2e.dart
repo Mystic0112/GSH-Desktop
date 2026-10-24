@@ -1,8 +1,8 @@
 // Wave 0 (plano 58) — E2E do aceite:
-// abre shell via cockpit-server, digita, vê saída, DESCONECTA, reata a partir
+// abre shell via gsh-server, digita, vê saída, DESCONECTA, reata a partir
 // do offset 0 e verifica que o scrollback sobreviveu ao detach.
 //
-// Uso (da pasta cockpit/):
+// Uso (da pasta gsh/):
 //   ./tool/wave0/build_pty_dylib.sh
 //   (cd tool/wave0 && dart pub get)
 //   dart run tool/wave0/wave0_e2e.dart
@@ -11,27 +11,27 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cockpit_core/cockpit_core.dart';
-import 'package:cockpit_remote/cockpit_remote.dart';
+import 'package:gsh_core/gsh_core.dart';
+import 'package:gsh_remote/gsh_remote.dart';
 
 Future<void> main() async {
   final socketPath =
       '${Directory.systemTemp.path}/wave0-e2e-${DateTime.now().millisecondsSinceEpoch}.sock';
-  final repoRoot = _cockpitRoot();
+  final repoRoot = _gshRoot();
 
   // 1. Sobe o servidor como processo separado (como na vida real).
   final server = await Process.start(
     'dart',
     [
       'run',
-      'packages/cockpit_server/bin/cockpit_server.dart',
+      'packages/gsh_server/bin/gsh_server.dart',
       '--socket',
       socketPath,
     ],
     workingDirectory: repoRoot,
     environment: {
       ...Platform.environment,
-      'COCKPIT_PTY_DYLIB': '$repoRoot/build/wave0/libcockpit_pty.dylib',
+      'GSH_PTY_DYLIB': '$repoRoot/build/wave0/libgsh_pty.dylib',
     },
   );
   server.stderr.transform(utf8.decoder).listen(stderr.write);
@@ -216,14 +216,14 @@ Future<void> main() async {
   }
 }
 
-String _cockpitRoot() {
-  // O script roda de cockpit/ (dart run tool/wave0/...) ou de tool/wave0.
+String _gshRoot() {
+  // O script roda de gsh/ (dart run tool/wave0/...) ou de tool/wave0.
   var dir = Directory.current;
   while (!File('${dir.path}/pubspec.yaml').existsSync() ||
-      !Directory('${dir.path}/packages/cockpit_server').existsSync()) {
+      !Directory('${dir.path}/packages/gsh_server').existsSync()) {
     final parent = dir.parent;
     if (parent.path == dir.path) {
-      throw StateError('run from the cockpit/ folder');
+      throw StateError('run from the gsh/ folder');
     }
     dir = parent;
   }

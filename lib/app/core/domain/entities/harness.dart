@@ -1,4 +1,4 @@
-/// Catálogo único dos agentes de CLI que o Cockpit conhece.
+/// Catálogo único dos agentes de CLI que o GSH conhece.
 ///
 /// Mesma lista serve a dois consumidores: a **detecção de processo** (ícone na
 /// aba do terminal, via [HarnessSpec.allEntryPoints]) e as **automações** (gerar

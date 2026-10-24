@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/lsp/lsp_server_pool.dart';
-import 'package:cockpit/app/core/domain/contracts/lsp_client.dart';
-import 'package:cockpit/app/core/domain/entities/lsp_diagnostic.dart';
-import 'package:cockpit/app/core/domain/entities/lsp_semantic_tokens.dart';
-import 'package:cockpit/app/core/domain/exceptions/lsp_error.dart';
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/data/lsp/lsp_server_pool.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/lsp_client.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_diagnostic.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_semantic_tokens.dart';
+import 'package:gsh_desktop/app/core/domain/exceptions/lsp_error.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Cliente fake controlável: `startSucceeds` é compartilhado pela factory pra

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cockpit/app/core/ui/window_activity_controller.dart';
+import 'package:gsh_desktop/app/core/ui/window_activity_controller.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

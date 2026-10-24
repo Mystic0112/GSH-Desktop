@@ -4,9 +4,9 @@
 // (https://github.com/material-extensions/vscode-material-icon-theme),
 // versão 5.35.0, licença MIT (ver assets/file_icons/LICENSE).
 //
-// Regenerar: ver o script no plano 37 / histórico de commits do cockpit.
+// Regenerar: ver o script no plano 37 / histórico de commits do gsh.
 // Apenas o conjunto *default* (dark) é embarcado — variantes _light e
-// _highContrast são ignoradas (o Cockpit é dark-only).
+// _highContrast são ignoradas (o GSH é dark-only).
 //
 // ignore_for_file: lines_longer_than_80_chars
 

@@ -1,9 +1,9 @@
 // Detecção de link no buffer do terminal: URLs (navegador) e caminhos de
 // arquivo (FileViewer), incluindo o sufixo `:linha`.
 
-import 'package:cockpit/app/cockpit/ui/widgets/terminal_link.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/terminal_link.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:cockpit/app/core/terminal/xterm/xterm.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/xterm.dart';
 
 /// Escreve [text] na 1ª linha de um terminal e devolve o link sob a coluna [col].
 TerminalLink? _linkAt(String text, int col, {bool detectFiles = true}) {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:cockpit/app/core/domain/entities/terminal_profile.dart';
-import 'package:cockpit/app/core/utils/shell_command.dart';
+import 'package:gsh_desktop/app/core/domain/entities/terminal_profile.dart';
+import 'package:gsh_desktop/app/core/utils/shell_command.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Decodifica o `-EncodedCommand` (base64 de UTF-16LE) de volta pra texto.

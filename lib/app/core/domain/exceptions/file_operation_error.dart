@@ -31,7 +31,7 @@ enum FileOperationErrorKind {
 /// Mesmo contrato do `AutomationError`: `data/` e ViewModel só descrevem *o
 /// que* houve ([kind]) mais os dados variáveis ([name], [detail], [exitCode]);
 /// a frase nasce na UI, em `fileOperationErrorMessage` (`core/ui`). Ver a seção
-/// de i18n no `cockpit/CLAUDE.md`.
+/// de i18n no `gsh/CLAUDE.md`.
 class FileOperationError implements Exception {
   const FileOperationError(
     this.kind, {

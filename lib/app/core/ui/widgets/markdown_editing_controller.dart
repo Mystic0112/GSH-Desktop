@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'dart:io' show File;
 
 import 'package:flutter/material.dart' show Icons;

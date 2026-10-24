@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/telemetry/otlp_receiver.dart';
-import 'package:cockpit/app/cockpit/data/telemetry/telemetry_workspace_config.dart';
-import 'package:cockpit/app/cockpit/domain/entities/telemetry_event.dart';
+import 'package:gsh_desktop/app/gsh/data/telemetry/otlp_receiver.dart';
+import 'package:gsh_desktop/app/gsh/data/telemetry/telemetry_workspace_config.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/telemetry_event.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _Sink implements OtlpSink {
@@ -53,13 +53,13 @@ void main() {
     });
     tearDown(() => rx.stop());
 
-    test('logs: roteia por cockpit.run, mapeia severidade e exceção', () async {
+    test('logs: roteia por gsh.run, mapeia severidade e exceção', () async {
       final code = await post(rx.endpoint, '/v1/logs', {
         'resourceLogs': [
           {
             'resource': {
               'attributes': [
-                kv('cockpit.run', 'r_1'),
+                kv('gsh.run', 'r_1'),
                 kv('service.name', 'api'),
               ],
             },

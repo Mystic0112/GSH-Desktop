@@ -1,16 +1,16 @@
-# Empacotamento & Release — Cockpit
+# Empacotamento & Release — GSH Desktop
 
 Runbook de build/empacotamento das 3 plataformas. Base pro job de CI
-(`.github/workflows/cockpit-release.yml`, plano 43 passo 3). Plano de
-referência: [`../../plan/43-cockpit-packaging.md`](../../plan/43-cockpit-packaging.md).
+(`.github/workflows/gsh-release.yml`, plano 43 passo 3). Plano de
+referência: [`../../plan/43-gsh-packaging.md`](../../plan/43-gsh-packaging.md).
 
 ## Identidade (passo 1 — feito)
 
 | Item | Valor |
 |---|---|
-| App ID (macOS bundle id / Linux app id) | `work.jacobmoura.cockpit` |
-| Nome de exibição | **Remote Pi Cockpit** |
-| Binário | `cockpit` (Linux/Windows) / `Cockpit` (macOS) — **não** renomeado |
+| App ID (macOS bundle id / Linux app id) | `work.gorila.gshdesktop` |
+| Nome de exibição | **GSH Desktop** |
+| Binário | `gsh` (Linux/Windows) / `GSH Desktop` (macOS) |
 | Team ID (Apple) | `U843T2P7A2` |
 | Versão (SSOT) | `version:` do `pubspec.yaml` (`x.y.z+n`) |
 
@@ -21,7 +21,7 @@ referência: [`../../plan/43-cockpit-packaging.md`](../../plan/43-cockpit-packag
 - Windows: `CompanyName`/`ProductName`/`LegalCopyright` em
   `windows/runner/Runner.rc`; versão vem dos defines `FLUTTER_VERSION_*`
   (injetados em build; o `#else "1.0.0"` é só fallback).
-- Linux: `.desktop` + ícones hicolor + `work.jacobmoura.cockpit.metainfo.xml`
+- Linux: `.desktop` + ícones hicolor + `work.jacobmoura.gsh.metainfo.xml`
   (AppStream), instalados via `linux/CMakeLists.txt`.
 
 ## Ferramenta
@@ -33,7 +33,7 @@ descontinuado):
 dart pub global activate fastforge
 ```
 
-Config: `distribute_options.yaml` (raiz do cockpit) + um `make_config.yaml` por
+Config: `distribute_options.yaml` (raiz do gsh) + um `make_config.yaml` por
 formato. **Atenção à convenção de path do Fastforge**: os configs ficam em
 `<plataforma>/packaging/<formato>/make_config.yaml` (hardcoded no loader), **não**
 em `packaging/<plataforma>/...` como o diagrama do plano sugeria:
@@ -53,11 +53,11 @@ a API key do App Store Connect, Zig 0.16.0 e o target Rust usado pela CLI do
 servidor Linux remoto (`rustup target add aarch64-unknown-linux-gnu`).
 
 ```bash
-cd cockpit
+cd gsh
 
 # 1. Build universal (x86_64 + arm64 — default do Flutter macOS release).
 flutter build macos --release
-APP="build/macos/Build/Products/Release/Cockpit.app"
+APP="build/macos/Build/Products/Release/GSH.app"
 
 # 2. Assina o .app com Developer ID + Hardened Runtime + entitlements de Release.
 codesign --force --deep --options runtime --timestamp \
@@ -69,8 +69,8 @@ codesign --verify --deep --strict --verbose=2 "$APP"   # checagem
 #    via npm, alternativa pra CI). Layout: app + atalho /Applications.
 mkdir -p dist
 STAGE=$(mktemp -d); cp -R "$APP" "$STAGE/"; ln -s /Applications "$STAGE/Applications"
-DMG="dist/RemotePiCockpit-1.0.0-macos-universal.dmg"
-hdiutil create -volname "Remote Pi Cockpit" -srcfolder "$STAGE" -ov -format UDZO "$DMG"
+DMG="dist/RemotePiGsh-1.0.0-macos-universal.dmg"
+hdiutil create -volname "Remote Pi GSH" -srcfolder "$STAGE" -ov -format UDZO "$DMG"
 rm -rf "$STAGE"
 
 # 4. Assina o DMG.
@@ -79,7 +79,7 @@ codesign --force --timestamp \
 
 # 5. Notariza (App Store Connect API key) e aguarda.
 xcrun notarytool submit "$DMG" \
-  --key "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/Flutterando/RemotePi/CockpitApp/AuthKey_3Y2J8MA3M4.p8" \
+  --key "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/Flutterando/RemotePi/GshApp/AuthKey_3Y2J8MA3M4.p8" \
   --key-id 3Y2J8MA3M4 \
   --issuer a76c76e6-a413-449e-926c-f2c30d5645c4 \
   --wait
@@ -104,7 +104,7 @@ fastforge package --platform windows --targets exe   # usa windows/packaging/exe
 ```
 
 Sem assinatura nesta fase (aviso do SmartScreen documentado no site). Artefato:
-`RemotePiCockpit-Setup-<v>-windows-x64.exe`.
+`RemotePiGsh-Setup-<v>-windows-x64.exe`.
 
 ## Linux — `.deb` + `.rpm` (x86_64 e arm64)
 
@@ -142,7 +142,7 @@ plugins: `grep -rh "pkg_check_modules\|find_package" linux/flutter/ephemeral/.pl
 **Armadilha do CMake:** um configure que aborta deixa `CMAKE_INSTALL_PREFIX` em
 `/usr/local` no `CMakeCache.txt`, e o `linux/CMakeLists.txt` só o aponta pro
 bundle quando o prefixo ainda está no default inicial. A partir daí todo build
-falha em `file INSTALL cannot copy ... to /usr/local/cockpit: Permission
+falha em `file INSTALL cannot copy ... to /usr/local/gsh: Permission
 denied`, mesmo com as libs já instaladas. Conserto:
 
 ```bash
@@ -151,7 +151,7 @@ rm -rf build/linux/x64/release/CMakeFiles
 ```
 
 O `fastforge` (`dart pub global activate fastforge`) sai em
-`dist/<versão>/cockpit-<versão>-linux.deb`; instalar com `sudo dpkg -i`, **com o
+`dist/<versão>/gsh-<versão>-linux.deb`; instalar com `sudo dpkg -i`, **com o
 app fechado** — senão os binários trocam embaixo do processo vivo.
 
 Deps de runtime declaradas nos `make_config.yaml` (GTK3 + libs base). **Pendência
@@ -159,31 +159,31 @@ de CI** (passo 3): rodar `ldd` no bundle gerado pra confirmar/expandir as deps, 
 validar instalação em containers `ubuntu:24.04` (deb) e `fedora:40` (rpm) — não
 foi possível neste Mac (sem build Linux; Docker presente mas parado).
 
-## cockpit-server avulso — zip para VPS (Linux x86_64 e arm64)
+## gsh-server avulso — zip para VPS (Linux x86_64 e arm64)
 
-Release **separada** do app: tag `cockpit-server-v<versão>` dispara
-`.github/workflows/cockpit-server-release.yml` (dois jobs Linux nativos, sem
+Release **separada** do app: tag `gsh-server-v<versão>` dispara
+`.github/workflows/gsh-server-release.yml` (dois jobs Linux nativos, sem
 Flutter). A versão da tag **deve** bater com o `version:` do pubspec: cliente
 e servidor andam juntos, o mobile recusa versão diferente. Crie as duas tags
-(`cockpit-v…` e `cockpit-server-v…`) no mesmo commit.
+(`gsh-v…` e `gsh-server-v…`) no mesmo commit.
 
-Artefatos: `cockpit-server-<versão>-linux-{x86_64,arm64}.zip` + `SHA256SUMS`.
+Artefatos: `gsh-server-<versão>-linux-{x86_64,arm64}.zip` + `SHA256SUMS`.
 Layout (ver `tool/build-server-zip.sh`):
 
 ```
-cockpit-server/
-├── bin/{cockpit-server,cockpit}
-├── lib/{libcockpit_pty.so,libanaki_*.so}
+gsh-server/
+├── bin/{gsh-server,gsh}
+├── lib/{libgsh_pty.so,libanaki_*.so}
 ├── bundle.manifest   # sha256sum -c, mesmo formato que o cliente grava por SSH
 ├── VERSION           # linha 1 versão, linha 2 arch
-└── install.sh        # packages/cockpit_server/install.sh
+└── install.sh        # packages/gsh_server/install.sh
 ```
 
-Instalação no host: `curl -fsSL https://remote-pi.jacobmoura.work/cockpit-server.sh | bash`
-(script em `cockpit/install-server.sh`, só resolve versão e arch, baixa, confere o hash e
+Instalação no host: `curl -fsSL https://remote-pi.jacobmoura.work/gsh-server.sh | bash`
+(script em `gsh/install-server.sh`, só resolve versão e arch, baixa, confere o hash e
 chama o `install.sh` do zip). `--service` registra a unit `systemd --user`
-via `cockpit-server service install|uninstall|status`. Documentação: seção
-"Remote hosts & VPS" em `site/src/app/cockpit/docs/page.tsx`.
+via `gsh-server service install|uninstall|status`. Documentação: seção
+"Remote hosts & VPS" em `site/src/app/gsh/docs/page.tsx`.
 
 Observação: o bundle do zip e o embarcado no app são compilados em runners
 diferentes, então os bytes podem divergir e o desktop pode reinstalar por cima
@@ -200,7 +200,7 @@ em runtime via `setFeedURL`) e baixa o artefato de update assinado **EdDSA**.
 
 | Plataforma | Primeira instalação | Update (appcast) |
 |---|---|---|
-| macOS | `.dmg` notarizado | **`Cockpit-<v>-macos.zip`** = `ditto` do `.app` notarizado+**stapled** |
+| macOS | `.dmg` notarizado | **`GSH-<v>-macos.zip`** = `ditto` do `.app` notarizado+**stapled** |
 | Windows | `.exe` Inno | o **mesmo `.exe`** rodado silencioso (`sparkle:installerArguments`) |
 | Linux | `.deb`/`.rpm` | — |
 
@@ -214,36 +214,36 @@ Por isso há **um par** de chaves, não dois.
   - macOS: `SUPublicEDKey` em `macos/Runner/Info.plist`.
   - Windows: recurso `EdDSAPub EDDSA {...}` em `windows/runner/Runner.rc`.
 - **Privada** (NUNCA commitar): backup em
-  `…/CloudDocs/Flutterando/RemotePi/CockpitApp/sparkle_ed25519_private_key.txt`
+  `…/CloudDocs/Flutterando/RemotePi/GshApp/sparkle_ed25519_private_key.txt`
   (iCloud, junto dos certs Apple) **e** no secret do GitHub `SPARKLE_PRIVATE_KEY`.
-  Gerada via Sparkle na conta de keychain `remote-pi-cockpit`.
+  Gerada via Sparkle na conta de keychain `remote-pi-gsh`.
 
 Regenerar / rotacionar (⚠️ trocar a chave **trava a base instalada**: os apps
 antigos só confiam na pública embutida neles — só faça se a privada vazar, e
 saiba que os usuários atuais terão que reinstalar manualmente):
 
 ```bash
-cd cockpit
+cd gsh
 # (re)gera; imprime a SUPublicEDKey; privada vai pro Keychain (conta dedicada)
-./macos/Pods/Sparkle/bin/generate_keys --account remote-pi-cockpit
+./macos/Pods/Sparkle/bin/generate_keys --account remote-pi-gsh
 # exporta a privada pro iCloud (pede "Allow" no Keychain)
-./macos/Pods/Sparkle/bin/generate_keys --account remote-pi-cockpit -x \
-  "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/Flutterando/RemotePi/CockpitApp/sparkle_ed25519_private_key.txt"
+./macos/Pods/Sparkle/bin/generate_keys --account remote-pi-gsh -x \
+  "/Users/jacob/Library/Mobile Documents/com~apple~CloudDocs/Flutterando/RemotePi/GshApp/sparkle_ed25519_private_key.txt"
 # atualizar: SUPublicEDKey (Info.plist), EdDSAPub (Runner.rc) e o secret SPARKLE_PRIVATE_KEY
 ```
 
 ### Assinatura + appcasts (no CI, job `publish`)
 
 Tudo num lugar só, em ubuntu, com **uma** chave e **sem** ferramenta nativa: o
-job assina `Cockpit-<v>-macos.zip` e o `.exe` com PyNaCl (a `SPARKLE_PRIVATE_KEY`)
+job assina `GSH-<v>-macos.zip` e o `.exe` com PyNaCl (a `SPARKLE_PRIVATE_KEY`)
 e gera `appcast-macos.xml` + `appcast-windows.xml`. macOS usa
 `sparkle:version` = **build number** (`+n`); Windows usa a versão marketing.
 
 ### Publicação (gate manual)
 
 Junto do `latest.json`, suba `appcast-macos.xml` e `appcast-windows.xml` pro rp-s3
-(`/Users/flutterando/cockpit/data/`). Até subir, ninguém se auto-atualiza. As feed
-URLs são `https://rp-s3.jacobmoura.work/downloads/cockpit/appcast-{macos,windows}.xml`.
+(`/Users/flutterando/gsh/data/`). Até subir, ninguém se auto-atualiza. As feed
+URLs são `https://rp-s3.jacobmoura.work/downloads/gsh/appcast-{macos,windows}.xml`.
 
 ### Pendências (não testáveis neste Mac)
 
@@ -252,26 +252,26 @@ URLs são `https://rp-s3.jacobmoura.work/downloads/cockpit/appcast-{macos,window
   relaunch (Restart Manager) sem duplo-launch.
 - Validar o **codesign do Sparkle** na notarização (framework + Autoupdate +
   Updater.app + XPCServices — confirmados presentes no bundle; `--deep` deve cobrir).
-- E2E real: subir um appcast apontando pra v(N+1) e ver um cockpit v(N) se atualizar.
+- E2E real: subir um appcast apontando pra v(N+1) e ver um gsh v(N) se atualizar.
 
 ## Próximos passos (plano 43)
 
-- Passo 3: `.github/workflows/cockpit-release.yml` (trigger `cockpit-v*`). **Feito**
+- Passo 3: `.github/workflows/gsh-release.yml` (trigger `gsh-v*`). **Feito**
   (+ self-update do plano 47: `.app.zip` + appcasts assinados).
 - Passo 4: layout/`latest.json` na VPS.
 - Passo 5: página de downloads no `site/`.
 - Passo 6: runbook de release (bump `version:` → tag → CI → smoke test).
 # Linux: política de GPU híbrida
 
-O bootstrap nativo do Cockpit seleciona a GPU integrada e XWayland por padrão e
-remove, somente do processo do Cockpit, variáveis NVIDIA herdadas da sessão
+O bootstrap nativo do GSH seleciona a GPU integrada e XWayland por padrão e
+remove, somente do processo do GSH, variáveis NVIDIA herdadas da sessão
 gráfica. Isso evita que o EGL da NVIDIA entre no processo em sessões Wayland
 híbridas. Um `GDK_BACKEND` definido explicitamente continua sendo respeitado.
 Para comparar ou forçar a GPU dedicada, inicie com
-`COCKPIT_USE_NVIDIA=1 cockpit`. O startup log registra `gpu_policy`,
+`GSH_USE_NVIDIA=1 gsh`. O startup log registra `gpu_policy`,
 `GDK_BACKEND` e `XDG_SESSION_TYPE` sem registrar comandos ou conteýo do usuário.
 
 Matriz de diagnóstico Linux: Intel/XWayland é o caminho seguro de produção;
-compare NVIDIA/Wayland com `COCKPIT_USE_NVIDIA=1 GDK_BACKEND=wayland cockpit` e
-Intel/Wayland com `GDK_BACKEND=wayland cockpit`. Rollback é remover a chamada
+compare NVIDIA/Wayland com `GSH_USE_NVIDIA=1 GDK_BACKEND=wayland gsh` e
+Intel/Wayland com `GDK_BACKEND=wayland gsh`. Rollback é remover a chamada
 `configure_linux_gpu_environment()`; nenhuma configuração global é alterada.

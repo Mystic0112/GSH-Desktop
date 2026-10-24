@@ -217,41 +217,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.2"
-  cockpit_core:
-    dependency: "direct main"
-    description:
-      path: "packages/cockpit_core"
-      relative: true
-    source: path
-    version: "0.1.0"
-  cockpit_keepawake:
-    dependency: "direct main"
-    description:
-      path: "packages/cockpit_keepawake"
-      relative: true
-    source: path
-    version: "0.1.0"
-  cockpit_protocol:
-    dependency: transitive
-    description:
-      path: "packages/cockpit_protocol"
-      relative: true
-    source: path
-    version: "0.1.0"
-  cockpit_pty:
-    dependency: "direct main"
-    description:
-      path: "plugins/cockpit_pty"
-      relative: true
-    source: path
-    version: "1.0.7"
-  cockpit_remote:
-    dependency: "direct main"
-    description:
-      path: "packages/cockpit_remote"
-      relative: true
-    source: path
-    version: "0.1.0"
   code_assets:
     dependency: transitive
     description:
@@ -432,7 +397,7 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/flterm"
-      ref: cockpit-pin-flterm-upstream-2026-10d
+      ref: gsh-pin-flterm-upstream-2026-10d
       resolved-ref: a342abbec8f744714bf6c38fb5516acf19114486
       url: "https://github.com/jacobaraujo7/libghostty.git"
     source: git
@@ -689,6 +654,41 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
+  gsh_core:
+    dependency: "direct main"
+    description:
+      path: "packages/gsh_core"
+      relative: true
+    source: path
+    version: "0.1.0"
+  gsh_keepawake:
+    dependency: "direct main"
+    description:
+      path: "packages/gsh_keepawake"
+      relative: true
+    source: path
+    version: "0.1.0"
+  gsh_protocol:
+    dependency: transitive
+    description:
+      path: "packages/gsh_protocol"
+      relative: true
+    source: path
+    version: "0.1.0"
+  gsh_pty:
+    dependency: "direct main"
+    description:
+      path: "plugins/gsh_pty"
+      relative: true
+    source: path
+    version: "1.0.7"
+  gsh_remote:
+    dependency: "direct main"
+    description:
+      path: "packages/gsh_remote"
+      relative: true
+    source: path
+    version: "0.1.0"
   highlight:
     dependency: "direct main"
     description:
@@ -837,7 +837,7 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/libghostty"
-      ref: cockpit-pin-flterm-upstream-2026-10d
+      ref: gsh-pin-flterm-upstream-2026-10d
       resolved-ref: a342abbec8f744714bf6c38fb5516acf19114486
       url: "https://github.com/jacobaraujo7/libghostty.git"
     source: git

@@ -4,9 +4,9 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:cockpit/app/core/terminal/xterm/src/core/escape/handler.dart'
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/escape/handler.dart'
     as _i2;
-import 'package:cockpit/app/core/terminal/xterm/src/core/mouse/mode.dart'
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/mouse/mode.dart'
     as _i3;
 
 // ignore_for_file: type=lint

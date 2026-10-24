@@ -1,12 +1,12 @@
 # Host Windows — preparar a máquina
 
-Como deixar uma máquina Windows pronta para ser **host** do Cockpit (plano 61).
+Como deixar uma máquina Windows pronta para ser **host** do GSH (plano 61).
 Do outro lado, o cliente pode ser macOS, Linux, Windows ou iPad.
 
-Pré-requisito de produto: **o Cockpit desktop precisa estar instalado no host**.
-O servidor remoto é instalado copiando o `cockpit-server-bundle` que o app já
-deixa na máquina (decisão D2) — nenhum binário viaja pelo SSH. Sem o Cockpit
-instalado lá, o cliente falha com "Windows mas não tem o Cockpit instalado".
+Pré-requisito de produto: **o GSH desktop precisa estar instalado no host**.
+O servidor remoto é instalado copiando o `gsh-server-bundle` que o app já
+deixa na máquina (decisão D2) — nenhum binário viaja pelo SSH. Sem o GSH
+instalado lá, o cliente falha com "Windows mas não tem o GSH instalado".
 
 ## 1. Ligar o servidor SSH
 
@@ -26,7 +26,7 @@ Get-Service sshd            # deve estar Running
 Get-NetTCPConnection -LocalPort 22 -State Listen
 ```
 
-> Não é preciso trocar o `DefaultShell` para PowerShell. O Cockpit invoca
+> Não é preciso trocar o `DefaultShell` para PowerShell. O GSH invoca
 > `powershell -NoProfile -EncodedCommand` explicitamente (decisão D1), então o
 > `cmd.exe` default serve — e funciona numa instalação recém-feita.
 
@@ -99,7 +99,7 @@ Da máquina cliente:
 ssh -o BatchMode=yes usuario@host "echo OK"
 ```
 
-`BatchMode=yes` é o mesmo modo que o Cockpit usa: ele proíbe qualquer pergunta
+`BatchMode=yes` é o mesmo modo que o GSH usa: ele proíbe qualquer pergunta
 interativa, então se cair em pedido de senha é porque a chave **não** está sendo
 aceita — volte aos passos 2 e 3.
 
@@ -110,7 +110,7 @@ aceita — volte aos passos 2 e 3.
 | `Permission denied (publickey)` | Chave no arquivo errado (passo 2) ou ACL frouxa (passo 3) |
 | `Connection refused` | `sshd` parado, ou firewall bloqueando a 22 |
 | Pede senha mesmo com chave | Mesma coisa do primeiro caso — a chave está sendo ignorada |
-| Conecta, mas o Cockpit diz que não achou o Cockpit no host | O app não está instalado no host (ver pré-requisito no topo) |
+| Conecta, mas o GSH diz que não achou o GSH no host | O app não está instalado no host (ver pré-requisito no topo) |
 
 Log do servidor, quando nada mais explicar:
 
@@ -122,13 +122,13 @@ Get-WinEvent -LogName 'OpenSSH/Operational' -MaxEvents 30 |
 ## Notas de arquitetura (por que é assim)
 
 - **O servidor escuta em loopback, nunca na rede.** No Windows o `dart:io` não
-  tem socket UNIX, então o `cockpit-server` escuta numa porta TCP de loopback
+  tem socket UNIX, então o `gsh-server` escuta numa porta TCP de loopback
   efêmera e anuncia porta + token num arquivo de rendezvous
-  (`~/.cockpit/cockpit-server.sock`, que ali é um JSON, não um socket). O acesso
+  (`~/.gsh/gsh-server.sock`, que ali é um JSON, não um socket). O acesso
   de fora é sempre pelo túnel SSH — a porta não é exposta.
 - **O token existe porque loopback não protege.** Uma porta de loopback aceita
   conexão de qualquer processo da máquina, enquanto um socket UNIX já nasce
-  protegido pelas permissões do `~/.cockpit`. O token viaja no handshake e o
+  protegido pelas permissões do `~/.gsh`. O token viaja no handshake e o
   servidor recusa sem ele.
 - **O servidor é iniciado por WMI, não por `Start-Process`.** A sessão do `sshd`
   no Windows roda dentro de um Job Object com kill-on-close: todo processo filho

@@ -3,7 +3,7 @@ import 'dart:io' show Platform;
 /// Catálogo **estático e read-only** dos atalhos de teclado do app, pra exibição
 /// na aba Settings → Shortcuts. As teclas hoje estão declaradas em quatro
 /// lugares (menu declarativo `buildAppMenus`, `CallbackShortcuts` do `AppRoot`,
-/// `CallbackShortcuts` do `CockpitPage` e o handler `HardwareKeyboard` de
+/// `CallbackShortcuts` do `GshPage` e o handler `HardwareKeyboard` de
 /// navegação de panes) — este arquivo só as **documenta**, resolvendo o
 /// modificador por plataforma (⌘ no macOS, Ctrl fora). Quando os atalhos
 /// virarem customizáveis, este catálogo é o candidato natural a virar o registry
@@ -42,6 +42,8 @@ List<ShortcutSection> buildShortcutCatalog() {
     ]),
     ShortcutSection('Workspace', <AppShortcut>[
       AppShortcut('New Terminal', [cmd, 'T']),
+      AppShortcut('New Chat', [cmd, shift, 'L']),
+      AppShortcut('New Chat to the Right', [cmd, shift, 'J']),
       AppShortcut('Toggle Workspace Panel', [cmd, 'B']),
       AppShortcut('Toggle Files', [cmd, shift, 'B']),
       AppShortcut('Split Pane Right', [cmd, 'D']),

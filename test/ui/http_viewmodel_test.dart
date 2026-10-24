@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 
-import 'package:cockpit/app/cockpit/domain/contracts/http_request_runner.dart';
-import 'package:cockpit/app/cockpit/domain/entities/http_document.dart';
-import 'package:cockpit/app/cockpit/domain/entities/http_response_result.dart';
-import 'package:cockpit/app/cockpit/domain/exceptions/http_request_error.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/http_viewmodel.dart';
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/http_request_runner.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/http_document.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/http_response_result.dart';
+import 'package:gsh_desktop/app/gsh/domain/exceptions/http_request_error.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/http_viewmodel.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _StubRunner implements HttpRequestRunner {

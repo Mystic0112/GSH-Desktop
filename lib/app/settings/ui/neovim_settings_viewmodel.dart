@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/domain/contracts/neovim_gateway.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/neovim_gateway.dart';
 import 'package:flutter/foundation.dart';
 
 class NeovimSettingsViewModel extends ChangeNotifier {

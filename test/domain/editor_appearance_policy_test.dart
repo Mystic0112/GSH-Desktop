@@ -1,10 +1,10 @@
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/settings/domain/editor_appearance_policy.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/settings/domain/editor_appearance_policy.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('Cockpit engine exposes both code appearance settings', () {
-    const settings = AppSettings(fileEditorEngine: FileEditorEngine.cockpit);
+  test('GSH engine exposes both code appearance settings', () {
+    const settings = AppSettings(fileEditorEngine: FileEditorEngine.gsh);
     expect(EditorAppearancePolicy.showCodeFont(settings), isTrue);
     expect(EditorAppearancePolicy.showCodeSize(settings), isTrue);
   });

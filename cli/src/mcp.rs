@@ -1,18 +1,18 @@
-//! `cockpit mcp --agent <app-id>` — servidor MCP (stdio, JSON-RPC 2.0, uma
+//! `gsh mcp --agent <app-id>` — servidor MCP (stdio, JSON-RPC 2.0, uma
 //! mensagem por linha) que põe um app desktop (Claude Desktop, Cursor,
 //! Antigravity, Codex/ChatGPT) no grafo de agentes como nó **externo**.
 //!
-//! O app desktop spawna este processo sem env do Cockpit: o transporte acha o
+//! O app desktop spawna este processo sem env do GSH: o transporte acha o
 //! app pelo socket bem conhecido (ver `transport::candidate_sockets`). O nó é
 //! `ext:<app-id>` no wire — os verbos `msg`/`peers` são os mesmos da CLI, só o
 //! `tabId` do emissor muda.
 //!
 //! Modelo **pull**: o app não empurra nada pro cliente MCP. Mensagens pra este
-//! agente ficam numa fila no Cockpit e saem por `wait_messages` (long-poll).
+//! agente ficam numa fila no GSH e saem por `wait_messages` (long-poll).
 //!
 //! **Identidade automática** ([resolve_identity]): o Codex CLI e o app desktop
 //! do Codex dividem o `~/.codex/config.toml`, então a MESMA entrada (`--agent
-//! codex-desktop`) sobe no Codex de um terminal do Cockpit — onde o sandbox
+//! codex-desktop`) sobe no Codex de um terminal do GSH — onde o sandbox
 //! bloqueia a CLI de shell e só o MCP (fora do sandbox) alcança o app. Antes de
 //! atender, o servidor pergunta ao app (`mcp-whoami`) se o próprio pid está na
 //! árvore de processos de alguma aba; se está, age COMO aquela aba (mesmos
@@ -20,7 +20,7 @@
 //!
 //! **`from` por chamada**: o Codex CLI 0.16x roda as sessões num app-server
 //! daemon compartilhado (pai = init) que spawna os servidores MCP — sem
-//! ancestralidade de aba nem env do Cockpit, e um processo serve várias abas
+//! ancestralidade de aba nem env do GSH, e um processo serve várias abas
 //! (e o app ChatGPT). Por isso toda ferramenta aceita `from` (id ou label da
 //! aba): o app resolve, exige aba de terminal com Codex e age como ela naquela
 //! chamada (cursor do `wait_messages` por aba, no app). Sem `from`, vale a
@@ -46,7 +46,7 @@ const PROTOCOL: &str = "2025-06-18";
 /// Batimento de presença: o app mostra o nó online enquanto chega um a cada
 /// poucos segundos.
 // ponytail: heartbeat em vez de conexão persistente — o socket do app é uma
-// requisição por conexão; sobrevive a reinício do Cockpit sem reconectar.
+// requisição por conexão; sobrevive a reinício do GSH sem reconectar.
 const HEARTBEAT: Duration = Duration::from_secs(5);
 
 /// Teto do `wait_messages`: o cliente MCP do Claude Desktop derruba a
@@ -58,12 +58,12 @@ const CALL_TIMEOUT: Duration = Duration::from_secs(10);
 /// Transporte injetável (testes rodam sem app): `transport::try_request`.
 type Call<'a> = &'a dyn Fn(Value, Duration) -> Result<Value, String>;
 
-const HELP: &str = "cockpit mcp [--agent <app-id>]
-  Stdio MCP server that connects an agent to Cockpit's Agents graph. Run
-  under a Cockpit terminal tab (e.g. by Codex, whose sandbox blocks the shell
+const HELP: &str = "gsh mcp [--agent <app-id>]
+  Stdio MCP server that connects an agent to GSH's Agents graph. Run
+  under a GSH terminal tab (e.g. by Codex, whose sandbox blocks the shell
   CLI) it acts as that tab; otherwise as the desktop app --agent names. The
-  app runs it from its MCP config (Cockpit's New agent dialog writes that
-  entry; Cockpit adds it to ~/.codex/config.toml for Codex). app-id:
+  app runs it from its MCP config (GSH's New agent dialog writes that
+  entry; GSH adds it to ~/.codex/config.toml for Codex). app-id:
   claude-desktop | cursor | antigravity-ide | codex-desktop.
   Tools: peers, send, wait_messages (max 55s per call), list_agents. Each
   takes an optional `from` (tab id or label): a Codex terminal tab passes its
@@ -86,7 +86,7 @@ pub fn run(args: &[String]) -> ! {
     }
     let agent = match parse_agent(args) {
         Ok(a) => a,
-        Err(e) => die(&format!("cockpit mcp: {e}\n{HELP}"), 2),
+        Err(e) => die(&format!("gsh mcp: {e}\n{HELP}"), 2),
     };
     let me = resolve_identity(
         agent.as_deref(),
@@ -94,7 +94,7 @@ pub fn run(args: &[String]) -> ! {
         ancestry(std::process::id()),
         &transport::try_request,
     )
-    .unwrap_or_else(|e| die(&format!("cockpit mcp: {e}"), 2));
+    .unwrap_or_else(|e| die(&format!("gsh mcp: {e}"), 2));
     let tab = me.tab.clone();
     let instructions = instructions(&me);
 
@@ -202,10 +202,10 @@ fn chain(pid: u32, parent: &HashMap<u32, u32>) -> Vec<u32> {
 ///
 /// Quem decide é o app (`mcp-whoami`): procura uma raiz de aba em [pids]
 /// ([ancestry]; o Codex do terminal é ancestral deste processo). [hint] é o
-/// `COCKPIT_TAB_ID` herdado (o Codex só repassa se a entrada listar em
+/// `GSH_TAB_ID` herdado (o Codex só repassa se a entrada listar em
 /// `env_vars`); o app só o aceita quando não consegue ver a árvore da aba
 /// (WSL, host remoto) — env herdado não prova parentesco: um Cursor aberto de
-/// dentro de um terminal do Cockpit herda o env e não é aquela aba.
+/// dentro de um terminal do GSH herda o env e não é aquela aba.
 fn resolve_identity(
     agent: Option<&str>,
     hint: Option<String>,
@@ -235,7 +235,7 @@ fn resolve_identity(
         // App respondeu "não é aba" (ou é antigo e não conhece o verbo).
         Ok(resp) => agent.map(ext).ok_or_else(|| {
             format!(
-                "not running under a Cockpit terminal ({}) and no --agent given",
+                "not running under a GSH terminal ({}) and no --agent given",
                 transport::error_text(&resp)
             )
         }),
@@ -244,7 +244,7 @@ fn resolve_identity(
         Err(e) => match (agent, hint) {
             (Some(app), _) => Ok(ext(app)),
             (None, Some(id)) => Ok(tab(id, None)),
-            (None, None) => Err(format!("no --agent given and Cockpit is unreachable ({e})")),
+            (None, None) => Err(format!("no --agent given and GSH is unreachable ({e})")),
         },
     }
 }
@@ -274,7 +274,7 @@ fn handle(req: &Value, tab: &str, instructions: &str, call: Call) -> Option<Valu
                 .and_then(Value::as_str)
                 .unwrap_or(PROTOCOL),
             "capabilities": {"tools": {}},
-            "serverInfo": {"name": "cockpit", "version": crate::VERSION},
+            "serverInfo": {"name": "gsh", "version": crate::VERSION},
             "instructions": instructions,
         }),
         "ping" => json!({}),
@@ -294,9 +294,9 @@ fn handle(req: &Value, tab: &str, instructions: &str, call: Call) -> Option<Valu
 fn instructions(me: &Identity) -> String {
     if !me.external {
         return format!(
-            "You are connected to Cockpit's Agents graph as the terminal tab \
-`{}` ({}). Use these tools to talk to other agents instead of the `cockpit \
-msg`/`cockpit peers` shell commands (a sandbox, like Codex's, blocks them). \
+            "You are connected to GSH's Agents graph as the terminal tab \
+`{}` ({}). Use these tools to talk to other agents instead of the `gsh \
+msg`/`gsh peers` shell commands (a sandbox, like Codex's, blocks them). \
 Messages to you are typed into your terminal as `[from: <name>] ...` lines; \
 wait_messages also returns the ones that arrived since its last call. Talk to \
 agents with send; discover them with peers and list_agents.",
@@ -305,9 +305,9 @@ agents with send; discover them with peers and list_agents.",
     }
     let agent = &me.label;
     format!(
-        "You are connected to Cockpit's Agents graph as the desktop agent \
-`{agent}`. Other agents (Claude Code, Codex... in Cockpit terminals) can message \
-you, but nothing is pushed to you: messages are queued in Cockpit. Call \
+        "You are connected to GSH's Agents graph as the desktop agent \
+`{agent}`. Other agents (Claude Code, Codex... in GSH terminals) can message \
+you, but nothing is pushed to you: messages are queued in GSH. Call \
 wait_messages to read them (call it once at the start: your role and first task \
 may be waiting). Talk to agents with send; discover them with peers and \
 list_agents. After sending work, call wait_messages to collect the replies. \
@@ -317,15 +317,15 @@ list_agents. After sending work, call wait_messages to collect the replies. \
 
 /// Pista do `from` (descrições e instruções): o Codex de uma aba fala por
 /// este servidor sem que ele saiba de qual aba (ver o doc do módulo).
-const FROM_HINT: &str = "If you run in a Cockpit terminal tab (e.g. Codex), pass \
-from: <your tab id> — it is in the connection message Cockpit sent you.";
+const FROM_HINT: &str = "If you run in a GSH terminal tab (e.g. Codex), pass \
+from: <your tab id> — it is in the connection message GSH sent you.";
 
 /// Schema com `from` (toda ferramenta aceita) mais [props].
 fn schema(mut props: Value, required: &[&str]) -> Value {
     props["from"] = json!({
         "type": "string",
-        "description": "Your Cockpit tab id (e.g. \"t50\") or tab label, when you \
-run in a Cockpit terminal tab. Omit otherwise."
+        "description": "Your GSH tab id (e.g. \"t50\") or tab label, when you \
+run in a GSH terminal tab. Omit otherwise."
     });
     json!({"type": "object", "properties": props, "required": required})
 }
@@ -334,14 +334,14 @@ fn tools() -> Value {
     json!([
         {
             "name": "peers",
-            "description": format!("List the agents you are connected to on the Cockpit \
+            "description": format!("List the agents you are connected to on the GSH \
 canvas: label (the address for send), harness or app, working, maestro, online. \
 Message them with send. {FROM_HINT}"),
             "inputSchema": schema(json!({}), &[]),
         },
         {
             "name": "send",
-            "description": format!("Send a message to another agent on the Cockpit canvas \
+            "description": format!("Send a message to another agent on the GSH canvas \
 (a terminal agent such as Claude Code or Codex, or another desktop app). `to` is \
 its label from peers/list_agents. Terminal agents get it typed into their \
 terminal right away, signed with your name. Replies \
@@ -358,7 +358,7 @@ collect them. {FROM_HINT}"),
         {
             "name": "wait_messages",
             "description": format!("Collect messages addressed to you: from terminal agents \
-(`cockpit msg --to <your label>`), other desktop agents, or Cockpit itself (role, \
+(`gsh msg --to <your label>`), other desktop agents, or GSH itself (role, \
 initial task, connection intros). Returns every message that arrived since \
 your last call at once, or waits up to timeout_seconds (default 45, max 55; \
 call again to keep waiting) for the first to arrive. Returns \"No messages\" \
@@ -377,7 +377,7 @@ on timeout. {FROM_HINT}"),
         },
         {
             "name": "list_agents",
-            "description": format!("List every agent in your Cockpit workspace (terminal \
+            "description": format!("List every agent in your GSH workspace (terminal \
 and desktop), including ones you are not connected to: label, harness or app, \
 working, maestro, linked. Useful when you are the maestro. {FROM_HINT}"),
             "inputSchema": schema(json!({}), &[]),
@@ -437,7 +437,7 @@ fn call_tool(params: &Value, tab: &str, call: Call) -> Option<Value> {
 /// `data` da resposta do app, ou o erro em texto pro modelo.
 fn app(call: Call, req: Value, timeout: Duration) -> Result<Value, String> {
     let resp = call(req, timeout).map_err(|e| {
-        format!("Cockpit is not running or unreachable. Open the Cockpit app and try again. (detail: {e})")
+        format!("GSH is not running or unreachable. Open the GSH app and try again. (detail: {e})")
     })?;
     if resp.get("ok") == Some(&Value::Bool(true)) {
         Ok(resp.get("data").cloned().unwrap_or(Value::Null))
@@ -487,7 +487,7 @@ mod tests {
         assert_eq!(r["id"], 1);
         assert_eq!(r["result"]["protocolVersion"], "2024-11-05");
         assert!(r["result"]["capabilities"]["tools"].is_object());
-        assert_eq!(r["result"]["serverInfo"]["name"], "cockpit");
+        assert_eq!(r["result"]["serverInfo"]["name"], "gsh");
         let r = handle(&req(json!({"id": 2, "method": "initialize"})), "ext:cursor", "", none).unwrap();
         assert_eq!(r["result"]["protocolVersion"], PROTOCOL);
     }
@@ -613,7 +613,7 @@ mod tests {
 
     #[test]
     fn app_fora_do_ar_e_erro_de_ferramenta_claro() {
-        let down: Call = &|_, _| Err("no Cockpit app to talk to".to_string());
+        let down: Call = &|_, _| Err("no GSH app to talk to".to_string());
         let r = handle(
             &req(json!({"id": 1, "method": "tools/call", "params": {"name": "peers"}})),
             "ext:x",
@@ -625,7 +625,7 @@ mod tests {
         assert!(r["result"]["content"][0]["text"]
             .as_str()
             .unwrap()
-            .starts_with("Cockpit is not running"));
+            .starts_with("GSH is not running"));
         let r = handle(
             &req(json!({"id": 2, "method": "tools/call", "params": {"name": "zzz"}})),
             "ext:x",
@@ -687,7 +687,7 @@ mod tests {
 
     #[test]
     fn ancestrais_sobem_pela_tabela_do_ps() {
-        // zsh(100) → codex(110) → cockpit mcp(120); 1 = init.
+        // zsh(100) → codex(110) → gsh mcp(120); 1 = init.
         let t = parse_ps("    1     0\n  100     1\n  110   100\n  120   110\n lixo\n");
         assert_eq!(chain(120, &t), [120, 110, 100, 1]);
         assert_eq!(chain(999, &t), [999], "fora da tabela: só o próprio pid");
@@ -702,7 +702,7 @@ mod tests {
 
     #[test]
     fn identidade_cai_no_externo_ou_erra_sem_agent() {
-        let not_tab: Call = &|_, _| Ok(json!({"ok": false, "error": "not inside a Cockpit terminal"}));
+        let not_tab: Call = &|_, _| Ok(json!({"ok": false, "error": "not inside a GSH terminal"}));
         let me = resolve_identity(Some("codex-desktop"), None, vec![1], not_tab).unwrap();
         assert_eq!(
             me,

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:cockpit/app/core/data/lsp/lsp_codec.dart';
+import 'package:gsh_desktop/app/core/data/lsp/lsp_codec.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Bytes do framing LSP para uma mensagem JSON-RPC.

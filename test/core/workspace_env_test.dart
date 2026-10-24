@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/utils/workspace_env.dart';
+import 'package:gsh_desktop/app/core/utils/workspace_env.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -95,12 +95,12 @@ void main() {
         ) async {
           asked.add(path);
           return switch (path) {
-            '/srv/app/.env.cockpit' => 'X=app\nY=app\nPATH=/evil',
-            '/srv/lib/.env.cockpit' => 'Y=lib',
+            '/srv/app/.env.gsh' => 'X=app\nY=app\nPATH=/evil',
+            '/srv/lib/.env.gsh' => 'Y=lib',
             _ => null,
           };
         });
-        expect(asked, ['/srv/app/.env.cockpit', '/srv/lib/.env.cockpit']);
+        expect(asked, ['/srv/app/.env.gsh', '/srv/lib/.env.gsh']);
         expect(env, {'X': 'app', 'Y': 'lib'});
       },
     );
@@ -111,7 +111,7 @@ void main() {
         asked.add(path);
         return null;
       });
-      expect(asked, [r'C:\proj\.env.cockpit']);
+      expect(asked, [r'C:\proj\.env.gsh']);
     });
   });
 }

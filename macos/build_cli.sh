@@ -1,29 +1,29 @@
 #!/bin/bash
-# Compila a CLI interna `cockpit` (crate Rust em `cli/`) e a empacota como
-# `cockpit-cli` (nome distinto de `cockpit.app`/PRODUCT_NAME) em Resources,
+# Compila a CLI interna `gsh` (crate Rust em `cli/`) e a empacota como
+# `gsh-cli` (nome distinto de `gsh.app`/PRODUCT_NAME) em Resources,
 # assinada. Dois modos:
 #
 #   ./macos/build_cli.sh dev
-#     Compila só a arquitetura do host para ~/.cockpit/bin-debug/cockpit (para
+#     Compila só a arquitetura do host para ~/.gsh/bin-debug/gsh (para
 #     `flutter run` / testes E2E) — o diretório da CLI é namespaceado por
 #     flavor, como o status.sock, pra build de dev e instalada não
 #     sobrescreverem a CLI uma da outra.
 #
 #   (sem args / rodado pelo Xcode como Run Script phase)
 #     Compila **universal** (arm64 + x86_64), copia para
-#       ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/cockpit-cli
+#       ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/gsh-cli
 #     e code-signa com ${EXPANDED_CODE_SIGN_IDENTITY} (a mesma da app). O app,
-#     no boot, materializa essa cópia como ~/.cockpit/bin[-debug]/cockpit.
+#     no boot, materializa essa cópia como ~/.gsh/bin[-debug]/gsh.
 #
 # Por que Rust e não mais `dart compile exe`: o AOT do Dart sai de UMA
 # arquitetura por vez, não cross-compila pra macOS x64 e **não sobrevive ao
 # lipo** (o binário fat perde o snapshot e vira um `dartvm` sem programa). Com
 # Rust as duas fatias saem do mesmo host e o `lipo` é válido, então a release
-# feita em Apple Silicon roda em Intel. A CLI também absorveu o `cockpit-hook`
-# como subcomando (`cockpit hook`).
+# feita em Apple Silicon roda em Intel. A CLI também absorveu o `gsh-hook`
+# como subcomando (`gsh hook`).
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"   # cockpit/
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"   # gsh/
 CRATE="$ROOT/cli"
 
 resolve_cargo() {
@@ -35,23 +35,23 @@ resolve_cargo() {
 CARGO="$(resolve_cargo)"
 
 # Flavor assado no binário (ver cli/build.rs): decide qual socket a CLI procura
-# PRIMEIRO quando roda fora de um terminal do Cockpit. Sem isso, a CLI do build
+# PRIMEIRO quando roda fora de um terminal do GSH. Sem isso, a CLI do build
 # de dev era atendida pelo app instalado quando os dois estavam abertos.
 # `CONFIGURATION` vem do Xcode; o modo `dev` é sempre debug.
 if [ "${1:-bundle}" = "dev" ] || [ "${CONFIGURATION:-Release}" = "Debug" ]; then
-  export COCKPIT_FLAVOR=debug
+  export GSH_FLAVOR=debug
 else
-  export COCKPIT_FLAVOR=release
+  export GSH_FLAVOR=release
 fi
-echo "[build_cli] flavor=$COCKPIT_FLAVOR"
+echo "[build_cli] flavor=$GSH_FLAVOR"
 
 mode="${1:-bundle}"
 if [ "$mode" = "dev" ]; then
-  DEST="$HOME/.cockpit/bin-debug/cockpit"
+  DEST="$HOME/.gsh/bin-debug/gsh"
   echo "[build_cli] dev: compilando para a arquitetura do host -> $DEST"
   "$CARGO" build --release --manifest-path "$CRATE/Cargo.toml"
   mkdir -p "$(dirname "$DEST")"
-  cp "$CRATE/target/release/cockpit" "$DEST"
+  cp "$CRATE/target/release/gsh" "$DEST"
   chmod +x "$DEST"
   echo "[build_cli] dev OK"
   exit 0
@@ -60,7 +60,7 @@ fi
 # Modo bundle (Xcode).
 : "${BUILT_PRODUCTS_DIR:?precisa rodar pelo Xcode (BUILT_PRODUCTS_DIR ausente)}"
 : "${PRODUCT_NAME:?PRODUCT_NAME ausente}"
-DEST="$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app/Contents/Resources/cockpit-cli"
+DEST="$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app/Contents/Resources/gsh-cli"
 mkdir -p "$(dirname "$DEST")"
 
 # Fatias: por padrão as duas (o app é distribuído universal). `ARCHS` do Xcode
@@ -81,7 +81,7 @@ for target in "${TARGETS[@]}"; do
   # — se o target realmente faltar, o cargo abaixo falha alto com a razão.
   rustup target add "$target" >/dev/null 2>&1 || true
   "$CARGO" build --release --manifest-path "$CRATE/Cargo.toml" --target "$target"
-  SLICES+=("$CRATE/target/$target/release/cockpit")
+  SLICES+=("$CRATE/target/$target/release/gsh")
 done
 
 if [ ${#SLICES[@]} -eq 1 ]; then
@@ -107,7 +107,7 @@ if [ -z "$IDENTITY" ] || [ "$IDENTITY" = "-" ]; then
 else
   echo "[build_cli] codesign ($IDENTITY) + hardened runtime $DEST"
   codesign --force --options runtime \
-    --entitlements "$ROOT/macos/cockpit_hook.entitlements" \
+    --entitlements "$ROOT/macos/gsh_hook.entitlements" \
     -s "$IDENTITY" "$DEST"
 fi
 echo "[build_cli] bundle OK -> $DEST"

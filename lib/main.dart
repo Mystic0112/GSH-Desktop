@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:cockpit/app/bootstrapper.dart';
-import 'package:cockpit/app/cockpit/ui/document/document_window_app.dart';
-import 'package:cockpit/app/cockpit/ui/document/document_windows.dart';
-import 'package:cockpit/app/cockpit/ui/document/open_files_channel.dart';
-import 'package:cockpit/app/cockpit/ui/document/running_instance.dart';
-import 'package:cockpit/app/core/data/diagnostics/diagnostics_log.dart';
-import 'package:cockpit/app/core/data/diagnostics/error_handlers.dart';
-import 'package:cockpit/app/core/data/diagnostics/performance_diagnostics.dart';
-import 'package:cockpit/app/core/ui/widgets/app_error_view.dart';
-import 'package:cockpit/app/core/ui/widgets/error_report_dialog.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/bootstrapper.dart';
+import 'package:gsh_desktop/app/gsh/ui/document/document_window_app.dart';
+import 'package:gsh_desktop/app/gsh/ui/document/document_windows.dart';
+import 'package:gsh_desktop/app/gsh/ui/document/open_files_channel.dart';
+import 'package:gsh_desktop/app/gsh/ui/document/running_instance.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/error_handlers.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/performance_diagnostics.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/app_error_view.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/error_report_dialog.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:media_kit/media_kit.dart';
@@ -18,7 +18,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 /// Bootstrap real (Hive, shell, cleanup de órfãos, hooks, AppModule) mora no
-/// [CockpitBootstrapper]: a janela abre imediatamente com tela de loading e o
+/// [GshBootstrapper]: a janela abre imediatamente com tela de loading e o
 /// setup lento roda atrás, com tela de erro + retry se algo falhar.
 ///
 /// Aqui fica só o que precisa envolver *tudo*: a captura global de erros. Um app
@@ -32,7 +32,7 @@ Future<void> main(List<String> args) async {
     return;
   }
   // Windows/Linux: "abrir com" sobe um processo novo por arquivo. Se já há um
-  // Cockpit vivo, entrega os caminhos a ele e sai; senão este processo vira o
+  // GSH vivo, entrega os caminhos a ele e sai; senão este processo vira o
   // app e abre os arquivos após o boot (ver RunningInstance/OpenFilesChannel).
   if (Platform.isWindows || Platform.isLinux) {
     final files = RunningInstance.filePathsFromArguments(args);
@@ -98,7 +98,7 @@ Future<void> main(List<String> args) async {
 
     // `TranslationProvider` fica acima de tudo — é ele quem reconstrói a árvore
     // quando `LocaleSettings.setLocale()` é chamado (troca de idioma em runtime).
-    runApp(TranslationProvider(child: const CockpitBootstrapper()));
+    runApp(TranslationProvider(child: const GshBootstrapper()));
   });
 }
 

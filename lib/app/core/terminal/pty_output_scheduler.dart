@@ -4,7 +4,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:cockpit/app/core/data/diagnostics/performance_diagnostics.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/performance_diagnostics.dart';
 
 /// Orça o trabalho de todos os PTYs do app de forma global e justa.
 ///
@@ -264,7 +264,7 @@ final class PtyOutputCoalescer {
         FlutterErrorDetails(
           exception: error,
           stack: stackTrace,
-          library: 'cockpit terminal output scheduler',
+          library: 'gsh terminal output scheduler',
           context: ErrorDescription('while consuming PTY output'),
         ),
       );

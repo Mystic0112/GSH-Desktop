@@ -1,8 +1,8 @@
-import 'package:cockpit/app/cockpit/domain/entities/file_diff.dart';
-import 'package:cockpit/app/cockpit/ui/session/diff_viewer_session.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/diff_viewer.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/file_diff.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/diff_viewer_session.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/diff_viewer.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 

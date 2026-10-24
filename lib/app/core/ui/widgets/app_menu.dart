@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 /// Um item de [showAppMenu]: ícone (opcional) à esquerda + rótulo, com check à

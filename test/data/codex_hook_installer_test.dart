@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/hooks/codex_hook_installer_impl.dart';
-import 'package:cockpit/app/cockpit/domain/services/mcp_config_merge.dart';
+import 'package:gsh_desktop/app/gsh/data/hooks/codex_hook_installer_impl.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/mcp_config_merge.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Instalador com o passo de materialização da CLI curto-circuitado: os testes
@@ -20,7 +20,7 @@ class _FakeInstaller extends CodexHookInstallerImpl {
   Future<String?> mcpCommand() async => cli;
 
   @override
-  Future<String?> ensureCli() async => '/fake/cockpit';
+  Future<String?> ensureCli() async => '/fake/gsh';
 
   @override
   Future<String?> resolveHookCommand(String? cliPath) async => command;
@@ -49,7 +49,8 @@ void main() {
   }
 
   group('trustHash', () {
-    // Goldens capturados de uma sessão real: com estes valores no config.toml,
+    // Goldens capturados de uma sessão real (caminho original do upstream, não
+    // renomear: o hash depende dele): com estes valores no config.toml,
     // o `codex exec` executou os hooks SEM `--dangerously-bypass-hook-trust`.
     // Se o Codex mudar o algoritmo, é aqui que a gente descobre.
     const command =
@@ -102,10 +103,10 @@ void main() {
 
   group('writeConfig', () {
     test('instala os sete eventos com trust correspondente', () async {
-      const installer = _FakeInstaller('/bin/cockpit hook');
+      const installer = _FakeInstaller('/bin/gsh hook');
       await installer.writeConfig(
         home: home.path,
-        command: '/bin/cockpit hook',
+        command: '/bin/gsh hook',
       );
 
       final hooks = readHooks()['hooks'] as Map<String, dynamic>;
@@ -136,23 +137,23 @@ void main() {
     test('marca o comando com --harness codex', () async {
       // É o que permite ao app retomar a aba com `codex resume <id>`: o
       // session-id sozinho não diz de que harness veio.
-      const installer = _FakeInstaller('/bin/cockpit hook');
+      const installer = _FakeInstaller('/bin/gsh hook');
       await installer.writeConfig(
         home: home.path,
-        command: '/bin/cockpit hook',
+        command: '/bin/gsh hook',
       );
 
       final stop = ((readHooks()['hooks'] as Map)['Stop'] as List).first as Map;
       final handler = (stop['hooks'] as List).first as Map;
-      expect(handler['command'], '/bin/cockpit hook --harness codex');
+      expect(handler['command'], '/bin/gsh hook --harness codex');
     });
 
     test('re-rodar não duplica entries nem blocos de trust', () async {
-      const installer = _FakeInstaller('/bin/cockpit hook');
+      const installer = _FakeInstaller('/bin/gsh hook');
       for (var i = 0; i < 3; i++) {
         await installer.writeConfig(
           home: home.path,
-          command: '/bin/cockpit hook',
+          command: '/bin/gsh hook',
         );
       }
 
@@ -160,7 +161,7 @@ void main() {
       expect((hooks['Stop'] as List).length, 1);
 
       final config = readConfig();
-      expect('# >>> cockpit hooks'.allMatches(config).length, 1);
+      expect('# >>> gsh hooks'.allMatches(config).length, 1);
       expect('trusted_hash'.allMatches(config).length, 7);
     });
 
@@ -181,10 +182,10 @@ void main() {
         }),
       );
 
-      const installer = _FakeInstaller('/bin/cockpit hook');
+      const installer = _FakeInstaller('/bin/gsh hook');
       await installer.writeConfig(
         home: home.path,
-        command: '/bin/cockpit hook',
+        command: '/bin/gsh hook',
       );
 
       final stop =
@@ -206,23 +207,23 @@ void main() {
             'trust_level = "trusted"\n',
           );
 
-        const installer = _FakeInstaller('/bin/cockpit hook');
+        const installer = _FakeInstaller('/bin/gsh hook');
         await installer.writeConfig(
           home: home.path,
-          command: '/bin/cockpit hook',
+          command: '/bin/gsh hook',
         );
         await installer.writeConfig(
           home: home.path,
-          command: '/bin/cockpit hook',
+          command: '/bin/gsh hook',
         );
 
         final content = config.readAsStringSync();
         expect(content, contains('model = "gpt-5.6"'));
         expect(content, contains('trust_level = "trusted"'));
-        expect('# >>> cockpit hooks'.allMatches(content).length, 1);
+        expect('# >>> gsh hooks'.allMatches(content).length, 1);
         // O que é nosso vem no fim, depois do conteúdo do usuário.
         expect(
-          content.indexOf('# >>> cockpit hooks'),
+          content.indexOf('# >>> gsh hooks'),
           greaterThan(content.indexOf('trust_level')),
         );
       },
@@ -230,42 +231,42 @@ void main() {
 
     test('sem ~/.codex não cria nada (Codex não instalado)', () async {
       await codex.delete(recursive: true);
-      const installer = _FakeInstaller('/bin/cockpit hook');
+      const installer = _FakeInstaller('/bin/gsh hook');
       await installer.writeConfig(
         home: home.path,
-        command: '/bin/cockpit hook',
+        command: '/bin/gsh hook',
       );
       expect(Directory('${home.path}/.codex').existsSync(), isFalse);
     });
 
     test('hooks.json corrompido não impede a instalação', () async {
       File('${codex.path}/hooks.json').writeAsStringSync('{ nao é json');
-      const installer = _FakeInstaller('/bin/cockpit hook');
+      const installer = _FakeInstaller('/bin/gsh hook');
       await installer.writeConfig(
         home: home.path,
-        command: '/bin/cockpit hook',
+        command: '/bin/gsh hook',
       );
       expect((readHooks()['hooks'] as Map).keys, hasLength(7));
     });
   });
 
   group('entrada MCP (Codex nas abas e no app desktop)', () {
-    const cli = '/home/u/.cockpit/bin/cockpit';
-    const installer = _FakeInstaller('/bin/cockpit hook', cli: cli);
+    const cli = '/home/u/.gsh/bin/gsh';
+    const installer = _FakeInstaller('/bin/gsh hook', cli: cli);
     final entry = tomlMcpEntry(
       command: cli,
       args: ['mcp', '--agent', 'codex-desktop'],
     );
     Future<void> boot() =>
-        installer.writeConfig(home: home.path, command: '/bin/cockpit hook');
+        installer.writeConfig(home: home.path, command: '/bin/gsh hook');
 
     test('escreve uma vez, antes do bloco; reboot não muda um byte', () async {
       final config = File('${codex.path}/config.toml')
         ..writeAsStringSync('model = "gpt-5.6"\n');
       await boot();
       final once = config.readAsStringSync();
-      expect(once, startsWith('model = "gpt-5.6"\n\n$entry\n# >>> cockpit'));
-      expect(once, contains('env_vars = ["COCKPIT_TAB_ID"'));
+      expect(once, startsWith('model = "gpt-5.6"\n\n$entry\n# >>> gsh'));
+      expect(once, contains('env_vars = ["GSH_TAB_ID"'));
       final stamp = config.lastModifiedSync();
       await Future<void>.delayed(const Duration(milliseconds: 20));
       await boot();
@@ -273,7 +274,7 @@ void main() {
       expect(config.readAsStringSync(), once);
       expect(config.lastModifiedSync(), stamp, reason: 'nada mudou: não grava');
       // Backup do original, uma vez só.
-      final bak = File('${config.path}.cockpit-bak');
+      final bak = File('${config.path}.gsh-bak');
       expect(bak.readAsStringSync(), 'model = "gpt-5.6"\n');
     });
 
@@ -281,8 +282,8 @@ void main() {
       'entrada do dialog (depois do bloco) é reaproveitada, não duplicada',
       () async {
         await const _FakeInstaller(
-          '/bin/cockpit hook',
-        ).writeConfig(home: home.path, command: '/bin/cockpit hook');
+          '/bin/gsh hook',
+        ).writeConfig(home: home.path, command: '/bin/gsh hook');
         final config = File('${codex.path}/config.toml');
         // O dialog de apps desktop acrescenta no fim, depois do bloco de hooks.
         config.writeAsStringSync(
@@ -295,27 +296,27 @@ void main() {
         await boot();
         await boot();
         final content = config.readAsStringSync();
-        expect('[mcp_servers.cockpit]'.allMatches(content).length, 1);
-        expect('# >>> cockpit hooks'.allMatches(content).length, 1);
-        expect('# <<< cockpit hooks'.allMatches(content).length, 1);
+        expect('[mcp_servers.gsh]'.allMatches(content).length, 1);
+        expect('# >>> gsh hooks'.allMatches(content).length, 1);
+        expect('# <<< gsh hooks'.allMatches(content).length, 1);
         expect('trusted_hash'.allMatches(content).length, 7);
       },
     );
 
     test(
-      'sem CLI materializada, ou cockpit definido à mão: não mexe',
+      'sem CLI materializada, ou gsh definido à mão: não mexe',
       () async {
         await const _FakeInstaller(
-          '/bin/cockpit hook',
-        ).writeConfig(home: home.path, command: '/bin/cockpit hook');
+          '/bin/gsh hook',
+        ).writeConfig(home: home.path, command: '/bin/gsh hook');
         expect(readConfig(), isNot(contains('mcp_servers')));
 
         final config = File('${codex.path}/config.toml')
-          ..writeAsStringSync('mcp_servers.cockpit.command = "meu"\n');
+          ..writeAsStringSync('mcp_servers.gsh.command = "meu"\n');
         await boot();
         final content = config.readAsStringSync();
-        expect(content, startsWith('mcp_servers.cockpit.command = "meu"\n'));
-        expect(content, isNot(contains('[mcp_servers.cockpit]')));
+        expect(content, startsWith('mcp_servers.gsh.command = "meu"\n'));
+        expect(content, isNot(contains('[mcp_servers.gsh]')));
         expect(content, contains('trusted_hash'));
       },
     );

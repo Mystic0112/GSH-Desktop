@@ -1,6 +1,6 @@
 import 'dart:io';
 
-/// Forma canônica de caminho **dentro** do Cockpit: sempre com `/`.
+/// Forma canônica de caminho **dentro** do GSH: sempre com `/`.
 ///
 /// ## Por que existe
 ///

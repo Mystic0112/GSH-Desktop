@@ -30,7 +30,7 @@ pub fn resolve(name: &str) -> Option<String> {
                     return Some(((ch - 0x60) as char).to_string());
                 }
             }
-            // Nome de 1 caractere → literal (ex.: `cockpit send-key a`).
+            // Nome de 1 caractere → literal (ex.: `gsh send-key a`).
             // Conta em chars (não bytes) pra não fatiar UTF-8.
             if name.chars().count() == 1 {
                 return Some(name.to_string());

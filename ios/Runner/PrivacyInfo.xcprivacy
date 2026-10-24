@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- Manifesto de privacidade (exigido pela App Store desde 2024). O Cockpit
+	<!-- Manifesto de privacidade (exigido pela App Store desde 2024). O GSH
 	     nao rastreia nem coleta dados; as APIs "required reason" que aparecem
 	     sao as do template Flutter/plugins (UserDefaults e timestamps de
 	     arquivo), declaradas com os motivos padrao. -->

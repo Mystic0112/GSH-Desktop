@@ -1,9 +1,9 @@
-import 'package:cockpit/app/cockpit/domain/entities/file_view.dart';
-import 'package:cockpit/app/cockpit/ui/session/file_viewer_session.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/kanban_board_view.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/core/utils/user_home.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/file_view.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/file_viewer_session.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/kanban_board_view.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/utils/user_home.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 

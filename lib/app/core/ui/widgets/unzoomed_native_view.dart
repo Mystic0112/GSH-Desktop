@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/terminal/terminal_zoom.dart';
-import 'package:cockpit/app/core/ui/settings_controller.dart';
+import 'package:gsh_desktop/app/core/terminal/terminal_zoom.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 

@@ -1,8 +1,8 @@
-import 'package:cockpit/app/core/domain/entities/harness.dart';
+import 'package:gsh_desktop/app/core/domain/entities/harness.dart';
 
 // Quem fala de automação fala de [HarnessKind] — reexportado para não obrigar
 // dois imports em cada arquivo.
-export 'package:cockpit/app/core/domain/entities/harness.dart';
+export 'package:gsh_desktop/app/core/domain/entities/harness.dart';
 
 /// Id do modelo de roteamento automático. Quando o harness oferece esse modo,
 /// ele é o padrão: é o único id que nunca quebra por diferença de plano.
@@ -27,7 +27,7 @@ extension AutomationHarnessSupport on HarnessKind {
   };
 
   /// `false` quando o harness não tem catálogo de modelos vinculado à conta.
-  /// Nesses casos o Cockpit não deixa escolher modelo — usa `auto` (Copilot) ou
+  /// Nesses casos o GSH não deixa escolher modelo — usa `auto` (Copilot) ou
   /// o modelo que o próprio CLI já tem configurado (Claude Code), que é sempre
   /// compatível com o plano do usuário.
   bool get hasAccountScopedModels => switch (this) {

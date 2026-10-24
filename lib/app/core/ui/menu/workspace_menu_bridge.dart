@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 
 /// Ponte **reativa** entre o shell e o menu **File** (New Agent / New Terminal).
-/// O `CockpitPage` publica se há um workspace ativo + os callbacks que abrem uma
+/// O `GshPage` publica se há um workspace ativo + os callbacks que abrem uma
 /// aba nova nele; o menu habilita os itens só quando [hasWorkspace] e dispara a
 /// ação. `ChangeNotifier` app-scoped (provido no `ModularApp.provide`): o
 /// `AppRoot`/topbar dão `context.watch` pra reconstruir os menus quando um
@@ -11,6 +11,8 @@ import 'package:flutter/scheduler.dart';
 class WorkspaceMenuBridge extends ChangeNotifier {
   bool _hasWorkspace = false;
   VoidCallback? _onNewTerminal;
+  VoidCallback? _onNewChat;
+  VoidCallback? _onNewChatRight;
   VoidCallback? _onSplitRight;
   VoidCallback? _onSplitDown;
   VoidCallback? _onToggleRail;
@@ -27,6 +29,8 @@ class WorkspaceMenuBridge extends ChangeNotifier {
   bool get hasWorkspace => _hasWorkspace;
 
   void newTerminal() => _onNewTerminal?.call();
+  void newChat() => _onNewChat?.call();
+  void newChatRight() => _onNewChatRight?.call();
   void splitRight() => _onSplitRight?.call();
   void splitDown() => _onSplitDown?.call();
   void toggleRail() => _onToggleRail?.call();
@@ -40,11 +44,13 @@ class WorkspaceMenuBridge extends ChangeNotifier {
   void focusPaneUp() => _onFocusPaneUp?.call();
   void focusPaneDown() => _onFocusPaneDown?.call();
 
-  /// O `CockpitPage` publica o estado atual. Callbacks são sempre atualizados;
+  /// O `GshPage` publica o estado atual. Callbacks são sempre atualizados;
   /// só notifica (→ menu/settings reconstroem) quando [hasWorkspace] muda.
   void setWorkspace({
     required bool hasWorkspace,
     VoidCallback? onNewTerminal,
+    VoidCallback? onNewChat,
+    VoidCallback? onNewChatRight,
     VoidCallback? onSplitRight,
     VoidCallback? onSplitDown,
     VoidCallback? onToggleRail,
@@ -59,6 +65,8 @@ class WorkspaceMenuBridge extends ChangeNotifier {
     VoidCallback? onFocusPaneDown,
   }) {
     _onNewTerminal = onNewTerminal;
+    _onNewChat = onNewChat;
+    _onNewChatRight = onNewChatRight;
     _onSplitRight = onSplitRight;
     _onSplitDown = onSplitDown;
     _onToggleRail = onToggleRail;
@@ -73,7 +81,7 @@ class WorkspaceMenuBridge extends ChangeNotifier {
     _onFocusPaneDown = onFocusPaneDown;
     if (hasWorkspace == _hasWorkspace) return;
     _hasWorkspace = hasWorkspace;
-    // CockpitPage clears this bridge from dispose(), which runs while Flutter
+    // GshPage clears this bridge from dispose(), which runs while Flutter
     // finalizes the route subtree. Notifying synchronously there asks AppRoot
     // (an ancestor) to rebuild while the element tree is locked and produces
     // the misleading _InactiveElements._unmount cascade. Match the editor

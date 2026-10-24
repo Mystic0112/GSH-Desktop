@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/ui/widgets/editor_comment.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/editor_comment.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -15,14 +15,14 @@ Tudo de terminal num lugar só:
   SGR com primeiro parâmetro vazio, DSR-CPR 1-based, `viewId` no IME
   (`custom_text_edit.dart`). Removidos na absorção (não usados): zmodem,
   suggestion, debugger_view.
-- **`cockpit_terminal*.dart`** — view/render próprios (cache de `ui.Picture`
+- **`gsh_terminal*.dart`** — view/render próprios (cache de `ui.Picture`
   por linha, gesture, painter), preservados para o adapter xterm.
 
 Testes do emulador: `test/core/terminal/xterm/` (suíte do upstream adaptada;
 2 casos de `getText()` com wrap já falhavam no fork e estão `skip: true`).
 
-O PTY (nativo, C/FFI) também é nosso: **`plugins/cockpit_pty/`** — absorvido
+O PTY (nativo, C/FFI) também é nosso: **`plugins/gsh_pty/`** — absorvido
 2026-07-19 do fork `jacobaraujo7/kyroon_pty` v1.0.6 (upstream
-cesarmod2017/kyroon_pty, MIT preservado), renomeado `kyroon_pty`→`cockpit_pty`
+cesarmod2017/kyroon_pty, MIT preservado), renomeado `kyroon_pty`→`gsh_pty`
 (package, podspecs, CMake, dylib) e usado via path dependency. Não publicado;
 manutenção é nossa. Zero `dependency_overrides` git restantes no pubspec.

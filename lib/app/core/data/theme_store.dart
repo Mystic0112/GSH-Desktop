@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/setup/storage_location.dart';
+import 'package:gsh_desktop/app/core/data/setup/storage_location.dart';
 import 'package:flutter/foundation.dart' show FlutterError;
 import 'package:flutter/services.dart' show MissingPluginException;
-import 'package:cockpit/app/core/domain/result.dart';
-import 'package:cockpit/app/core/ui/themes/theme_codec.dart';
-import 'package:cockpit/app/core/ui/themes/theme_registry.dart';
-import 'package:cockpit/app/core/ui/themes/theme_spec.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/ui/themes/theme_codec.dart';
+import 'package:gsh_desktop/app/core/ui/themes/theme_registry.dart';
+import 'package:gsh_desktop/app/core/ui/themes/theme_spec.dart';
 import 'package:path/path.dart' as p;
 
 /// O que pode dar errado ao importar/exportar um tema. Tipo, não frase — a
@@ -64,7 +64,7 @@ class ThemeStore {
 
   /// Carrega todos os temas da pasta. Arquivo inválido é **pulado**, não fatal:
   /// um tema quebrado não pode impedir o app de abrir.
-  Future<List<CockpitThemeSpec>> loadAll() async {
+  Future<List<GshThemeSpec>> loadAll() async {
     final Directory dir;
     try {
       dir = await themesDir();
@@ -79,7 +79,7 @@ class ThemeStore {
       // que é como o path_provider falha num teste de unidade puro.
       return const [];
     }
-    final themes = <CockpitThemeSpec>[];
+    final themes = <GshThemeSpec>[];
     for (final entity in dir.listSync()) {
       if (entity is! File || p.extension(entity.path) != '.json') continue;
       final result = _parseFile(entity);
@@ -94,10 +94,10 @@ class ThemeStore {
   /// Valida **antes** de copiar: arquivo inválido nunca chega à pasta, então o
   /// [loadAll] do próximo boot não precisa lidar com lixo que nós mesmos
   /// gravamos.
-  Future<Result<CockpitThemeSpec, ThemeStoreError>> import(File source) async {
+  Future<Result<GshThemeSpec, ThemeStoreError>> import(File source) async {
     final parsed = _parseFile(source);
     if (parsed case Failure(:final error)) return Failure(error);
-    final spec = (parsed as Success<CockpitThemeSpec, ThemeStoreError>).value;
+    final spec = (parsed as Success<GshThemeSpec, ThemeStoreError>).value;
 
     if (builtInThemeById(spec.id) != null) {
       return const Failure(ThemeStoreError(ThemeStoreErrorKind.reservedId));
@@ -118,7 +118,7 @@ class ThemeStore {
 
   /// Grava [spec] em [targetPath] (o "Export" das Configurações).
   Future<Result<void, ThemeStoreError>> export(
-    CockpitThemeSpec spec,
+    GshThemeSpec spec,
     String targetPath,
   ) async {
     try {
@@ -146,7 +146,7 @@ class ThemeStore {
     }
   }
 
-  Result<CockpitThemeSpec, ThemeStoreError> _parseFile(File file) {
+  Result<GshThemeSpec, ThemeStoreError> _parseFile(File file) {
     final String raw;
     try {
       raw = file.readAsStringSync();
@@ -175,10 +175,10 @@ class ThemeStore {
 
     try {
       return Success(
-        CockpitThemeSpec.fromJson(
+        GshThemeSpec.fromJson(
           decoded,
           resolveBase: builtInThemeById,
-          fallbackBase: cockpitDefaultTheme,
+          fallbackBase: gshDefaultTheme,
         ),
       );
     } on ThemeParseError catch (e) {
@@ -188,7 +188,7 @@ class ThemeStore {
     }
   }
 
-  String _encode(CockpitThemeSpec spec) =>
+  String _encode(GshThemeSpec spec) =>
       const JsonEncoder.withIndent('  ').convert(spec.toJson());
 
   /// Id → nome de arquivo. Ids são namespaced com ponto (`acme.midnight`), o

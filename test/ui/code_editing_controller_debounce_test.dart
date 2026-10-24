@@ -1,6 +1,6 @@
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/core/ui/widgets/code_editing_controller.dart';
-import 'package:cockpit/app/core/ui/widgets/code_highlight.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/code_editing_controller.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/code_highlight.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 

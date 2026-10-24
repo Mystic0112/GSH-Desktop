@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:cockpit/app/core/domain/services/window_placement.dart';
+import 'package:gsh_desktop/app/core/domain/services/window_placement.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

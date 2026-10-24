@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/domain/entities/db_connection.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/db_connection.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// O dialog de conexão de rede é **só connection string** — não há mais
@@ -35,7 +35,7 @@ void main() {
 
     test('postgres com opções que nenhum formulário expunha', () {
       const url =
-          'postgres://u@h:5432/db?sslmode=verify-full&application_name=cockpit';
+          'postgres://u@h:5432/db?sslmode=verify-full&application_name=gsh';
       expect(conn(url).url, url);
       expect(conn(url).useTls, isTrue);
     });

@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/terminal/xterm/src/base/event.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/base/event.dart';
 
 mixin Disposable {
   final _disposables = <Disposable>[];

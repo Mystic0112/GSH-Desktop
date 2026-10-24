@@ -1,4 +1,4 @@
-import 'package:cockpit_core/cockpit_core.dart';
+import 'package:gsh_core/gsh_core.dart';
 
 /// Túnel de mentira: registra o que foi pedido e devolve uma ponta local fixa.
 /// Deixa os testes provarem a **reescrita de endpoint** sem servidor SSH.

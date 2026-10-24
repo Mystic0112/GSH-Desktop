@@ -1,8 +1,8 @@
-import 'package:cockpit/app/core/terminal/xterm/src/core/input/keys.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/input/keytab/keytab_default.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/input/keytab/keytab_parse.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/input/keytab/keytab_record.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/input/keytab/keytab_token.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/input/keys.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/input/keytab/keytab_default.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/input/keytab/keytab_parse.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/input/keytab/keytab_record.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/input/keytab/keytab_token.dart';
 
 class Keytab {
   Keytab({required this.name, required this.records});

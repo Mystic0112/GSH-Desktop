@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/tasks/tasks_json_loader.dart';
-import 'package:cockpit/app/cockpit/domain/entities/task_definition.dart';
+import 'package:gsh_desktop/app/gsh/data/tasks/tasks_json_loader.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/task_definition.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -9,7 +9,7 @@ void main() {
 
   setUp(() async {
     tmp = await Directory.systemTemp.createTemp('tasks_json_test');
-    await Directory('${tmp.path}/.cockpit').create();
+    await Directory('${tmp.path}/.gsh').create();
   });
 
   tearDown(() async {
@@ -17,7 +17,7 @@ void main() {
   });
 
   Future<void> write(String json) =>
-      File('${tmp.path}/.cockpit/tasks.json').writeAsString(json);
+      File('${tmp.path}/.gsh/tasks.json').writeAsString(json);
 
   test('arquivo ausente → lista vazia', () async {
     expect(await const TasksJsonLoader().load(tmp.path), isEmpty);

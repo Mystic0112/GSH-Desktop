@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/domain/entities/db_connection.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/db_connection.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -168,10 +168,10 @@ void main() {
       engine: DbEngine.postgres,
       host: 'h',
       database: 'd',
-      query: 'sslmode=require&application_name=cockpit',
+      query: 'sslmode=require&application_name=gsh',
     );
     expect(off.url, isNot(contains('sslmode')));
-    expect(off.url, contains('application_name=cockpit'));
+    expect(off.url, contains('application_name=gsh'));
     expect(off.useTls, isFalse);
   });
 

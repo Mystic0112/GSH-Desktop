@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:cockpit/app/cockpit/data/remote/remote_host_password_store.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/remote_hosts_store.dart';
-import 'package:cockpit/app/cockpit/domain/entities/remote_host.dart';
-import 'package:cockpit/app/cockpit/domain/entities/remote_workspace_pin.dart';
-import 'package:cockpit/app/cockpit/ui/remote/remote_hosts_controller.dart';
+import 'package:gsh_desktop/app/gsh/data/remote/remote_host_password_store.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/remote_hosts_store.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/remote_host.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/remote_workspace_pin.dart';
+import 'package:gsh_desktop/app/gsh/ui/remote/remote_hosts_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 

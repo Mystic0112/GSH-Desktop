@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:launch_at_startup/launch_at_startup.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-/// "Iniciar com o sistema" (plano 58 / General): registra o Cockpit como item
+/// "Iniciar com o sistema" (plano 58 / General): registra o GSH como item
 /// de login do SO. Wrapper fino sobre o `launch_at_startup` (macOS via
 /// LaunchAgent plist, Windows via registro Run, Linux via .desktop autostart).
 ///

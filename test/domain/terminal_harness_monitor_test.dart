@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:cockpit/app/cockpit/domain/contracts/process_tree_provider.dart';
-import 'package:cockpit/app/cockpit/domain/entities/process_snapshot.dart';
-import 'package:cockpit/app/core/domain/entities/harness.dart';
-import 'package:cockpit/app/cockpit/domain/services/terminal_harness_monitor.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/process_tree_provider.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/process_snapshot.dart';
+import 'package:gsh_desktop/app/core/domain/entities/harness.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/terminal_harness_monitor.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class FakeProcessTreeProvider implements ProcessTreeProvider {
@@ -354,14 +354,14 @@ void main() {
     });
   });
 
-  group('sessionOwningProcess (cockpit mcp do Codex de uma aba)', () {
+  group('sessionOwningProcess (gsh mcp do Codex de uma aba)', () {
     ProcessSnapshot p(int pid, int ppid, String exe) =>
         ProcessSnapshot(pid: pid, ppid: ppid, executable: exe, argv: [exe]);
-    // t1: zsh(100) → codex(110) → cockpit mcp(120). t2: bash(200).
+    // t1: zsh(100) → codex(110) → gsh mcp(120). t2: bash(200).
     final table = [
       p(100, 1, 'zsh'),
       p(110, 100, 'codex'),
-      p(120, 110, 'cockpit'),
+      p(120, 110, 'gsh'),
       p(200, 1, 'bash'),
     ];
 

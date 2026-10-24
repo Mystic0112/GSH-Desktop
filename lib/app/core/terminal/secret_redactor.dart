@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
 /// Filtro de saída do terminal que troca os **valores** injetados pelo
-/// `.env.cockpit` por [mask] antes de o texto chegar ao emulador. Como entra
+/// `.env.gsh` por [mask] antes de o texto chegar ao emulador. Como entra
 /// antes do coalescer, cobre de uma vez a tela, o scrollback gravado pra
-/// restore e o `cockpit read-tab` que um agente usa pra ler a aba.
+/// restore e o `gsh read-tab` que um agente usa pra ler a aba.
 ///
 /// O alvo é o **vazamento acidental** (`env`, `echo $TOKEN`, `curl -v`, erro
 /// de ferramenta ecoando a variável), não um agente determinado: valor
@@ -36,7 +36,7 @@ class SecretRedactor {
   int _maxLength = 0;
   String _carry = '';
 
-  /// Troca o conjunto de segredos (ex.: workspace remoto, cujo `.env.cockpit`
+  /// Troca o conjunto de segredos (ex.: workspace remoto, cujo `.env.gsh`
   /// chega do host depois do spawn). A cauda segurada continua válida: é
   /// reavaliada contra a lista nova no próximo [feed].
   void update(Iterable<String> secrets) {

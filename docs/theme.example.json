@@ -1,11 +1,11 @@
 {
-  "$schema": "https://raw.githubusercontent.com/jacobaraujo7/remote_pi/main/cockpit/docs/theme.schema.json",
+  "$schema": "https://raw.githubusercontent.com/jacobaraujo7/remote_pi/main/gsh/docs/theme.schema.json",
   "id": "acme.aurora",
   "name": "Aurora",
   "author": "Acme",
   "version": "1.0.0",
 
-  "extends": "cockpit",
+  "extends": "gsh",
 
   "variants": {
     "dark": {

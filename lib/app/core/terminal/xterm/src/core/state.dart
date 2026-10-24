@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/terminal/xterm/src/core/cursor.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/mouse/mode.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/cursor.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/mouse/mode.dart';
 
 abstract class TerminalState {
   int get viewWidth;

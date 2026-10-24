@@ -1,8 +1,8 @@
-//! `cockpit install-skill` (plano 69): grava as skills embutidas nas pastas de
+//! `gsh install-skill` (plano 69): grava as skills embutidas nas pastas de
 //! skills dos harnesses instalados nesta máquina.
 //!
 //! Uma skill é a pasta `<nome>/` com `SKILL.md` e arquivos de apoio. Cada
-//! skill instalada ganha um manifesto `.cockpit-skill.json` com a lista de
+//! skill instalada ganha um manifesto `.gsh-skill.json` com a lista de
 //! arquivos que são nossos: no update, o que saiu da árvore é apagado (sem
 //! isso uma `references/x.md` órfã ficaria pra sempre), e arquivo igual é
 //! no-op. Arquivos que o usuário colocou na pasta e não constam no manifesto
@@ -18,9 +18,9 @@ use crate::util::{die, home_dir};
 
 include!(concat!(env!("OUT_DIR"), "/skills_gen.rs"));
 
-const MANIFEST: &str = ".cockpit-skill.json";
-const HELP: &str = "cockpit install-skill [--agent claude|codex|pi|antigravity|all] [--force] [--list]
-  Installs Cockpit's agent skills (cockpit-cli, …) into the skills folder of each
+const MANIFEST: &str = ".gsh-skill.json";
+const HELP: &str = "gsh install-skill [--agent claude|codex|pi|antigravity|all] [--force] [--list]
+  Installs GSH's agent skills (gsh-cli, …) into the skills folder of each
   harness found in $HOME. Idempotent: identical files are left alone, files that
   no longer ship are removed. --list prints the embedded skills and exits.";
 
@@ -47,7 +47,7 @@ pub fn install_skill(args: &[String]) -> ! {
                 agent = args
                     .get(i)
                     .cloned()
-                    .unwrap_or_else(|| die("cockpit install-skill: --agent requires a value", 2));
+                    .unwrap_or_else(|| die("gsh install-skill: --agent requires a value", 2));
             }
             a if a.starts_with("--agent=") => agent = a["--agent=".len()..].to_string(),
             "--force" | "-f" => force = true,
@@ -57,7 +57,7 @@ pub fn install_skill(args: &[String]) -> ! {
                 std::process::exit(0)
             }
             other => die(
-                &format!("cockpit install-skill: unknown flag {other}\n{HELP}"),
+                &format!("gsh install-skill: unknown flag {other}\n{HELP}"),
                 2,
             ),
         }
@@ -75,7 +75,7 @@ pub fn install_skill(args: &[String]) -> ! {
         }
         std::process::exit(0)
     }
-    let home = home_dir().unwrap_or_else(|| die("cockpit: HOME not resolved", 1));
+    let home = home_dir().unwrap_or_else(|| die("gsh: HOME not resolved", 1));
     let home = Path::new(&home);
     let targets: Vec<&(&str, &str, &str)> = AGENTS
         .iter()
@@ -83,7 +83,7 @@ pub fn install_skill(args: &[String]) -> ! {
         .collect();
     if targets.is_empty() {
         die(
-            &format!("cockpit install-skill: unknown agent {agent} (claude|codex|pi|antigravity|all)"),
+            &format!("gsh install-skill: unknown agent {agent} (claude|codex|pi|antigravity|all)"),
             2,
         );
     }
@@ -96,13 +96,13 @@ pub fn install_skill(args: &[String]) -> ! {
         any = true;
         let root = home.join(skills_dir);
         match install_tree(&root, SKILLS, force) {
-            Ok(report) => println!("cockpit: {name}: {report} ({})", root.display()),
-            Err(e) => eprintln!("cockpit: {name}: {e}"),
+            Ok(report) => println!("gsh: {name}: {report} ({})", root.display()),
+            Err(e) => eprintln!("gsh: {name}: {e}"),
         }
     }
     if !any {
         println!(
-            "cockpit: no agent skills folder found in {} (nothing installed)",
+            "gsh: no agent skills folder found in {} (nothing installed)",
             home.display()
         );
     }
@@ -257,33 +257,33 @@ mod tests {
     fn instala_atualiza_e_remove_orfaos() {
         let root = tmp();
         let v1: &[(&str, &[u8])] = &[
-            ("cockpit-cli/SKILL.md", b"v1"),
-            ("cockpit-cli/references/a.md", b"a"),
+            ("gsh-cli/SKILL.md", b"v1"),
+            ("gsh-cli/references/a.md", b"a"),
         ];
         let r = install_tree(&root, v1, false).unwrap();
         assert_eq!((r.written, r.removed, r.unchanged), (2, 0, 0));
-        assert!(root.join("cockpit-cli/references/a.md").exists());
+        assert!(root.join("gsh-cli/references/a.md").exists());
         // arquivo do usuário, fora do manifesto: fica
-        fs::write(root.join("cockpit-cli/notes.md"), b"mine").unwrap();
+        fs::write(root.join("gsh-cli/notes.md"), b"mine").unwrap();
 
         let r = install_tree(&root, v1, false).unwrap();
         assert_eq!((r.written, r.removed, r.unchanged), (0, 0, 2));
         assert_eq!(r.to_string(), "skills already installed");
 
-        let v2: &[(&str, &[u8])] = &[("cockpit-cli/SKILL.md", b"v2")];
+        let v2: &[(&str, &[u8])] = &[("gsh-cli/SKILL.md", b"v2")];
         let r = install_tree(&root, v2, false).unwrap();
         assert_eq!((r.written, r.removed, r.unchanged), (1, 1, 0));
         assert!(
-            !root.join("cockpit-cli/references").exists(),
+            !root.join("gsh-cli/references").exists(),
             "pasta vazia some"
         );
         assert!(
-            root.join("cockpit-cli/notes.md").exists(),
+            root.join("gsh-cli/notes.md").exists(),
             "arquivo do usuário intacto"
         );
-        assert_eq!(fs::read(root.join("cockpit-cli/SKILL.md")).unwrap(), b"v2");
+        assert_eq!(fs::read(root.join("gsh-cli/SKILL.md")).unwrap(), b"v2");
         let m: Value = serde_json::from_str(
-            &fs::read_to_string(root.join("cockpit-cli/.cockpit-skill.json")).unwrap(),
+            &fs::read_to_string(root.join("gsh-cli/.gsh-skill.json")).unwrap(),
         )
         .unwrap();
         assert_eq!(m["files"], json!(["SKILL.md"]));
@@ -300,6 +300,6 @@ mod tests {
 
     #[test]
     fn arvore_embutida_tem_a_cli() {
-        assert!(SKILLS.iter().any(|(r, _)| *r == "cockpit-cli/SKILL.md"));
+        assert!(SKILLS.iter().any(|(r, _)| *r == "gsh-cli/SKILL.md"));
     }
 }

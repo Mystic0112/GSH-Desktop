@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:cockpit/app/core/domain/contracts/neovim_gateway.dart';
-import 'package:cockpit/app/core/domain/exceptions/neovim_error.dart';
-import 'package:cockpit/app/core/domain/result.dart';
-import 'package:cockpit/app/core/utils/executable_resolver.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/neovim_gateway.dart';
+import 'package:gsh_desktop/app/core/domain/exceptions/neovim_error.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/utils/executable_resolver.dart';
 
 class NeovimGatewayImpl implements NeovimGateway {
   String? _cachedExecutable;
@@ -31,7 +31,7 @@ class NeovimGatewayImpl implements NeovimGateway {
   @override
   String serverAddress(String workspaceId) {
     final token = _fnv1a(workspaceId).toRadixString(16);
-    final name = 'cockpit-nvim-${pid.toRadixString(16)}-$token';
+    final name = 'gsh-nvim-${pid.toRadixString(16)}-$token';
     return Platform.isWindows ? r'\\.\pipe\' + name : '/tmp/$name.sock';
   }
 

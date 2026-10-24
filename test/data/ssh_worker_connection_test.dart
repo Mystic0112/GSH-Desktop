@@ -4,8 +4,8 @@
 // ciclo de vida (done/close) fecha sem vazar isolate.
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/remote/dartssh_host_connection.dart';
-import 'package:cockpit/app/cockpit/data/remote/ssh_worker_connection.dart';
+import 'package:gsh_desktop/app/gsh/data/remote/dartssh_host_connection.dart';
+import 'package:gsh_desktop/app/gsh/data/remote/ssh_worker_connection.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

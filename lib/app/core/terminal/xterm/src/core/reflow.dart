@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/line.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/utils/circular_buffer.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/line.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/utils/circular_buffer.dart';
 
 class _LineBuilder {
   _LineBuilder([this._capacity = 80]) {

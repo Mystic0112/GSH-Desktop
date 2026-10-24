@@ -1,6 +1,6 @@
 // import 'package:flutter_test/flutter_test.dart';
-// import 'package:cockpit/app/core/terminal/xterm/buffer/line/line.dart';
-// import 'package:cockpit/app/core/terminal/xterm/terminal/cursor.dart';
+// import 'package:gsh_desktop/app/core/terminal/xterm/buffer/line/line.dart';
+// import 'package:gsh_desktop/app/core/terminal/xterm/terminal/cursor.dart';
 
 void main() {
   // group("BufferLine Tests", () {

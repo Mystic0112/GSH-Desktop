@@ -1,6 +1,6 @@
-import 'package:cockpit/app/core/core_module.dart';
-import 'package:cockpit/app/core/data/terminal/terminal_profile_resolver_impl.dart';
-import 'package:cockpit/app/core/ui/automation_controller.dart';
+import 'package:gsh_desktop/app/core/core_module.dart';
+import 'package:gsh_desktop/app/core/data/terminal/terminal_profile_resolver_impl.dart';
+import 'package:gsh_desktop/app/core/ui/automation_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';

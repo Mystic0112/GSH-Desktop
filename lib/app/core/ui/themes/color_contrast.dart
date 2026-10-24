@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 /// Cor de texto/ícone legível **sobre** [background].
 ///
-/// Existe porque o Cockpit deixou de ter só duas paletas fixas: com tema
+/// Existe porque o GSH deixou de ter só duas paletas fixas: com tema
 /// customizável, `accent`/`error` podem ser claros, e um `Colors.white`
 /// hardcoded vira texto invisível. A escolha é por luminância relativa
 /// (WCAG 2.x): abaixo do ponto de virada, texto claro; acima, texto escuro.

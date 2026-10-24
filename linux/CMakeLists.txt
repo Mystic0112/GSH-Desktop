@@ -4,7 +4,7 @@ project(runner LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "cockpit")
+set(BINARY_NAME "gsh")
 # The unique GTK application identifier for this application. See:
 # https://wiki.gnome.org/HowDoI/ChooseApplicationID
 set(APPLICATION_ID "work.gorila.gshdesktop")
@@ -137,11 +137,11 @@ if(NOT CMAKE_BUILD_TYPE MATCHES "Debug")
     COMPONENT Runtime)
 endif()
 
-# === tool → cockpit-hook + cockpit-cli (helpers Dart AOT) ===
+# === tool → gsh-hook + gsh-cli (helpers Dart AOT) ===
 # Compila o helper de hook (status de turno do claude) e a CLI interna
 # (send/send-key/list-panes/open) e os instala **ao lado do binário** (raiz do
 # bundle, onde o [_bundledHelper] os procura). Em runtime o ClaudeHookInstaller
-# os materializa em ~/.cockpit/bin. Equivale ao build_hook.sh/build_cli.sh do
+# os materializa em ~/.gsh/bin. Equivale ao build_hook.sh/build_cli.sh do
 # macOS e ao bloco correspondente no windows/CMakeLists.txt.
 if(DEFINED ENV{FLUTTER_ROOT})
   set(DART_EXE "$ENV{FLUTTER_ROOT}/bin/dart")
@@ -149,23 +149,23 @@ else()
   set(DART_EXE "dart")
 endif()
 
-set(COCKPIT_HOOK_SRC "${CMAKE_SOURCE_DIR}/../tool/cockpit_hook.dart")
-set(COCKPIT_HOOK_EXE "${CMAKE_BINARY_DIR}/cockpit-hook")
+set(GSH_HOOK_SRC "${CMAKE_SOURCE_DIR}/../tool/gsh_hook.dart")
+set(GSH_HOOK_EXE "${CMAKE_BINARY_DIR}/gsh-hook")
 add_custom_command(
-  OUTPUT "${COCKPIT_HOOK_EXE}"
-  COMMAND "${DART_EXE}" compile exe "${COCKPIT_HOOK_SRC}" -o "${COCKPIT_HOOK_EXE}"
-  DEPENDS "${COCKPIT_HOOK_SRC}"
-  COMMENT "Compilando cockpit-hook"
+  OUTPUT "${GSH_HOOK_EXE}"
+  COMMAND "${DART_EXE}" compile exe "${GSH_HOOK_SRC}" -o "${GSH_HOOK_EXE}"
+  DEPENDS "${GSH_HOOK_SRC}"
+  COMMENT "Compilando gsh-hook"
   VERBATIM)
-add_custom_target(cockpit_hook ALL DEPENDS "${COCKPIT_HOOK_EXE}")
-install(PROGRAMS "${COCKPIT_HOOK_EXE}" DESTINATION "${CMAKE_INSTALL_PREFIX}"
+add_custom_target(gsh_hook ALL DEPENDS "${GSH_HOOK_EXE}")
+install(PROGRAMS "${GSH_HOOK_EXE}" DESTINATION "${CMAKE_INSTALL_PREFIX}"
   COMPONENT Runtime)
 
-# === cli/ → cockpit-cli (CLI interna em Rust, com o hook como subcomando) ===
-# A CLI absorveu o antigo helper `cockpit-hook`: `cockpit hook` faz o mesmo
+# === cli/ → gsh-cli (CLI interna em Rust, com o hook como subcomando) ===
+# A CLI absorveu o antigo helper `gsh-hook`: `gsh hook` faz o mesmo
 # papel. Rust porque o `dart compile exe` sai de UMA arquitetura, não
 # cross-compila e não sobrevive ao `lipo` — ver macos/build_cli.sh.
-set(COCKPIT_CLI_CRATE "${CMAKE_SOURCE_DIR}/../cli")
+set(GSH_CLI_CRATE "${CMAKE_SOURCE_DIR}/../cli")
 # O PATH do processo que roda o CMake nem sempre traz o `cargo` (IDE/launcher
 # não herda o shell de login), então a instalação padrão do rustup entra como
 # hint — mesma resolução do `resolve_cargo` do macos/build_cli.sh. Falhar aqui,
@@ -179,33 +179,33 @@ endif()
 # `build.rs` entra na lista: é ele que assa o flavor no binário, e uma
 # mudança lá não mexe em `src/` — sem isto o CMake daria a CLI por
 # atualizada. Mesma classe do glob do servidor logo abaixo.
-file(GLOB_RECURSE COCKPIT_CLI_SOURCES CONFIGURE_DEPENDS
-  "${COCKPIT_CLI_CRATE}/src/*.rs" "${COCKPIT_CLI_CRATE}/text/*"
-  "${COCKPIT_CLI_CRATE}/build.rs")
-set(COCKPIT_CLI_BUILT "${COCKPIT_CLI_CRATE}/target/release/cockpit")
-set(COCKPIT_CLI_EXE "${CMAKE_BINARY_DIR}/cockpit-cli")
+file(GLOB_RECURSE GSH_CLI_SOURCES CONFIGURE_DEPENDS
+  "${GSH_CLI_CRATE}/src/*.rs" "${GSH_CLI_CRATE}/text/*"
+  "${GSH_CLI_CRATE}/build.rs")
+set(GSH_CLI_BUILT "${GSH_CLI_CRATE}/target/release/gsh")
+set(GSH_CLI_EXE "${CMAKE_BINARY_DIR}/gsh-cli")
 # Flavor assado no binário (ver cli/build.rs): decide qual socket a CLI procura
-# primeiro quando roda fora de um terminal do Cockpit.
+# primeiro quando roda fora de um terminal do GSH.
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  set(COCKPIT_CLI_FLAVOR "debug")
+  set(GSH_CLI_FLAVOR "debug")
 else()
-  set(COCKPIT_CLI_FLAVOR "release")
+  set(GSH_CLI_FLAVOR "release")
 endif()
 add_custom_command(
-  OUTPUT "${COCKPIT_CLI_EXE}"
-  COMMAND "${CMAKE_COMMAND}" -E env "COCKPIT_FLAVOR=${COCKPIT_CLI_FLAVOR}"
+  OUTPUT "${GSH_CLI_EXE}"
+  COMMAND "${CMAKE_COMMAND}" -E env "GSH_FLAVOR=${GSH_CLI_FLAVOR}"
           "${CARGO_EXECUTABLE}" build --release
-          --manifest-path "${COCKPIT_CLI_CRATE}/Cargo.toml"
-  COMMAND "${CMAKE_COMMAND}" -E copy "${COCKPIT_CLI_BUILT}" "${COCKPIT_CLI_EXE}"
-  DEPENDS ${COCKPIT_CLI_SOURCES} "${COCKPIT_CLI_CRATE}/Cargo.toml"
-  COMMENT "Compilando cockpit-cli (Rust)"
+          --manifest-path "${GSH_CLI_CRATE}/Cargo.toml"
+  COMMAND "${CMAKE_COMMAND}" -E copy "${GSH_CLI_BUILT}" "${GSH_CLI_EXE}"
+  DEPENDS ${GSH_CLI_SOURCES} "${GSH_CLI_CRATE}/Cargo.toml"
+  COMMENT "Compilando gsh-cli (Rust)"
   VERBATIM)
-add_custom_target(cockpit_cli ALL DEPENDS "${COCKPIT_CLI_EXE}")
-install(PROGRAMS "${COCKPIT_CLI_EXE}" DESTINATION "${CMAKE_INSTALL_PREFIX}"
+add_custom_target(gsh_cli ALL DEPENDS "${GSH_CLI_EXE}")
+install(PROGRAMS "${GSH_CLI_EXE}" DESTINATION "${CMAKE_INSTALL_PREFIX}"
   COMPONENT Runtime)
 
 # === Desktop integration (nome + ícone para publicação) ===
-# .desktop com Name=Cockpit, e ícones do tema hicolor nomeados pelo
+# .desktop com Name=GSH, e ícones do tema hicolor nomeados pelo
 # APPLICATION_ID (work.gorila.gshdesktop) — é assim que o launcher/dock e a
 # barra de tarefas resolvem nome e ícone do app empacotado (deb/AppImage/snap).
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/gshdesktop.desktop"
@@ -213,7 +213,7 @@ install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/gshdesktop.desktop"
   RENAME "${APPLICATION_ID}.desktop"
   COMPONENT Runtime)
 
-# Tipos de arquivo do Cockpit (.kanban/.ckp/.dbq/.http) pro "Abrir com" do
+# Tipos de arquivo do GSH (.kanban/.ckp/.dbq/.http) pro "Abrir com" do
 # gerenciador de arquivos — o .desktop acima declara os MimeType.
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/${APPLICATION_ID}.xml"
   DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mime/packages"
@@ -231,53 +231,53 @@ install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/${APPLICATION_ID}.metainfo.xml"
   DESTINATION "${CMAKE_INSTALL_PREFIX}/share/metainfo"
   COMPONENT Runtime)
 
-# === cockpit-server (sidecar) ===
+# === gsh-server (sidecar) ===
 # Bundle `bin/` + `lib/` do servidor headless, instalado AO LADO do executável
-# (mesmo lugar do cockpit-hook e da cockpit-cli; o deb/rpm empacota o prefixo
+# (mesmo lugar do gsh-hook e da gsh-cli; o deb/rpm empacota o prefixo
 # inteiro). Equivale ao Run Script do macOS (build_server.sh); sem isto o app
 # cai no fallback in-process e o Linux roda uma arquitetura diferente do macOS.
 #
 # `dart build cli` NÃO cross-compila, mas aqui não é problema: o CI compila cada
 # arquitetura no seu próprio runner nativo (x64 e arm64).
-set(COCKPIT_SERVER_PKG "${CMAKE_SOURCE_DIR}/../packages/cockpit_server")
-set(COCKPIT_SERVER_DIR "${CMAKE_BINARY_DIR}/server-bundle")
-set(COCKPIT_SERVER_EXE "${COCKPIT_SERVER_DIR}/bin/cockpit-server")
+set(GSH_SERVER_PKG "${CMAKE_SOURCE_DIR}/../packages/gsh_server")
+set(GSH_SERVER_DIR "${CMAKE_BINARY_DIR}/server-bundle")
+set(GSH_SERVER_EXE "${GSH_SERVER_DIR}/bin/gsh-server")
 # O servidor NÃO é só o pacote dele: depende dos irmãos por `path:`
-# (cockpit_core, cockpit_engine, cockpit_protocol). Com o glob olhando só
-# `cockpit_server/`, editar o engine não invalidava nada e o CMake dava o
-# bundle por atualizado — o build saía com um `cockpit-server` VELHO, em
+# (gsh_core, gsh_engine, gsh_protocol). Com o glob olhando só
+# `gsh_server/`, editar o engine não invalidava nada e o CMake dava o
+# bundle por atualizado — o build saía com um `gsh-server` VELHO, em
 # silêncio. Mesmo ajuste do windows/CMakeLists.txt.
-file(GLOB_RECURSE COCKPIT_SERVER_SOURCES CONFIGURE_DEPENDS
-  "${COCKPIT_SERVER_PKG}/bin/*.dart" "${COCKPIT_SERVER_PKG}/lib/*.dart"
-  "${COCKPIT_SERVER_PKG}/../cockpit_core/lib/*.dart"
-  "${COCKPIT_SERVER_PKG}/../cockpit_engine/lib/*.dart"
-  "${COCKPIT_SERVER_PKG}/../cockpit_protocol/lib/*.dart")
+file(GLOB_RECURSE GSH_SERVER_SOURCES CONFIGURE_DEPENDS
+  "${GSH_SERVER_PKG}/bin/*.dart" "${GSH_SERVER_PKG}/lib/*.dart"
+  "${GSH_SERVER_PKG}/../gsh_core/lib/*.dart"
+  "${GSH_SERVER_PKG}/../gsh_engine/lib/*.dart"
+  "${GSH_SERVER_PKG}/../gsh_protocol/lib/*.dart")
 add_custom_command(
-  OUTPUT "${COCKPIT_SERVER_EXE}"
+  OUTPUT "${GSH_SERVER_EXE}"
   # Bundle limpo: `dart build cli` recusa diretório de saída já existente.
-  COMMAND "${CMAKE_COMMAND}" -E rm -rf "${COCKPIT_SERVER_DIR}" "${CMAKE_BINARY_DIR}/server-out"
-  COMMAND "${CMAKE_COMMAND}" -E chdir "${COCKPIT_SERVER_PKG}" "${DART_EXE}" pub get
-  COMMAND "${CMAKE_COMMAND}" -E chdir "${COCKPIT_SERVER_PKG}" "${DART_EXE}" build cli
+  COMMAND "${CMAKE_COMMAND}" -E rm -rf "${GSH_SERVER_DIR}" "${CMAKE_BINARY_DIR}/server-out"
+  COMMAND "${CMAKE_COMMAND}" -E chdir "${GSH_SERVER_PKG}" "${DART_EXE}" pub get
+  COMMAND "${CMAKE_COMMAND}" -E chdir "${GSH_SERVER_PKG}" "${DART_EXE}" build cli
           -o "${CMAKE_BINARY_DIR}/server-out"
   # `dart build cli` gera <out>/bundle/{bin,lib}; o exe sai com underscore.
   COMMAND "${CMAKE_COMMAND}" -E copy_directory
-          "${CMAKE_BINARY_DIR}/server-out/bundle" "${COCKPIT_SERVER_DIR}"
+          "${CMAKE_BINARY_DIR}/server-out/bundle" "${GSH_SERVER_DIR}"
   COMMAND "${CMAKE_COMMAND}" -E rename
-          "${COCKPIT_SERVER_DIR}/bin/cockpit_server" "${COCKPIT_SERVER_EXE}"
+          "${GSH_SERVER_DIR}/bin/gsh_server" "${GSH_SERVER_EXE}"
   # A lib do PTY vai ao LADO do exe do servidor: é o 2º candidato do
-  # openPtyDylib (o 1º é a env COCKPIT_PTY_DYLIB, que o sidecar preenche).
+  # openPtyDylib (o 1º é a env GSH_PTY_DYLIB, que o sidecar preenche).
   # Reusa o artefato do plugin em vez de compilar o mesmo .c duas vezes.
   COMMAND "${CMAKE_COMMAND}" -E copy
-          "$<TARGET_FILE:cockpit_pty>" "${COCKPIT_SERVER_DIR}/bin/"
+          "$<TARGET_FILE:gsh_pty>" "${GSH_SERVER_DIR}/bin/"
   # CLI embarcada ao lado do servidor (plano 60, Wave G): o servidor instala o
   # hook do agente apontando pra ela, e a acha na mesma pasta bin/.
   COMMAND "${CMAKE_COMMAND}" -E copy
-          "${COCKPIT_CLI_EXE}" "${COCKPIT_SERVER_DIR}/bin/cockpit"
-  DEPENDS ${COCKPIT_SERVER_SOURCES} "${COCKPIT_SERVER_PKG}/pubspec.yaml"
-          "${COCKPIT_CLI_EXE}" cockpit_pty
-  COMMENT "Compilando cockpit-server (bundle do sidecar)"
+          "${GSH_CLI_EXE}" "${GSH_SERVER_DIR}/bin/gsh"
+  DEPENDS ${GSH_SERVER_SOURCES} "${GSH_SERVER_PKG}/pubspec.yaml"
+          "${GSH_CLI_EXE}" gsh_pty
+  COMMENT "Compilando gsh-server (bundle do sidecar)"
   VERBATIM)
-add_custom_target(cockpit_server ALL DEPENDS "${COCKPIT_SERVER_EXE}")
-install(DIRECTORY "${COCKPIT_SERVER_DIR}/"
-  DESTINATION "${CMAKE_INSTALL_PREFIX}/cockpit-server-bundle"
+add_custom_target(gsh_server ALL DEPENDS "${GSH_SERVER_EXE}")
+install(DIRECTORY "${GSH_SERVER_DIR}/"
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/gsh-server-bundle"
   USE_SOURCE_PERMISSIONS COMPONENT Runtime)

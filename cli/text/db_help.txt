@@ -1,15 +1,15 @@
-cockpit db — query the workspace's databases (agent-friendly JSON)
+gsh db — query the workspace's databases (agent-friendly JSON)
 
-Connections are registered per workspace in .cockpit/databases.json (Database
+Connections are registered per workspace in .gsh/databases.json (Database
 panel in the app); SQLite files found in the repo are auto-detected. The app
 executes every statement — credentials never reach this CLI.
 
 USAGE:
-  cockpit db list                                  registered + detected connections
-  cockpit db schema  --db <name> [<table>]         tables, or a table's columns
-  cockpit db query   --db <name> --sql "<SELECT…>" [--limit N]   run a query
-  cockpit db execute --db <name> --sql "<DML…>"    run DML, returns affectedRows
-  cockpit db run <file.dbq>                        run a .dbq file (frontmatter picks the db)
+  gsh db list                                  registered + detected connections
+  gsh db schema  --db <name> [<table>]         tables, or a table's columns
+  gsh db query   --db <name> --sql "<SELECT…>" [--limit N]   run a query
+  gsh db execute --db <name> --sql "<DML…>"    run DML, returns affectedRows
+  gsh db run <file.dbq>                        run a .dbq file (frontmatter picks the db)
 
 ACCESS:
   Connections are read-only for agents by default: execute (and any write) is
@@ -18,7 +18,7 @@ ACCESS:
   "access" field.
 
 FLAGS:
-  --workspace <id|path>   target workspace when not inside a Cockpit pane
+  --workspace <id|path>   target workspace when not inside a GSH pane
   --limit N               row cap for query (default 200; "truncated" flags the cut)
 
 OUTPUT (single JSON line; exit 1 on error):

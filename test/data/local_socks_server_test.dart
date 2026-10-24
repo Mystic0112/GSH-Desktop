@@ -1,4 +1,4 @@
-import 'package:cockpit_core/cockpit_core.dart';
+import 'package:gsh_core/gsh_core.dart';
 import 'dart:async';
 import 'dart:io';
 

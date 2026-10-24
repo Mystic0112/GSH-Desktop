@@ -1,9 +1,9 @@
-# `.cockpit/tasks.json` — Task Run
+# `.gsh/tasks.json` — Task Run
 
 ## Docker Compose e Podman Compose
 
 Ao abrir um YAML local que contenha um mapa `services`, use **Gerar tasks do
-Compose** no cabeçalho do painel. O Cockpit cria ou sincroniza uma task por
+Compose** no cabeçalho do painel. O GSH cria ou sincroniza uma task por
 service, com os profiles `up`, `build`, `recreate` e `recreate-deps`. São aceitos
 `docker compose`, `docker-compose`, `podman compose` e `podman-compose`.
 
@@ -15,22 +15,22 @@ comando Compose e clicar em um service ativo acompanha as últimas 200 linhas de
 logs. Esta integração é local; workspaces remotos continuam lendo o arquivo
 normalmente, sem sincronização automática.
 
-Quando o YAML aberto é referenciado por `include` em um Compose pai, o Cockpit
+Quando o YAML aberto é referenciado por `include` em um Compose pai, o GSH
 usa esse arquivo pai para executar e consultar o projeto. Assim são preservados
 `project_directory`, o `.env` da raiz e os mesmos labels usados nos containers.
 O estado também é reconciliado pelos labels Compose do runtime, permitindo
-reconhecer services iniciados fora do Cockpit mesmo quando `compose ps` não
+reconhecer services iniciados fora do GSH mesmo quando `compose ps` não
 consegue interpolar localmente todas as variáveis do arquivo.
 
-O **Task Run** do cockpit roda os comandos de build/dev do seu projeto
+O **Task Run** do gsh roda os comandos de build/dev do seu projeto
 (`npm run dev`, `flutter run`, `go run`, `make`…) com streaming de output, ciclo
 de vida visual (play/stop/restart), teclas interativas e "reload ao salvar".
 
 Há duas fontes de tasks, que convivem:
 
-1. **Detecção automática** — ao abrir um projeto, o cockpit lê os manifestos
+1. **Detecção automática** — ao abrir um projeto, o gsh lê os manifestos
    (`package.json scripts`, `pubspec.yaml`) e já mostra tasks **sem config**.
-2. **Manual** — este arquivo, `.cockpit/tasks.json`, na pasta que você abre como
+2. **Manual** — este arquivo, `.gsh/tasks.json`, na pasta que você abre como
    workspace. Use pra customizar, adicionar tasks ou descrever um **monorepo**.
    Tasks do JSON têm **precedência** sobre detectadas de mesmo `id`.
 
@@ -42,11 +42,11 @@ Há duas fontes de tasks, que convivem:
 
 ## Onde fica
 
-Na **raiz do workspace** que você abre no cockpit. A descoberta é literal (sem
+Na **raiz do workspace** que você abre no gsh. A descoberta é literal (sem
 subir na árvore), então:
 
-- Projeto de pacote único → abra a pasta do pacote; `.cockpit/tasks.json` ali.
-- **Monorepo** → abra a raiz; um único `.cockpit/tasks.json` na raiz dirige os
+- Projeto de pacote único → abra a pasta do pacote; `.gsh/tasks.json` ali.
+- **Monorepo** → abra a raiz; um único `.gsh/tasks.json` na raiz dirige os
   subpacotes via `cwd` por task (ver abaixo).
 
 ## Exemplo
@@ -116,7 +116,7 @@ subir na árvore), então:
 | `preview`          | bool/str | não         | `true`      | Auto-open do navegador embutido: por padrão a **primeira** URL local do output (`http://localhost:…`) abre uma aba de navegador (re-runs reusam a aba na mesma origem). `false` desliga; uma string (`"http://localhost:8080"`) abre essa URL fixa já no start. Sem webview na plataforma (Linux), abre no browser do SO. |
 | `previewOpen`      | string   | não         | `always`    | **Quando** o preview abre: `always` (start e restart), `start` (só no start — Restart e o restart do watcher não reabrem; um stop + start manual reabre) ou `never`. Ignorado se `preview` é `false`. |
 
-> O cockpit gera o `id` da task automaticamente (`json:<label>`); ele sobrescreve
+> O gsh gera o `id` da task automaticamente (`json:<label>`); ele sobrescreve
 > uma task detectada de mesmo `id`.
 
 ### `interactiveKeys[]`
@@ -134,7 +134,7 @@ no app** — o que existe vem daqui.
 ### `watch`
 
 O `flutter run` **não** recarrega ao salvar — isso é feature de plugin de IDE; o
-cockpit reimplementa via observação de arquivos. Fica **sempre ligado** enquanto
+gsh reimplementa via observação de arquivos. Fica **sempre ligado** enquanto
 a task com `watch` está viva.
 
 | Campo        | Tipo     | Obrigatório | Default | Descrição |
@@ -171,10 +171,10 @@ Há um JSON Schema em [`docs/tasks.schema.json`](./tasks.schema.json). Pra ganha
 autocomplete/validação no editor, referencie-o no topo do arquivo:
 
 ```jsonc
-{ "$schema": "../cockpit/docs/tasks.schema.json", "tasks": [ ... ] }
+{ "$schema": "../gsh/docs/tasks.schema.json", "tasks": [ ... ] }
 ```
 
-(O cockpit ignora `$schema` ao executar — é só pro editor.)
+(O gsh ignora `$schema` ao executar — é só pro editor.)
 
 ## Limitações conhecidas
 

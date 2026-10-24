@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:flutter/widgets.dart';
 
 /// Substituto do Material `InkWell` para superfícies clicáveis custom (linhas de

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:cockpit/app/core/terminal/terminal_controller.dart';
+import 'package:gsh_desktop/app/core/terminal/terminal_controller.dart';
 import 'package:flterm/flterm.dart' as ghost;
 import 'package:flutter_test/flutter_test.dart';
 

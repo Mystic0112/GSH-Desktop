@@ -3,7 +3,7 @@
 
 int main(int argc, char** argv) {
   const std::string gpu_policy = configure_linux_gpu_environment();
-  g_message("Cockpit Linux startup: gpu_policy=%s gdk_backend=%s session=%s",
+  g_message("GSH Linux startup: gpu_policy=%s gdk_backend=%s session=%s",
             gpu_policy.c_str(),
             g_getenv("GDK_BACKEND") != nullptr ? g_getenv("GDK_BACKEND")
                                                 : "auto",

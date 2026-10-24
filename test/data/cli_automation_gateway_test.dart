@@ -1,6 +1,6 @@
-import 'package:cockpit/app/core/data/automation/cli_automation_gateway.dart';
-import 'package:cockpit/app/core/domain/entities/automation.dart';
-import 'package:cockpit/app/core/domain/services/commit_message_prompt.dart';
+import 'package:gsh_desktop/app/core/data/automation/cli_automation_gateway.dart';
+import 'package:gsh_desktop/app/core/domain/entities/automation.dart';
+import 'package:gsh_desktop/app/core/domain/services/commit_message_prompt.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -15,7 +15,7 @@ void main() {
       final command = CliAutomationGateway.buildCommand(
         selection,
         'prompt',
-        codexSystemPromptPath: '/tmp/cockpit-system.md',
+        codexSystemPromptPath: '/tmp/gsh-system.md',
       );
 
       expect(
@@ -25,7 +25,7 @@ void main() {
       expect(command.args, containsAll(['--model', 'gpt-5.4-mini']));
       expect(
         command.args,
-        contains('model_instructions_file="/tmp/cockpit-system.md"'),
+        contains('model_instructions_file="/tmp/gsh-system.md"'),
       );
       expect(command.stdin, 'prompt');
     },
@@ -76,7 +76,7 @@ void main() {
     // O bug: a descoberta listava os modelos do provider `antigravity` (que é
     // registrado por uma extensão) e a geração rodava com `--no-extensions`,
     // derrubando o provider — o CLI respondia "Model not found" para um id que
-    // o próprio Cockpit tinha oferecido.
+    // o próprio GSH tinha oferecido.
     final generation = CliAutomationGateway.buildCommand(
       const AutomationSelection(
         harnessId: HarnessKind.pi,
@@ -288,7 +288,7 @@ void main() {
 
   test('harnesses without an account catalog do not offer a model choice', () {
     // Nenhuma das duas CLIs sabe dizer o que o plano do usuário libera fora do
-    // modo interativo, então o Cockpit não inventa uma lista.
+    // modo interativo, então o GSH não inventa uma lista.
     expect(HarnessKind.claudeCode.hasAccountScopedModels, isFalse);
     expect(HarnessKind.gitHubCopilot.hasAccountScopedModels, isFalse);
     expect(HarnessKind.gitHubCopilot.pinnedModelId, kAutomationAutoModelId);
@@ -317,7 +317,7 @@ void main() {
     );
 
     expect(prompt, isNot(contains('secret-value')));
-    expect(prompt, contains('[sensitive line redacted by Cockpit]'));
+    expect(prompt, contains('[sensitive line redacted by GSH]'));
     expect(prompt, isNot(contains('intent and meaningful outcome')));
     expect(
       CommitMessagePrompt.systemPrompt,

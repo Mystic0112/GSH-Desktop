@@ -1,6 +1,6 @@
-import 'package:cockpit/app/cockpit/data/remote/remote_git_adapter.dart';
-import 'package:cockpit/app/cockpit/domain/entities/git_file_status.dart';
-import 'package:cockpit_core/cockpit_core.dart' as core;
+import 'package:gsh_desktop/app/gsh/data/remote/remote_git_adapter.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/git_file_status.dart';
+import 'package:gsh_core/gsh_core.dart' as core;
 import 'package:flutter_test/flutter_test.dart';
 
 core.GitStatus status(String branch, List<(String, String, String)> files) =>
@@ -49,14 +49,14 @@ void main() {
 
   test('pasta untracked colapsada não vira "arquivo" com barra na chave', () {
     // Host com servidor antigo (sem `-uall`) manda a pasta colapsada. A chave
-    // guardada com a barra fazia a árvore desenhar `.cockpit` como arquivo.
-    final info = remoteGitInfo(status('main', [('?', '?', '.cockpit/')]));
+    // guardada com a barra fazia a árvore desenhar `.gsh` como arquivo.
+    final info = remoteGitInfo(status('main', [('?', '?', '.gsh/')]));
 
-    expect(info.files.keys, ['.cockpit']);
-    expect(info.files['.cockpit'], GitFileStatus.untracked);
-    expect(info.untrackedDirs, {'.cockpit'});
+    expect(info.files.keys, ['.gsh']);
+    expect(info.files['.gsh'], GitFileStatus.untracked);
+    expect(info.untrackedDirs, {'.gsh'});
     // E os descendentes herdam o untracked, mesmo sem terem sido enumerados.
-    expect(info.isUntracked('.cockpit/tasks.json'), isTrue);
+    expect(info.isUntracked('.gsh/tasks.json'), isTrue);
   });
 
   test(
@@ -64,13 +64,13 @@ void main() {
     () {
       final info = remoteGitInfo(
         status('main', [
-          ('?', '?', '.cockpit/tasks.json'),
-          ('?', '?', '.cockpit/databases.json'),
+          ('?', '?', '.gsh/tasks.json'),
+          ('?', '?', '.gsh/databases.json'),
         ]),
       );
       expect(info.files.keys, [
-        '.cockpit/tasks.json',
-        '.cockpit/databases.json',
+        '.gsh/tasks.json',
+        '.gsh/databases.json',
       ]);
       expect(info.untrackedDirs, isEmpty);
     },

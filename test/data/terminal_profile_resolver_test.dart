@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/terminal/terminal_profile_resolver_impl.dart';
-import 'package:cockpit/app/core/domain/entities/terminal_profile.dart';
+import 'package:gsh_desktop/app/core/data/terminal/terminal_profile_resolver_impl.dart';
+import 'package:gsh_desktop/app/core/domain/entities/terminal_profile.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Runner falso: casa por `'<exe> <args>'`, conta chamadas e devolve o

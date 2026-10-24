@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:cockpit/app/core/domain/contracts/automation_gateway.dart';
-import 'package:cockpit/app/core/domain/entities/automation.dart';
-import 'package:cockpit/app/core/domain/exceptions/automation_error.dart';
-import 'package:cockpit/app/core/ui/automation_controller.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/automation_gateway.dart';
+import 'package:gsh_desktop/app/core/domain/entities/automation.dart';
+import 'package:gsh_desktop/app/core/domain/exceptions/automation_error.dart';
+import 'package:gsh_desktop/app/core/ui/automation_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _Gateway implements AutomationGateway {

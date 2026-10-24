@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/setup/storage_location.dart';
-import 'package:cockpit/app/core/domain/entities/sound_event.dart';
+import 'package:gsh_desktop/app/core/data/setup/storage_location.dart';
+import 'package:gsh_desktop/app/core/domain/entities/sound_event.dart';
 import 'package:path/path.dart' as p;
 
 /// Guarda as **cópias** dos áudios custom escolhidos pelo usuário

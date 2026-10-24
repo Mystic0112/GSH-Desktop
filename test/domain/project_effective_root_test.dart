@@ -1,9 +1,9 @@
-import 'package:cockpit/app/cockpit/domain/entities/project.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/project.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// `Project.effectiveRoot` existe por causa de um bug real: a CLI lia
 /// `project.path` direto e, num workspace REMOTO, recebia vazio — a pasta vive
-/// em `remotePath`. O efeito era `cockpit db`, `list-tasks` e `read-task`
+/// em `remotePath`. O efeito era `gsh db`, `list-tasks` e `read-task`
 /// recusarem a própria aba com "this pane has no workspace folder", enquanto a
 /// UI funcionava (ela já resolvia a raiz certa por outro caminho).
 void main() {
@@ -36,8 +36,8 @@ void main() {
     // A raiz vazia passa a significar SÓ isto — era o que o guard da CLI
     // pretendia barrar quando começou a barrar workspace remoto junto.
     final p = Project(
-      id: '__cockpit__',
-      name: 'Cockpit',
+      id: '__gsh__',
+      name: 'Clássico',
       path: '',
       colorValue: 0,
       createdAt: DateTime(2026),

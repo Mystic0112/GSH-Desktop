@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/terminal/sidecar/sidecar_terminal_connector.dart';
+import 'package:gsh_desktop/app/gsh/data/terminal/sidecar/sidecar_terminal_connector.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Regressão do bug que deixou toda aba de terminal ~5,8s mais lenta na 1.28.0:
@@ -11,7 +11,7 @@ void main() {
   late Directory bin;
 
   setUp(() {
-    bin = Directory.systemTemp.createTempSync('cockpit-bundle-bin');
+    bin = Directory.systemTemp.createTempSync('gsh-bundle-bin');
   });
   tearDown(() => bin.deleteSync(recursive: true));
 

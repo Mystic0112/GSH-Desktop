@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/domain/services/workspace_cycle.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/workspace_cycle.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -17,7 +17,7 @@ void main() {
 
   test('fora da lista: avançar vai pro primeiro, voltar pro último', () {
     expect(nextWorkspaceId(order, null, 1), 'a');
-    expect(nextWorkspaceId(order, '__cockpit__', -1), 'c');
+    expect(nextWorkspaceId(order, '__gsh__', -1), 'c');
   });
 
   test('lista vazia devolve null', () {

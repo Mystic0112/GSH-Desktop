@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/ui/settings_controller.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 

@@ -1,0 +1,16 @@
+name: gsh_remote
+description: Proxies remotos dos contratos do GSH (plano 58) — o cliente fala com o gsh-server pelo protocolo.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  gsh_core:
+    path: ../gsh_core
+  gsh_protocol:
+    path: ../gsh_protocol
+
+dev_dependencies:
+  test: ^1.25.0

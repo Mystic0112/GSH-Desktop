@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:cockpit/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:flutter/widgets.dart';
 
 class LoadingScreen extends StatefulWidget {

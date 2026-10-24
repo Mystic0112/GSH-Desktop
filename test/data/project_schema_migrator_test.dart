@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/repositories/json_project_repository.dart';
-import 'package:cockpit/app/cockpit/data/repositories/project_schema_migrator.dart';
-import 'package:cockpit/app/cockpit/domain/entities/realm.dart';
-import 'package:cockpit/app/core/data/setup/json_state_store.dart';
+import 'package:gsh_desktop/app/gsh/data/repositories/json_project_repository.dart';
+import 'package:gsh_desktop/app/gsh/data/repositories/project_schema_migrator.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/realm.dart';
+import 'package:gsh_desktop/app/core/data/setup/json_state_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -80,11 +80,11 @@ void main() {
   });
 
   test(
-    'last-selected legado apontando pro Cockpit sintético é preservado',
+    'last-selected legado apontando pro GSH sintético é preservado',
     () async {
       await projects.put(
         JsonProjectRepository.lastSelectedPrefix,
-        '__cockpit__',
+        '__gsh__',
       );
 
       await const ProjectSchemaMigrator().run(projects, layouts);
@@ -93,7 +93,7 @@ void main() {
         projects.get(
           '${JsonProjectRepository.lastSelectedPrefix}::${Realm.defaultId}',
         ),
-        '__cockpit__',
+        '__gsh__',
       );
       expect(projects.get(JsonProjectRepository.lastSelectedPrefix), isNull);
     },

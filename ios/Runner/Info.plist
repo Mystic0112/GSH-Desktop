@@ -5,11 +5,11 @@
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Cockpit connects to your machines on the local network over SSH to run terminals, files, git and databases remotely.</string>
+	<string>GSH connects to your machines on the local network over SSH to run terminals, files, git and databases remotely.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Cockpit Remote</string>
+	<string>GSH Remote</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,7 +17,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>cockpit</string>
+	<string>gsh</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -73,16 +73,16 @@
 	     pergunta do App Store Connect. -->
 	<!-- Purpose strings exigidas pelo upload (ITMS-90683): os plugins do
 	     navegador embutido (flutter_inappwebview) e do file_picker referenciam
-	     estas APIs mesmo sem o Cockpit usa-las por conta propria. Sem a frase o
+	     estas APIs mesmo sem o GSH usa-las por conta propria. Sem a frase o
 	     Transporter recusa o pacote. -->
 	<key>NSCameraUsageDescription</key>
-	<string>Cockpit does not use the camera itself. A web page opened in the built-in browser may request it.</string>
+	<string>GSH does not use the camera itself. A web page opened in the built-in browser may request it.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Cockpit does not use the microphone itself. A web page opened in the built-in browser may request it.</string>
+	<string>GSH does not use the microphone itself. A web page opened in the built-in browser may request it.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Lets you pick an image from your library to attach to a file or a web page in the built-in browser.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Cockpit does not use your location itself. A web page opened in the built-in browser may request it.</string>
+	<string>GSH does not use your location itself. A web page opened in the built-in browser may request it.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>

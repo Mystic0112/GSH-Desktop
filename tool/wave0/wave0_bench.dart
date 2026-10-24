@@ -1,11 +1,11 @@
 // Wave 0 (plano 58) — benchmark do gate de latência:
 // eco de keystroke via `cat` em PTY, caminho FFI direto (NativeTerminalService
-// in-process) vs caminho loopback (cockpit-server + UDS + JSONL/base64).
+// in-process) vs caminho loopback (gsh-server + UDS + JSONL/base64).
 // Orçamento do plano: acréscimo < 1ms no p50.
 //
 // Também mede throughput de despejo (yes | head) nos dois caminhos.
 //
-// Uso (da pasta cockpit/):
+// Uso (da pasta gsh/):
 //   ./tool/wave0/build_pty_dylib.sh
 //   (cd tool/wave0 && dart pub get)
 //   dart run tool/wave0/wave0_bench.dart
@@ -14,16 +14,16 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cockpit_core/cockpit_core.dart';
-import 'package:cockpit_engine/cockpit_engine.dart';
-import 'package:cockpit_remote/cockpit_remote.dart';
+import 'package:gsh_core/gsh_core.dart';
+import 'package:gsh_engine/gsh_engine.dart';
+import 'package:gsh_remote/gsh_remote.dart';
 
 const _iterations = 300;
 const _dumpBytes = 32 * 1024 * 1024;
 
 Future<void> main() async {
-  final repoRoot = _cockpitRoot();
-  final dylib = '$repoRoot/build/wave0/libcockpit_pty.dylib';
+  final repoRoot = _gshRoot();
+  final dylib = '$repoRoot/build/wave0/libgsh_pty.dylib';
 
   stdout.writeln('== FFI direto (in-process) ==');
   final native = NativeTerminalService();
@@ -31,19 +31,19 @@ Future<void> main() async {
   final ffiDump = await _dumpThroughput(native);
   await native.dispose();
 
-  stdout.writeln('== loopback (cockpit-server via UDS) ==');
+  stdout.writeln('== loopback (gsh-server via UDS) ==');
   final socketPath =
       '${Directory.systemTemp.path}/wave0-bench-${DateTime.now().millisecondsSinceEpoch}.sock';
   final server = await Process.start(
     'dart',
     [
       'run',
-      'packages/cockpit_server/bin/cockpit_server.dart',
+      'packages/gsh_server/bin/gsh_server.dart',
       '--socket',
       socketPath,
     ],
     workingDirectory: repoRoot,
-    environment: {...Platform.environment, 'COCKPIT_PTY_DYLIB': dylib},
+    environment: {...Platform.environment, 'GSH_PTY_DYLIB': dylib},
   );
   await server.stdout
       .transform(utf8.decoder)
@@ -158,11 +158,11 @@ void _report(String label, double ffi, double remote) {
   );
 }
 
-String _cockpitRoot() {
+String _gshRoot() {
   var dir = Directory.current;
-  while (!Directory('${dir.path}/packages/cockpit_server').existsSync()) {
+  while (!Directory('${dir.path}/packages/gsh_server').existsSync()) {
     final parent = dir.parent;
-    if (parent.path == dir.path) throw StateError('run from cockpit/');
+    if (parent.path == dir.path) throw StateError('run from gsh/');
     dir = parent;
   }
   return dir.path;

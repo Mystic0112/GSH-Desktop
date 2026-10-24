@@ -1,8 +1,8 @@
-import 'package:cockpit/app/cockpit/domain/entities/agent_message.dart';
-import 'package:cockpit/app/cockpit/ui/session/pane_item.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/agent_message_log.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/cockpit_cli_handler.dart';
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/agent_message.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/pane_item.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_message_log.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_cli_handler.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _Tab extends PaneItem {

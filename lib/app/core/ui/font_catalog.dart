@@ -47,7 +47,7 @@ class FontOption {
 
 /// Nome que garantidamente não existe: mede o fallback do motor de texto.
 /// Qualquer família ausente resolve para o mesmo tipo, então mede igual a ele.
-const _absentFamilySentinel = '__cockpit_absent_family__';
+const _absentFamilySentinel = '__gsh_absent_family__';
 
 /// Famílias que o app serve por conta própria (`google_fonts`), então estão
 /// disponíveis independentemente do que a máquina tem instalado.

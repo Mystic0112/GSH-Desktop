@@ -1,9 +1,9 @@
-import 'package:cockpit/app/cockpit/domain/contracts/db_connection_store.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/db_driver.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/nosql_runner.dart';
-import 'package:cockpit/app/cockpit/domain/entities/db_connection.dart';
-import 'package:cockpit/app/cockpit/domain/entities/db_result.dart';
-import 'package:cockpit/app/cockpit/domain/services/db_query_service.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/db_connection_store.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/db_driver.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/nosql_runner.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/db_connection.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/db_result.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/db_query_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'fakes/mongo_database_store_fake.dart';
@@ -13,7 +13,7 @@ import 'fakes/ssh_fakes.dart';
 /// deixa de mandá-lo pelo fio.
 ///
 /// O bug que isto trava: a chave do cofre local era
-/// `cockpit.db.<workspaceId>.<conn>`, e o `workspaceId` é derivado por
+/// `gsh.db.<workspaceId>.<conn>`, e o `workspaceId` é derivado por
 /// máquina. A senha cadastrada num cliente nunca era achada por outro — a
 /// conexão só funcionava no computador que a criou.
 void main() {
@@ -96,7 +96,7 @@ void main() {
   });
 
   test('connections() de workspace remoto vem do HOST', () async {
-    // `cockpit db list` numa aba remota respondia `{"ok":[]}` num workspace com
+    // `gsh db list` numa aba remota respondia `{"ok":[]}` num workspace com
     // dez conexões: a função recebia só a raiz, não sabia que o workspace era
     // remoto e lia o store LOCAL — caminho que não existe no disco do cliente.
     final f = build([pg()]);

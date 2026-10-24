@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-CockpitThemeSpec parse(String source) => CockpitThemeSpec.fromJson(
+GshThemeSpec parse(String source) => GshThemeSpec.fromJson(
   jsonDecode(source) as Map<String, Object?>,
   resolveBase: builtInThemeById,
-  fallbackBase: cockpitDefaultTheme,
+  fallbackBase: gshDefaultTheme,
 );
 
 void main() {
@@ -42,7 +42,7 @@ void main() {
     });
   });
 
-  group('CockpitThemeSpec.fromJson', () {
+  group('GshThemeSpec.fromJson', () {
     test('tema mínimo herda todo o resto do tema nativo', () {
       final theme = parse('''
         {
@@ -57,15 +57,15 @@ void main() {
       // Não declarado → vem da base, incluindo syntax e terminal.
       expect(dark.ui.bg, AppColors.dark.bg);
       expect(dark.syntax.keyword, SyntaxColors.githubDark.keyword);
-      expect(dark.terminal.background, cockpitTerminalThemeDark.background);
+      expect(dark.terminal.background, gshTerminalThemeDark.background);
     });
 
     test('extends usa o built-in nomeado como base', () {
       final theme = parse('''
         {
-          "id": "acme.on-cockpit",
-          "name": "On Cockpit",
-          "extends": "cockpit",
+          "id": "acme.on-gsh",
+          "name": "On GSH",
+          "extends": "gsh",
           "variants": { "dark": { "ui": { "accent": "#FF0088" } } }
         }
       ''');
@@ -123,8 +123,8 @@ void main() {
     test('export é autônomo: reimportar dá o mesmo tema', () {
       final original = parse('''
         {
-          "id": "acme.on-cockpit", "name": "On Cockpit",
-          "extends": "cockpit",
+          "id": "acme.on-gsh", "name": "On GSH",
+          "extends": "gsh",
           "variants": { "dark": { "ui": { "accent": "#FF0088" } } }
         }
       ''');
@@ -145,9 +145,9 @@ void main() {
     // o que o olho de fato lê como "mais fundo" / "mais alto".
     double lum(Color c) => c.computeLuminance();
 
-    test('Cockpit: o chrome é mais fundo que o corpo da aba', () {
+    test('GSH: o chrome é mais fundo que o corpo da aba', () {
       for (final b in Brightness.values) {
-        final ui = cockpitDefaultTheme.variantFor(b).ui;
+        final ui = gshDefaultTheme.variantFor(b).ui;
         expect(
           lum(ui.bg),
           lessThan(lum(ui.panel)),
@@ -157,22 +157,22 @@ void main() {
       }
     });
 
-    test('Cockpit 2: inverte — o corpo da aba é mais fundo que o chrome', () {
+    test('GSH 2: inverte — o corpo da aba é mais fundo que o chrome', () {
       for (final b in Brightness.values) {
-        final ui = cockpit2Theme.variantFor(b).ui;
+        final ui = gsh2Theme.variantFor(b).ui;
         expect(
           lum(ui.panel),
           lessThan(lum(ui.bg)),
-          reason: 'a inversão é a razão de existir do Cockpit 2 ($b)',
+          reason: 'a inversão é a razão de existir do GSH 2 ($b)',
         );
       }
     });
 
     test(
-      'Cockpit 2: as camadas elevadas ficam acima do chrome E do conteúdo',
+      'GSH 2: as camadas elevadas ficam acima do chrome E do conteúdo',
       () {
         for (final b in Brightness.values) {
-          final ui = cockpit2Theme.variantFor(b).ui;
+          final ui = gsh2Theme.variantFor(b).ui;
           // panel2 = composer/cards/seleção. Aparece sobre o chrome claro e sobre
           // o conteúdo escuro; tem de ler como elevação nos dois.
           expect(lum(ui.panel2), greaterThan(lum(ui.panel)));
@@ -181,9 +181,9 @@ void main() {
       },
     );
 
-    test('Cockpit 2: o terminal acompanha o fundo da aba', () {
+    test('GSH 2: o terminal acompanha o fundo da aba', () {
       for (final b in Brightness.values) {
-        final variant = cockpit2Theme.variantFor(b);
+        final variant = gsh2Theme.variantFor(b);
         expect(variant.terminal.background, variant.ui.panel);
       }
     });
@@ -244,7 +244,7 @@ void main() {
 
     test('tema importado sem `syntax`/`terminal` segue o próprio campo', () {
       // Um tema de três tokens não pode herdar o fundo do código da BASE — ele
-      // ficaria com o campo do Cockpit dentro das próprias superfícies.
+      // ficaria com o campo do GSH dentro das próprias superfícies.
       final theme = parse('''
         {
           "id": "acme.so-ui", "name": "So UI",
@@ -278,14 +278,14 @@ void main() {
     });
 
     test(
-      'Violet herda a estrutura de superfícies do Cockpit que o originou',
+      'Violet herda a estrutura de superfícies do GSH que o originou',
       () {
         // A razão de o Violet ser derivado (e não escrito à mão) é essa: ele
-        // acompanha a calibragem do Cockpit correspondente de graça. Se alguém
+        // acompanha a calibragem do GSH correspondente de graça. Se alguém
         // reescrever o Violet com hexes soltos, esta comparação denuncia.
         for (final (base, violet) in [
-          (cockpitDefaultTheme, violet1Theme),
-          (cockpit2Theme, violet2Theme),
+          (gshDefaultTheme, violet1Theme),
+          (gsh2Theme, violet2Theme),
         ]) {
           for (final b in Brightness.values) {
             final a = base.variantFor(b).ui;
@@ -308,8 +308,8 @@ void main() {
 
     test('Violet tinge os neutros mas preserva as cores semânticas', () {
       for (final (base, violet) in [
-        (cockpitDefaultTheme, violet1Theme),
-        (cockpit2Theme, violet2Theme),
+        (gshDefaultTheme, violet1Theme),
+        (gsh2Theme, violet2Theme),
       ]) {
         for (final b in Brightness.values) {
           final a = base.variantFor(b).ui;
@@ -330,8 +330,8 @@ void main() {
 
     test('Violet: o terminal segue a aba e o cursor segue a marca', () {
       for (final (base, violet) in [
-        (cockpitDefaultTheme, violet1Theme),
-        (cockpit2Theme, violet2Theme),
+        (gshDefaultTheme, violet1Theme),
+        (gsh2Theme, violet2Theme),
       ]) {
         for (final b in Brightness.values) {
           final variant = violet.variantFor(b);
@@ -346,12 +346,12 @@ void main() {
     });
 
     test('Midnight muda de arranjo conforme o brilho — de propósito', () {
-      // Escuro: inverte (conteúdo afunda), como o Cockpit 2.
+      // Escuro: inverte (conteúdo afunda), como o GSH 2.
       final dark = midnightTheme.variantFor(Brightness.dark).ui;
       expect(
         lum(dark.panel),
         lessThan(lum(dark.bg)),
-        reason: 'no escuro o Midnight herda a inversão do Cockpit 2',
+        reason: 'no escuro o Midnight herda a inversão do GSH 2',
       );
 
       // Claro: NÃO inverte. A inversão não sobrevive ao modo claro — o chrome
@@ -361,12 +361,12 @@ void main() {
       expect(
         lum(light.bg),
         lessThan(lum(light.panel)),
-        reason: 'no claro o Midnight volta ao arranjo do Cockpit 1',
+        reason: 'no claro o Midnight volta ao arranjo do GSH 1',
       );
 
-      // E os painéis do claro são mais fundos que os do Cockpit 1: é o que
+      // E os painéis do claro são mais fundos que os do GSH 1: é o que
       // devolve a hierarquia que o modo claro perde.
-      expect(lum(light.bg), lessThan(lum(cockpitDefaultTheme.light!.ui.bg)));
+      expect(lum(light.bg), lessThan(lum(gshDefaultTheme.light!.ui.bg)));
     });
 
     test('nenhum built-in deixa o texto fraco abaixo de 3:1', () {
@@ -525,7 +525,7 @@ void main() {
       // o código e o terminal viram um recorte colado por cima do tema.
       //
       // A regra é sobre o TOM, não sobre uma lista de ids: tema cujo painel é
-      // neutro (o Cockpit oficial, o Pantera) não tem tom a levar para o campo,
+      // neutro (o GSH oficial, o Pantera) não tem tom a levar para o campo,
       // e branco puro ali é a resposta certa.
       double satOf(Color c) => HSLColor.fromColor(c).saturation;
       for (final theme in builtInThemes) {
@@ -572,7 +572,7 @@ void main() {
       );
       expect(
         schemaTokens('terminal'),
-        terminalThemeToJson(cockpitTerminalThemeDark).keys.toSet(),
+        terminalThemeToJson(gshTerminalThemeDark).keys.toSet(),
       );
     });
 

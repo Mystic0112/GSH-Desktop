@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
-import 'package:cockpit/app/core/ui/menu/workspace_menu_bridge.dart';
-import 'package:cockpit/app/core/ui/widgets/devtools_inspector.dart';
+import 'package:gsh_desktop/app/core/ui/menu/workspace_menu_bridge.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/devtools_inspector.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';

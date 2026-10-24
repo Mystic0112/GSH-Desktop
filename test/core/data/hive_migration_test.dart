@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/setup/hive_migration.dart';
+import 'package:gsh_desktop/app/core/data/setup/hive_migration.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'package:path/path.dart' as p;

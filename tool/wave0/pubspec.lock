@@ -41,31 +41,31 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.4"
-  cockpit_core:
+  gsh_core:
     dependency: "direct main"
     description:
-      path: "../../packages/cockpit_core"
+      path: "../../packages/gsh_core"
       relative: true
     source: path
     version: "0.1.0"
-  cockpit_engine:
+  gsh_engine:
     dependency: "direct main"
     description:
-      path: "../../packages/cockpit_engine"
+      path: "../../packages/gsh_engine"
       relative: true
     source: path
     version: "0.1.0"
-  cockpit_protocol:
+  gsh_protocol:
     dependency: "direct main"
     description:
-      path: "../../packages/cockpit_protocol"
+      path: "../../packages/gsh_protocol"
       relative: true
     source: path
     version: "0.1.0"
-  cockpit_remote:
+  gsh_remote:
     dependency: "direct main"
     description:
-      path: "../../packages/cockpit_remote"
+      path: "../../packages/gsh_remote"
       relative: true
     source: path
     version: "0.1.0"

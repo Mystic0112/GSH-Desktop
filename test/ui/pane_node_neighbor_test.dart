@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/ui/states/pane_node.dart';
+import 'package:gsh_desktop/app/gsh/ui/states/pane_node.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

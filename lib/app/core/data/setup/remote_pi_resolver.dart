@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/utils/executable_resolver.dart';
+import 'package:gsh_desktop/app/core/utils/executable_resolver.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 
-/// Helpers de ambiente do usuário: HOME, diretórios app-managed em `~/.cockpit`
+/// Helpers de ambiente do usuário: HOME, diretórios app-managed em `~/.gsh`
 /// e o `node` no PATH dos subprocessos. (O nome do arquivo vem da época em que
 /// também resolvia o `remote-pi`; isso saiu com o agente nativo na 2.0.)
 
@@ -11,39 +11,39 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 String? remotePiHome() =>
     Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'];
 
-/// Onde a **CLI interna** (`cockpit`) é materializada, e o único diretório que o
+/// Onde a **CLI interna** (`gsh`) é materializada, e o único diretório que o
 /// app prefixa no PATH das suas abas.
 ///
-/// Namespaceado por debug/release pela mesma razão do `status.sock`: `~/.cockpit`
+/// Namespaceado por debug/release pela mesma razão do `status.sock`: `~/.gsh`
 /// é o HOME real (não é isolado por bundle id como o Hive), então uma build de
 /// dev e a instalada disputariam o mesmo arquivo — quem bootasse por último
 /// sobrescreveria a CLI da outra. Como o PATH é injetado por app, cada um aponta
-/// pro seu diretório e o comando continua se chamando `cockpit` nos dois.
+/// pro seu diretório e o comando continua se chamando `gsh` nos dois.
 ///
-/// O `cockpit-hook` **não** segue este namespace: o caminho dele vai gravado no
+/// O `gsh-hook` **não** segue este namespace: o caminho dele vai gravado no
 /// `~/.claude/settings.json` (global, um só), e apontar pra uma pasta de build de
 /// dev quebraria o hook no dia em que essa build sumisse.
-String? cockpitCliDir() {
+String? gshCliDir() {
   final home = remotePiHome();
   if (home == null) return null;
-  return '$home/.cockpit/bin${kDebugMode ? '-debug' : ''}';
+  return '$home/.gsh/bin${kDebugMode ? '-debug' : ''}';
 }
 
-/// Caminho absoluto da CLI materializada em [cockpitCliDir]: o `command` das
-/// entradas MCP (`cockpit mcp`) nos configs dos agentes. Um só formato pra
+/// Caminho absoluto da CLI materializada em [gshCliDir]: o `command` das
+/// entradas MCP (`gsh mcp`) nos configs dos agentes. Um só formato pra
 /// quem escreve a entrada (dialog de apps desktop e instalador do Codex), senão
 /// os dois a reescreveriam um do outro.
-String? cockpitCliPath() {
-  final dir = cockpitCliDir();
+String? gshCliPath() {
+  final dir = gshCliDir();
   if (dir == null) return null;
-  return '$dir/cockpit${Platform.isWindows ? '.exe' : ''}';
+  return '$dir/gsh${Platform.isWindows ? '.exe' : ''}';
 }
 
 /// Diretório estável do helper de hooks, compartilhado entre builds.
-String? cockpitHookDir() {
+String? gshHookDir() {
   final home = remotePiHome();
   if (home == null) return null;
-  return '$home/.cockpit/bin';
+  return '$home/.gsh/bin';
 }
 
 /// Resolve o `node` em caminhos conhecidos (mesma estratégia do `pi`).

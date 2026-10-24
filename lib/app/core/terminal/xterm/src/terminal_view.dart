@@ -2,24 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
 
-import 'package:cockpit/app/core/terminal/xterm/src/core/input/keys.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/terminal.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/controller.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/cursor_type.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/custom_text_edit.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/gesture/gesture_handler.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/input_map.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/keyboard_listener.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/keyboard_visibility.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/render.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/scroll_handler.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/shortcut/actions.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/shortcut/shortcuts.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/terminal_text_style.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/terminal_theme.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/themes.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/input/keys.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/terminal.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/controller.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/cursor_type.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/custom_text_edit.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/gesture/gesture_handler.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/input_map.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/keyboard_listener.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/keyboard_visibility.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/render.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/scroll_handler.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/shortcut/actions.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/shortcut/shortcuts.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/terminal_text_style.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/terminal_theme.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/themes.dart';
 
 class TerminalView extends StatefulWidget {
   const TerminalView(

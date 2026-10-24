@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cockpit/app/cockpit/data/filesystem/content_searcher_impl.dart';
-import 'package:cockpit/app/cockpit/domain/entities/content_search.dart';
+import 'package:gsh_desktop/app/gsh/data/filesystem/content_searcher_impl.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/content_search.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -33,7 +33,7 @@ void main() {
       .toList();
 
   setUp(() async {
-    root = await Directory.systemTemp.createTemp('cockpit_search_test_');
+    root = await Directory.systemTemp.createTemp('gsh_search_test_');
   });
 
   tearDown(() async {

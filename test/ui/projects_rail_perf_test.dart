@@ -1,18 +1,18 @@
-import 'package:cockpit/app/core/ui/keep_awake_controller.dart';
-import 'package:cockpit_keepawake/cockpit_keepawake.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/dismissed_update_store.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/self_updater.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/update_checker.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/url_opener.dart';
-import 'package:cockpit/app/cockpit/domain/entities/git_info.dart';
-import 'package:cockpit/app/cockpit/domain/entities/project.dart';
-import 'package:cockpit/app/cockpit/domain/entities/realm.dart';
-import 'package:cockpit/app/cockpit/domain/entities/update_info.dart';
-import 'package:cockpit/app/cockpit/domain/value_objects/update_target.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/update_viewmodel.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/projects_rail.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/ui/keep_awake_controller.dart';
+import 'package:gsh_keepawake/gsh_keepawake.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/dismissed_update_store.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/self_updater.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/update_checker.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/url_opener.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/git_info.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/project.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/realm.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/update_info.dart';
+import 'package:gsh_desktop/app/gsh/domain/value_objects/update_target.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/update_viewmodel.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/projects_rail.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter/gestures.dart' show PointerDeviceKind, kSecondaryButton;
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -175,7 +175,7 @@ Widget _rail({
             return const [];
           },
           onMoveToRealm: (_, _) {},
-          onSelectCockpit: () {},
+          onSelectGsh: () {},
           onNewWorkspace: (_) {},
           onSelectRemote: (_) {},
           remoteGitInfoOf: (_) => null,

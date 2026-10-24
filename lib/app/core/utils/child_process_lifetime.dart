@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 
 /// Amarra um processo filho à vida DESTE processo, no Windows.
 ///
-/// O `cockpit-server` sobrevive de propósito à queda do app (é o que permite
+/// O `gsh-server` sobrevive de propósito à queda do app (é o que permite
 /// retomar sessões), e o `--exit-on-idle` cobre o caso normal. Mas um órfão que
 /// continua dono do socket é problema real: um app novo o encontra respondendo
 /// e passa a falar com uma build antiga. Já aconteceu — uma correção publicada

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/setup/json_state_store.dart';
+import 'package:gsh_desktop/app/core/data/setup/json_state_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
 

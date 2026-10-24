@@ -20,7 +20,7 @@ val keystoreProperties = Properties().apply {
 val hasReleaseKeystore = keystoreProperties.getProperty("storeFile") != null
 
 android {
-    namespace = "work.jacobmoura.cockpit"
+    namespace = "work.gorila.gshdesktop"
     // Forcado pra 36: varias deps transitivas (via desktop_drop/exifinterface)
     // exigem compilar contra API 34+. desktop_drop e desktop-only e sera gateado
     // pra fora do mobile depois; por ora subir o compileSdk destrava.
@@ -36,7 +36,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "work.jacobmoura.cockpit"
+        applicationId = "work.gorila.gshdesktop"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/repositories/json_dismissed_update_store.dart';
-import 'package:cockpit/app/cockpit/data/repositories/json_project_repository.dart';
-import 'package:cockpit/app/cockpit/data/repositories/json_realm_repository.dart';
-import 'package:cockpit/app/cockpit/data/repositories/json_workspace_layout_store.dart';
-import 'package:cockpit/app/cockpit/domain/entities/project.dart';
-import 'package:cockpit/app/cockpit/domain/entities/realm.dart';
-import 'package:cockpit/app/core/data/repositories/json_settings_store.dart';
-import 'package:cockpit/app/core/data/setup/json_state_store.dart';
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/gsh/data/repositories/json_dismissed_update_store.dart';
+import 'package:gsh_desktop/app/gsh/data/repositories/json_project_repository.dart';
+import 'package:gsh_desktop/app/gsh/data/repositories/json_realm_repository.dart';
+import 'package:gsh_desktop/app/gsh/data/repositories/json_workspace_layout_store.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/project.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/realm.dart';
+import 'package:gsh_desktop/app/core/data/repositories/json_settings_store.dart';
+import 'package:gsh_desktop/app/core/data/setup/json_state_store.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Impls JSON contra os contratos de domain — mesma semântica das antigas
@@ -30,9 +30,9 @@ void main() {
   group('JsonSettingsStore', () {
     test('roundtrip save/load', () async {
       final s = JsonSettingsStore(store);
-      await s.save(const AppSettings(showCockpit: false));
+      await s.save(const AppSettings(showGsh: false));
       final loaded = await s.load();
-      expect(loaded.showCockpit, isFalse);
+      expect(loaded.showGsh, isFalse);
     });
 
     test('sem registro → defaults', () async {
@@ -110,12 +110,12 @@ void main() {
         // apagaria o scrollback dos terminais deles.
         final s = JsonWorkspaceLayoutStore(store);
         await s.save('root', {'tree': {}});
-        await s.save('root::/repo/.cockpit/worktrees/fix', {'tree': {}});
+        await s.save('root::/repo/.gsh/worktrees/fix', {'tree': {}});
 
         final all = await s.loadAll();
         expect(
           all.keys,
-          containsAll(<String>['root', 'root::/repo/.cockpit/worktrees/fix']),
+          containsAll(<String>['root', 'root::/repo/.gsh/worktrees/fix']),
         );
       },
     );

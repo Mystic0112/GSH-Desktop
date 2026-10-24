@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/core/data/diagnostics/diagnostics_log.dart';
-import 'package:cockpit/app/core/data/diagnostics/performance_diagnostics.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/performance_diagnostics.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
-import 'package:cockpit/app/core/ui/widgets/app_tooltip.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/app_tooltip.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:window_manager/window_manager.dart';
 
