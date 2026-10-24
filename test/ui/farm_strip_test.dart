@@ -1,5 +1,7 @@
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/lan_team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/farm_source.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_strip.dart';
@@ -128,6 +130,7 @@ Future<List<int>> _mount(WidgetTester tester, _Source source) async {
   final module = createModule(
     register: (c) => c
       ..addInstance<FarmSource>(source)
+      ..addInstance<TeamFarmChannel>(LanTeamFarmChannel())
       ..route(
         '/',
         provide: (s) => s..addChangeNotifier<FarmViewModel>(FarmViewModel.new),
