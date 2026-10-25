@@ -9,6 +9,7 @@ import 'package:gsh_desktop/app/gsh/data/chat/claude_stream_engine.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/chat_engine.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_attachment.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_event.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/chat_usage.dart';
 import 'package:gsh_pty/gsh_pty.dart';
 
 /// Claude Code **interativo** como motor de chat, para ter Remote Control (o
@@ -32,6 +33,7 @@ class ClaudeCliEngineFactory implements ChatEngineFactory {
     required String cwd,
     String? resumeSessionId,
     bool showThinking = false,
+    String? model,
   }) async {
     final exe = await resolveExecutable('claude');
     final sid = resumeSessionId ?? _uuidV4();
@@ -75,6 +77,7 @@ class ClaudeCliEngineFactory implements ChatEngineFactory {
           '--session-id',
           sid,
         ],
+        if (model != null) ...['--model', model],
         '--settings',
         // Sem `--allow-dangerously-skip-permissions`: no interativo ela abre
         // um aviso de consentimento que não cabe ao GSH aceitar sozinho.
@@ -93,6 +96,11 @@ class ClaudeCliEngineFactory implements ChatEngineFactory {
     required String cwd,
     required String sessionId,
   }) => readClaudeHistory(cwd: cwd, sessionId: sessionId);
+
+  /// Sem protocolo de controle no TUI: quem consulta a conta é o roteador
+  /// (pelo `stream-json`).
+  @override
+  Future<ChatAccountProbe?> probe({bool fresh = false}) async => null;
 }
 
 /// Comando do hook: grava o pedido (stdin) em `<id>.req` e espera o GSH
@@ -429,6 +437,18 @@ class ClaudeCliEngine implements ChatEngine {
     );
     tmp.renameSync('${_asks.path}/$requestId.resp');
   }
+
+  /// `/model <valor>` digitado no TUI (o mesmo que o usuário faria).
+  @override
+  void setModel(String model) => unawaited(() async {
+    await _ready.future;
+    await _paste('/model $model');
+    _write('\r');
+  }());
+
+  /// O TUI não responde isso por fora: o roteador consulta a conta.
+  @override
+  Future<ChatPlanUsage?> planUsage() async => null;
 
   /// Shift+Tab gira os modos; o rodapé do TUI diz em qual parou.
   @override

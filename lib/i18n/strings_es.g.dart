@@ -1360,6 +1360,15 @@ class _Translations$gsh$chat$es extends Translations$gsh$chat$en {
 	@override String sendToSession({required Object name}) => 'Envía este mensaje a la sesión "${name}" con SendMessage y espera su respuesta: ';
 	@override String get remoteControl => 'Remote Control';
 	@override String get remoteControlHint => 'Continuar esta conversación en una terminal con Remote Control (celular, claude.ai/code). El motor del chat no soporta Remote Control.';
+	@override String get usage => 'Uso';
+	@override String usageContext({required Object used, required Object window}) => 'Contexto: ${used} de ${window}';
+	@override String get usageContextNone => 'Contexto: aparece después de la primera respuesta';
+	@override String get usageSession => 'Sesión (5 h)';
+	@override String get usageWeek => 'Semana';
+	@override String usageModelWeek({required Object model}) => '${model} esta semana';
+	@override String usageResetsToday({required Object time}) => 'se reinicia a las ${time}';
+	@override String usageResetsOn({required Object date, required Object time}) => 'se reinicia el ${date} a las ${time}';
+	@override String get usageUnavailable => 'Uso del plan no disponible ahora.';
 	@override String remoteControlActive({required Object url}) => 'Esta conversación ya está en Remote Control: continúa en el móvil o en ${url}';
 	@override String get remoteControlNoSession => 'Envía un mensaje primero: Remote Control continúa una conversación existente.';
 	@override String get remoteControlBusy => 'Espera a que el agente termine este turno e inténtalo de nuevo.';
@@ -3416,6 +3425,15 @@ extension on TranslationsEs {
 			'gsh.chat.sendToSession' => ({required Object name}) => 'Envía este mensaje a la sesión "${name}" con SendMessage y espera su respuesta: ',
 			'gsh.chat.remoteControl' => 'Remote Control',
 			'gsh.chat.remoteControlHint' => 'Continuar esta conversación en una terminal con Remote Control (celular, claude.ai/code). El motor del chat no soporta Remote Control.',
+			'gsh.chat.usage' => 'Uso',
+			'gsh.chat.usageContext' => ({required Object used, required Object window}) => 'Contexto: ${used} de ${window}',
+			'gsh.chat.usageContextNone' => 'Contexto: aparece después de la primera respuesta',
+			'gsh.chat.usageSession' => 'Sesión (5 h)',
+			'gsh.chat.usageWeek' => 'Semana',
+			'gsh.chat.usageModelWeek' => ({required Object model}) => '${model} esta semana',
+			'gsh.chat.usageResetsToday' => ({required Object time}) => 'se reinicia a las ${time}',
+			'gsh.chat.usageResetsOn' => ({required Object date, required Object time}) => 'se reinicia el ${date} a las ${time}',
+			'gsh.chat.usageUnavailable' => 'Uso del plan no disponible ahora.',
 			'gsh.chat.remoteControlActive' => ({required Object url}) => 'Esta conversación ya está en Remote Control: continúa en el móvil o en ${url}',
 			'gsh.chat.remoteControlNoSession' => 'Envía un mensaje primero: Remote Control continúa una conversación existente.',
 			'gsh.chat.remoteControlBusy' => 'Espera a que el agente termine este turno e inténtalo de nuevo.',
@@ -3617,6 +3635,8 @@ extension on TranslationsEs {
 			'settings.page.storage.change' => 'Cambiar…',
 			'settings.page.storage.resetTitle' => 'Restablecer GSH Desktop',
 			'settings.page.storage.resetDesc' => 'Elimina todos los datos locales — proyectos, diseños, configuración e historial de terminal — y vuelve a la ubicación predeterminada.',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.storage.resetButton' => 'Restablecer…',
 			'settings.page.storage.resetConfirm' => 'Restablecer',
 			'settings.page.storage.resetDialogTitle' => '¿Restablecer GSH Desktop?',
@@ -3626,8 +3646,6 @@ extension on TranslationsEs {
 			'settings.page.storage.restartUseDefaultMessage' => 'GSH Desktop usará la ubicación predeterminada del sistema a partir del próximo inicio. Tus datos en la carpeta personalizada permanecen intactos.',
 			'settings.page.storage.restartResetMessage' => 'Se borraron todos los datos de GSH Desktop. Reinicia para empezar de nuevo.',
 			'settings.page.storage.later' => 'Más tarde',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.storage.quitGsh' => 'Salir de GSH Desktop',
 			'settings.page.storage.chooseFolderDialogTitle' => 'Elige una carpeta para los datos de GSH Desktop',
 			'settings.page.terminal.sectionDefaultTerminal' => 'Terminal predeterminado',

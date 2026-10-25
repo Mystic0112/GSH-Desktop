@@ -3,6 +3,7 @@ import 'package:gsh_desktop/app/gsh/domain/contracts/session_directory.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/telemetry_case_view.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat_attachments.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_model_usage.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/app_menu.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/app_tooltip.dart';
@@ -19,18 +20,6 @@ const chatPermissionModes = [
   'plan',
   'bypassPermissions',
 ];
-
-/// Nome curto do modelo: `claude-opus-4-5-20251101` → `Opus 4.5`. Id que não
-/// segue o padrão volta como veio.
-String shortModelName(String? id) {
-  if (id == null || id.isEmpty) return 'Claude';
-  final m = RegExp(
-    r'(opus|sonnet|haiku)-(\d{1,2})(?:-(\d{1,2}))?(?!\d)',
-  ).firstMatch(id);
-  if (m == null) return id;
-  final family = '${m[1]![0].toUpperCase()}${m[1]!.substring(1)}';
-  return m[3] == null ? '$family ${m[2]}' : '$family ${m[2]}.${m[3]}';
-}
 
 /// Composer: faixa de contexto (pasta + branch), caixa de texto com o enviar
 /// dentro, e a linha de baixo (anexar, modo de permissão, modelo).
@@ -188,7 +177,7 @@ class _BottomBar extends StatelessWidget {
       if (mode != null) chat.setPermissionMode(mode);
     }
 
-    final model = Text(shortModelName(chat.model), style: label);
+    final model = ChatModelButton(chat: chat);
     return Row(
       children: [
         _IconAction(
@@ -228,6 +217,8 @@ class _BottomBar extends StatelessWidget {
           ),
         ),
         const Spacer(),
+        ChatUsageRing(chat: chat),
+        const SizedBox(width: 2),
         if (chat.costUsd > 0)
           AppTooltip(
             message: tr.cost(v: chat.costUsd.toStringAsFixed(2)),

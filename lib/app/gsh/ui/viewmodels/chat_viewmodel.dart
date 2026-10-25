@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:gsh_desktop/app/gsh/domain/contracts/chat_engine.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/chat_usage.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_attachment.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_event.dart';
 import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
@@ -223,6 +224,17 @@ class ChatController extends ChangeNotifier {
   double costUsd = 0;
   bool busy = false;
 
+  /// Modelos da conta (para o seletor) e o escolhido pelo usuário — sem
+  /// motor no ar, vale para o primeiro envio (`--model`).
+  List<ChatModelOption> models = const [];
+  String? modelChoice;
+
+  /// Limites do plano (sessão de 5 h, semana...) e o contexto da conversa.
+  ChatPlanUsage? planUsage;
+  int contextTokens = 0;
+  int contextWindow = 0;
+  DateTime? _usageAt;
+
   /// Link do Remote Control quando a sessão já nasce nele (motor CLI).
   String? remoteControlUrl;
 
@@ -238,6 +250,35 @@ class ChatController extends ChangeNotifier {
       _ => false,
     },
   );
+
+  /// Troca o modelo. Sem motor no ar ainda, vale para o primeiro envio.
+  void setModel(String value) {
+    if (value == modelChoice) return;
+    modelChoice = value;
+    _engine?.setModel(value);
+    notifyListeners();
+  }
+
+  /// Modelos e uso: com motor no ar pergunta a ele; senão, à conta. Uso fica
+  /// guardado 30 s (o [fresh] força — o usuário abriu o painel de uso).
+  Future<void> refreshAccount({bool fresh = false}) async {
+    final at = _usageAt;
+    if (!fresh &&
+        models.isNotEmpty &&
+        at != null &&
+        DateTime.now().difference(at) < const Duration(seconds: 30)) {
+      return;
+    }
+    _usageAt = DateTime.now();
+    final fromEngine = await _engine?.planUsage();
+    final probe = fromEngine == null || models.isEmpty
+        ? await _factory.probe(fresh: fresh)
+        : null;
+    if (_disposed) return;
+    if (models.isEmpty && probe != null) models = probe.models;
+    planUsage = fromEngine ?? probe?.usage ?? planUsage;
+    notifyListeners();
+  }
 
   /// Troca o modo de permissão. Sem motor no ar ainda, vale para o primeiro
   /// envio.
@@ -336,6 +377,7 @@ class ChatController extends ChangeNotifier {
       cwd: cwd,
       resumeSessionId: sessionId,
       showThinking: showsThinking,
+      model: modelChoice,
     );
     _sub = engine.events.listen(_onEvent);
     return engine;
@@ -406,6 +448,13 @@ class ChatController extends ChangeNotifier {
         if (permissionMode != null) this.permissionMode = permissionMode;
       case ChatModeChanged(:final mode):
         permissionMode = mode;
+      case ChatModels(:final models):
+        this.models = models;
+      case ChatModelChanged(:final model):
+        this.model = model;
+      case ChatContext(:final tokens, :final window):
+        contextTokens = tokens;
+        if (window > 0) contextWindow = window;
       case ChatUserText(:final text):
         items.add(ChatUserItem(text));
       case ChatPeerMessage(:final fromName, :final text):
@@ -500,6 +549,8 @@ class ChatController extends ChangeNotifier {
         busy = false;
         this.sessionId = sessionId;
         if (costUsd != null) this.costUsd += costUsd;
+        // O turno gastou do plano: atualiza o indicador (com o cache de 30 s).
+        unawaited(refreshAccount());
         if (isError) items.add(ChatNoticeItem(ChatNoticeKind.turnFailed, text));
       case ChatEngineFailed(:final exitCode, :final stderr):
         busy = false;

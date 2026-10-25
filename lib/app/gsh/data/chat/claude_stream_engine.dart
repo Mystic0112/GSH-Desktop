@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:gsh_desktop/app/gsh/data/chat/claude_account.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/chat_engine.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/chat_usage.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_attachment.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_event.dart';
 import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
@@ -25,6 +27,7 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
     required String cwd,
     String? resumeSessionId,
     bool showThinking = false,
+    String? model,
   }) async {
     final exe = await resolveExecutable('claude');
     // Sem escolha explícita em ~/.claude/settings.json, o Claude Code segura a
@@ -63,6 +66,7 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
         // manda o bloco vazio.
         if (showThinking) ...['--thinking-display', 'summarized'],
         if (resumeSessionId != null) ...['--resume', resumeSessionId],
+        if (model != null) ...['--model', model],
       ],
       workingDirectory: cwd,
       environment: claudeEnvWithDirOnPath(exe),
@@ -75,6 +79,29 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
     required String cwd,
     required String sessionId,
   }) => readClaudeHistory(cwd: cwd, sessionId: sessionId);
+
+  static ChatAccountProbe? _probe;
+  static DateTime? _probeAt;
+
+  /// Modelos mudam pouco e o uso não precisa de segundo a segundo: guarda
+  /// por 1 min (o [fresh] força).
+  @override
+  Future<ChatAccountProbe?> probe({bool fresh = false}) async {
+    final at = _probeAt;
+    if (!fresh &&
+        _probe != null &&
+        at != null &&
+        DateTime.now().difference(at) < const Duration(minutes: 1)) {
+      return _probe;
+    }
+    final exe = await resolveExecutable('claude');
+    final p = await probeClaudeAccount(exe, claudeEnvWithDirOnPath(exe));
+    if (p != null) {
+      _probe = p;
+      _probeAt = DateTime.now();
+    }
+    return p ?? _probe;
+  }
 }
 
 /// O transcript que o próprio Claude Code grava em
@@ -133,6 +160,12 @@ Map<String, String> claudeEnvWithDirOnPath(String exe) {
 
 class ClaudeStreamEngine implements ChatEngine {
   ClaudeStreamEngine(this._proc) {
+    // Lista de modelos da conta (e o resto do `initialize`, ignorado).
+    _write({
+      'type': 'control_request',
+      'request_id': 'gsh-init',
+      'request': {'subtype': 'initialize'},
+    });
     _proc.stdout
         .transform(utf8.decoder)
         .transform(const LineSplitter())
@@ -167,12 +200,58 @@ class ClaudeStreamEngine implements ChatEngine {
       return;
     }
     if (o is! Map<String, dynamic>) return;
+    if (o['type'] == 'control_response') return _onControlResponse(o);
     for (final e in parseClaudeStreamLine(o)) {
       if (e is ChatPermissionAsk) {
         _asked[e.requestId] = (e.input, claudeAddRules(o['request']));
       }
       _events.add(e);
     }
+  }
+
+  /// Respostas aos nossos `control_request` (init, troca de modelo, uso).
+  void _onControlResponse(Map<String, dynamic> o) {
+    final r = o['response'];
+    if (r is! Map) return;
+    final id = r['request_id'] as String? ?? '';
+    final body = r['response'];
+    if (id == 'gsh-init') {
+      final models = parseClaudeModels(body);
+      if (models.isNotEmpty) _events.add(ChatModels(models));
+    } else if (id.startsWith('gsh-model-')) {
+      final m = body is Map ? body['model'] : null;
+      if (m is String && m.isNotEmpty) _events.add(ChatModelChanged(m));
+    } else if (_usage.remove(id) case final c?) {
+      c.complete(parseClaudePlanUsage(body));
+    }
+  }
+
+  final _usage = <String, Completer<ChatPlanUsage?>>{};
+
+  @override
+  void setModel(String model) => _write({
+    'type': 'control_request',
+    'request_id': 'gsh-model-${++_seq}',
+    'request': {'subtype': 'set_model', 'model': model},
+  });
+
+  @override
+  Future<ChatPlanUsage?> planUsage() {
+    if (_closed) return Future.value();
+    final id = 'gsh-usage-${++_seq}';
+    final c = _usage[id] = Completer<ChatPlanUsage?>();
+    _write({
+      'type': 'control_request',
+      'request_id': id,
+      'request': {'subtype': 'get_usage'},
+    });
+    return c.future.timeout(
+      const Duration(seconds: 10),
+      onTimeout: () {
+        _usage.remove(id);
+        return null;
+      },
+    );
   }
 
   Future<void> _onDone() async {
@@ -398,6 +477,7 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
     case 'result':
       final cost = o['total_cost_usd'];
       return [
+        ?parseClaudeContext(o),
         ChatTurnEnd(
           isError: o['is_error'] == true,
           text: o['result'] as String? ?? '',

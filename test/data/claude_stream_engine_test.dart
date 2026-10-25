@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:gsh_desktop/app/gsh/domain/entities/chat_usage.dart';
 import 'package:gsh_desktop/app/gsh/data/chat/claude_stream_engine.dart';
 import 'dart:io';
 import 'dart:typed_data';
@@ -112,6 +113,14 @@ class _FakeEngine implements ChatEngine {
   @override
   void setPermissionMode(String mode) => modes.add(mode);
 
+  final models = <String>[];
+
+  @override
+  void setModel(String model) => models.add(model);
+
+  @override
+  Future<ChatPlanUsage?> planUsage() async => null;
+
   @override
   void interrupt() {}
   @override
@@ -135,10 +144,14 @@ class _FakeFactory implements ChatEngineFactory {
     required String sessionId,
   }) async => past;
   @override
+  Future<ChatAccountProbe?> probe({bool fresh = false}) async => null;
+
+  @override
   Future<ChatEngine> start({
     required String cwd,
     String? resumeSessionId,
     bool showThinking = false,
+    String? model,
   }) async {
     resumed = resumeSessionId;
     thinking = showThinking;

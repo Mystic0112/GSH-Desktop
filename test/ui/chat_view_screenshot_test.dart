@@ -2,11 +2,12 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:gsh_desktop/app/gsh/domain/entities/chat_usage.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/chat_engine.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_attachment.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_event.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
-import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_composer.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_model_usage.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_pane.dart';
 import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:gsh_desktop/i18n/strings.g.dart';
@@ -35,6 +36,14 @@ class _Engine implements ChatEngine {
   }) {}
   @override
   void setPermissionMode(String mode) => modes.add(mode);
+
+  final models = <String>[];
+
+  @override
+  void setModel(String model) => models.add(model);
+
+  @override
+  Future<ChatPlanUsage?> planUsage() async => null;
   @override
   void interrupt() {}
   @override
@@ -44,10 +53,14 @@ class _Engine implements ChatEngine {
 class _Factory implements ChatEngineFactory {
   final engine = _Engine();
   @override
+  Future<ChatAccountProbe?> probe({bool fresh = false}) async => null;
+
+  @override
   Future<ChatEngine> start({
     required String cwd,
     String? resumeSessionId,
     bool showThinking = false,
+    String? model,
   }) async => engine;
   @override
   Future<List<ChatEvent>> history({
@@ -90,8 +103,7 @@ Future<(ChatController, _Factory)> _script(
     'description': 'Roda os testes do chat',
   }, result: '00:04 +12: All tests passed!');
   tool('Read', {
-    'file_path':
-        '/home/dev/GSH-Desktop/lib/app/gsh/ui/widgets/chat_view.dart',
+    'file_path': '/home/dev/GSH-Desktop/lib/app/gsh/ui/widgets/chat_view.dart',
   }, result: '...');
   tool('Edit', {
     'file_path': '/home/dev/GSH-Desktop/lib/chat_view.dart',

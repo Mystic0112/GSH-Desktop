@@ -2895,6 +2895,33 @@ class Translations$gsh$chat$en {
 	/// en: 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat's engine doesn't support Remote Control.'
 	String get remoteControlHint => 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat\'s engine doesn\'t support Remote Control.';
 
+	/// en: 'Usage'
+	String get usage => 'Usage';
+
+	/// en: 'Context: ${used} of ${window}'
+	String usageContext({required Object used, required Object window}) => 'Context: ${used} of ${window}';
+
+	/// en: 'Context: shows up after the first reply'
+	String get usageContextNone => 'Context: shows up after the first reply';
+
+	/// en: 'Session (5 h)'
+	String get usageSession => 'Session (5 h)';
+
+	/// en: 'Week'
+	String get usageWeek => 'Week';
+
+	/// en: '${model} this week'
+	String usageModelWeek({required Object model}) => '${model} this week';
+
+	/// en: 'resets at ${time}'
+	String usageResetsToday({required Object time}) => 'resets at ${time}';
+
+	/// en: 'resets ${date} at ${time}'
+	String usageResetsOn({required Object date, required Object time}) => 'resets ${date} at ${time}';
+
+	/// en: 'Plan usage unavailable right now.'
+	String get usageUnavailable => 'Plan usage unavailable right now.';
+
 	/// en: 'This conversation is already on Remote Control: continue on your phone or at ${url}'
 	String remoteControlActive({required Object url}) => 'This conversation is already on Remote Control: continue on your phone or at ${url}';
 
@@ -6371,6 +6398,15 @@ extension on Translations {
 			'gsh.chat.sendToSession' => ({required Object name}) => 'Send this message to the session "${name}" with SendMessage and wait for its reply: ',
 			'gsh.chat.remoteControl' => 'Remote Control',
 			'gsh.chat.remoteControlHint' => 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat\'s engine doesn\'t support Remote Control.',
+			'gsh.chat.usage' => 'Usage',
+			'gsh.chat.usageContext' => ({required Object used, required Object window}) => 'Context: ${used} of ${window}',
+			'gsh.chat.usageContextNone' => 'Context: shows up after the first reply',
+			'gsh.chat.usageSession' => 'Session (5 h)',
+			'gsh.chat.usageWeek' => 'Week',
+			'gsh.chat.usageModelWeek' => ({required Object model}) => '${model} this week',
+			'gsh.chat.usageResetsToday' => ({required Object time}) => 'resets at ${time}',
+			'gsh.chat.usageResetsOn' => ({required Object date, required Object time}) => 'resets ${date} at ${time}',
+			'gsh.chat.usageUnavailable' => 'Plan usage unavailable right now.',
 			'gsh.chat.remoteControlActive' => ({required Object url}) => 'This conversation is already on Remote Control: continue on your phone or at ${url}',
 			'gsh.chat.remoteControlNoSession' => 'Send a message first: Remote Control continues an existing conversation.',
 			'gsh.chat.remoteControlBusy' => 'Wait for the agent to finish this turn, then try again.',
@@ -6572,6 +6608,8 @@ extension on Translations {
 			'settings.page.storage.change' => 'Change…',
 			'settings.page.storage.resetTitle' => 'Reset GSH Desktop',
 			'settings.page.storage.resetDesc' => 'Delete all local data — projects, layouts, settings and terminal history — and return to the default location.',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.storage.resetButton' => 'Reset…',
 			'settings.page.storage.resetConfirm' => 'Reset',
 			'settings.page.storage.resetDialogTitle' => 'Reset GSH Desktop?',
@@ -6581,8 +6619,6 @@ extension on Translations {
 			'settings.page.storage.restartUseDefaultMessage' => 'GSH Desktop will use the default system location from the next launch. Your data in the custom folder is left untouched.',
 			'settings.page.storage.restartResetMessage' => 'All GSH Desktop data was cleared. Restart to start fresh.',
 			'settings.page.storage.later' => 'Later',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.storage.quitGsh' => 'Quit GSH Desktop',
 			'settings.page.storage.chooseFolderDialogTitle' => 'Choose a folder for GSH Desktop data',
 			'settings.page.terminal.sectionDefaultTerminal' => 'Default terminal',

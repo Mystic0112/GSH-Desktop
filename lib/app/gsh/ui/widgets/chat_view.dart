@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:gsh_desktop/app/gsh/ui/session/chat_session.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_viewmodel.dart';
@@ -32,6 +34,8 @@ class _ChatViewState extends State<ChatView> {
   void initState() {
     super.initState();
     _chat.addListener(_remember);
+    // Modelos da conta e uso do plano para o composer (sem gastar tokens).
+    unawaited(_chat.refreshAccount());
     final chats = context.read<ChatViewModel>();
     widget.session.onDisposed ??= () => chats.close(widget.session.id);
   }

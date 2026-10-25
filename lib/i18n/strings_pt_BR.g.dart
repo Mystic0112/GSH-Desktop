@@ -1360,6 +1360,15 @@ class _Translations$gsh$chat$pt_BR extends Translations$gsh$chat$en {
 	@override String sendToSession({required Object name}) => 'Mande esta mensagem para a sessão "${name}" com SendMessage e espere a resposta: ';
 	@override String get remoteControl => 'Remote Control';
 	@override String get remoteControlHint => 'Continuar esta conversa num terminal com Remote Control (celular, claude.ai/code). O motor do chat não suporta Remote Control.';
+	@override String get usage => 'Uso';
+	@override String usageContext({required Object used, required Object window}) => 'Contexto: ${used} de ${window}';
+	@override String get usageContextNone => 'Contexto: aparece depois da primeira resposta';
+	@override String get usageSession => 'Sessão (5 h)';
+	@override String get usageWeek => 'Semana';
+	@override String usageModelWeek({required Object model}) => '${model} na semana';
+	@override String usageResetsToday({required Object time}) => 'zera às ${time}';
+	@override String usageResetsOn({required Object date, required Object time}) => 'zera em ${date} às ${time}';
+	@override String get usageUnavailable => 'Uso do plano indisponível agora.';
 	@override String remoteControlActive({required Object url}) => 'Esta conversa já está no Remote Control: continue no celular ou em ${url}';
 	@override String get remoteControlNoSession => 'Mande uma mensagem primeiro: o Remote Control continua uma conversa que já existe.';
 	@override String get remoteControlBusy => 'Espere o agente terminar este turno e tente de novo.';
@@ -3416,6 +3425,15 @@ extension on TranslationsPtBr {
 			'gsh.chat.sendToSession' => ({required Object name}) => 'Mande esta mensagem para a sessão "${name}" com SendMessage e espere a resposta: ',
 			'gsh.chat.remoteControl' => 'Remote Control',
 			'gsh.chat.remoteControlHint' => 'Continuar esta conversa num terminal com Remote Control (celular, claude.ai/code). O motor do chat não suporta Remote Control.',
+			'gsh.chat.usage' => 'Uso',
+			'gsh.chat.usageContext' => ({required Object used, required Object window}) => 'Contexto: ${used} de ${window}',
+			'gsh.chat.usageContextNone' => 'Contexto: aparece depois da primeira resposta',
+			'gsh.chat.usageSession' => 'Sessão (5 h)',
+			'gsh.chat.usageWeek' => 'Semana',
+			'gsh.chat.usageModelWeek' => ({required Object model}) => '${model} na semana',
+			'gsh.chat.usageResetsToday' => ({required Object time}) => 'zera às ${time}',
+			'gsh.chat.usageResetsOn' => ({required Object date, required Object time}) => 'zera em ${date} às ${time}',
+			'gsh.chat.usageUnavailable' => 'Uso do plano indisponível agora.',
 			'gsh.chat.remoteControlActive' => ({required Object url}) => 'Esta conversa já está no Remote Control: continue no celular ou em ${url}',
 			'gsh.chat.remoteControlNoSession' => 'Mande uma mensagem primeiro: o Remote Control continua uma conversa que já existe.',
 			'gsh.chat.remoteControlBusy' => 'Espere o agente terminar este turno e tente de novo.',
@@ -3617,6 +3635,8 @@ extension on TranslationsPtBr {
 			'settings.page.storage.change' => 'Alterar…',
 			'settings.page.storage.resetTitle' => 'Redefinir o GSH Desktop',
 			'settings.page.storage.resetDesc' => 'Exclui todos os dados locais — projetos, layouts, configurações e histórico do terminal — e volta ao local padrão.',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.storage.resetButton' => 'Redefinir…',
 			'settings.page.storage.resetConfirm' => 'Redefinir',
 			'settings.page.storage.resetDialogTitle' => 'Redefinir o GSH Desktop?',
@@ -3626,8 +3646,6 @@ extension on TranslationsPtBr {
 			'settings.page.storage.restartUseDefaultMessage' => 'O GSH Desktop usará o local padrão do sistema a partir da próxima abertura. Seus dados na pasta personalizada permanecem intactos.',
 			'settings.page.storage.restartResetMessage' => 'Todos os dados do GSH Desktop foram apagados. Reinicie para começar do zero.',
 			'settings.page.storage.later' => 'Mais tarde',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.storage.quitGsh' => 'Sair do GSH Desktop',
 			'settings.page.storage.chooseFolderDialogTitle' => 'Escolha uma pasta para os dados do GSH Desktop',
 			'settings.page.terminal.sectionDefaultTerminal' => 'Terminal padrão',

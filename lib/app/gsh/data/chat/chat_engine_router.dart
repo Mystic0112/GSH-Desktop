@@ -5,6 +5,7 @@ import 'package:gsh_desktop/app/gsh/data/chat/claude_cli_engine.dart';
 import 'package:gsh_desktop/app/gsh/data/chat/claude_stream_engine.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/chat_engine.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_event.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/chat_usage.dart';
 
 /// Escolhe o motor de cada chat novo pela preferência
 /// `chatRemoteControl`: `stream-json` (padrão) ou o CLI interativo com
@@ -21,6 +22,7 @@ class ChatEngineRouter implements ChatEngineFactory {
     required String cwd,
     String? resumeSessionId,
     bool showThinking = false,
+    String? model,
   }) async {
     // O motor CLI usa `/usr/bin/env` e um hook em sh: só macOS/Linux. No
     // Windows fica o stream-json mesmo com a preferência ligada.
@@ -30,8 +32,13 @@ class ChatEngineRouter implements ChatEngineFactory {
       cwd: cwd,
       resumeSessionId: resumeSessionId,
       showThinking: showThinking,
+      model: model,
     );
   }
+
+  @override
+  Future<ChatAccountProbe?> probe({bool fresh = false}) =>
+      _stream.probe(fresh: fresh);
 
   @override
   Future<List<ChatEvent>> history({

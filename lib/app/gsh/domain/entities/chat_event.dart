@@ -1,3 +1,5 @@
+import 'package:gsh_desktop/app/gsh/domain/entities/chat_usage.dart';
+
 /// O que o motor de chat (Claude Code em `stream-json`) avisa. Um evento por
 /// bloco: texto, chamada de ferramenta, resultado, pedido de permissão, fim de
 /// turno. A UI monta a conversa a partir disto.
@@ -157,4 +159,25 @@ class ChatEngineFailed extends ChatEvent {
 
   /// Últimas linhas do stderr (pode ser vazio).
   final String stderr;
+}
+
+/// Modelos que a conta pode usar (resposta do `initialize`).
+class ChatModels extends ChatEvent {
+  const ChatModels(this.models);
+  final List<ChatModelOption> models;
+}
+
+/// O modelo da conversa mudou (pedido do usuário). [model] é o id real.
+class ChatModelChanged extends ChatEvent {
+  const ChatModelChanged(this.model);
+  final String model;
+}
+
+/// Quanto do contexto a conversa ocupa, ao fim de um turno.
+class ChatContext extends ChatEvent {
+  const ChatContext({required this.tokens, required this.window});
+  final int tokens;
+
+  /// Janela do modelo (200k, 1M...). 0 = não veio.
+  final int window;
 }
