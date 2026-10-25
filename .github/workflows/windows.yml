@@ -68,7 +68,7 @@ jobs:
       - name: Instalador (Fastforge)
         run: |
           dart pub global activate fastforge
-          dart pub global run fastforge package --platform windows --targets exe --skip-clean
+          dart pub global run fastforge:main package --platform windows --targets exe --skip-clean
 
       - name: Upload (instalador)
         uses: actions/upload-artifact@v4
