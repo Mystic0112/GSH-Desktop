@@ -70,7 +70,7 @@ codesign --verify --deep --strict --verbose=2 "$APP"   # checagem
 mkdir -p dist
 STAGE=$(mktemp -d); cp -R "$APP" "$STAGE/"; ln -s /Applications "$STAGE/Applications"
 DMG="dist/RemotePiGsh-1.0.0-macos-universal.dmg"
-hdiutil create -volname "Remote Pi GSH" -srcfolder "$STAGE" -ov -format UDZO "$DMG"
+hdiutil create -volname "GSH Desktop" -srcfolder "$STAGE" -ov -format UDZO "$DMG"
 rm -rf "$STAGE"
 
 # 4. Assina o DMG.

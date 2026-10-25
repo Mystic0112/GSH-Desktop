@@ -29,7 +29,7 @@ class WindowsHostShell extends HostShell {
 
   /// Bundle do GSH instalado no host — a fonte da instalação (D2).
   static const _hostBundle =
-      r'$env:LOCALAPPDATA\Programs\Remote Pi GSH\gsh-server-bundle';
+      r'$env:LOCALAPPDATA\Programs\GSH Desktop\gsh-server-bundle';
 
   @override
   bool get installsFromHostBundle => true;
