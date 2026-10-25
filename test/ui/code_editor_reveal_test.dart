@@ -1,10 +1,10 @@
-import 'package:cockpit/app/cockpit/domain/entities/scm_line_decorations.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/code_editor.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/editor_overview_ruler.dart';
-import 'package:cockpit/app/core/domain/entities/lsp_diagnostic.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/core/ui/widgets/code_editing_controller.dart';
-import 'package:cockpit/app/core/ui/widgets/code_highlight.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/scm_line_decorations.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/code_editor.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/editor_overview_ruler.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_diagnostic.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/code_editing_controller.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/code_highlight.dart';
 import 'package:flutter/material.dart'
     as m
     show Scrollbar, ScrollbarOrientation;

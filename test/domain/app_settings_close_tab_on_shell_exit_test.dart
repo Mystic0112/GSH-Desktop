@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

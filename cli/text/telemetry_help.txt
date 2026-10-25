@@ -1,38 +1,38 @@
-cockpit telemetry — the workspace's structured error/log store (agent-friendly JSON)
+gsh telemetry — the workspace's structured error/log store (agent-friendly JSON)
 
 Every task the app runs feeds it by default. Anything else you run (a dev
 server in a plain terminal, `flutter test` from an agent's shell) enters it
-when you prefix the command with `cockpit telemetry`. Query it instead of
+when you prefix the command with `gsh telemetry`. Query it instead of
 reading terminal output.
 
 RUN A COMMAND (the wrapper):
-  cockpit telemetry flutter run                    observe this process (PTY when interactive)
-  cockpit telemetry --name api npm run dev         stable name for the run
-  cockpit telemetry -q -- ./script.sh              `--` forces "everything after is the command"
-  Prints, at exit:  telemetry: run r_42 · 3 errors · 12 warnings · cockpit telemetry errors --run r_42
+  gsh telemetry flutter run                    observe this process (PTY when interactive)
+  gsh telemetry --name api npm run dev         stable name for the run
+  gsh telemetry -q -- ./script.sh              `--` forces "everything after is the command"
+  Prints, at exit:  telemetry: run r_42 · 3 errors · 12 warnings · gsh telemetry errors --run r_42
   The child's exit code is returned unchanged.
 
 QUERY:
-  cockpit telemetry errors   [filters]             open cases, grouped by fingerprint (default: --level error)
-  cockpit telemetry logs     [filters]             non-error events (--level debug|info|warn)
-  cockpit telemetry events   [filters]             everything, raw
-  cockpit telemetry runs     [--project P] [--key K] [--live]
-  cockpit telemetry show <id> [--context N]        e_xxxx (case) | ev_xxxx (event) | r_xx (run)
-  cockpit telemetry wait --fingerprint e_xxxx [--absent 30s] [--timeout 60s]
-  cockpit telemetry wait --any-new [--timeout 60s]
-  cockpit telemetry mark start|end <name>
-  cockpit telemetry resolve|ignore|reopen <e_xxxx> [--reason "..."]
-  cockpit telemetry clear --case e_xxxx | --run r_xx | --project P
-  cockpit telemetry probes                         added lines in the working tree that carry "probe"
-  cockpit telemetry perf [--run r_xx] [--metric m] performance metrics of the app run (P50/P95/max)
+  gsh telemetry errors   [filters]             open cases, grouped by fingerprint (default: --level error)
+  gsh telemetry logs     [filters]             non-error events (--level debug|info|warn)
+  gsh telemetry events   [filters]             everything, raw
+  gsh telemetry runs     [--project P] [--key K] [--live]
+  gsh telemetry show <id> [--context N]        e_xxxx (case) | ev_xxxx (event) | r_xx (run)
+  gsh telemetry wait --fingerprint e_xxxx [--absent 30s] [--timeout 60s]
+  gsh telemetry wait --any-new [--timeout 60s]
+  gsh telemetry mark start|end <name>
+  gsh telemetry resolve|ignore|reopen <e_xxxx> [--reason "..."]
+  gsh telemetry clear --case e_xxxx | --run r_xx | --project P
+  gsh telemetry probes                         added lines in the working tree that carry "probe"
+  gsh telemetry perf [--run r_xx] [--metric m] performance metrics of the app run (P50/P95/max)
 
 THE APP ITSELF (--app):
-  cockpit telemetry errors --app                   Cockpit's own errors (framework, async, isolates)
-  cockpit telemetry logs --app --level warn        its warnings (fallbacks the app took silently)
-  cockpit telemetry runs --app                     one run per app boot
+  gsh telemetry errors --app                   GSH's own errors (framework, async, isolates)
+  gsh telemetry logs --app --level warn        its warnings (fallbacks the app took silently)
+  gsh telemetry runs --app                     one run per app boot
   Add --app to any query verb to read the app's store instead of the
   workspace's. It only fills while Settings → General → Developer mode is on
-  (off by default); metrics are recorded then too (or with COCKPIT_PERF=1).
+  (off by default); metrics are recorded then too (or with GSH_PERF=1).
 
 FILTERS (errors/logs/events):
   --project <name>    --task <task-id>   --run <r_xx>   --key <run key>   --tab <tab-id>
@@ -53,4 +53,4 @@ LOOP (how an agent should use it):
 
 FLAGS:
   --tab-id <id>       act as another tab (workspace resolution)
-  --workspace <id>    explicit workspace (see `cockpit list-workspaces`)
+  --workspace <id>    explicit workspace (see `gsh list-workspaces`)

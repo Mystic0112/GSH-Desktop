@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/core/terminal/terminal_controller.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/terminal/terminal_controller.dart';
 import 'package:flterm/flterm.dart' as ghost;
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
@@ -13,7 +13,7 @@ void main() {
 
   for (final engine in TerminalEngine.values) {
     group('${engine.name} terminal controller', () {
-      late CockpitTerminalController terminal;
+      late GshTerminalController terminal;
 
       setUp(() => terminal = createTerminalController(engine));
       tearDown(() => terminal.dispose());

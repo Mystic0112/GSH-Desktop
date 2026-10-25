@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/ui/session/pane_item.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/pane_item.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// [PaneItem] mínimo com título dinâmico mutável — simula o OSC-title do

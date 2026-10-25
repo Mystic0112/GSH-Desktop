@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/domain/entities/lsp_diagnostic.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_diagnostic.dart';
 
 /// Localização num arquivo (path + range) — resultado de `textDocument/definition`.
 class LspLocation {

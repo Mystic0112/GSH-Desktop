@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/domain/services/terminal_path_resolver.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/terminal_path_resolver.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -24,19 +24,19 @@ void main() {
     expect(
       TerminalPathResolver.resolve(
         'lib/main.dart',
-        cwd: '/repo/cockpit',
+        cwd: '/repo/gsh',
         roots: [root],
-        exists: disk({'/repo/cockpit/lib/main.dart', '/repo/lib/main.dart'}),
+        exists: disk({'/repo/gsh/lib/main.dart', '/repo/lib/main.dart'}),
       ),
-      '/repo/cockpit/lib/main.dart',
+      '/repo/gsh/lib/main.dart',
     );
   });
 
-  test('agente em cockpit/ cita plan/ da raiz do monorepo: sobe e acha', () {
+  test('agente em gsh/ cita plan/ da raiz do monorepo: sobe e acha', () {
     expect(
       TerminalPathResolver.resolve(
         'plan/66-janela-dbq.md',
-        cwd: '/repo/cockpit',
+        cwd: '/repo/gsh',
         roots: [root],
         exists: disk({'/repo/plan/66-janela-dbq.md'}),
       ),
@@ -48,11 +48,11 @@ void main() {
     expect(
       TerminalPathResolver.resolve(
         'secret.md',
-        cwd: '/repo/cockpit',
+        cwd: '/repo/gsh',
         roots: [root],
         exists: disk({'/secret.md'}),
       ),
-      '/repo/cockpit/secret.md',
+      '/repo/gsh/secret.md',
     );
   });
 
@@ -72,11 +72,11 @@ void main() {
     expect(
       TerminalPathResolver.resolve(
         'plan/novo.md',
-        cwd: '/repo/cockpit',
+        cwd: '/repo/gsh',
         roots: [root],
         exists: disk({}),
       ),
-      '/repo/cockpit/plan/novo.md',
+      '/repo/gsh/plan/novo.md',
     );
     expect(
       TerminalPathResolver.resolve('./x/../y.md', cwd: '/srv/app'),

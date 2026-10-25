@@ -43,7 +43,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	// Translations
 	late final Translations$core$en core = Translations$core$en.internal(_root);
 	late final Translations$common$en common = Translations$common$en.internal(_root);
-	late final Translations$cockpit$en cockpit = Translations$cockpit$en.internal(_root);
+	late final Translations$gsh$en gsh = Translations$gsh$en.internal(_root);
 	late final Translations$settings$en settings = Translations$settings$en.internal(_root);
 	late final Translations$automation$en automation = Translations$automation$en.internal(_root);
 	late final Translations$fileOperation$en fileOperation = Translations$fileOperation$en.internal(_root);
@@ -144,52 +144,52 @@ class Translations$common$en {
 	String get noResults => 'No results';
 }
 
-// Path: cockpit
-class Translations$cockpit$en {
-	Translations$cockpit$en.internal(this._root);
+// Path: gsh
+class Translations$gsh$en {
+	Translations$gsh$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	late final Translations$cockpit$confirmDialog$en confirmDialog = Translations$cockpit$confirmDialog$en.internal(_root);
-	late final Translations$cockpit$neovim$en neovim = Translations$cockpit$neovim$en.internal(_root);
-	late final Translations$cockpit$worktreeCreateDialog$en worktreeCreateDialog = Translations$cockpit$worktreeCreateDialog$en.internal(_root);
-	late final Translations$cockpit$commitMessageDialog$en commitMessageDialog = Translations$cockpit$commitMessageDialog$en.internal(_root);
-	late final Translations$cockpit$tasksPanel$en tasksPanel = Translations$cockpit$tasksPanel$en.internal(_root);
-	late final Translations$cockpit$cockpitPage$en cockpitPage = Translations$cockpit$cockpitPage$en.internal(_root);
-	late final Translations$cockpit$welcomeView$en welcomeView = Translations$cockpit$welcomeView$en.internal(_root);
-	late final Translations$cockpit$paneView$en paneView = Translations$cockpit$paneView$en.internal(_root);
-	late final Translations$cockpit$fileTreePanel$en fileTreePanel = Translations$cockpit$fileTreePanel$en.internal(_root);
-	late final Translations$cockpit$fileViewer$en fileViewer = Translations$cockpit$fileViewer$en.internal(_root);
-	late final Translations$cockpit$workspaceSettingsDialog$en workspaceSettingsDialog = Translations$cockpit$workspaceSettingsDialog$en.internal(_root);
-	late final Translations$cockpit$realmDialogs$en realmDialogs = Translations$cockpit$realmDialogs$en.internal(_root);
-	late final Translations$cockpit$dbRedisTable$en dbRedisTable = Translations$cockpit$dbRedisTable$en.internal(_root);
-	late final Translations$cockpit$dbQueryView$en dbQueryView = Translations$cockpit$dbQueryView$en.internal(_root);
-	late final Translations$cockpit$httpView$en httpView = Translations$cockpit$httpView$en.internal(_root);
-	late final Translations$cockpit$kanbanView$en kanbanView = Translations$cockpit$kanbanView$en.internal(_root);
-	late final Translations$cockpit$dbPanel$en dbPanel = Translations$cockpit$dbPanel$en.internal(_root);
-	late final Translations$cockpit$dbMongoView$en dbMongoView = Translations$cockpit$dbMongoView$en.internal(_root);
-	late final Translations$cockpit$dbConnectionDialog$en dbConnectionDialog = Translations$cockpit$dbConnectionDialog$en.internal(_root);
-	late final Translations$cockpit$sshPrompts$en sshPrompts = Translations$cockpit$sshPrompts$en.internal(_root);
-	late final Translations$cockpit$projectsRail$en projectsRail = Translations$cockpit$projectsRail$en.internal(_root);
-	late final Translations$cockpit$findBar$en findBar = Translations$cockpit$findBar$en.internal(_root);
-	late final Translations$cockpit$contentSearch$en contentSearch = Translations$cockpit$contentSearch$en.internal(_root);
-	late final Translations$cockpit$topbar$en topbar = Translations$cockpit$topbar$en.internal(_root);
-	late final Translations$cockpit$tasks$en tasks = Translations$cockpit$tasks$en.internal(_root);
-	late final Translations$cockpit$notifications$en notifications = Translations$cockpit$notifications$en.internal(_root);
-	late final Translations$cockpit$terminalLink$en terminalLink = Translations$cockpit$terminalLink$en.internal(_root);
-	late final Translations$cockpit$terminal$en terminal = Translations$cockpit$terminal$en.internal(_root);
-	late final Translations$cockpit$remoteHost$en remoteHost = Translations$cockpit$remoteHost$en.internal(_root);
-	late final Translations$cockpit$browserPane$en browserPane = Translations$cockpit$browserPane$en.internal(_root);
-	late final Translations$cockpit$documentWindow$en documentWindow = Translations$cockpit$documentWindow$en.internal(_root);
-	late final Translations$cockpit$gallery$en gallery = Translations$cockpit$gallery$en.internal(_root);
-	late final Translations$cockpit$notebook$en notebook = Translations$cockpit$notebook$en.internal(_root);
-	late final Translations$cockpit$layoutPreview$en layoutPreview = Translations$cockpit$layoutPreview$en.internal(_root);
-	late final Translations$cockpit$telemetry$en telemetry = Translations$cockpit$telemetry$en.internal(_root);
-	late final Translations$cockpit$panelView$en panelView = Translations$cockpit$panelView$en.internal(_root);
-	late final Translations$cockpit$chat$en chat = Translations$cockpit$chat$en.internal(_root);
-	late final Translations$cockpit$farm$en farm = Translations$cockpit$farm$en.internal(_root);
-	late final Translations$cockpit$agentGraph$en agentGraph = Translations$cockpit$agentGraph$en.internal(_root);
+	late final Translations$gsh$confirmDialog$en confirmDialog = Translations$gsh$confirmDialog$en.internal(_root);
+	late final Translations$gsh$neovim$en neovim = Translations$gsh$neovim$en.internal(_root);
+	late final Translations$gsh$worktreeCreateDialog$en worktreeCreateDialog = Translations$gsh$worktreeCreateDialog$en.internal(_root);
+	late final Translations$gsh$commitMessageDialog$en commitMessageDialog = Translations$gsh$commitMessageDialog$en.internal(_root);
+	late final Translations$gsh$tasksPanel$en tasksPanel = Translations$gsh$tasksPanel$en.internal(_root);
+	late final Translations$gsh$gshPage$en gshPage = Translations$gsh$gshPage$en.internal(_root);
+	late final Translations$gsh$welcomeView$en welcomeView = Translations$gsh$welcomeView$en.internal(_root);
+	late final Translations$gsh$paneView$en paneView = Translations$gsh$paneView$en.internal(_root);
+	late final Translations$gsh$fileTreePanel$en fileTreePanel = Translations$gsh$fileTreePanel$en.internal(_root);
+	late final Translations$gsh$fileViewer$en fileViewer = Translations$gsh$fileViewer$en.internal(_root);
+	late final Translations$gsh$workspaceSettingsDialog$en workspaceSettingsDialog = Translations$gsh$workspaceSettingsDialog$en.internal(_root);
+	late final Translations$gsh$realmDialogs$en realmDialogs = Translations$gsh$realmDialogs$en.internal(_root);
+	late final Translations$gsh$dbRedisTable$en dbRedisTable = Translations$gsh$dbRedisTable$en.internal(_root);
+	late final Translations$gsh$dbQueryView$en dbQueryView = Translations$gsh$dbQueryView$en.internal(_root);
+	late final Translations$gsh$httpView$en httpView = Translations$gsh$httpView$en.internal(_root);
+	late final Translations$gsh$kanbanView$en kanbanView = Translations$gsh$kanbanView$en.internal(_root);
+	late final Translations$gsh$dbPanel$en dbPanel = Translations$gsh$dbPanel$en.internal(_root);
+	late final Translations$gsh$dbMongoView$en dbMongoView = Translations$gsh$dbMongoView$en.internal(_root);
+	late final Translations$gsh$dbConnectionDialog$en dbConnectionDialog = Translations$gsh$dbConnectionDialog$en.internal(_root);
+	late final Translations$gsh$sshPrompts$en sshPrompts = Translations$gsh$sshPrompts$en.internal(_root);
+	late final Translations$gsh$projectsRail$en projectsRail = Translations$gsh$projectsRail$en.internal(_root);
+	late final Translations$gsh$findBar$en findBar = Translations$gsh$findBar$en.internal(_root);
+	late final Translations$gsh$contentSearch$en contentSearch = Translations$gsh$contentSearch$en.internal(_root);
+	late final Translations$gsh$topbar$en topbar = Translations$gsh$topbar$en.internal(_root);
+	late final Translations$gsh$tasks$en tasks = Translations$gsh$tasks$en.internal(_root);
+	late final Translations$gsh$notifications$en notifications = Translations$gsh$notifications$en.internal(_root);
+	late final Translations$gsh$terminalLink$en terminalLink = Translations$gsh$terminalLink$en.internal(_root);
+	late final Translations$gsh$terminal$en terminal = Translations$gsh$terminal$en.internal(_root);
+	late final Translations$gsh$remoteHost$en remoteHost = Translations$gsh$remoteHost$en.internal(_root);
+	late final Translations$gsh$browserPane$en browserPane = Translations$gsh$browserPane$en.internal(_root);
+	late final Translations$gsh$documentWindow$en documentWindow = Translations$gsh$documentWindow$en.internal(_root);
+	late final Translations$gsh$gallery$en gallery = Translations$gsh$gallery$en.internal(_root);
+	late final Translations$gsh$notebook$en notebook = Translations$gsh$notebook$en.internal(_root);
+	late final Translations$gsh$layoutPreview$en layoutPreview = Translations$gsh$layoutPreview$en.internal(_root);
+	late final Translations$gsh$telemetry$en telemetry = Translations$gsh$telemetry$en.internal(_root);
+	late final Translations$gsh$panelView$en panelView = Translations$gsh$panelView$en.internal(_root);
+	late final Translations$gsh$chat$en chat = Translations$gsh$chat$en.internal(_root);
+	late final Translations$gsh$farm$en farm = Translations$gsh$farm$en.internal(_root);
+	late final Translations$gsh$agentGraph$en agentGraph = Translations$gsh$agentGraph$en.internal(_root);
 }
 
 // Path: settings
@@ -386,6 +386,12 @@ class Translations$core$menu$en {
 	/// en: 'New Terminal'
 	String get newTerminal => 'New Terminal';
 
+	/// en: 'New Chat'
+	String get newChat => 'New Chat';
+
+	/// en: 'New Chat to the Right'
+	String get newChatRight => 'New Chat to the Right';
+
 	/// en: 'Open Workspace'
 	String get openWorkspace => 'Open Workspace';
 
@@ -465,9 +471,9 @@ class Translations$core$menu$en {
 	String get zoom => 'Zoom';
 }
 
-// Path: cockpit.confirmDialog
-class Translations$cockpit$confirmDialog$en {
-	Translations$cockpit$confirmDialog$en.internal(this._root);
+// Path: gsh.confirmDialog
+class Translations$gsh$confirmDialog$en {
+	Translations$gsh$confirmDialog$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -486,9 +492,9 @@ class Translations$cockpit$confirmDialog$en {
 	String get saveAndClose => 'Save & close';
 }
 
-// Path: cockpit.neovim
-class Translations$cockpit$neovim$en {
-	Translations$cockpit$neovim$en.internal(this._root);
+// Path: gsh.neovim
+class Translations$gsh$neovim$en {
+	Translations$gsh$neovim$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -510,9 +516,9 @@ class Translations$cockpit$neovim$en {
 	String get closeAnyway => 'Close anyway';
 }
 
-// Path: cockpit.worktreeCreateDialog
-class Translations$cockpit$worktreeCreateDialog$en {
-	Translations$cockpit$worktreeCreateDialog$en.internal(this._root);
+// Path: gsh.worktreeCreateDialog
+class Translations$gsh$worktreeCreateDialog$en {
+	Translations$gsh$worktreeCreateDialog$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -600,9 +606,9 @@ class Translations$cockpit$worktreeCreateDialog$en {
 	String get back => 'Back';
 }
 
-// Path: cockpit.commitMessageDialog
-class Translations$cockpit$commitMessageDialog$en {
-	Translations$cockpit$commitMessageDialog$en.internal(this._root);
+// Path: gsh.commitMessageDialog
+class Translations$gsh$commitMessageDialog$en {
+	Translations$gsh$commitMessageDialog$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -651,9 +657,9 @@ class Translations$cockpit$commitMessageDialog$en {
 	String get cancelGeneration => 'Cancel generation';
 }
 
-// Path: cockpit.tasksPanel
-class Translations$cockpit$tasksPanel$en {
-	Translations$cockpit$tasksPanel$en.internal(this._root);
+// Path: gsh.tasksPanel
+class Translations$gsh$tasksPanel$en {
+	Translations$gsh$tasksPanel$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -714,9 +720,9 @@ class Translations$cockpit$tasksPanel$en {
 	String composeConflicts({required Object labels}) => 'Kept non-Compose tasks with conflicting labels: ${labels}';
 }
 
-// Path: cockpit.cockpitPage
-class Translations$cockpit$cockpitPage$en {
-	Translations$cockpit$cockpitPage$en.internal(this._root);
+// Path: gsh.gshPage
+class Translations$gsh$gshPage$en {
+	Translations$gsh$gshPage$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -807,9 +813,9 @@ class Translations$cockpit$cockpitPage$en {
 	String get lspStopped => 'stopped';
 }
 
-// Path: cockpit.welcomeView
-class Translations$cockpit$welcomeView$en {
-	Translations$cockpit$welcomeView$en.internal(this._root);
+// Path: gsh.welcomeView
+class Translations$gsh$welcomeView$en {
+	Translations$gsh$welcomeView$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -837,9 +843,9 @@ class Translations$cockpit$welcomeView$en {
 	String get addWorkspace => 'Add workspace';
 }
 
-// Path: cockpit.paneView
-class Translations$cockpit$paneView$en {
-	Translations$cockpit$paneView$en.internal(this._root);
+// Path: gsh.paneView
+class Translations$gsh$paneView$en {
+	Translations$gsh$paneView$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -936,9 +942,9 @@ class Translations$cockpit$paneView$en {
 	String get openAsHtml => 'Open as HTML';
 }
 
-// Path: cockpit.fileTreePanel
-class Translations$cockpit$fileTreePanel$en {
-	Translations$cockpit$fileTreePanel$en.internal(this._root);
+// Path: gsh.fileTreePanel
+class Translations$gsh$fileTreePanel$en {
+	Translations$gsh$fileTreePanel$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1284,9 +1290,9 @@ class Translations$cockpit$fileTreePanel$en {
 	String openInAgent({required Object harness}) => 'Open in ${harness}';
 }
 
-// Path: cockpit.fileViewer
-class Translations$cockpit$fileViewer$en {
-	Translations$cockpit$fileViewer$en.internal(this._root);
+// Path: gsh.fileViewer
+class Translations$gsh$fileViewer$en {
+	Translations$gsh$fileViewer$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1308,9 +1314,9 @@ class Translations$cockpit$fileViewer$en {
 	String get reload => 'Reload';
 }
 
-// Path: cockpit.workspaceSettingsDialog
-class Translations$cockpit$workspaceSettingsDialog$en {
-	Translations$cockpit$workspaceSettingsDialog$en.internal(this._root);
+// Path: gsh.workspaceSettingsDialog
+class Translations$gsh$workspaceSettingsDialog$en {
+	Translations$gsh$workspaceSettingsDialog$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1344,9 +1350,9 @@ class Translations$cockpit$workspaceSettingsDialog$en {
 	String get folder => 'Folder';
 }
 
-// Path: cockpit.realmDialogs
-class Translations$cockpit$realmDialogs$en {
-	Translations$cockpit$realmDialogs$en.internal(this._root);
+// Path: gsh.realmDialogs
+class Translations$gsh$realmDialogs$en {
+	Translations$gsh$realmDialogs$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1389,9 +1395,9 @@ class Translations$cockpit$realmDialogs$en {
 	);
 }
 
-// Path: cockpit.dbRedisTable
-class Translations$cockpit$dbRedisTable$en {
-	Translations$cockpit$dbRedisTable$en.internal(this._root);
+// Path: gsh.dbRedisTable
+class Translations$gsh$dbRedisTable$en {
+	Translations$gsh$dbRedisTable$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1458,9 +1464,9 @@ class Translations$cockpit$dbRedisTable$en {
 	String get searchHint => 'Search — pattern, e.g. user:*';
 }
 
-// Path: cockpit.dbQueryView
-class Translations$cockpit$dbQueryView$en {
-	Translations$cockpit$dbQueryView$en.internal(this._root);
+// Path: gsh.dbQueryView
+class Translations$gsh$dbQueryView$en {
+	Translations$gsh$dbQueryView$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1527,9 +1533,9 @@ class Translations$cockpit$dbQueryView$en {
 	String get copy => 'Copy';
 }
 
-// Path: cockpit.httpView
-class Translations$cockpit$httpView$en {
-	Translations$cockpit$httpView$en.internal(this._root);
+// Path: gsh.httpView
+class Translations$gsh$httpView$en {
+	Translations$gsh$httpView$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1577,12 +1583,12 @@ class Translations$cockpit$httpView$en {
 	/// en: ' · truncated (response too large)'
 	String get truncatedSuffix => ' · truncated (response too large)';
 
-	late final Translations$cockpit$httpView$error$en error = Translations$cockpit$httpView$error$en.internal(_root);
+	late final Translations$gsh$httpView$error$en error = Translations$gsh$httpView$error$en.internal(_root);
 }
 
-// Path: cockpit.kanbanView
-class Translations$cockpit$kanbanView$en {
-	Translations$cockpit$kanbanView$en.internal(this._root);
+// Path: gsh.kanbanView
+class Translations$gsh$kanbanView$en {
+	Translations$gsh$kanbanView$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1741,12 +1747,12 @@ class Translations$cockpit$kanbanView$en {
 	/// en: 'Not recognized by the parser — drags whole, no inline editing.'
 	String get unrecognizedBlock => 'Not recognized by the parser — drags whole, no inline editing.';
 
-	late final Translations$cockpit$kanbanView$deleteColumnDialog$en deleteColumnDialog = Translations$cockpit$kanbanView$deleteColumnDialog$en.internal(_root);
+	late final Translations$gsh$kanbanView$deleteColumnDialog$en deleteColumnDialog = Translations$gsh$kanbanView$deleteColumnDialog$en.internal(_root);
 }
 
-// Path: cockpit.dbPanel
-class Translations$cockpit$dbPanel$en {
-	Translations$cockpit$dbPanel$en.internal(this._root);
+// Path: gsh.dbPanel
+class Translations$gsh$dbPanel$en {
+	Translations$gsh$dbPanel$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1773,11 +1779,11 @@ class Translations$cockpit$dbPanel$en {
 	/// en: 'Remove "${name}" from this workspace? Any saved password is discarded. .dbq files that reference it are not touched.'
 	String deleteConnectionMessage({required Object name}) => 'Remove "${name}" from this workspace? Any saved password is discarded. .dbq files that reference it are not touched.';
 
-	/// en: '.cockpit/databases.json · ${n} connections'
-	String footer({required Object n}) => '.cockpit/databases.json · ${n} connections';
+	/// en: '.gsh/databases.json · ${n} connections'
+	String footer({required Object n}) => '.gsh/databases.json · ${n} connections';
 
-	/// en: '.cockpit/databases.json · 1 connection'
-	String get footerOne => '.cockpit/databases.json · 1 connection';
+	/// en: '.gsh/databases.json · 1 connection'
+	String get footerOne => '.gsh/databases.json · 1 connection';
 
 	/// en: 'No connections yet.'
 	String get noConnections => 'No connections yet.';
@@ -1786,9 +1792,9 @@ class Translations$cockpit$dbPanel$en {
 	String get passwordRequired => 'Password not found on the host. Open this connection and enter it again — it is saved on the machine that runs the database, not on this one.';
 }
 
-// Path: cockpit.dbMongoView
-class Translations$cockpit$dbMongoView$en {
-	Translations$cockpit$dbMongoView$en.internal(this._root);
+// Path: gsh.dbMongoView
+class Translations$gsh$dbMongoView$en {
+	Translations$gsh$dbMongoView$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1831,9 +1837,9 @@ class Translations$cockpit$dbMongoView$en {
 	String get insert => 'Insert';
 }
 
-// Path: cockpit.dbConnectionDialog
-class Translations$cockpit$dbConnectionDialog$en {
-	Translations$cockpit$dbConnectionDialog$en.internal(this._root);
+// Path: gsh.dbConnectionDialog
+class Translations$gsh$dbConnectionDialog$en {
+	Translations$gsh$dbConnectionDialog$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1921,9 +1927,9 @@ class Translations$cockpit$dbConnectionDialog$en {
 	String get passwordOnHost => 'The password is stored on the host, not on this machine.';
 }
 
-// Path: cockpit.sshPrompts
-class Translations$cockpit$sshPrompts$en {
-	Translations$cockpit$sshPrompts$en.internal(this._root);
+// Path: gsh.sshPrompts
+class Translations$gsh$sshPrompts$en {
+	Translations$gsh$sshPrompts$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1954,9 +1960,9 @@ class Translations$cockpit$sshPrompts$en {
 	String get unlock => 'Unlock';
 }
 
-// Path: cockpit.projectsRail
-class Translations$cockpit$projectsRail$en {
-	Translations$cockpit$projectsRail$en.internal(this._root);
+// Path: gsh.projectsRail
+class Translations$gsh$projectsRail$en {
+	Translations$gsh$projectsRail$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2044,9 +2050,9 @@ class Translations$cockpit$projectsRail$en {
 	String get collapseWorktrees => 'Collapse worktrees';
 }
 
-// Path: cockpit.findBar
-class Translations$cockpit$findBar$en {
-	Translations$cockpit$findBar$en.internal(this._root);
+// Path: gsh.findBar
+class Translations$gsh$findBar$en {
+	Translations$gsh$findBar$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2080,9 +2086,9 @@ class Translations$cockpit$findBar$en {
 	String get noResults => 'No results';
 }
 
-// Path: cockpit.contentSearch
-class Translations$cockpit$contentSearch$en {
-	Translations$cockpit$contentSearch$en.internal(this._root);
+// Path: gsh.contentSearch
+class Translations$gsh$contentSearch$en {
+	Translations$gsh$contentSearch$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2116,9 +2122,9 @@ class Translations$cockpit$contentSearch$en {
 	String get noResults => 'No results.';
 }
 
-// Path: cockpit.topbar
-class Translations$cockpit$topbar$en {
-	Translations$cockpit$topbar$en.internal(this._root);
+// Path: gsh.topbar
+class Translations$gsh$topbar$en {
+	Translations$gsh$topbar$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2146,9 +2152,9 @@ class Translations$cockpit$topbar$en {
 	String get openChat => 'Chat with Claude (beta)';
 }
 
-// Path: cockpit.tasks
-class Translations$cockpit$tasks$en {
-	Translations$cockpit$tasks$en.internal(this._root);
+// Path: gsh.tasks
+class Translations$gsh$tasks$en {
+	Translations$gsh$tasks$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2170,9 +2176,9 @@ class Translations$cockpit$tasks$en {
 	String get quit => 'Quit';
 }
 
-// Path: cockpit.notifications
-class Translations$cockpit$notifications$en {
-	Translations$cockpit$notifications$en.internal(this._root);
+// Path: gsh.notifications
+class Translations$gsh$notifications$en {
+	Translations$gsh$notifications$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2188,9 +2194,9 @@ class Translations$cockpit$notifications$en {
 	String get agentNeedsAction => 'Agent needs your input';
 }
 
-// Path: cockpit.terminalLink
-class Translations$cockpit$terminalLink$en {
-	Translations$cockpit$terminalLink$en.internal(this._root);
+// Path: gsh.terminalLink
+class Translations$gsh$terminalLink$en {
+	Translations$gsh$terminalLink$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2218,9 +2224,9 @@ class Translations$cockpit$terminalLink$en {
 	String get copyLink => 'Copy link';
 }
 
-// Path: cockpit.terminal
-class Translations$cockpit$terminal$en {
-	Translations$cockpit$terminal$en.internal(this._root);
+// Path: gsh.terminal
+class Translations$gsh$terminal$en {
+	Translations$gsh$terminal$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2229,13 +2235,13 @@ class Translations$cockpit$terminal$en {
 	/// en: 'Warning: the folder "${requested}" does not exist. This terminal opened in "${path}".'
 	String cwdFallbackWarning({required Object requested, required Object path}) => 'Warning: the folder "${requested}" does not exist. This terminal opened in "${path}".';
 
-	/// en: 'Notice: .env.cockpit is tracked by git (it came with the repository). Injected: ${keys}'
-	String workspaceEnvTracked({required Object keys}) => 'Notice: .env.cockpit is tracked by git (it came with the repository). Injected: ${keys}';
+	/// en: 'Notice: .env.gsh is tracked by git (it came with the repository). Injected: ${keys}'
+	String workspaceEnvTracked({required Object keys}) => 'Notice: .env.gsh is tracked by git (it came with the repository). Injected: ${keys}';
 }
 
-// Path: cockpit.remoteHost
-class Translations$cockpit$remoteHost$en {
-	Translations$cockpit$remoteHost$en.internal(this._root);
+// Path: gsh.remoteHost
+class Translations$gsh$remoteHost$en {
+	Translations$gsh$remoteHost$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2386,9 +2392,9 @@ class Translations$cockpit$remoteHost$en {
 	String get errIdentityUnreadable => 'That file could not be read.';
 }
 
-// Path: cockpit.browserPane
-class Translations$cockpit$browserPane$en {
-	Translations$cockpit$browserPane$en.internal(this._root);
+// Path: gsh.browserPane
+class Translations$gsh$browserPane$en {
+	Translations$gsh$browserPane$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2410,9 +2416,9 @@ class Translations$cockpit$browserPane$en {
 	String get go => 'Go';
 }
 
-// Path: cockpit.documentWindow
-class Translations$cockpit$documentWindow$en {
-	Translations$cockpit$documentWindow$en.internal(this._root);
+// Path: gsh.documentWindow
+class Translations$gsh$documentWindow$en {
+	Translations$gsh$documentWindow$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2425,9 +2431,9 @@ class Translations$cockpit$documentWindow$en {
 	String fileNotFound({required Object path}) => 'File not found: ${path}';
 }
 
-// Path: cockpit.gallery
-class Translations$cockpit$gallery$en {
-	Translations$cockpit$gallery$en.internal(this._root);
+// Path: gsh.gallery
+class Translations$gsh$gallery$en {
+	Translations$gsh$gallery$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2439,20 +2445,20 @@ class Translations$cockpit$gallery$en {
 	/// en: 'Could not create the file'
 	String get createErrorTitle => 'Could not create the file';
 
-	late final Translations$cockpit$gallery$dbQuery$en dbQuery = Translations$cockpit$gallery$dbQuery$en.internal(_root);
-	late final Translations$cockpit$gallery$kanban$en kanban = Translations$cockpit$gallery$kanban$en.internal(_root);
-	late final Translations$cockpit$gallery$layout$en layout = Translations$cockpit$gallery$layout$en.internal(_root);
-	late final Translations$cockpit$gallery$httpRequest$en httpRequest = Translations$cockpit$gallery$httpRequest$en.internal(_root);
-	late final Translations$cockpit$gallery$html$en html = Translations$cockpit$gallery$html$en.internal(_root);
-	late final Translations$cockpit$gallery$tasks$en tasks = Translations$cockpit$gallery$tasks$en.internal(_root);
-	late final Translations$cockpit$gallery$notebook$en notebook = Translations$cockpit$gallery$notebook$en.internal(_root);
-	late final Translations$cockpit$gallery$workspaceEnv$en workspaceEnv = Translations$cockpit$gallery$workspaceEnv$en.internal(_root);
-	late final Translations$cockpit$gallery$panel$en panel = Translations$cockpit$gallery$panel$en.internal(_root);
+	late final Translations$gsh$gallery$dbQuery$en dbQuery = Translations$gsh$gallery$dbQuery$en.internal(_root);
+	late final Translations$gsh$gallery$kanban$en kanban = Translations$gsh$gallery$kanban$en.internal(_root);
+	late final Translations$gsh$gallery$layout$en layout = Translations$gsh$gallery$layout$en.internal(_root);
+	late final Translations$gsh$gallery$httpRequest$en httpRequest = Translations$gsh$gallery$httpRequest$en.internal(_root);
+	late final Translations$gsh$gallery$html$en html = Translations$gsh$gallery$html$en.internal(_root);
+	late final Translations$gsh$gallery$tasks$en tasks = Translations$gsh$gallery$tasks$en.internal(_root);
+	late final Translations$gsh$gallery$notebook$en notebook = Translations$gsh$gallery$notebook$en.internal(_root);
+	late final Translations$gsh$gallery$workspaceEnv$en workspaceEnv = Translations$gsh$gallery$workspaceEnv$en.internal(_root);
+	late final Translations$gsh$gallery$panel$en panel = Translations$gsh$gallery$panel$en.internal(_root);
 }
 
-// Path: cockpit.notebook
-class Translations$cockpit$notebook$en {
-	Translations$cockpit$notebook$en.internal(this._root);
+// Path: gsh.notebook
+class Translations$gsh$notebook$en {
+	Translations$gsh$notebook$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2503,7 +2509,7 @@ class Translations$cockpit$notebook$en {
 	/// en: 'Could not save the image'
 	String get imageFailed => 'Could not save the image';
 
-	late final Translations$cockpit$notebook$format$en format = Translations$cockpit$notebook$format$en.internal(_root);
+	late final Translations$gsh$notebook$format$en format = Translations$gsh$notebook$format$en.internal(_root);
 
 	/// en: 'Linked from'
 	String get backlinks => 'Linked from';
@@ -2524,9 +2530,9 @@ class Translations$cockpit$notebook$en {
 	String get hideList => 'Hide notes list';
 }
 
-// Path: cockpit.layoutPreview
-class Translations$cockpit$layoutPreview$en {
-	Translations$cockpit$layoutPreview$en.internal(this._root);
+// Path: gsh.layoutPreview
+class Translations$gsh$layoutPreview$en {
+	Translations$gsh$layoutPreview$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2536,7 +2542,7 @@ class Translations$cockpit$layoutPreview$en {
 	String get applyFailedTitle => 'Could not apply the layout';
 
 	/// en: 'Apply in GSH Desktop'
-	String get applyInCockpit => 'Apply in GSH Desktop';
+	String get applyInGsh => 'Apply in GSH Desktop';
 
 	/// en: 'Open as new workspace'
 	String get applyNewWorkspace => 'Open as new workspace';
@@ -2581,9 +2587,9 @@ class Translations$cockpit$layoutPreview$en {
 	String subtitle({required Object n}) => 'This layout opens ${n} terminals. Read the commands before applying.';
 }
 
-// Path: cockpit.telemetry
-class Translations$cockpit$telemetry$en {
-	Translations$cockpit$telemetry$en.internal(this._root);
+// Path: gsh.telemetry
+class Translations$gsh$telemetry$en {
+	Translations$gsh$telemetry$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2640,8 +2646,8 @@ class Translations$cockpit$telemetry$en {
 	/// en: 'task'
 	String get srcTask => 'task';
 
-	/// en: 'cockpit telemetry'
-	String get srcWrapper => 'cockpit telemetry';
+	/// en: 'gsh telemetry'
+	String get srcWrapper => 'gsh telemetry';
 
 	/// en: 'run ${id}'
 	String run({required Object id}) => 'run ${id}';
@@ -2776,9 +2782,9 @@ class Translations$cockpit$telemetry$en {
 	String get chipApp => 'GSH Desktop';
 }
 
-// Path: cockpit.panelView
-class Translations$cockpit$panelView$en {
-	Translations$cockpit$panelView$en.internal(this._root);
+// Path: gsh.panelView
+class Translations$gsh$panelView$en {
+	Translations$gsh$panelView$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2794,9 +2800,9 @@ class Translations$cockpit$panelView$en {
 	String get openAsHtml => 'Open as HTML';
 }
 
-// Path: cockpit.chat
-class Translations$cockpit$chat$en {
-	Translations$cockpit$chat$en.internal(this._root);
+// Path: gsh.chat
+class Translations$gsh$chat$en {
+	Translations$gsh$chat$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2805,11 +2811,20 @@ class Translations$cockpit$chat$en {
 	/// en: 'Chat'
 	String get tabTitle => 'Chat';
 
-	/// en: 'Chat with Claude Code'
-	String get emptyTitle => 'Chat with Claude Code';
+	/// en: 'New conversation'
+	String get emptyTitle => 'New conversation';
 
-	/// en: 'Uses the claude installed on this machine, with your own login. Folder: ${cwd}'
-	String emptyHint({required Object cwd}) => 'Uses the claude installed on this machine, with your own login. Folder: ${cwd}';
+	/// en: 'Claude Code in ${folder}, with your own login.'
+	String emptySubtitle({required Object folder}) => 'Claude Code in ${folder}, with your own login.';
+
+	/// en: 'Enter sends; Shift+Enter adds a line.'
+	String get emptyHintSend => 'Enter sends; Shift+Enter adds a line.';
+
+	/// en: 'Paste a screenshot with Ctrl+V, or drop files onto the chat.'
+	String get emptyHintPaste => 'Paste a screenshot with Ctrl+V, or drop files onto the chat.';
+
+	/// en: 'Pick the permission mode below the input: ask, accept edits, plan, or bypass.'
+	String get emptyHintMode => 'Pick the permission mode below the input: ask, accept edits, plan, or bypass.';
 
 	/// en: 'Message Claude… (Enter sends, Shift+Enter for a new line)'
 	String get placeholder => 'Message Claude… (Enter sends, Shift+Enter for a new line)';
@@ -2852,11 +2867,167 @@ class Translations$cockpit$chat$en {
 
 	/// en: 'The turn ended with an error: ${detail}'
 	String turnFailed({required Object detail}) => 'The turn ended with an error: ${detail}';
+
+	/// en: 'This conversation continues in a terminal with Remote Control: open it on your phone or at claude.ai/code. The chat here is paused.'
+	String get handedOff => 'This conversation continues in a terminal with Remote Control: open it on your phone or at claude.ai/code. The chat here is paused.';
+
+	/// en: 'Message from ${name}'
+	String peerMessageFrom({required Object name}) => 'Message from ${name}';
+
+	/// en: 'Sessions'
+	String get sessions => 'Sessions';
+
+	/// en: 'No other Claude Code session is running right now.'
+	String get noSessions => 'No other Claude Code session is running right now.';
+
+	/// en: 'List every session (asks the agent)…'
+	String get listAllSessions => 'List every session (asks the agent)…';
+
+	/// en: 'List the sessions I can message, with ListAgents, and wait for me to pick one. '
+	String get askListSessions => 'List the sessions I can message, with ListAgents, and wait for me to pick one. ';
+
+	/// en: 'Send this message to the session "${name}" with SendMessage and wait for its reply: '
+	String sendToSession({required Object name}) => 'Send this message to the session "${name}" with SendMessage and wait for its reply: ';
+
+	/// en: 'Remote Control'
+	String get remoteControl => 'Remote Control';
+
+	/// en: 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat's engine doesn't support Remote Control.'
+	String get remoteControlHint => 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat\'s engine doesn\'t support Remote Control.';
+
+	/// en: 'Usage'
+	String get usage => 'Usage';
+
+	/// en: 'Context: ${used} of ${window}'
+	String usageContext({required Object used, required Object window}) => 'Context: ${used} of ${window}';
+
+	/// en: 'Context: shows up after the first reply'
+	String get usageContextNone => 'Context: shows up after the first reply';
+
+	/// en: 'Session (5 h)'
+	String get usageSession => 'Session (5 h)';
+
+	/// en: 'Week'
+	String get usageWeek => 'Week';
+
+	/// en: '${model} this week'
+	String usageModelWeek({required Object model}) => '${model} this week';
+
+	/// en: 'resets at ${time}'
+	String usageResetsToday({required Object time}) => 'resets at ${time}';
+
+	/// en: 'resets ${date} at ${time}'
+	String usageResetsOn({required Object date, required Object time}) => 'resets ${date} at ${time}';
+
+	/// en: 'Plan usage unavailable right now.'
+	String get usageUnavailable => 'Plan usage unavailable right now.';
+
+	/// en: 'This conversation is already on Remote Control: continue on your phone or at ${url}'
+	String remoteControlActive({required Object url}) => 'This conversation is already on Remote Control: continue on your phone or at ${url}';
+
+	/// en: 'Send a message first: Remote Control continues an existing conversation.'
+	String get remoteControlNoSession => 'Send a message first: Remote Control continues an existing conversation.';
+
+	/// en: 'Wait for the agent to finish this turn, then try again.'
+	String get remoteControlBusy => 'Wait for the agent to finish this turn, then try again.';
+
+	/// en: 'Couldn't open the terminal in this workspace.'
+	String get remoteControlFailed => 'Couldn\'t open the terminal in this workspace.';
+
+	/// en: '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).'
+	String attachmentTooLarge({required Object name}) => '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).';
+
+	/// en: 'Loading the conversation…'
+	String get loadingHistory => 'Loading the conversation…';
+
+	/// en: 'Always allow ${rule}'
+	String allowAlways({required Object rule}) => 'Always allow ${rule}';
+
+	/// en: 'Always allowed: ${rule}'
+	String allowedAlways({required Object rule}) => 'Always allowed: ${rule}';
+
+	/// en: '… ${n} more lines'
+	String moreLines({required Object n}) => '… ${n} more lines';
+
+	/// en: 'The agent is asking'
+	String get questionTitle => 'The agent is asking';
+
+	/// en: 'Other…'
+	String get other => 'Other…';
+
+	/// en: 'Answer'
+	String get answer => 'Answer';
+
+	/// en: 'Agent's plan'
+	String get planTitle => 'Agent\'s plan';
+
+	/// en: 'Approve and run'
+	String get planApprove => 'Approve and run';
+
+	/// en: 'Keep planning'
+	String get planRefine => 'Keep planning';
+
+	/// en: 'What should change in the plan?'
+	String get planRefineHint => 'What should change in the plan?';
+
+	/// en: 'Send adjustment'
+	String get planSendRefine => 'Send adjustment';
+
+	/// en: 'Plan approved'
+	String get planApproved => 'Plan approved';
+
+	/// en: 'Asked to keep planning'
+	String get planRefined => 'Asked to keep planning';
+
+	/// en: 'Adjustment: ${text}'
+	String planRefinedWith({required Object text}) => 'Adjustment: ${text}';
+
+	/// en: 'New conversation'
+	String get newChat => 'New conversation';
+
+	/// en: 'Attach files'
+	String get attach => 'Attach files';
+
+	/// en: 'Ask permission'
+	String get modeDefault => 'Ask permission';
+
+	/// en: 'Accept edits'
+	String get modeAcceptEdits => 'Accept edits';
+
+	/// en: 'Plan'
+	String get modePlan => 'Plan';
+
+	/// en: 'Skip permissions'
+	String get modeBypass => 'Skip permissions';
+
+	/// en: '(one) {Edited 1 file} (other) {Edited ${n} files}'
+	String editedFiles({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: 'Edited 1 file',
+		other: 'Edited ${n} files',
+	);
+
+	/// en: 'Thinking'
+	String get thinkingTitle => 'Thinking';
+
+	/// en: 'Thinking…'
+	String get thinkingLive => 'Thinking…';
+
+	/// en: 'Completed'
+	String get stateCompleted => 'Completed';
+
+	/// en: 'Ready for review'
+	String get stateReviewReady => 'Ready for review';
+
+	/// en: 'Blocked'
+	String get stateBlocked => 'Blocked';
+
+	/// en: 'Failed'
+	String get stateFailed => 'Failed';
 }
 
-// Path: cockpit.farm
-class Translations$cockpit$farm$en {
-	Translations$cockpit$farm$en.internal(this._root);
+// Path: gsh.farm
+class Translations$gsh$farm$en {
+	Translations$gsh$farm$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2880,14 +3051,44 @@ class Translations$cockpit$farm$en {
 	/// en: '${n} need you'
 	String waiting({required Object n}) => '${n} need you';
 
+	/// en: '1 needs you'
+	String get waitingOne => '1 needs you';
+
 	/// en: '${n} idle'
 	String idle({required Object n}) => '${n} idle';
 
-	/// en: '${n} tokens out'
-	String tokens({required Object n}) => '${n} tokens out';
+	/// en: 'Knocking on your door'
+	String get doorTitle => 'Knocking on your door';
 
-	/// en: '${out} tokens out · context ${ctx}'
-	String tokensDetail({required Object out, required Object ctx}) => '${out} tokens out · context ${ctx}';
+	/// en: '${name} (agent ${agent}) wants to talk to your agent ${target}'
+	String doorMessage({required Object name, required Object agent, required Object target}) => '${name} (agent ${agent}) wants to talk to your agent ${target}';
+
+	/// en: '${name} (agent ${agent}) wants to hand ${file} to your agent ${target}'
+	String doorFile({required Object name, required Object agent, required Object file, required Object target}) => '${name} (agent ${agent}) wants to hand ${file} to your agent ${target}';
+
+	/// en: 'Open the door'
+	String get doorOpen => 'Open the door';
+
+	/// en: 'Refuse'
+	String get doorRefuse => 'Refuse';
+
+	/// en: '${name}'s'
+	String peerOf({required Object name}) => '${name}\'s';
+
+	/// en: '${name}'s farm'
+	String peerBanner({required Object name}) => '${name}\'s farm';
+
+	/// en: 'Spent ${total} tokens'
+	String spent({required Object total}) => 'Spent ${total} tokens';
+
+	/// en: '${input} input · ${cache} cache · ${out} out'
+	String spentDetail({required Object input, required Object cache, required Object out}) => '${input} input · ${cache} cache · ${out} out';
+
+	/// en: 'context ${ctx}'
+	String context({required Object ctx}) => 'context ${ctx}';
+
+	/// en: '${n} tokens spent'
+	String spentHud({required Object n}) => '${n} tokens spent';
 
 	/// en: 'Click to open its terminal'
 	String get clickToOpen => 'Click to open its terminal';
@@ -2901,12 +3102,12 @@ class Translations$cockpit$farm$en {
 	/// en: '${n} sub-agents'
 	String subagents({required Object n}) => '${n} sub-agents';
 
-	late final Translations$cockpit$farm$activity$en activity = Translations$cockpit$farm$activity$en.internal(_root);
+	late final Translations$gsh$farm$activity$en activity = Translations$gsh$farm$activity$en.internal(_root);
 }
 
-// Path: cockpit.agentGraph
-class Translations$cockpit$agentGraph$en {
-	Translations$cockpit$agentGraph$en.internal(this._root);
+// Path: gsh.agentGraph
+class Translations$gsh$agentGraph$en {
+	Translations$gsh$agentGraph$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2972,8 +3173,8 @@ class Translations$cockpit$agentGraph$en {
 	/// en: 'e.g. Reviewer'
 	String get namePlaceholder => 'e.g. Reviewer';
 
-	/// en: 'Another tab already uses this name. Names must be unique so `cockpit msg --to` can reach it.'
-	String get nameTaken => 'Another tab already uses this name. Names must be unique so `cockpit msg --to` can reach it.';
+	/// en: 'Another tab already uses this name. Names must be unique so `gsh msg --to` can reach it.'
+	String get nameTaken => 'Another tab already uses this name. Names must be unique so `gsh msg --to` can reach it.';
 
 	/// en: 'Command'
 	String get command => 'Command';
@@ -3065,8 +3266,8 @@ class Translations$cockpit$agentGraph$en {
 	/// en: 'Integration'
 	String get integration => 'Integration';
 
-	/// en: 'GSH Desktop adds an MCP server named "cockpit" to this file and saves a backup next to it. Other servers are not touched.'
-	String get integrationHint => 'GSH Desktop adds an MCP server named "cockpit" to this file and saves a backup next to it. Other servers are not touched.';
+	/// en: 'GSH Desktop adds an MCP server named "gsh" to this file and saves a backup next to it. Other servers are not touched.'
+	String get integrationHint => 'GSH Desktop adds an MCP server named "gsh" to this file and saves a backup next to it. Other servers are not touched.';
 
 	/// en: 'Add the GSH Desktop MCP server to ${app}'s config'
 	String integrationConsent({required Object app}) => 'Add the GSH Desktop MCP server to ${app}\'s config';
@@ -3074,7 +3275,7 @@ class Translations$cockpit$agentGraph$en {
 	/// en: 'Restart ${app} if it was already open so it loads the GSH Desktop MCP server; then ask it to call wait_messages.'
 	String restartHint({required Object app}) => 'Restart ${app} if it was already open so it loads the GSH Desktop MCP server; then ask it to call wait_messages.';
 
-	late final Translations$cockpit$agentGraph$integrationError$en integrationError = Translations$cockpit$agentGraph$integrationError$en.internal(_root);
+	late final Translations$gsh$agentGraph$integrationError$en integrationError = Translations$gsh$agentGraph$integrationError$en.internal(_root);
 }
 
 // Path: settings.language
@@ -3119,6 +3320,22 @@ class Translations$settings$page$en {
 	late final Translations$settings$page$shortcuts$en shortcuts = Translations$settings$page$shortcuts$en.internal(_root);
 	late final Translations$settings$page$languages$en languages = Translations$settings$page$languages$en.internal(_root);
 	late final Translations$settings$page$automations$en automations = Translations$settings$page$automations$en.internal(_root);
+	late final Translations$settings$page$claudeCode$en claudeCode = Translations$settings$page$claudeCode$en.internal(_root);
+	late final Translations$settings$page$placeholder$en placeholder = Translations$settings$page$placeholder$en.internal(_root);
+	late final Translations$settings$page$claude$en claude = Translations$settings$page$claude$en.internal(_root);
+	late final Translations$settings$page$account$en account = Translations$settings$page$account$en.internal(_root);
+	late final Translations$settings$page$usage$en usage = Translations$settings$page$usage$en.internal(_root);
+	late final Translations$settings$page$memory$en memory = Translations$settings$page$memory$en.internal(_root);
+	late final Translations$settings$page$skills$en skills = Translations$settings$page$skills$en.internal(_root);
+	late final Translations$settings$page$connectors$en connectors = Translations$settings$page$connectors$en.internal(_root);
+	late final Translations$settings$page$plugins$en plugins = Translations$settings$page$plugins$en.internal(_root);
+	late final Translations$settings$page$developer$en developer = Translations$settings$page$developer$en.internal(_root);
+	late final Translations$settings$page$system$en system = Translations$settings$page$system$en.internal(_root);
+	late final Translations$settings$page$catalog$en catalog = Translations$settings$page$catalog$en.internal(_root);
+	late final Translations$settings$page$generalClaude$en generalClaude = Translations$settings$page$generalClaude$en.internal(_root);
+	late final Translations$settings$page$privacy$en privacy = Translations$settings$page$privacy$en.internal(_root);
+	late final Translations$settings$page$resources$en resources = Translations$settings$page$resources$en.internal(_root);
+	late final Translations$settings$page$designSystems$en designSystems = Translations$settings$page$designSystems$en.internal(_root);
 }
 
 // Path: settings.remoteHosts
@@ -3189,8 +3406,8 @@ class Translations$settings$remoteHosts$en {
 	/// en: 'How it works'
 	String get helpTitle => 'How it works';
 
-	/// en: 'GSH Desktop connects to your machine over SSH and talks to a small server that runs the terminals, files and git there. The host must have GSH Desktop (desktop) or the cockpit-server installed and running, and this device’s public key added to its ~/.ssh/authorized_keys.'
-	String get helpBody => 'GSH Desktop connects to your machine over SSH and talks to a small server that runs the terminals, files and git there. The host must have GSH Desktop (desktop) or the cockpit-server installed and running, and this device’s public key added to its ~/.ssh/authorized_keys.';
+	/// en: 'GSH Desktop connects to your machine over SSH and talks to a small server that runs the terminals, files and git there. The host must have GSH Desktop (desktop) or the gsh-server installed and running, and this device’s public key added to its ~/.ssh/authorized_keys.'
+	String get helpBody => 'GSH Desktop connects to your machine over SSH and talks to a small server that runs the terminals, files and git there. The host must have GSH Desktop (desktop) or the gsh-server installed and running, and this device’s public key added to its ~/.ssh/authorized_keys.';
 }
 
 // Path: automation.error
@@ -3361,9 +3578,9 @@ class Translations$theme$error$en {
 	String get noVariants => 'The theme declares no variant. Add "dark", "light" or both under "variants".';
 }
 
-// Path: cockpit.httpView.error
-class Translations$cockpit$httpView$error$en {
-	Translations$cockpit$httpView$error$en.internal(this._root);
+// Path: gsh.httpView.error
+class Translations$gsh$httpView$error$en {
+	Translations$gsh$httpView$error$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3400,9 +3617,9 @@ class Translations$cockpit$httpView$error$en {
 	String responseTooLarge({required Object bytes}) => 'The response is larger than the ${bytes} byte limit.';
 }
 
-// Path: cockpit.kanbanView.deleteColumnDialog
-class Translations$cockpit$kanbanView$deleteColumnDialog$en {
-	Translations$cockpit$kanbanView$deleteColumnDialog$en.internal(this._root);
+// Path: gsh.kanbanView.deleteColumnDialog
+class Translations$gsh$kanbanView$deleteColumnDialog$en {
+	Translations$gsh$kanbanView$deleteColumnDialog$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3424,9 +3641,9 @@ class Translations$cockpit$kanbanView$deleteColumnDialog$en {
 	String get emptyMessage => 'This column is empty.';
 }
 
-// Path: cockpit.gallery.dbQuery
-class Translations$cockpit$gallery$dbQuery$en {
-	Translations$cockpit$gallery$dbQuery$en.internal(this._root);
+// Path: gsh.gallery.dbQuery
+class Translations$gsh$gallery$dbQuery$en {
+	Translations$gsh$gallery$dbQuery$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3439,9 +3656,9 @@ class Translations$cockpit$gallery$dbQuery$en {
 	String get description => 'SQL editor with a result grid, using one of the registered connections.';
 }
 
-// Path: cockpit.gallery.kanban
-class Translations$cockpit$gallery$kanban$en {
-	Translations$cockpit$gallery$kanban$en.internal(this._root);
+// Path: gsh.gallery.kanban
+class Translations$gsh$gallery$kanban$en {
+	Translations$gsh$gallery$kanban$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3454,9 +3671,9 @@ class Translations$cockpit$gallery$kanban$en {
 	String get description => 'Columns and cards stored as plain markdown. Drag, edit and comment.';
 }
 
-// Path: cockpit.gallery.layout
-class Translations$cockpit$gallery$layout$en {
-	Translations$cockpit$gallery$layout$en.internal(this._root);
+// Path: gsh.gallery.layout
+class Translations$gsh$gallery$layout$en {
+	Translations$gsh$gallery$layout$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3469,9 +3686,9 @@ class Translations$cockpit$gallery$layout$en {
 	String get description => 'Terminals and splits to open in one go, like tmuxinator. Can run automatically on new worktrees.';
 }
 
-// Path: cockpit.gallery.httpRequest
-class Translations$cockpit$gallery$httpRequest$en {
-	Translations$cockpit$gallery$httpRequest$en.internal(this._root);
+// Path: gsh.gallery.httpRequest
+class Translations$gsh$gallery$httpRequest$en {
+	Translations$gsh$gallery$httpRequest$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3484,9 +3701,9 @@ class Translations$cockpit$gallery$httpRequest$en {
 	String get description => 'Write requests in a file and run them with the response next to it.';
 }
 
-// Path: cockpit.gallery.html
-class Translations$cockpit$gallery$html$en {
-	Translations$cockpit$gallery$html$en.internal(this._root);
+// Path: gsh.gallery.html
+class Translations$gsh$gallery$html$en {
+	Translations$gsh$gallery$html$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3499,9 +3716,9 @@ class Translations$cockpit$gallery$html$en {
 	String get description => 'A page the agent writes and GSH Desktop renders directly: mind maps, diagrams, charts, whatever you need.';
 }
 
-// Path: cockpit.gallery.tasks
-class Translations$cockpit$gallery$tasks$en {
-	Translations$cockpit$gallery$tasks$en.internal(this._root);
+// Path: gsh.gallery.tasks
+class Translations$gsh$gallery$tasks$en {
+	Translations$gsh$gallery$tasks$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3510,13 +3727,13 @@ class Translations$cockpit$gallery$tasks$en {
 	/// en: 'Tasks'
 	String get title => 'Tasks';
 
-	/// en: 'Commands to run from the Tasks panel, such as the dev server, tests and build. Stored in .cockpit/tasks.json.'
-	String get description => 'Commands to run from the Tasks panel, such as the dev server, tests and build. Stored in .cockpit/tasks.json.';
+	/// en: 'Commands to run from the Tasks panel, such as the dev server, tests and build. Stored in .gsh/tasks.json.'
+	String get description => 'Commands to run from the Tasks panel, such as the dev server, tests and build. Stored in .gsh/tasks.json.';
 }
 
-// Path: cockpit.gallery.notebook
-class Translations$cockpit$gallery$notebook$en {
-	Translations$cockpit$gallery$notebook$en.internal(this._root);
+// Path: gsh.gallery.notebook
+class Translations$gsh$gallery$notebook$en {
+	Translations$gsh$gallery$notebook$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3529,9 +3746,9 @@ class Translations$cockpit$gallery$notebook$en {
 	String get description => 'A folder of short notes with tags. The agent writes, you read and edit. Also opens in Obsidian.';
 }
 
-// Path: cockpit.gallery.workspaceEnv
-class Translations$cockpit$gallery$workspaceEnv$en {
-	Translations$cockpit$gallery$workspaceEnv$en.internal(this._root);
+// Path: gsh.gallery.workspaceEnv
+class Translations$gsh$gallery$workspaceEnv$en {
+	Translations$gsh$gallery$workspaceEnv$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3544,9 +3761,9 @@ class Translations$cockpit$gallery$workspaceEnv$en {
 	String get description => 'Variables injected into every terminal of this workspace. Put API tokens or logins here instead of pasting them into the agent\'s prompt. Kept out of git.';
 }
 
-// Path: cockpit.gallery.panel
-class Translations$cockpit$gallery$panel$en {
-	Translations$cockpit$gallery$panel$en.internal(this._root);
+// Path: gsh.gallery.panel
+class Translations$gsh$gallery$panel$en {
+	Translations$gsh$gallery$panel$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3559,9 +3776,9 @@ class Translations$cockpit$gallery$panel$en {
 	String get description => 'An HTML page with a bridge to the app: its buttons run GSH Desktop CLI and shell commands on this machine. A playground for quick dashboards.';
 }
 
-// Path: cockpit.notebook.format
-class Translations$cockpit$notebook$format$en {
-	Translations$cockpit$notebook$format$en.internal(this._root);
+// Path: gsh.notebook.format
+class Translations$gsh$notebook$format$en {
+	Translations$gsh$notebook$format$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3619,9 +3836,9 @@ class Translations$cockpit$notebook$format$en {
 	String get image => 'Insert image…';
 }
 
-// Path: cockpit.farm.activity
-class Translations$cockpit$farm$activity$en {
-	Translations$cockpit$farm$activity$en.internal(this._root);
+// Path: gsh.farm.activity
+class Translations$gsh$farm$activity$en {
+	Translations$gsh$farm$activity$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3661,9 +3878,9 @@ class Translations$cockpit$farm$activity$en {
 	String get done => 'done';
 }
 
-// Path: cockpit.agentGraph.integrationError
-class Translations$cockpit$agentGraph$integrationError$en {
-	Translations$cockpit$agentGraph$integrationError$en.internal(this._root);
+// Path: gsh.agentGraph.integrationError
+class Translations$gsh$agentGraph$integrationError$en {
+	Translations$gsh$agentGraph$integrationError$en.internal(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -3702,6 +3919,12 @@ class Translations$settings$page$nav$en {
 
 	// Translations
 
+	/// en: 'GSH Desktop'
+	String get sideGsh => 'GSH Desktop';
+
+	/// en: 'Claude'
+	String get sideClaude => 'Claude';
+
 	/// en: 'General'
 	String get general => 'General';
 
@@ -3725,6 +3948,56 @@ class Translations$settings$page$nav$en {
 
 	/// en: 'Remote hosts'
 	String get remoteHosts => 'Remote hosts';
+
+	/// en: 'Claude Code'
+	String get claudeCode => 'Claude Code';
+
+	/// en: 'Search'
+	String get search => 'Search';
+
+	/// en: 'Account'
+	String get account => 'Account';
+
+	/// en: 'Privacy'
+	String get privacy => 'Privacy';
+
+	/// en: 'Usage'
+	String get usage => 'Usage';
+
+	/// en: 'Resources'
+	String get resources => 'Resources';
+
+	/// en: 'Memory'
+	String get memory => 'Memory';
+
+	/// en: 'Design systems'
+	String get designSystems => 'Design systems';
+
+	/// en: 'Cowork'
+	String get cowork => 'Cowork';
+
+	/// en: 'System'
+	String get system => 'System';
+
+	/// en: 'Extensions'
+	String get extensions => 'Extensions';
+
+	/// en: 'Developer'
+	String get developer => 'Developer';
+
+	/// en: 'Skills'
+	String get skills => 'Skills';
+
+	/// en: 'Connectors'
+	String get connectors => 'Connectors';
+
+	/// en: 'Plugins'
+	String get plugins => 'Plugins';
+
+	/// en: 'API keys'
+	String get apiKeys => 'API keys';
+
+	late final Translations$settings$page$nav$groups$en groups = Translations$settings$page$nav$groups$en.internal(_root);
 }
 
 // Path: settings.page.general
@@ -3742,7 +4015,7 @@ class Translations$settings$page$general$en {
 	String get editorEngineTitle => 'Engine';
 
 	/// en: 'GSH Desktop (default)'
-	String get editorEngineCockpit => 'GSH Desktop (default)';
+	String get editorEngineGsh => 'GSH Desktop (default)';
 
 	/// en: 'Neovim'
 	String get editorEngineNeovim => 'Neovim';
@@ -3757,10 +4030,10 @@ class Translations$settings$page$general$en {
 	String get neovimRefresh => 'Check again';
 
 	/// en: 'Show GSH Desktop terminal'
-	String get showCockpitTitle => 'Show GSH Desktop terminal';
+	String get showGshTitle => 'Show GSH Desktop terminal';
 
 	/// en: 'Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.'
-	String get showCockpitDesc => 'Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.';
+	String get showGshDesc => 'Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.';
 
 	/// en: 'Launch at login'
 	String get launchAtStartupTitle => 'Launch at login';
@@ -3888,7 +4161,7 @@ class Translations$settings$page$storage$en {
 	String get later => 'Later';
 
 	/// en: 'Quit GSH Desktop'
-	String get quitCockpit => 'Quit GSH Desktop';
+	String get quitGsh => 'Quit GSH Desktop';
 
 	/// en: 'Choose a folder for GSH Desktop data'
 	String get chooseFolderDialogTitle => 'Choose a folder for GSH Desktop data';
@@ -4305,6 +4578,918 @@ class Translations$settings$page$automations$en {
 	String get recommendedSuffix => 'Recommended';
 }
 
+// Path: settings.page.claudeCode
+class Translations$settings$page$claudeCode$en {
+	Translations$settings$page$claudeCode$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'General'
+	String get sectionGeneral => 'General';
+
+	/// en: 'Classify session states'
+	String get classifyTitle => 'Classify session states';
+
+	/// en: 'Show in the chat header the state Claude Code assigns at the end of each turn: completed, ready for review or blocked. Claude Code classifies either way; turning this off only hides the badge.'
+	String get classifyDesc => 'Show in the chat header the state Claude Code assigns at the end of each turn: completed, ready for review or blocked. Claude Code classifies either way; turning this off only hides the badge.';
+
+	/// en: 'Switch models when a message is flagged'
+	String get switchModelsTitle => 'Switch models when a message is flagged';
+
+	/// en: 'When safeguards flag a message, automatically switch to a different model to keep the conversation going. When off, your session pauses instead. Saved in ~/.claude/settings.json (switchModelsOnFlag).'
+	String get switchModelsDesc => 'When safeguards flag a message, automatically switch to a different model to keep the conversation going. When off, your session pauses instead. Saved in ~/.claude/settings.json (switchModelsOnFlag).';
+
+	/// en: 'Code appearance'
+	String get sectionCodeAppearance => 'Code appearance';
+
+	/// en: 'From the active theme'
+	String get followTheme => 'From the active theme';
+
+	/// en: 'Code colors in light mode'
+	String get codeThemeLightHint => 'Code colors in light mode';
+
+	/// en: 'Code colors in dark mode'
+	String get codeThemeDarkHint => 'Code colors in dark mode';
+
+	/// en: 'Code font'
+	String get codeFontTitle => 'Code font';
+
+	/// en: 'A custom monospaced font for code: viewer, editor, diffs and the chat's code blocks. The terminal has its own font under Appearance.'
+	String get codeFontDesc => 'A custom monospaced font for code: viewer, editor, diffs and the chat\'s code blocks. The terminal has its own font under Appearance.';
+
+	/// en: 'e.g. JetBrains Mono'
+	String get codeFontPlaceholder => 'e.g. JetBrains Mono';
+
+	/// en: 'Appearance'
+	String get sectionAppearance => 'Appearance';
+
+	/// en: 'Default transcript view'
+	String get transcriptTitle => 'Default transcript view';
+
+	/// en: 'The view new chat conversations open with. Conversations already open keep theirs.'
+	String get transcriptDesc => 'The view new chat conversations open with. Conversations already open keep theirs.';
+
+	/// en: 'Normal'
+	String get viewNormal => 'Normal';
+
+	/// en: 'Thinking'
+	String get viewThinking => 'Thinking';
+
+	/// en: 'Verbose'
+	String get viewVerbose => 'Verbose';
+
+	/// en: 'Remote Control'
+	String get sectionRemoteControl => 'Remote Control';
+
+	/// en: 'Chat with Remote Control (experimental)'
+	String get chatRemoteControlTitle => 'Chat with Remote Control (experimental)';
+
+	/// en: 'The GSH chat runs the interactive claude in a hidden terminal, connected to Remote Control: the conversation shows up on your phone and at claude.ai/code, and other machines' sessions can see it. Replies arrive per message (no letter-by-letter streaming). Applies to chats opened after the change; turn it off to go back to the fast engine.'
+	String get chatRemoteControlDesc => 'The GSH chat runs the interactive claude in a hidden terminal, connected to Remote Control: the conversation shows up on your phone and at claude.ai/code, and other machines\' sessions can see it. Replies arrive per message (no letter-by-letter streaming). Applies to chats opened after the change; turn it off to go back to the fast engine.';
+
+	/// en: 'Connect new sessions to Remote Control'
+	String get remoteControlTitle => 'Connect new sessions to Remote Control';
+
+	/// en: 'Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).'
+	String get remoteControlDesc => 'Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).';
+
+	/// en: 'Couldn't save: ${detail}'
+	String saveFailed({required Object detail}) => 'Couldn\'t save: ${detail}';
+
+	/// en: 'Sessions'
+	String get sectionSessions => 'Sessions';
+
+	/// en: 'Prompt suggestions'
+	String get promptSuggestionsTitle => 'Prompt suggestions';
+
+	/// en: 'Show a suggested next prompt after Claude answers. Suggestions use a bit of your usage.'
+	String get promptSuggestionsDesc => 'Show a suggested next prompt after Claude answers. Suggestions use a bit of your usage.';
+
+	/// en: 'Output style'
+	String get outputStyleTitle => 'Output style';
+
+	/// en: 'How Claude structures answers in Code sessions. Applies to new sessions.'
+	String get outputStyleDesc => 'How Claude structures answers in Code sessions. Applies to new sessions.';
+
+	/// en: 'Default'
+	String get outputStyleDefault => 'Default';
+
+	/// en: 'Messages from other sessions'
+	String get crossSessionTitle => 'Messages from other sessions';
+
+	/// en: 'What to do when another Claude Code session sends this one a message (SendMessage). GSH sets Accept for every session on this machine; Hold parks it for your approval, Refuse drops it. Saved as crossSessionInbound.'
+	String get crossSessionDesc => 'What to do when another Claude Code session sends this one a message (SendMessage). GSH sets Accept for every session on this machine; Hold parks it for your approval, Refuse drops it. Saved as crossSessionInbound.';
+
+	/// en: 'Default'
+	String get crossSessionDefault => 'Default';
+
+	/// en: 'Accept'
+	String get crossSessionAccept => 'Accept';
+
+	/// en: 'Hold for approval'
+	String get crossSessionHold => 'Hold for approval';
+
+	/// en: 'Refuse'
+	String get crossSessionRefuse => 'Refuse';
+
+	/// en: 'Local sandbox'
+	String get sandboxTitle => 'Local sandbox';
+
+	/// en: 'Runs Claude Code bash commands inside an isolated sandbox. Applies to new sessions.'
+	String get sandboxDesc => 'Runs Claude Code bash commands inside an isolated sandbox. Applies to new sessions.';
+
+	/// en: 'Strict sandbox mode'
+	String get sandboxStrictTitle => 'Strict sandbox mode';
+
+	/// en: 'Blocks commands that cannot run inside the sandbox instead of running them outside it.'
+	String get sandboxStrictDesc => 'Blocks commands that cannot run inside the sandbox instead of running them outside it.';
+
+	/// en: 'Security'
+	String get sectionSecurity => 'Security';
+
+	/// en: 'Protected hosts'
+	String get protectedHostsTitle => 'Protected hosts';
+
+	/// en: 'Hosts no agent may touch from a command: ssh, scp, remote workspace, anything that names them. GSH blocks the command before it runs, in every Claude Code and Codex session on this machine, and tells the agent to ask you. Comma-separated; whole words (prod blocks "ssh prod" and "prod.x.com", not "production"). Saved in ~/.gsh/protected-hosts.json.'
+	String get protectedHostsDesc => 'Hosts no agent may touch from a command: ssh, scp, remote workspace, anything that names them. GSH blocks the command before it runs, in every Claude Code and Codex session on this machine, and tells the agent to ask you. Comma-separated; whole words (prod blocks "ssh prod" and "prod.x.com", not "production"). Saved in ~/.gsh/protected-hosts.json.';
+
+	/// en: 'Browser'
+	String get sectionBrowser => 'Browser';
+
+	/// en: 'Open links in the built-in browser'
+	String get linksInAppTitle => 'Open links in the built-in browser';
+
+	/// en: 'Links clicked in terminals open in a GSH browser tab instead of your default browser.'
+	String get linksInAppDesc => 'Links clicked in terminals open in a GSH browser tab instead of your default browser.';
+}
+
+// Path: settings.page.placeholder
+class Translations$settings$page$placeholder$en {
+	Translations$settings$page$placeholder$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Cowork is a Claude Desktop feature (tasks that run on this computer with local files, browser and MCPs).'
+	String get cowork1 => 'Cowork is a Claude Desktop feature (tasks that run on this computer with local files, browser and MCPs).';
+
+	/// en: 'In GSH the equivalent is the Claude chat in a workspace and the Farm, where agent loops run in terminals.'
+	String get cowork2 => 'In GSH the equivalent is the Claude chat in a workspace and the Farm, where agent loops run in terminals.';
+
+	/// en: 'Let Claude work directly with apps, data and tools on your computer.'
+	String get extensionsDesc => 'Let Claude work directly with apps, data and tools on your computer.';
+
+	/// en: 'No extension installed'
+	String get extensionsEmpty => 'No extension installed';
+
+	/// en: '.MCPB/.DXT extensions belong to Claude Desktop. In GSH, MCP servers live under Connectors and Developer.'
+	String get extensions => '.MCPB/.DXT extensions belong to Claude Desktop. In GSH, MCP servers live under Connectors and Developer.';
+}
+
+// Path: settings.page.claude
+class Translations$settings$page$claude$en {
+	Translations$settings$page$claude$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Refresh'
+	String get refresh => 'Refresh';
+
+	/// en: 'Loading…'
+	String get loading => 'Loading…';
+
+	/// en: 'Open a terminal'
+	String get terminalTitle => 'Open a terminal';
+
+	/// en: 'Open a local workspace first: this runs the `claude` CLI in one of its terminals so you can follow it.'
+	String get noWorkspace => 'Open a local workspace first: this runs the `claude` CLI in one of its terminals so you can follow it.';
+
+	/// en: 'Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec'
+	String get months => 'Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec';
+
+	/// en: 'Mon|Tue|Wed|Thu|Fri|Sat|Sun'
+	String get weekdays => 'Mon|Tue|Wed|Thu|Fri|Sat|Sun';
+
+	/// en: '${month} ${day}'
+	String dateShort({required Object month, required Object day}) => '${month} ${day}';
+
+	late final Translations$settings$page$claude$error$en error = Translations$settings$page$claude$error$en.internal(_root);
+}
+
+// Path: settings.page.account
+class Translations$settings$page$account$en {
+	Translations$settings$page$account$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Account'
+	String get title => 'Account';
+
+	/// en: 'Profile'
+	String get profile => 'Profile';
+
+	/// en: 'Instructions for Claude'
+	String get instructions => 'Instructions for Claude';
+
+	/// en: 'Saved in ~/.claude/CLAUDE.md: Claude Code loads it in every session on this computer.'
+	String get instructionsDesc => 'Saved in ~/.claude/CLAUDE.md: Claude Code loads it in every session on this computer.';
+
+	/// en: 'e.g. keep explanations short and direct'
+	String get instructionsHint => 'e.g. keep explanations short and direct';
+
+	/// en: 'Signed in'
+	String get loggedIn => 'Signed in';
+
+	/// en: 'Signed out'
+	String get loggedOut => 'Signed out';
+
+	/// en: 'Claude Code on this computer uses this account.'
+	String get loggedInDesc => 'Claude Code on this computer uses this account.';
+
+	/// en: 'Sign in to use your Claude subscription in Claude Code.'
+	String get loggedOutDesc => 'Sign in to use your Claude subscription in Claude Code.';
+
+	/// en: 'Sign in'
+	String get login => 'Sign in';
+
+	/// en: 'Sign out'
+	String get logout => 'Sign out';
+
+	/// en: 'Sign out of Claude Code?'
+	String get logoutConfirmTitle => 'Sign out of Claude Code?';
+
+	/// en: 'Runs `claude auth logout`. Sessions on this computer stop using your subscription until you sign in again.'
+	String get logoutConfirmMessage => 'Runs `claude auth logout`. Sessions on this computer stop using your subscription until you sign in again.';
+
+	/// en: 'Email'
+	String get email => 'Email';
+
+	/// en: 'Organization'
+	String get organization => 'Organization';
+
+	/// en: 'Organization ID'
+	String get orgId => 'Organization ID';
+
+	/// en: 'Plan'
+	String get plan => 'Plan';
+
+	/// en: 'Sign-in method'
+	String get method => 'Sign-in method';
+}
+
+// Path: settings.page.usage
+class Translations$settings$page$usage$en {
+	Translations$settings$page$usage$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Your usage limits'
+	String get title => 'Your usage limits';
+
+	/// en: 'Weekly limits'
+	String get weeklyTitle => 'Weekly limits';
+
+	/// en: 'Plan limits do not apply to this sign-in (API key or third-party provider).'
+	String get unavailable => 'Plan limits do not apply to this sign-in (API key or third-party provider).';
+
+	/// en: 'Current session'
+	String get windowSession => 'Current session';
+
+	/// en: 'All models'
+	String get windowWeekly => 'All models';
+
+	/// en: 'Resets in ${when}'
+	String resetsIn({required Object when}) => 'Resets in ${when}';
+
+	/// en: 'Resets ${when}'
+	String resetsAt({required Object when}) => 'Resets ${when}';
+
+	/// en: '${pct}% used'
+	String percentUsed({required Object pct}) => '${pct}% used';
+
+	/// en: 'Last updated: ${when}'
+	String updated({required Object when}) => 'Last updated: ${when}';
+
+	/// en: 'less than a minute ago'
+	String get justNow => 'less than a minute ago';
+
+	/// en: '${n} min ago'
+	String minutesAgo({required Object n}) => '${n} min ago';
+
+	/// en: '${m} min'
+	String minutes({required Object m}) => '${m} min';
+
+	/// en: '${h} h ${m} min'
+	String hoursMinutes({required Object h, required Object m}) => '${h} h ${m} min';
+
+	late final Translations$settings$page$usage$plans$en plans = Translations$settings$page$usage$plans$en.internal(_root);
+}
+
+// Path: settings.page.memory
+class Translations$settings$page$memory$en {
+	Translations$settings$page$memory$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Memory'
+	String get title => 'Memory';
+
+	/// en: 'What a Claude Code session in the active workspace loads: your instructions and the memory Claude writes on its own. Click to open the file.'
+	String get intro => 'What a Claude Code session in the active workspace loads: your instructions and the memory Claude writes on its own. Click to open the file.';
+
+	/// en: 'Instructions'
+	String get instructionsTitle => 'Instructions';
+
+	/// en: 'Auto memory'
+	String get autoTitle => 'Auto memory';
+
+	/// en: 'No CLAUDE.md found.'
+	String get empty => 'No CLAUDE.md found.';
+
+	/// en: 'Claude has not saved memories for this workspace yet.'
+	String get autoEmpty => 'Claude has not saved memories for this workspace yet.';
+
+	/// en: 'User (all projects)'
+	String get scopeUser => 'User (all projects)';
+
+	/// en: 'Project'
+	String get scopeProject => 'Project';
+
+	/// en: 'Updated ${when}'
+	String updated({required Object when}) => 'Updated ${when}';
+}
+
+// Path: settings.page.skills
+class Translations$settings$page$skills$en {
+	Translations$settings$page$skills$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Created by you'
+	String get groupUser => 'Created by you';
+
+	/// en: 'From this project'
+	String get groupProject => 'From this project';
+
+	/// en: 'From plugins'
+	String get groupPlugins => 'From plugins';
+
+	/// en: 'by you'
+	String get byYou => 'by you';
+
+	/// en: 'project'
+	String get byProject => 'project';
+
+	/// en: 'No skills installed.'
+	String get empty => 'No skills installed.';
+}
+
+// Path: settings.page.connectors
+class Translations$settings$page$connectors$en {
+	Translations$settings$page$connectors$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Checking each server… this can take a few seconds.'
+	String get checking => 'Checking each server… this can take a few seconds.';
+
+	/// en: 'No MCP server configured.'
+	String get empty => 'No MCP server configured.';
+
+	/// en: 'Add MCP server'
+	String get addServer => 'Add MCP server';
+
+	/// en: 'Connector'
+	String get colConnector => 'Connector';
+
+	/// en: 'Type'
+	String get colType => 'Type';
+
+	/// en: 'Status'
+	String get colStatus => 'Status';
+
+	/// en: 'Provided by the plugin ${plugin}'
+	String fromPlugin({required Object plugin}) => 'Provided by the plugin ${plugin}';
+
+	/// en: 'Web'
+	String get typeWeb => 'Web';
+
+	/// en: 'Local'
+	String get typeLocal => 'Local';
+
+	/// en: 'Plugin'
+	String get originPlugin => 'Plugin';
+
+	/// en: 'Connect'
+	String get link => 'Connect';
+
+	/// en: 'The claude.ai connector directory has no public API, so GSH does not list it. Add any MCP server here: GSH runs `claude mcp add` in a terminal.'
+	String get discoverIntro => 'The claude.ai connector directory has no public API, so GSH does not list it. Add any MCP server here: GSH runs `claude mcp add` in a terminal.';
+
+	/// en: 'Name'
+	String get formName => 'Name';
+
+	/// en: 'Type'
+	String get formType => 'Type';
+
+	/// en: 'URL'
+	String get formUrl => 'URL';
+
+	/// en: 'Command'
+	String get formCommand => 'Command';
+
+	/// en: 'Scope'
+	String get formScope => 'Scope';
+
+	/// en: 'User = every project; Local = only the project of the terminal.'
+	String get formScopeDesc => 'User = every project; Local = only the project of the terminal.';
+
+	/// en: 'User'
+	String get scopeUser => 'User';
+
+	/// en: 'Local'
+	String get scopeLocal => 'Local';
+
+	/// en: 'MCP docs'
+	String get docs => 'MCP docs';
+
+	/// en: 'Add in terminal'
+	String get addInTerminal => 'Add in terminal';
+
+	late final Translations$settings$page$connectors$status$en status = Translations$settings$page$connectors$status$en.internal(_root);
+}
+
+// Path: settings.page.plugins
+class Translations$settings$page$plugins$en {
+	Translations$settings$page$plugins$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Search skills and plugins'
+	String get search => 'Search skills and plugins';
+
+	/// en: 'In this project'
+	String get groupProject => 'In this project';
+
+	/// en: 'From the marketplaces you added'
+	String get groupMarketplaces => 'From the marketplaces you added';
+
+	/// en: 'Open a workspace to see the plugins enabled in it.'
+	String get noWorkspace => 'Open a workspace to see the plugins enabled in it.';
+
+	/// en: 'No plugin enabled in .claude/settings.json of this project.'
+	String get projectEmpty => 'No plugin enabled in .claude/settings.json of this project.';
+
+	/// en: 'No plugins installed.'
+	String get empty => 'No plugins installed.';
+
+	/// en: 'Disabled'
+	String get disabled => 'Disabled';
+}
+
+// Path: settings.page.developer
+class Translations$settings$page$developer$en {
+	Translations$settings$page$developer$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Developer'
+	String get title => 'Developer';
+
+	/// en: 'Local MCP servers'
+	String get mcpTitle => 'Local MCP servers';
+
+	/// en: 'stdio MCP servers that Claude Code starts on this computer. They are configured in ~/.claude.json.'
+	String get mcpDesc => 'stdio MCP servers that Claude Code starts on this computer. They are configured in ~/.claude.json.';
+
+	/// en: 'No local MCP server.'
+	String get mcpEmpty => 'No local MCP server.';
+
+	/// en: 'Edit configuration'
+	String get editConfig => 'Edit configuration';
+
+	/// en: 'Command'
+	String get command => 'Command';
+
+	/// en: 'Arguments'
+	String get arguments => 'Arguments';
+
+	/// en: 'Error'
+	String get error => 'Error';
+
+	/// en: 'Telemetry'
+	String get telemetryTitle => 'Telemetry';
+
+	/// en: 'Errors and logs from workspace processes are in the shell Telemetry panel; with developer mode on it also shows GSH Desktop’s own.'
+	String get telemetryDesc => 'Errors and logs from workspace processes are in the shell Telemetry panel; with developer mode on it also shows GSH Desktop’s own.';
+
+	/// en: 'Claude Code settings file'
+	String get claudeSettingsTitle => 'Claude Code settings file';
+
+	/// en: '~/.claude/settings.json — permissions, hooks, environment and model.'
+	String get claudeSettingsDesc => '~/.claude/settings.json — permissions, hooks, environment and model.';
+
+	/// en: 'Want an API key?'
+	String get apiKeyTitle => 'Want an API key?';
+
+	/// en: 'Create keys and check usage in the Claude Console. It needs another account and API usage is billed separately.'
+	String get apiKeyDesc => 'Create keys and check usage in the Claude Console. It needs another account and API usage is billed separately.';
+
+	/// en: 'Go to the Console'
+	String get apiKeyButton => 'Go to the Console';
+}
+
+// Path: settings.page.system
+class Translations$settings$page$system$en {
+	Translations$settings$page$system$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'System'
+	String get title => 'System';
+
+	/// en: 'App version'
+	String get version => 'App version';
+
+	/// en: 'Keep computer awake'
+	String get keepAwakeTitle => 'Keep computer awake';
+
+	/// en: 'Prevents idle sleep while on (same as the bolt button in the rail). Turns off when the app closes; closing the lid still sleeps.'
+	String get keepAwakeDesc => 'Prevents idle sleep while on (same as the bolt button in the rail). Turns off when the app closes; closing the lid still sleeps.';
+}
+
+// Path: settings.page.catalog
+class Translations$settings$page$catalog$en {
+	Translations$settings$page$catalog$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Mine'
+	String get mine => 'Mine';
+
+	/// en: 'Discover'
+	String get discover => 'Discover';
+
+	/// en: 'Add'
+	String get add => 'Add';
+
+	/// en: 'All'
+	String get all => 'All';
+
+	/// en: 'by ${author}'
+	String by({required Object author}) => 'by ${author}';
+
+	/// en: 'New skill…'
+	String get newSkill => 'New skill…';
+
+	/// en: 'Add marketplace…'
+	String get addMarketplace => 'Add marketplace…';
+}
+
+// Path: settings.page.generalClaude
+class Translations$settings$page$generalClaude$en {
+	Translations$settings$page$generalClaude$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Appearance'
+	String get sectionAppearance => 'Appearance';
+
+	/// en: 'Theme'
+	String get theme => 'Theme';
+
+	/// en: 'System'
+	String get themeSystem => 'System';
+
+	/// en: 'Light'
+	String get themeLight => 'Light';
+
+	/// en: 'Dark'
+	String get themeDark => 'Dark';
+
+	/// en: 'Interface font'
+	String get uiFont => 'Interface font';
+
+	/// en: 'Font for the whole interface — menus, sidebars and panels.'
+	String get uiFontDesc => 'Font for the whole interface — menus, sidebars and panels.';
+
+	/// en: 'Chat font'
+	String get chatFont => 'Chat font';
+
+	/// en: 'Text of the Claude chat conversation.'
+	String get chatFontDesc => 'Text of the Claude chat conversation.';
+
+	/// en: 'Same as the interface'
+	String get chatFontDefault => 'Same as the interface';
+
+	/// en: 'Text size'
+	String get textSize => 'Text size';
+
+	/// en: 'Base text size of the app (the same setting as in Appearance).'
+	String get textSizeDesc => 'Base text size of the app (the same setting as in Appearance).';
+
+	/// en: 'Small'
+	String get sizeSmall => 'Small';
+
+	/// en: 'Medium'
+	String get sizeMedium => 'Medium';
+
+	/// en: 'Large'
+	String get sizeLarge => 'Large';
+
+	/// en: 'Transcript width'
+	String get transcriptWidth => 'Transcript width';
+
+	/// en: 'Maximum width of the chat transcript and message box.'
+	String get transcriptWidthDesc => 'Maximum width of the chat transcript and message box.';
+
+	/// en: 'Narrow'
+	String get widthNarrow => 'Narrow';
+
+	/// en: 'Medium'
+	String get widthMedium => 'Medium';
+
+	/// en: 'Wide'
+	String get widthWide => 'Wide';
+
+	/// en: 'Reduced motion'
+	String get reducedMotion => 'Reduced motion';
+
+	/// en: 'Fewer animations in Claude Code (spinner shimmer, flashes). Saved as prefersReducedMotion in ~/.claude/settings.json.'
+	String get reducedMotionDesc => 'Fewer animations in Claude Code (spinner shimmer, flashes). Saved as prefersReducedMotion in ~/.claude/settings.json.';
+
+	/// en: 'Notifications'
+	String get sectionNotifications => 'Notifications';
+
+	/// en: 'Response completion'
+	String get notifyTurnDone => 'Response completion';
+
+	/// en: 'Get a notification when an agent finishes a response and the window is not focused.'
+	String get notifyTurnDoneDesc => 'Get a notification when an agent finishes a response and the window is not focused.';
+
+	/// en: 'Code permission requests'
+	String get notifyPermission => 'Code permission requests';
+
+	/// en: 'Play a sound when an agent is waiting for your approval or answer.'
+	String get notifyPermissionDesc => 'Play a sound when an agent is waiting for your approval or answer.';
+
+	/// en: 'Push to phone when input is needed'
+	String get pushInputNeeded => 'Push to phone when input is needed';
+
+	/// en: 'Claude Code sends a push when a permission prompt or question is waiting (inputNeededNotifEnabled).'
+	String get pushInputNeededDesc => 'Claude Code sends a push when a permission prompt or question is waiting (inputNeededNotifEnabled).';
+
+	/// en: 'Proactive phone notifications'
+	String get pushAgent => 'Proactive phone notifications';
+
+	/// en: 'Let Claude push important session updates to your phone (agentPushNotifEnabled).'
+	String get pushAgentDesc => 'Let Claude push important session updates to your phone (agentPushNotifEnabled).';
+}
+
+// Path: settings.page.privacy
+class Translations$settings$page$privacy$en {
+	Translations$settings$page$privacy$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Data'
+	String get title => 'Data';
+
+	/// en: 'GSH telemetry'
+	String get gshTelemetry => 'GSH telemetry';
+
+	/// en: 'Local only: errors and logs stay in SQLite on this computer and are never sent anywhere.'
+	String get gshTelemetryDesc => 'Local only: errors and logs stay in SQLite on this computer and are never sent anywhere.';
+
+	/// en: 'Turn off Claude Code telemetry'
+	String get ccTelemetry => 'Turn off Claude Code telemetry';
+
+	/// en: 'Sets DISABLE_TELEMETRY in the env of ~/.claude/settings.json (usage metrics are not sent).'
+	String get ccTelemetryDesc => 'Sets DISABLE_TELEMETRY in the env of ~/.claude/settings.json (usage metrics are not sent).';
+
+	/// en: 'Turn off Claude Code error reports'
+	String get ccErrors => 'Turn off Claude Code error reports';
+
+	/// en: 'Sets DISABLE_ERROR_REPORTING in the env of ~/.claude/settings.json.'
+	String get ccErrorsDesc => 'Sets DISABLE_ERROR_REPORTING in the env of ~/.claude/settings.json.';
+}
+
+// Path: settings.page.resources
+class Translations$settings$page$resources$en {
+	Translations$settings$page$resources$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'General'
+	String get sectionGeneral => 'General';
+
+	/// en: 'GSH features'
+	String get sectionShell => 'GSH features';
+
+	/// en: 'Chat with Claude (beta)'
+	String get chat => 'Chat with Claude (beta)';
+
+	/// en: 'Chat button in the workspace bar (Claude Code in stream-json).'
+	String get chatDesc => 'Chat button in the workspace bar (Claude Code in stream-json).';
+
+	/// en: 'Farm'
+	String get farm => 'Farm';
+
+	/// en: 'Agent loops read from Claude Code transcripts.'
+	String get farmDesc => 'Agent loops read from Claude Code transcripts.';
+
+	/// en: 'Team farm'
+	String get sectionTeamFarm => 'Team farm';
+
+	/// en: 'See your teammates' farms'
+	String get teamFarm => 'See your teammates\' farms';
+
+	/// en: 'On the same network (e.g. at the office), each GSH announces its own farm and shows your teammates' next to yours — zoom out to see them. No server: nothing leaves the local network. Off, nothing leaves your GSH.'
+	String get teamFarmDesc => 'On the same network (e.g. at the office), each GSH announces its own farm and shows your teammates\' next to yours — zoom out to see them. No server: nothing leaves the local network. Off, nothing leaves your GSH.';
+
+	/// en: 'Team'
+	String get teamName => 'Team';
+
+	/// en: 'Only people using the same team name see each other.'
+	String get teamNameDesc => 'Only people using the same team name see each other.';
+
+	/// en: 'e.g. gorila'
+	String get teamNamePlaceholder => 'e.g. gorila';
+
+	/// en: 'Your name'
+	String get teamMe => 'Your name';
+
+	/// en: 'Shown above your farm to your teammates.'
+	String get teamMeDesc => 'Shown above your farm to your teammates.';
+
+	/// en: 'Show session titles'
+	String get teamShowTitles => 'Show session titles';
+
+	/// en: 'Titles may contain bits of your prompts. Off, teammates only see each agent's folder, status and tokens.'
+	String get teamShowTitlesDesc => 'Titles may contain bits of your prompts. Off, teammates only see each agent\'s folder, status and tokens.';
+
+	/// en: 'Team password'
+	String get teamSecret => 'Team password';
+
+	/// en: 'Turns on agent-to-agent messaging: your agent can send messages and files to your teammates' agents, and theirs to yours. Everyone on the team uses the same password; without it, nobody knocks on your door (and farms without it don't show up).'
+	String get teamSecretDesc => 'Turns on agent-to-agent messaging: your agent can send messages and files to your teammates\' agents, and theirs to yours. Everyone on the team uses the same password; without it, nobody knocks on your door (and farms without it don\'t show up).';
+
+	/// en: 'agree on a password'
+	String get teamSecretPlaceholder => 'agree on a password';
+
+	/// en: 'Who can knock'
+	String get teamDoorAllow => 'Who can knock';
+
+	/// en: 'Teammates' names, comma separated. Empty = the whole team.'
+	String get teamDoorAllowDesc => 'Teammates\' names, comma separated. Empty = the whole team.';
+
+	/// en: 'whole team'
+	String get teamDoorAllowPlaceholder => 'whole team';
+
+	/// en: 'Ask before opening the door'
+	String get teamDoorAsk => 'Ask before opening the door';
+
+	/// en: 'When a teammate sends something to one of your agents, GSH asks you before handing it over. Off, your agent gets it directly, marked as information from a teammate (not as an order from you).'
+	String get teamDoorAskDesc => 'When a teammate sends something to one of your agents, GSH asks you before handing it over. Off, your agent gets it directly, marked as information from a teammate (not as an order from you).';
+
+	/// en: 'Work network'
+	String get teamNetwork => 'Work network';
+
+	/// en: 'The office network's IP range (e.g. 192.168.10.0/24). When set, GSH only announces and listens while you're on it.'
+	String get teamNetworkDesc => 'The office network\'s IP range (e.g. 192.168.10.0/24). When set, GSH only announces and listens while you\'re on it.';
+
+	/// en: 'any local network'
+	String get teamNetworkPlaceholder => 'any local network';
+
+	/// en: 'Farm scenery'
+	String get farmScenery => 'Farm scenery';
+
+	/// en: 'Where the agents live: the farm or a pixel art office.'
+	String get farmSceneryDesc => 'Where the agents live: the farm or a pixel art office.';
+
+	/// en: 'Farm'
+	String get sceneryFarm => 'Farm';
+
+	/// en: 'Office'
+	String get sceneryOffice => 'Office';
+
+	/// en: 'Agent graph'
+	String get graph => 'Agent graph';
+
+	/// en: 'Visualize the agents of the workspace and who talks to whom.'
+	String get graphDesc => 'Visualize the agents of the workspace and who talks to whom.';
+
+	/// en: 'Built-in browser'
+	String get browser => 'Built-in browser';
+
+	/// en: '"Browser" tab in the pane menu (where the platform has an inline webview).'
+	String get browserDesc => '"Browser" tab in the pane menu (where the platform has an inline webview).';
+
+	/// en: 'Skills moved to '
+	String get skillsMoved => 'Skills moved to ';
+}
+
+// Path: settings.page.designSystems
+class Translations$settings$page$designSystems$en {
+	Translations$settings$page$designSystems$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Design systems'
+	String get title => 'Design systems';
+
+	/// en: 'In GSH these are the themes: interface, terminal and code colors in one package.'
+	String get desc => 'In GSH these are the themes: interface, terminal and code colors in one package.';
+
+	/// en: 'New design system'
+	String get add => 'New design system';
+
+	/// en: 'Search by name'
+	String get search => 'Search by name';
+
+	/// en: 'Showing ${n} of ${total}'
+	String showing({required Object n, required Object total}) => 'Showing ${n} of ${total}';
+
+	/// en: 'Name'
+	String get colName => 'Name';
+
+	/// en: 'Origin'
+	String get colOrigin => 'Origin';
+
+	/// en: 'Author'
+	String get colAuthor => 'Author';
+
+	/// en: 'Active'
+	String get active => 'Active';
+
+	/// en: 'Imported'
+	String get imported => 'Imported';
+
+	/// en: 'Built-in'
+	String get builtIn => 'Built-in';
+
+	/// en: 'Use this theme'
+	String get activate => 'Use this theme';
+
+	/// en: 'Remove'
+	String get remove => 'Remove';
+}
+
+// Path: settings.page.nav.groups
+class Translations$settings$page$nav$groups$en {
+	Translations$settings$page$nav$groups$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Settings'
+	String get settings => 'Settings';
+
+	/// en: 'This computer'
+	String get thisComputer => 'This computer';
+
+	/// en: 'Personalization'
+	String get personalization => 'Personalization';
+
+	/// en: 'Platform'
+	String get platform => 'Platform';
+
+	/// en: 'GSH Desktop'
+	String get app => 'GSH Desktop';
+}
+
 // Path: settings.page.general.updateFrequency
 class Translations$settings$page$general$updateFrequency$en {
 	Translations$settings$page$general$updateFrequency$en.internal(this._root);
@@ -4324,6 +5509,69 @@ class Translations$settings$page$general$updateFrequency$en {
 
 	/// en: 'Never'
 	String get never => 'Never';
+}
+
+// Path: settings.page.claude.error
+class Translations$settings$page$claude$error$en {
+	Translations$settings$page$claude$error$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Claude Code CLI (`claude`) not found on this computer.'
+	String get cliMissing => 'Claude Code CLI (`claude`) not found on this computer.';
+
+	/// en: 'The `claude` CLI took too long to answer.'
+	String get timeout => 'The `claude` CLI took too long to answer.';
+
+	/// en: 'The `claude` CLI failed: ${detail}'
+	String failed({required Object detail}) => 'The `claude` CLI failed: ${detail}';
+}
+
+// Path: settings.page.usage.plans
+class Translations$settings$page$usage$plans$en {
+	Translations$settings$page$usage$plans$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Pro'
+	String get pro => 'Pro';
+
+	/// en: 'Max'
+	String get max => 'Max';
+
+	/// en: 'Team'
+	String get team => 'Team';
+
+	/// en: 'Enterprise'
+	String get enterprise => 'Enterprise';
+}
+
+// Path: settings.page.connectors.status
+class Translations$settings$page$connectors$status$en {
+	Translations$settings$page$connectors$status$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Connected'
+	String get connected => 'Connected';
+
+	/// en: 'Needs authentication'
+	String get needsAuth => 'Needs authentication';
+
+	/// en: 'Failed'
+	String get failed => 'Failed';
+
+	/// en: 'Pending approval'
+	String get pending => 'Pending approval';
+
+	/// en: 'Unknown'
+	String get unknown => 'Unknown';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -4364,6 +5612,8 @@ extension on Translations {
 			'core.menu.checkForUpdates' => 'Check for Updates…',
 			'core.menu.file' => 'File',
 			'core.menu.newTerminal' => 'New Terminal',
+			'core.menu.newChat' => 'New Chat',
+			'core.menu.newChatRight' => 'New Chat to the Right',
 			'core.menu.openWorkspace' => 'Open Workspace',
 			'core.menu.save' => 'Save',
 			'core.menu.discard' => 'Discard',
@@ -4413,810 +5663,874 @@ extension on Translations {
 			'common.copyCode' => 'Copy code',
 			'common.search' => 'Search',
 			'common.noResults' => 'No results',
-			'cockpit.confirmDialog.unsavedChangesTitle' => 'Unsaved changes',
-			'cockpit.confirmDialog.unsavedChangesMessage' => ({required Object fileName}) => '“${fileName}” has unsaved changes. Save them before closing?',
-			'cockpit.confirmDialog.dontSave' => 'Don\'t save',
-			'cockpit.confirmDialog.saveAndClose' => 'Save & close',
-			'cockpit.neovim.unavailable' => 'Neovim is not available. Opening in GSH Desktop instead.',
-			'cockpit.neovim.openFailed' => 'Could not reach Neovim. Opening in GSH Desktop instead.',
-			'cockpit.neovim.unsavedTitle' => 'Unsaved Neovim buffers',
-			'cockpit.neovim.unsavedMessage' => 'Neovim has modified buffers. Close the tab and discard those changes?',
-			'cockpit.neovim.closeAnyway' => 'Close anyway',
-			'cockpit.worktreeCreateDialog.forkTitle' => 'Fork worktree',
-			'cockpit.worktreeCreateDialog.createTitle' => 'Create worktree',
-			'cockpit.worktreeCreateDialog.forkSubtitle' => ({required Object root}) => 'New worktree branched from ${root}.',
-			'cockpit.worktreeCreateDialog.createSubtitle' => ({required Object root}) => 'New feature in ${root} — new branch from the current HEAD.',
-			'cockpit.worktreeCreateDialog.namePlaceholder' => 'feat/minha-feature',
-			'cockpit.worktreeCreateDialog.errorWhitespace' => 'No spaces in the name.',
-			'cockpit.worktreeCreateDialog.errorInvalidChar' => 'Invalid character for a branch name.',
-			'cockpit.worktreeCreateDialog.errorInvalidSequence' => 'Invalid sequence (e.g. "..", "//", starting/ending with "/").',
-			'cockpit.worktreeCreateDialog.errorReserved' => 'Reserved position (do not start with "-"/"." or end with ".lock").',
-			'cockpit.worktreeCreateDialog.errorDuplicateBranch' => 'A branch with that name already exists.',
-			'cockpit.worktreeCreateDialog.errorDuplicateWorktree' => 'A worktree with that name already exists.',
-			'cockpit.worktreeCreateDialog.errorBranchHierarchyConflict' => ({required Object target, required Object existing}) => 'Cannot create branch \'${target}\' because it conflicts with the existing branch \'${existing}\'.',
-			'cockpit.worktreeCreateDialog.errorBranchHierarchicalConflictGeneral' => 'A branch with a conflicting hierarchy already exists.',
-			'cockpit.worktreeCreateDialog.fork' => 'Fork',
-			'cockpit.worktreeCreateDialog.postCheckoutHint' => 'This repository has a post-checkout hook.',
-			'cockpit.worktreeCreateDialog.running' => 'Running…',
-			'cockpit.worktreeCreateDialog.advancedSettings' => 'Advanced Settings',
-			'cockpit.worktreeCreateDialog.copyIgnored' => 'Copy ignored files (.gitignore)',
-			'cockpit.worktreeCreateDialog.copyIgnoredDesc' => 'Copies files ignored by .gitignore (e.g. .env, local keys) to the new worktree.',
-			'cockpit.worktreeCreateDialog.copyUntracked' => 'Copy untracked files',
-			'cockpit.worktreeCreateDialog.copyUntrackedDesc' => 'Copies new or modified files that haven\'t been staged yet.',
-			'cockpit.worktreeCreateDialog.baseBranch' => 'Base branch',
-			'cockpit.worktreeCreateDialog.baseBranchDesc' => 'The branch from which the new worktree and branch will be created.',
-			'cockpit.worktreeCreateDialog.fetchRemote' => 'Fetch remote branch',
-			'cockpit.worktreeCreateDialog.fetchRemoteDesc' => 'Run git fetch to guarantee the base branch is confirmed before creating the worktree.',
-			'cockpit.worktreeCreateDialog.searchBranch' => 'Search branch...',
-			'cockpit.worktreeCreateDialog.back' => 'Back',
-			'cockpit.commitMessageDialog.commitTitle' => 'Commit',
-			'cockpit.commitMessageDialog.stageAndCommitTitle' => 'Stage and Commit',
-			'cockpit.commitMessageDialog.scopeNote' => ({required Object fileName}) => 'Commit "${fileName}" only.',
-			'cockpit.commitMessageDialog.placeholder' => 'fix: short summary of the change',
-			'cockpit.commitMessageDialog.errorEmptySubject' => 'The first line (subject) cannot be empty.',
-			'cockpit.commitMessageDialog.errorTooShort' => ({required Object min}) => 'Subject too short (min ${min} characters).',
-			'cockpit.commitMessageDialog.errorTooLong' => ({required Object max}) => 'Subject too long (max ${max} characters).',
-			'cockpit.commitMessageDialog.errorTrailingPeriod' => 'Subject should not end with a period.',
-			'cockpit.commitMessageDialog.errorControlChars' => 'Subject contains control characters.',
-			'cockpit.commitMessageDialog.errorBlankSecondLine' => 'Leave the second line blank (git subject/body separator).',
-			'cockpit.commitMessageDialog.generate' => 'Generate commit message',
-			'cockpit.commitMessageDialog.generateWith' => ({required Object harness}) => 'Generate with ${harness}',
-			'cockpit.commitMessageDialog.generating' => 'Generating…',
-			'cockpit.commitMessageDialog.cancelGeneration' => 'Cancel generation',
-			'cockpit.tasksPanel.reloadTasksTooltip' => 'Reload tasks',
-			'cockpit.tasksPanel.restartTooltip' => 'Restart',
-			'cockpit.tasksPanel.stopTooltip' => 'Stop',
-			'cockpit.tasksPanel.runTooltip' => 'Run',
-			'cockpit.tasksPanel.sendsKeyTooltip' => ({required Object label, required Object key}) => '${label} (sends \'${key}\')',
-			'cockpit.tasksPanel.startingTooltip' => 'Starting…',
-			'cockpit.tasksPanel.stoppingTooltip' => 'Stopping…',
-			'cockpit.tasksPanel.switchProfileTooltip' => 'Switch profile',
-			'cockpit.tasksPanel.moreKeysTooltip' => 'More keys',
-			'cockpit.tasksPanel.sectionTasks' => 'TASKS',
-			'cockpit.tasksPanel.noTasks' => 'No tasks detected in this project.',
-			'cockpit.tasksPanel.createTasksJson' => 'Create tasks.json',
-			'cockpit.tasksPanel.generateComposeTasks' => 'Generate Compose tasks',
-			'cockpit.tasksPanel.selectComposeEngine' => 'Choose a Compose engine',
-			'cockpit.tasksPanel.noComposeEngine' => 'Docker Compose or Podman Compose was not found.',
-			'cockpit.tasksPanel.invalidComposeFile' => 'The active file is not a valid Compose file with services.',
-			'cockpit.tasksPanel.invalidTasksJson' => 'tasks.json is invalid. No changes were written.',
-			'cockpit.tasksPanel.composeConflicts' => ({required Object labels}) => 'Kept non-Compose tasks with conflicting labels: ${labels}',
-			'cockpit.cockpitPage.chooseProjectFolderDialogTitle' => 'Choose the project folder',
-			'cockpit.cockpitPage.chooseWorkspaceFolderDialogTitle' => 'Choose the workspace folder',
-			'cockpit.cockpitPage.workspaceRenamedTitle' => 'Workspace renamed',
-			'cockpit.cockpitPage.workspaceRenamedMessage' => ({required Object name}) => 'The new name "${name}" will only be sent to agents after restarting the workspace or the application.',
-			'cockpit.cockpitPage.syncTitle' => ({required Object label}) => 'Sync — ${label}',
-			'cockpit.cockpitPage.pullTitle' => ({required Object label}) => 'Pull — ${label}',
-			'cockpit.cockpitPage.pushTitle' => ({required Object label}) => 'Push — ${label}',
-			'cockpit.cockpitPage.updateFromParentTitle' => ({required Object name}) => 'Update from Parent — ${name}',
-			'cockpit.cockpitPage.mergeToParentTitle' => ({required Object name}) => 'Merge to Parent — ${name}',
-			'cockpit.cockpitPage.worktreeMergedAndRemoved' => 'Worktree merged and removed.',
-			'cockpit.cockpitPage.nothingWasChanged' => 'Nothing was changed.',
-			'cockpit.cockpitPage.newRealmTitle' => 'New realm',
-			'cockpit.cockpitPage.closeWorkspaceTitle' => 'Close workspace',
-			'cockpit.cockpitPage.closeWorkspaceMessage' => ({required Object name}) => 'Close "${name}"? The agents in this workspace will be terminated. The folder on disk is kept.',
-			'cockpit.cockpitPage.closeAction' => 'Close',
-			'cockpit.cockpitPage.removeWorktreeTitle' => 'Remove worktree',
-			'cockpit.cockpitPage.removeWorktreeMessage' => ({required Object name, required Object warn}) => 'Remove "${name}"? The worktree folder and the branch will be deleted and the agents in this fork will be terminated.${warn}',
-			'cockpit.cockpitPage.removeWorktreeWarning' => ({required Object name}) => '\n\nWarning: the branch "${name}" has not been merged yet — removing it (git branch -D) discards the unmerged work.',
-			'cockpit.cockpitPage.failedToRemoveWorktreeTitle' => 'Failed to remove worktree',
-			'cockpit.cockpitPage.openLayoutTitle' => 'Open layout',
-			'cockpit.cockpitPage.replaceLayoutTitle' => 'Replace the current layout?',
-			'cockpit.cockpitPage.replaceLayoutMessage' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 tab will be closed, including one with a running process.', other: '${n} tabs will be closed, including ones with running processes.', ), 
-			'cockpit.cockpitPage.replaceLayoutConfirm' => 'Replace',
-			'cockpit.cockpitPage.restartServerTooltip' => 'Restart server',
-			'cockpit.cockpitPage.noLspAvailable' => 'No LSP available',
-			'cockpit.cockpitPage.lspRunning' => 'running',
-			'cockpit.cockpitPage.lspStopped' => 'stopped',
-			'cockpit.welcomeView.title' => 'Welcome to GSH Desktop',
-			'cockpit.welcomeView.subtitle' => 'Open a folder or connect to a remote host to start.',
-			'cockpit.welcomeView.createWorkspace' => 'Create workspace',
-			'cockpit.welcomeView.openLocalFolder' => 'Open local folder',
-			'cockpit.welcomeView.connectHost' => 'Connect to host',
-			'cockpit.welcomeView.configureHost' => 'Configure host',
-			'cockpit.welcomeView.addWorkspace' => 'Add workspace',
-			'cockpit.paneView.closePaneTitle' => 'Close pane?',
-			'cockpit.paneView.closePaneMessage' => ({required Object count}) => 'This closes all ${count} tab(s) in this pane and ends the agents/terminals in it.',
-			'cockpit.paneView.close' => 'Close',
-			'cockpit.paneView.closeOtherTabs' => 'Close others',
-			'cockpit.paneView.closeTabsToTheRight' => 'Close to the right',
-			'cockpit.paneView.closeAllTabs' => 'Close all',
-			'cockpit.paneView.closeTabsTitle' => 'Close tabs?',
-			'cockpit.paneView.closeTabsMessage' => ({required Object count}) => 'This closes ${count} tab(s) and ends the agents/terminals in them.',
-			'cockpit.paneView.allTabs' => 'All tabs',
-			'cockpit.paneView.pinTab' => 'Pin tab',
-			'cockpit.paneView.openInNewWindow' => 'Open in new window',
-			'cockpit.paneView.rename' => 'Rename',
-			'cockpit.paneView.openAsMarkdown' => 'Open as markdown',
-			'cockpit.paneView.openAsBoard' => 'Open as board',
-			'cockpit.paneView.resetTitle' => 'Reset Title',
-			'cockpit.paneView.copyId' => 'Copy Id',
-			'cockpit.paneView.restartTab' => 'Restart',
-			'cockpit.paneView.newTab' => 'New tab',
-			'cockpit.paneView.newTerminal' => 'New terminal…',
-			'cockpit.paneView.splitRight' => 'Split right',
-			'cockpit.paneView.splitDown' => 'Split down',
-			'cockpit.paneView.closePane' => 'Close pane',
-			'cockpit.paneView.dropHereToMove' => 'Drop here to move the tab',
-			'cockpit.paneView.dockAsTab' => 'Dock as tab',
-			'cockpit.paneView.openBrowser' => 'Open browser',
-			'cockpit.paneView.openTerminal' => 'Open terminal',
-			'cockpit.paneView.openAsLayout' => 'Open as layout',
-			'cockpit.paneView.openAsYaml' => 'Open as YAML',
-			'cockpit.paneView.openAsPanel' => 'Open as panel',
-			'cockpit.paneView.openAsHtml' => 'Open as HTML',
-			'cockpit.fileTreePanel.viewDiff' => 'View Diff',
-			'cockpit.fileTreePanel.commit' => 'Commit',
-			'cockpit.fileTreePanel.stageAndCommit' => 'Stage and Commit',
-			'cockpit.fileTreePanel.unstage' => 'Unstage',
-			'cockpit.fileTreePanel.stageChanges' => 'Stage Changes',
-			'cockpit.fileTreePanel.discardChanges' => 'Discard Changes',
-			'cockpit.fileTreePanel.enterCommitMessage' => 'Enter a commit message.',
-			'cockpit.fileTreePanel.commitUnavailable' => 'Commit is unavailable for this workspace.',
-			'cockpit.fileTreePanel.gitErrorTitle' => 'Git error',
-			'cockpit.fileTreePanel.deleteNewFileTitle' => 'Delete new file?',
-			'cockpit.fileTreePanel.discardChangesTitle' => 'Discard changes?',
-			'cockpit.fileTreePanel.deleteNewFileMessage' => ({required Object name}) => '"${name}" is a new file and cannot be restored. Delete it?',
-			'cockpit.fileTreePanel.discardOneMessage' => ({required Object name}) => 'Discard all changes in "${name}"? Deleted files will be restored.',
-			'cockpit.fileTreePanel.discard' => 'Discard',
-			'cockpit.fileTreePanel.deleteAllNewFilesTitle' => 'Delete all new files?',
-			'cockpit.fileTreePanel.allNewFilesMessage' => ({required Object count}) => 'All ${count} files are new and will be deleted. This cannot be undone.',
-			'cockpit.fileTreePanel.discardTrackedMessage' => ({required Object count, required Object extra}) => 'Discard changes in ${count} tracked file(s)?${extra}',
-			'cockpit.fileTreePanel.discardTrackedExtra' => ({required Object count}) => ' ${count} new file(s) will be kept.',
-			'cockpit.fileTreePanel.deleteAll' => 'Delete All',
-			'cockpit.fileTreePanel.deleteQuestionTitle' => 'Delete?',
-			'cockpit.fileTreePanel.moveToTrash' => ({required Object name}) => 'Move “${name}” to the Trash?',
-			'cockpit.fileTreePanel.permanentlyDelete' => ({required Object name}) => 'Permanently delete “${name}”? This can’t be undone.',
-			'cockpit.fileTreePanel.couldNotDeleteTitle' => 'Could not delete',
-			'cockpit.fileTreePanel.moveQuestionTitle' => 'Move?',
-			'cockpit.fileTreePanel.moveMessage' => ({required Object name, required Object dest}) => 'Move “${name}” to “${dest}”?',
-			'cockpit.fileTreePanel.moveAction' => 'Move',
-			'cockpit.fileTreePanel.couldNotMoveTitle' => 'Could not move',
-			'cockpit.fileTreePanel.couldNotPasteTitle' => 'Could not paste',
-			'cockpit.fileTreePanel.filesTooltip' => 'Files',
-			'cockpit.fileTreePanel.searchTooltip' => 'Search',
-			'cockpit.fileTreePanel.sourceControlTooltip' => 'Source Control',
-			'cockpit.fileTreePanel.databaseTooltip' => 'Database',
-			'cockpit.fileTreePanel.sectionFiles' => 'FILES',
-			'cockpit.fileTreePanel.newFile' => 'New file',
-			'cockpit.fileTreePanel.newFolder' => 'New folder',
-			'cockpit.fileTreePanel.refreshTooltip' => 'Refresh',
-			'cockpit.fileTreePanel.agentFilterTooltip' => 'Filter by agent',
-			'cockpit.fileTreePanel.allAgents' => 'All agents',
-			'cockpit.fileTreePanel.trackingUnavailable' => 'tracking unavailable',
-			'cockpit.fileTreePanel.editedBy' => ({required Object label, required Object time}) => 'Edited by ${label} · ${time}',
-			'cockpit.fileTreePanel.inferredSuffix' => '(inferred)',
-			'cockpit.fileTreePanel.noTouchedFiles' => 'No files touched by this agent yet',
-			'cockpit.fileTreePanel.concurrentAgentEdits' => 'Edited by 2+ agents in the last 10 minutes',
-			'cockpit.fileTreePanel.collapseAll' => 'Collapse all folders',
-			'cockpit.fileTreePanel.sectionSourceControl' => 'SOURCE CONTROL',
-			'cockpit.fileTreePanel.viewAsList' => 'View as List',
-			'cockpit.fileTreePanel.viewAsTree' => 'View as Tree',
-			'cockpit.fileTreePanel.noFolderMessage' => 'No folder — open a workspace.',
-			'cockpit.fileTreePanel.amend' => 'Amend',
-			'cockpit.fileTreePanel.commitMessagePlaceholder' => 'Commit Message',
-			'cockpit.fileTreePanel.amendCommit' => 'Amend Commit',
-			'cockpit.fileTreePanel.lastCommit' => 'last commit',
-			'cockpit.fileTreePanel.openInFinder' => 'Open in Finder',
-			'cockpit.fileTreePanel.openInExplorer' => 'Open in Explorer',
-			'cockpit.fileTreePanel.openInFileManager' => 'Open in file manager',
-			'cockpit.fileTreePanel.open' => 'Open',
-			'cockpit.fileTreePanel.openWith' => 'Open with',
-			'cockpit.fileTreePanel.openInNewWindow' => 'Open in new window',
-			'cockpit.fileTreePanel.openLayout' => 'Open layout',
-			'cockpit.fileTreePanel.openAsMarkdown' => 'Open as markdown',
-			'cockpit.fileTreePanel.showGitDiff' => 'Show git diff',
-			'cockpit.fileTreePanel.createTerminal' => 'Open terminal',
-			'cockpit.fileTreePanel.rename' => 'Rename',
-			'cockpit.fileTreePanel.copy' => 'Copy',
-			'cockpit.fileTreePanel.cut' => 'Cut',
-			'cockpit.fileTreePanel.paste' => 'Paste',
-			'cockpit.fileTreePanel.copyRelativePath' => 'Copy relative path',
-			'cockpit.fileTreePanel.copyAbsolutePath' => 'Copy absolute path',
-			'cockpit.fileTreePanel.renameFailed' => 'Rename failed.',
-			'cockpit.fileTreePanel.noChanges' => 'No changes.',
-			'cockpit.fileTreePanel.stagedChangesHeader' => ({required Object count}) => 'STAGED CHANGES (${count})',
-			'cockpit.fileTreePanel.changesHeader' => ({required Object count}) => 'CHANGES (${count})',
-			'cockpit.fileTreePanel.discardAllChanges' => 'Discard All Changes',
-			'cockpit.fileTreePanel.unstageAllChanges' => 'Unstage All Changes',
-			'cockpit.fileTreePanel.stageAllChanges' => 'Stage All Changes',
-			'cockpit.fileTreePanel.discardFolderChanges' => 'Discard Folder Changes',
-			'cockpit.fileTreePanel.unstageFolderChanges' => 'Unstage Folder Changes',
-			'cockpit.fileTreePanel.stageFolderChanges' => 'Stage Folder Changes',
-			'cockpit.fileTreePanel.generateCommitMessage' => 'Generate commit message',
-			'cockpit.fileTreePanel.generateWith' => ({required Object harness}) => 'Generate with ${harness}',
-			'cockpit.fileTreePanel.generateUnavailableWhileAmending' => 'Unavailable while amending a commit',
-			'cockpit.fileTreePanel.cancelGeneration' => 'Cancel generation',
-			'cockpit.fileTreePanel.changes' => 'Changes',
-			'cockpit.fileTreePanel.history' => 'History',
-			'cockpit.fileTreePanel.historyRepository' => 'Repository',
-			'cockpit.fileTreePanel.historyNoRepository' => 'No Git repository available.',
-			'cockpit.fileTreePanel.historyEmpty' => 'No commits found.',
-			'cockpit.fileTreePanel.historyLoadFailed' => 'Could not load Git history.',
-			'cockpit.fileTreePanel.historyUntitledCommit' => 'Untitled commit',
-			'cockpit.fileTreePanel.historyNow' => 'now',
-			'cockpit.fileTreePanel.historyMinutesAgo' => ({required Object count}) => '${count}m ago',
-			'cockpit.fileTreePanel.historyHoursAgo' => ({required Object count}) => '${count}h ago',
-			'cockpit.fileTreePanel.historyYesterday' => 'yesterday',
-			'cockpit.fileTreePanel.historyDayAgo' => '1d ago',
-			'cockpit.fileTreePanel.historyDaysAgo' => ({required Object count}) => '${count}d ago',
-			'cockpit.fileTreePanel.historyFiles' => 'Files changed',
-			'cockpit.fileTreePanel.historyFilesEmpty' => 'No files changed.',
-			'cockpit.fileTreePanel.historyFilesLoadFailed' => 'Could not load changed files.',
-			'cockpit.fileTreePanel.diffEmptyTree' => 'Empty tree',
-			'cockpit.fileTreePanel.diffOriginal' => ({required Object ref}) => 'Original ${ref}',
-			'cockpit.fileTreePanel.diffModified' => ({required Object ref}) => 'Modified ${ref}',
-			'cockpit.fileTreePanel.diffWorkingTree' => 'Working tree',
-			'cockpit.fileTreePanel.diffBinaryFile' => 'Binary file - no text diff.',
-			'cockpit.fileTreePanel.diffNoChanges' => 'No changes.',
-			'cockpit.fileTreePanel.diffError' => ({required Object detail}) => 'Could not read the diff: ${detail}',
-			'cockpit.fileTreePanel.galleryTooltip' => 'Gallery',
-			'cockpit.fileTreePanel.sectionGallery' => 'GALLERY',
-			'cockpit.fileTreePanel.openAsHtml' => 'Open as HTML',
-			'cockpit.fileTreePanel.importQuestionTitle' => 'Copy here?',
-			'cockpit.fileTreePanel.importMessage' => ({required Object count, required Object dest}) => 'Copy ${count} items into “${dest}”?',
-			'cockpit.fileTreePanel.importAction' => 'Copy',
-			'cockpit.fileTreePanel.couldNotImportTitle' => 'Could not copy',
-			'cockpit.fileTreePanel.openInAgent' => ({required Object harness}) => 'Open in ${harness}',
-			'cockpit.fileViewer.cantOpen' => 'Can\'t open this file.',
-			'cockpit.fileViewer.couldNotLoadImage' => 'Could not load the image.',
-			'cockpit.fileViewer.preview' => 'Preview',
-			'cockpit.fileViewer.source' => 'Source',
-			'cockpit.fileViewer.reload' => 'Reload',
-			'cockpit.workspaceSettingsDialog.choosePhotoTitle' => 'Choose workspace photo',
-			'cockpit.workspaceSettingsDialog.title' => 'Workspace settings',
-			'cockpit.workspaceSettingsDialog.namePlaceholder' => 'Workspace name',
-			'cockpit.workspaceSettingsDialog.addPhoto' => 'Add photo',
-			'cockpit.workspaceSettingsDialog.changePhoto' => 'Change photo',
-			'cockpit.workspaceSettingsDialog.remove' => 'Remove',
-			'cockpit.workspaceSettingsDialog.color' => 'Color',
-			'cockpit.workspaceSettingsDialog.host' => 'Host',
-			'cockpit.workspaceSettingsDialog.folder' => 'Folder',
-			'cockpit.realmDialogs.namePlaceholder' => 'Realm name',
-			'cockpit.realmDialogs.duplicateName' => 'A realm with this name already exists.',
-			'cockpit.realmDialogs.newRealmTitle' => 'New realm',
-			'cockpit.realmDialogs.renameRealmTitle' => 'Rename realm',
-			'cockpit.realmDialogs.rename' => 'Rename',
-			'cockpit.realmDialogs.deleteRealmTitle' => 'Delete realm',
-			'cockpit.realmDialogs.deleteMessage' => ({required Object name, required Object suffix}) => 'Delete "${name}"? No workspace is deleted — the folder list just changes.${suffix}',
-			'cockpit.realmDialogs.deleteSuffixOne' => ' Its workspace will move to Default.',
-			'cockpit.realmDialogs.deleteSuffixMany' => ({required Object count}) => ' Its ${count} workspaces will move to Default.',
-			'cockpit.realmDialogs.manageRealmsTitle' => 'Manage realms',
-			'cockpit.realmDialogs.workspaceCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 workspace', other: '${n} workspaces', ), 
-			'cockpit.dbRedisTable.deleteKeyTitle' => 'Delete key',
-			'cockpit.dbRedisTable.deleteKeyMessage' => ({required Object key}) => 'Delete "${key}" from this Redis database?',
-			'cockpit.dbRedisTable.refresh' => 'Refresh',
-			'cockpit.dbRedisTable.newKey' => 'New key',
-			'cockpit.dbRedisTable.columnKey' => 'KEY',
-			'cockpit.dbRedisTable.columnValue' => 'VALUE',
-			'cockpit.dbRedisTable.columnType' => 'TYPE',
-			'cockpit.dbRedisTable.columnTtl' => 'TTL',
-			'cockpit.dbRedisTable.keyCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 key', other: '${n} keys', ), 
-			'cockpit.dbRedisTable.noKeys' => 'No keys in this database.',
-			'cockpit.dbRedisTable.noKeysMatch' => ({required Object pattern}) => 'No keys match "${pattern}".',
-			'cockpit.dbRedisTable.loadMore' => 'Load more',
-			'cockpit.dbRedisTable.loadingFullValue' => 'Loading full value…',
-			'cockpit.dbRedisTable.ttlMustBeNumber' => 'TTL must be a number of seconds.',
-			'cockpit.dbRedisTable.addKey' => 'Add key',
-			'cockpit.dbRedisTable.keyFieldHint' => 'key',
-			'cockpit.dbRedisTable.ttlFieldHint' => 'ttl (s, optional)',
-			'cockpit.dbRedisTable.valueFieldHint' => 'value',
-			'cockpit.dbRedisTable.searchHint' => 'Search — pattern, e.g. user:*',
-			'cockpit.dbQueryView.saveQueryAs' => 'Save query as',
-			'cockpit.dbQueryView.couldNotSave' => 'Could not save',
-			'cockpit.dbQueryView.selectDatabase' => 'Select database',
-			'cockpit.dbQueryView.noSqlConnections' => 'No SQL connections',
-			'cockpit.dbQueryView.running' => 'Running…',
-			'cockpit.dbQueryView.runSelection' => 'Run selection',
-			'cockpit.dbQueryView.run' => 'Run',
-			'cockpit.dbQueryView.pickDatabaseHint' => 'Pick a database above, then Run (⌘↵).',
-			'cockpit.dbQueryView.runQueryHint' => 'Run the query (⌘↵) to see results here.',
-			'cockpit.dbQueryView.noRows' => 'No rows.',
-			'cockpit.dbQueryView.rowsAffected' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 row affected', other: '${n} rows affected', ), 
-			'cockpit.dbQueryView.rowsFooter' => ({required Object n}) => '${n} rows',
-			'cockpit.dbQueryView.truncatedSuffix' => ' · truncated (raise -- limit)',
-			'cockpit.dbQueryView.table' => 'Table',
-			'cockpit.dbQueryView.json' => 'JSON',
-			'cockpit.dbQueryView.unsaved' => 'unsaved',
-			'cockpit.dbQueryView.saved' => 'saved',
-			'cockpit.dbQueryView.copied' => 'Copied',
-			'cockpit.dbQueryView.copy' => 'Copy',
-			'cockpit.httpView.saveRequestAs' => 'Save request as',
-			'cockpit.httpView.couldNotSave' => 'Could not save',
-			'cockpit.httpView.run' => 'Run',
-			'cockpit.httpView.running' => 'Running…',
-			'cockpit.httpView.noRequests' => 'No request in this file — write one, e.g. GET https://example.com',
-			'cockpit.httpView.selectRequest' => 'Select request',
-			'cockpit.httpView.requestCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 request', other: '${n} requests', ), 
-			'cockpit.httpView.runHint' => 'Run the request (⌘↵) to see the response here.',
-			'cockpit.httpView.emptyBody' => 'Empty response body.',
-			'cockpit.httpView.body' => 'JSON',
-			'cockpit.httpView.headers' => 'Headers',
-			'cockpit.httpView.raw' => 'Text',
-			'cockpit.httpView.truncatedSuffix' => ' · truncated (response too large)',
-			'cockpit.httpView.error.title' => 'Request failed',
-			'cockpit.httpView.error.noRequest' => 'No request found at the cursor.',
-			'cockpit.httpView.error.invalidUrl' => ({required Object url}) => 'Invalid URL: ${url}',
-			'cockpit.httpView.error.unresolvedVariable' => ({required Object name}) => 'Variable {{${name}}} has no value. Declare it with @${name} = … in this file.',
-			'cockpit.httpView.error.bodyFileMissing' => ({required Object path}) => 'Body file not found: ${path}',
-			'cockpit.httpView.error.bodyFileUnreadable' => ({required Object path, required Object detail}) => 'Could not read the body file ${path}: ${detail}',
-			'cockpit.httpView.error.connectionFailed' => ({required Object detail}) => 'Could not reach the server: ${detail}',
-			'cockpit.httpView.error.connectionFailedNoDetail' => 'Could not reach the server.',
-			'cockpit.httpView.error.timeout' => ({required Object seconds}) => 'The request timed out after ${seconds}s.',
-			'cockpit.httpView.error.responseTooLarge' => ({required Object bytes}) => 'The response is larger than the ${bytes} byte limit.',
-			'cockpit.kanbanView.filter' => 'Filter',
-			'cockpit.kanbanView.filterTitlePlaceholder' => 'Search titles',
-			'cockpit.kanbanView.filterLabels' => 'Labels',
-			'cockpit.kanbanView.filterClear' => 'Clear',
-			'cockpit.kanbanView.filterDependencies' => 'Dependencies',
-			'cockpit.kanbanView.filterBlocked' => 'Blocked',
-			'cockpit.kanbanView.filterReady' => 'Ready',
-			'cockpit.kanbanView.blockedBy' => 'Blocked by',
-			'cockpit.kanbanView.addBlocker' => 'Add a blocking card',
-			'cockpit.kanbanView.searchCards' => 'Search cards',
-			'cockpit.kanbanView.unknownCard' => 'unknown',
-			'cockpit.kanbanView.boardView' => 'Board',
-			'cockpit.kanbanView.listView' => 'List',
-			'cockpit.kanbanView.refresh' => 'Refresh from disk',
-			'cockpit.kanbanView.manageLabels' => 'Labels',
-			'cockpit.kanbanView.labelsTitle' => 'Labels in this board',
-			'cockpit.kanbanView.labelNamePlaceholder' => 'label name',
-			'cockpit.kanbanView.labelUsage' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 card', other: '${n} cards', ), 
-			'cockpit.kanbanView.deleteLabel' => 'Delete label',
-			'cockpit.kanbanView.newCard' => 'new card',
-			'cockpit.kanbanView.newCardTitle' => 'New card',
-			'cockpit.kanbanView.newColumn' => 'New column',
-			'cockpit.kanbanView.columnNameTitle' => 'Column name',
-			'cockpit.kanbanView.dragColumn' => 'Drag column',
-			'cockpit.kanbanView.columnOptions' => 'Column options',
-			'cockpit.kanbanView.renameColumn' => 'Rename column',
-			'cockpit.kanbanView.moveColumnLeft' => 'Move left',
-			'cockpit.kanbanView.moveColumnRight' => 'Move right',
-			'cockpit.kanbanView.deleteColumn' => 'Delete column',
-			'cockpit.kanbanView.newCardHere' => 'New card here',
-			'cockpit.kanbanView.duplicateCard' => 'Duplicate',
-			'cockpit.kanbanView.cardLabels' => 'Labels',
-			'cockpit.kanbanView.deleteCard' => 'Delete card',
-			'cockpit.kanbanView.advance' => 'Move to next column',
-			'cockpit.kanbanView.advanceHold' => 'Move to next column (hold: move to last column)',
-			'cockpit.kanbanView.advanceBack' => 'Move back a column',
-			'cockpit.kanbanView.emptyColumn' => 'No cards',
-			'cockpit.kanbanView.cardCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 card', other: '${n} cards', ), 
-			'cockpit.kanbanView.notes' => 'Note',
-			'cockpit.kanbanView.notesPlaceholder' => 'Write a note',
-			'cockpit.kanbanView.comments' => 'Comments',
-			'cockpit.kanbanView.addComment' => 'Add comment',
-			'cockpit.kanbanView.commentPlaceholder' => 'Write a comment',
-			'cockpit.kanbanView.noComments' => 'No comments yet',
-			'cockpit.kanbanView.closeDetail' => 'Close',
-			'cockpit.kanbanView.notABoard' => 'This file has no ## columns yet — it opens as markdown.',
-			'cockpit.kanbanView.startBoard' => 'Start a board',
-			'cockpit.kanbanView.couldNotSave' => 'Could not save the board',
-			'cockpit.kanbanView.unrecognizedBlock' => 'Not recognized by the parser — drags whole, no inline editing.',
-			'cockpit.kanbanView.deleteColumnDialog.title' => ({required Object name}) => 'Delete “${name}”?',
-			'cockpit.kanbanView.deleteColumnDialog.message' => ({required Object count}) => 'This column has ${count}. Choose what happens to them.',
-			'cockpit.kanbanView.deleteColumnDialog.moveCards' => 'Move to the previous column',
-			'cockpit.kanbanView.deleteColumnDialog.deleteAll' => 'Delete with the column',
-			'cockpit.kanbanView.deleteColumnDialog.emptyMessage' => 'This column is empty.',
-			'cockpit.dbPanel.sectionDatabase' => 'DATABASE',
-			'cockpit.dbPanel.edit' => 'Edit…',
-			'cockpit.dbPanel.copyName' => 'Copy name',
-			'cockpit.dbPanel.newQuery' => 'New query',
-			'cockpit.dbPanel.browseKeys' => 'Browse keys',
-			'cockpit.dbPanel.deleteConnectionTitle' => 'Delete connection',
-			'cockpit.dbPanel.deleteConnectionMessage' => ({required Object name}) => 'Remove "${name}" from this workspace? Any saved password is discarded. .dbq files that reference it are not touched.',
-			'cockpit.dbPanel.footer' => ({required Object n}) => '.cockpit/databases.json · ${n} connections',
-			'cockpit.dbPanel.footerOne' => '.cockpit/databases.json · 1 connection',
-			'cockpit.dbPanel.noConnections' => 'No connections yet.',
-			'cockpit.dbPanel.passwordRequired' => 'Password not found on the host. Open this connection and enter it again — it is saved on the machine that runs the database, not on this one.',
-			'cockpit.dbMongoView.deleteDocumentTitle' => 'Delete document',
-			'cockpit.dbMongoView.deleteDocumentMessage' => ({required Object id, required Object collection}) => 'Delete the document with _id ${id} from "${collection}"?',
-			'cockpit.dbMongoView.filterHint' => 'Filter — JSON, e.g. {"status": "active"}',
-			'cockpit.dbMongoView.docCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 doc', other: '${n} docs', ), 
-			'cockpit.dbMongoView.refresh' => 'Refresh',
-			'cockpit.dbMongoView.insertDocument' => 'Insert document',
-			'cockpit.dbMongoView.noDocuments' => 'No documents in this collection.',
-			'cockpit.dbMongoView.noDocumentsMatch' => 'No documents match this filter.',
-			'cockpit.dbMongoView.loadMore' => 'Load more',
-			'cockpit.dbMongoView.edit' => 'Edit',
-			'cockpit.dbMongoView.insert' => 'Insert',
-			'cockpit.dbConnectionDialog.chooseFileTitle' => 'Choose SQLite database',
-			'cockpit.dbConnectionDialog.file' => 'File',
-			'cockpit.dbConnectionDialog.chooseFilePlaceholder' => 'Choose a SQLite file…',
-			'cockpit.dbConnectionDialog.name' => 'Name',
-			'cockpit.dbConnectionDialog.password' => 'Password',
-			'cockpit.dbConnectionDialog.savePassword' => 'Save Password',
-			'cockpit.dbConnectionDialog.allowWrites' => 'Allow writes (agents)',
-			'cockpit.dbConnectionDialog.allowWritesHint' => 'off = agents can only read via CLI',
-			'cockpit.dbConnectionDialog.visibleToAgents' => 'Visible to agents',
-			'cockpit.dbConnectionDialog.visibleToAgentsHint' => 'off = hidden from the CLI, GUI only',
-			'cockpit.dbConnectionDialog.testing' => 'Testing connection…',
-			'cockpit.dbConnectionDialog.connectionOk' => 'Connection OK',
-			'cockpit.dbConnectionDialog.connectionFailed' => 'Connection failed',
-			'cockpit.dbConnectionDialog.editTitle' => 'Edit connection',
-			'cockpit.dbConnectionDialog.newTitle' => 'New connection',
-			'cockpit.dbConnectionDialog.connectionString' => 'Connection string',
-			'cockpit.dbConnectionDialog.invalidUrl' => 'Not a valid connection URL.',
-			'cockpit.dbConnectionDialog.sshTunnel' => 'SSH Tunnel',
-			'cockpit.dbConnectionDialog.sshHost' => 'SSH Host',
-			'cockpit.dbConnectionDialog.sshPort' => 'SSH Port',
-			'cockpit.dbConnectionDialog.sshUser' => 'SSH User',
-			'cockpit.dbConnectionDialog.privateKey' => 'Private key',
-			'cockpit.dbConnectionDialog.choosePrivateKeyPlaceholder' => 'Choose a private key…',
-			'cockpit.dbConnectionDialog.choosePrivateKeyDialogTitle' => 'Choose SSH private key',
-			'cockpit.dbConnectionDialog.keyPassphrase' => 'Key passphrase',
-			'cockpit.dbConnectionDialog.savePassphrase' => 'Save passphrase',
+			'gsh.confirmDialog.unsavedChangesTitle' => 'Unsaved changes',
+			'gsh.confirmDialog.unsavedChangesMessage' => ({required Object fileName}) => '“${fileName}” has unsaved changes. Save them before closing?',
+			'gsh.confirmDialog.dontSave' => 'Don\'t save',
+			'gsh.confirmDialog.saveAndClose' => 'Save & close',
+			'gsh.neovim.unavailable' => 'Neovim is not available. Opening in GSH Desktop instead.',
+			'gsh.neovim.openFailed' => 'Could not reach Neovim. Opening in GSH Desktop instead.',
+			'gsh.neovim.unsavedTitle' => 'Unsaved Neovim buffers',
+			'gsh.neovim.unsavedMessage' => 'Neovim has modified buffers. Close the tab and discard those changes?',
+			'gsh.neovim.closeAnyway' => 'Close anyway',
+			'gsh.worktreeCreateDialog.forkTitle' => 'Fork worktree',
+			'gsh.worktreeCreateDialog.createTitle' => 'Create worktree',
+			'gsh.worktreeCreateDialog.forkSubtitle' => ({required Object root}) => 'New worktree branched from ${root}.',
+			'gsh.worktreeCreateDialog.createSubtitle' => ({required Object root}) => 'New feature in ${root} — new branch from the current HEAD.',
+			'gsh.worktreeCreateDialog.namePlaceholder' => 'feat/minha-feature',
+			'gsh.worktreeCreateDialog.errorWhitespace' => 'No spaces in the name.',
+			'gsh.worktreeCreateDialog.errorInvalidChar' => 'Invalid character for a branch name.',
+			'gsh.worktreeCreateDialog.errorInvalidSequence' => 'Invalid sequence (e.g. "..", "//", starting/ending with "/").',
+			'gsh.worktreeCreateDialog.errorReserved' => 'Reserved position (do not start with "-"/"." or end with ".lock").',
+			'gsh.worktreeCreateDialog.errorDuplicateBranch' => 'A branch with that name already exists.',
+			'gsh.worktreeCreateDialog.errorDuplicateWorktree' => 'A worktree with that name already exists.',
+			'gsh.worktreeCreateDialog.errorBranchHierarchyConflict' => ({required Object target, required Object existing}) => 'Cannot create branch \'${target}\' because it conflicts with the existing branch \'${existing}\'.',
+			'gsh.worktreeCreateDialog.errorBranchHierarchicalConflictGeneral' => 'A branch with a conflicting hierarchy already exists.',
+			'gsh.worktreeCreateDialog.fork' => 'Fork',
+			'gsh.worktreeCreateDialog.postCheckoutHint' => 'This repository has a post-checkout hook.',
+			'gsh.worktreeCreateDialog.running' => 'Running…',
+			'gsh.worktreeCreateDialog.advancedSettings' => 'Advanced Settings',
+			'gsh.worktreeCreateDialog.copyIgnored' => 'Copy ignored files (.gitignore)',
+			'gsh.worktreeCreateDialog.copyIgnoredDesc' => 'Copies files ignored by .gitignore (e.g. .env, local keys) to the new worktree.',
+			'gsh.worktreeCreateDialog.copyUntracked' => 'Copy untracked files',
+			'gsh.worktreeCreateDialog.copyUntrackedDesc' => 'Copies new or modified files that haven\'t been staged yet.',
+			'gsh.worktreeCreateDialog.baseBranch' => 'Base branch',
+			'gsh.worktreeCreateDialog.baseBranchDesc' => 'The branch from which the new worktree and branch will be created.',
+			'gsh.worktreeCreateDialog.fetchRemote' => 'Fetch remote branch',
+			'gsh.worktreeCreateDialog.fetchRemoteDesc' => 'Run git fetch to guarantee the base branch is confirmed before creating the worktree.',
+			'gsh.worktreeCreateDialog.searchBranch' => 'Search branch...',
+			'gsh.worktreeCreateDialog.back' => 'Back',
+			'gsh.commitMessageDialog.commitTitle' => 'Commit',
+			'gsh.commitMessageDialog.stageAndCommitTitle' => 'Stage and Commit',
+			'gsh.commitMessageDialog.scopeNote' => ({required Object fileName}) => 'Commit "${fileName}" only.',
+			'gsh.commitMessageDialog.placeholder' => 'fix: short summary of the change',
+			'gsh.commitMessageDialog.errorEmptySubject' => 'The first line (subject) cannot be empty.',
+			'gsh.commitMessageDialog.errorTooShort' => ({required Object min}) => 'Subject too short (min ${min} characters).',
+			'gsh.commitMessageDialog.errorTooLong' => ({required Object max}) => 'Subject too long (max ${max} characters).',
+			'gsh.commitMessageDialog.errorTrailingPeriod' => 'Subject should not end with a period.',
+			'gsh.commitMessageDialog.errorControlChars' => 'Subject contains control characters.',
+			'gsh.commitMessageDialog.errorBlankSecondLine' => 'Leave the second line blank (git subject/body separator).',
+			'gsh.commitMessageDialog.generate' => 'Generate commit message',
+			'gsh.commitMessageDialog.generateWith' => ({required Object harness}) => 'Generate with ${harness}',
+			'gsh.commitMessageDialog.generating' => 'Generating…',
+			'gsh.commitMessageDialog.cancelGeneration' => 'Cancel generation',
+			'gsh.tasksPanel.reloadTasksTooltip' => 'Reload tasks',
+			'gsh.tasksPanel.restartTooltip' => 'Restart',
+			'gsh.tasksPanel.stopTooltip' => 'Stop',
+			'gsh.tasksPanel.runTooltip' => 'Run',
+			'gsh.tasksPanel.sendsKeyTooltip' => ({required Object label, required Object key}) => '${label} (sends \'${key}\')',
+			'gsh.tasksPanel.startingTooltip' => 'Starting…',
+			'gsh.tasksPanel.stoppingTooltip' => 'Stopping…',
+			'gsh.tasksPanel.switchProfileTooltip' => 'Switch profile',
+			'gsh.tasksPanel.moreKeysTooltip' => 'More keys',
+			'gsh.tasksPanel.sectionTasks' => 'TASKS',
+			'gsh.tasksPanel.noTasks' => 'No tasks detected in this project.',
+			'gsh.tasksPanel.createTasksJson' => 'Create tasks.json',
+			'gsh.tasksPanel.generateComposeTasks' => 'Generate Compose tasks',
+			'gsh.tasksPanel.selectComposeEngine' => 'Choose a Compose engine',
+			'gsh.tasksPanel.noComposeEngine' => 'Docker Compose or Podman Compose was not found.',
+			'gsh.tasksPanel.invalidComposeFile' => 'The active file is not a valid Compose file with services.',
+			'gsh.tasksPanel.invalidTasksJson' => 'tasks.json is invalid. No changes were written.',
+			'gsh.tasksPanel.composeConflicts' => ({required Object labels}) => 'Kept non-Compose tasks with conflicting labels: ${labels}',
+			'gsh.gshPage.chooseProjectFolderDialogTitle' => 'Choose the project folder',
+			'gsh.gshPage.chooseWorkspaceFolderDialogTitle' => 'Choose the workspace folder',
+			'gsh.gshPage.workspaceRenamedTitle' => 'Workspace renamed',
+			'gsh.gshPage.workspaceRenamedMessage' => ({required Object name}) => 'The new name "${name}" will only be sent to agents after restarting the workspace or the application.',
+			'gsh.gshPage.syncTitle' => ({required Object label}) => 'Sync — ${label}',
+			'gsh.gshPage.pullTitle' => ({required Object label}) => 'Pull — ${label}',
+			'gsh.gshPage.pushTitle' => ({required Object label}) => 'Push — ${label}',
+			'gsh.gshPage.updateFromParentTitle' => ({required Object name}) => 'Update from Parent — ${name}',
+			'gsh.gshPage.mergeToParentTitle' => ({required Object name}) => 'Merge to Parent — ${name}',
+			'gsh.gshPage.worktreeMergedAndRemoved' => 'Worktree merged and removed.',
+			'gsh.gshPage.nothingWasChanged' => 'Nothing was changed.',
+			'gsh.gshPage.newRealmTitle' => 'New realm',
+			'gsh.gshPage.closeWorkspaceTitle' => 'Close workspace',
+			'gsh.gshPage.closeWorkspaceMessage' => ({required Object name}) => 'Close "${name}"? The agents in this workspace will be terminated. The folder on disk is kept.',
+			'gsh.gshPage.closeAction' => 'Close',
+			'gsh.gshPage.removeWorktreeTitle' => 'Remove worktree',
+			'gsh.gshPage.removeWorktreeMessage' => ({required Object name, required Object warn}) => 'Remove "${name}"? The worktree folder and the branch will be deleted and the agents in this fork will be terminated.${warn}',
+			'gsh.gshPage.removeWorktreeWarning' => ({required Object name}) => '\n\nWarning: the branch "${name}" has not been merged yet — removing it (git branch -D) discards the unmerged work.',
+			'gsh.gshPage.failedToRemoveWorktreeTitle' => 'Failed to remove worktree',
+			'gsh.gshPage.openLayoutTitle' => 'Open layout',
+			'gsh.gshPage.replaceLayoutTitle' => 'Replace the current layout?',
+			'gsh.gshPage.replaceLayoutMessage' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 tab will be closed, including one with a running process.', other: '${n} tabs will be closed, including ones with running processes.', ), 
+			'gsh.gshPage.replaceLayoutConfirm' => 'Replace',
+			'gsh.gshPage.restartServerTooltip' => 'Restart server',
+			'gsh.gshPage.noLspAvailable' => 'No LSP available',
+			'gsh.gshPage.lspRunning' => 'running',
+			'gsh.gshPage.lspStopped' => 'stopped',
+			'gsh.welcomeView.title' => 'Welcome to GSH Desktop',
+			'gsh.welcomeView.subtitle' => 'Open a folder or connect to a remote host to start.',
+			'gsh.welcomeView.createWorkspace' => 'Create workspace',
+			'gsh.welcomeView.openLocalFolder' => 'Open local folder',
+			'gsh.welcomeView.connectHost' => 'Connect to host',
+			'gsh.welcomeView.configureHost' => 'Configure host',
+			'gsh.welcomeView.addWorkspace' => 'Add workspace',
+			'gsh.paneView.closePaneTitle' => 'Close pane?',
+			'gsh.paneView.closePaneMessage' => ({required Object count}) => 'This closes all ${count} tab(s) in this pane and ends the agents/terminals in it.',
+			'gsh.paneView.close' => 'Close',
+			'gsh.paneView.closeOtherTabs' => 'Close others',
+			'gsh.paneView.closeTabsToTheRight' => 'Close to the right',
+			'gsh.paneView.closeAllTabs' => 'Close all',
+			'gsh.paneView.closeTabsTitle' => 'Close tabs?',
+			'gsh.paneView.closeTabsMessage' => ({required Object count}) => 'This closes ${count} tab(s) and ends the agents/terminals in them.',
+			'gsh.paneView.allTabs' => 'All tabs',
+			'gsh.paneView.pinTab' => 'Pin tab',
+			'gsh.paneView.openInNewWindow' => 'Open in new window',
+			'gsh.paneView.rename' => 'Rename',
+			'gsh.paneView.openAsMarkdown' => 'Open as markdown',
+			'gsh.paneView.openAsBoard' => 'Open as board',
+			'gsh.paneView.resetTitle' => 'Reset Title',
+			'gsh.paneView.copyId' => 'Copy Id',
+			'gsh.paneView.restartTab' => 'Restart',
+			'gsh.paneView.newTab' => 'New tab',
+			'gsh.paneView.newTerminal' => 'New terminal…',
+			'gsh.paneView.splitRight' => 'Split right',
+			'gsh.paneView.splitDown' => 'Split down',
+			'gsh.paneView.closePane' => 'Close pane',
+			'gsh.paneView.dropHereToMove' => 'Drop here to move the tab',
+			'gsh.paneView.dockAsTab' => 'Dock as tab',
+			'gsh.paneView.openBrowser' => 'Open browser',
+			'gsh.paneView.openTerminal' => 'Open terminal',
+			'gsh.paneView.openAsLayout' => 'Open as layout',
+			'gsh.paneView.openAsYaml' => 'Open as YAML',
+			'gsh.paneView.openAsPanel' => 'Open as panel',
+			'gsh.paneView.openAsHtml' => 'Open as HTML',
+			'gsh.fileTreePanel.viewDiff' => 'View Diff',
+			'gsh.fileTreePanel.commit' => 'Commit',
+			'gsh.fileTreePanel.stageAndCommit' => 'Stage and Commit',
+			'gsh.fileTreePanel.unstage' => 'Unstage',
+			'gsh.fileTreePanel.stageChanges' => 'Stage Changes',
+			'gsh.fileTreePanel.discardChanges' => 'Discard Changes',
+			'gsh.fileTreePanel.enterCommitMessage' => 'Enter a commit message.',
+			'gsh.fileTreePanel.commitUnavailable' => 'Commit is unavailable for this workspace.',
+			'gsh.fileTreePanel.gitErrorTitle' => 'Git error',
+			'gsh.fileTreePanel.deleteNewFileTitle' => 'Delete new file?',
+			'gsh.fileTreePanel.discardChangesTitle' => 'Discard changes?',
+			'gsh.fileTreePanel.deleteNewFileMessage' => ({required Object name}) => '"${name}" is a new file and cannot be restored. Delete it?',
+			'gsh.fileTreePanel.discardOneMessage' => ({required Object name}) => 'Discard all changes in "${name}"? Deleted files will be restored.',
+			'gsh.fileTreePanel.discard' => 'Discard',
+			'gsh.fileTreePanel.deleteAllNewFilesTitle' => 'Delete all new files?',
+			'gsh.fileTreePanel.allNewFilesMessage' => ({required Object count}) => 'All ${count} files are new and will be deleted. This cannot be undone.',
+			'gsh.fileTreePanel.discardTrackedMessage' => ({required Object count, required Object extra}) => 'Discard changes in ${count} tracked file(s)?${extra}',
+			'gsh.fileTreePanel.discardTrackedExtra' => ({required Object count}) => ' ${count} new file(s) will be kept.',
+			'gsh.fileTreePanel.deleteAll' => 'Delete All',
+			'gsh.fileTreePanel.deleteQuestionTitle' => 'Delete?',
+			'gsh.fileTreePanel.moveToTrash' => ({required Object name}) => 'Move “${name}” to the Trash?',
+			'gsh.fileTreePanel.permanentlyDelete' => ({required Object name}) => 'Permanently delete “${name}”? This can’t be undone.',
+			'gsh.fileTreePanel.couldNotDeleteTitle' => 'Could not delete',
+			'gsh.fileTreePanel.moveQuestionTitle' => 'Move?',
+			'gsh.fileTreePanel.moveMessage' => ({required Object name, required Object dest}) => 'Move “${name}” to “${dest}”?',
+			'gsh.fileTreePanel.moveAction' => 'Move',
+			'gsh.fileTreePanel.couldNotMoveTitle' => 'Could not move',
+			'gsh.fileTreePanel.couldNotPasteTitle' => 'Could not paste',
+			'gsh.fileTreePanel.filesTooltip' => 'Files',
+			'gsh.fileTreePanel.searchTooltip' => 'Search',
+			'gsh.fileTreePanel.sourceControlTooltip' => 'Source Control',
+			'gsh.fileTreePanel.databaseTooltip' => 'Database',
+			'gsh.fileTreePanel.sectionFiles' => 'FILES',
+			'gsh.fileTreePanel.newFile' => 'New file',
+			'gsh.fileTreePanel.newFolder' => 'New folder',
+			'gsh.fileTreePanel.refreshTooltip' => 'Refresh',
+			'gsh.fileTreePanel.agentFilterTooltip' => 'Filter by agent',
+			'gsh.fileTreePanel.allAgents' => 'All agents',
+			'gsh.fileTreePanel.trackingUnavailable' => 'tracking unavailable',
+			'gsh.fileTreePanel.editedBy' => ({required Object label, required Object time}) => 'Edited by ${label} · ${time}',
+			'gsh.fileTreePanel.inferredSuffix' => '(inferred)',
+			'gsh.fileTreePanel.noTouchedFiles' => 'No files touched by this agent yet',
+			'gsh.fileTreePanel.concurrentAgentEdits' => 'Edited by 2+ agents in the last 10 minutes',
+			'gsh.fileTreePanel.collapseAll' => 'Collapse all folders',
+			'gsh.fileTreePanel.sectionSourceControl' => 'SOURCE CONTROL',
+			'gsh.fileTreePanel.viewAsList' => 'View as List',
+			'gsh.fileTreePanel.viewAsTree' => 'View as Tree',
+			'gsh.fileTreePanel.noFolderMessage' => 'No folder — open a workspace.',
+			'gsh.fileTreePanel.amend' => 'Amend',
+			'gsh.fileTreePanel.commitMessagePlaceholder' => 'Commit Message',
+			'gsh.fileTreePanel.amendCommit' => 'Amend Commit',
+			'gsh.fileTreePanel.lastCommit' => 'last commit',
+			'gsh.fileTreePanel.openInFinder' => 'Open in Finder',
+			'gsh.fileTreePanel.openInExplorer' => 'Open in Explorer',
+			'gsh.fileTreePanel.openInFileManager' => 'Open in file manager',
+			'gsh.fileTreePanel.open' => 'Open',
+			'gsh.fileTreePanel.openWith' => 'Open with',
+			'gsh.fileTreePanel.openInNewWindow' => 'Open in new window',
+			'gsh.fileTreePanel.openLayout' => 'Open layout',
+			'gsh.fileTreePanel.openAsMarkdown' => 'Open as markdown',
+			'gsh.fileTreePanel.showGitDiff' => 'Show git diff',
+			'gsh.fileTreePanel.createTerminal' => 'Open terminal',
+			'gsh.fileTreePanel.rename' => 'Rename',
+			'gsh.fileTreePanel.copy' => 'Copy',
+			'gsh.fileTreePanel.cut' => 'Cut',
+			'gsh.fileTreePanel.paste' => 'Paste',
+			'gsh.fileTreePanel.copyRelativePath' => 'Copy relative path',
+			'gsh.fileTreePanel.copyAbsolutePath' => 'Copy absolute path',
+			'gsh.fileTreePanel.renameFailed' => 'Rename failed.',
+			'gsh.fileTreePanel.noChanges' => 'No changes.',
+			'gsh.fileTreePanel.stagedChangesHeader' => ({required Object count}) => 'STAGED CHANGES (${count})',
+			'gsh.fileTreePanel.changesHeader' => ({required Object count}) => 'CHANGES (${count})',
+			'gsh.fileTreePanel.discardAllChanges' => 'Discard All Changes',
+			'gsh.fileTreePanel.unstageAllChanges' => 'Unstage All Changes',
+			'gsh.fileTreePanel.stageAllChanges' => 'Stage All Changes',
+			'gsh.fileTreePanel.discardFolderChanges' => 'Discard Folder Changes',
+			'gsh.fileTreePanel.unstageFolderChanges' => 'Unstage Folder Changes',
+			'gsh.fileTreePanel.stageFolderChanges' => 'Stage Folder Changes',
+			'gsh.fileTreePanel.generateCommitMessage' => 'Generate commit message',
+			'gsh.fileTreePanel.generateWith' => ({required Object harness}) => 'Generate with ${harness}',
+			'gsh.fileTreePanel.generateUnavailableWhileAmending' => 'Unavailable while amending a commit',
+			'gsh.fileTreePanel.cancelGeneration' => 'Cancel generation',
+			'gsh.fileTreePanel.changes' => 'Changes',
+			'gsh.fileTreePanel.history' => 'History',
+			'gsh.fileTreePanel.historyRepository' => 'Repository',
+			'gsh.fileTreePanel.historyNoRepository' => 'No Git repository available.',
+			'gsh.fileTreePanel.historyEmpty' => 'No commits found.',
+			'gsh.fileTreePanel.historyLoadFailed' => 'Could not load Git history.',
+			'gsh.fileTreePanel.historyUntitledCommit' => 'Untitled commit',
+			'gsh.fileTreePanel.historyNow' => 'now',
+			'gsh.fileTreePanel.historyMinutesAgo' => ({required Object count}) => '${count}m ago',
+			'gsh.fileTreePanel.historyHoursAgo' => ({required Object count}) => '${count}h ago',
+			'gsh.fileTreePanel.historyYesterday' => 'yesterday',
+			'gsh.fileTreePanel.historyDayAgo' => '1d ago',
+			'gsh.fileTreePanel.historyDaysAgo' => ({required Object count}) => '${count}d ago',
+			'gsh.fileTreePanel.historyFiles' => 'Files changed',
+			'gsh.fileTreePanel.historyFilesEmpty' => 'No files changed.',
+			'gsh.fileTreePanel.historyFilesLoadFailed' => 'Could not load changed files.',
+			'gsh.fileTreePanel.diffEmptyTree' => 'Empty tree',
+			'gsh.fileTreePanel.diffOriginal' => ({required Object ref}) => 'Original ${ref}',
+			'gsh.fileTreePanel.diffModified' => ({required Object ref}) => 'Modified ${ref}',
+			'gsh.fileTreePanel.diffWorkingTree' => 'Working tree',
+			'gsh.fileTreePanel.diffBinaryFile' => 'Binary file - no text diff.',
+			'gsh.fileTreePanel.diffNoChanges' => 'No changes.',
+			'gsh.fileTreePanel.diffError' => ({required Object detail}) => 'Could not read the diff: ${detail}',
+			'gsh.fileTreePanel.galleryTooltip' => 'Gallery',
+			'gsh.fileTreePanel.sectionGallery' => 'GALLERY',
+			'gsh.fileTreePanel.openAsHtml' => 'Open as HTML',
+			'gsh.fileTreePanel.importQuestionTitle' => 'Copy here?',
+			'gsh.fileTreePanel.importMessage' => ({required Object count, required Object dest}) => 'Copy ${count} items into “${dest}”?',
+			'gsh.fileTreePanel.importAction' => 'Copy',
+			'gsh.fileTreePanel.couldNotImportTitle' => 'Could not copy',
+			'gsh.fileTreePanel.openInAgent' => ({required Object harness}) => 'Open in ${harness}',
+			'gsh.fileViewer.cantOpen' => 'Can\'t open this file.',
+			'gsh.fileViewer.couldNotLoadImage' => 'Could not load the image.',
+			'gsh.fileViewer.preview' => 'Preview',
+			'gsh.fileViewer.source' => 'Source',
+			'gsh.fileViewer.reload' => 'Reload',
+			'gsh.workspaceSettingsDialog.choosePhotoTitle' => 'Choose workspace photo',
+			'gsh.workspaceSettingsDialog.title' => 'Workspace settings',
+			'gsh.workspaceSettingsDialog.namePlaceholder' => 'Workspace name',
+			'gsh.workspaceSettingsDialog.addPhoto' => 'Add photo',
+			'gsh.workspaceSettingsDialog.changePhoto' => 'Change photo',
+			'gsh.workspaceSettingsDialog.remove' => 'Remove',
+			'gsh.workspaceSettingsDialog.color' => 'Color',
+			'gsh.workspaceSettingsDialog.host' => 'Host',
+			'gsh.workspaceSettingsDialog.folder' => 'Folder',
+			'gsh.realmDialogs.namePlaceholder' => 'Realm name',
+			'gsh.realmDialogs.duplicateName' => 'A realm with this name already exists.',
+			'gsh.realmDialogs.newRealmTitle' => 'New realm',
+			'gsh.realmDialogs.renameRealmTitle' => 'Rename realm',
+			'gsh.realmDialogs.rename' => 'Rename',
+			'gsh.realmDialogs.deleteRealmTitle' => 'Delete realm',
+			'gsh.realmDialogs.deleteMessage' => ({required Object name, required Object suffix}) => 'Delete "${name}"? No workspace is deleted — the folder list just changes.${suffix}',
+			'gsh.realmDialogs.deleteSuffixOne' => ' Its workspace will move to Default.',
+			'gsh.realmDialogs.deleteSuffixMany' => ({required Object count}) => ' Its ${count} workspaces will move to Default.',
+			'gsh.realmDialogs.manageRealmsTitle' => 'Manage realms',
+			'gsh.realmDialogs.workspaceCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 workspace', other: '${n} workspaces', ), 
+			'gsh.dbRedisTable.deleteKeyTitle' => 'Delete key',
+			'gsh.dbRedisTable.deleteKeyMessage' => ({required Object key}) => 'Delete "${key}" from this Redis database?',
+			'gsh.dbRedisTable.refresh' => 'Refresh',
+			'gsh.dbRedisTable.newKey' => 'New key',
+			'gsh.dbRedisTable.columnKey' => 'KEY',
+			'gsh.dbRedisTable.columnValue' => 'VALUE',
+			'gsh.dbRedisTable.columnType' => 'TYPE',
+			'gsh.dbRedisTable.columnTtl' => 'TTL',
+			'gsh.dbRedisTable.keyCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 key', other: '${n} keys', ), 
+			'gsh.dbRedisTable.noKeys' => 'No keys in this database.',
+			'gsh.dbRedisTable.noKeysMatch' => ({required Object pattern}) => 'No keys match "${pattern}".',
+			'gsh.dbRedisTable.loadMore' => 'Load more',
+			'gsh.dbRedisTable.loadingFullValue' => 'Loading full value…',
+			'gsh.dbRedisTable.ttlMustBeNumber' => 'TTL must be a number of seconds.',
+			'gsh.dbRedisTable.addKey' => 'Add key',
+			'gsh.dbRedisTable.keyFieldHint' => 'key',
+			'gsh.dbRedisTable.ttlFieldHint' => 'ttl (s, optional)',
+			'gsh.dbRedisTable.valueFieldHint' => 'value',
+			'gsh.dbRedisTable.searchHint' => 'Search — pattern, e.g. user:*',
+			'gsh.dbQueryView.saveQueryAs' => 'Save query as',
+			'gsh.dbQueryView.couldNotSave' => 'Could not save',
+			'gsh.dbQueryView.selectDatabase' => 'Select database',
+			'gsh.dbQueryView.noSqlConnections' => 'No SQL connections',
+			'gsh.dbQueryView.running' => 'Running…',
+			'gsh.dbQueryView.runSelection' => 'Run selection',
+			'gsh.dbQueryView.run' => 'Run',
+			'gsh.dbQueryView.pickDatabaseHint' => 'Pick a database above, then Run (⌘↵).',
+			'gsh.dbQueryView.runQueryHint' => 'Run the query (⌘↵) to see results here.',
+			'gsh.dbQueryView.noRows' => 'No rows.',
+			'gsh.dbQueryView.rowsAffected' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 row affected', other: '${n} rows affected', ), 
+			'gsh.dbQueryView.rowsFooter' => ({required Object n}) => '${n} rows',
+			'gsh.dbQueryView.truncatedSuffix' => ' · truncated (raise -- limit)',
+			'gsh.dbQueryView.table' => 'Table',
+			'gsh.dbQueryView.json' => 'JSON',
+			'gsh.dbQueryView.unsaved' => 'unsaved',
+			'gsh.dbQueryView.saved' => 'saved',
+			'gsh.dbQueryView.copied' => 'Copied',
+			'gsh.dbQueryView.copy' => 'Copy',
+			'gsh.httpView.saveRequestAs' => 'Save request as',
+			'gsh.httpView.couldNotSave' => 'Could not save',
+			'gsh.httpView.run' => 'Run',
+			'gsh.httpView.running' => 'Running…',
+			'gsh.httpView.noRequests' => 'No request in this file — write one, e.g. GET https://example.com',
+			'gsh.httpView.selectRequest' => 'Select request',
+			'gsh.httpView.requestCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 request', other: '${n} requests', ), 
+			'gsh.httpView.runHint' => 'Run the request (⌘↵) to see the response here.',
+			'gsh.httpView.emptyBody' => 'Empty response body.',
+			'gsh.httpView.body' => 'JSON',
+			'gsh.httpView.headers' => 'Headers',
+			'gsh.httpView.raw' => 'Text',
+			'gsh.httpView.truncatedSuffix' => ' · truncated (response too large)',
+			'gsh.httpView.error.title' => 'Request failed',
+			'gsh.httpView.error.noRequest' => 'No request found at the cursor.',
+			'gsh.httpView.error.invalidUrl' => ({required Object url}) => 'Invalid URL: ${url}',
+			'gsh.httpView.error.unresolvedVariable' => ({required Object name}) => 'Variable {{${name}}} has no value. Declare it with @${name} = … in this file.',
+			'gsh.httpView.error.bodyFileMissing' => ({required Object path}) => 'Body file not found: ${path}',
+			'gsh.httpView.error.bodyFileUnreadable' => ({required Object path, required Object detail}) => 'Could not read the body file ${path}: ${detail}',
+			'gsh.httpView.error.connectionFailed' => ({required Object detail}) => 'Could not reach the server: ${detail}',
+			'gsh.httpView.error.connectionFailedNoDetail' => 'Could not reach the server.',
+			'gsh.httpView.error.timeout' => ({required Object seconds}) => 'The request timed out after ${seconds}s.',
+			'gsh.httpView.error.responseTooLarge' => ({required Object bytes}) => 'The response is larger than the ${bytes} byte limit.',
+			'gsh.kanbanView.filter' => 'Filter',
+			'gsh.kanbanView.filterTitlePlaceholder' => 'Search titles',
+			'gsh.kanbanView.filterLabels' => 'Labels',
+			'gsh.kanbanView.filterClear' => 'Clear',
+			'gsh.kanbanView.filterDependencies' => 'Dependencies',
+			'gsh.kanbanView.filterBlocked' => 'Blocked',
+			'gsh.kanbanView.filterReady' => 'Ready',
+			'gsh.kanbanView.blockedBy' => 'Blocked by',
+			'gsh.kanbanView.addBlocker' => 'Add a blocking card',
+			'gsh.kanbanView.searchCards' => 'Search cards',
+			'gsh.kanbanView.unknownCard' => 'unknown',
+			'gsh.kanbanView.boardView' => 'Board',
+			'gsh.kanbanView.listView' => 'List',
+			'gsh.kanbanView.refresh' => 'Refresh from disk',
+			'gsh.kanbanView.manageLabels' => 'Labels',
+			'gsh.kanbanView.labelsTitle' => 'Labels in this board',
+			'gsh.kanbanView.labelNamePlaceholder' => 'label name',
+			'gsh.kanbanView.labelUsage' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 card', other: '${n} cards', ), 
+			'gsh.kanbanView.deleteLabel' => 'Delete label',
+			'gsh.kanbanView.newCard' => 'new card',
+			'gsh.kanbanView.newCardTitle' => 'New card',
+			'gsh.kanbanView.newColumn' => 'New column',
+			'gsh.kanbanView.columnNameTitle' => 'Column name',
+			'gsh.kanbanView.dragColumn' => 'Drag column',
+			'gsh.kanbanView.columnOptions' => 'Column options',
+			'gsh.kanbanView.renameColumn' => 'Rename column',
+			'gsh.kanbanView.moveColumnLeft' => 'Move left',
+			'gsh.kanbanView.moveColumnRight' => 'Move right',
+			'gsh.kanbanView.deleteColumn' => 'Delete column',
+			'gsh.kanbanView.newCardHere' => 'New card here',
+			'gsh.kanbanView.duplicateCard' => 'Duplicate',
+			'gsh.kanbanView.cardLabels' => 'Labels',
+			'gsh.kanbanView.deleteCard' => 'Delete card',
+			'gsh.kanbanView.advance' => 'Move to next column',
+			'gsh.kanbanView.advanceHold' => 'Move to next column (hold: move to last column)',
+			'gsh.kanbanView.advanceBack' => 'Move back a column',
+			'gsh.kanbanView.emptyColumn' => 'No cards',
+			'gsh.kanbanView.cardCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 card', other: '${n} cards', ), 
+			'gsh.kanbanView.notes' => 'Note',
+			'gsh.kanbanView.notesPlaceholder' => 'Write a note',
+			'gsh.kanbanView.comments' => 'Comments',
+			'gsh.kanbanView.addComment' => 'Add comment',
+			'gsh.kanbanView.commentPlaceholder' => 'Write a comment',
+			'gsh.kanbanView.noComments' => 'No comments yet',
+			'gsh.kanbanView.closeDetail' => 'Close',
+			'gsh.kanbanView.notABoard' => 'This file has no ## columns yet — it opens as markdown.',
+			'gsh.kanbanView.startBoard' => 'Start a board',
+			'gsh.kanbanView.couldNotSave' => 'Could not save the board',
+			'gsh.kanbanView.unrecognizedBlock' => 'Not recognized by the parser — drags whole, no inline editing.',
+			'gsh.kanbanView.deleteColumnDialog.title' => ({required Object name}) => 'Delete “${name}”?',
+			'gsh.kanbanView.deleteColumnDialog.message' => ({required Object count}) => 'This column has ${count}. Choose what happens to them.',
+			'gsh.kanbanView.deleteColumnDialog.moveCards' => 'Move to the previous column',
+			'gsh.kanbanView.deleteColumnDialog.deleteAll' => 'Delete with the column',
+			'gsh.kanbanView.deleteColumnDialog.emptyMessage' => 'This column is empty.',
+			'gsh.dbPanel.sectionDatabase' => 'DATABASE',
+			'gsh.dbPanel.edit' => 'Edit…',
+			'gsh.dbPanel.copyName' => 'Copy name',
+			'gsh.dbPanel.newQuery' => 'New query',
+			'gsh.dbPanel.browseKeys' => 'Browse keys',
+			'gsh.dbPanel.deleteConnectionTitle' => 'Delete connection',
+			'gsh.dbPanel.deleteConnectionMessage' => ({required Object name}) => 'Remove "${name}" from this workspace? Any saved password is discarded. .dbq files that reference it are not touched.',
+			'gsh.dbPanel.footer' => ({required Object n}) => '.gsh/databases.json · ${n} connections',
+			'gsh.dbPanel.footerOne' => '.gsh/databases.json · 1 connection',
+			'gsh.dbPanel.noConnections' => 'No connections yet.',
+			'gsh.dbPanel.passwordRequired' => 'Password not found on the host. Open this connection and enter it again — it is saved on the machine that runs the database, not on this one.',
+			'gsh.dbMongoView.deleteDocumentTitle' => 'Delete document',
+			'gsh.dbMongoView.deleteDocumentMessage' => ({required Object id, required Object collection}) => 'Delete the document with _id ${id} from "${collection}"?',
+			'gsh.dbMongoView.filterHint' => 'Filter — JSON, e.g. {"status": "active"}',
+			'gsh.dbMongoView.docCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 doc', other: '${n} docs', ), 
+			'gsh.dbMongoView.refresh' => 'Refresh',
+			'gsh.dbMongoView.insertDocument' => 'Insert document',
+			'gsh.dbMongoView.noDocuments' => 'No documents in this collection.',
+			'gsh.dbMongoView.noDocumentsMatch' => 'No documents match this filter.',
+			'gsh.dbMongoView.loadMore' => 'Load more',
+			'gsh.dbMongoView.edit' => 'Edit',
+			'gsh.dbMongoView.insert' => 'Insert',
+			'gsh.dbConnectionDialog.chooseFileTitle' => 'Choose SQLite database',
+			'gsh.dbConnectionDialog.file' => 'File',
+			'gsh.dbConnectionDialog.chooseFilePlaceholder' => 'Choose a SQLite file…',
+			'gsh.dbConnectionDialog.name' => 'Name',
+			'gsh.dbConnectionDialog.password' => 'Password',
+			'gsh.dbConnectionDialog.savePassword' => 'Save Password',
+			'gsh.dbConnectionDialog.allowWrites' => 'Allow writes (agents)',
+			'gsh.dbConnectionDialog.allowWritesHint' => 'off = agents can only read via CLI',
+			'gsh.dbConnectionDialog.visibleToAgents' => 'Visible to agents',
+			'gsh.dbConnectionDialog.visibleToAgentsHint' => 'off = hidden from the CLI, GUI only',
+			'gsh.dbConnectionDialog.testing' => 'Testing connection…',
+			'gsh.dbConnectionDialog.connectionOk' => 'Connection OK',
+			'gsh.dbConnectionDialog.connectionFailed' => 'Connection failed',
+			'gsh.dbConnectionDialog.editTitle' => 'Edit connection',
+			'gsh.dbConnectionDialog.newTitle' => 'New connection',
+			'gsh.dbConnectionDialog.connectionString' => 'Connection string',
+			'gsh.dbConnectionDialog.invalidUrl' => 'Not a valid connection URL.',
+			'gsh.dbConnectionDialog.sshTunnel' => 'SSH Tunnel',
+			'gsh.dbConnectionDialog.sshHost' => 'SSH Host',
+			'gsh.dbConnectionDialog.sshPort' => 'SSH Port',
+			'gsh.dbConnectionDialog.sshUser' => 'SSH User',
+			'gsh.dbConnectionDialog.privateKey' => 'Private key',
+			'gsh.dbConnectionDialog.choosePrivateKeyPlaceholder' => 'Choose a private key…',
+			'gsh.dbConnectionDialog.choosePrivateKeyDialogTitle' => 'Choose SSH private key',
 			_ => null,
 		} ?? switch (path) {
-			'cockpit.dbConnectionDialog.passwordOnHost' => 'The password is stored on the host, not on this machine.',
-			'cockpit.sshPrompts.unknownSshHostTitle' => 'Unknown SSH host',
-			'cockpit.sshPrompts.neverConnected' => ({required Object endpoint}) => 'GSH Desktop has never connected to ${endpoint} before.',
-			'cockpit.sshPrompts.trustHint' => 'Trust it only if this fingerprint matches the server. You can check it on the server with:',
-			'cockpit.sshPrompts.trust' => 'Trust',
-			'cockpit.sshPrompts.sshKeyPassphraseTitle' => 'SSH key passphrase',
-			'cockpit.sshPrompts.unlockMessage' => ({required Object keyPath, required Object connectionName}) => 'Unlock ${keyPath} to connect "${connectionName}".',
-			'cockpit.sshPrompts.keptInMemoryHint' => 'Kept in memory until GSH Desktop quits. To let agents use this connection, enable "Save passphrase" in the connection.',
-			'cockpit.sshPrompts.unlock' => 'Unlock',
-			'cockpit.projectsRail.workspaces' => 'Workspaces',
-			'cockpit.projectsRail.keepAwakeOn' => 'Keeping this computer awake for remote access. Click to let it sleep again.',
-			'cockpit.projectsRail.keepAwakeOff' => 'Keep this computer awake for remote access. Off again when GSH Desktop restarts.',
-			'cockpit.projectsRail.keepAwakeBattery' => 'Keeping awake on battery power. This drains the battery.',
-			'cockpit.projectsRail.keepAwakeLid' => 'Closing a laptop lid still puts it to sleep.',
-			'cockpit.projectsRail.newWorkspace' => 'New workspace',
-			'cockpit.projectsRail.settings' => 'Settings',
-			'cockpit.projectsRail.mergeToParent' => 'Merge to Parent',
-			'cockpit.projectsRail.updateFromParent' => 'Update from Parent',
-			'cockpit.projectsRail.forkWorktree' => 'Fork Worktree',
-			'cockpit.projectsRail.copyBranch' => 'Copy branch',
-			'cockpit.projectsRail.remove' => 'Remove',
-			'cockpit.projectsRail.moveToRealm' => 'Move to realm',
-			'cockpit.projectsRail.copyWorkspaceId' => 'Copy workspace id',
-			'cockpit.projectsRail.rename' => 'Rename',
-			'cockpit.projectsRail.close' => 'Close',
-			'cockpit.projectsRail.newRealm' => 'New realm…',
-			'cockpit.projectsRail.manageRealms' => 'Manage realms…',
-			'cockpit.projectsRail.noWorkspaces' => 'No workspaces yet.',
-			'cockpit.projectsRail.sync' => 'Sync',
-			'cockpit.projectsRail.pull' => 'Pull',
-			'cockpit.projectsRail.push' => 'Push',
-			'cockpit.projectsRail.createWorktree' => 'Create worktree',
-			'cockpit.projectsRail.worktreeCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 worktree', other: '${n} worktrees', ), 
-			'cockpit.projectsRail.expandWorktrees' => 'Expand worktrees',
-			'cockpit.projectsRail.collapseWorktrees' => 'Collapse worktrees',
-			'cockpit.findBar.find' => 'Find',
-			'cockpit.findBar.matchCase' => 'Match case',
-			'cockpit.findBar.wholeWord' => 'Whole word',
-			'cockpit.findBar.useRegex' => 'Use regular expression',
-			'cockpit.findBar.previous' => 'Previous (⇧⏎)',
-			'cockpit.findBar.next' => 'Next (⏎)',
-			'cockpit.findBar.close' => 'Close (Esc)',
-			'cockpit.findBar.badPattern' => 'Bad pattern',
-			'cockpit.findBar.noResults' => 'No results',
-			'cockpit.contentSearch.sectionSearch' => 'SEARCH',
-			'cockpit.contentSearch.searchInFiles' => 'Search in files',
-			'cockpit.contentSearch.matchCase' => 'Match case',
-			'cockpit.contentSearch.wholeWord' => 'Whole word',
-			'cockpit.contentSearch.useRegex' => 'Use regular expression',
-			'cockpit.contentSearch.invalidRegex' => 'Invalid regular expression.',
-			'cockpit.contentSearch.typeToSearch' => 'Type to search across files.',
-			'cockpit.contentSearch.searching' => 'Searching…',
-			'cockpit.contentSearch.noResults' => 'No results.',
-			'cockpit.topbar.collapseSidebar' => 'Collapse sidebar',
-			'cockpit.topbar.toggleFiles' => 'Show/hide files',
-			'cockpit.topbar.filesUnavailable' => 'Files unavailable in GSH Desktop',
-			'cockpit.topbar.hideKeyboard' => 'Hide keyboard',
-			'cockpit.topbar.visualizeAgents' => 'Visualize agents',
-			'cockpit.topbar.openFarm' => 'Agent farm',
-			'cockpit.topbar.openChat' => 'Chat with Claude (beta)',
-			'cockpit.tasks.hotReload' => 'Hot reload',
-			'cockpit.tasks.hotRestart' => 'Hot restart',
-			'cockpit.tasks.toggleDebugPaint' => 'Toggle debug paint',
-			'cockpit.tasks.togglePlatform' => 'Toggle platform',
-			'cockpit.tasks.quit' => 'Quit',
-			'cockpit.notifications.agentFinished' => 'Agent finished',
-			'cockpit.notifications.open' => 'Open',
-			'cockpit.notifications.agentNeedsAction' => 'Agent needs your input',
-			'cockpit.terminalLink.open' => 'Open',
-			'cockpit.terminalLink.revealFinder' => 'Reveal in Finder',
-			'cockpit.terminalLink.revealExplorer' => 'Show in Explorer',
-			'cockpit.terminalLink.revealFolder' => 'Open containing folder',
-			'cockpit.terminalLink.copyPath' => 'Copy path',
-			'cockpit.terminalLink.openLink' => 'Open link',
-			'cockpit.terminalLink.copyLink' => 'Copy link',
-			'cockpit.terminal.cwdFallbackWarning' => ({required Object requested, required Object path}) => 'Warning: the folder "${requested}" does not exist. This terminal opened in "${path}".',
-			'cockpit.terminal.workspaceEnvTracked' => ({required Object keys}) => 'Notice: .env.cockpit is tracked by git (it came with the repository). Injected: ${keys}',
-			'cockpit.remoteHost.addHost' => 'Add remote host',
-			'cockpit.remoteHost.hostName' => 'Name',
-			'cockpit.remoteHost.sshTarget' => 'SSH target (user@host)',
-			'cockpit.remoteHost.connecting' => ({required Object host}) => 'Connecting to ${host}…',
-			'cockpit.remoteHost.openingTunnel' => 'SSH tunnel',
-			'cockpit.remoteHost.installingServer' => 'Installing server',
-			'cockpit.remoteHost.handshake' => ({required Object version}) => 'Server ${version}',
-			'cockpit.remoteHost.loadingWorkspace' => 'Loading workspace…',
-			'cockpit.remoteHost.reconnecting' => ({required Object host}) => 'Reconnecting to ${host}…',
-			'cockpit.remoteHost.offline' => ({required Object host}) => '${host} offline',
-			'cockpit.remoteHost.remove' => 'Remove',
-			'cockpit.remoteHost.reconnect' => 'Reconnect',
-			'cockpit.remoteHost.installServer' => 'Install server',
-			'cockpit.remoteHost.errSshUnreachable' => ({required Object host}) => 'Cannot reach ${host} over SSH. Is it on, and is Remote Login enabled?',
-			'cockpit.remoteHost.errInstallFailed' => ({required Object host}) => 'Could not install the server on ${host}.',
-			'cockpit.remoteHost.errVersionMismatch' => 'Server version incompatible; update it.',
-			'cockpit.remoteHost.errDetail' => ({required Object detail}) => 'Details: ${detail}',
-			'cockpit.remoteHost.pickFolderTitle' => ({required Object host}) => 'Open folder on ${host}',
-			'cockpit.remoteHost.openHere' => 'Open here',
-			'cockpit.remoteHost.emptyFolder' => 'No subfolders',
-			'cockpit.remoteHost.newLocal' => 'Local',
-			'cockpit.remoteHost.newRemote' => 'Remote',
-			'cockpit.remoteHost.chooseHost' => 'Choose a host',
-			'cockpit.remoteHost.newHostEntry' => 'New host…',
-			'cockpit.remoteHost.editHost' => 'Edit host',
-			'cockpit.remoteHost.userLabel' => 'Username',
-			'cockpit.remoteHost.hostLabel' => 'Host / IP',
-			'cockpit.remoteHost.portLabel' => 'Port',
-			'cockpit.remoteHost.authLabel' => 'Authentication',
-			'cockpit.remoteHost.authKey' => 'SSH key',
-			'cockpit.remoteHost.authPassword' => 'Password',
-			'cockpit.remoteHost.passwordLabel' => 'Password',
-			'cockpit.remoteHost.passwordKeep' => 'Leave blank to keep current',
-			'cockpit.remoteHost.errUser' => 'Username required',
-			'cockpit.remoteHost.errHost' => 'Host required',
-			'cockpit.remoteHost.errPassword' => 'Password required',
-			'cockpit.remoteHost.identityChoose' => 'Choose…',
-			'cockpit.remoteHost.identityEmpty' => 'No key selected',
-			'cockpit.remoteHost.identityDialogTitle' => 'Select the SSH private key',
-			'cockpit.remoteHost.errIdentity' => 'Pick the private key to authenticate with.',
-			'cockpit.remoteHost.errHostKeyUnknown' => ({required Object host}) => 'GSH Desktop does not trust ${host} yet. Connect again and confirm the fingerprint.',
-			'cockpit.remoteHost.errHostKeyChanged' => ({required Object host}) => '${host} is presenting a different SSH key than the one stored. If you did not reinstall that machine, stop and check it — otherwise remove the old entry from ~/.ssh/known_hosts.',
-			'cockpit.remoteHost.errHostBundleMissing' => ({required Object host}) => '${host} runs Windows but does not have GSH Desktop installed. The remote server is installed from the GSH Desktop bundle already on that machine, so install GSH Desktop there and try again.',
-			'cockpit.remoteHost.errHostUnknownOs' => ({required Object host}) => 'Could not identify the operating system of ${host}. The account may have a restricted shell, or no shell at all.',
-			'cockpit.remoteHost.errIdentityPublic' => 'Only the public key is here. That works only if the private key is in your SSH agent; otherwise pick the private file (same name, without .pub).',
-			'cockpit.remoteHost.errIdentityNotKey' => 'That file does not look like a private key.',
-			'cockpit.remoteHost.errIdentityMissingFile' => 'That file no longer exists.',
-			'cockpit.remoteHost.errIdentityUnreadable' => 'That file could not be read.',
-			'cockpit.browserPane.back' => 'Back',
-			'cockpit.browserPane.forward' => 'Forward',
-			'cockpit.browserPane.reload' => 'Reload',
-			'cockpit.browserPane.urlHint' => 'Enter URL or address',
-			'cockpit.browserPane.go' => 'Go',
-			'cockpit.documentWindow.mediaNotSupported' => 'Audio and video open in the main GSH Desktop window.',
-			'cockpit.documentWindow.fileNotFound' => ({required Object path}) => 'File not found: ${path}',
-			'cockpit.gallery.intro' => 'Special GSH Desktop documents that give you a visual of what the AI agent is doing.',
-			'cockpit.gallery.createErrorTitle' => 'Could not create the file',
-			'cockpit.gallery.dbQuery.title' => 'Database query',
-			'cockpit.gallery.dbQuery.description' => 'SQL editor with a result grid, using one of the registered connections.',
-			'cockpit.gallery.kanban.title' => 'Kanban board',
-			'cockpit.gallery.kanban.description' => 'Columns and cards stored as plain markdown. Drag, edit and comment.',
-			'cockpit.gallery.layout.title' => 'Pane layout',
-			'cockpit.gallery.layout.description' => 'Terminals and splits to open in one go, like tmuxinator. Can run automatically on new worktrees.',
-			'cockpit.gallery.httpRequest.title' => 'HTTP requests',
-			'cockpit.gallery.httpRequest.description' => 'Write requests in a file and run them with the response next to it.',
-			'cockpit.gallery.html.title' => 'HTML view',
-			'cockpit.gallery.html.description' => 'A page the agent writes and GSH Desktop renders directly: mind maps, diagrams, charts, whatever you need.',
-			'cockpit.gallery.tasks.title' => 'Tasks',
-			'cockpit.gallery.tasks.description' => 'Commands to run from the Tasks panel, such as the dev server, tests and build. Stored in .cockpit/tasks.json.',
-			'cockpit.gallery.notebook.title' => 'Notebook',
-			'cockpit.gallery.notebook.description' => 'A folder of short notes with tags. The agent writes, you read and edit. Also opens in Obsidian.',
-			'cockpit.gallery.workspaceEnv.title' => 'Workspace env',
-			'cockpit.gallery.workspaceEnv.description' => 'Variables injected into every terminal of this workspace. Put API tokens or logins here instead of pasting them into the agent\'s prompt. Kept out of git.',
-			'cockpit.gallery.panel.title' => 'Panel',
-			'cockpit.gallery.panel.description' => 'An HTML page with a bridge to the app: its buttons run GSH Desktop CLI and shell commands on this machine. A playground for quick dashboards.',
-			'cockpit.notebook.notes' => 'Notes',
-			'cockpit.notebook.newNote' => 'New note',
-			'cockpit.notebook.searchPlaceholder' => 'Search notes',
-			'cockpit.notebook.empty' => 'No notes yet. Create one, or ask the agent to write here.',
-			'cockpit.notebook.noMatch' => 'No note matches.',
-			'cockpit.notebook.selectNote' => 'Select a note',
-			'cockpit.notebook.reload' => 'Reload from disk',
-			'cockpit.notebook.untagged' => 'untagged',
-			'cockpit.notebook.saveFailed' => 'Could not save the note',
-			'cockpit.notebook.createFailed' => 'Could not create the note',
-			'cockpit.notebook.addTag' => 'add tag',
-			'cockpit.notebook.untitled' => 'Untitled',
-			'cockpit.notebook.deleteNote' => 'Delete note',
-			'cockpit.notebook.deleteConfirm' => ({required Object name}) => 'Move “${name}” to the trash?',
-			'cockpit.notebook.imageFailed' => 'Could not save the image',
-			'cockpit.notebook.format.bold' => 'Bold (⌘B)',
-			'cockpit.notebook.format.italic' => 'Italic (⌘I)',
-			'cockpit.notebook.format.strike' => 'Strikethrough',
-			'cockpit.notebook.format.heading1' => 'Heading 1',
-			'cockpit.notebook.format.heading2' => 'Heading 2',
-			'cockpit.notebook.format.heading3' => 'Heading 3',
-			'cockpit.notebook.format.bullets' => 'Bullet list',
-			'cockpit.notebook.format.numbered' => 'Numbered list',
-			'cockpit.notebook.format.checklist' => 'Checklist',
-			'cockpit.notebook.format.quote' => 'Quote',
-			'cockpit.notebook.format.code' => 'Inline code (⌘E)',
-			'cockpit.notebook.format.codeBlock' => 'Code block',
-			'cockpit.notebook.format.link' => 'Link (⌘K)',
-			'cockpit.notebook.format.rule' => 'Divider',
-			'cockpit.notebook.format.noteLink' => 'Link to a note ([[…]])',
-			'cockpit.notebook.format.noteLinkSearch' => 'Search notes',
-			'cockpit.notebook.format.image' => 'Insert image…',
-			'cockpit.notebook.backlinks' => 'Linked from',
-			'cockpit.notebook.renameTag' => 'Rename tag',
-			'cockpit.notebook.deleteTag' => 'Delete tag',
-			'cockpit.notebook.deleteTagConfirm' => ({required Object name, required Object count}) => 'Remove “${name}” from ${count} notes? The notes stay.',
-			'cockpit.notebook.showList' => 'Show notes list',
-			'cockpit.notebook.hideList' => 'Hide notes list',
-			'cockpit.layoutPreview.applyFailedTitle' => 'Could not apply the layout',
-			'cockpit.layoutPreview.applyInCockpit' => 'Apply in GSH Desktop',
-			'cockpit.layoutPreview.applyNewWorkspace' => 'Open as new workspace',
-			'cockpit.layoutPreview.applyTo' => ({required Object workspace}) => 'Apply to ${workspace}',
-			'cockpit.layoutPreview.autorunWorktree' => 'autorun: worktree. This layout is also applied on its own when you create a worktree of the workspace that holds it.',
-			'cockpit.layoutPreview.command' => 'Command',
-			'cockpit.layoutPreview.folder' => 'Folder',
-			'cockpit.layoutPreview.noCommand' => 'no command, opens a shell',
-			'cockpit.layoutPreview.replaceConfirm' => 'Replace layout',
-			'cockpit.layoutPreview.replaceMessage' => ({required Object n}) => '${n} open tabs of this workspace will be closed, including any running work.',
-			'cockpit.layoutPreview.replaceTitle' => ({required Object workspace}) => 'Replace the layout of ${workspace}?',
-			'cockpit.layoutPreview.skippedTitle' => 'Not created on this system',
-			'cockpit.layoutPreview.splitDown' => 'split down',
-			'cockpit.layoutPreview.splitRight' => 'split right',
-			'cockpit.layoutPreview.splitTab' => 'tab',
-			'cockpit.layoutPreview.subtitle' => ({required Object n}) => 'This layout opens ${n} terminals. Read the commands before applying.',
-			'cockpit.telemetry.tooltip' => 'Telemetry',
-			'cockpit.telemetry.title' => 'Telemetry',
-			'cockpit.telemetry.liveRuns' => ({required Object n}) => '${n} live',
-			'cockpit.telemetry.noWorkspace' => 'Open a workspace to see its telemetry.',
-			'cockpit.telemetry.empty' => 'Nothing here yet.',
-			'cockpit.telemetry.emptyFiltered' => 'Nothing here yet.',
-			'cockpit.telemetry.searchHint' => 'Filter cases',
-			'cockpit.telemetry.chipOpen' => 'Open',
-			'cockpit.telemetry.chipNew' => 'New',
-			'cockpit.telemetry.chipResolved' => 'Resolved',
-			'cockpit.telemetry.chipIgnored' => 'Ignored',
-			'cockpit.telemetry.chipWarnings' => 'Warnings',
-			'cockpit.telemetry.tagNew' => 'new',
-			'cockpit.telemetry.tagRegression' => 'regression',
-			'cockpit.telemetry.tagResolved' => 'resolved',
-			'cockpit.telemetry.tagIgnored' => 'ignored',
-			'cockpit.telemetry.srcTask' => 'task',
-			'cockpit.telemetry.srcWrapper' => 'cockpit telemetry',
-			'cockpit.telemetry.run' => ({required Object id}) => 'run ${id}',
-			'cockpit.telemetry.resolve' => 'Mark resolved',
-			'cockpit.telemetry.ignore' => 'Ignore (hide from agents too)',
-			'cockpit.telemetry.reopen' => 'Reopen',
-			'cockpit.telemetry.clear' => 'Clear occurrences',
-			'cockpit.telemetry.clearRun' => 'Clear this run',
-			'cockpit.telemetry.clearProject' => 'Clear project',
-			'cockpit.telemetry.openFile' => ({required Object location}) => 'Open ${location}',
-			'cockpit.telemetry.showInTerminal' => 'Show in terminal',
-			'cockpit.telemetry.copyCommand' => 'Copy CLI command',
-			'cockpit.telemetry.copied' => 'Copied',
-			'cockpit.telemetry.statusOpen' => 'Open',
-			'cockpit.telemetry.statusResolved' => 'Resolved',
-			'cockpit.telemetry.statusIgnored' => 'Ignored',
-			'cockpit.telemetry.occurrences' => 'Occurrences',
-			'cockpit.telemetry.inRuns' => ({required Object n}) => 'in ${n} runs',
-			'cockpit.telemetry.first' => 'First',
-			'cockpit.telemetry.last' => 'Last',
-			'cockpit.telemetry.origin' => 'Origin',
-			'cockpit.telemetry.sectionStack' => 'Stack',
-			'cockpit.telemetry.stackHint' => 'project frames highlighted · click opens the file',
-			'cockpit.telemetry.sectionCorrelated' => 'Correlated log',
-			'cockpit.telemetry.correlatedHint' => 'the closest JSON log before the error, same run',
-			'cockpit.telemetry.none' => 'none',
-			'cockpit.telemetry.sectionRuns' => 'Occurrences by run',
-			'cockpit.telemetry.runsHint' => 'same key (cwd, command): this is how new and regression are computed',
-			'cockpit.telemetry.sectionContext' => 'Raw context',
-			'cockpit.telemetry.contextHint' => 'terminal lines around the last occurrence',
-			'cockpit.telemetry.current' => 'current',
-			'cockpit.telemetry.fingerprintHint' => ({required Object location}) => 'fingerprint = type + normalized message + ${location}',
-			'cockpit.telemetry.blameUncommitted' => 'changed in working tree',
-			'cockpit.telemetry.blameCommit' => ({required Object ago, required Object sha}) => 'changed ${ago} (${sha})',
-			'cockpit.telemetry.justNow' => 'just now',
-			'cockpit.telemetry.minutesAgo' => ({required Object n}) => '${n}m ago',
-			'cockpit.telemetry.hoursAgo' => ({required Object n}) => '${n}h ago',
-			'cockpit.telemetry.daysAgo' => ({required Object n}) => '${n}d ago',
-			'cockpit.telemetry.resolvedToast' => 'Resolved. If it comes back in a later run it reappears as a regression.',
-			'cockpit.telemetry.ignoredToast' => 'Ignored. Agents no longer see it (unless --include-ignored).',
-			'cockpit.telemetry.clearedToast' => 'Occurrences deleted. Triage rules are kept.',
-			'cockpit.telemetry.byHuman' => 'by you',
-			'cockpit.telemetry.byAgent' => 'by agent',
-			'cockpit.telemetry.caseTabTitle' => ({required Object type, required Object file}) => '${type} · ${file}',
-			'cockpit.telemetry.srcApp' => 'App',
-			'cockpit.telemetry.chipApp' => 'GSH Desktop',
-			'cockpit.panelView.unavailable' => 'Panels need the embedded web view, which is not available on Linux yet.',
-			'cockpit.panelView.openInBrowser' => 'Open in browser',
-			'cockpit.panelView.openAsHtml' => 'Open as HTML',
-			'cockpit.chat.tabTitle' => 'Chat',
-			'cockpit.chat.emptyTitle' => 'Chat with Claude Code',
-			'cockpit.chat.emptyHint' => ({required Object cwd}) => 'Uses the claude installed on this machine, with your own login. Folder: ${cwd}',
-			'cockpit.chat.placeholder' => 'Message Claude… (Enter sends, Shift+Enter for a new line)',
-			'cockpit.chat.send' => 'Send',
-			'cockpit.chat.stop' => 'Stop',
-			'cockpit.chat.working' => 'working…',
-			'cockpit.chat.waitingYou' => 'waiting for you',
-			'cockpit.chat.cost' => ({required Object v}) => 'cost US\$ ${v}',
-			'cockpit.chat.askPermission' => ({required Object tool}) => 'Allow ${tool}?',
-			'cockpit.chat.allow' => 'Allow',
-			'cockpit.chat.deny' => 'Deny',
-			'cockpit.chat.allowed' => 'Allowed',
-			'cockpit.chat.denied' => 'Denied',
-			'cockpit.chat.startFailed' => ({required Object detail}) => 'Couldn\'t start claude: ${detail}',
-			'cockpit.chat.engineExited' => ({required Object code}) => 'claude exited (code ${code}).',
-			'cockpit.chat.turnFailed' => ({required Object detail}) => 'The turn ended with an error: ${detail}',
-			'cockpit.farm.tabTitle' => 'Farm',
-			'cockpit.farm.title' => 'Agent farm',
-			'cockpit.farm.emptyTitle' => 'No agents running',
-			'cockpit.farm.emptyHint' => 'Every Claude Code loop on this machine shows up here while it works, including subagents and sessions outside GSH Desktop.',
-			'cockpit.farm.working' => ({required Object n}) => '${n} working',
-			'cockpit.farm.waiting' => ({required Object n}) => '${n} need you',
-			'cockpit.farm.idle' => ({required Object n}) => '${n} idle',
-			'cockpit.farm.tokens' => ({required Object n}) => '${n} tokens out',
-			'cockpit.farm.tokensDetail' => ({required Object out, required Object ctx}) => '${out} tokens out · context ${ctx}',
-			'cockpit.farm.clickToOpen' => 'Click to open its terminal',
-			'cockpit.farm.outsideGsh' => 'This agent is running outside GSH Desktop. Its terminal is in another window.',
-			'cockpit.farm.agents' => ({required Object n}) => '${n} agents',
-			'cockpit.farm.subagents' => ({required Object n}) => '${n} sub-agents',
-			'cockpit.farm.activity.thinking' => 'thinking',
-			'cockpit.farm.activity.reading' => 'reading',
-			'cockpit.farm.activity.editing' => 'editing',
-			'cockpit.farm.activity.running' => 'running a command',
-			'cockpit.farm.activity.searching' => 'searching the web',
-			'cockpit.farm.activity.delegating' => 'delegating',
-			'cockpit.farm.activity.tooling' => 'using a tool',
-			'cockpit.farm.activity.waiting' => 'waiting for you',
-			'cockpit.farm.activity.idle' => 'idle',
-			'cockpit.farm.activity.sleeping' => 'asleep',
-			'cockpit.farm.activity.done' => 'done',
-			'cockpit.agentGraph.tabTitle' => 'Agents',
-			'cockpit.agentGraph.newAgent' => 'New agent',
-			'cockpit.agentGraph.emptyTitle' => 'No agents in this workspace',
-			'cockpit.agentGraph.emptyHint' => 'Start an agent in a terminal or create one here. Drag from an agent\'s port to another agent to connect them.',
-			'cockpit.agentGraph.statusWorking' => 'Working',
-			'cockpit.agentGraph.statusWaiting' => 'Waiting',
-			'cockpit.agentGraph.statusIdle' => 'Idle',
-			'cockpit.agentGraph.messageCount' => ({required Object n}) => 'Messages: ${n}',
-			'cockpit.agentGraph.lastMessage' => ({required Object preview}) => 'Last: ${preview}',
-			'cockpit.agentGraph.linked' => 'Connected',
-			'cockpit.agentGraph.removeLinkHint' => 'Right-click to remove the connection',
-			'cockpit.agentGraph.removeLink' => 'Remove connection',
-			'cockpit.agentGraph.connectHint' => 'Drag to another agent to connect',
-			'cockpit.agentGraph.quickStart' => 'Quick start',
-			'cockpit.agentGraph.shell' => 'Shell',
-			'cockpit.agentGraph.tabDetails' => 'Details',
-			'cockpit.agentGraph.tabAppearance' => 'Appearance',
-			'cockpit.agentGraph.tabAgent' => 'Agent',
-			'cockpit.agentGraph.name' => 'Terminal name',
-			'cockpit.agentGraph.namePlaceholder' => 'e.g. Reviewer',
-			'cockpit.agentGraph.nameTaken' => 'Another tab already uses this name. Names must be unique so `cockpit msg --to` can reach it.',
-			'cockpit.agentGraph.command' => 'Command',
-			'cockpit.agentGraph.commandPlaceholder' => 'e.g. claude --model opus (empty = shell)',
-			'cockpit.agentGraph.cwd' => 'Working directory',
-			'cockpit.agentGraph.browse' => 'Browse…',
-			'cockpit.agentGraph.cwdMissing' => 'This folder does not exist.',
-			'cockpit.agentGraph.monitor' => 'Monitor activity',
-			'cockpit.agentGraph.monitorHint' => 'Badge, sound and notification when a turn ends.',
-			'cockpit.agentGraph.maestro' => 'Maestro',
-			'cockpit.agentGraph.maestroTooltip' => 'Promotes this agent to maestro: it is connected to every agent on the canvas and coordinates them.',
-			'cockpit.agentGraph.maestroReplaces' => ({required Object name}) => '${name} is the current maestro and will be demoted.',
-			'cockpit.agentGraph.color' => 'Color',
-			'cockpit.agentGraph.colorAuto' => 'Automatic',
-			'cockpit.agentGraph.role' => 'Role / instructions',
-			'cockpit.agentGraph.rolePlaceholder' => 'Sent as its first message once the agent is ready.',
-			'cockpit.agentGraph.task' => 'Initial task',
-			'cockpit.agentGraph.taskPlaceholder' => 'Sent right after the role.',
-			'cockpit.agentGraph.focus' => 'Focus',
-			'cockpit.agentGraph.rename' => 'Rename',
-			'cockpit.agentGraph.renameTitle' => 'Rename agent',
-			'cockpit.agentGraph.makeMaestro' => 'Make maestro',
-			'cockpit.agentGraph.removeMaestro' => 'Remove maestro',
-			'cockpit.agentGraph.closeTab' => 'Close tab',
-			'cockpit.agentGraph.removeFromCanvas' => 'Remove from canvas',
-			'cockpit.agentGraph.desktopApps' => 'Desktop apps',
-			'cockpit.agentGraph.desktopBadge' => 'desktop',
-			'cockpit.agentGraph.statusOnline' => 'Online',
-			'cockpit.agentGraph.statusOffline' => 'Offline',
-			'cockpit.agentGraph.queued' => ({required Object n}) => '${n} queued',
-			'cockpit.agentGraph.agentName' => 'Name',
-			'cockpit.agentGraph.integration' => 'Integration',
-			'cockpit.agentGraph.integrationHint' => 'GSH Desktop adds an MCP server named "cockpit" to this file and saves a backup next to it. Other servers are not touched.',
-			'cockpit.agentGraph.integrationConsent' => ({required Object app}) => 'Add the GSH Desktop MCP server to ${app}\'s config',
-			'cockpit.agentGraph.restartHint' => ({required Object app}) => 'Restart ${app} if it was already open so it loads the GSH Desktop MCP server; then ask it to call wait_messages.',
-			'cockpit.agentGraph.integrationError.invalidConfig' => ({required Object path}) => '${path} is not plain JSON/TOML that GSH Desktop can edit safely (comments or a different layout). Nothing was changed.',
-			'cockpit.agentGraph.integrationError.cliMissing' => ({required Object path}) => 'The GSH Desktop CLI is not installed yet (${path}). Restart GSH Desktop and try again.',
-			'cockpit.agentGraph.integrationError.writeFailed' => ({required Object detail}) => 'Could not update the config: ${detail}',
+			'gsh.dbConnectionDialog.keyPassphrase' => 'Key passphrase',
+			'gsh.dbConnectionDialog.savePassphrase' => 'Save passphrase',
+			'gsh.dbConnectionDialog.passwordOnHost' => 'The password is stored on the host, not on this machine.',
+			'gsh.sshPrompts.unknownSshHostTitle' => 'Unknown SSH host',
+			'gsh.sshPrompts.neverConnected' => ({required Object endpoint}) => 'GSH Desktop has never connected to ${endpoint} before.',
+			'gsh.sshPrompts.trustHint' => 'Trust it only if this fingerprint matches the server. You can check it on the server with:',
+			'gsh.sshPrompts.trust' => 'Trust',
+			'gsh.sshPrompts.sshKeyPassphraseTitle' => 'SSH key passphrase',
+			'gsh.sshPrompts.unlockMessage' => ({required Object keyPath, required Object connectionName}) => 'Unlock ${keyPath} to connect "${connectionName}".',
+			'gsh.sshPrompts.keptInMemoryHint' => 'Kept in memory until GSH Desktop quits. To let agents use this connection, enable "Save passphrase" in the connection.',
+			'gsh.sshPrompts.unlock' => 'Unlock',
+			'gsh.projectsRail.workspaces' => 'Workspaces',
+			'gsh.projectsRail.keepAwakeOn' => 'Keeping this computer awake for remote access. Click to let it sleep again.',
+			'gsh.projectsRail.keepAwakeOff' => 'Keep this computer awake for remote access. Off again when GSH Desktop restarts.',
+			'gsh.projectsRail.keepAwakeBattery' => 'Keeping awake on battery power. This drains the battery.',
+			'gsh.projectsRail.keepAwakeLid' => 'Closing a laptop lid still puts it to sleep.',
+			'gsh.projectsRail.newWorkspace' => 'New workspace',
+			'gsh.projectsRail.settings' => 'Settings',
+			'gsh.projectsRail.mergeToParent' => 'Merge to Parent',
+			'gsh.projectsRail.updateFromParent' => 'Update from Parent',
+			'gsh.projectsRail.forkWorktree' => 'Fork Worktree',
+			'gsh.projectsRail.copyBranch' => 'Copy branch',
+			'gsh.projectsRail.remove' => 'Remove',
+			'gsh.projectsRail.moveToRealm' => 'Move to realm',
+			'gsh.projectsRail.copyWorkspaceId' => 'Copy workspace id',
+			'gsh.projectsRail.rename' => 'Rename',
+			'gsh.projectsRail.close' => 'Close',
+			'gsh.projectsRail.newRealm' => 'New realm…',
+			'gsh.projectsRail.manageRealms' => 'Manage realms…',
+			'gsh.projectsRail.noWorkspaces' => 'No workspaces yet.',
+			'gsh.projectsRail.sync' => 'Sync',
+			'gsh.projectsRail.pull' => 'Pull',
+			'gsh.projectsRail.push' => 'Push',
+			'gsh.projectsRail.createWorktree' => 'Create worktree',
+			'gsh.projectsRail.worktreeCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '1 worktree', other: '${n} worktrees', ), 
+			'gsh.projectsRail.expandWorktrees' => 'Expand worktrees',
+			'gsh.projectsRail.collapseWorktrees' => 'Collapse worktrees',
+			'gsh.findBar.find' => 'Find',
+			'gsh.findBar.matchCase' => 'Match case',
+			'gsh.findBar.wholeWord' => 'Whole word',
+			'gsh.findBar.useRegex' => 'Use regular expression',
+			'gsh.findBar.previous' => 'Previous (⇧⏎)',
+			'gsh.findBar.next' => 'Next (⏎)',
+			'gsh.findBar.close' => 'Close (Esc)',
+			'gsh.findBar.badPattern' => 'Bad pattern',
+			'gsh.findBar.noResults' => 'No results',
+			'gsh.contentSearch.sectionSearch' => 'SEARCH',
+			'gsh.contentSearch.searchInFiles' => 'Search in files',
+			'gsh.contentSearch.matchCase' => 'Match case',
+			'gsh.contentSearch.wholeWord' => 'Whole word',
+			'gsh.contentSearch.useRegex' => 'Use regular expression',
+			'gsh.contentSearch.invalidRegex' => 'Invalid regular expression.',
+			'gsh.contentSearch.typeToSearch' => 'Type to search across files.',
+			'gsh.contentSearch.searching' => 'Searching…',
+			'gsh.contentSearch.noResults' => 'No results.',
+			'gsh.topbar.collapseSidebar' => 'Collapse sidebar',
+			'gsh.topbar.toggleFiles' => 'Show/hide files',
+			'gsh.topbar.filesUnavailable' => 'Files unavailable in GSH Desktop',
+			'gsh.topbar.hideKeyboard' => 'Hide keyboard',
+			'gsh.topbar.visualizeAgents' => 'Visualize agents',
+			'gsh.topbar.openFarm' => 'Agent farm',
+			'gsh.topbar.openChat' => 'Chat with Claude (beta)',
+			'gsh.tasks.hotReload' => 'Hot reload',
+			'gsh.tasks.hotRestart' => 'Hot restart',
+			'gsh.tasks.toggleDebugPaint' => 'Toggle debug paint',
+			'gsh.tasks.togglePlatform' => 'Toggle platform',
+			'gsh.tasks.quit' => 'Quit',
+			'gsh.notifications.agentFinished' => 'Agent finished',
+			'gsh.notifications.open' => 'Open',
+			'gsh.notifications.agentNeedsAction' => 'Agent needs your input',
+			'gsh.terminalLink.open' => 'Open',
+			'gsh.terminalLink.revealFinder' => 'Reveal in Finder',
+			'gsh.terminalLink.revealExplorer' => 'Show in Explorer',
+			'gsh.terminalLink.revealFolder' => 'Open containing folder',
+			'gsh.terminalLink.copyPath' => 'Copy path',
+			'gsh.terminalLink.openLink' => 'Open link',
+			'gsh.terminalLink.copyLink' => 'Copy link',
+			'gsh.terminal.cwdFallbackWarning' => ({required Object requested, required Object path}) => 'Warning: the folder "${requested}" does not exist. This terminal opened in "${path}".',
+			'gsh.terminal.workspaceEnvTracked' => ({required Object keys}) => 'Notice: .env.gsh is tracked by git (it came with the repository). Injected: ${keys}',
+			'gsh.remoteHost.addHost' => 'Add remote host',
+			'gsh.remoteHost.hostName' => 'Name',
+			'gsh.remoteHost.sshTarget' => 'SSH target (user@host)',
+			'gsh.remoteHost.connecting' => ({required Object host}) => 'Connecting to ${host}…',
+			'gsh.remoteHost.openingTunnel' => 'SSH tunnel',
+			'gsh.remoteHost.installingServer' => 'Installing server',
+			'gsh.remoteHost.handshake' => ({required Object version}) => 'Server ${version}',
+			'gsh.remoteHost.loadingWorkspace' => 'Loading workspace…',
+			'gsh.remoteHost.reconnecting' => ({required Object host}) => 'Reconnecting to ${host}…',
+			'gsh.remoteHost.offline' => ({required Object host}) => '${host} offline',
+			'gsh.remoteHost.remove' => 'Remove',
+			'gsh.remoteHost.reconnect' => 'Reconnect',
+			'gsh.remoteHost.installServer' => 'Install server',
+			'gsh.remoteHost.errSshUnreachable' => ({required Object host}) => 'Cannot reach ${host} over SSH. Is it on, and is Remote Login enabled?',
+			'gsh.remoteHost.errInstallFailed' => ({required Object host}) => 'Could not install the server on ${host}.',
+			'gsh.remoteHost.errVersionMismatch' => 'Server version incompatible; update it.',
+			'gsh.remoteHost.errDetail' => ({required Object detail}) => 'Details: ${detail}',
+			'gsh.remoteHost.pickFolderTitle' => ({required Object host}) => 'Open folder on ${host}',
+			'gsh.remoteHost.openHere' => 'Open here',
+			'gsh.remoteHost.emptyFolder' => 'No subfolders',
+			'gsh.remoteHost.newLocal' => 'Local',
+			'gsh.remoteHost.newRemote' => 'Remote',
+			'gsh.remoteHost.chooseHost' => 'Choose a host',
+			'gsh.remoteHost.newHostEntry' => 'New host…',
+			'gsh.remoteHost.editHost' => 'Edit host',
+			'gsh.remoteHost.userLabel' => 'Username',
+			'gsh.remoteHost.hostLabel' => 'Host / IP',
+			'gsh.remoteHost.portLabel' => 'Port',
+			'gsh.remoteHost.authLabel' => 'Authentication',
+			'gsh.remoteHost.authKey' => 'SSH key',
+			'gsh.remoteHost.authPassword' => 'Password',
+			'gsh.remoteHost.passwordLabel' => 'Password',
+			'gsh.remoteHost.passwordKeep' => 'Leave blank to keep current',
+			'gsh.remoteHost.errUser' => 'Username required',
+			'gsh.remoteHost.errHost' => 'Host required',
+			'gsh.remoteHost.errPassword' => 'Password required',
+			'gsh.remoteHost.identityChoose' => 'Choose…',
+			'gsh.remoteHost.identityEmpty' => 'No key selected',
+			'gsh.remoteHost.identityDialogTitle' => 'Select the SSH private key',
+			'gsh.remoteHost.errIdentity' => 'Pick the private key to authenticate with.',
+			'gsh.remoteHost.errHostKeyUnknown' => ({required Object host}) => 'GSH Desktop does not trust ${host} yet. Connect again and confirm the fingerprint.',
+			'gsh.remoteHost.errHostKeyChanged' => ({required Object host}) => '${host} is presenting a different SSH key than the one stored. If you did not reinstall that machine, stop and check it — otherwise remove the old entry from ~/.ssh/known_hosts.',
+			'gsh.remoteHost.errHostBundleMissing' => ({required Object host}) => '${host} runs Windows but does not have GSH Desktop installed. The remote server is installed from the GSH Desktop bundle already on that machine, so install GSH Desktop there and try again.',
+			'gsh.remoteHost.errHostUnknownOs' => ({required Object host}) => 'Could not identify the operating system of ${host}. The account may have a restricted shell, or no shell at all.',
+			'gsh.remoteHost.errIdentityPublic' => 'Only the public key is here. That works only if the private key is in your SSH agent; otherwise pick the private file (same name, without .pub).',
+			'gsh.remoteHost.errIdentityNotKey' => 'That file does not look like a private key.',
+			'gsh.remoteHost.errIdentityMissingFile' => 'That file no longer exists.',
+			'gsh.remoteHost.errIdentityUnreadable' => 'That file could not be read.',
+			'gsh.browserPane.back' => 'Back',
+			'gsh.browserPane.forward' => 'Forward',
+			'gsh.browserPane.reload' => 'Reload',
+			'gsh.browserPane.urlHint' => 'Enter URL or address',
+			'gsh.browserPane.go' => 'Go',
+			'gsh.documentWindow.mediaNotSupported' => 'Audio and video open in the main GSH Desktop window.',
+			'gsh.documentWindow.fileNotFound' => ({required Object path}) => 'File not found: ${path}',
+			'gsh.gallery.intro' => 'Special GSH Desktop documents that give you a visual of what the AI agent is doing.',
+			'gsh.gallery.createErrorTitle' => 'Could not create the file',
+			'gsh.gallery.dbQuery.title' => 'Database query',
+			'gsh.gallery.dbQuery.description' => 'SQL editor with a result grid, using one of the registered connections.',
+			'gsh.gallery.kanban.title' => 'Kanban board',
+			'gsh.gallery.kanban.description' => 'Columns and cards stored as plain markdown. Drag, edit and comment.',
+			'gsh.gallery.layout.title' => 'Pane layout',
+			'gsh.gallery.layout.description' => 'Terminals and splits to open in one go, like tmuxinator. Can run automatically on new worktrees.',
+			'gsh.gallery.httpRequest.title' => 'HTTP requests',
+			'gsh.gallery.httpRequest.description' => 'Write requests in a file and run them with the response next to it.',
+			'gsh.gallery.html.title' => 'HTML view',
+			'gsh.gallery.html.description' => 'A page the agent writes and GSH Desktop renders directly: mind maps, diagrams, charts, whatever you need.',
+			'gsh.gallery.tasks.title' => 'Tasks',
+			'gsh.gallery.tasks.description' => 'Commands to run from the Tasks panel, such as the dev server, tests and build. Stored in .gsh/tasks.json.',
+			'gsh.gallery.notebook.title' => 'Notebook',
+			'gsh.gallery.notebook.description' => 'A folder of short notes with tags. The agent writes, you read and edit. Also opens in Obsidian.',
+			'gsh.gallery.workspaceEnv.title' => 'Workspace env',
+			'gsh.gallery.workspaceEnv.description' => 'Variables injected into every terminal of this workspace. Put API tokens or logins here instead of pasting them into the agent\'s prompt. Kept out of git.',
+			'gsh.gallery.panel.title' => 'Panel',
+			'gsh.gallery.panel.description' => 'An HTML page with a bridge to the app: its buttons run GSH Desktop CLI and shell commands on this machine. A playground for quick dashboards.',
+			'gsh.notebook.notes' => 'Notes',
+			'gsh.notebook.newNote' => 'New note',
+			'gsh.notebook.searchPlaceholder' => 'Search notes',
+			'gsh.notebook.empty' => 'No notes yet. Create one, or ask the agent to write here.',
+			'gsh.notebook.noMatch' => 'No note matches.',
+			'gsh.notebook.selectNote' => 'Select a note',
+			'gsh.notebook.reload' => 'Reload from disk',
+			'gsh.notebook.untagged' => 'untagged',
+			'gsh.notebook.saveFailed' => 'Could not save the note',
+			'gsh.notebook.createFailed' => 'Could not create the note',
+			'gsh.notebook.addTag' => 'add tag',
+			'gsh.notebook.untitled' => 'Untitled',
+			'gsh.notebook.deleteNote' => 'Delete note',
+			'gsh.notebook.deleteConfirm' => ({required Object name}) => 'Move “${name}” to the trash?',
+			'gsh.notebook.imageFailed' => 'Could not save the image',
+			'gsh.notebook.format.bold' => 'Bold (⌘B)',
+			'gsh.notebook.format.italic' => 'Italic (⌘I)',
+			'gsh.notebook.format.strike' => 'Strikethrough',
+			'gsh.notebook.format.heading1' => 'Heading 1',
+			'gsh.notebook.format.heading2' => 'Heading 2',
+			'gsh.notebook.format.heading3' => 'Heading 3',
+			'gsh.notebook.format.bullets' => 'Bullet list',
+			'gsh.notebook.format.numbered' => 'Numbered list',
+			'gsh.notebook.format.checklist' => 'Checklist',
+			'gsh.notebook.format.quote' => 'Quote',
+			'gsh.notebook.format.code' => 'Inline code (⌘E)',
+			'gsh.notebook.format.codeBlock' => 'Code block',
+			'gsh.notebook.format.link' => 'Link (⌘K)',
+			'gsh.notebook.format.rule' => 'Divider',
+			'gsh.notebook.format.noteLink' => 'Link to a note ([[…]])',
+			'gsh.notebook.format.noteLinkSearch' => 'Search notes',
+			'gsh.notebook.format.image' => 'Insert image…',
+			'gsh.notebook.backlinks' => 'Linked from',
+			'gsh.notebook.renameTag' => 'Rename tag',
+			'gsh.notebook.deleteTag' => 'Delete tag',
+			'gsh.notebook.deleteTagConfirm' => ({required Object name, required Object count}) => 'Remove “${name}” from ${count} notes? The notes stay.',
+			'gsh.notebook.showList' => 'Show notes list',
+			'gsh.notebook.hideList' => 'Hide notes list',
+			'gsh.layoutPreview.applyFailedTitle' => 'Could not apply the layout',
+			'gsh.layoutPreview.applyInGsh' => 'Apply in GSH Desktop',
+			'gsh.layoutPreview.applyNewWorkspace' => 'Open as new workspace',
+			'gsh.layoutPreview.applyTo' => ({required Object workspace}) => 'Apply to ${workspace}',
+			'gsh.layoutPreview.autorunWorktree' => 'autorun: worktree. This layout is also applied on its own when you create a worktree of the workspace that holds it.',
+			'gsh.layoutPreview.command' => 'Command',
+			'gsh.layoutPreview.folder' => 'Folder',
+			'gsh.layoutPreview.noCommand' => 'no command, opens a shell',
+			'gsh.layoutPreview.replaceConfirm' => 'Replace layout',
+			'gsh.layoutPreview.replaceMessage' => ({required Object n}) => '${n} open tabs of this workspace will be closed, including any running work.',
+			'gsh.layoutPreview.replaceTitle' => ({required Object workspace}) => 'Replace the layout of ${workspace}?',
+			'gsh.layoutPreview.skippedTitle' => 'Not created on this system',
+			'gsh.layoutPreview.splitDown' => 'split down',
+			'gsh.layoutPreview.splitRight' => 'split right',
+			'gsh.layoutPreview.splitTab' => 'tab',
+			'gsh.layoutPreview.subtitle' => ({required Object n}) => 'This layout opens ${n} terminals. Read the commands before applying.',
+			'gsh.telemetry.tooltip' => 'Telemetry',
+			'gsh.telemetry.title' => 'Telemetry',
+			'gsh.telemetry.liveRuns' => ({required Object n}) => '${n} live',
+			'gsh.telemetry.noWorkspace' => 'Open a workspace to see its telemetry.',
+			'gsh.telemetry.empty' => 'Nothing here yet.',
+			'gsh.telemetry.emptyFiltered' => 'Nothing here yet.',
+			'gsh.telemetry.searchHint' => 'Filter cases',
+			'gsh.telemetry.chipOpen' => 'Open',
+			'gsh.telemetry.chipNew' => 'New',
+			'gsh.telemetry.chipResolved' => 'Resolved',
+			'gsh.telemetry.chipIgnored' => 'Ignored',
+			'gsh.telemetry.chipWarnings' => 'Warnings',
+			'gsh.telemetry.tagNew' => 'new',
+			'gsh.telemetry.tagRegression' => 'regression',
+			'gsh.telemetry.tagResolved' => 'resolved',
+			'gsh.telemetry.tagIgnored' => 'ignored',
+			'gsh.telemetry.srcTask' => 'task',
+			'gsh.telemetry.srcWrapper' => 'gsh telemetry',
+			'gsh.telemetry.run' => ({required Object id}) => 'run ${id}',
+			'gsh.telemetry.resolve' => 'Mark resolved',
+			'gsh.telemetry.ignore' => 'Ignore (hide from agents too)',
+			'gsh.telemetry.reopen' => 'Reopen',
+			'gsh.telemetry.clear' => 'Clear occurrences',
+			'gsh.telemetry.clearRun' => 'Clear this run',
+			'gsh.telemetry.clearProject' => 'Clear project',
+			'gsh.telemetry.openFile' => ({required Object location}) => 'Open ${location}',
+			'gsh.telemetry.showInTerminal' => 'Show in terminal',
+			'gsh.telemetry.copyCommand' => 'Copy CLI command',
+			'gsh.telemetry.copied' => 'Copied',
+			'gsh.telemetry.statusOpen' => 'Open',
+			'gsh.telemetry.statusResolved' => 'Resolved',
+			'gsh.telemetry.statusIgnored' => 'Ignored',
+			'gsh.telemetry.occurrences' => 'Occurrences',
+			'gsh.telemetry.inRuns' => ({required Object n}) => 'in ${n} runs',
+			'gsh.telemetry.first' => 'First',
+			'gsh.telemetry.last' => 'Last',
+			'gsh.telemetry.origin' => 'Origin',
+			'gsh.telemetry.sectionStack' => 'Stack',
+			'gsh.telemetry.stackHint' => 'project frames highlighted · click opens the file',
+			'gsh.telemetry.sectionCorrelated' => 'Correlated log',
+			'gsh.telemetry.correlatedHint' => 'the closest JSON log before the error, same run',
+			'gsh.telemetry.none' => 'none',
+			'gsh.telemetry.sectionRuns' => 'Occurrences by run',
+			'gsh.telemetry.runsHint' => 'same key (cwd, command): this is how new and regression are computed',
+			'gsh.telemetry.sectionContext' => 'Raw context',
+			'gsh.telemetry.contextHint' => 'terminal lines around the last occurrence',
+			'gsh.telemetry.current' => 'current',
+			'gsh.telemetry.fingerprintHint' => ({required Object location}) => 'fingerprint = type + normalized message + ${location}',
+			'gsh.telemetry.blameUncommitted' => 'changed in working tree',
+			'gsh.telemetry.blameCommit' => ({required Object ago, required Object sha}) => 'changed ${ago} (${sha})',
+			'gsh.telemetry.justNow' => 'just now',
+			'gsh.telemetry.minutesAgo' => ({required Object n}) => '${n}m ago',
+			'gsh.telemetry.hoursAgo' => ({required Object n}) => '${n}h ago',
+			'gsh.telemetry.daysAgo' => ({required Object n}) => '${n}d ago',
+			'gsh.telemetry.resolvedToast' => 'Resolved. If it comes back in a later run it reappears as a regression.',
+			'gsh.telemetry.ignoredToast' => 'Ignored. Agents no longer see it (unless --include-ignored).',
+			'gsh.telemetry.clearedToast' => 'Occurrences deleted. Triage rules are kept.',
+			'gsh.telemetry.byHuman' => 'by you',
+			'gsh.telemetry.byAgent' => 'by agent',
+			'gsh.telemetry.caseTabTitle' => ({required Object type, required Object file}) => '${type} · ${file}',
+			'gsh.telemetry.srcApp' => 'App',
+			'gsh.telemetry.chipApp' => 'GSH Desktop',
+			'gsh.panelView.unavailable' => 'Panels need the embedded web view, which is not available on Linux yet.',
+			'gsh.panelView.openInBrowser' => 'Open in browser',
+			'gsh.panelView.openAsHtml' => 'Open as HTML',
+			'gsh.chat.tabTitle' => 'Chat',
+			'gsh.chat.emptyTitle' => 'New conversation',
+			'gsh.chat.emptySubtitle' => ({required Object folder}) => 'Claude Code in ${folder}, with your own login.',
+			'gsh.chat.emptyHintSend' => 'Enter sends; Shift+Enter adds a line.',
+			'gsh.chat.emptyHintPaste' => 'Paste a screenshot with Ctrl+V, or drop files onto the chat.',
+			'gsh.chat.emptyHintMode' => 'Pick the permission mode below the input: ask, accept edits, plan, or bypass.',
+			'gsh.chat.placeholder' => 'Message Claude… (Enter sends, Shift+Enter for a new line)',
+			'gsh.chat.send' => 'Send',
+			'gsh.chat.stop' => 'Stop',
+			'gsh.chat.working' => 'working…',
+			'gsh.chat.waitingYou' => 'waiting for you',
+			'gsh.chat.cost' => ({required Object v}) => 'cost US\$ ${v}',
+			'gsh.chat.askPermission' => ({required Object tool}) => 'Allow ${tool}?',
+			'gsh.chat.allow' => 'Allow',
+			'gsh.chat.deny' => 'Deny',
+			'gsh.chat.allowed' => 'Allowed',
+			'gsh.chat.denied' => 'Denied',
+			'gsh.chat.startFailed' => ({required Object detail}) => 'Couldn\'t start claude: ${detail}',
+			'gsh.chat.engineExited' => ({required Object code}) => 'claude exited (code ${code}).',
+			'gsh.chat.turnFailed' => ({required Object detail}) => 'The turn ended with an error: ${detail}',
+			'gsh.chat.handedOff' => 'This conversation continues in a terminal with Remote Control: open it on your phone or at claude.ai/code. The chat here is paused.',
+			'gsh.chat.peerMessageFrom' => ({required Object name}) => 'Message from ${name}',
+			'gsh.chat.sessions' => 'Sessions',
+			'gsh.chat.noSessions' => 'No other Claude Code session is running right now.',
+			'gsh.chat.listAllSessions' => 'List every session (asks the agent)…',
+			'gsh.chat.askListSessions' => 'List the sessions I can message, with ListAgents, and wait for me to pick one. ',
+			'gsh.chat.sendToSession' => ({required Object name}) => 'Send this message to the session "${name}" with SendMessage and wait for its reply: ',
+			'gsh.chat.remoteControl' => 'Remote Control',
+			'gsh.chat.remoteControlHint' => 'Continue this conversation in a terminal with Remote Control (phone, claude.ai/code). The chat\'s engine doesn\'t support Remote Control.',
+			'gsh.chat.usage' => 'Usage',
+			'gsh.chat.usageContext' => ({required Object used, required Object window}) => 'Context: ${used} of ${window}',
+			'gsh.chat.usageContextNone' => 'Context: shows up after the first reply',
+			'gsh.chat.usageSession' => 'Session (5 h)',
+			'gsh.chat.usageWeek' => 'Week',
+			'gsh.chat.usageModelWeek' => ({required Object model}) => '${model} this week',
+			'gsh.chat.usageResetsToday' => ({required Object time}) => 'resets at ${time}',
+			'gsh.chat.usageResetsOn' => ({required Object date, required Object time}) => 'resets ${date} at ${time}',
+			'gsh.chat.usageUnavailable' => 'Plan usage unavailable right now.',
+			'gsh.chat.remoteControlActive' => ({required Object url}) => 'This conversation is already on Remote Control: continue on your phone or at ${url}',
+			'gsh.chat.remoteControlNoSession' => 'Send a message first: Remote Control continues an existing conversation.',
+			'gsh.chat.remoteControlBusy' => 'Wait for the agent to finish this turn, then try again.',
+			'gsh.chat.remoteControlFailed' => 'Couldn\'t open the terminal in this workspace.',
+			'gsh.chat.attachmentTooLarge' => ({required Object name}) => '${name} is too large to send (images up to 5 MB, PDFs up to 32 MB).',
+			'gsh.chat.loadingHistory' => 'Loading the conversation…',
+			'gsh.chat.allowAlways' => ({required Object rule}) => 'Always allow ${rule}',
+			'gsh.chat.allowedAlways' => ({required Object rule}) => 'Always allowed: ${rule}',
+			'gsh.chat.moreLines' => ({required Object n}) => '… ${n} more lines',
+			'gsh.chat.questionTitle' => 'The agent is asking',
+			'gsh.chat.other' => 'Other…',
+			'gsh.chat.answer' => 'Answer',
+			'gsh.chat.planTitle' => 'Agent\'s plan',
+			'gsh.chat.planApprove' => 'Approve and run',
+			'gsh.chat.planRefine' => 'Keep planning',
+			'gsh.chat.planRefineHint' => 'What should change in the plan?',
+			'gsh.chat.planSendRefine' => 'Send adjustment',
+			'gsh.chat.planApproved' => 'Plan approved',
+			'gsh.chat.planRefined' => 'Asked to keep planning',
+			'gsh.chat.planRefinedWith' => ({required Object text}) => 'Adjustment: ${text}',
+			'gsh.chat.newChat' => 'New conversation',
+			'gsh.chat.attach' => 'Attach files',
+			'gsh.chat.modeDefault' => 'Ask permission',
+			'gsh.chat.modeAcceptEdits' => 'Accept edits',
+			'gsh.chat.modePlan' => 'Plan',
+			'gsh.chat.modeBypass' => 'Skip permissions',
+			'gsh.chat.editedFiles' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Edited 1 file', other: 'Edited ${n} files', ), 
+			'gsh.chat.thinkingTitle' => 'Thinking',
+			'gsh.chat.thinkingLive' => 'Thinking…',
+			'gsh.chat.stateCompleted' => 'Completed',
+			'gsh.chat.stateReviewReady' => 'Ready for review',
+			'gsh.chat.stateBlocked' => 'Blocked',
+			'gsh.chat.stateFailed' => 'Failed',
+			'gsh.farm.tabTitle' => 'Farm',
+			'gsh.farm.title' => 'Agent farm',
+			'gsh.farm.emptyTitle' => 'No agents running',
+			'gsh.farm.emptyHint' => 'Every Claude Code loop on this machine shows up here while it works, including subagents and sessions outside GSH Desktop.',
+			'gsh.farm.working' => ({required Object n}) => '${n} working',
+			'gsh.farm.waiting' => ({required Object n}) => '${n} need you',
+			'gsh.farm.waitingOne' => '1 needs you',
+			'gsh.farm.idle' => ({required Object n}) => '${n} idle',
+			'gsh.farm.doorTitle' => 'Knocking on your door',
+			'gsh.farm.doorMessage' => ({required Object name, required Object agent, required Object target}) => '${name} (agent ${agent}) wants to talk to your agent ${target}',
+			'gsh.farm.doorFile' => ({required Object name, required Object agent, required Object file, required Object target}) => '${name} (agent ${agent}) wants to hand ${file} to your agent ${target}',
+			'gsh.farm.doorOpen' => 'Open the door',
+			'gsh.farm.doorRefuse' => 'Refuse',
+			'gsh.farm.peerOf' => ({required Object name}) => '${name}\'s',
+			'gsh.farm.peerBanner' => ({required Object name}) => '${name}\'s farm',
+			'gsh.farm.spent' => ({required Object total}) => 'Spent ${total} tokens',
+			'gsh.farm.spentDetail' => ({required Object input, required Object cache, required Object out}) => '${input} input · ${cache} cache · ${out} out',
+			'gsh.farm.context' => ({required Object ctx}) => 'context ${ctx}',
+			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens spent',
+			'gsh.farm.clickToOpen' => 'Click to open its terminal',
+			'gsh.farm.outsideGsh' => 'This agent is running outside GSH Desktop. Its terminal is in another window.',
+			'gsh.farm.agents' => ({required Object n}) => '${n} agents',
+			'gsh.farm.subagents' => ({required Object n}) => '${n} sub-agents',
+			'gsh.farm.activity.thinking' => 'thinking',
+			'gsh.farm.activity.reading' => 'reading',
+			'gsh.farm.activity.editing' => 'editing',
+			'gsh.farm.activity.running' => 'running a command',
+			'gsh.farm.activity.searching' => 'searching the web',
+			'gsh.farm.activity.delegating' => 'delegating',
+			'gsh.farm.activity.tooling' => 'using a tool',
+			'gsh.farm.activity.waiting' => 'waiting for you',
+			'gsh.farm.activity.idle' => 'idle',
+			'gsh.farm.activity.sleeping' => 'asleep',
+			'gsh.farm.activity.done' => 'done',
+			'gsh.agentGraph.tabTitle' => 'Agents',
+			'gsh.agentGraph.newAgent' => 'New agent',
+			'gsh.agentGraph.emptyTitle' => 'No agents in this workspace',
+			'gsh.agentGraph.emptyHint' => 'Start an agent in a terminal or create one here. Drag from an agent\'s port to another agent to connect them.',
+			'gsh.agentGraph.statusWorking' => 'Working',
+			'gsh.agentGraph.statusWaiting' => 'Waiting',
+			'gsh.agentGraph.statusIdle' => 'Idle',
+			'gsh.agentGraph.messageCount' => ({required Object n}) => 'Messages: ${n}',
+			'gsh.agentGraph.lastMessage' => ({required Object preview}) => 'Last: ${preview}',
+			'gsh.agentGraph.linked' => 'Connected',
+			'gsh.agentGraph.removeLinkHint' => 'Right-click to remove the connection',
+			'gsh.agentGraph.removeLink' => 'Remove connection',
+			'gsh.agentGraph.connectHint' => 'Drag to another agent to connect',
+			'gsh.agentGraph.quickStart' => 'Quick start',
+			'gsh.agentGraph.shell' => 'Shell',
+			'gsh.agentGraph.tabDetails' => 'Details',
+			'gsh.agentGraph.tabAppearance' => 'Appearance',
+			'gsh.agentGraph.tabAgent' => 'Agent',
+			'gsh.agentGraph.name' => 'Terminal name',
+			'gsh.agentGraph.namePlaceholder' => 'e.g. Reviewer',
+			'gsh.agentGraph.nameTaken' => 'Another tab already uses this name. Names must be unique so `gsh msg --to` can reach it.',
+			'gsh.agentGraph.command' => 'Command',
+			'gsh.agentGraph.commandPlaceholder' => 'e.g. claude --model opus (empty = shell)',
+			'gsh.agentGraph.cwd' => 'Working directory',
+			'gsh.agentGraph.browse' => 'Browse…',
+			'gsh.agentGraph.cwdMissing' => 'This folder does not exist.',
+			'gsh.agentGraph.monitor' => 'Monitor activity',
+			'gsh.agentGraph.monitorHint' => 'Badge, sound and notification when a turn ends.',
+			'gsh.agentGraph.maestro' => 'Maestro',
+			'gsh.agentGraph.maestroTooltip' => 'Promotes this agent to maestro: it is connected to every agent on the canvas and coordinates them.',
+			'gsh.agentGraph.maestroReplaces' => ({required Object name}) => '${name} is the current maestro and will be demoted.',
+			'gsh.agentGraph.color' => 'Color',
+			'gsh.agentGraph.colorAuto' => 'Automatic',
+			'gsh.agentGraph.role' => 'Role / instructions',
+			'gsh.agentGraph.rolePlaceholder' => 'Sent as its first message once the agent is ready.',
+			'gsh.agentGraph.task' => 'Initial task',
+			'gsh.agentGraph.taskPlaceholder' => 'Sent right after the role.',
+			'gsh.agentGraph.focus' => 'Focus',
+			'gsh.agentGraph.rename' => 'Rename',
+			'gsh.agentGraph.renameTitle' => 'Rename agent',
+			'gsh.agentGraph.makeMaestro' => 'Make maestro',
+			'gsh.agentGraph.removeMaestro' => 'Remove maestro',
+			'gsh.agentGraph.closeTab' => 'Close tab',
+			'gsh.agentGraph.removeFromCanvas' => 'Remove from canvas',
+			'gsh.agentGraph.desktopApps' => 'Desktop apps',
+			'gsh.agentGraph.desktopBadge' => 'desktop',
+			'gsh.agentGraph.statusOnline' => 'Online',
+			'gsh.agentGraph.statusOffline' => 'Offline',
+			'gsh.agentGraph.queued' => ({required Object n}) => '${n} queued',
+			'gsh.agentGraph.agentName' => 'Name',
+			'gsh.agentGraph.integration' => 'Integration',
+			'gsh.agentGraph.integrationHint' => 'GSH Desktop adds an MCP server named "gsh" to this file and saves a backup next to it. Other servers are not touched.',
+			'gsh.agentGraph.integrationConsent' => ({required Object app}) => 'Add the GSH Desktop MCP server to ${app}\'s config',
+			'gsh.agentGraph.restartHint' => ({required Object app}) => 'Restart ${app} if it was already open so it loads the GSH Desktop MCP server; then ask it to call wait_messages.',
+			'gsh.agentGraph.integrationError.invalidConfig' => ({required Object path}) => '${path} is not plain JSON/TOML that GSH Desktop can edit safely (comments or a different layout). Nothing was changed.',
+			'gsh.agentGraph.integrationError.cliMissing' => ({required Object path}) => 'The GSH Desktop CLI is not installed yet (${path}). Restart GSH Desktop and try again.',
+			'gsh.agentGraph.integrationError.writeFailed' => ({required Object detail}) => 'Could not update the config: ${detail}',
 			'settings.language.title' => 'Language',
 			'settings.language.system' => 'System',
 			'settings.language.english' => 'English',
@@ -5224,6 +6538,8 @@ extension on Translations {
 			'settings.language.spanish' => 'Español',
 			'settings.page.header.back' => 'Back',
 			'settings.page.header.title' => 'Settings',
+			'settings.page.nav.sideGsh' => 'GSH Desktop',
+			'settings.page.nav.sideClaude' => 'Claude',
 			'settings.page.nav.general' => 'General',
 			'settings.page.nav.appearance' => 'Appearance',
 			'settings.page.nav.terminal' => 'Terminal',
@@ -5232,15 +6548,36 @@ extension on Translations {
 			'settings.page.nav.notifications' => 'Notifications',
 			'settings.page.nav.automations' => 'Automations',
 			'settings.page.nav.remoteHosts' => 'Remote hosts',
+			'settings.page.nav.claudeCode' => 'Claude Code',
+			'settings.page.nav.search' => 'Search',
+			'settings.page.nav.account' => 'Account',
+			'settings.page.nav.privacy' => 'Privacy',
+			'settings.page.nav.usage' => 'Usage',
+			'settings.page.nav.resources' => 'Resources',
+			'settings.page.nav.memory' => 'Memory',
+			'settings.page.nav.designSystems' => 'Design systems',
+			'settings.page.nav.cowork' => 'Cowork',
+			'settings.page.nav.system' => 'System',
+			'settings.page.nav.extensions' => 'Extensions',
+			'settings.page.nav.developer' => 'Developer',
+			'settings.page.nav.skills' => 'Skills',
+			'settings.page.nav.connectors' => 'Connectors',
+			'settings.page.nav.plugins' => 'Plugins',
+			'settings.page.nav.apiKeys' => 'API keys',
+			'settings.page.nav.groups.settings' => 'Settings',
+			'settings.page.nav.groups.thisComputer' => 'This computer',
+			'settings.page.nav.groups.personalization' => 'Personalization',
+			'settings.page.nav.groups.platform' => 'Platform',
+			'settings.page.nav.groups.app' => 'GSH Desktop',
 			'settings.page.general.sectionEditor' => 'Editor',
 			'settings.page.general.editorEngineTitle' => 'Engine',
-			'settings.page.general.editorEngineCockpit' => 'GSH Desktop (default)',
+			'settings.page.general.editorEngineGsh' => 'GSH Desktop (default)',
 			'settings.page.general.editorEngineNeovim' => 'Neovim',
 			'settings.page.general.neovimChecking' => 'Looking for Neovim…',
 			'settings.page.general.neovimNotFound' => 'Neovim was not found in your shell PATH.',
 			'settings.page.general.neovimRefresh' => 'Check again',
-			'settings.page.general.showCockpitTitle' => 'Show GSH Desktop terminal',
-			'settings.page.general.showCockpitDesc' => 'Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.',
+			'settings.page.general.showGshTitle' => 'Show GSH Desktop terminal',
+			'settings.page.general.showGshDesc' => 'Keep a pathless, terminal-only workspace pinned at the top of the rail. Turning it off closes its terminals.',
 			'settings.page.general.launchAtStartupTitle' => 'Launch at login',
 			'settings.page.general.launchAtStartupDesc' => 'Start GSH Desktop automatically when you sign in to your computer.',
 			'settings.page.general.sectionUpdates' => 'Updates',
@@ -5271,6 +6608,8 @@ extension on Translations {
 			'settings.page.storage.change' => 'Change…',
 			'settings.page.storage.resetTitle' => 'Reset GSH Desktop',
 			'settings.page.storage.resetDesc' => 'Delete all local data — projects, layouts, settings and terminal history — and return to the default location.',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.storage.resetButton' => 'Reset…',
 			'settings.page.storage.resetConfirm' => 'Reset',
 			'settings.page.storage.resetDialogTitle' => 'Reset GSH Desktop?',
@@ -5280,7 +6619,7 @@ extension on Translations {
 			'settings.page.storage.restartUseDefaultMessage' => 'GSH Desktop will use the default system location from the next launch. Your data in the custom folder is left untouched.',
 			'settings.page.storage.restartResetMessage' => 'All GSH Desktop data was cleared. Restart to start fresh.',
 			'settings.page.storage.later' => 'Later',
-			'settings.page.storage.quitCockpit' => 'Quit GSH Desktop',
+			'settings.page.storage.quitGsh' => 'Quit GSH Desktop',
 			'settings.page.storage.chooseFolderDialogTitle' => 'Choose a folder for GSH Desktop data',
 			'settings.page.terminal.sectionDefaultTerminal' => 'Default terminal',
 			'settings.page.terminal.engineTitle' => 'Engine',
@@ -5360,8 +6699,6 @@ extension on Translations {
 			'settings.page.notifications.soundTurnDone' => 'Turn completed',
 			'settings.page.notifications.soundTurnDoneDesc' => 'An agent finished its turn.',
 			'settings.page.notifications.soundActionRequired' => 'Action required',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.notifications.soundActionRequiredDesc' => 'An agent is waiting for your approval or answer.',
 			'settings.page.notifications.soundDefault' => 'Default',
 			'settings.page.notifications.soundCustom' => ({required Object name}) => 'Custom: ${name}',
@@ -5403,6 +6740,264 @@ extension on Translations {
 			'settings.page.automations.discoveryFailed' => 'Could not discover installed automation harnesses.',
 			'settings.page.automations.staleModel' => ({required Object model, required Object harness}) => 'Model "${model}" is no longer available for ${harness}. Using the CLI default — pick another model in Settings if needed.',
 			'settings.page.automations.recommendedSuffix' => 'Recommended',
+			'settings.page.claudeCode.sectionGeneral' => 'General',
+			'settings.page.claudeCode.classifyTitle' => 'Classify session states',
+			'settings.page.claudeCode.classifyDesc' => 'Show in the chat header the state Claude Code assigns at the end of each turn: completed, ready for review or blocked. Claude Code classifies either way; turning this off only hides the badge.',
+			'settings.page.claudeCode.switchModelsTitle' => 'Switch models when a message is flagged',
+			'settings.page.claudeCode.switchModelsDesc' => 'When safeguards flag a message, automatically switch to a different model to keep the conversation going. When off, your session pauses instead. Saved in ~/.claude/settings.json (switchModelsOnFlag).',
+			'settings.page.claudeCode.sectionCodeAppearance' => 'Code appearance',
+			'settings.page.claudeCode.followTheme' => 'From the active theme',
+			'settings.page.claudeCode.codeThemeLightHint' => 'Code colors in light mode',
+			'settings.page.claudeCode.codeThemeDarkHint' => 'Code colors in dark mode',
+			'settings.page.claudeCode.codeFontTitle' => 'Code font',
+			'settings.page.claudeCode.codeFontDesc' => 'A custom monospaced font for code: viewer, editor, diffs and the chat\'s code blocks. The terminal has its own font under Appearance.',
+			'settings.page.claudeCode.codeFontPlaceholder' => 'e.g. JetBrains Mono',
+			'settings.page.claudeCode.sectionAppearance' => 'Appearance',
+			'settings.page.claudeCode.transcriptTitle' => 'Default transcript view',
+			'settings.page.claudeCode.transcriptDesc' => 'The view new chat conversations open with. Conversations already open keep theirs.',
+			'settings.page.claudeCode.viewNormal' => 'Normal',
+			'settings.page.claudeCode.viewThinking' => 'Thinking',
+			'settings.page.claudeCode.viewVerbose' => 'Verbose',
+			'settings.page.claudeCode.sectionRemoteControl' => 'Remote Control',
+			'settings.page.claudeCode.chatRemoteControlTitle' => 'Chat with Remote Control (experimental)',
+			'settings.page.claudeCode.chatRemoteControlDesc' => 'The GSH chat runs the interactive claude in a hidden terminal, connected to Remote Control: the conversation shows up on your phone and at claude.ai/code, and other machines\' sessions can see it. Replies arrive per message (no letter-by-letter streaming). Applies to chats opened after the change; turn it off to go back to the fast engine.',
+			'settings.page.claudeCode.remoteControlTitle' => 'Connect new sessions to Remote Control',
+			'settings.page.claudeCode.remoteControlDesc' => 'Every claude session you start in a terminal connects to Remote Control, so you can continue it on your phone or at claude.ai/code. Saved in ~/.claude/settings.json (remoteControlAtStartup). Needs a claude.ai login (Pro, Max, Team or Enterprise).',
+			'settings.page.claudeCode.saveFailed' => ({required Object detail}) => 'Couldn\'t save: ${detail}',
+			'settings.page.claudeCode.sectionSessions' => 'Sessions',
+			'settings.page.claudeCode.promptSuggestionsTitle' => 'Prompt suggestions',
+			'settings.page.claudeCode.promptSuggestionsDesc' => 'Show a suggested next prompt after Claude answers. Suggestions use a bit of your usage.',
+			'settings.page.claudeCode.outputStyleTitle' => 'Output style',
+			'settings.page.claudeCode.outputStyleDesc' => 'How Claude structures answers in Code sessions. Applies to new sessions.',
+			'settings.page.claudeCode.outputStyleDefault' => 'Default',
+			'settings.page.claudeCode.crossSessionTitle' => 'Messages from other sessions',
+			'settings.page.claudeCode.crossSessionDesc' => 'What to do when another Claude Code session sends this one a message (SendMessage). GSH sets Accept for every session on this machine; Hold parks it for your approval, Refuse drops it. Saved as crossSessionInbound.',
+			'settings.page.claudeCode.crossSessionDefault' => 'Default',
+			'settings.page.claudeCode.crossSessionAccept' => 'Accept',
+			'settings.page.claudeCode.crossSessionHold' => 'Hold for approval',
+			'settings.page.claudeCode.crossSessionRefuse' => 'Refuse',
+			'settings.page.claudeCode.sandboxTitle' => 'Local sandbox',
+			'settings.page.claudeCode.sandboxDesc' => 'Runs Claude Code bash commands inside an isolated sandbox. Applies to new sessions.',
+			'settings.page.claudeCode.sandboxStrictTitle' => 'Strict sandbox mode',
+			'settings.page.claudeCode.sandboxStrictDesc' => 'Blocks commands that cannot run inside the sandbox instead of running them outside it.',
+			'settings.page.claudeCode.sectionSecurity' => 'Security',
+			'settings.page.claudeCode.protectedHostsTitle' => 'Protected hosts',
+			'settings.page.claudeCode.protectedHostsDesc' => 'Hosts no agent may touch from a command: ssh, scp, remote workspace, anything that names them. GSH blocks the command before it runs, in every Claude Code and Codex session on this machine, and tells the agent to ask you. Comma-separated; whole words (prod blocks "ssh prod" and "prod.x.com", not "production"). Saved in ~/.gsh/protected-hosts.json.',
+			'settings.page.claudeCode.sectionBrowser' => 'Browser',
+			'settings.page.claudeCode.linksInAppTitle' => 'Open links in the built-in browser',
+			'settings.page.claudeCode.linksInAppDesc' => 'Links clicked in terminals open in a GSH browser tab instead of your default browser.',
+			'settings.page.placeholder.cowork1' => 'Cowork is a Claude Desktop feature (tasks that run on this computer with local files, browser and MCPs).',
+			'settings.page.placeholder.cowork2' => 'In GSH the equivalent is the Claude chat in a workspace and the Farm, where agent loops run in terminals.',
+			'settings.page.placeholder.extensionsDesc' => 'Let Claude work directly with apps, data and tools on your computer.',
+			'settings.page.placeholder.extensionsEmpty' => 'No extension installed',
+			'settings.page.placeholder.extensions' => '.MCPB/.DXT extensions belong to Claude Desktop. In GSH, MCP servers live under Connectors and Developer.',
+			'settings.page.claude.refresh' => 'Refresh',
+			'settings.page.claude.loading' => 'Loading…',
+			'settings.page.claude.terminalTitle' => 'Open a terminal',
+			'settings.page.claude.noWorkspace' => 'Open a local workspace first: this runs the `claude` CLI in one of its terminals so you can follow it.',
+			'settings.page.claude.months' => 'Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec',
+			'settings.page.claude.weekdays' => 'Mon|Tue|Wed|Thu|Fri|Sat|Sun',
+			'settings.page.claude.dateShort' => ({required Object month, required Object day}) => '${month} ${day}',
+			'settings.page.claude.error.cliMissing' => 'Claude Code CLI (`claude`) not found on this computer.',
+			'settings.page.claude.error.timeout' => 'The `claude` CLI took too long to answer.',
+			'settings.page.claude.error.failed' => ({required Object detail}) => 'The `claude` CLI failed: ${detail}',
+			'settings.page.account.title' => 'Account',
+			'settings.page.account.profile' => 'Profile',
+			'settings.page.account.instructions' => 'Instructions for Claude',
+			'settings.page.account.instructionsDesc' => 'Saved in ~/.claude/CLAUDE.md: Claude Code loads it in every session on this computer.',
+			'settings.page.account.instructionsHint' => 'e.g. keep explanations short and direct',
+			'settings.page.account.loggedIn' => 'Signed in',
+			'settings.page.account.loggedOut' => 'Signed out',
+			'settings.page.account.loggedInDesc' => 'Claude Code on this computer uses this account.',
+			'settings.page.account.loggedOutDesc' => 'Sign in to use your Claude subscription in Claude Code.',
+			'settings.page.account.login' => 'Sign in',
+			'settings.page.account.logout' => 'Sign out',
+			'settings.page.account.logoutConfirmTitle' => 'Sign out of Claude Code?',
+			'settings.page.account.logoutConfirmMessage' => 'Runs `claude auth logout`. Sessions on this computer stop using your subscription until you sign in again.',
+			'settings.page.account.email' => 'Email',
+			'settings.page.account.organization' => 'Organization',
+			'settings.page.account.orgId' => 'Organization ID',
+			'settings.page.account.plan' => 'Plan',
+			'settings.page.account.method' => 'Sign-in method',
+			'settings.page.usage.title' => 'Your usage limits',
+			'settings.page.usage.weeklyTitle' => 'Weekly limits',
+			'settings.page.usage.unavailable' => 'Plan limits do not apply to this sign-in (API key or third-party provider).',
+			'settings.page.usage.windowSession' => 'Current session',
+			'settings.page.usage.windowWeekly' => 'All models',
+			'settings.page.usage.resetsIn' => ({required Object when}) => 'Resets in ${when}',
+			'settings.page.usage.resetsAt' => ({required Object when}) => 'Resets ${when}',
+			'settings.page.usage.percentUsed' => ({required Object pct}) => '${pct}% used',
+			'settings.page.usage.updated' => ({required Object when}) => 'Last updated: ${when}',
+			'settings.page.usage.justNow' => 'less than a minute ago',
+			'settings.page.usage.minutesAgo' => ({required Object n}) => '${n} min ago',
+			'settings.page.usage.minutes' => ({required Object m}) => '${m} min',
+			'settings.page.usage.hoursMinutes' => ({required Object h, required Object m}) => '${h} h ${m} min',
+			'settings.page.usage.plans.pro' => 'Pro',
+			'settings.page.usage.plans.max' => 'Max',
+			'settings.page.usage.plans.team' => 'Team',
+			'settings.page.usage.plans.enterprise' => 'Enterprise',
+			'settings.page.memory.title' => 'Memory',
+			'settings.page.memory.intro' => 'What a Claude Code session in the active workspace loads: your instructions and the memory Claude writes on its own. Click to open the file.',
+			'settings.page.memory.instructionsTitle' => 'Instructions',
+			'settings.page.memory.autoTitle' => 'Auto memory',
+			'settings.page.memory.empty' => 'No CLAUDE.md found.',
+			'settings.page.memory.autoEmpty' => 'Claude has not saved memories for this workspace yet.',
+			'settings.page.memory.scopeUser' => 'User (all projects)',
+			'settings.page.memory.scopeProject' => 'Project',
+			'settings.page.memory.updated' => ({required Object when}) => 'Updated ${when}',
+			'settings.page.skills.groupUser' => 'Created by you',
+			'settings.page.skills.groupProject' => 'From this project',
+			'settings.page.skills.groupPlugins' => 'From plugins',
+			'settings.page.skills.byYou' => 'by you',
+			'settings.page.skills.byProject' => 'project',
+			'settings.page.skills.empty' => 'No skills installed.',
+			'settings.page.connectors.checking' => 'Checking each server… this can take a few seconds.',
+			'settings.page.connectors.empty' => 'No MCP server configured.',
+			'settings.page.connectors.addServer' => 'Add MCP server',
+			'settings.page.connectors.colConnector' => 'Connector',
+			'settings.page.connectors.colType' => 'Type',
+			'settings.page.connectors.colStatus' => 'Status',
+			'settings.page.connectors.fromPlugin' => ({required Object plugin}) => 'Provided by the plugin ${plugin}',
+			'settings.page.connectors.typeWeb' => 'Web',
+			'settings.page.connectors.typeLocal' => 'Local',
+			'settings.page.connectors.originPlugin' => 'Plugin',
+			'settings.page.connectors.link' => 'Connect',
+			'settings.page.connectors.discoverIntro' => 'The claude.ai connector directory has no public API, so GSH does not list it. Add any MCP server here: GSH runs `claude mcp add` in a terminal.',
+			'settings.page.connectors.formName' => 'Name',
+			'settings.page.connectors.formType' => 'Type',
+			'settings.page.connectors.formUrl' => 'URL',
+			'settings.page.connectors.formCommand' => 'Command',
+			'settings.page.connectors.formScope' => 'Scope',
+			'settings.page.connectors.formScopeDesc' => 'User = every project; Local = only the project of the terminal.',
+			'settings.page.connectors.scopeUser' => 'User',
+			'settings.page.connectors.scopeLocal' => 'Local',
+			'settings.page.connectors.docs' => 'MCP docs',
+			'settings.page.connectors.addInTerminal' => 'Add in terminal',
+			'settings.page.connectors.status.connected' => 'Connected',
+			'settings.page.connectors.status.needsAuth' => 'Needs authentication',
+			'settings.page.connectors.status.failed' => 'Failed',
+			'settings.page.connectors.status.pending' => 'Pending approval',
+			'settings.page.connectors.status.unknown' => 'Unknown',
+			'settings.page.plugins.search' => 'Search skills and plugins',
+			'settings.page.plugins.groupProject' => 'In this project',
+			'settings.page.plugins.groupMarketplaces' => 'From the marketplaces you added',
+			'settings.page.plugins.noWorkspace' => 'Open a workspace to see the plugins enabled in it.',
+			'settings.page.plugins.projectEmpty' => 'No plugin enabled in .claude/settings.json of this project.',
+			'settings.page.plugins.empty' => 'No plugins installed.',
+			'settings.page.plugins.disabled' => 'Disabled',
+			'settings.page.developer.title' => 'Developer',
+			'settings.page.developer.mcpTitle' => 'Local MCP servers',
+			'settings.page.developer.mcpDesc' => 'stdio MCP servers that Claude Code starts on this computer. They are configured in ~/.claude.json.',
+			'settings.page.developer.mcpEmpty' => 'No local MCP server.',
+			'settings.page.developer.editConfig' => 'Edit configuration',
+			'settings.page.developer.command' => 'Command',
+			'settings.page.developer.arguments' => 'Arguments',
+			'settings.page.developer.error' => 'Error',
+			'settings.page.developer.telemetryTitle' => 'Telemetry',
+			'settings.page.developer.telemetryDesc' => 'Errors and logs from workspace processes are in the shell Telemetry panel; with developer mode on it also shows GSH Desktop’s own.',
+			'settings.page.developer.claudeSettingsTitle' => 'Claude Code settings file',
+			'settings.page.developer.claudeSettingsDesc' => '~/.claude/settings.json — permissions, hooks, environment and model.',
+			'settings.page.developer.apiKeyTitle' => 'Want an API key?',
+			'settings.page.developer.apiKeyDesc' => 'Create keys and check usage in the Claude Console. It needs another account and API usage is billed separately.',
+			'settings.page.developer.apiKeyButton' => 'Go to the Console',
+			'settings.page.system.title' => 'System',
+			'settings.page.system.version' => 'App version',
+			'settings.page.system.keepAwakeTitle' => 'Keep computer awake',
+			'settings.page.system.keepAwakeDesc' => 'Prevents idle sleep while on (same as the bolt button in the rail). Turns off when the app closes; closing the lid still sleeps.',
+			'settings.page.catalog.mine' => 'Mine',
+			'settings.page.catalog.discover' => 'Discover',
+			'settings.page.catalog.add' => 'Add',
+			'settings.page.catalog.all' => 'All',
+			'settings.page.catalog.by' => ({required Object author}) => 'by ${author}',
+			'settings.page.catalog.newSkill' => 'New skill…',
+			'settings.page.catalog.addMarketplace' => 'Add marketplace…',
+			'settings.page.generalClaude.sectionAppearance' => 'Appearance',
+			'settings.page.generalClaude.theme' => 'Theme',
+			'settings.page.generalClaude.themeSystem' => 'System',
+			'settings.page.generalClaude.themeLight' => 'Light',
+			'settings.page.generalClaude.themeDark' => 'Dark',
+			'settings.page.generalClaude.uiFont' => 'Interface font',
+			'settings.page.generalClaude.uiFontDesc' => 'Font for the whole interface — menus, sidebars and panels.',
+			'settings.page.generalClaude.chatFont' => 'Chat font',
+			'settings.page.generalClaude.chatFontDesc' => 'Text of the Claude chat conversation.',
+			'settings.page.generalClaude.chatFontDefault' => 'Same as the interface',
+			'settings.page.generalClaude.textSize' => 'Text size',
+			'settings.page.generalClaude.textSizeDesc' => 'Base text size of the app (the same setting as in Appearance).',
+			'settings.page.generalClaude.sizeSmall' => 'Small',
+			'settings.page.generalClaude.sizeMedium' => 'Medium',
+			'settings.page.generalClaude.sizeLarge' => 'Large',
+			'settings.page.generalClaude.transcriptWidth' => 'Transcript width',
+			'settings.page.generalClaude.transcriptWidthDesc' => 'Maximum width of the chat transcript and message box.',
+			'settings.page.generalClaude.widthNarrow' => 'Narrow',
+			'settings.page.generalClaude.widthMedium' => 'Medium',
+			'settings.page.generalClaude.widthWide' => 'Wide',
+			'settings.page.generalClaude.reducedMotion' => 'Reduced motion',
+			'settings.page.generalClaude.reducedMotionDesc' => 'Fewer animations in Claude Code (spinner shimmer, flashes). Saved as prefersReducedMotion in ~/.claude/settings.json.',
+			'settings.page.generalClaude.sectionNotifications' => 'Notifications',
+			'settings.page.generalClaude.notifyTurnDone' => 'Response completion',
+			'settings.page.generalClaude.notifyTurnDoneDesc' => 'Get a notification when an agent finishes a response and the window is not focused.',
+			'settings.page.generalClaude.notifyPermission' => 'Code permission requests',
+			'settings.page.generalClaude.notifyPermissionDesc' => 'Play a sound when an agent is waiting for your approval or answer.',
+			'settings.page.generalClaude.pushInputNeeded' => 'Push to phone when input is needed',
+			'settings.page.generalClaude.pushInputNeededDesc' => 'Claude Code sends a push when a permission prompt or question is waiting (inputNeededNotifEnabled).',
+			'settings.page.generalClaude.pushAgent' => 'Proactive phone notifications',
+			'settings.page.generalClaude.pushAgentDesc' => 'Let Claude push important session updates to your phone (agentPushNotifEnabled).',
+			'settings.page.privacy.title' => 'Data',
+			'settings.page.privacy.gshTelemetry' => 'GSH telemetry',
+			'settings.page.privacy.gshTelemetryDesc' => 'Local only: errors and logs stay in SQLite on this computer and are never sent anywhere.',
+			'settings.page.privacy.ccTelemetry' => 'Turn off Claude Code telemetry',
+			'settings.page.privacy.ccTelemetryDesc' => 'Sets DISABLE_TELEMETRY in the env of ~/.claude/settings.json (usage metrics are not sent).',
+			'settings.page.privacy.ccErrors' => 'Turn off Claude Code error reports',
+			'settings.page.privacy.ccErrorsDesc' => 'Sets DISABLE_ERROR_REPORTING in the env of ~/.claude/settings.json.',
+			'settings.page.resources.sectionGeneral' => 'General',
+			'settings.page.resources.sectionShell' => 'GSH features',
+			'settings.page.resources.chat' => 'Chat with Claude (beta)',
+			'settings.page.resources.chatDesc' => 'Chat button in the workspace bar (Claude Code in stream-json).',
+			'settings.page.resources.farm' => 'Farm',
+			'settings.page.resources.farmDesc' => 'Agent loops read from Claude Code transcripts.',
+			'settings.page.resources.sectionTeamFarm' => 'Team farm',
+			'settings.page.resources.teamFarm' => 'See your teammates\' farms',
+			'settings.page.resources.teamFarmDesc' => 'On the same network (e.g. at the office), each GSH announces its own farm and shows your teammates\' next to yours — zoom out to see them. No server: nothing leaves the local network. Off, nothing leaves your GSH.',
+			'settings.page.resources.teamName' => 'Team',
+			'settings.page.resources.teamNameDesc' => 'Only people using the same team name see each other.',
+			'settings.page.resources.teamNamePlaceholder' => 'e.g. gorila',
+			'settings.page.resources.teamMe' => 'Your name',
+			'settings.page.resources.teamMeDesc' => 'Shown above your farm to your teammates.',
+			'settings.page.resources.teamShowTitles' => 'Show session titles',
+			'settings.page.resources.teamShowTitlesDesc' => 'Titles may contain bits of your prompts. Off, teammates only see each agent\'s folder, status and tokens.',
+			'settings.page.resources.teamSecret' => 'Team password',
+			'settings.page.resources.teamSecretDesc' => 'Turns on agent-to-agent messaging: your agent can send messages and files to your teammates\' agents, and theirs to yours. Everyone on the team uses the same password; without it, nobody knocks on your door (and farms without it don\'t show up).',
+			'settings.page.resources.teamSecretPlaceholder' => 'agree on a password',
+			'settings.page.resources.teamDoorAllow' => 'Who can knock',
+			'settings.page.resources.teamDoorAllowDesc' => 'Teammates\' names, comma separated. Empty = the whole team.',
+			'settings.page.resources.teamDoorAllowPlaceholder' => 'whole team',
+			'settings.page.resources.teamDoorAsk' => 'Ask before opening the door',
+			'settings.page.resources.teamDoorAskDesc' => 'When a teammate sends something to one of your agents, GSH asks you before handing it over. Off, your agent gets it directly, marked as information from a teammate (not as an order from you).',
+			'settings.page.resources.teamNetwork' => 'Work network',
+			'settings.page.resources.teamNetworkDesc' => 'The office network\'s IP range (e.g. 192.168.10.0/24). When set, GSH only announces and listens while you\'re on it.',
+			'settings.page.resources.teamNetworkPlaceholder' => 'any local network',
+			'settings.page.resources.farmScenery' => 'Farm scenery',
+			'settings.page.resources.farmSceneryDesc' => 'Where the agents live: the farm or a pixel art office.',
+			'settings.page.resources.sceneryFarm' => 'Farm',
+			'settings.page.resources.sceneryOffice' => 'Office',
+			'settings.page.resources.graph' => 'Agent graph',
+			'settings.page.resources.graphDesc' => 'Visualize the agents of the workspace and who talks to whom.',
+			'settings.page.resources.browser' => 'Built-in browser',
+			'settings.page.resources.browserDesc' => '"Browser" tab in the pane menu (where the platform has an inline webview).',
+			'settings.page.resources.skillsMoved' => 'Skills moved to ',
+			'settings.page.designSystems.title' => 'Design systems',
+			'settings.page.designSystems.desc' => 'In GSH these are the themes: interface, terminal and code colors in one package.',
+			'settings.page.designSystems.add' => 'New design system',
+			'settings.page.designSystems.search' => 'Search by name',
+			'settings.page.designSystems.showing' => ({required Object n, required Object total}) => 'Showing ${n} of ${total}',
+			'settings.page.designSystems.colName' => 'Name',
+			'settings.page.designSystems.colOrigin' => 'Origin',
+			'settings.page.designSystems.colAuthor' => 'Author',
+			'settings.page.designSystems.active' => 'Active',
+			'settings.page.designSystems.imported' => 'Imported',
+			'settings.page.designSystems.builtIn' => 'Built-in',
+			'settings.page.designSystems.activate' => 'Use this theme',
+			'settings.page.designSystems.remove' => 'Remove',
 			'settings.remoteHosts.title' => 'Remote hosts',
 			'settings.remoteHosts.description' => 'Machines you reach over SSH. Adding a host here is the same as adding one from the workspace "+" menu.',
 			'settings.remoteHosts.empty' => 'No remote hosts yet.',
@@ -5423,7 +7018,7 @@ extension on Translations {
 			'settings.remoteHosts.statusOffline' => 'Offline',
 			'settings.remoteHosts.statusIdle' => 'Not connected',
 			'settings.remoteHosts.helpTitle' => 'How it works',
-			'settings.remoteHosts.helpBody' => 'GSH Desktop connects to your machine over SSH and talks to a small server that runs the terminals, files and git there. The host must have GSH Desktop (desktop) or the cockpit-server installed and running, and this device’s public key added to its ~/.ssh/authorized_keys.',
+			'settings.remoteHosts.helpBody' => 'GSH Desktop connects to your machine over SSH and talks to a small server that runs the terminals, files and git there. The host must have GSH Desktop (desktop) or the gsh-server installed and running, and this device’s public key added to its ~/.ssh/authorized_keys.',
 			'automation.error.unavailable' => ({required Object harness}) => '${harness} is not installed or is not on PATH.',
 			'automation.error.modelUnavailable' => ({required Object model, required Object harness}) => 'Model "${model}" is not available for ${harness}. Choose another model in Settings.',
 			'automation.error.authentication' => ({required Object harness, required Object detail}) => '${harness}: ${detail}',

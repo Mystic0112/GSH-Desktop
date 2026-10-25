@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/domain/contracts/mongo_database_store.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/mongo_database_store.dart';
 
 /// [MongoDatabaseStore] em memória — a escolha de database do seletor Mongo
 /// sem tocar Hive.

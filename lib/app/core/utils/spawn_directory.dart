@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/utils/user_home.dart';
+import 'package:gsh_desktop/app/core/utils/user_home.dart';
 
 /// Resultado de [resolveSpawnDirectory]: a pasta em que dá pra spawnar de fato,
 /// e se ela é a que foi pedida.
@@ -23,7 +23,7 @@ class SpawnDirectory {
 /// pra ignorar: no Windows o `CreateProcessW` falha com
 /// `GetLastError=267` (ERROR_DIRECTORY) e no POSIX o `chdir` do filho falha.
 /// Isso acontece na vida real quando o usuário apaga a pasta de um workspace e
-/// abre o Cockpit depois: o layout salvo ainda aponta pra lá.
+/// abre o GSH depois: o layout salvo ainda aponta pra lá.
 ///
 /// A ordem do fallback preserva o máximo de contexto:
 /// 1. a pasta pedida, se existir;

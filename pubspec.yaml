@@ -1,4 +1,4 @@
-name: cockpit
+name: gsh_desktop
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -47,17 +47,17 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Plano 58 (Cockpit Remote): contratos compartilhados + proxies do
-  # cockpit-server. O app NUNCA importa cockpit_engine (guardrail mobile:
+  # Plano 58 (GSH Remote): contratos compartilhados + proxies do
+  # gsh-server. O app NUNCA importa gsh_engine (guardrail mobile:
   # código nativo só existe no servidor).
-  cockpit_core:
-    path: packages/cockpit_core
-  cockpit_remote:
-    path: packages/cockpit_remote
+  gsh_core:
+    path: packages/gsh_core
+  gsh_remote:
+    path: packages/gsh_remote
   # Segura o sleep por inatividade da máquina (botão "Keep awake" no rodapé
   # do rail). Dart puro, desktop-only, no-op em iPad/Android.
-  cockpit_keepawake:
-    path: packages/cockpit_keepawake
+  gsh_keepawake:
+    path: packages/gsh_keepawake
 
   # Parse dos layouts `.ckp` (orquestração de panes) — YAML puro-Dart.
   yaml: ^3.1.2
@@ -93,7 +93,7 @@ dependencies:
   file_picker: ^8.1.2
 
   # Plano 51 — senha de conexão no cofre nativo do SO (Keychain / Credential
-  # Manager / Secret Service). Nunca em .cockpit/databases.json.
+  # Manager / Secret Service). Nunca em .gsh/databases.json.
   flutter_secure_storage: ^9.0.0
 
   # Persistência local virou JSON puro (JsonStateStore, write-temp+rename
@@ -133,9 +133,9 @@ dependencies:
   # vendor: quiver (+ meta via SDK).
   quiver: ^3.0.0
   # PTY nativo (ConPTY/forkpty) — plugin interno absorvido do fork
-  # jacobaraujo7/kyroon_pty v1.0.6 (ver plugins/cockpit_pty/pubspec.yaml).
-  cockpit_pty:
-    path: plugins/cockpit_pty
+  # jacobaraujo7/kyroon_pty v1.0.6 (ver plugins/gsh_pty/pubspec.yaml).
+  gsh_pty:
+    path: plugins/gsh_pty
 
   # Motor VT alternativo baseado no Ghostty. `libghostty` fornece os bindings
   # nativos e `flterm` a view Flutter oficial do mesmo repositório. Pins exatos:
@@ -176,7 +176,7 @@ dependencies:
 
   # FFI direto no app: Job Object do Windows que amarra filhos à vida do
   # processo (core/utils/child_process_lifetime.dart). O `win32` saiu junto com
-  # o named pipe do supervisor; quem ainda precisa dele é o cockpit_keepawake.
+  # o named pipe do supervisor; quem ainda precisa dele é o gsh_keepawake.
   ffi: ^2.1.0
 
   # Aviso de atualização in-app (plano 43, passo 7): versão atual do app
@@ -297,7 +297,7 @@ flutter:
     # sanitizador + diff de DOM + CSS por variáveis de tema). Sem rede: a
     # webview carrega só estes assets, sob CSP restritiva.
     - assets/md_preview/
-    # Plano 67 — ponte JS injetada nas abas `.panel` (window.cockpit).
+    # Plano 67 — ponte JS injetada nas abas `.panel` (window.gsh).
     - assets/panel/
     - assets/panel/lib/
 
@@ -326,7 +326,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-# TEMPORÁRIO — fork jacobaraujo7/libghostty (tag flterm-cockpit-2). Baseado no
+# TEMPORÁRIO — fork jacobaraujo7/libghostty (tag flterm-gsh-2). Baseado no
 # RELEASE v0.0.11 (nativo prebuilt de elias8, mesmo do pub) + 2 fixes: (1) scroll
 # interno de TUI no Ghostty (wheel->mouse no alt-buffer) e (2) text input do
 # Windows (#114). NÃO usa o dev-branch do fork (que tem compressão e exige um
@@ -351,11 +351,11 @@ dependency_overrides:
   # (force-push) e o SHA vira commit órfão — some de todo clone frio, e o
   # release quebra em TODAS as plataformas no CI ("Could not find a file named
   # packages/libghostty/pubspec.yaml"), enquanto a máquina com pub-cache quente
-  # segue compilando. Foi o que derrubou o cockpit-v1.15.1. Tag não move em
+  # segue compilando. Foi o que derrubou o gsh-v1.15.1. Tag não move em
   # force-push, então é o único pin realmente imutável aqui.
   #
   # O commit do libghostty inclui o fix de isolamento do git no hook: sem ele, o
-  # `source: compile` lia a tag do repo CONSUMIDOR (cockpit-vX.Y.Z), não batia
+  # `source: compile` lia a tag do repo CONSUMIDOR (gsh-vX.Y.Z), não batia
   # com o vX.Y.Z esperado pelo ghostty e abortava — quebrando todo release
   # tagueado. Upstream: elias8/libghostty#120 (785a21c = versão revisada do
   # mesmo fix, depois do force-push da revisão).
@@ -373,11 +373,11 @@ dependency_overrides:
   # delta desincroniza do sentinel — no iOS, digitar um acento congelava toda a
   # digitacao (setEditingState ignorado -> delta.apply estoura -> canal morre).
   #
-  # Tag cockpit-pin-flterm-link-click (891b2af): Cmd/Ctrl+clique num link abre
+  # Tag gsh-pin-flterm-link-click (891b2af): Cmd/Ctrl+clique num link abre
   # mesmo quando a TUI liga mouse tracking (Claude Code, vim). Antes o clique
   # ia pro app e o link so realcava. Clique sem modificador segue indo pro app.
   #
-  # Tag cockpit-pin-flterm-upstream-2026-10 (735e10d): refresh completo sobre
+  # Tag gsh-pin-flterm-upstream-2026-10 (735e10d): refresh completo sobre
   # o upstream main de 2026-10-02 (branch integrate/upstream-main-2026-10), com
   # os 6 patches nossos reportados pra nova arquitetura de input (recover/reopen
   # do text input iOS x3, dead keys sob Kitty, Cmd+char chord pro app, clique
@@ -386,7 +386,7 @@ dependency_overrides:
   # clipboard, Ctrl+Space como chord, fixes de Kitty graphics. O C API do
   # Ghostty mudou (simbolos novos, ex.: ghostty_search_new): dylib nova.
   #
-  # Tag cockpit-pin-flterm-upstream-2026-10c (b41f118): + TerminalView.
+  # Tag gsh-pin-flterm-upstream-2026-10c (b41f118): + TerminalView.
   # presentationActive (absorvido do PR #230, moregola): aba oculta fica
   # montada mas o renderer nao recebe frames; ao reabrir, sync + layout
   # completo. Dylib nativa identica a 2026-10 (patch so Dart).
@@ -400,10 +400,10 @@ dependency_overrides:
   flterm:
     git:
       url: https://github.com/jacobaraujo7/libghostty.git
-      ref: cockpit-pin-flterm-upstream-2026-10d
+      ref: gsh-pin-flterm-upstream-2026-10d
       path: packages/flterm
   libghostty:
     git:
       url: https://github.com/jacobaraujo7/libghostty.git
-      ref: cockpit-pin-flterm-upstream-2026-10d
+      ref: gsh-pin-flterm-upstream-2026-10d
       path: packages/libghostty

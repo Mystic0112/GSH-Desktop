@@ -2,7 +2,7 @@
 
 ## Ensaio controlado
 
-- Base: `main` em `bd5cda24`, Windows, build Flutter **debug**, `COCKPIT_PERF=1`.
+- Base: `main` em `bd5cda24`, Windows, build Flutter **debug**, `GSH_PERF=1`.
 - Instância debug e workspace temporário isolados. Abrimos 10 shells PowerShell:
   o primeiro no novo workspace, mais quatro em splits alternados e outros cinco
   como abas. Os dez foram confirmados por `list-workspaces --json`; o workspace
@@ -26,7 +26,7 @@ levou mais de 60 ms. O primeiro shell após iniciar a instância foi um caso fri
 
 ## Onde o trabalho acontece
 
-1. **Abrir terminal.** `CockpitViewModel._buildTerminal` constrói a sessão e
+1. **Abrir terminal.** `GshViewModel._buildTerminal` constrói a sessão e
    inicia o gateway; `notifyListeners` reconstrói `_CenterPanel`. O painel
    recorre por workspaces e splits, e cada `PaneView` mantém as abas num
    `IndexedStack`. A diferença entre `terminalOpen` e `terminalOpenFrame`, junto
@@ -55,7 +55,7 @@ contenção de CPU/processos a investigar separadamente.
 ## Workspace complexo no Windows
 
 Um segundo ensaio usou dois projetos do repositório e cinco terminais em cada
-um (10 shells, mais o terminal interno do Cockpit). Na máquina havia cerca de
+um (10 shells, mais o terminal interno do GSH). Na máquina havia cerca de
 838 processos; uma execução isolada da consulta usada pelo monitor levou
 842 ms e produziu 324 KiB de JSON. Com a versão anterior, oito trocas reais
 entre os projetos levaram 60–97 ms até o próximo frame, enquanto a resposta
@@ -128,7 +128,7 @@ todo o travamento ao Codex.
 
 ## Próxima medição visual
 
-Em um build **profile**, iniciar com `COCKPIT_PERF=1`. Repetir com 5 e 10
+Em um build **profile**, iniciar com `GSH_PERF=1`. Repetir com 5 e 10
 terminais no mesmo workspace: (a) arrastar uma aba entre panes e encaixá-la;
 (b) arrastar o divisor por alguns segundos. Comparar `terminalDockFrame`,
 `terminalResizeFrame`, `slowFrame` e `frame`, além de uma captura de CPU no
@@ -161,7 +161,7 @@ mais 2 s para flush do estado; o callback de saída do app ainda pode aguardar
 outro flush e a telemetria. No sidecar, as sessões PTY são encerradas em
 sequência; no Windows, cada `pty_kill` enumera a árvore de processos. Estes são
 caminhos candidatos à demora, ainda sem medição ao vivo nesta data. A instância
-do Cockpit já estava fechada no momento da inspeção, então os botões não foram
+do GSH já estava fechada no momento da inspeção, então os botões não foram
 reproduzidos neste follow-up.
 
 A build Windows debug atualizada compilou e os testes do scheduler/diagnóstico
@@ -182,10 +182,10 @@ pela leitura do código, ainda sem reprodução visual do sintoma original.
 ## Ensaio isolado do ciclo de vida dos PTYs em 2026-10-01
 
 O benchmark reproduzível em
-`packages/cockpit_engine/tool/benchmark_pty_lifecycle.dart` abre 10
+`packages/gsh_engine/tool/benchmark_pty_lifecycle.dart` abre 10
 `cmd.exe` pelo mesmo `NativeTerminalService` usado no sidecar Windows,
 envia `ping -t 127.0.0.1` a cada PTY, espera saída contínua, redimensiona
-cada sessão e chama `dispose()`. O binário `cockpit_pty.dll` veio do build
+cada sessão e chama `dispose()`. O binário `gsh_pty.dll` veio do build
 Windows debug desta branch. O benchmark é headless: não monta Flutter, não
 inclui o protocolo do sidecar e não mede a saída completa do aplicativo.
 
@@ -193,7 +193,7 @@ Quatro execuções com 10 sessões vivas e saída contínua levaram 183, 187, 19
 e 196 ms para `NativeTerminalService.dispose()`. Na execução do arquivo
 versionado, `activeOutput=10`, as aberturas individuais levaram 10–32 ms
 e os resizes 6–374 µs. Portanto, nesta máquina, a etapa nativa de encerrar
-10 PTYs não reproduziu os vários segundos relatados ao fechar o Cockpit.
+10 PTYs não reproduziu os vários segundos relatados ao fechar o GSH.
 A duração do callback da janela, a saída do engine, o encerramento do sidecar
 e a verificação independente de processos órfãos ainda precisam de medição.
 O ensaio não demonstra que o fechamento completo seja rápido.

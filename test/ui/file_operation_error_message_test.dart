@@ -1,6 +1,6 @@
-import 'package:cockpit/app/core/domain/exceptions/file_operation_error.dart';
-import 'package:cockpit/app/core/ui/file_operation_error_message.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/domain/exceptions/file_operation_error.dart';
+import 'package:gsh_desktop/app/core/ui/file_operation_error_message.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

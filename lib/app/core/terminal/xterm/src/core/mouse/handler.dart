@@ -1,10 +1,10 @@
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/mouse/button_state.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/mouse/mode.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/mouse/button.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/mouse/reporter.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/platform.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/state.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/mouse/button_state.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/mouse/mode.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/mouse/button.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/mouse/reporter.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/platform.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/state.dart';
 
 class TerminalMouseEvent {
   /// The button that is pressed or released.

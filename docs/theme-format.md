@@ -1,4 +1,4 @@
-# Formato de tema do Cockpit (`cockpit-theme-1`)
+# Formato de tema do GSH (`gsh-theme-1`)
 
 Um tema é **um arquivo JSON**. Ele pinta as três camadas de uma vez: a UI do
 app, o realce de código do viewer e a paleta do terminal.
@@ -13,12 +13,12 @@ app, o realce de código do viewer e a paleta do terminal.
 
 ```json
 {
-  "$schema": "https://raw.githubusercontent.com/jacobaraujo7/remote_pi/main/cockpit/docs/theme.schema.json",
+  "$schema": "https://raw.githubusercontent.com/jacobaraujo7/remote_pi/main/gsh/docs/theme.schema.json",
   "id": "acme.aurora",
   "name": "Aurora",
   "author": "Acme",
   "version": "1.0.0",
-  "extends": "cockpit",
+  "extends": "gsh",
   "variants": {
     "dark":  { "ui": {}, "syntax": {}, "terminal": {} },
     "light": { "ui": {}, "syntax": {}, "terminal": {} }
@@ -28,10 +28,10 @@ app, o realce de código do viewer e a paleta do terminal.
 
 | Campo | Obrigatório | O quê |
 |---|---|---|
-| `id` | sim | Identidade estável, namespaced (`publisher.nome`). É o que fica salvo nas preferências — renomear o `name` não perde a escolha do usuário. Não pode colidir com um built-in (`cockpit`, `cockpit.2`, `violet`, `violet.2`, `midnight`, `rose`, `sun`, `flexoki`, `pantera`). |
+| `id` | sim | Identidade estável, namespaced (`publisher.nome`). É o que fica salvo nas preferências — renomear o `name` não perde a escolha do usuário. Não pode colidir com um built-in (`gsh`, `gsh.2`, `violet`, `violet.2`, `midnight`, `rose`, `sun`, `flexoki`, `pantera`). |
 | `name` | sim | O que aparece no seletor. |
 | `author`, `version` | não | Metadados. |
-| `extends` | não | Id de um tema built-in do qual herdar. Hoje existem `cockpit`, `cockpit.2`, `violet`, `violet.2`, `midnight`, `rose`, `sun`, `flexoki` e `pantera`. Ausente = herda de `cockpit`. |
+| `extends` | não | Id de um tema built-in do qual herdar. Hoje existem `gsh`, `gsh.2`, `violet`, `violet.2`, `midnight`, `rose`, `sun`, `flexoki` e `pantera`. Ausente = herda de `gsh`. |
 | `variants` | sim | Pelo menos um de `dark` / `light`. |
 
 **Herança é o ponto.** Todo token não declarado vem da base, então um tema útil
@@ -85,7 +85,7 @@ Troca só a marca e mantém tudo do tema nativo:
 
 ```json
 {
-  "$schema": "https://raw.githubusercontent.com/jacobaraujo7/remote_pi/main/cockpit/docs/theme.schema.json",
+  "$schema": "https://raw.githubusercontent.com/jacobaraujo7/remote_pi/main/gsh/docs/theme.schema.json",
   "id": "acme.violet",
   "name": "Violet",
   "variants": {
@@ -103,7 +103,7 @@ todos os grupos preenchidos.
 O schema fica **no repositório**, não num domínio nosso:
 
 ```
-https://raw.githubusercontent.com/jacobaraujo7/remote_pi/main/cockpit/docs/theme.schema.json
+https://raw.githubusercontent.com/jacobaraujo7/remote_pi/main/gsh/docs/theme.schema.json
 ```
 
 Versionado junto do código que o implementa, então não existe o caso de o site

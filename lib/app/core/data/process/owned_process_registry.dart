@@ -1,19 +1,19 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:cockpit/app/core/utils/user_home.dart';
+import 'package:gsh_desktop/app/core/utils/user_home.dart';
 
-/// Persiste PIDs de processos filhos sem misturar instâncias do Cockpit.
+/// Persiste PIDs de processos filhos sem misturar instâncias do GSH.
 ///
 /// Cada categoria grava um arquivo por PID proprietário:
 ///
 /// ```text
-/// ~/.pi/cockpit/process-pids/<category>/<ownerPid>.pids
+/// ~/.pi/gsh/process-pids/<category>/<ownerPid>.pids
 /// ```
 ///
 /// No boot, a instância limpa o próprio arquivo (hot restart) e arquivos de
 /// proprietários que já morreram (crash/cold restart). Arquivos pertencentes a
-/// outros Cockpits ainda vivos são preservados.
+/// outros Gshs ainda vivos são preservados.
 class OwnedProcessRegistry {
   OwnedProcessRegistry({
     required this.category,
@@ -154,7 +154,7 @@ class OwnedProcessRegistry {
   static String _defaultRootPath() {
     final home = userHome() ?? '';
     return '$home${Platform.pathSeparator}.pi${Platform.pathSeparator}'
-        'cockpit${Platform.pathSeparator}process-pids';
+        'gsh${Platform.pathSeparator}process-pids';
   }
 
   static Future<bool> _defaultIsProcessAlive(int processPid) async {

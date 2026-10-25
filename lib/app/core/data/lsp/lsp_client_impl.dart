@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/lsp/lsp_codec.dart';
-import 'package:cockpit/app/core/data/lsp/lsp_process_registry.dart';
-import 'package:cockpit/app/core/data/setup/remote_pi_resolver.dart';
-import 'package:cockpit/app/core/domain/contracts/lsp_client.dart';
-import 'package:cockpit/app/core/domain/entities/lsp_diagnostic.dart';
-import 'package:cockpit/app/core/domain/entities/lsp_semantic_tokens.dart';
-import 'package:cockpit/app/core/domain/exceptions/lsp_error.dart';
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/data/lsp/lsp_codec.dart';
+import 'package:gsh_desktop/app/core/data/lsp/lsp_process_registry.dart';
+import 'package:gsh_desktop/app/core/data/setup/remote_pi_resolver.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/lsp_client.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_diagnostic.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_semantic_tokens.dart';
+import 'package:gsh_desktop/app/core/domain/exceptions/lsp_error.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:flutter/foundation.dart';
 
 /// Tipos/modificadores padrão da spec LSP (3.16+) — anunciados no handshake pra

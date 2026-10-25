@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:cockpit/app/cockpit/domain/contracts/git_head_baseline_reader.dart';
-import 'package:cockpit/app/cockpit/domain/entities/file_view.dart';
-import 'package:cockpit/app/cockpit/domain/entities/git_head_baseline.dart';
-import 'package:cockpit/app/cockpit/domain/entities/scm_line_decorations.dart';
-import 'package:cockpit/app/cockpit/domain/services/scm_baseline_cache.dart';
-import 'package:cockpit/app/cockpit/domain/services/scm_line_decoration_calculator.dart';
-import 'package:cockpit/app/cockpit/ui/session/file_viewer_session.dart';
-import 'package:cockpit/app/cockpit/ui/session/scm_line_decoration_coordinator.dart';
-import 'package:cockpit/app/core/ui/widgets/code_editing_controller.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/git_head_baseline_reader.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/file_view.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/git_head_baseline.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/scm_line_decorations.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/scm_baseline_cache.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/scm_line_decoration_calculator.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/file_viewer_session.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/scm_line_decoration_coordinator.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/code_editing_controller.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 

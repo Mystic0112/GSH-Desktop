@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cockpit/app/cockpit/domain/entities/update_info.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/update_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

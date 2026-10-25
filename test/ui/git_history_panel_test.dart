@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:cockpit/app/cockpit/domain/entities/git_history_commit.dart';
-import 'package:cockpit/app/cockpit/domain/entities/git_history_file_change.dart';
-import 'package:cockpit/app/cockpit/domain/exceptions/git_history_error.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/git_history_panel.dart';
-import 'package:cockpit/app/core/domain/result.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/git_history_commit.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/git_history_file_change.dart';
+import 'package:gsh_desktop/app/gsh/domain/exceptions/git_history_error.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/git_history_panel.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
@@ -16,7 +16,7 @@ void main() {
     return TranslationProvider(
       child: ShadcnApp(
         theme: buildTheme(brightness: Brightness.dark),
-        home: CockpitTheme(
+        home: GshTheme(
           colors: tokens.colors,
           typo: tokens.typo,
           syntax: tokens.syntax,

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/remote/host_shell/host_shell.dart';
-import 'package:cockpit/app/cockpit/data/remote/host_shell/posix_host_shell.dart';
-import 'package:cockpit/app/cockpit/data/remote/host_shell/windows_host_shell.dart';
+import 'package:gsh_desktop/app/gsh/data/remote/host_shell/host_shell.dart';
+import 'package:gsh_desktop/app/gsh/data/remote/host_shell/posix_host_shell.dart';
+import 'package:gsh_desktop/app/gsh/data/remote/host_shell/windows_host_shell.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Executor de SSH falso: grava os comandos e devolve respostas roteirizadas.
@@ -66,10 +66,10 @@ class _RealPosixExec {
 ClientBundle _posixTestBundle(Directory root) {
   final bin = Directory('${root.path}/bin')..createSync();
   final lib = Directory('${root.path}/lib')..createSync();
-  final server = File('${bin.path}/cockpit-server')
+  final server = File('${bin.path}/gsh-server')
     ..writeAsStringSync('new-server');
-  File('${bin.path}/cockpit').writeAsStringSync('new-cli');
-  File('${lib.path}/libcockpit_pty.dylib').writeAsStringSync('new-pty');
+  File('${bin.path}/gsh').writeAsStringSync('new-cli');
+  File('${lib.path}/libgsh_pty.dylib').writeAsStringSync('new-pty');
   return ClientBundle(root: root.path, serverBinary: server.path);
 }
 
@@ -201,7 +201,7 @@ void main() {
       // Caminho com espaço é o caso que quebrava em comando de texto: nosso
       // argv → ssh → cmd → PowerShell, quatro níveis de escape.
       final command = windowsPowerShellCommand(
-        r'Test-Path "C:\Users\John Smith\.cockpit"',
+        r'Test-Path "C:\Users\John Smith\.gsh"',
       );
       final b64 = command.split('-EncodedCommand ').last;
       expect(b64, isNot(contains(' ')));
@@ -262,10 +262,10 @@ void main() {
       // Matar por nome derrubaria o sidecar da GUI de quem está sentado na
       // máquina, junto com os terminais locais dele.
       expect(script, contains('ExecutablePath'));
-      expect(script, contains(r'.cockpit\server\bin\cockpit-server.exe'));
+      expect(script, contains(r'.gsh\server\bin\gsh-server.exe'));
     });
 
-    test('installFromHost devolve false sem Cockpit no host (D2)', () async {
+    test('installFromHost devolve false sem GSH no host (D2)', () async {
       final exec = _FakeExec((_) => [(0, 'missing', '')]);
       expect(await shellWith(exec).installFromHost(), isFalse);
     });
@@ -276,7 +276,7 @@ void main() {
 
       final script = _decodePowerShell(exec.commands.single);
       expect(script, contains('Copy-Item'));
-      expect(script, contains('cockpit-server-bundle'));
+      expect(script, contains('gsh-server-bundle'));
     });
 
     test('serverSha256 usa Get-FileHash', () async {
@@ -313,7 +313,7 @@ void main() {
       expect(endpoint, isA<UnixSocketEndpoint>());
       expect(
         (endpoint! as UnixSocketEndpoint).path,
-        '/Users/jacob/.cockpit/cockpit-server.sock',
+        '/Users/jacob/.gsh/gsh-server.sock',
       );
       // A ausência de servidor segue sendo descoberta pelo túnel, como antes
       // do plano 61 — é o que preserva a latência de abertura.
@@ -326,7 +326,7 @@ void main() {
 
       final command = exec.commands.single;
       expect(command, contains('nohup'));
-      expect(command, contains('libcockpit_pty.dylib'));
+      expect(command, contains('libgsh_pty.dylib'));
       expect(command, contains('--exit-on-idle 120'));
       expect(command, contains('server-boot.log'));
     });
@@ -343,7 +343,7 @@ void main() {
         exec: exec.call,
       ).startServer(idleSeconds: 120);
 
-      expect(exec.commands.single, contains('libcockpit_pty.so'));
+      expect(exec.commands.single, contains('libgsh_pty.so'));
     });
 
     test('serverInstalled exige executável e manifesto completo', () async {
@@ -364,15 +364,15 @@ void main() {
       'instala no staging, verifica manifesto e só então troca o live',
       () async {
         final root = Directory.systemTemp.createTempSync(
-          'cockpit-posix-install',
+          'gsh-posix-install',
         );
         addTearDown(() => root.deleteSync(recursive: true));
         final bin = Directory('${root.path}/bin')..createSync();
         final lib = Directory('${root.path}/lib')..createSync();
-        final server = File('${bin.path}/cockpit-server')
+        final server = File('${bin.path}/gsh-server')
           ..writeAsStringSync('server');
-        File('${bin.path}/cockpit').writeAsStringSync('cli');
-        File('${lib.path}/libcockpit_pty.dylib').writeAsStringSync('pty');
+        File('${bin.path}/gsh').writeAsStringSync('cli');
+        File('${lib.path}/libgsh_pty.dylib').writeAsStringSync('pty');
         final exec = _FakeExec((_) => [(0, '', '')]);
 
         await shellWith(exec).installFromClient(
@@ -400,7 +400,7 @@ void main() {
         expect(exec.commands[swapIndex], contains('server.previous-'));
         expect(
           exec.commands[swapIndex],
-          contains('no_nest_rename "\$HOME/.cockpit/server.staging-'),
+          contains('no_nest_rename "\$HOME/.gsh/server.staging-'),
         );
         expect(exec.commands[swapIndex], contains('mv -T -- "\$1" "\$2"'));
         expect(exec.commands[swapIndex], contains('os.rename'));
@@ -410,10 +410,10 @@ void main() {
           contains('needs GNU mv -T, python3, or perl'),
         );
         expect(exec.commands[swapIndex], isNot(contains('mv "\$1" "\$2"')));
-        expect(exec.commands[swapIndex], contains('"\$HOME/.cockpit/server"'));
+        expect(exec.commands[swapIndex], contains('"\$HOME/.gsh/server"'));
         expect(
           exec.commands[swapIndex],
-          isNot(contains('mv "\$HOME/.cockpit/server.staging-')),
+          isNot(contains('mv "\$HOME/.gsh/server.staging-')),
         );
         expect(
           exec.commands[swapIndex],
@@ -421,25 +421,25 @@ void main() {
         );
         expect(
           exec.commands.last,
-          contains('rm -rf "\$HOME/.cockpit/server.install.lock"'),
+          contains('rm -rf "\$HOME/.gsh/server.install.lock"'),
         );
         final manifestText = utf8.decode(exec.stdinPayloads[manifestIndex]!);
-        expect(manifestText, contains('  bin/cockpit-server\n'));
-        expect(manifestText, contains('  bin/cockpit\n'));
-        expect(manifestText, contains('  lib/libcockpit_pty.dylib\n'));
+        expect(manifestText, contains('  bin/gsh-server\n'));
+        expect(manifestText, contains('  bin/gsh\n'));
+        expect(manifestText, contains('  lib/libgsh_pty.dylib\n'));
       },
     );
 
     test('upload interrompido não promove staging parcial', () async {
-      final root = Directory.systemTemp.createTempSync('cockpit-posix-fail');
+      final root = Directory.systemTemp.createTempSync('gsh-posix-fail');
       addTearDown(() => root.deleteSync(recursive: true));
       final bin = Directory('${root.path}/bin')..createSync();
       final lib = Directory('${root.path}/lib')..createSync();
-      final server = File('${bin.path}/cockpit-server')
+      final server = File('${bin.path}/gsh-server')
         ..writeAsStringSync('server');
-      File('${lib.path}/libcockpit_pty.dylib').writeAsStringSync('pty');
+      File('${lib.path}/libgsh_pty.dylib').writeAsStringSync('pty');
       final exec = _FakeExec(
-        (command) => command.contains('libcockpit_pty.dylib')
+        (command) => command.contains('libgsh_pty.dylib')
             ? [(1, '', 'network cut')]
             : [(0, '', '')],
       );
@@ -463,7 +463,7 @@ void main() {
       );
       final cleanupIndex = exec.commands.indexWhere(
         (command) =>
-            command.contains('rm -rf "\$HOME/.cockpit/server.staging-'),
+            command.contains('rm -rf "\$HOME/.gsh/server.staging-'),
       );
       expect(cleanupIndex, greaterThan(0));
       expect(exec.commands[cleanupIndex], contains('server.previous-'));
@@ -472,10 +472,10 @@ void main() {
     });
 
     test('lock ocupado/timeout impede qualquer upload ou promoção', () async {
-      final root = Directory.systemTemp.createTempSync('cockpit-posix-locked');
+      final root = Directory.systemTemp.createTempSync('gsh-posix-locked');
       addTearDown(() => root.deleteSync(recursive: true));
       final bin = Directory('${root.path}/bin')..createSync();
-      final server = File('${bin.path}/cockpit-server')
+      final server = File('${bin.path}/gsh-server')
         ..writeAsStringSync('server');
       final exec = _FakeExec(
         (command) => command.contains('while ! mkdir')
@@ -502,11 +502,11 @@ void main() {
 
     test('falha na promoção repara backup antes de soltar o lock', () async {
       final root = Directory.systemTemp.createTempSync(
-        'cockpit-posix-rollback',
+        'gsh-posix-rollback',
       );
       addTearDown(() => root.deleteSync(recursive: true));
       final bin = Directory('${root.path}/bin')..createSync();
-      final server = File('${bin.path}/cockpit-server')
+      final server = File('${bin.path}/gsh-server')
         ..writeAsStringSync('server');
       final exec = _FakeExec(
         (command) => command.contains('sha256sum -c bundle.manifest')
@@ -528,19 +528,19 @@ void main() {
         (command) =>
             !command.contains('sha256sum -c bundle.manifest') &&
             command.contains(
-              'no_nest_rename "\$HOME/.cockpit/server.previous-',
+              'no_nest_rename "\$HOME/.gsh/server.previous-',
             ) &&
-            command.contains('"\$HOME/.cockpit/server"'),
+            command.contains('"\$HOME/.gsh/server"'),
       );
       final releaseIndex = exec.commands.lastIndexWhere(
         (command) =>
-            command.contains('rm -rf "\$HOME/.cockpit/server.install.lock"'),
+            command.contains('rm -rf "\$HOME/.gsh/server.install.lock"'),
       );
       expect(recoveryIndex, greaterThan(promotionIndex));
       expect(releaseIndex, greaterThan(recoveryIndex));
       expect(
         exec.commands[recoveryIndex],
-        isNot(contains('rm -rf "\$HOME/.cockpit/server.previous-')),
+        isNot(contains('rm -rf "\$HOME/.gsh/server.previous-')),
       );
     });
 
@@ -548,12 +548,12 @@ void main() {
       'guard de promoção põe live inesperado em conflito sem aninhar backup',
       () async {
         final root = Directory.systemTemp.createTempSync(
-          'cockpit-posix-guard-fs',
+          'gsh-posix-guard-fs',
         );
         addTearDown(() => root.deleteSync(recursive: true));
         final home = Directory('${root.path}/home')..createSync();
-        final cockpit = Directory('${home.path}/.cockpit')..createSync();
-        final live = Directory('${cockpit.path}/server')..createSync();
+        final gsh = Directory('${home.path}/.gsh')..createSync();
+        final live = Directory('${gsh.path}/server')..createSync();
         File('${live.path}/known-good').writeAsStringSync('old');
         final fakeBin = Directory('${root.path}/fake-bin')..createSync();
         final fakeMv = File('${fakeBin.path}/mv')
@@ -566,8 +566,8 @@ if [ "$1" = "-T" ] && [ "$2" = "--" ]; then
   source=$3
   destination=$4
   case "$source" in
-    "$HOME/.cockpit/server.staging-"*)
-      if [ "$destination" = "$HOME/.cockpit/server" ]; then
+    "$HOME/.gsh/server.staging-"*)
+      if [ "$destination" = "$HOME/.gsh/server" ]; then
         # A corrida acontece dentro da primitiva, depois de qualquer guard.
         mkdir -p "$destination"
         printf '%s' unexpected > "$destination/unexpected"
@@ -599,7 +599,7 @@ exec /bin/mv "$@"
           ),
           isEmpty,
         );
-        final conflicts = cockpit
+        final conflicts = gsh
             .listSync()
             .where(
               (entity) => entity.path
@@ -614,7 +614,7 @@ exec /bin/mv "$@"
           'unexpected',
         );
         expect(
-          cockpit.listSync().where(
+          gsh.listSync().where(
             (entity) => entity.path
                 .split(Platform.pathSeparator)
                 .last
@@ -622,7 +622,7 @@ exec /bin/mv "$@"
           ),
           isEmpty,
         );
-        final stages = cockpit
+        final stages = gsh
             .listSync()
             .whereType<Directory>()
             .where(
@@ -634,7 +634,7 @@ exec /bin/mv "$@"
             .toList();
         expect(stages, hasLength(1));
         expect(
-          File('${stages.single.path}/bin/cockpit-server').readAsStringSync(),
+          File('${stages.single.path}/bin/gsh-server').readAsStringSync(),
           'new-server',
         );
       },
@@ -645,12 +645,12 @@ exec /bin/mv "$@"
       'recovery anterior recusa live surgido no rename sem aninhar backup',
       () async {
         final root = Directory.systemTemp.createTempSync(
-          'cockpit-posix-prior-recovery-race',
+          'gsh-posix-prior-recovery-race',
         );
         addTearDown(() => root.deleteSync(recursive: true));
         final home = Directory('${root.path}/home')..createSync();
-        final cockpit = Directory('${home.path}/.cockpit')..createSync();
-        final prior = Directory('${cockpit.path}/server.previous-interrupted')
+        final gsh = Directory('${home.path}/.gsh')..createSync();
+        final prior = Directory('${gsh.path}/server.previous-interrupted')
           ..createSync();
         File('${prior.path}/known-good').writeAsStringSync('old');
         final fakeBin = Directory('${root.path}/fake-bin')..createSync();
@@ -664,8 +664,8 @@ if [ "$1" = "-T" ] && [ "$2" = "--" ]; then
   source=$3
   destination=$4
   case "$source" in
-    "$HOME/.cockpit/server.previous-"*)
-      if [ "$destination" = "$HOME/.cockpit/server" ]; then
+    "$HOME/.gsh/server.previous-"*)
+      if [ "$destination" = "$HOME/.gsh/server" ]; then
         mkdir -p "$destination"
         printf '%s' raced > "$destination/unexpected"
         exit 1
@@ -688,17 +688,17 @@ exec /bin/mv "$@"
 
         expect(File('${prior.path}/known-good').readAsStringSync(), 'old');
         expect(
-          File('${cockpit.path}/server/unexpected').readAsStringSync(),
+          File('${gsh.path}/server/unexpected').readAsStringSync(),
           'raced',
         );
         expect(
           Directory(
-            '${cockpit.path}/server/server.previous-interrupted',
+            '${gsh.path}/server/server.previous-interrupted',
           ).existsSync(),
           isFalse,
         );
         expect(
-          cockpit.listSync().where(
+          gsh.listSync().where(
             (entity) => entity.path
                 .split(Platform.pathSeparator)
                 .last
@@ -714,12 +714,12 @@ exec /bin/mv "$@"
       'finally preserva live ambíguo e restaura backup sem aninhamento',
       () async {
         final root = Directory.systemTemp.createTempSync(
-          'cockpit-posix-finally-fs',
+          'gsh-posix-finally-fs',
         );
         addTearDown(() => root.deleteSync(recursive: true));
         final home = Directory('${root.path}/home')..createSync();
-        final cockpit = Directory('${home.path}/.cockpit')..createSync();
-        final live = Directory('${cockpit.path}/server')..createSync();
+        final gsh = Directory('${home.path}/.gsh')..createSync();
+        final live = Directory('${gsh.path}/server')..createSync();
         File('${live.path}/known-good').writeAsStringSync('old');
         final bundleRoot = Directory('${root.path}/bundle')..createSync();
         final realExec = _RealPosixExec(home: home.path);
@@ -729,7 +729,7 @@ exec /bin/mv "$@"
           List<int>? stdinBytes,
         }) async {
           if (command.contains('sha256sum -c bundle.manifest')) {
-            final stage = cockpit.listSync().whereType<Directory>().singleWhere(
+            final stage = gsh.listSync().whereType<Directory>().singleWhere(
               (directory) => directory.path
                   .split(Platform.pathSeparator)
                   .last
@@ -739,7 +739,7 @@ exec /bin/mv "$@"
                 .split(Platform.pathSeparator)
                 .last
                 .substring('server.staging-'.length);
-            live.renameSync('${cockpit.path}/server.previous-$token');
+            live.renameSync('${gsh.path}/server.previous-$token');
             live.createSync();
             File('${live.path}/unexpected').writeAsStringSync('ambiguous');
             return (76, '', 'simulated transport cut between renames');
@@ -763,7 +763,7 @@ exec /bin/mv "$@"
           ),
           isEmpty,
         );
-        final conflicts = cockpit
+        final conflicts = gsh
             .listSync()
             .where(
               (entity) => entity.path
@@ -778,7 +778,7 @@ exec /bin/mv "$@"
           'ambiguous',
         );
         expect(
-          cockpit.listSync().where(
+          gsh.listSync().where(
             (entity) => entity.path
                 .split(Platform.pathSeparator)
                 .last

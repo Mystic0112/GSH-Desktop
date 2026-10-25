@@ -1,15 +1,15 @@
-# Instalador Windows (Inno Setup) do Cockpit. NÃO buildável neste Mac — gerado
+# Instalador Windows (Inno Setup) do GSH. NÃO buildável neste Mac — gerado
 # no job `windows` do CI (windows-latest + Inno Setup). Code signing via
 # SignPath OSS acontece no workflow, em duas etapas (exes internos antes de
-# empacotar, instalador depois): ver cockpit-release.yml.
-app_id: work.jacobmoura.cockpit
-display_name: Remote Pi Cockpit
-publisher_name: Jacob Moura
-publisher_url: https://jacobmoura.work
-# O binário do runner Windows é `cockpit.exe` (BINARY_NAME=cockpit).
-executable_name: cockpit.exe
+# empacotar, instalador depois): ver gsh-release.yml.
+app_id: work.gorila.gshdesktop
+display_name: GSH Desktop
+publisher_name: Gorila Software House
+publisher_url: https://gorilash.com.br
+# O binário do runner Windows é `gsh.exe` (BINARY_NAME=gsh).
+executable_name: gsh.exe
 # Instala por usuário (sem exigir admin) em %LOCALAPPDATA%\Programs.
-install_dir_name: "{userpf}\\Remote Pi Cockpit"
+install_dir_name: "{userpf}\\GSH Desktop"
 privileges_required: lowest
 create_desktop_icon: true
 setup_icon_file: windows/runner/resources/app_icon.ico

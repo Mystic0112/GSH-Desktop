@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:cockpit/app/cockpit/domain/contracts/git_command_runner.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/git_status_reader.dart';
-import 'package:cockpit/app/cockpit/domain/entities/git_info.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/git_controller.dart';
-import 'package:cockpit/app/core/ui/window_activity_controller.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/git_command_runner.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/git_status_reader.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/git_info.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/git_controller.dart';
+import 'package:gsh_desktop/app/core/ui/window_activity_controller.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 

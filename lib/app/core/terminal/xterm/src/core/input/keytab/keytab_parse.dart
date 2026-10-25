@@ -1,7 +1,7 @@
-import 'package:cockpit/app/core/terminal/xterm/src/core/input/keytab/keytab.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/input/keytab/keytab_record.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/input/keytab/keytab_token.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/input/keytab/qt_keyname.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/input/keytab/keytab.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/input/keytab/keytab_record.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/input/keytab/keytab_token.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/input/keytab/qt_keyname.dart';
 
 class ParseError {}
 

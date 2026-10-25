@@ -7,11 +7,11 @@ environment:
   sdk: ^3.9.0
 
 dependencies:
-  cockpit_core:
-    path: ../../packages/cockpit_core
-  cockpit_engine:
-    path: ../../packages/cockpit_engine
-  cockpit_protocol:
-    path: ../../packages/cockpit_protocol
-  cockpit_remote:
-    path: ../../packages/cockpit_remote
+  gsh_core:
+    path: ../../packages/gsh_core
+  gsh_engine:
+    path: ../../packages/gsh_engine
+  gsh_protocol:
+    path: ../../packages/gsh_protocol
+  gsh_remote:
+    path: ../../packages/gsh_remote

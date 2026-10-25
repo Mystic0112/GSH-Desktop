@@ -7,7 +7,7 @@
 // árvore de arquivos com N roots + badge git por root, escolha de root no "+",
 // e os dois dialogs (detecção na criação e "Manage roots…").
 // Nada aqui tem lógica: dados fake, callbacks abrem só os dialogs mock.
-import 'package:cockpit/app/core/ui/themes/app_colors.dart';
+import 'package:gsh_desktop/app/core/ui/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 
 const AppColors _c = AppColors.dark;
@@ -107,7 +107,7 @@ class _ProjectsColumn extends StatelessWidget {
         children: [
           const _SectionLabel('WORKSPACES'),
           _projectRow(
-            'Cockpit',
+            'GSH',
             const Color(0xFF6B7280),
             icon: Icons.terminal,
             showMenu: false,
@@ -863,7 +863,7 @@ void _showDetectionDialog(BuildContext context) {
           _checkRow(true, 'shared-libs', 'main'),
           _checkRow(false, 'playground', 'main'),
           const SizedBox(height: 12),
-          _checkRow(true, 'Salvar .cockpit/workspace.json na pasta', null),
+          _checkRow(true, 'Salvar .gsh/workspace.json na pasta', null),
         ],
       ),
       actions: const ['Só a pasta, sem roots', 'Criar workspace'],
@@ -894,7 +894,7 @@ void _showManageRootsDialog(BuildContext context) {
             ],
           ),
           const SizedBox(height: 12),
-          _checkRow(true, 'Sincronizar com .cockpit/workspace.json', null),
+          _checkRow(true, 'Sincronizar com .gsh/workspace.json', null),
         ],
       ),
       actions: const ['Cancelar', 'Salvar'],

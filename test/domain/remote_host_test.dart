@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/domain/entities/remote_host.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/remote_host.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

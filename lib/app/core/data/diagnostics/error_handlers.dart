@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:cockpit/app/core/data/diagnostics/diagnostics_log.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
 import 'package:flutter/foundation.dart';
 
 /// Instala as capturas globais de erro e roda [body] dentro de uma zona

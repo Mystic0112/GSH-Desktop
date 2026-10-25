@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:cockpit/app/core/terminal/xterm/xterm.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/xterm.dart';
 
 void main() {
   test('Can instantiate Terminal', () {

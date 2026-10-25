@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/ui/file_icons/file_icon_map.g.dart';
-import 'package:cockpit/app/core/utils/workspace_env.dart';
+import 'package:gsh_desktop/app/core/ui/file_icons/file_icon_map.g.dart';
+import 'package:gsh_desktop/app/core/utils/workspace_env.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -9,7 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 ///
 /// Ex.: `app.module.ts` casa `module.ts` (angular) antes de `ts`; `.gitignore`
 /// casa pelo nome exato; `photo.PNG` é case-insensitive.
-/// Extensões do Cockpit que o material-icon-theme não conhece (o mapa `.g` é
+/// Extensões do GSH que o material-icon-theme não conhece (o mapa `.g` é
 /// gerado — overrides manuais moram aqui). `.dbq` = arquivo de query da DB
 /// tab (plano 51); `.http`/`.rest` = arquivo de request da HTTP tab (o SVG
 /// existe nos assets, mas o mapa gerado não associa a extensão a ele);
@@ -20,9 +20,9 @@ const Map<String, String> _extensionOverrides = {
   'http': 'http',
   'rest': 'http',
   // Caderno: SVG nosso (tile preto, bloco de notas branco), não do tema.
-  'notebook': 'cockpit-notebook',
+  'notebook': 'gsh-notebook',
   // Painel HTML vivo (plano 67): SVG nosso, janela com play.
-  'panel': 'cockpit-panel',
+  'panel': 'gsh-panel',
 };
 
 String fileIconName(String fileName) {
@@ -92,15 +92,15 @@ class FileTypeIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // `.ckp` (layout), `.env.cockpit` (env do workspace) e a pasta `.cockpit/`
+    // `.ckp` (layout), `.env.gsh` (env do workspace) e a pasta `.gsh/`
     // (config) usam o logo do próprio
-    // Cockpit — não são tipos que o material-icon-theme conheça. O `.notebook`
+    // GSH — não são tipos que o material-icon-theme conheça. O `.notebook`
     // tem SVG próprio via `_extensionOverrides` (a árvore o renderiza como
     // arquivo, então cai em `fileIconName`).
     final lower = name.toLowerCase();
     if (lower.endsWith('.ckp') ||
         lower == kWorkspaceEnvFileName ||
-        (_isFolder && lower == '.cockpit')) {
+        (_isFolder && lower == '.gsh')) {
       return Image.asset(
         'assets/branding/gsh_logo.png',
         width: size,

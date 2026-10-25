@@ -1,107 +1,81 @@
-# Remote Pi Cockpit
+# GSH Desktop
 
-Desktop client for coding agents: terminals, agents, files, git, worktrees,
-databases and tasks side by side, on macOS, Windows and Linux, with iPad and
-Android clients for remote hosts.
+Harness/IDE da **Gorila Software House** para trabalhar com agentes de código
+(Claude Code, Codex e outros) no desktop: terminais, chat nativo com o Claude
+Code, uma "fazenda" que mostra os agentes trabalhando, arquivos, git, bancos e
+tasks lado a lado. Linux, macOS e Windows.
 
-- Site and docs: https://remote-pi.jacobmoura.work/cockpit
-- Downloads (dmg, exe, deb, rpm, apk): https://github.com/jacobaraujo7/remote_pi/releases?q=cockpit-v
-- Packaging and release runbook: [packaging/README.md](packaging/README.md)
+Fork do [Cockpit](https://github.com/jacobaraujo7/remote_pi) (Remote Pi, de
+Jacob Moura, MIT). O mundo em pixel art da fazenda foi portado do
+[clodfarm](https://github.com/matank001/clodfarm) (MIT; licença em
+`third_party/clodfarm/LICENSE`).
 
-## cockpit-server on a Linux host (VPS)
+## O que tem
 
-Remote workspaces run a small headless `cockpit-server` on the host, reached
-over SSH. The desktop app installs and updates it by itself on first connect
-when it ships that target (macOS and Linux arm64 clients ship Linux arm64;
-Linux x86_64 ships Linux x86_64). Every other combination, and the mobile
-apps (which carry no server), need the host prepared once with the installer
-below. Both paths install to the same place and recognize each other. Linux
-x86_64 and arm64 only, user space, no sudo.
+- **Chat** (botão de balão no topo): conversa com o Claude Code no estilo do
+  Claude Desktop, sobre o `claude` instalado na máquina e o login de cada
+  pessoa. Aprovação de permissão com um clique ("Sempre permitir" grava a regra
+  no projeto), diffs inline, plano, perguntas com opções, anexos (imagem, PDF,
+  arquivo; Ctrl+V cola print), raciocínio, retomar conversa ao reabrir,
+  mensagens entre sessões e "Continuar no Remote Control".
+- **Fazenda** (botão de grama): cada loop de agente da máquina é um bicho num
+  canteiro; subagentes em volta do pai; quem espera permissão levanta bandeira.
+  Lê os transcripts do Claude Code, então pega sessões abertas fora do GSH.
+  Clique no bicho abre o terminal dele.
+- **Terminais, arquivos, git, worktrees, bancos, tasks, navegador embutido**:
+  herdados do Cockpit.
+- **Configurações** em dois lados: *GSH Desktop* (aparência, terminal, atalhos…)
+  e *Claude* (conta, uso, memória, Claude Code, skills, conectores, plugins…),
+  no estilo do Claude Desktop, lendo e gravando o `~/.claude/settings.json` e
+  a CLI `claude`.
+- **Hosts protegidos** (Configurações → Claude → Claude Code → Segurança):
+  nenhum agente roda um comando que cite `prod`, `homolog` etc., em nenhuma
+  sessão da máquina.
+- **Remote Control**: toggle para toda sessão interativa conectar ao celular /
+  claude.ai; o chat entrega a conversa a um terminal com Remote Control.
 
-```bash
-curl -fsSL https://remote-pi.jacobmoura.work/cockpit-server.sh | bash
-# same script straight from GitHub (the site URL redirects here):
-curl -fsSL https://raw.githubusercontent.com/jacobaraujo7/remote_pi/main/cockpit/install-server.sh | bash
-```
+O GSH não fala com a API da Anthropic: o motor é sempre o `claude` da máquina.
 
-The script lives at [install-server.sh](install-server.sh). What it does, in order:
+## Rodar
 
-1. Checks that the host is Linux and maps `uname -m` to `x86_64` or `arm64`.
-2. Resolves the version: `COCKPIT_VERSION=x.y.z` if set, otherwise the latest
-   `cockpit-server-v*` release on GitHub. The server version must match the
-   Cockpit app you connect from.
-3. Downloads `cockpit-server-<version>-linux-<arch>.zip` and `SHA256SUMS` from
-   that release and verifies the checksum.
-4. Unzips to a temp folder (`unzip`, else `python3`, else installs `unzip`
-   with the package manager when sudo is passwordless) and runs the
-   `install.sh` shipped inside the zip,
-   which verifies `bundle.manifest`, does a smoke start, swaps the folder into
-   `~/.cockpit/server` atomically (previous install kept as backup until the
-   smoke passes) and links `~/.local/bin/cockpit-server`.
-5. With `--service` (`bash -s -- --service`), registers a `systemd --user`
-   unit via `cockpit-server service install` so the server starts at boot.
-   It may print one `sudo loginctl enable-linger` command for you to run once.
-
-Re-running the script updates the install; the same version is a no-op.
-
-Manual download, for a host without internet access or if you prefer to read
-the files first:
-
-- Releases: https://github.com/jacobaraujo7/remote_pi/releases?q=cockpit-server-v
-- Then `unzip cockpit-server-<version>-linux-<arch>.zip && ./cockpit-server/install.sh`
-
-Service commands, once installed:
-
-```bash
-cockpit-server service install     # systemd --user unit, starts at boot
-cockpit-server service status
-cockpit-server service uninstall
-cockpit-server --version
-```
-
-Full page with troubleshooting: https://remote-pi.jacobmoura.work/cockpit/docs#remote
-
-## Seeing what the installed app is doing (Telemetry)
-
-The production build can show its own errors, warnings and performance
-metrics, without a debug build or a console:
-
-1. **Settings → General → Developer mode** (off by default).
-2. Open the **Telemetry** panel (right sidebar) and select the **Cockpit**
-   chip. Every boot of the app is a run; uncaught errors, isolate and zone
-   failures, and the warnings the code emits where it used to fail silently
-   show up there with a fingerprint and the file in `lib/` that raised them.
-3. The same data is available from a terminal tab with
-   `cockpit telemetry errors --app` (add `--app` to any telemetry verb, e.g.
-   `logs --app --level warn`, `runs --app`, `perf --app`).
-
-Nothing is sent anywhere: the store is a local SQLite file under the app's
-Application Support folder (`telemetry/__cockpit__.sqlite`), outside any
-workspace.
-
-Cost while Developer mode is on:
-
-- **Disk**: events are written straight to SQLite, capped at 256 MB and
-  7 days (oldest finished runs are vacuumed first). A busy session rarely
-  passes a few megabytes.
-- **Memory**: the only in-memory buffer is the performance ring of 256
-  entries, flushed to the store every 30 s. Error and warning events are not
-  held in RAM.
-- **CPU**: two 1 s timers aggregate frame timings while the window is active.
-  Not measurable on the terminal workload; turn Developer mode off if you are
-  profiling something else.
-
-Secrets are redacted on write (`Authorization`, cookies, tokens, JWTs). See
-[docs/telemetry.md](docs/telemetry.md) for the store layout and the CLI.
-
-## Development
-
-Prerequisites: Flutter (version pinned in `.github/workflows/cockpit-release.yml`),
-Rust via rustup, Zig 0.16.0. See [CLAUDE.md](CLAUDE.md) for the architecture
-and conventions.
+Pré-requisitos: Flutter 3.44+, Rust (`cargo`), Zig 0.16 (compila o libghostty),
+`claude` instalado e logado.
 
 ```bash
 flutter pub get
-flutter run -d macos
-flutter analyze && flutter test
+flutter run -d linux   # ou macos / windows
 ```
+
+Checagens antes de commitar:
+
+```bash
+flutter analyze && flutter test test/data && (cd cli && cargo test)
+```
+
+Build Linux: `flutter build linux` (gera `build/linux/x64/release/bundle/gsh`).
+Empacotamento (deb/rpm/dmg/exe): [`packaging/README.md`](packaging/README.md).
+
+## Como é organizado
+
+- `lib/app/gsh/` — o shell (workspaces, panes, chat, fazenda, settings de
+  sessão). `lib/app/settings/` — a tela de configurações. `lib/app/core/` — o
+  que é compartilhado. Regras em [`CLAUDE.md`](CLAUDE.md) e
+  [`lib/app/CLAUDE.md`](lib/app/CLAUDE.md).
+- `cli/` — a CLI interna `gsh` (Rust): hooks dos harnesses (status de turno,
+  fazenda, hosts protegidos), MCP, comandos de aba/workspace.
+- `packages/` — motor compartilhado com o `gsh-server` (workspaces remotos).
+- `docs/` — formatos de arquivo (`.ckp`, tema, tasks), hooks, telemetria.
+
+Nomes internos: CLI `gsh` (alias `gd`), dados em `~/.gsh/`, pasta `.gsh/` no
+workspace, env `GSH_*`.
+
+## Trabalho
+
+Branches: `master` (estável), `helio` (harness/chat/configurações), `yan`
+(fazenda/visibilidade). Pull request para o `master`. Backlog e decisões na
+lista **GSH Desktop** do ClickUp.
+
+## Licença
+
+MIT — veja [`LICENSE`](LICENSE) (Cockpit, Jacob Moura) e
+`third_party/clodfarm/LICENSE`.

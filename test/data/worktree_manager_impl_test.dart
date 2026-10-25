@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/filesystem/git_binary.dart';
-import 'package:cockpit/app/cockpit/data/filesystem/worktree_manager_impl.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/worktree_manager.dart';
-import 'package:cockpit/app/cockpit/domain/entities/worktree.dart';
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/gsh/data/filesystem/git_binary.dart';
+import 'package:gsh_desktop/app/gsh/data/filesystem/worktree_manager_impl.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/worktree_manager.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/worktree.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -35,7 +35,7 @@ void main() {
   }
 
   setUp(() async {
-    repo = await Directory.systemTemp.createTemp('cockpit_wt_test_');
+    repo = await Directory.systemTemp.createTemp('gsh_wt_test_');
     await git(['init']);
     await git(['config', 'user.email', 'test@example.com']);
     await git(['config', 'user.name', 'Test']);
@@ -68,7 +68,7 @@ void main() {
     );
     final wt = (added as Success<Worktree, WorktreeOpError>).value;
     expect(Directory(wt.path).existsSync(), isTrue);
-    expect(wt.path, endsWith('/.cockpit/worktrees/feat/sso'));
+    expect(wt.path, endsWith('/.gsh/worktrees/feat/sso'));
     expect(wt.branch, 'feat/sso');
     expect(wt.isDetached, isFalse);
 
@@ -78,10 +78,10 @@ void main() {
     expect(gitignore.existsSync(), isTrue);
     expect(
       gitignore.readAsStringSync().split('\n'),
-      contains('.cockpit/worktrees/'),
+      contains('.gsh/worktrees/'),
     );
     final status = await git(['status', '--porcelain']);
-    expect(status.stdout.toString(), isNot(contains('.cockpit')));
+    expect(status.stdout.toString(), isNot(contains('.gsh')));
 
     // list: exclui a raiz, inclui o novo fork.
     final list = await manager.list(repo.path);
@@ -122,7 +122,7 @@ void main() {
   });
 
   test('list/namespace de pasta não-git devolvem vazio', () async {
-    final tmp = await Directory.systemTemp.createTemp('cockpit_nogit_');
+    final tmp = await Directory.systemTemp.createTemp('gsh_nogit_');
     addTearDown(() async {
       if (await tmp.exists()) await tmp.delete(recursive: true);
     });

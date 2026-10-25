@@ -1,16 +1,16 @@
 import 'dart:io' show Platform;
 
-import 'package:cockpit/app/core/utils/platform_kind.dart';
+import 'package:gsh_desktop/app/core/utils/platform_kind.dart';
 
-import 'package:cockpit/app/core/app_intents.dart';
-import 'package:cockpit/app/core/ui/menu/editor_menu_bridge.dart';
-import 'package:cockpit/app/core/ui/menu/menu_model.dart';
-import 'package:cockpit/app/core/ui/menu/workspace_menu_bridge.dart';
-import 'package:cockpit/app/core/ui/settings_controller.dart';
-import 'package:cockpit/app/core/ui/widgets/app_menu.dart';
-import 'package:cockpit/app/core/ui/widgets/hover_tap.dart';
-import 'package:cockpit/i18n/strings.g.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/app_intents.dart';
+import 'package:gsh_desktop/app/core/ui/menu/editor_menu_bridge.dart';
+import 'package:gsh_desktop/app/core/ui/menu/menu_model.dart';
+import 'package:gsh_desktop/app/core/ui/menu/workspace_menu_bridge.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/app_menu.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/hover_tap.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:flutter/services.dart' show LogicalKeyboardKey;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:window_manager/window_manager.dart';
@@ -37,7 +37,7 @@ const List<LogicalKeyboardKey> _tabDigitKeys = <LogicalKeyboardKey>[
 /// `AppRoot`, dentro do `build`, então trocar de idioma remonta a barra.
 /// Referencia só o `core`: o [controller]
 /// (zoom/tamanho da interface) e as pontes globais de `app_intents.dart` (abrir
-/// configurações/projeto, checar updates) — resolvidas pelo `CockpitPage`, então
+/// configurações/projeto, checar updates) — resolvidas pelo `GshPage`, então
 /// `null`-safe enquanto o shell não montou.
 List<MenuBarMenu> buildAppMenus(
   Translations t,
@@ -74,7 +74,7 @@ List<MenuBarMenu> buildAppMenus(
       const MenuRole(MenuBarRole.quit),
     ]),
     MenuBarMenu(tr.file, <MenuNode>[
-      // New Terminal abre uma aba no workspace ativo (via CockpitPage →
+      // New Terminal abre uma aba no workspace ativo (via GshPage →
       // newTabIn). Só habilita quando há workspace selecionado.
       // No mobile o "+" da aba cria terminal e o "+" do rail abre workspace —
       // esses itens de menu são redundantes (plano 60, Wave F).
@@ -83,6 +83,26 @@ List<MenuBarMenu> buildAppMenus(
           tr.newTerminal,
           accelerator: const MenuAccelerator(LogicalKeyboardKey.keyT),
           onSelected: workspace.hasWorkspace ? workspace.newTerminal : null,
+        ),
+      // Chat nativo (Claude Code): ⌘⇧L abre na pane focada; ⌘⇧J numa pane nova
+      // à direita da focada (o terminal fica ao lado do chat).
+      if (!isMobilePlatform)
+        MenuAction(
+          tr.newChat,
+          accelerator: const MenuAccelerator(
+            LogicalKeyboardKey.keyL,
+            shift: true,
+          ),
+          onSelected: workspace.hasWorkspace ? workspace.newChat : null,
+        ),
+      if (!isMobilePlatform)
+        MenuAction(
+          tr.newChatRight,
+          accelerator: const MenuAccelerator(
+            LogicalKeyboardKey.keyJ,
+            shift: true,
+          ),
+          onSelected: workspace.hasWorkspace ? workspace.newChatRight : null,
         ),
       if (!isMobilePlatform) const MenuSeparator(),
       if (!isMobilePlatform)
@@ -163,7 +183,7 @@ List<MenuBarMenu> buildAppMenus(
       // Já o "Focus Pane" (⌘⌥ + setas) NÃO leva acelerador de menu: setas não
       // funcionam como key equivalent no macOS (o campo focado consome a seta
       // antes do menu), então quem trata a tecla é um handler global do
-      // HardwareKeyboard no `CockpitPage`. Aqui ficam só os itens clicáveis (com
+      // HardwareKeyboard no `GshPage`. Aqui ficam só os itens clicáveis (com
       // o hint da tecla no rótulo, já que o menu não desenha acelerador nenhum).
       // Focar painel e Selecionar aba: só fazem sentido com teclado/atalho —
       // no mobile o toque já seleciona painel/aba direto.
@@ -346,7 +366,7 @@ PlatformProvidedMenuItemType? _providedType(MenuBarRole role) => switch (role) {
 /// moram nela, à direita, e `File`/`View`/`Window` lado a lado espremiam o
 /// título e encostavam neles. O macOS não tem esse problema (a barra é do SO,
 /// fora da janela) — por isso o aperto é só aqui. Então os menus de topo viram
-/// **submenus** de um único botão: clique → popup com `Cockpit`/`File`/`View`/
+/// **submenus** de um único botão: clique → popup com `GSH`/`File`/`View`/
 /// `Window`, cada um abrindo os próprios itens.
 ///
 /// O modelo ([MenuBarMenu]) não muda: só este renderer aninha um nível a mais.
@@ -388,7 +408,7 @@ class _WindowMenuBarState extends State<WindowMenuBar> {
     setState(() => _open = true);
     // ACHATADO (não submenus): no touch, submenu aninhado é ruim de acertar E
     // a escolha de uma folha de submenu se perde na corrida com o `closeAll` do
-    // shadcn (a ação não dispararia). Os grupos (Cockpit/File/View/Window) viram
+    // shadcn (a ação não dispararia). Os grupos (GSH/File/View/Window) viram
     // seções separadas por divisória, e cada item é folha de topo — que fecha o
     // menu raiz com o valor certo e executa a ação.
     final items = <AppMenuItem<VoidCallback>>[];

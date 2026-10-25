@@ -3,7 +3,7 @@ import 'dart:io';
 /// Descobre a **raiz do projeto** de um arquivo subindo a árvore de diretórios
 /// até achar um arquivo marcador da linguagem (ex.: `pubspec.yaml` pro Dart,
 /// `package.json`/`tsconfig.json` pro TS). É o que resolve o monorepo: dado
-/// `mono/cockpit/lib/main.dart`, a raiz do servidor Dart é `mono/cockpit/`
+/// `mono/gsh/lib/main.dart`, a raiz do servidor Dart é `mono/gsh/`
 /// (onde está o `pubspec.yaml`), não `mono/`.
 ///
 /// A chave do pool é `(linguagem, raiz)` — logo dois arquivos do mesmo pacote

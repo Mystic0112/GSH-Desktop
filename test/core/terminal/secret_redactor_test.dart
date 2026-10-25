@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/terminal/secret_redactor.dart';
+import 'package:gsh_desktop/app/core/terminal/secret_redactor.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

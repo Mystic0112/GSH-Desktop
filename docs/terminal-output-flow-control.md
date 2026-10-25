@@ -17,7 +17,7 @@ still running, but pointer events could not reach application code until that
 queue drained. This explains both parts of the observed behavior: the window
 froze without a crash, and recovered as soon as producers became quiet.
 
-Host measurements during an incident showed Cockpit as the main CPU consumer
+Host measurements during an incident showed GSH as the main CPU consumer
 at roughly 22%, with about 353 MiB resident and about 14 GiB still available.
 The application was not being killed, swapping heavily or exhausting its
 scrollback limits. The binding resource was serialized UI-isolate time.

@@ -1,11 +1,11 @@
 // Confirma se o native asset do anaki_postgres resolve num exe compilado do
-// cockpit_engine (mesmo caminho do cockpit-server). Conecta num host bogus:
+// gsh_engine (mesmo caminho do gsh-server). Conecta num host bogus:
 // se falhar com "connection refused" o native está OK; se "symbol not found"
 // ou "No available native assets", o native NÃO foi empacotado.
 import 'dart:io';
 
-import 'package:cockpit_core/cockpit_core.dart';
-import 'package:cockpit_engine/cockpit_engine.dart';
+import 'package:gsh_core/gsh_core.dart';
+import 'package:gsh_engine/gsh_engine.dart';
 
 Future<void> main() async {
   const db = NativeDbService();

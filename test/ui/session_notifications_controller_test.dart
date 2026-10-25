@@ -1,8 +1,8 @@
-import 'package:cockpit/app/cockpit/domain/contracts/notifier.dart';
-import 'package:cockpit/app/cockpit/ui/session/pane_item.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/session_notifications_controller.dart';
-import 'package:cockpit/app/core/domain/entities/sound_event.dart';
-import 'package:cockpit/app/core/ui/window_activity_controller.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/notifier.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/pane_item.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/session_notifications_controller.dart';
+import 'package:gsh_desktop/app/core/domain/entities/sound_event.dart';
+import 'package:gsh_desktop/app/core/ui/window_activity_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _FakePane extends PaneItem {

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/filesystem/git_binary.dart';
-import 'package:cockpit/app/cockpit/data/filesystem/git_history_reader_impl.dart';
+import 'package:gsh_desktop/app/gsh/data/filesystem/git_binary.dart';
+import 'package:gsh_desktop/app/gsh/data/filesystem/git_history_reader_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -42,7 +42,7 @@ void main() {
         Process.run('git', args, workingDirectory: repo.path);
 
     setUp(() async {
-      repo = await Directory.systemTemp.createTemp('cockpit_history_test_');
+      repo = await Directory.systemTemp.createTemp('gsh_history_test_');
       await git(['init']);
       await git(['config', 'user.email', 'test@example.com']);
       await git(['config', 'user.name', 'Test']);

@@ -1,12 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/mouse/button.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/mouse/button_state.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/terminal_view.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/controller.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/gesture/gesture_detector.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/pointer_input.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/ui/render.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/mouse/button.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/mouse/button_state.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/terminal_view.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/controller.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/gesture/gesture_detector.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/pointer_input.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/ui/render.dart';
 
 class TerminalGestureHandler extends StatefulWidget {
   const TerminalGestureHandler({

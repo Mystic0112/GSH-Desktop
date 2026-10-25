@@ -7,10 +7,10 @@ typedef ProcessRunner =
 /// Descobre o **shell de login real** do usuário (POSIX: macOS/Linux).
 ///
 /// `$SHELL` **não é variável de sistema** — ela só existe porque um shell-pai a
-/// exporta. Quando o Cockpit é aberto pelo Finder/Dock (launchd, sem shell-pai)
+/// exporta. Quando o GSH é aberto pelo Finder/Dock (launchd, sem shell-pai)
 /// a variável fica **ausente** e o antigo `Platform.environment['SHELL'] ??
 /// '/bin/zsh'` silenciosamente ignorava o shell de login do usuário — quem usa
-/// fish caía no zsh (issue #42). Aberto via `open -a Cockpit` de um terminal o
+/// fish caía no zsh (issue #42). Aberto via `open -a GSH` de um terminal o
 /// `$SHELL` propaga e tudo funciona, o que explica o "só quebra pelo Finder".
 /// O flag `-l`/`-ilc` resolve **PATH**, não **qual** shell.
 ///

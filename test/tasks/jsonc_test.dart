@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/tasks/tasks_json_loader.dart';
-import 'package:cockpit/app/core/data/jsonc.dart';
+import 'package:gsh_desktop/app/gsh/data/tasks/tasks_json_loader.dart';
+import 'package:gsh_desktop/app/core/data/jsonc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -44,14 +44,14 @@ void main() {
     late Directory tmp;
     setUp(() async {
       tmp = await Directory.systemTemp.createTemp('jsonc_loader');
-      await Directory('${tmp.path}/.cockpit').create();
+      await Directory('${tmp.path}/.gsh').create();
     });
     tearDown(() async {
       if (await tmp.exists()) await tmp.delete(recursive: true);
     });
 
     test('tasks.json com comentários e vírgula final carrega', () async {
-      await File('${tmp.path}/.cockpit/tasks.json').writeAsString('''
+      await File('${tmp.path}/.gsh/tasks.json').writeAsString('''
 {
   // comentário de topo
   "tasks": [

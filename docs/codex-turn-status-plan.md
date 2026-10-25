@@ -11,17 +11,17 @@ hoje exclusivo do Claude Code, para sessões do **Codex CLI**.
 
 ## Contexto
 
-O Cockpit já sabe quando um agente está trabalhando, terminou o turno ou precisa
-de ação do usuário. O mecanismo (ver `project_cockpit_claude_turn_status`):
+O GSH já sabe quando um agente está trabalhando, terminou o turno ou precisa
+de ação do usuário. O mecanismo (ver `project_gsh_claude_turn_status`):
 
-1. `ClaudeHookInstallerImpl` materializa a CLI interna em `~/.cockpit/bin/` e faz
-   append idempotente de um entry marcado (`_cockpit: v1`) em cada evento de
+1. `ClaudeHookInstallerImpl` materializa a CLI interna em `~/.gsh/bin/` e faz
+   append idempotente de um entry marcado (`_gsh: v1`) em cada evento de
    `~/.claude/settings.json`, sem tocar nos hooks do usuário.
 2. O Claude executa `<cli> hook` a cada evento, passando um JSON por stdin.
 3. `cli/src/hook.rs` traduz o evento num status (`working` / `waiting` / `idle`)
    e manda pro app por socket Unix (TCP + token no Windows), roteando pela env
-   `COCKPIT_PANE_ID` que o app injeta na PTY da aba.
-4. Sessão de agente fora do Cockpit não tem essas envs → o hook é no-op. Gate
+   `GSH_PANE_ID` que o app injeta na PTY da aba.
+4. Sessão de agente fora do GSH não tem essas envs → o hook é no-op. Gate
    natural, sem configuração.
 
 O Codex CLI 0.147.0 ganhou um sistema de hooks **espelhado no do Claude Code**,
@@ -67,9 +67,9 @@ Não replicar a heurística.
 
 ```
 cli/src/hook.rs                     # status_for ganha os eventos do Codex
-lib/app/cockpit/domain/contracts/
+lib/app/gsh/domain/contracts/
   hook_installer.dart               # contrato genérico (renomeia claude_hook_installer)
-lib/app/cockpit/data/hooks/
+lib/app/gsh/data/hooks/
   hook_installer_base.dart          # materialização da CLI + append idempotente
   claude_hook_installer_impl.dart   # alvo ~/.claude/settings.json
   codex_hook_installer_impl.dart    # alvo ~/.codex/hooks.json
@@ -112,7 +112,7 @@ necessário.
   `config.toml`, com `trusted_hash = "sha256:…"` sobre o JSON canônico da
   identidade normalizada do handler. Como deriva da config e não do binário,
   computamos e gravamos junto — sem interação do usuário.
-- Campos extras no handler (nosso marcador `_cockpit`) são ignorados pelo
+- Campos extras no handler (nosso marcador `_gsh`) são ignorados pelo
   parser e **não** entram no hash.
 - Ciclo observado numa sessão real: `SessionStart` → `UserPromptSubmit` →
   `PreToolUse` (`tool_name: "Bash"`) → `PostToolUse` → `Stop` → `SessionEnd`.
@@ -167,11 +167,11 @@ Claude segue normal.
 1. `bootstrapper.dart` chama os dois instaladores (falha de um não impede o
    outro).
 2. E2E manual, com build `.debug` (bundle id isolado, memória
-   `project_cockpit_debug_flavor`): abrir aba, rodar `codex`, mandar um prompt
+   `project_gsh_debug_flavor`): abrir aba, rodar `codex`, mandar um prompt
    que use ferramenta e peça aprovação, e conferir na aba: spinner ao enviar,
    badge de "precisa de ação" na aprovação, chime/notificação no fim do turno,
    indicador limpo ao sair.
-3. Conferir que uma sessão `codex` **fora** do Cockpit não emite nada (gate por
+3. Conferir que uma sessão `codex` **fora** do GSH não emite nada (gate por
    env).
 
 **Aceite**: os quatro estados observados numa sessão real de Codex, e o Claude
@@ -179,7 +179,7 @@ sem regressão na mesma build.
 
 ### Wave 4 — Documentação
 
-1. Seção no `CLAUDE.md` do cockpit (ou em `docs/`) descrevendo que o status de
+1. Seção no `CLAUDE.md` do gsh (ou em `docs/`) descrevendo que o status de
    turno cobre Claude Code **e** Codex CLI, e onde cada arquivo de config mora.
 2. Nota no CHANGELOG na release que levar isso (em inglês, user-facing).
 
@@ -191,7 +191,7 @@ sem regressão na mesma build.
 - [x] Wave 2: instalador genérico + `CodexHookInstallerImpl`, idempotente
 - [x] Wave 3: instalação no boot
 - [ ] Wave 3: E2E dos quatro estados numa aba do app **(a testar)**
-- [ ] Wave 3: sessão de Codex fora do Cockpit não emite status **(a testar)**
+- [ ] Wave 3: sessão de Codex fora do GSH não emite status **(a testar)**
 - [x] Wave 4: documentação (`turn-status-hooks.md`)
 - [ ] Wave 4: CHANGELOG — a seção é escrita no `/deploy` (o guard reprova
       `## [Unreleased]` no topo, então não dá pra adiantar aqui)

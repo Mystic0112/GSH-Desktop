@@ -1,10 +1,10 @@
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.14)
-project(cockpit LANGUAGES CXX)
+project(gsh LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "cockpit")
+set(BINARY_NAME "gsh")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.
@@ -97,36 +97,36 @@ if(PLUGIN_BUNDLED_LIBRARIES)
     COMPONENT Runtime)
 endif()
 
-# === cockpit-hook helper (status de turno do claude nas abas) ===
+# === gsh-hook helper (status de turno do claude nas abas) ===
 # Compila o helper que o claude invoca nos hooks e o instala ao lado do binário
 # (o Inno empacota o bundle inteiro). Em runtime o ClaudeHookInstaller o extrai
-# pra ~/.cockpit/bin. Equivale ao Run Script phase do macOS (build_hook.sh).
-set(COCKPIT_HOOK_SRC "${CMAKE_SOURCE_DIR}/../tool/cockpit_hook.dart")
-set(COCKPIT_HOOK_EXE "${CMAKE_BINARY_DIR}/cockpit-hook.exe")
+# pra ~/.gsh/bin. Equivale ao Run Script phase do macOS (build_hook.sh).
+set(GSH_HOOK_SRC "${CMAKE_SOURCE_DIR}/../tool/gsh_hook.dart")
+set(GSH_HOOK_EXE "${CMAKE_BINARY_DIR}/gsh-hook.exe")
 if(DEFINED ENV{FLUTTER_ROOT})
   set(DART_EXE "$ENV{FLUTTER_ROOT}/bin/dart.bat")
 else()
   set(DART_EXE "dart")
 endif()
 add_custom_command(
-  OUTPUT "${COCKPIT_HOOK_EXE}"
-  COMMAND "${DART_EXE}" compile exe "${COCKPIT_HOOK_SRC}" -o "${COCKPIT_HOOK_EXE}"
-  DEPENDS "${COCKPIT_HOOK_SRC}"
-  COMMENT "Compilando cockpit-hook.exe"
+  OUTPUT "${GSH_HOOK_EXE}"
+  COMMAND "${DART_EXE}" compile exe "${GSH_HOOK_SRC}" -o "${GSH_HOOK_EXE}"
+  DEPENDS "${GSH_HOOK_SRC}"
+  COMMENT "Compilando gsh-hook.exe"
   VERBATIM)
-add_custom_target(cockpit_hook ALL DEPENDS "${COCKPIT_HOOK_EXE}")
-install(PROGRAMS "${COCKPIT_HOOK_EXE}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
+add_custom_target(gsh_hook ALL DEPENDS "${GSH_HOOK_EXE}")
+install(PROGRAMS "${GSH_HOOK_EXE}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
   COMPONENT Runtime)
 
-# === cockpit CLI (CLI interna: send/send-key/list-panes) ===
-# Compila a CLI como `cockpit-cli.exe` (nome distinto do runner) e a instala ao
+# === gsh CLI (CLI interna: send/send-key/list-panes) ===
+# Compila a CLI como `gsh-cli.exe` (nome distinto do runner) e a instala ao
 # lado do binário. Em runtime o ClaudeHookInstaller a materializa como
-# ~/.cockpit/bin/cockpit.exe. Equivale ao Run Script phase do macOS (build_cli.sh).
-# === cli/ → cockpit-cli (CLI interna em Rust, com o hook como subcomando) ===
-# A CLI absorveu o antigo helper `cockpit-hook`: `cockpit hook` faz o mesmo
+# ~/.gsh/bin/gsh.exe. Equivale ao Run Script phase do macOS (build_cli.sh).
+# === cli/ → gsh-cli (CLI interna em Rust, com o hook como subcomando) ===
+# A CLI absorveu o antigo helper `gsh-hook`: `gsh hook` faz o mesmo
 # papel. Rust porque o `dart compile exe` sai de UMA arquitetura, não
 # cross-compila e não sobrevive ao `lipo` — ver macos/build_cli.sh.
-set(COCKPIT_CLI_CRATE "${CMAKE_SOURCE_DIR}/../cli")
+set(GSH_CLI_CRATE "${CMAKE_SOURCE_DIR}/../cli")
 # O PATH do processo que roda o CMake nem sempre traz o `cargo` (IDE/launcher
 # não herda o shell de login), então a instalação padrão do rustup entra como
 # hint — mesma resolução do `resolve_cargo` do macos/build_cli.sh. Falhar aqui,
@@ -140,29 +140,29 @@ endif()
 # `build.rs` entra na lista: é ele que assa o flavor no binário, e uma
 # mudança lá não mexe em `src/` — sem isto o CMake daria a CLI por
 # atualizada. Mesma classe do glob do servidor logo abaixo.
-file(GLOB_RECURSE COCKPIT_CLI_SOURCES CONFIGURE_DEPENDS
-  "${COCKPIT_CLI_CRATE}/src/*.rs" "${COCKPIT_CLI_CRATE}/text/*"
-  "${COCKPIT_CLI_CRATE}/build.rs")
-set(COCKPIT_CLI_BUILT "${COCKPIT_CLI_CRATE}/target/release/cockpit.exe")
-set(COCKPIT_CLI_EXE "${CMAKE_BINARY_DIR}/cockpit-cli.exe")
+file(GLOB_RECURSE GSH_CLI_SOURCES CONFIGURE_DEPENDS
+  "${GSH_CLI_CRATE}/src/*.rs" "${GSH_CLI_CRATE}/text/*"
+  "${GSH_CLI_CRATE}/build.rs")
+set(GSH_CLI_BUILT "${GSH_CLI_CRATE}/target/release/gsh.exe")
+set(GSH_CLI_EXE "${CMAKE_BINARY_DIR}/gsh-cli.exe")
 # Flavor assado no binário (ver cli/build.rs): decide qual socket a CLI procura
-# primeiro quando roda fora de um terminal do Cockpit.
+# primeiro quando roda fora de um terminal do GSH.
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  set(COCKPIT_CLI_FLAVOR "debug")
+  set(GSH_CLI_FLAVOR "debug")
 else()
-  set(COCKPIT_CLI_FLAVOR "release")
+  set(GSH_CLI_FLAVOR "release")
 endif()
 add_custom_command(
-  OUTPUT "${COCKPIT_CLI_EXE}"
-  COMMAND "${CMAKE_COMMAND}" -E env "COCKPIT_FLAVOR=${COCKPIT_CLI_FLAVOR}"
+  OUTPUT "${GSH_CLI_EXE}"
+  COMMAND "${CMAKE_COMMAND}" -E env "GSH_FLAVOR=${GSH_CLI_FLAVOR}"
           "${CARGO_EXECUTABLE}" build --release
-          --manifest-path "${COCKPIT_CLI_CRATE}/Cargo.toml"
-  COMMAND "${CMAKE_COMMAND}" -E copy "${COCKPIT_CLI_BUILT}" "${COCKPIT_CLI_EXE}"
-  DEPENDS ${COCKPIT_CLI_SOURCES} "${COCKPIT_CLI_CRATE}/Cargo.toml"
-  COMMENT "Compilando cockpit-cli.exe (Rust)"
+          --manifest-path "${GSH_CLI_CRATE}/Cargo.toml"
+  COMMAND "${CMAKE_COMMAND}" -E copy "${GSH_CLI_BUILT}" "${GSH_CLI_EXE}"
+  DEPENDS ${GSH_CLI_SOURCES} "${GSH_CLI_CRATE}/Cargo.toml"
+  COMMENT "Compilando gsh-cli.exe (Rust)"
   VERBATIM)
-add_custom_target(cockpit_cli ALL DEPENDS "${COCKPIT_CLI_EXE}")
-install(PROGRAMS "${COCKPIT_CLI_EXE}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
+add_custom_target(gsh_cli ALL DEPENDS "${GSH_CLI_EXE}")
+install(PROGRAMS "${GSH_CLI_EXE}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
   COMPONENT Runtime)
 
 # === ConPTY moderno (OpenConsole embarcado) ===
@@ -171,10 +171,10 @@ install(PROGRAMS "${COCKPIT_CLI_EXE}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
 # (`?1049h`) nem modos de mouse ao terminal e desalinha o cursor na repintura
 # do PSReadLine. Embarcamos `conpty.dll` + `OpenConsole.exe` do pacote oficial
 # `Microsoft.Windows.Console.ConPTY` (o mesmo que o Windows Terminal, WezTerm e
-# Alacritty embarcam); o `cockpit_pty.dll` carrega o `conpty.dll` da própria
-# pasta e cai no kernel32 se faltar (ver cockpit_pty_win.c). Os dois arquivos
-# precisam ficar na MESMA pasta do `cockpit_pty.dll`: no bundle do sidecar
-# (`bin/`) e ao lado do `cockpit.exe` (fallback in-process).
+# Alacritty embarcam); o `gsh_pty.dll` carrega o `conpty.dll` da própria
+# pasta e cai no kernel32 se faltar (ver gsh_pty_win.c). Os dois arquivos
+# precisam ficar na MESMA pasta do `gsh_pty.dll`: no bundle do sidecar
+# (`bin/`) e ao lado do `gsh.exe` (fallback in-process).
 set(CONPTY_VERSION "1.25.260930003")
 set(CONPTY_SHA256 "02b07b349af66d801159bdf9e440d4a1ce78bb951f37fc8609731665afdae7ee")
 set(CONPTY_NUPKG "${CMAKE_BINARY_DIR}/conpty/microsoft.windows.console.conpty.${CONPTY_VERSION}.nupkg")
@@ -201,11 +201,11 @@ if(NOT EXISTS "${CONPTY_DLL}" OR NOT EXISTS "${CONPTY_OPENCONSOLE}")
     message(FATAL_ERROR "Falha ao extrair ${CONPTY_NUPKG}")
   endif()
 endif()
-# Ao lado do cockpit.exe (mesma pasta do cockpit_pty.dll do plugin).
+# Ao lado do gsh.exe (mesma pasta do gsh_pty.dll do plugin).
 install(FILES "${CONPTY_DLL}" "${CONPTY_OPENCONSOLE}"
   DESTINATION "${INSTALL_BUNDLE_LIB_DIR}" COMPONENT Runtime)
 
-# === cockpit-server (sidecar) ===
+# === gsh-server (sidecar) ===
 # Bundle `bin/` + `lib/` do servidor headless, instalado AO LADO do executável
 # (o Inno empacota o bundle inteiro). Equivale ao Run Script do macOS
 # (build_server.sh); sem isto o app cai no fallback in-process e o Windows roda
@@ -213,50 +213,50 @@ install(FILES "${CONPTY_DLL}" "${CONPTY_OPENCONSOLE}"
 #
 # `dart build cli` NÃO cross-compila, mas aqui não é problema: o runner do CI é
 # x64 nativo, a única arquitetura que publicamos no Windows.
-set(COCKPIT_SERVER_PKG "${CMAKE_SOURCE_DIR}/../packages/cockpit_server")
-set(COCKPIT_SERVER_DIR "${CMAKE_BINARY_DIR}/server-bundle")
-set(COCKPIT_SERVER_EXE "${COCKPIT_SERVER_DIR}/bin/cockpit-server.exe")
+set(GSH_SERVER_PKG "${CMAKE_SOURCE_DIR}/../packages/gsh_server")
+set(GSH_SERVER_DIR "${CMAKE_BINARY_DIR}/server-bundle")
+set(GSH_SERVER_EXE "${GSH_SERVER_DIR}/bin/gsh-server.exe")
 # O servidor NÃO é só o pacote dele: depende dos irmãos por `path:`
-# (cockpit_core, cockpit_engine, cockpit_protocol). Enquanto o glob só olhava
-# `cockpit_server/`, editar o engine não invalidava nada e o CMake dava o
-# bundle por atualizado — o build saía com um `cockpit-server.exe` VELHO, em
+# (gsh_core, gsh_engine, gsh_protocol). Enquanto o glob só olhava
+# `gsh_server/`, editar o engine não invalidava nada e o CMake dava o
+# bundle por atualizado — o build saía com um `gsh-server.exe` VELHO, em
 # silêncio. Aconteceu com a correção do login shell em host Windows.
-file(GLOB_RECURSE COCKPIT_SERVER_SOURCES CONFIGURE_DEPENDS
-  "${COCKPIT_SERVER_PKG}/bin/*.dart" "${COCKPIT_SERVER_PKG}/lib/*.dart"
-  "${COCKPIT_SERVER_PKG}/../cockpit_core/lib/*.dart"
-  "${COCKPIT_SERVER_PKG}/../cockpit_engine/lib/*.dart"
-  "${COCKPIT_SERVER_PKG}/../cockpit_protocol/lib/*.dart")
+file(GLOB_RECURSE GSH_SERVER_SOURCES CONFIGURE_DEPENDS
+  "${GSH_SERVER_PKG}/bin/*.dart" "${GSH_SERVER_PKG}/lib/*.dart"
+  "${GSH_SERVER_PKG}/../gsh_core/lib/*.dart"
+  "${GSH_SERVER_PKG}/../gsh_engine/lib/*.dart"
+  "${GSH_SERVER_PKG}/../gsh_protocol/lib/*.dart")
 add_custom_command(
-  OUTPUT "${COCKPIT_SERVER_EXE}"
+  OUTPUT "${GSH_SERVER_EXE}"
   # Bundle limpo: `dart build cli` recusa diretório de saída já existente.
-  COMMAND "${CMAKE_COMMAND}" -E rm -rf "${COCKPIT_SERVER_DIR}" "${CMAKE_BINARY_DIR}/server-out"
-  COMMAND "${CMAKE_COMMAND}" -E chdir "${COCKPIT_SERVER_PKG}" "${DART_EXE}" pub get
-  COMMAND "${CMAKE_COMMAND}" -E chdir "${COCKPIT_SERVER_PKG}" "${DART_EXE}" build cli
+  COMMAND "${CMAKE_COMMAND}" -E rm -rf "${GSH_SERVER_DIR}" "${CMAKE_BINARY_DIR}/server-out"
+  COMMAND "${CMAKE_COMMAND}" -E chdir "${GSH_SERVER_PKG}" "${DART_EXE}" pub get
+  COMMAND "${CMAKE_COMMAND}" -E chdir "${GSH_SERVER_PKG}" "${DART_EXE}" build cli
           -o "${CMAKE_BINARY_DIR}/server-out"
   # `dart build cli` gera <out>/bundle/{bin,lib}; o exe sai com underscore.
   COMMAND "${CMAKE_COMMAND}" -E copy_directory
-          "${CMAKE_BINARY_DIR}/server-out/bundle" "${COCKPIT_SERVER_DIR}"
+          "${CMAKE_BINARY_DIR}/server-out/bundle" "${GSH_SERVER_DIR}"
   COMMAND "${CMAKE_COMMAND}" -E rename
-          "${COCKPIT_SERVER_DIR}/bin/cockpit_server.exe" "${COCKPIT_SERVER_EXE}"
+          "${GSH_SERVER_DIR}/bin/gsh_server.exe" "${GSH_SERVER_EXE}"
   # A lib do PTY vai ao LADO do exe do servidor: é o 2º candidato do
-  # openPtyDylib (o 1º é a env COCKPIT_PTY_DYLIB, que o sidecar preenche).
+  # openPtyDylib (o 1º é a env GSH_PTY_DYLIB, que o sidecar preenche).
   # Reusa o artefato do plugin em vez de compilar o mesmo .c duas vezes.
   COMMAND "${CMAKE_COMMAND}" -E copy
-          "$<TARGET_FILE:cockpit_pty>" "${COCKPIT_SERVER_DIR}/bin/"
-  # ConPTY moderno ao lado do cockpit_pty.dll do sidecar (ver bloco acima).
+          "$<TARGET_FILE:gsh_pty>" "${GSH_SERVER_DIR}/bin/"
+  # ConPTY moderno ao lado do gsh_pty.dll do sidecar (ver bloco acima).
   COMMAND "${CMAKE_COMMAND}" -E copy
-          "${CONPTY_DLL}" "${CONPTY_OPENCONSOLE}" "${COCKPIT_SERVER_DIR}/bin/"
+          "${CONPTY_DLL}" "${CONPTY_OPENCONSOLE}" "${GSH_SERVER_DIR}/bin/"
   # CLI embarcada ao lado do servidor (plano 60, Wave G): o servidor instala o
   # hook do agente apontando pra ela, e a acha na mesma pasta bin/.
   COMMAND "${CMAKE_COMMAND}" -E copy
-          "${COCKPIT_CLI_EXE}" "${COCKPIT_SERVER_DIR}/bin/cockpit.exe"
-  DEPENDS ${COCKPIT_SERVER_SOURCES} "${COCKPIT_SERVER_PKG}/pubspec.yaml"
-          "${COCKPIT_CLI_EXE}" cockpit_pty
-  COMMENT "Compilando cockpit-server (bundle do sidecar)"
+          "${GSH_CLI_EXE}" "${GSH_SERVER_DIR}/bin/gsh.exe"
+  DEPENDS ${GSH_SERVER_SOURCES} "${GSH_SERVER_PKG}/pubspec.yaml"
+          "${GSH_CLI_EXE}" gsh_pty
+  COMMENT "Compilando gsh-server (bundle do sidecar)"
   VERBATIM)
-add_custom_target(cockpit_server ALL DEPENDS "${COCKPIT_SERVER_EXE}")
-install(DIRECTORY "${COCKPIT_SERVER_DIR}/"
-  DESTINATION "${INSTALL_BUNDLE_LIB_DIR}/cockpit-server-bundle"
+add_custom_target(gsh_server ALL DEPENDS "${GSH_SERVER_EXE}")
+install(DIRECTORY "${GSH_SERVER_DIR}/"
+  DESTINATION "${INSTALL_BUNDLE_LIB_DIR}/gsh-server-bundle"
   USE_SOURCE_PERMISSIONS COMPONENT Runtime)
 
 # Copy the native assets provided by the build.dart from all packages.

@@ -1,8 +1,8 @@
-import 'package:cockpit/app/core/ui/themes/theme_codec.dart';
+import 'package:gsh_desktop/app/core/ui/themes/theme_codec.dart';
 import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/widgets.dart';
 
-/// Tokens de cor do Cockpit — espelham `tokens.css` do design (dark pro-tool,
+/// Tokens de cor do GSH — espelham `tokens.css` do design (dark pro-tool,
 /// accent azul Remote Pi). Lidos via `context.colors.<token>`.
 @immutable
 class AppColors {
@@ -193,7 +193,7 @@ class AppColors {
     'shadow': encodeHexColor(shadow),
   };
 
-  /// Igualdade por valor. Não é conveniência de teste: o [CockpitTheme] decide
+  /// Igualdade por valor. Não é conveniência de teste: o [GshTheme] decide
   /// se repinta a árvore comparando estes objetos, e `buildTokens` devolve uma
   /// instância **nova** a cada build da raiz. Sem `==`, qualquer rebuild da raiz
   /// (troca de aba focada, estado do editor) invalidava todo consumidor de

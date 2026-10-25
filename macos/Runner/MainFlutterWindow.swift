@@ -41,7 +41,7 @@ class MainFlutterWindow: NSWindow {
   /// `runModal` pra não travar a platform/UI thread mesclada do embedder.
   private func registerNativeDialogs(_ controller: FlutterViewController) {
     let channel = FlutterMethodChannel(
-      name: "cockpit/native_dialogs",
+      name: "gsh/native_dialogs",
       binaryMessenger: controller.engine.binaryMessenger
     )
     channel.setMethodCallHandler { [weak self] call, result in

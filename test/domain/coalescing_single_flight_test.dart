@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cockpit/app/cockpit/domain/utils/coalescing_single_flight.dart';
+import 'package:gsh_desktop/app/gsh/domain/utils/coalescing_single_flight.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

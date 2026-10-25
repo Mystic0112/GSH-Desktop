@@ -1,6 +1,6 @@
-import 'package:cockpit/app/core/domain/entities/setup_check.dart';
+import 'package:gsh_desktop/app/core/domain/entities/setup_check.dart';
 
-/// Permissões do SO necessárias ao Cockpit (macOS first). Contrato no domínio;
+/// Permissões do SO necessárias ao GSH (macOS first). Contrato no domínio;
 /// a impl (plugin de notificação + heurística de disco) mora em `data/`.
 ///
 /// Em SOs onde a permissão não existe/não se aplica, os métodos devolvem

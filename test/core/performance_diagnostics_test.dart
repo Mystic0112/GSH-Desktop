@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/data/diagnostics/performance_diagnostics.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/performance_diagnostics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

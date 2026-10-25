@@ -1,12 +1,12 @@
 // Wave 2 (plano 58) — E2E MANUAL do transporte SSH. Requer um host real
 // alcançável por `ssh <target>` sem senha interativa (chave/agent).
 //
-// Uso (da pasta cockpit/):
+// Uso (da pasta gsh/):
 //   ./tool/build-sidecar.sh
 //   dart run tool/wave0/wave2_e2e.dart jacob@imac.local
 //
 // O script faz o fluxo completo do RemoteHostConnector, standalone:
-// 1. instala o cockpit-server no host via ssh (binário local → stdin → arquivo)
+// 1. instala o gsh-server no host via ssh (binário local → stdin → arquivo)
 // 2. inicia o servidor remoto (nohup, --exit-on-idle 0)
 // 3. abre túnel UDS→UDS e fala o protocolo: shell remoto, eco, detach,
 //    reattach com scrollback (a sessão sobrevive à queda do túnel).
@@ -15,8 +15,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cockpit_core/cockpit_core.dart';
-import 'package:cockpit_remote/cockpit_remote.dart';
+import 'package:gsh_core/gsh_core.dart';
+import 'package:gsh_remote/gsh_remote.dart';
 
 Future<void> main(List<String> args) async {
   if (args.isEmpty) {
@@ -25,8 +25,8 @@ Future<void> main(List<String> args) async {
   }
   final target = args.first;
   final root = Directory.current.path;
-  final binary = '$root/build/wave0/cockpit-server';
-  final dylib = '$root/build/wave0/libcockpit_pty.dylib';
+  final binary = '$root/build/wave0/gsh-server';
+  final dylib = '$root/build/wave0/libgsh_pty.dylib';
   if (!File(binary).existsSync()) {
     stderr.writeln('rode ./tool/build-sidecar.sh antes');
     exit(2);
@@ -36,8 +36,8 @@ Future<void> main(List<String> args) async {
   Process? tunnel;
   try {
     // 1. Install server via ssh (mesmo mecanismo do RemoteHostConnector).
-    await _push(target, binary, '~/.cockpit/bin/cockpit-server');
-    await _push(target, dylib, '~/.cockpit/bin/libcockpit_pty.dylib');
+    await _push(target, binary, '~/.gsh/bin/gsh-server');
+    await _push(target, dylib, '~/.gsh/bin/libgsh_pty.dylib');
     _check('install server (binário + dylib via ssh)', true);
 
     // 2. (Re)inicia o servidor remoto.
@@ -46,9 +46,9 @@ Future<void> main(List<String> args) async {
     await _ssh(target, 'pkill -f "[c]ockpit-server --socket" || true');
     await _ssh(
       target,
-      'COCKPIT_PTY_DYLIB=\$HOME/.cockpit/bin/libcockpit_pty.dylib '
-      'nohup \$HOME/.cockpit/bin/cockpit-server '
-      '--socket \$HOME/.cockpit/cockpit-server.sock --exit-on-idle 0 '
+      'GSH_PTY_DYLIB=\$HOME/.gsh/bin/libgsh_pty.dylib '
+      'nohup \$HOME/.gsh/bin/gsh-server '
+      '--socket \$HOME/.gsh/gsh-server.sock --exit-on-idle 0 '
       '>/dev/null 2>&1 & echo ok',
     );
     _check('servidor remoto iniciado', true);
@@ -62,7 +62,7 @@ Future<void> main(List<String> args) async {
       r'printf %s "$HOME"',
     ]);
     final remoteHome = (homeResult.stdout as String).trim();
-    final remoteSock = '$remoteHome/.cockpit/cockpit-server.sock';
+    final remoteSock = '$remoteHome/.gsh/gsh-server.sock';
     final localSock =
         '${Directory.systemTemp.path}/wave2-${DateTime.now().millisecondsSinceEpoch}.sock';
     tunnel = await Process.start('ssh', [
@@ -175,7 +175,7 @@ Future<void> _push(String target, String local, String remote) async {
     '-o',
     'BatchMode=yes',
     target,
-    'mkdir -p ~/.cockpit/bin && cat > $remote && chmod +x $remote',
+    'mkdir -p ~/.gsh/bin && cat > $remote && chmod +x $remote',
   ]);
   process.stdin.add(await File(local).readAsBytes());
   await process.stdin.close();

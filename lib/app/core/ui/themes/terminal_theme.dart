@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
-import 'package:cockpit/app/core/terminal/xterm/xterm.dart';
-import 'package:cockpit/app/core/ui/themes/theme_codec.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/xterm.dart';
+import 'package:gsh_desktop/app/core/ui/themes/theme_codec.dart';
 
 /// Tema **dark** do `TerminalView` (fundo `#18181B`, cursor accent, paleta ANSI
 /// dark). O fundo e a paleta de 16 cores são do emulador (nossos) — o oh-my-zsh
 /// só emite os códigos ANSI do prompt/`ls`; quem pinta é este tema.
-const TerminalTheme cockpitTerminalThemeDark = TerminalTheme(
+const TerminalTheme gshTerminalThemeDark = TerminalTheme(
   cursor: Color(0xFF2F6FF0), // accent
   selection: Color(0x402F6FF0),
   foreground: Color(0xFFECECEF), // text
@@ -34,7 +34,7 @@ const TerminalTheme cockpitTerminalThemeDark = TerminalTheme(
 /// Tema **light** do terminal — fundo claro + paleta ANSI escurecida (estilo
 /// GitHub light), legível sobre branco. Cores claras (yellow/white) viram tons
 /// mais escuros pra não sumirem; prompts do oh-my-zsh ficam legíveis.
-const TerminalTheme cockpitTerminalThemeLight = TerminalTheme(
+const TerminalTheme gshTerminalThemeLight = TerminalTheme(
   cursor: Color(0xFF2F6FF0), // accent
   selection: Color(0x222F6FF0),
   foreground: Color(0xFF1A1A1F), // text (dark)
@@ -65,10 +65,10 @@ const TerminalTheme cockpitTerminalThemeLight = TerminalTheme(
 /// Fallback: só é o caminho certo fora da árvore com tema instalado. Dentro da
 /// UI use `context.terminalTheme`, que respeita o tema ativo (built-in **ou**
 /// custom) em vez de assumir a paleta padrão.
-TerminalTheme cockpitTerminalThemeFor(Brightness brightness) =>
+TerminalTheme gshTerminalThemeFor(Brightness brightness) =>
     brightness == Brightness.dark
-    ? cockpitTerminalThemeDark
-    : cockpitTerminalThemeLight;
+    ? gshTerminalThemeDark
+    : gshTerminalThemeLight;
 
 /// Lê a paleta do terminal de [json], herdando de [base] o não declarado.
 ///

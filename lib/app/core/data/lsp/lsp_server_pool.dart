@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/lsp/lsp_command.dart';
-import 'package:cockpit/app/core/data/lsp/lsp_launchers.dart';
-import 'package:cockpit/app/core/data/lsp/lsp_text_edit.dart';
-import 'package:cockpit/app/core/data/lsp/project_root_finder.dart';
-import 'package:cockpit/app/core/domain/contracts/lsp_client.dart';
-import 'package:cockpit/app/core/domain/entities/lsp_diagnostic.dart';
-import 'package:cockpit/app/core/domain/entities/lsp_location.dart';
-import 'package:cockpit/app/core/domain/entities/lsp_semantic_tokens.dart';
-import 'package:cockpit/app/core/domain/exceptions/lsp_error.dart';
-import 'package:cockpit/app/core/domain/result.dart';
-import 'package:cockpit/app/core/utils/executable_resolver.dart';
+import 'package:gsh_desktop/app/core/data/lsp/lsp_command.dart';
+import 'package:gsh_desktop/app/core/data/lsp/lsp_launchers.dart';
+import 'package:gsh_desktop/app/core/data/lsp/lsp_text_edit.dart';
+import 'package:gsh_desktop/app/core/data/lsp/project_root_finder.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/lsp_client.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_diagnostic.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_location.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_semantic_tokens.dart';
+import 'package:gsh_desktop/app/core/domain/exceptions/lsp_error.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/utils/executable_resolver.dart';
 import 'package:flutter/foundation.dart';
 
 /// Pool **global do app** de language servers, chaveado por `(linguagem, raiz)`.
@@ -93,7 +93,7 @@ class LspServerPool {
   /// Raiz do servidor que deve atender [path].
   ///
   /// O walk-up (`ProjectRootFinder`) resolve o caso do monorepo: um arquivo em
-  /// `mono/cockpit/lib/x.dart` é atendido pelo servidor de `mono/cockpit/`
+  /// `mono/gsh/lib/x.dart` é atendido pelo servidor de `mono/gsh/`
   /// (onde está o `pubspec.yaml`), não pelo de `mono/`. Mas o mesmo walk-up,
   /// aplicado a um arquivo **fora do workspace** — uma classe do SDK Flutter
   /// aberta via go-to-definition, ou um pacote do pub-cache — acha o

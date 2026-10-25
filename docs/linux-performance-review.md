@@ -5,7 +5,7 @@
 - Arch/Omarchy 4.0.3, kernel 7.2.3, Hyprland 0.56.2 on Wayland.
 - Intel i5-9300H (4C/8T), 31 GiB RAM, 62 GiB combined zram/swap, NVMe.
 - Intel UHD 630 plus NVIDIA GTX 1650 Max-Q, NVIDIA 610.57.04.
-- Restored Cockpit state: 31 layouts, 47 tabs, 35 terminal sessions and 12
+- Restored GSH state: 31 layouts, 47 tabs, 35 terminal sessions and 12
   project records. State/scrollback size is small and is not a disk-capacity
   bottleneck.
 
@@ -24,7 +24,7 @@
 4. Scrollback was bounded, but trimming converted and copied up to 2.5 million
    UTF-16 code units on the UI isolate.
 5. The graphical session exports NVIDIA vendor/offload variables globally even
-   though Cockpit's installed launcher describes Intel as the default. Recent
+   though GSH's installed launcher describes Intel as the default. Recent
    debug cores terminate in `libnvidia-eglcore.so`; another release core is in
    Flutter's GTK loop with an NVIDIA EGL thread. The journal also records NVRM
    heap/channel allocation failures while system memory pressure was low.
@@ -43,7 +43,7 @@
   overflow measurement.
 - Chunked scrollback retention without full-buffer copies during trimming.
 - Native pre-GTK hybrid-GPU policy: integrated graphics by default, inherited
-  NVIDIA variables removed process-locally, and `COCKPIT_USE_NVIDIA=1` opt-in.
+  NVIDIA variables removed process-locally, and `GSH_USE_NVIDIA=1` opt-in.
 - Opt-in fixed-schema performance telemetry and a deterministic 40-terminal PTY
   scheduler workload.
 

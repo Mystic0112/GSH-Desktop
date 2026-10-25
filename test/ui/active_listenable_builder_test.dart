@@ -1,4 +1,4 @@
-import 'package:cockpit/app/cockpit/ui/widgets/active_listenable_builder.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/active_listenable_builder.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

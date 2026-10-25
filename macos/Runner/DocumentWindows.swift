@@ -11,7 +11,7 @@ import desktop_multi_window
 enum DocumentWindowChannel {
   static func register(_ controller: FlutterViewController) {
     let channel = FlutterMethodChannel(
-      name: "cockpit/document_window",
+      name: "gsh/document_window",
       binaryMessenger: controller.engine.binaryMessenger
     )
     channel.setMethodCallHandler { [weak controller] call, result in
@@ -43,7 +43,7 @@ enum DocumentWindowChannel {
 }
 
 /// Arquivos abertos **pelo sistema** (duplo clique no Finder, "Abrir com",
-/// `open -a Cockpit x.kanban`): o AppDelegate recebe `openFiles` e repassa ao
+/// `open -a GSH x.kanban`): o AppDelegate recebe `openFiles` e repassa ao
 /// Dart, que abre cada um numa janela de documento. Antes de o Dart estar
 /// pronto (launch a frio por duplo clique), os caminhos ficam em buffer e o
 /// Dart os puxa com `pull` assim que registra o handler.
@@ -56,7 +56,7 @@ final class OpenFilesChannel {
 
   func register(_ controller: FlutterViewController) {
     let channel = FlutterMethodChannel(
-      name: "cockpit/open_files",
+      name: "gsh/open_files",
       binaryMessenger: controller.engine.binaryMessenger
     )
     channel.setMethodCallHandler { [weak self] call, result in

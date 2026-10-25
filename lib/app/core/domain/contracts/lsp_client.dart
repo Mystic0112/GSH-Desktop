@@ -1,6 +1,6 @@
-import 'package:cockpit/app/core/domain/entities/lsp_diagnostic.dart';
-import 'package:cockpit/app/core/domain/exceptions/lsp_error.dart';
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_diagnostic.dart';
+import 'package:gsh_desktop/app/core/domain/exceptions/lsp_error.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 
 /// Como ligar um language server: o comando (binário + args) e o `languageId`
 /// LSP que o servidor atende. A tabela `lsp_launchers.dart` (Wave 2) produz uma

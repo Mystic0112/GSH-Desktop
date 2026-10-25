@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/db/db_connection_store_impl.dart';
-import 'package:cockpit/app/cockpit/domain/entities/db_connection.dart';
+import 'package:gsh_desktop/app/gsh/data/db/db_connection_store_impl.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/db_connection.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Salvar uma conexão fazia ela pular de lugar: a gravação anexava a editada no
@@ -12,7 +12,7 @@ void main() {
   late Directory dir;
   const store = DbConnectionStoreImpl();
 
-  setUp(() => dir = Directory.systemTemp.createTempSync('cockpit-db-order'));
+  setUp(() => dir = Directory.systemTemp.createTempSync('gsh-db-order'));
   tearDown(() => dir.deleteSync(recursive: true));
 
   DbConnection conn(String name) =>
@@ -47,7 +47,7 @@ void main() {
     await store.save(dir.path, [conn('zebra'), conn('alfa')]);
 
     final json = jsonDecode(
-      File('${dir.path}/.cockpit/databases.json').readAsStringSync(),
+      File('${dir.path}/.gsh/databases.json').readAsStringSync(),
     );
     final nomes = [for (final e in json['databases'] as List) e['name']];
     // Sem isto, cada salvamento produzia um diff de reordenação no git.

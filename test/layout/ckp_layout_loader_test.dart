@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/layout/ckp_layout_loader.dart';
-import 'package:cockpit/app/cockpit/domain/entities/layout_spec.dart';
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/gsh/data/layout/ckp_layout_loader.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/layout_spec.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

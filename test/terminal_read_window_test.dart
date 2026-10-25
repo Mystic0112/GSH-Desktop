@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:cockpit/app/cockpit/ui/session/terminal_read_window.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/terminal_read_window.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:cockpit/app/core/terminal/xterm/xterm.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/xterm.dart';
 
 /// Sobe um Terminal e escreve N linhas numeradas (`L1`..`Ln`).
 Terminal _filled(int n) {

@@ -1,5 +1,5 @@
-import 'package:cockpit/app/cockpit/domain/entities/project.dart';
-import 'package:cockpit/app/cockpit/domain/services/layout_destinations.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/project.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/layout_destinations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Project _p(String id, String path, {String realmId = 'r1'}) => Project(
@@ -44,7 +44,7 @@ void main() {
     expect(layoutDestinationsFor('/home/j/app2/dev.ckp', projects), isEmpty);
   });
 
-  test('workspace sem pasta local (Cockpit sintético) nunca é destino', () {
+  test('workspace sem pasta local (GSH sintético) nunca é destino', () {
     final projects = [Project.systemTerminal()];
     expect(layoutDestinationsFor('/home/j/app/dev.ckp', projects), isEmpty);
   });

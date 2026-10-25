@@ -1,8 +1,8 @@
-import 'package:cockpit/app/core/terminal/xterm/xterm.dart';
-import 'package:cockpit/app/core/ui/themes/app_colors.dart';
-import 'package:cockpit/app/core/ui/themes/syntax_colors.dart';
-import 'package:cockpit/app/core/ui/themes/terminal_theme.dart';
-import 'package:cockpit/app/core/ui/themes/theme_codec.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/xterm.dart';
+import 'package:gsh_desktop/app/core/ui/themes/app_colors.dart';
+import 'package:gsh_desktop/app/core/ui/themes/syntax_colors.dart';
+import 'package:gsh_desktop/app/core/ui/themes/terminal_theme.dart';
+import 'package:gsh_desktop/app/core/ui/themes/theme_codec.dart';
 import 'package:flutter/widgets.dart';
 
 /// As três paletas de **um** brilho: a UI do app, o syntax do viewer e o
@@ -68,14 +68,14 @@ class ThemeVariant {
   };
 }
 
-/// Um tema completo do Cockpit: identidade + um variant por brilho.
+/// Um tema completo do GSH: identidade + um variant por brilho.
 ///
 /// Um tema pode trazer só um dos dois variants (um "tema dark" puro). Nesse
 /// caso [variantFor] devolve o que existe para qualquer brilho — melhor um tema
 /// aplicado fora do brilho pedido do que um Frankenstein meio-claro-meio-escuro.
 @immutable
-class CockpitThemeSpec {
-  const CockpitThemeSpec({
+class GshThemeSpec {
+  const GshThemeSpec({
     required this.id,
     required this.name,
     this.author,
@@ -84,7 +84,7 @@ class CockpitThemeSpec {
     this.light,
   }) : assert(dark != null || light != null, 'tema sem nenhum variant');
 
-  /// Id estável, namespaced (`cockpit.dark`, `acme.midnight`). É o que fica
+  /// Id estável, namespaced (`gsh.dark`, `acme.midnight`). É o que fica
   /// persistido nas preferências — renomear o `name` não perde a escolha.
   final String id;
   final String name;
@@ -107,10 +107,10 @@ class CockpitThemeSpec {
   /// Parseia um tema em JSON. [resolveBase] resolve o `extends` para o tema
   /// herdado (tipicamente o registry dos built-in); quando o arquivo não declara
   /// `extends`, a base é [fallbackBase].
-  factory CockpitThemeSpec.fromJson(
+  factory GshThemeSpec.fromJson(
     Map<String, Object?> json, {
-    required CockpitThemeSpec? Function(String id)? resolveBase,
-    required CockpitThemeSpec fallbackBase,
+    required GshThemeSpec? Function(String id)? resolveBase,
+    required GshThemeSpec fallbackBase,
   }) {
     final id = json['id'];
     if (id is! String || id.trim().isEmpty) {
@@ -172,7 +172,7 @@ class CockpitThemeSpec {
         path: 'variants',
       );
     }
-    return CockpitThemeSpec(
+    return GshThemeSpec(
       id: id.trim(),
       name: name.trim(),
       author: json['author'] is String ? json['author'] as String : null,
@@ -206,4 +206,4 @@ class CockpitThemeSpec {
 /// propósito — quem escreve tema quer o autocomplete do formato atual, e o
 /// `$schema` não participa do parse (o app ignora o campo ao ler o tema).
 const String themeSchemaUrl =
-    'https://raw.githubusercontent.com/jacobaraujo7/remote_pi/main/cockpit/docs/theme.schema.json';
+    'https://raw.githubusercontent.com/jacobaraujo7/remote_pi/main/gsh/docs/theme.schema.json';

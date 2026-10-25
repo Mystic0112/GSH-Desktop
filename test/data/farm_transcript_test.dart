@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/farm/claude_transcript_farm_source.dart';
-import 'package:cockpit/app/cockpit/data/farm/transcript_tail.dart';
-import 'package:cockpit/app/cockpit/domain/entities/farm_loop.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/farm_viewmodel.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/claude_transcript_farm_source.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/transcript_tail.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Map<String, dynamic> _assistant(
@@ -74,6 +74,9 @@ void main() {
       expect(t.activity, FarmActivity.idle);
       expect(t.totalOutputTokens, 57);
       expect(t.contextTokens, 102);
+      // Gasto: entrada (2) e cache (100) também uma vez por mensagem.
+      expect(t.totalInputTokens, 4);
+      expect(t.totalCacheReadTokens, 200);
       expect(t.cwd, '/repo');
     });
 

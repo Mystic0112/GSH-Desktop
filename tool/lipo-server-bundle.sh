@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Junta a fatia x86_64 do cockpit-server (plano 58) ao bundle arm64 do host,
+# Junta a fatia x86_64 do gsh-server (plano 58) ao bundle arm64 do host,
 # deixando bin/ + lib/ utilizáveis nas DUAS arquiteturas. Necessário porque
 # `dart build cli` não cross-compila: cada arquitetura sai de um build próprio
 # (o CI monta o x64 num runner Intel). Sem isso, Mac Intel cai no fallback
@@ -9,25 +9,25 @@
 #   tool/lipo-server-bundle.sh <target-bundle> <x64-bundle> [sign-identity]
 #
 #   <target-bundle>  bundle arm64 a completar, in place (ex.: o do .app em
-#                    Resources/cockpit-server-bundle)
+#                    Resources/gsh-server-bundle)
 #   <x64-bundle>     bundle x86_64 vindo do runner Intel (bin/ + lib/)
 #   [sign-identity]  opcional; se dado, reassina cada Mach-O tocado (o lipo
 #                    invalida a assinatura anterior). Sem ela, o chamador assina.
 #
 # DUAS estratégias, e a diferença NÃO é estética:
 #
-# - dylibs e binários nativos (bin/cockpit, a CLI em Rust) viram Mach-O
+# - dylibs e binários nativos (bin/gsh, a CLI em Rust) viram Mach-O
 #   universais via `lipo -create`. É o caminho normal do macOS.
 #
-# - o executável do servidor (`bin/cockpit-server`) é um AOT do Dart, e AOT do
+# - o executável do servidor (`bin/gsh-server`) é um AOT do Dart, e AOT do
 #   Dart NÃO PODE ser lipado: o `dart build cli` anexa o snapshot ao fim do
 #   Mach-O, e dentro de um container fat o `dartaotruntime` não o encontra mais
 #   — ele passa a tratar o primeiro argumento como snapshot e morre com
 #   "<arg> is not an AOT snapshot", nas duas arquiteturas. Foi o que quebrou o
 #   sidecar (e o bootstrap remoto) da 1.28.0: o servidor nunca subia e todo
 #   terminal caía no PTY in-process depois de ~5,8s de backoff.
-#   Então ele sai do bundle como DOIS arquivos finos, `cockpit-server-arm64` e
-#   `cockpit-server-x64`, e quem escolhe é o runtime (ver
+#   Então ele sai do bundle como DOIS arquivos finos, `gsh-server-arm64` e
+#   `gsh-server-x64`, e quem escolhe é o runtime (ver
 #   `SidecarTerminalConnector.serverBinaryIn`).
 #
 # Idempotente: rodar duas vezes com o mesmo x64 dá o mesmo resultado.
@@ -41,7 +41,7 @@ IDENTITY="${3:-}"
 [ -d "$X64" ] || { echo "[lipo] x64 bundle não existe: $X64" >&2; exit 1; }
 
 # Executáveis AOT do Dart: fatias separadas, nunca fat (ver cabeçalho).
-AOT_EXES="cockpit-server"
+AOT_EXES="gsh-server"
 
 sign_if_asked() {
   [ -n "$IDENTITY" ] || return 0
@@ -128,7 +128,7 @@ is_aot() {
 
 for e in $AOT_EXES; do split_aot "$e"; done
 
-# O resto de bin/ e todas as dylibs. libcockpit_pty já sai universal do
+# O resto de bin/ e todas as dylibs. libgsh_pty já sai universal do
 # build_server (cc -arch arm64 -arch x86_64), mas passar por aqui é inócuo.
 for f in "$TARGET"/bin/*; do
   [ -f "$f" ] || continue

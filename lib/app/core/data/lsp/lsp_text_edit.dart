@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/domain/entities/lsp_diagnostic.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_diagnostic.dart';
 
 /// Um `TextEdit` do LSP: substitui o trecho em [range] por [newText]. É o que
 /// `textDocument/formatting` devolve — uma lista a aplicar no buffer.

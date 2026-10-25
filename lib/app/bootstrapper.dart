@@ -2,40 +2,42 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'dart:ui' show AppExitResponse;
 
-import 'package:cockpit/app/app_module.dart';
-import 'package:cockpit/app/app_widget.dart';
-import 'package:cockpit/app/cockpit/data/hooks/claude_hook_installer_impl.dart';
-import 'package:cockpit/app/cockpit/data/hooks/codex_hook_installer_impl.dart';
-import 'package:cockpit/app/cockpit/data/terminal/sidecar/sidecar_terminal_connector.dart';
-import 'package:cockpit/app/cockpit/data/tasks/task_process_registry.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/hook_installer.dart';
-import 'package:cockpit/app/cockpit/data/telemetry/app_telemetry_bridge.dart';
-import 'package:cockpit/app/core/data/diagnostics/diagnostics_log.dart';
-import 'package:cockpit/app/core/data/lsp/lsp_process_registry.dart';
-import 'package:cockpit/app/core/data/repositories/json_settings_store.dart';
-import 'package:cockpit/app/core/utils/platform_kind.dart';
-import 'package:cockpit/app/core/data/setup/hive_migration.dart';
-import 'package:cockpit/app/core/data/setup/local_network_permission.dart';
-import 'package:cockpit/app/core/data/setup/json_state_store.dart';
-import 'package:cockpit/app/cockpit/ui/document/open_files_channel.dart';
-import 'package:cockpit/app/core/data/setup/storage_location.dart';
-import 'package:cockpit/app/core/data/theme_store.dart';
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/core/domain/services/window_placement.dart';
-import 'package:cockpit/app/core/ui/keep_awake_controller.dart';
-import 'package:cockpit/app/core/ui/automation_controller.dart';
-import 'package:cockpit/app/core/ui/menu/editor_menu_bridge.dart';
-import 'package:cockpit/app/core/ui/menu/workspace_menu_bridge.dart';
-import 'package:cockpit/app/core/ui/settings_controller.dart';
-import 'package:cockpit/app/core/ui/window_activity_controller.dart';
-import 'package:cockpit/i18n/strings.g.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
-import 'package:cockpit/app/core/ui/widgets/bootstrap_error_view.dart';
-import 'package:cockpit/app/core/ui/widgets/devtools_inspector.dart';
-import 'package:cockpit/app/core/ui/widgets/error_report_dialog.dart';
-import 'package:cockpit/app/core/ui/widgets/loading_screen.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/confirm_dialog.dart';
-import 'package:cockpit/app/core/utils/login_shell.dart';
+import 'package:gsh_desktop/app/app_module.dart';
+import 'package:gsh_desktop/app/app_widget.dart';
+import 'package:gsh_desktop/app/gsh/data/hooks/claude_hook_installer_impl.dart';
+import 'package:gsh_desktop/app/gsh/data/hooks/codex_hook_installer_impl.dart';
+import 'package:gsh_desktop/app/gsh/data/terminal/sidecar/sidecar_terminal_connector.dart';
+import 'package:gsh_desktop/app/gsh/data/tasks/task_process_registry.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/hook_installer.dart';
+import 'package:gsh_desktop/app/core/data/claude_code_settings_file.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
+import 'package:gsh_desktop/app/gsh/data/telemetry/app_telemetry_bridge.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
+import 'package:gsh_desktop/app/core/data/lsp/lsp_process_registry.dart';
+import 'package:gsh_desktop/app/core/data/repositories/json_settings_store.dart';
+import 'package:gsh_desktop/app/core/utils/platform_kind.dart';
+import 'package:gsh_desktop/app/core/data/setup/hive_migration.dart';
+import 'package:gsh_desktop/app/core/data/setup/local_network_permission.dart';
+import 'package:gsh_desktop/app/core/data/setup/json_state_store.dart';
+import 'package:gsh_desktop/app/gsh/ui/document/open_files_channel.dart';
+import 'package:gsh_desktop/app/core/data/setup/storage_location.dart';
+import 'package:gsh_desktop/app/core/data/theme_store.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/domain/services/window_placement.dart';
+import 'package:gsh_desktop/app/core/ui/keep_awake_controller.dart';
+import 'package:gsh_desktop/app/core/ui/automation_controller.dart';
+import 'package:gsh_desktop/app/core/ui/menu/editor_menu_bridge.dart';
+import 'package:gsh_desktop/app/core/ui/menu/workspace_menu_bridge.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
+import 'package:gsh_desktop/app/core/ui/window_activity_controller.dart';
+import 'package:gsh_desktop/i18n/strings.g.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/bootstrap_error_view.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/devtools_inspector.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/error_report_dialog.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/loading_screen.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/confirm_dialog.dart';
+import 'package:gsh_desktop/app/core/utils/login_shell.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:screen_retriever/screen_retriever.dart';
@@ -54,15 +56,15 @@ const _splashFloor = Duration(milliseconds: 400);
 /// sem feedback.
 ///
 /// Mora fora de `core/` de propósito: o bootstrap conhece features
-/// (hooks/registries do cockpit) e o `core/` não pode importar de feature.
-class CockpitBootstrapper extends StatefulWidget {
-  const CockpitBootstrapper({super.key});
+/// (hooks/registries do gsh) e o `core/` não pode importar de feature.
+class GshBootstrapper extends StatefulWidget {
+  const GshBootstrapper({super.key});
 
   @override
-  State<CockpitBootstrapper> createState() => _CockpitBootstrapperState();
+  State<GshBootstrapper> createState() => _GshBootstrapperState();
 }
 
-class _CockpitBootstrapperState extends State<CockpitBootstrapper> {
+class _GshBootstrapperState extends State<GshBootstrapper> {
   bool _initialized = false;
   Object? _error;
   Module? _appModule;
@@ -98,7 +100,7 @@ class _CockpitBootstrapperState extends State<CockpitBootstrapper> {
         } on Object catch (e, stack) {
           DiagnosticsLog.instance.logError('exit-flush', e, stack);
         }
-        // Encerra o sidecar JUNTO com o app. Sem isto, o `cockpit-server`
+        // Encerra o sidecar JUNTO com o app. Sem isto, o `gsh-server`
         // sobrevivia ao fechamento e — como o self-update troca o binário no
         // disco embaixo do processo vivo — o host seguia servindo código
         // antigo indefinidamente. O `--exit-on-parent-close` cobre a morte
@@ -133,10 +135,10 @@ class _CockpitBootstrapperState extends State<CockpitBootstrapper> {
       // instância viva, então o caminho é idempotente.
       //
       // Raiz do estado via StorageLocation: pasta padrão OU a escolhida nas
-      // Configurações (ponteiro fixo em `~/.cockpit/storage_root`).
-      // Subdiretório próprio (`cockpit`/`cockpit-debug`) separa debug de
+      // Configurações (ponteiro fixo em `~/.gsh/storage_root`).
+      // Subdiretório próprio (`gsh`/`gsh-debug`) separa debug de
       // produção. Os stores das features são abertos pelos próprios builders
-      // async (ver buildCockpitModule); aqui só settings + window_state.
+      // async (ver buildGshModule); aqui só settings + window_state.
       //
       // Migração one-shot Hive→JSON: dados legados (boxes .hive, inclusive no
       // default antigo do Windows em Documents) são despejados nos JSONs de
@@ -188,13 +190,13 @@ class _CockpitBootstrapperState extends State<CockpitBootstrapper> {
         unawaited(LocalNetworkPermission.prime());
 
         // Mata filhos órfãos desta instância ou de instâncias já encerradas,
-        // preservando LSP/tasks de outros Cockpits ainda vivos.
+        // preservando LSP/tasks de outros Gshs ainda vivos.
         await Future.wait([
           LspProcessRegistry.cleanOrphans(),
           TaskProcessRegistry.cleanOrphans(),
         ]);
 
-        // Hooks do Cockpit nos harnesses suportados (idempotente) pra sessões
+        // Hooks do GSH nos harnesses suportados (idempotente) pra sessões
         // de agente nas abas reportarem status de turno: Claude Code em
         // ~/.claude/settings.json, Codex CLI em ~/.codex/hooks.json (+ trust no
         // config.toml). Não-fatal e independentes. Desktop-only (mobile não tem
@@ -210,6 +212,12 @@ class _CockpitBootstrapperState extends State<CockpitBootstrapper> {
               }),
             );
           }
+          // Padrão do GSH: toda sessão do Claude Code desta máquina aceita
+          // mensagem de outra sessão (SendMessage). Sem isso o Claude Code
+          // segura a mensagem quando os modos de permissão diferem, e no
+          // chat (headless) ela expira sem ninguém ver. Só grava quando o
+          // usuário nunca escolheu (hold/refuse ficam como estão).
+          unawaited(_defaultCrossSessionToAccept());
         }
 
         _appModule = await buildAppModule(windowActivity: _windowActivity);
@@ -414,7 +422,7 @@ class _CockpitBootstrapperState extends State<CockpitBootstrapper> {
       theme: buildTheme(brightness: brightness, settings: s),
       home: home,
       builder: (context, child) {
-        return CockpitTheme(
+        return GshTheme(
           colors: tokens.colors,
           typo: tokens.typo,
           syntax: tokens.syntax,
@@ -454,7 +462,7 @@ class _CockpitBootstrapperState extends State<CockpitBootstrapper> {
           ..addChangeNotifier<SettingsController>(() => _settings!)
           ..addChangeNotifier<WindowActivityController>(() => _windowActivity)
           // A mesma instância bootstrap-owned é observada por Settings e Source
-          // Control e injetada nos controllers da feature Cockpit.
+          // Control e injetada nos controllers da feature GSH.
           ..addChangeNotifier<AutomationController>(
             () => inject<AutomationController>(),
           )
@@ -617,12 +625,12 @@ class WindowStateKeeperState extends State<WindowStateKeeper>
     if (ms >= 250) DiagnosticsLog.instance.log('close', '$tag levou ${ms}ms');
   }
 
-  /// Fechamento da janela: **este** é o encerramento limpo do Cockpit.
+  /// Fechamento da janela: **este** é o encerramento limpo do GSH.
   ///
   /// Só chega aqui porque o boot liga `setPreventClose(true)`. Sem isso, tanto
   /// o X da barra de título quanto o Quit do menu chamam `windowManager.close()`
   /// e o processo morre sem o Dart saber — e o boot seguinte encontra o
-  /// marcador de sessão viva e acusa crash. Era o motivo de o aviso "o Cockpit
+  /// marcador de sessão viva e acusa crash. Era o motivo de o aviso "o GSH
   /// fechou inesperadamente" voltar a **cada** inicialização no Windows: o app
   /// nunca conseguia registrar uma saída limpa. No macOS o ⌘Q passa pelo
   /// handshake de saída do engine (`onExitRequested`), que já marcava — por
@@ -704,4 +712,19 @@ class WindowStateKeeperState extends State<WindowStateKeeper>
   @override
   Widget build(BuildContext context) =>
       WindowActivityBoundary(activity: widget.activity, child: widget.child);
+}
+
+Future<void> _defaultCrossSessionToAccept() async {
+  final settings = ClaudeCodeSettingsFile();
+  if (await settings.getValue(ClaudeCodeKeys.crossSessionInbound) != null) {
+    return;
+  }
+  final r = await settings.setValue(
+    ClaudeCodeKeys.crossSessionInbound,
+    'accept',
+  );
+  r.fold(
+    (_) {},
+    (e) => debugPrint('[claude-settings] crossSessionInbound: $e'),
+  );
 }

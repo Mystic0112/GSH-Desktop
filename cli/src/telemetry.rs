@@ -1,5 +1,5 @@
-//! `cockpit telemetry` (plano 66): verbos de consulta da Caixa Preta e o
-//! wrapper que observa um processo (`cockpit telemetry <cmd>`).
+//! `gsh telemetry` (plano 66): verbos de consulta da Caixa Preta e o
+//! wrapper que observa um processo (`gsh telemetry <cmd>`).
 //!
 //! O wrapper é burro de propósito: sobe o filho (PTY aninhado quando há TTY,
 //! pipes quando não há), repassa os bytes intocados pra tela e, em paralelo,
@@ -104,7 +104,7 @@ fn query(verb: &str, rest: &[String]) -> ! {
         "wait" => "telemetry-wait".into(),
         "mark" => {
             if positionals.len() < 2 || !(positionals[0] == "start" || positionals[0] == "end") {
-                fail("error", "usage: cockpit telemetry mark start|end <name>");
+                fail("error", "usage: gsh telemetry mark start|end <name>");
             }
             a.insert("action".into(), json!(positionals[0]));
             a.insert("name".into(), json!(positionals[1]));
@@ -172,7 +172,7 @@ fn parse_wrap(args: &[String]) -> WrapOpts {
                 i += 1;
                 name = args.get(i).cloned();
                 if name.is_none() {
-                    die("cockpit telemetry: missing value for --name", 2);
+                    die("gsh telemetry: missing value for --name", 2);
                 }
             }
             s if s.starts_with("--name=") => name = Some(s["--name=".len()..].to_string()),
@@ -182,7 +182,7 @@ fn parse_wrap(args: &[String]) -> WrapOpts {
     }
     let argv: Vec<String> = args[i..].to_vec();
     if argv.is_empty() {
-        die("cockpit telemetry: missing command to run (see --help)", 2);
+        die("gsh telemetry: missing command to run (see --help)", 2);
     }
     WrapOpts { name, quiet, argv }
 }
@@ -202,7 +202,7 @@ fn wrap(args: &[String]) -> ! {
 
     // Sem app pra falar: roda o comando normalmente, avisa uma vez.
     if !transport::transport_configured() {
-        eprintln!("telemetry: not inside Cockpit, running without capture");
+        eprintln!("telemetry: not inside GSH, running without capture");
         let code = passthrough(&opts.argv);
         std::process::exit(code);
     }
@@ -299,7 +299,7 @@ fn wrap(args: &[String]) -> ! {
         let errors = resp["data"]["errors"].as_u64().unwrap_or(0);
         let warnings = resp["data"]["warnings"].as_u64().unwrap_or(0);
         eprintln!(
-            "telemetry: run {run_id} · {errors} errors · {warnings} warnings · cockpit telemetry errors --run {run_id}"
+            "telemetry: run {run_id} · {errors} errors · {warnings} warnings · gsh telemetry errors --run {run_id}"
         );
     }
     std::process::exit(code);
@@ -313,7 +313,7 @@ fn passthrough(argv: &[String]) -> i32 {
     {
         Ok(st) => exit_code_of(&st),
         Err(e) => {
-            eprintln!("cockpit telemetry: {}: {e}", argv[0]);
+            eprintln!("gsh telemetry: {}: {e}", argv[0]);
             127
         }
     }
@@ -393,7 +393,7 @@ fn run_pipes(argv: &[String], env: &[(String, String)], tx: &mpsc::Sender<Msg>) 
     let mut child = match cmd.spawn() {
         Ok(c) => c,
         Err(e) => {
-            eprintln!("cockpit telemetry: {}: {e}", argv[0]);
+            eprintln!("gsh telemetry: {}: {e}", argv[0]);
             return 127;
         }
     };

@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/lsp/project_root_finder.dart';
-import 'package:cockpit/app/core/domain/entities/lsp_diagnostic.dart';
-import 'package:cockpit/app/core/ui/widgets/code_highlight.dart';
+import 'package:gsh_desktop/app/core/data/lsp/project_root_finder.dart';
+import 'package:gsh_desktop/app/core/domain/entities/lsp_diagnostic.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/code_highlight.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 String join(String a, String b) => '$a${Platform.pathSeparator}$b';

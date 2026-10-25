@@ -1,6 +1,6 @@
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/range.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/buffer/segment.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/cell_offset.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/range.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/buffer/segment.dart';
 
 class BufferRangeLine extends BufferRange {
   BufferRangeLine(super.begin, super.end);

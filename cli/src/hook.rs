@@ -1,4 +1,4 @@
-//! `cockpit hook` — helper que os agentes invocam nos hooks de ciclo de vida.
+//! `gsh hook` — helper que os agentes invocam nos hooks de ciclo de vida.
 //! Serve **dois harnesses**, instalados pelos `HookInstaller`s do app:
 //!
 //! - **Claude Code** (`~/.claude/settings.json`)
@@ -6,18 +6,18 @@
 //!
 //! Os dois usam o mesmo envelope: um JSON pelo stdin com `hook_event_name`,
 //! `session_id`, `transcript_path` etc. Traduzimos num status de turno
-//! (working / waiting / idle) e mandamos pro Cockpit pelo mesmo socket da CLI,
+//! (working / waiting / idle) e mandamos pro GSH pelo mesmo socket da CLI,
 //! discriminado por ausência de `type:"cmd"`. Este helper é **agnóstico de
 //! harness**: só o conjunto de eventos difere, e o `status_for` cobre a união.
 //!
 //! Por que socket e não OSC na PTY: os agentes rodam os hooks SEM terminal
 //! controlador (escrever em /dev/tty falha com ENXIO). O app injeta no env da
-//! PTY o `COCKPIT_PANE_ID` (roteamento) e o `COCKPIT_STATUS_SOCK` (caminho do
-//! socket); o hook herda os dois. Sessões de agente fora do Cockpit não têm
+//! PTY o `GSH_PANE_ID` (roteamento) e o `GSH_STATUS_SOCK` (caminho do
+//! socket); o hook herda os dois. Sessões de agente fora do GSH não têm
 //! essas envs, então o hook não manda nada pelo socket (gate natural).
 //!
 //! **Fazenda do GSH Desktop:** com ou sem aba, o último status de cada sessão
-//! vai para `~/.cockpit/farm/<session_id>.json` ([record_farm]). É o único
+//! vai para `~/.gsh/farm/<session_id>.json` ([record_farm]). É o único
 //! jeito de a fazenda saber de um pedido de permissão: ele não aparece no
 //! transcript, só no `Notification`.
 //!
@@ -71,16 +71,30 @@ fn try_run(harness: String) -> Option<()> {
     }
 
     let event = str_field(&decoded, "hook_event_name");
+    // Hosts protegidos: comando que cite um deles é bloqueado antes de rodar,
+    // em qualquer sessão da máquina (não só numa aba do GSH).
+    if event == "PreToolUse" {
+        if let Some(home) = home_dir() {
+            let hosts = protected_hosts(&Path::new(&home).join(".gsh").join("protected-hosts.json"));
+            if let Some(host) = guard_hit(&decoded, &hosts) {
+                eprintln!(
+                    "GSH Desktop bloqueou este comando: ele cita o host protegido \"{host}\". \
+                     Peça ao usuário para rodar à mão ou remover o host em Configurações > Claude Code > Segurança."
+                );
+                std::process::exit(2);
+            }
+        }
+    }
     let status = status_for(&event, &decoded);
     if let Some(home) = home_dir() {
-        let dir = Path::new(&home).join(".cockpit").join("farm");
+        let dir = Path::new(&home).join(".gsh").join("farm");
         record_farm(&dir, &str_field(&decoded, "session_id"), &event, status, &harness);
     }
     let status = status?; // evento que não nos interessa
 
-    let pane_id = env_non_empty("COCKPIT_PANE_ID")?; // não é sessão do Cockpit
-    let sock = env_non_empty("COCKPIT_STATUS_SOCK");
-    let port = env_non_empty("COCKPIT_STATUS_PORT").and_then(|p| p.parse::<u16>().ok());
+    let pane_id = env_non_empty("GSH_PANE_ID")?; // não é sessão do GSH
+    let sock = env_non_empty("GSH_STATUS_SOCK");
+    let port = env_non_empty("GSH_STATUS_PORT").and_then(|p| p.parse::<u16>().ok());
     if sock.is_none() && port.is_none() {
         return None;
     }
@@ -115,7 +129,7 @@ fn try_run(harness: String) -> Option<()> {
     }
     // Token só importa no TCP (loopback é acessível por qualquer processo
     // local); no UDS a permissão do socket já protege.
-    if let Ok(tok) = std::env::var("COCKPIT_STATUS_TOKEN") {
+    if let Ok(tok) = std::env::var("GSH_STATUS_TOKEN") {
         payload["tok"] = json!(tok);
     }
 
@@ -136,6 +150,51 @@ fn try_run(harness: String) -> Option<()> {
     s.write_all(line.as_bytes()).ok()?;
     let _ = s.flush();
     Some(())
+}
+
+/// Lista de hosts protegidos (`~/.gsh/protected-hosts.json`, array de
+/// strings). Arquivo ausente ou inválido = nenhum.
+fn protected_hosts(path: &Path) -> Vec<String> {
+    let Ok(raw) = std::fs::read_to_string(path) else { return Vec::new() };
+    let Ok(v) = serde_json::from_str::<Value>(&raw) else { return Vec::new() };
+    v.as_array()
+        .map(|a| {
+            a.iter()
+                .filter_map(|x| x.as_str())
+                .map(|s| s.trim().to_lowercase())
+                .filter(|s| !s.is_empty())
+                .collect()
+        })
+        .unwrap_or_default()
+}
+
+/// Ferramentas que executam comando: o guard olha só o input delas (um
+/// `Read` de um arquivo chamado prod.md não é acesso ao host).
+const SHELL_TOOLS: [&str; 3] = ["Bash", "shell", "exec_command"];
+
+/// O host protegido que o input da ferramenta cita, se algum. O host conta
+/// como palavra: "prod" casa com "ssh prod", "user@prod" e "prod.x.com", mas
+/// não com "production" nem "--prod".
+pub fn guard_hit(json: &Value, hosts: &[String]) -> Option<String> {
+    if hosts.is_empty() || !SHELL_TOOLS.contains(&str_field(json, "tool_name").as_str()) {
+        return None;
+    }
+    let input = json.get("tool_input").map(|v| v.to_string()).unwrap_or_default().to_lowercase();
+    let is_word = |c: char| c.is_ascii_alphanumeric() || c == '_' || c == '-';
+    for host in hosts {
+        let mut from = 0;
+        while let Some(i) = input[from..].find(host.as_str()) {
+            let start = from + i;
+            let end = start + host.len();
+            let before_ok = start == 0 || !is_word(input[..start].chars().next_back().unwrap());
+            let after_ok = end == input.len() || !is_word(input[end..].chars().next().unwrap());
+            if before_ok && after_ok {
+                return Some(host.clone());
+            }
+            from = end;
+        }
+    }
+    None
 }
 
 /// Grava o último status da sessão em `<dir>/<sid>.json` (`st`, `ev`, `ts` em
@@ -317,6 +376,24 @@ pub fn status_for(event: &str, json: &Value) -> Option<&'static str> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn hosts_protegidos_bloqueiam_so_comando_que_cita_o_host() {
+        let hosts = vec!["prod".to_string(), "homolog.gorila.com".to_string()];
+        let cmd = |c: &str| json!({"tool_name": "Bash", "tool_input": {"command": c}});
+        assert_eq!(guard_hit(&cmd("ssh prod"), &hosts).as_deref(), Some("prod"));
+        assert_eq!(guard_hit(&cmd("scp a.txt deploy@prod.gorila.com:/x"), &hosts).as_deref(), Some("prod"));
+        assert_eq!(guard_hit(&cmd("gsh new-workspace . --host homolog.gorila.com"), &hosts).as_deref(), Some("homolog.gorila.com"));
+        assert_eq!(guard_hit(&cmd("npm run build --prod"), &hosts), None);
+        assert_eq!(guard_hit(&cmd("echo production"), &hosts), None);
+        // Só ferramentas de shell: ler um arquivo com o nome não é acesso.
+        let read = json!({"tool_name": "Read", "tool_input": {"file_path": "/docs/prod.md"}});
+        assert_eq!(guard_hit(&read, &hosts), None);
+        // Codex: input com argv.
+        let codex = json!({"tool_name": "shell", "tool_input": {"argv": ["ssh", "prod"]}});
+        assert_eq!(guard_hit(&codex, &hosts).as_deref(), Some("prod"));
+        assert_eq!(guard_hit(&cmd("ssh prod"), &[]), None);
+    }
 
     #[test]
     fn fazenda_grava_status_e_apaga_no_fim_da_sessao() {

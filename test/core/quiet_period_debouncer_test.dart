@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/utils/quiet_period_debouncer.dart';
+import 'package:gsh_desktop/app/core/utils/quiet_period_debouncer.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,21 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/hooks/claude_hook_installer_impl.dart';
+import 'package:gsh_desktop/app/gsh/data/hooks/claude_hook_installer_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('removes repeated Windows CLI hooks and preserves user hooks', () async {
-    final home = await Directory.systemTemp.createTemp('cockpit-hook-test-');
+    final home = await Directory.systemTemp.createTemp('gsh-hook-test-');
     addTearDown(() async {
       if (await home.exists()) await home.delete(recursive: true);
     });
     final config = File('${home.path}/.claude/settings.json');
     await config.parent.create(recursive: true);
     final legacy = <String>[
-      ...List.filled(5, r'C:/Users/test/.cockpit/bin/cockpit.exe hook'),
-      r'"C:/Program Files/Cockpit/cockpit.exe" hook --harness claude',
-      r'C:\Users\test\.cockpit\bin\cockpit.exe hook',
+      ...List.filled(5, r'C:/Users/test/.gsh/bin/gsh.exe hook'),
+      r'"C:/Program Files/GSH/gsh.exe" hook --harness claude',
+      r'C:\Users\test\.gsh\bin\gsh.exe hook',
     ];
     await config.writeAsString(
       jsonEncode({
@@ -48,16 +48,16 @@ void main() {
 
     await installer.writeConfig(
       home: home.path,
-      command: r'C:/Users/test/.cockpit/bin/cockpit.exe hook',
+      command: r'C:/Users/test/.gsh/bin/gsh.exe hook',
     );
     var groups = await stopGroups();
     expect(groups, hasLength(2));
     expect(jsonEncode(groups), contains('echo user-hook'));
-    expect(jsonEncode(groups), contains('"_cockpit":"v1"'));
+    expect(jsonEncode(groups), contains('"_gsh":"v1"'));
 
     await installer.writeConfig(
       home: home.path,
-      command: r'C:/Users/test/.cockpit/bin/cockpit.exe hook',
+      command: r'C:/Users/test/.gsh/bin/gsh.exe hook',
     );
     groups = await stopGroups();
     expect(groups, hasLength(2));

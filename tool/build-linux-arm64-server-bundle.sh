@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Cross-compiles the cockpit-server bundle deployed by a macOS client to Linux
+# Cross-compiles the gsh-server bundle deployed by a macOS client to Linux
 # arm64 remote hosts. The Dart AOT executable and anaki native assets are built
 # by `dart build cli`; the PTY library and Rust CLI use Zig as the cross linker.
 #
@@ -44,7 +44,7 @@ rm -rf "$DEST"
 mkdir -p "$DEST"
 
 (
-  cd "$ROOT/packages/cockpit_server"
+  cd "$ROOT/packages/gsh_server"
   "$DART" pub get >/dev/null
   "$DART" build cli \
     --target-os linux \
@@ -52,14 +52,14 @@ mkdir -p "$DEST"
     -o "$TMP/dart" >/dev/null
 )
 mv "$TMP/dart/bundle"/* "$DEST"/
-mv "$DEST/bin/cockpit_server" "$DEST/bin/cockpit-server"
+mv "$DEST/bin/gsh_server" "$DEST/bin/gsh-server"
 
-# cockpit_pty is intentionally not a Dart native asset yet. Build the same C
+# gsh_pty is intentionally not a Dart native asset yet. Build the same C
 # source as the native sidecar, but against Zig's Linux aarch64 sysroot.
 "$ZIG" cc -target aarch64-linux-gnu -shared -O2 -DDART_SHARED_LIB \
-  -o "$DEST/lib/libcockpit_pty.so" \
-  "$ROOT/plugins/cockpit_pty/src/cockpit_pty.c" \
-  -I"$ROOT/plugins/cockpit_pty/src" -lpthread
+  -o "$DEST/lib/libgsh_pty.so" \
+  "$ROOT/plugins/gsh_pty/src/gsh_pty.c" \
+  -I"$ROOT/plugins/gsh_pty/src" -lpthread
 
 # Cargo accepts a linker executable, not a command with arguments, so wrap Zig.
 # Rust >= 1.98 passes `-Wl,--fix-cortex-a53-843419` (a GNU ld/lld erratum
@@ -82,7 +82,7 @@ chmod +x "$ZIG_LINKER"
   CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER="$ZIG_LINKER" \
     "$CARGO" build --release --target "$TARGET" >/dev/null
 )
-cp "$ROOT/cli/target/$TARGET/release/cockpit" "$DEST/bin/cockpit"
-chmod +x "$DEST/bin/cockpit-server" "$DEST/bin/cockpit"
+cp "$ROOT/cli/target/$TARGET/release/gsh" "$DEST/bin/gsh"
+chmod +x "$DEST/bin/gsh-server" "$DEST/bin/gsh"
 
 echo "[linux-server] bundle OK -> $DEST"

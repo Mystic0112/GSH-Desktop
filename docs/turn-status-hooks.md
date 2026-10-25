@@ -1,6 +1,6 @@
 # Status de turno — hooks dos harnesses
 
-Como o Cockpit sabe que um agente numa aba está trabalhando, terminou o turno ou
+Como o GSH sabe que um agente numa aba está trabalhando, terminou o turno ou
 precisa de uma ação do usuário (spinner, badge, chime, notificação do SO).
 
 Suportados hoje: **Claude Code** e **Codex CLI** (0.147+).
@@ -15,13 +15,13 @@ turno que passou do 1º tick notifica). TUI que anima parada dá falso
 ## Como funciona
 
 1. No boot, `bootstrapper.dart` roda os `HookInstaller` de cada harness. Eles
-   materializam a CLI interna em `~/.cockpit/bin/cockpit` e registram
+   materializam a CLI interna em `~/.gsh/bin/gsh` e registram
    `<cli> hook` nos eventos de ciclo de vida da config do harness.
-2. A cada evento, o harness executa `cockpit hook` passando um JSON pelo stdin.
+2. A cada evento, o harness executa `gsh hook` passando um JSON pelo stdin.
 3. `cli/src/hook.rs` traduz o evento num status (`working` / `waiting` / `idle`)
    e manda pro app por socket Unix (TCP + token no Windows).
-4. O roteamento é pela env `COCKPIT_PANE_ID`, que o app injeta na PTY da aba.
-   Sessão de agente aberta **fora** do Cockpit não tem essa env, então o hook é
+4. O roteamento é pela env `GSH_PANE_ID`, que o app injeta na PTY da aba.
+   Sessão de agente aberta **fora** do GSH não tem essa env, então o hook é
    no-op. É o gate natural: nada a configurar, nada a desligar.
 
 Por que socket e não OSC na PTY: os harnesses rodam hooks sem terminal
@@ -35,7 +35,7 @@ controlador, e escrever em `/dev/tty` falha com `ENXIO`.
 | Codex CLI | `~/.codex/hooks.json` | mesma forma; **mais** um bloco de trust no `~/.codex/config.toml` |
 
 Os dois instaladores fazem **append idempotente** de um entry marcado
-(`_cockpit: v1`): re-rodar remove o entry antigo nosso e re-adiciona, sem nunca
+(`_gsh: v1`): re-rodar remove o entry antigo nosso e re-adiciona, sem nunca
 reescrever a lista (hooks do usuário, de plugins ou do iTerm2 sobrevivem).
 
 ## Mapeamento de eventos
@@ -104,7 +104,7 @@ digita o comando que reata a conversa. **O id sozinho não diz de qual harness
 | Codex CLI | `codex resume <id>` |
 
 Por isso o instalador registra o comando do hook com `--harness <nome>`
-(`cockpit hook --harness codex`), o helper carimba o payload com `hn`, e o
+(`gsh hook --harness codex`), o helper carimba o payload com `hn`, e o
 layout guarda `harness` ao lado de `claude_sid`. Sem a flag, o helper assume
 `claude` — é o que os entries instalados por versões anteriores passam, e todos
 eles eram do Claude.
@@ -135,41 +135,41 @@ trusted_hash = "sha256:…"
   O `timeout` é o **normalizado**: 600s para todos os eventos, exceto
   `SessionEnd`, que tem default 1s (teto 3s). Campos ausentes (`matcher`,
   `commandWindows`, `statusMessage`, `additionalContextLimit`) não entram.
-  Campos extras no arquivo — como o nosso marcador `_cockpit` — são ignorados
+  Campos extras no arquivo — como o nosso marcador `_gsh` — são ignorados
   na desserialização e **não** afetam o hash.
 
-Como o hash deriva da config e não do binário, o Cockpit computa e grava o trust
+Como o hash deriva da config e não do binário, o GSH computa e grava o trust
 junto com a instalação: o usuário não precisa aprovar nada na mão. É o mesmo
 grau de confiança que já assumimos ao escrever no `settings.json` do Claude —
 instalamos o nosso helper, e só ele. O bloco fica entre delimitadores
-(`# >>> cockpit hooks` … `# <<< cockpit hooks`) e é regerado a cada boot;
+(`# >>> gsh hooks` … `# <<< gsh hooks`) e é regerado a cada boot;
 o resto do `config.toml` nunca é tocado — fora a tabela abaixo.
 
-### Servidor MCP `cockpit` (o Codex não alcança a CLI de shell)
+### Servidor MCP `gsh` (o Codex não alcança a CLI de shell)
 
-O sandbox do Codex tira as envs `COCKPIT_*` dos comandos e bloqueia o socket
+O sandbox do Codex tira as envs `GSH_*` dos comandos e bloqueia o socket
 do app (`could not connect to app: Operation not permitted`), então
-`cockpit msg`/`peers` não funcionam de dentro dele. Servidor MCP roda **fora**
+`gsh msg`/`peers` não funcionam de dentro dele. Servidor MCP roda **fora**
 do sandbox: no mesmo passe do trust, o instalador garante, antes do bloco,
 
 ```toml
-[mcp_servers.cockpit]
-command = "/home/u/.cockpit/bin/cockpit"   # bin-debug no flavor de dev
+[mcp_servers.gsh]
+command = "/home/u/.gsh/bin/gsh"   # bin-debug no flavor de dev
 args = ["mcp", "--agent", "codex-desktop"]
-env_vars = ["COCKPIT_TAB_ID", "COCKPIT_STATUS_SOCK", "COCKPIT_STATUS_PORT", "COCKPIT_STATUS_TOKEN"]
+env_vars = ["GSH_TAB_ID", "GSH_STATUS_SOCK", "GSH_STATUS_PORT", "GSH_STATUS_TOKEN"]
 ```
 
 É a **mesma** entrada que o dialog de apps desktop escreve pro app do Codex
-(que divide este config), então ninguém duplica nada. O `cockpit mcp` decide
+(que divide este config), então ninguém duplica nada. O `gsh mcp` decide
 quem é ao subir (`mcp-whoami`): o app procura o pid dele na árvore de processos
 das abas (a mesma leitura do detector de harness); achou = age como aquela aba
-(`send` = `cockpit msg`, `peers`, `list_agents`, e `wait_messages` devolve o que
+(`send` = `gsh msg`, `peers`, `list_agents`, e `wait_messages` devolve o que
 chegou pra aba desde a última chamada — a entrega continua sendo digitada no
 PTY). Não achou = nó externo `ext:codex-desktop`. O Codex (0.150+) limpa o env
-dos servidores MCP; `env_vars` repassa as nossas. O `COCKPIT_TAB_ID` herdado só
+dos servidores MCP; `env_vars` repassa as nossas. O `GSH_TAB_ID` herdado só
 vale onde a árvore da aba não é visível (WSL, host remoto): env herdado não
 prova parentesco. Escreve só se algo mudou; antes da primeira escrita guarda
-`config.toml.cockpit-bak` (0600). Tabela `cockpit` definida de outro jeito
+`config.toml.gsh-bak` (0600). Tabela `gsh` definida de outro jeito
 (chave pontilhada) não é tocada.
 
 Referência no fonte do Codex: `codex-rs/hooks/src/engine/discovery.rs`
@@ -193,9 +193,9 @@ Referência no fonte do Codex: `codex-rs/hooks/src/engine/discovery.rs`
 
 ```
 cli/src/hook.rs                                   # tradução evento → status (agnóstico de harness)
-lib/app/cockpit/domain/contracts/hook_installer.dart
-lib/app/cockpit/data/hooks/hook_installer_base.dart      # CLI + comando (comum)
-lib/app/cockpit/data/hooks/claude_hook_installer_impl.dart
-lib/app/cockpit/data/hooks/codex_hook_installer_impl.dart
+lib/app/gsh/domain/contracts/hook_installer.dart
+lib/app/gsh/data/hooks/hook_installer_base.dart      # CLI + comando (comum)
+lib/app/gsh/data/hooks/claude_hook_installer_impl.dart
+lib/app/gsh/data/hooks/codex_hook_installer_impl.dart
 lib/app/bootstrapper.dart                         # roda os dois no boot, não-fatal
 ```

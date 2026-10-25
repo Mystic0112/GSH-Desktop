@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/filesystem/git_binary.dart';
-import 'package:cockpit/app/cockpit/data/filesystem/git_status_reader_impl.dart';
-import 'package:cockpit/app/cockpit/domain/entities/git_file_status.dart';
+import 'package:gsh_desktop/app/gsh/data/filesystem/git_binary.dart';
+import 'package:gsh_desktop/app/gsh/data/filesystem/git_status_reader_impl.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/git_file_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -24,7 +24,7 @@ void main() {
       File('${repo.path}/$rel').writeAsString(content);
 
   setUp(() async {
-    repo = await Directory.systemTemp.createTemp('cockpit_git_test_');
+    repo = await Directory.systemTemp.createTemp('gsh_git_test_');
     await git(['init']);
     await git(['config', 'user.email', 'test@example.com']);
     await git(['config', 'user.name', 'Test']);
@@ -44,7 +44,7 @@ void main() {
       markTestSkipped('git não disponível');
       return;
     }
-    final plain = await Directory.systemTemp.createTemp('cockpit_plain_');
+    final plain = await Directory.systemTemp.createTemp('gsh_plain_');
     addTearDown(() => plain.delete(recursive: true));
     expect(await reader.read(plain.path), isNull);
   });
@@ -167,7 +167,7 @@ void main() {
       return;
     }
     // Cria um "remoto" como clone bare e configura upstream.
-    final bare = await Directory.systemTemp.createTemp('cockpit_bare_');
+    final bare = await Directory.systemTemp.createTemp('gsh_bare_');
     addTearDown(() => bare.delete(recursive: true));
     await git(['clone', '--bare', repo.path, bare.path]);
     await git(['remote', 'add', 'origin', bare.path]);

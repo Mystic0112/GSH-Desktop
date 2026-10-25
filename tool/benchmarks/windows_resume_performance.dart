@@ -7,14 +7,14 @@
 // Counts and peak concurrency are the primary results; asynchronous wall time
 // is included only as a noisy host-dependent drain-time indicator.
 //
-// Run from cockpit/:
+// Run from gsh/:
 //   dart run tool/benchmarks/windows_resume_performance.dart
 //   dart compile exe tool/benchmarks/windows_resume_performance.dart -o <exe>
 
 import 'dart:async';
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/domain/utils/coalescing_single_flight.dart';
+import 'package:gsh_desktop/app/gsh/domain/utils/coalescing_single_flight.dart';
 
 const _burstTriggers = 1000;
 const _slowRefresh = Duration(milliseconds: 20);

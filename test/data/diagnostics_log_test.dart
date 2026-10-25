@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/diagnostics/diagnostics_log.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -9,7 +9,7 @@ void main() {
   final log = DiagnosticsLog.instance;
 
   setUp(() async {
-    dir = await Directory.systemTemp.createTemp('cockpit_diag_test');
+    dir = await Directory.systemTemp.createTemp('gsh_diag_test');
   });
 
   tearDown(() async {
@@ -28,7 +28,7 @@ void main() {
       await log.init(appVersion: '1.0.0', baseDir: dir.path);
       log.logError('flutter', StateError('explodiu'), StackTrace.current);
       final content = await log.currentFile!.readAsString();
-      expect(content, contains('[boot] Cockpit 1.0.0'));
+      expect(content, contains('[boot] GSH 1.0.0'));
       expect(content, contains('[flutter]'));
       expect(content, contains('explodiu'));
     });
@@ -129,14 +129,14 @@ void main() {
     );
 
     test('rotate apaga log além da retenção e preserva o recente', () async {
-      final velho = File('${dir.path}/cockpit-2020-01-01.log');
+      final velho = File('${dir.path}/gsh-2020-01-01.log');
       await velho.writeAsString('antigo');
       await velho.setLastModified(
         DateTime.now().subtract(
           Duration(days: DiagnosticsLog.retentionDays + 1),
         ),
       );
-      final novo = File('${dir.path}/cockpit-recente.log');
+      final novo = File('${dir.path}/gsh-recente.log');
       await novo.writeAsString('recente');
 
       await log.init(appVersion: '1.0.0', baseDir: dir.path);
@@ -145,7 +145,7 @@ void main() {
       expect(novo.existsSync(), isTrue);
     });
 
-    test('rotate ignora arquivos que não são log do cockpit', () async {
+    test('rotate ignora arquivos que não são log do gsh', () async {
       final outro = File('${dir.path}/outra-coisa.txt');
       await outro.writeAsString('x');
       await outro.setLastModified(DateTime(2020));

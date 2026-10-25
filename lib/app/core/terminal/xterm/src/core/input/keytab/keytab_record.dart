@@ -1,5 +1,5 @@
-import 'package:cockpit/app/core/terminal/xterm/src/core/input/keys.dart';
-import 'package:cockpit/app/core/terminal/xterm/src/core/input/keytab/keytab_escape.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/input/keys.dart';
+import 'package:gsh_desktop/app/core/terminal/xterm/src/core/input/keytab/keytab_escape.dart';
 
 enum KeytabActionType { input, shortcut }
 

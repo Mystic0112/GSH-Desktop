@@ -1,8 +1,8 @@
 // Testes do núcleo do multiplexador: a árvore de splits (puro, sem Flutter).
 
-import 'package:cockpit/app/cockpit/ui/states/pane_node.dart';
-import 'package:cockpit/app/core/ui/file_icons/file_icon.dart';
-import 'package:cockpit/app/core/ui/file_icons/file_icon_map.g.dart';
+import 'package:gsh_desktop/app/gsh/ui/states/pane_node.dart';
+import 'package:gsh_desktop/app/core/ui/file_icons/file_icon.dart';
+import 'package:gsh_desktop/app/core/ui/file_icons/file_icon_map.g.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

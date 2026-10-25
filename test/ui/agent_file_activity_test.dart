@@ -1,6 +1,6 @@
-import 'package:cockpit/app/cockpit/domain/entities/git_file_status.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/agent_file_activity.dart';
-import 'package:cockpit/app/core/ui/themes/agent_colors.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/git_file_status.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_file_activity.dart';
+import 'package:gsh_desktop/app/core/ui/themes/agent_colors.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

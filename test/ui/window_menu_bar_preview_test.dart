@@ -3,10 +3,10 @@ library;
 
 import 'dart:io';
 
-import 'package:cockpit/app/core/domain/entities/app_settings.dart';
-import 'package:cockpit/app/core/ui/menu/app_menu_bar.dart';
-import 'package:cockpit/app/core/ui/menu/menu_model.dart';
-import 'package:cockpit/app/core/ui/themes/themes.dart';
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+import 'package:gsh_desktop/app/core/ui/menu/app_menu_bar.dart';
+import 'package:gsh_desktop/app/core/ui/menu/menu_model.dart';
+import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:flutter/services.dart' show FontLoader, LogicalKeyboardKey;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
@@ -70,7 +70,7 @@ String _flutterRoot() {
 
 /// Menus reais o suficiente pra medir a barra (mesmos rótulos do app).
 List<MenuBarMenu> _menus() => <MenuBarMenu>[
-  MenuBarMenu('Cockpit', <MenuNode>[
+  MenuBarMenu('GSH', <MenuNode>[
     MenuAction('Settings…', onSelected: () {}),
     MenuAction('Check for Updates…', onSelected: () {}),
   ]),
@@ -167,8 +167,8 @@ class _WinBtn extends StatelessWidget {
       SizedBox(width: 46, height: 40, child: Icon(icon, size: 14));
 }
 
-/// Host = o mesmo empilhamento do `AppRoot`: ShadcnApp + CockpitTheme (que é a
-/// origem do `context.typo` usado nos rótulos do menu). Sem o CockpitTheme o
+/// Host = o mesmo empilhamento do `AppRoot`: ShadcnApp + GshTheme (que é a
+/// origem do `context.typo` usado nos rótulos do menu). Sem o GshTheme o
 /// fallback chamaria o google_fonts (rede) e o preview quebraria.
 const _previewSettings = AppSettings(interfaceFont: 'Geist', codeFont: 'Geist');
 
@@ -186,7 +186,7 @@ Widget _host(Widget child) {
       brightness: Brightness.dark,
       settings: _previewSettings,
     ).copyWith(platform: () => TargetPlatform.windows),
-    home: CockpitTheme(
+    home: GshTheme(
       colors: tokens.colors,
       typo: tokens.typo,
       syntax: tokens.syntax,

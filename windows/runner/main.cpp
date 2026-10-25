@@ -26,7 +26,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
   // `impeller::AiksContext::GetContentContext` (Event Log de 2026-10-03). Abrir
   // um preview de markdown ou um .panel derrubava o app. Skia segue como era
   // ate o 3.46; reavaliar quando o Impeller/GLES tratar texturas externas.
+#ifdef GSH_HAS_IMPELLER_SWITCH
   project.set_impeller_switch(flutter::ImpellerSwitch::Disabled);
+#endif
 
   std::vector<std::string> command_line_arguments =
       GetCommandLineArguments();
@@ -36,7 +38,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
   FlutterWindow window(project);
   Win32Window::Point origin(10, 10);
   Win32Window::Size size(1280, 720);
-  if (!window.Create(L"Cockpit", origin, size)) {
+  if (!window.Create(L"GSH", origin, size)) {
     return EXIT_FAILURE;
   }
   window.SetQuitOnClose(true);

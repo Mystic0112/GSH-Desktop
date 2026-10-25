@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:cockpit/app/cockpit/domain/entities/agent_message.dart';
-import 'package:cockpit/app/cockpit/domain/entities/desktop_agent_app.dart';
-import 'package:cockpit/app/cockpit/domain/services/mcp_config_merge.dart';
-import 'package:cockpit/app/cockpit/ui/session/external_agent.dart';
-import 'package:cockpit/app/cockpit/ui/session/pane_item.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/agent_graph_store.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/agent_message_delivery.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/agent_message_log.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/cockpit_cli_handler.dart';
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/agent_message.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/desktop_agent_app.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/mcp_config_merge.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/external_agent.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/pane_item.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_graph_store.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_message_delivery.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_message_log.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_cli_handler.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -27,7 +27,7 @@ class _Tab extends PaneItem {
   String get workingDirectory => '/tmp';
 }
 
-const _cmd = '/home/u/.cockpit/bin/cockpit';
+const _cmd = '/home/u/.gsh/bin/gsh';
 final _args = mcpServerArgs('cursor');
 
 void main() {
@@ -40,13 +40,13 @@ void main() {
         '    }\n'
         '}\n';
 
-    test('só mcpServers.cockpit muda; o resto e a indentação ficam', () {
+    test('só mcpServers.gsh muda; o resto e a indentação ficam', () {
       final out = mergeJsonMcpServer(raw, command: _cmd, args: _args);
       final json = jsonDecode(out) as Map<String, dynamic>;
       expect(json['preferences'], {'theme': 'dark'});
-      expect((json['mcpServers'] as Map).keys, ['other', 'cockpit']);
+      expect((json['mcpServers'] as Map).keys, ['other', 'gsh']);
       expect(json['mcpServers']['other']['env'], {'TOKEN': 'secret'});
-      expect(json['mcpServers']['cockpit'], {
+      expect(json['mcpServers']['gsh'], {
         'command': _cmd,
         'args': ['mcp', '--agent', 'cursor'],
       });
@@ -62,7 +62,7 @@ void main() {
           jsonDecode(mergeJsonMcpServer(blank, command: _cmd, args: _args)),
           {
             'mcpServers': {
-              'cockpit': {'command': _cmd, 'args': _args},
+              'gsh': {'command': _cmd, 'args': _args},
             },
           },
         );
@@ -104,15 +104,15 @@ void main() {
       expect(table, contains('args = ["mcp", "--agent", "cursor"]'));
     });
 
-    test('troca só a tabela cockpit; vizinhos e subtabela ficam', () {
+    test('troca só a tabela gsh; vizinhos e subtabela ficam', () {
       const tail =
-          '[mcp_servers.cockpit.env]\n'
+          '[mcp_servers.gsh.env]\n'
           'X = "1"\n'
           '\n'
           '[tui]\n'
           'theme = "x"\n';
       const old =
-          '$head\n[mcp_servers.cockpit]  # mine\ncommand = "old"\nargs = []\n\n$tail';
+          '$head\n[mcp_servers.gsh]  # mine\ncommand = "old"\nargs = []\n\n$tail';
       final out = mergeTomlMcpServer(old, command: _cmd, args: _args);
       expect(out, '$head\n$table\n$tail');
       expect(mergeTomlMcpServer(out, command: _cmd, args: _args), out);
@@ -122,31 +122,31 @@ void main() {
       expect(
         table,
         contains(
-          'env_vars = ["COCKPIT_TAB_ID", "COCKPIT_STATUS_SOCK", '
-          '"COCKPIT_STATUS_PORT", "COCKPIT_STATUS_TOKEN"]',
+          'env_vars = ["GSH_TAB_ID", "GSH_STATUS_SOCK", '
+          '"GSH_STATUS_PORT", "GSH_STATUS_TOKEN"]',
         ),
       );
     });
 
     test('comentários depois da tabela ficam (bloco de hooks)', () {
       const block =
-          '# >>> cockpit hooks (auto-gerado)\n'
+          '# >>> gsh hooks (auto-gerado)\n'
           '# Regerado a cada boot.\n'
           '\n'
           '[hooks.state."x"]\n'
           'enabled = true\n'
-          '# <<< cockpit hooks\n';
+          '# <<< gsh hooks\n';
       const old =
-          '$head\n[mcp_servers.cockpit]\ncommand = "old"\nargs = []\n\n$block';
+          '$head\n[mcp_servers.gsh]\ncommand = "old"\nargs = []\n\n$block';
       final out = mergeTomlMcpServer(old, command: _cmd, args: _args);
       expect(out, '$head\n$table\n$block');
       expect(mergeTomlMcpServer(out, command: _cmd, args: _args), out);
     });
 
-    test('cockpit definido de outro jeito é recusado', () {
+    test('gsh definido de outro jeito é recusado', () {
       for (final bad in [
-        'mcp_servers.cockpit.command = "x"\n',
-        '[mcp_servers]\ncockpit = { command = "x" }\n',
+        'mcp_servers.gsh.command = "x"\n',
+        '[mcp_servers]\ngsh = { command = "x" }\n',
       ]) {
         expect(
           () => mergeTomlMcpServer(bad, command: _cmd, args: _args),
@@ -245,7 +245,7 @@ void main() {
     test('teto: a mais antiga sai; drena tudo de uma vez', () async {
       final e = ext();
       for (var i = 0; i <= ExternalAgent.inboxCap; i++) {
-        e.enqueue('cockpit', 'm$i');
+        e.enqueue('gsh', 'm$i');
       }
       expect(e.pending, ExternalAgent.inboxCap);
       final got = await e.waitMessages(Duration.zero);
@@ -391,7 +391,7 @@ void main() {
       final peer = _Tab('t2', 'Claude Code 2');
       expect(
         linkIntroText(peer),
-        contains('cockpit msg --to "Claude Code 2" "..."'),
+        contains('gsh msg --to "Claude Code 2" "..."'),
       );
       final mcp = linkIntroText(peer, via: AgentChannel.mcpQueue);
       expect(mcp, contains('send tool'));
@@ -403,18 +403,18 @@ void main() {
       expect(agentChannel(peer), AgentChannel.shell);
     });
 
-    test('Codex numa aba: ferramentas do MCP cockpit, não a CLI de shell', () {
+    test('Codex numa aba: ferramentas do MCP gsh, não a CLI de shell', () {
       final peer = _Tab('t2', 'Reviewer');
       final link = linkIntroText(peer, via: AgentChannel.mcpTab);
-      expect(link, contains('`cockpit` MCP server'));
+      expect(link, contains('`gsh` MCP server'));
       expect(link, contains('blocked by your sandbox'));
       expect(link, contains('send tool (to: Reviewer)'));
-      expect(link, isNot(contains('cockpit msg --to')));
+      expect(link, isNot(contains('gsh msg --to')));
       final maestro = maestroIntroText([peer], via: AgentChannel.mcpTab);
       for (final tool in ['send', 'wait_messages', 'list_agents', 'peers']) {
         expect(maestro, contains(tool));
       }
-      expect(maestro, isNot(contains('cockpit msg')));
+      expect(maestro, isNot(contains('gsh msg')));
     });
 
     test(
@@ -425,7 +425,7 @@ void main() {
           linkIntroText(peer, via: AgentChannel.mcpTab, selfId: 't50'),
           maestroIntroText([peer], via: AgentChannel.mcpTab, selfId: 't50'),
         ]) {
-          expect(text, contains('You are Cockpit tab t50.'));
+          expect(text, contains('You are GSH tab t50.'));
           expect(text, contains('always pass from: "t50"'));
         }
         expect(linkIntroText(peer, selfId: 't50'), isNot(contains('t50')));

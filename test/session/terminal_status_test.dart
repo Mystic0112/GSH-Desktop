@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:cockpit/app/cockpit/domain/contracts/terminal_gateway.dart';
-import 'package:cockpit/app/cockpit/domain/contracts/terminal_status_server.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/cockpit_cli_handler.dart';
-import 'package:cockpit/app/core/domain/result.dart';
-import 'package:cockpit/app/cockpit/domain/services/terminal_harness_monitor.dart';
-import 'package:cockpit/app/core/domain/entities/harness.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/terminal_gateway.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/terminal_status_server.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_cli_handler.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/gsh/domain/services/terminal_harness_monitor.dart';
+import 'package:gsh_desktop/app/core/domain/entities/harness.dart';
 import 'package:fake_async/fake_async.dart';
-import 'package:cockpit/app/core/utils/spawn_directory.dart';
-import 'package:cockpit/app/core/domain/entities/terminal_profile.dart';
-import 'package:cockpit/app/cockpit/ui/session/terminal_session.dart';
+import 'package:gsh_desktop/app/core/utils/spawn_directory.dart';
+import 'package:gsh_desktop/app/core/domain/entities/terminal_profile.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/terminal_session.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// [TerminalGateway] inerte — não sobe PTY nenhum; só satisfaz o construtor da
@@ -223,9 +223,9 @@ void main() {
     });
   });
 
-  // Codex CLI roda as sessões num daemon compartilhado: o `cockpit mcp` não
+  // Codex CLI roda as sessões num daemon compartilhado: o `gsh mcp` não
   // tem árvore de aba, então cada chamada diz `from`.
-  group('from do cockpit mcp (actAsMcpFrom)', () {
+  group('from do gsh mcp (actAsMcpFrom)', () {
     test('aba Codex age como ela; outra aba, desconhecida e ausente', () async {
       final codexMon = _FakeMonitor();
       final claudeMon = _FakeMonitor();
@@ -235,12 +235,12 @@ void main() {
       codexMon.onChange!(HarnessKind.codex);
       claudeMon.onChange!(HarnessKind.claudeCode);
       final tabs = [codex, claude];
-      CockpitCommand cmd(String verb, Object? from) => CockpitCommand(
+      GshCommand cmd(String verb, Object? from) => GshCommand(
         cmd: verb,
         tabId: 'ext:codex-desktop',
         args: {'from': ?from, 'timeout': 0},
       );
-      String? tabOf(Result<CockpitCommand, String> r) =>
+      String? tabOf(Result<GshCommand, String> r) =>
           r.fold((c) => c.tabId, (e) => 'ERR $e');
 
       for (final verb in ['msg', 'peers', 'agents', 'ext-wait']) {

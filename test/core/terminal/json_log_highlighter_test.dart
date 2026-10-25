@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/terminal/json_log_highlighter.dart';
+import 'package:gsh_desktop/app/core/terminal/json_log_highlighter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Envolve [token] no SGR indexado [color] — mesma forma que o highlighter emite.

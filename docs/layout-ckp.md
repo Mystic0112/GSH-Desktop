@@ -1,13 +1,13 @@
 # `*.ckp` — Layouts de orquestração de panes
 
 Um arquivo `.ckp` é um YAML **versionável** que descreve os terminais a abrir
-num workspace do Cockpit — o equivalente a um layout de tmuxinator. Um arquivo
+num workspace do GSH — o equivalente a um layout de tmuxinator. Um arquivo
 = um layout; o nome do layout é o nome do arquivo (`dev.ckp` → layout "dev").
 
 Três formas de aplicar:
 
 1. **GUI** — botão direito no arquivo `.ckp` na árvore → **Open layout**.
-2. **CLI interna** — `cockpit orchestrate dev.ckp` (de dentro de uma tab).
+2. **CLI interna** — `gsh orchestrate dev.ckp` (de dentro de uma tab).
 3. **Autorun em worktree** — `autorun: worktree` no arquivo: ao criar uma
    worktree do workspace, o layout é aplicado sozinho (a worktree nasce vazia,
    então a geometria sai exata).
@@ -64,5 +64,5 @@ panes:
 
 ## Editor
 
-O Cockpit trata `.ckp` como YAML (highlight) e mostra o logo do Cockpit como
+O GSH trata `.ckp` como YAML (highlight) e mostra o logo do GSH como
 ícone do arquivo na árvore.

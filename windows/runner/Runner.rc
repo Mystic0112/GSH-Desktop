@@ -96,13 +96,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "Jacob Moura" "\0"
-            VALUE "FileDescription", "Remote Pi Cockpit" "\0"
+            VALUE "CompanyName", "Gorila Software House" "\0"
+            VALUE "FileDescription", "GSH Desktop" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "Cockpit" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 Jacob Moura. All rights reserved." "\0"
-            VALUE "OriginalFilename", "Cockpit.exe" "\0"
-            VALUE "ProductName", "Remote Pi Cockpit" "\0"
+            VALUE "InternalName", "GSH" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 Gorila Software House. Based on Cockpit (MIT) by Jacob Moura." "\0"
+            VALUE "OriginalFilename", "GSH.exe" "\0"
+            VALUE "ProductName", "GSH Desktop" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

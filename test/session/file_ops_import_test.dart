@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/domain/contracts/file_system_mutator.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/file_ops_controller.dart';
-import 'package:cockpit/app/core/domain/exceptions/file_operation_error.dart';
-import 'package:cockpit/app/core/domain/result.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/file_system_mutator.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/file_ops_controller.dart';
+import 'package:gsh_desktop/app/core/domain/exceptions/file_operation_error.dart';
+import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Registra as chamadas; `copy`/`rename` não tocam o disco (o controller só

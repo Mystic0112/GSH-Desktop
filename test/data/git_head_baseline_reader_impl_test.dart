@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/filesystem/git_binary.dart';
-import 'package:cockpit/app/cockpit/data/filesystem/git_head_baseline_reader_impl.dart';
+import 'package:gsh_desktop/app/gsh/data/filesystem/git_binary.dart';
+import 'package:gsh_desktop/app/gsh/data/filesystem/git_head_baseline_reader_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -23,7 +23,7 @@ void main() {
       File('${repo.path}/$rel').writeAsString(content);
 
   setUp(() async {
-    repo = await Directory.systemTemp.createTemp('cockpit_head_baseline_');
+    repo = await Directory.systemTemp.createTemp('gsh_head_baseline_');
     await git(['init']);
     await git(['config', 'user.email', 'test@example.com']);
     await git(['config', 'user.name', 'Test']);
@@ -149,7 +149,7 @@ void main() {
       markTestSkipped('git não disponível');
       return;
     }
-    final orphan = await Directory.systemTemp.createTemp('cockpit_no_git_');
+    final orphan = await Directory.systemTemp.createTemp('gsh_no_git_');
     addTearDown(() async {
       if (await orphan.exists()) await orphan.delete(recursive: true);
     });

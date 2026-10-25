@@ -1,13 +1,13 @@
 #!/bin/bash
-# Compila o helper `cockpit-hook` (tool/cockpit_hook.dart) e o coloca no lugar
+# Compila o helper `gsh-hook` (tool/gsh_hook.dart) e o coloca no lugar
 # certo, assinado. Dois modos:
 #
 #   ./macos/build_hook.sh dev
-#     Compila para ~/.cockpit/bin/cockpit-hook (para `flutter run` / testes E2E).
+#     Compila para ~/.gsh/bin/gsh-hook (para `flutter run` / testes E2E).
 #
 #   (sem args / rodado pelo Xcode como Run Script phase)
 #     Compila e copia para
-#       ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/cockpit-hook
+#       ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/gsh-hook
 #     e code-signa com ${EXPANDED_CODE_SIGN_IDENTITY} (a mesma da app).
 #
 # Adicionado como Run Script phase no target Runner (Xcode), depois do
@@ -15,8 +15,8 @@
 # PRODUCT_NAME/EXPANDED_CODE_SIGN_IDENTITY/FLUTTER_ROOT vêm do Xcode.
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"   # cockpit/
-SRC="$ROOT/tool/cockpit_hook.dart"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"   # gsh/
+SRC="$ROOT/tool/gsh_hook.dart"
 
 # Resolve o `dart`: 1) Flutter (FLUTTER_ROOT setado pelo Xcode), 2) PATH.
 resolve_dart() {
@@ -41,7 +41,7 @@ compile() {
 
 mode="${1:-bundle}"
 if [ "$mode" = "dev" ]; then
-  compile "$HOME/.cockpit/bin/cockpit-hook"
+  compile "$HOME/.gsh/bin/gsh-hook"
   echo "[build_hook] dev OK"
   exit 0
 fi
@@ -49,7 +49,7 @@ fi
 # Modo bundle (Xcode).
 : "${BUILT_PRODUCTS_DIR:?precisa rodar pelo Xcode (BUILT_PRODUCTS_DIR ausente)}"
 : "${PRODUCT_NAME:?PRODUCT_NAME ausente}"
-DEST="$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app/Contents/Resources/cockpit-hook"
+DEST="$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app/Contents/Resources/gsh-hook"
 compile "$DEST"
 
 # Assinatura: exe AOT do Dart é morto sob hardened runtime ad-hoc. Então:
@@ -63,7 +63,7 @@ if [ -z "$IDENTITY" ] || [ "$IDENTITY" = "-" ]; then
 else
   echo "[build_hook] codesign ($IDENTITY) + hardened runtime $DEST"
   codesign --force --options runtime \
-    --entitlements "$ROOT/macos/cockpit_hook.entitlements" \
+    --entitlements "$ROOT/macos/gsh_hook.entitlements" \
     -s "$IDENTITY" "$DEST"
 fi
 echo "[build_hook] bundle OK -> $DEST"

@@ -1,5 +1,5 @@
 PODS:
-  - cockpit_pty (0.0.1):
+  - gsh_pty (0.0.1):
     - Flutter
   - Flutter (1.0.0)
   - flutter_inappwebview_ios (0.0.1):
@@ -20,7 +20,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - cockpit_pty (from `.symlinks/plugins/cockpit_pty/ios`)
+  - gsh_pty (from `.symlinks/plugins/gsh_pty/ios`)
   - Flutter (from `Flutter`)
   - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
@@ -33,8 +33,8 @@ SPEC REPOS:
     - OrderedSet
 
 EXTERNAL SOURCES:
-  cockpit_pty:
-    :path: ".symlinks/plugins/cockpit_pty/ios"
+  gsh_pty:
+    :path: ".symlinks/plugins/gsh_pty/ios"
   Flutter:
     :path: Flutter
   flutter_inappwebview_ios:
@@ -49,7 +49,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/pasteboard/ios"
 
 SPEC CHECKSUMS:
-  cockpit_pty: 273697d84c160c4725643cd78000d5353a31de9e
+  gsh_pty: 273697d84c160c4725643cd78000d5353a31de9e
   Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
   flutter_inappwebview_ios: b89ba3482b96fb25e00c967aae065701b66e9b99
   flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13

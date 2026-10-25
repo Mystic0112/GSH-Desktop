@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cockpit/app/core/data/diagnostics/diagnostics_log.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -78,7 +78,7 @@ enum PerfField {
 typedef PerfSink = void Function(String metric, Map<String, num> fields);
 
 /// Telemetria de performance **opt-in de desenvolvedor**: liga com
-/// `COCKPIT_PERF=1` (alias legado `COCKPIT_PERF_DIAGNOSTICS=1`) em qualquer
+/// `GSH_PERF=1` (alias legado `GSH_PERF_DIAGNOSTICS=1`) em qualquer
 /// SO. Desligada em produção por decisão (plano 68): sem envio para fora, o
 /// número só serve a quem consegue lê-lo, e quem lê é o dono na própria
 /// máquina, medindo o `.dmg` instalado.
@@ -98,12 +98,12 @@ final class PerformanceDiagnostics {
 
   static final PerformanceDiagnostics instance = PerformanceDiagnostics();
 
-  /// `COCKPIT_PERF=1` (ou o alias legado) no ambiente do processo.
+  /// `GSH_PERF=1` (ou o alias legado) no ambiente do processo.
   static bool get envEnabled => _envEnabled();
 
   static bool _envEnabled() {
     final env = Platform.environment;
-    return env['COCKPIT_PERF'] == '1' || env['COCKPIT_PERF_DIAGNOSTICS'] == '1';
+    return env['GSH_PERF'] == '1' || env['GSH_PERF_DIAGNOSTICS'] == '1';
   }
 
   /// Ligada por env no boot ou por [enable] (modo desenvolvedor).
@@ -113,7 +113,7 @@ final class PerformanceDiagnostics {
   final Duration flushEvery;
 
   /// Destino das amostras. O default escreve no [DiagnosticsLog]; a página
-  /// do Cockpit troca pelo run do app na Telemetria (`AppTelemetryBridge`).
+  /// do GSH troca pelo run do app na Telemetria (`AppTelemetryBridge`).
   PerfSink sink;
 
   final List<_Entry> _entries = [];

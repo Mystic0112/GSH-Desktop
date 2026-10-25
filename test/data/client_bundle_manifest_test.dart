@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:cockpit/app/cockpit/data/remote/host_shell/host_shell.dart';
+import 'package:gsh_desktop/app/gsh/data/remote/host_shell/host_shell.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late Directory root;
 
   setUp(() {
-    root = Directory.systemTemp.createTempSync('cockpit-client-bundle');
+    root = Directory.systemTemp.createTempSync('gsh-client-bundle');
     Directory('${root.path}/bin').createSync();
     Directory('${root.path}/lib').createSync();
   });
@@ -22,9 +22,9 @@ void main() {
   test(
     'manifesto é determinístico e cobre todos os arquivos implantados',
     () async {
-      final server = put('bin/cockpit-server-arm64', 'server');
-      put('bin/cockpit', 'cli');
-      put('lib/libcockpit_pty.so', 'pty');
+      final server = put('bin/gsh-server-arm64', 'server');
+      put('bin/gsh', 'cli');
+      put('lib/libgsh_pty.so', 'pty');
       put('lib/libanaki_sqlite.so', 'sqlite');
       final bundle = ClientBundle(root: root.path, serverBinary: server.path);
 
@@ -36,21 +36,21 @@ void main() {
       expect(
         first.files.map((file) => file.remotePath),
         orderedEquals([
-          'bin/cockpit',
-          'bin/cockpit-server',
+          'bin/gsh',
+          'bin/gsh-server',
           'lib/libanaki_sqlite.so',
-          'lib/libcockpit_pty.so',
+          'lib/libgsh_pty.so',
         ]),
       );
-      expect(first.contents, contains('  bin/cockpit-server\n'));
-      expect(first.contents, contains('  lib/libcockpit_pty.so\n'));
+      expect(first.contents, contains('  bin/gsh-server\n'));
+      expect(first.contents, contains('  lib/libgsh_pty.so\n'));
     },
   );
 
   test('mudança só na CLI ou só numa lib muda o digest do bundle', () async {
-    final server = put('bin/cockpit-server', 'same-server');
-    final cli = put('bin/cockpit', 'cli-v1');
-    final pty = put('lib/libcockpit_pty.so', 'pty-v1');
+    final server = put('bin/gsh-server', 'same-server');
+    final cli = put('bin/gsh', 'cli-v1');
+    final pty = put('lib/libgsh_pty.so', 'pty-v1');
     final bundle = ClientBundle(root: root.path, serverBinary: server.path);
 
     final original = (await bundle.buildManifest()).digest;

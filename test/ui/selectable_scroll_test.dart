@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/ui/widgets/selectable_scroll.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/selectable_scroll.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

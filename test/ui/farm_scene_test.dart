@@ -1,24 +1,29 @@
 import 'dart:math' as math;
 
-import 'package:cockpit/app/cockpit/domain/entities/farm_loop.dart';
-import 'package:cockpit/app/cockpit/ui/viewmodels/farm_viewmodel.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/farm/farm_scene.dart';
-import 'package:cockpit/app/cockpit/ui/widgets/farm/farm_world.dart';
+import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_squad_looks.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_world.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 FarmLoop _loop(
   String id,
   String project, {
   String? parent,
+  String? agentType,
+  String? title,
   FarmActivity activity = FarmActivity.running,
 }) => FarmLoop(
   id: id,
   harness: 'claude',
   project: project,
-  title: id,
+  title: title ?? id,
   activity: activity,
   lastSeen: DateTime(2026, 10, 23),
   parentId: parent,
+  agentType: agentType,
 );
 
 FarmLayout _layout(int plots) => layoutFarm(
@@ -122,9 +127,105 @@ void main() {
     final scene = FarmScene(rnd: math.Random(1))..layout = _layout(6);
     scene.sync(groupFarm([_loop('w', '/p/a')]));
     expect(scene.critters['w']!.mode, CritterMode.work);
-    scene.sync(
-      groupFarm([_loop('w', '/p/a', activity: FarmActivity.waiting)]),
-    );
+    scene.sync(groupFarm([_loop('w', '/p/a', activity: FarmActivity.waiting)]));
     expect(scene.critters['w']!.mode, CritterMode.wait);
+  });
+
+  test('órfãos (pai fora da janela) ganham canteiro e aparecem', () {
+    final scene = FarmScene(rnd: math.Random(1))..layout = _layout(6);
+    scene.sync(
+      groupFarm([
+        _loop('m', '/p/a'),
+        _loop('o1', '/p/a', parent: 'sumiu'),
+        _loop('o2', '/p/a', parent: 'sumiu'),
+      ]),
+    );
+    expect(scene.critters.keys, containsAll(['m', 'o1', 'o2']));
+    final orphan = scene.plotInfo.where((i) => i != null && i.main == null);
+    expect(orphan, hasLength(1));
+    expect(orphan.single!.minis, 2);
+    expect(scene.need.plots, 2);
+    // o pai volta: o canteiro dos órfãos vira o dele
+    final at = scene.plotInfo.indexOf(orphan.single);
+    scene.sync(
+      groupFarm([
+        _loop('m', '/p/a'),
+        _loop('sumiu', '/p/a'),
+        _loop('o1', '/p/a', parent: 'sumiu'),
+      ]),
+    );
+    expect(scene.plotInfo[at]?.main?.id, 'sumiu');
+  });
+
+  test('agente do squad tem visual fixo; desconhecido segue sorteado', () {
+    expect(squadNameOf(_loop('a', '/p', agentType: 'escanor')), 'escanor');
+    expect(
+      squadNameOf(_loop('a', '/p', agentType: 'gorila-squad:Bulma')),
+      'bulma',
+    );
+    expect(squadNameOf(_loop('a', '/p', title: 'Kurama')), 'kurama');
+    expect(squadNameOf(_loop('a', '/p', agentType: 'Explore')), isNull);
+    final scene = FarmScene(rnd: math.Random(1))..layout = _layout(6);
+    scene.sync(
+      groupFarm([
+        _loop('m', '/p/a', title: 'kurama'),
+        _loop('s1', '/p/a', parent: 'm', agentType: 'escanor'),
+        _loop('s2', '/p/a', parent: 'm', agentType: 'Explore'),
+      ]),
+    );
+    expect(scene.critters['m']!.skin.hat, FarmHat.wizard);
+    expect(scene.critters['m']!.skin.body, squadLooks['kurama']!.body);
+    expect(scene.critters['s1']!.squad?.hat, FarmHat.crown);
+    expect(scene.critters['s2']!.squad, isNull);
+  });
+
+  test('quem passeia contorna o celeiro em vez de travar nele', () {
+    final scene = FarmScene(rnd: math.Random(3))..layout = _layout(6);
+    final l = scene.layout!;
+    scene.sync(groupFarm([_loop('w', '/p/a', activity: FarmActivity.idle)]));
+    final c = scene.critters['w']!;
+    // de um lado do celeiro ao outro, com ele no meio do caminho
+    final y = l.barn.center.dy;
+    c
+      ..x = l.barn.left - 14
+      ..y = y
+      ..tx = l.barn.right + 14
+      ..ty = y
+      ..roam = 0;
+    final goal = (c.tx, c.ty);
+    var reached = false;
+    for (var i = 0; i < 20 * 12 && !reached; i++) {
+      c.update(0.05, scene);
+      expect(l.blocked(c.x, c.y), isFalse);
+      reached = (c.x - goal.$1).abs() + (c.y - goal.$2).abs() < 1.5;
+    }
+    expect(reached, isTrue);
+  });
+
+  test('fazenda parada pula a maior parte dos quadros', () {
+    final scene = FarmScene(rnd: math.Random(1))..layout = _layout(6);
+    scene.sync(
+      groupFarm([
+        for (var i = 0; i < 4; i++)
+          _loop('z$i', '/p/$i', activity: FarmActivity.sleeping),
+      ]),
+    );
+    expect(scene.busy, isFalse);
+    // todo mundo chega no lugar, as faíscas de chegada caem
+    for (var i = 0; i < 12 * 30; i++) {
+      scene.update(1 / 12);
+    }
+    var dirty = 0;
+    const frames = 12 * 20;
+    for (var i = 0; i < frames; i++) {
+      if (scene.update(1 / 12)) dirty++;
+    }
+    // ignore: avoid_print
+    print('farm: $dirty de $frames quadros repintados (parada, 12 fps)');
+    // só o relógio lento (4 Hz) e uma piscada aqui e ali
+    expect(dirty, lessThan(frames * 0.5));
+    // algo andando (faísca) suja o quadro
+    scene.sparkle(10, 10, 1);
+    expect(scene.update(1 / 12), isTrue);
   });
 }

@@ -26,7 +26,7 @@
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Remote Pi Cockpit</string>
+	<string>Remote Pi GSH</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -59,24 +59,24 @@
 	<key>SUScheduledCheckInterval</key>
 	<integer>86400</integer>
 	<!-- Tipos de documento (janela de documento, 2.0): os formatos PRÓPRIOS
-	     são "Owner" (duplo clique abre no Cockpit); markdown e .http ficam
+	     são "Owner" (duplo clique abre no GSH); markdown e .http ficam
 	     como "Alternate" (aparecem em "Abrir com", sem roubar o padrão de
 	     quem usa Obsidian/Typora). O .notebook é uma PASTA-pacote. -->
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleTypeName</key>
-			<string>Cockpit Kanban Board</string>
+			<string>GSH Kanban Board</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
-			<array><string>work.jacobmoura.cockpit.kanban</string></array>
+			<array><string>work.gorila.gshdesktop.kanban</string></array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeName</key>
-			<string>Cockpit Notebook</string>
+			<string>GSH Notebook</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
@@ -84,27 +84,27 @@
 			<key>LSTypeIsPackage</key>
 			<true/>
 			<key>LSItemContentTypes</key>
-			<array><string>work.jacobmoura.cockpit.notebook</string></array>
+			<array><string>work.gorila.gshdesktop.notebook</string></array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeName</key>
-			<string>Cockpit Pane Layout</string>
+			<string>GSH Pane Layout</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
-			<array><string>work.jacobmoura.cockpit.layout</string></array>
+			<array><string>work.gorila.gshdesktop.layout</string></array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeName</key>
-			<string>Cockpit Database Query</string>
+			<string>GSH Database Query</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
-			<array><string>work.jacobmoura.cockpit.dbquery</string></array>
+			<array><string>work.gorila.gshdesktop.dbquery</string></array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeName</key>
@@ -131,9 +131,9 @@
 	<array>
 		<dict>
 			<key>UTTypeIdentifier</key>
-			<string>work.jacobmoura.cockpit.kanban</string>
+			<string>work.gorila.gshdesktop.kanban</string>
 			<key>UTTypeDescription</key>
-			<string>Cockpit Kanban Board</string>
+			<string>GSH Kanban Board</string>
 			<key>UTTypeConformsTo</key>
 			<array><string>net.daringfireball.markdown</string><string>public.plain-text</string></array>
 			<key>UTTypeTagSpecification</key>
@@ -144,9 +144,9 @@
 		</dict>
 		<dict>
 			<key>UTTypeIdentifier</key>
-			<string>work.jacobmoura.cockpit.notebook</string>
+			<string>work.gorila.gshdesktop.notebook</string>
 			<key>UTTypeDescription</key>
-			<string>Cockpit Notebook</string>
+			<string>GSH Notebook</string>
 			<key>UTTypeConformsTo</key>
 			<array><string>com.apple.package</string></array>
 			<key>UTTypeTagSpecification</key>
@@ -157,9 +157,9 @@
 		</dict>
 		<dict>
 			<key>UTTypeIdentifier</key>
-			<string>work.jacobmoura.cockpit.layout</string>
+			<string>work.gorila.gshdesktop.layout</string>
 			<key>UTTypeDescription</key>
-			<string>Cockpit Pane Layout</string>
+			<string>GSH Pane Layout</string>
 			<key>UTTypeConformsTo</key>
 			<array><string>public.yaml</string><string>public.plain-text</string></array>
 			<key>UTTypeTagSpecification</key>
@@ -170,9 +170,9 @@
 		</dict>
 		<dict>
 			<key>UTTypeIdentifier</key>
-			<string>work.jacobmoura.cockpit.dbquery</string>
+			<string>work.gorila.gshdesktop.dbquery</string>
 			<key>UTTypeDescription</key>
-			<string>Cockpit Database Query</string>
+			<string>GSH Database Query</string>
 			<key>UTTypeConformsTo</key>
 			<array><string>public.plain-text</string></array>
 			<key>UTTypeTagSpecification</key>

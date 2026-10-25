@@ -1,4 +1,4 @@
-import 'package:cockpit/app/core/utils/remote_path.dart';
+import 'package:gsh_desktop/app/core/utils/remote_path.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
