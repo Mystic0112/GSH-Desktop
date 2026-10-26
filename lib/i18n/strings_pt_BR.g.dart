@@ -1371,6 +1371,13 @@ class _Translations$gsh$chat$pt_BR extends Translations$gsh$chat$en {
 	@override String usageResetsToday({required Object time}) => 'zera às ${time}';
 	@override String usageResetsOn({required Object date, required Object time}) => 'zera em ${date} às ${time}';
 	@override String get usageUnavailable => 'Uso do plano indisponível agora.';
+	@override String get resume => 'Retomar conversa';
+	@override String get resumeHint => 'Abrir numa aba nova uma conversa recente do Claude Code desta máquina, com o histórico.';
+	@override String get resumeEmpty => 'Retomar uma conversa';
+	@override String get resumeNone => 'Nenhuma conversa nos últimos 7 dias.';
+	@override String get resumeLiveTitle => 'Esta conversa está aberta em outro lugar?';
+	@override String resumeLiveBody({required Object ago}) => 'Ela mudou ${ago}. Se ainda estiver aberta (Claude Desktop, terminal), continuar aqui faz os dois escreverem na mesma conversa. Feche lá antes.';
+	@override String get resumeAnyway => 'Abrir mesmo assim';
 	@override String remoteControlActive({required Object url}) => 'Esta conversa já está no Remote Control: continue no celular ou em ${url}';
 	@override String get remoteControlNoSession => 'Mande uma mensagem primeiro: o Remote Control continua uma conversa que já existe.';
 	@override String get remoteControlBusy => 'Espere o agente terminar este turno e tente de novo.';
@@ -3495,6 +3502,13 @@ extension on TranslationsPtBr {
 			'gsh.chat.usageResetsToday' => ({required Object time}) => 'zera às ${time}',
 			'gsh.chat.usageResetsOn' => ({required Object date, required Object time}) => 'zera em ${date} às ${time}',
 			'gsh.chat.usageUnavailable' => 'Uso do plano indisponível agora.',
+			'gsh.chat.resume' => 'Retomar conversa',
+			'gsh.chat.resumeHint' => 'Abrir numa aba nova uma conversa recente do Claude Code desta máquina, com o histórico.',
+			'gsh.chat.resumeEmpty' => 'Retomar uma conversa',
+			'gsh.chat.resumeNone' => 'Nenhuma conversa nos últimos 7 dias.',
+			'gsh.chat.resumeLiveTitle' => 'Esta conversa está aberta em outro lugar?',
+			'gsh.chat.resumeLiveBody' => ({required Object ago}) => 'Ela mudou ${ago}. Se ainda estiver aberta (Claude Desktop, terminal), continuar aqui faz os dois escreverem na mesma conversa. Feche lá antes.',
+			'gsh.chat.resumeAnyway' => 'Abrir mesmo assim',
 			'gsh.chat.remoteControlActive' => ({required Object url}) => 'Esta conversa já está no Remote Control: continue no celular ou em ${url}',
 			'gsh.chat.remoteControlNoSession' => 'Mande uma mensagem primeiro: o Remote Control continua uma conversa que já existe.',
 			'gsh.chat.remoteControlBusy' => 'Espere o agente terminar este turno e tente de novo.',
@@ -3688,6 +3702,8 @@ extension on TranslationsPtBr {
 			'settings.page.nav.privacy' => 'Privacidade',
 			'settings.page.nav.usage' => 'Uso',
 			'settings.page.nav.resources' => 'Recursos',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.nav.gshFeatures' => 'Recursos do GSH',
 			'settings.page.nav.memory' => 'Memória',
 			'settings.page.nav.designSystems' => 'Design systems',
@@ -3695,8 +3711,6 @@ extension on TranslationsPtBr {
 			'settings.page.nav.system' => 'Sistema',
 			'settings.page.nav.extensions' => 'Extensões',
 			'settings.page.nav.developer' => 'Desenvolvedor',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.nav.skills' => 'Skills',
 			'settings.page.nav.connectors' => 'Conectores',
 			'settings.page.nav.plugins' => 'Plugins',
@@ -4202,6 +4216,8 @@ extension on TranslationsPtBr {
 			'theme.error.missingField' => ({required Object field}) => 'Falta o campo obrigatório "${field}".',
 			'theme.error.badColor' => ({required Object value, required Object field}) => '"${value}" em "${field}" não é uma cor. Use #RGB, #RRGGBB ou #RRGGBBAA.',
 			'theme.error.unknownBase' => ({required Object value}) => 'Tema base "${value}" desconhecido em "extends".',
+			_ => null,
+		} ?? switch (path) {
 			'theme.error.noVariants' => 'O tema não declara nenhum variant. Adicione "dark", "light" ou os dois em "variants".',
 			_ => null,
 		};

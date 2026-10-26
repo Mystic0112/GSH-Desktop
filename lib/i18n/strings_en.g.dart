@@ -2926,6 +2926,27 @@ class Translations$gsh$chat$en {
 	/// en: 'Plan usage unavailable right now.'
 	String get usageUnavailable => 'Plan usage unavailable right now.';
 
+	/// en: 'Resume conversation'
+	String get resume => 'Resume conversation';
+
+	/// en: 'Open a recent Claude Code conversation from this machine in a new tab, with its history.'
+	String get resumeHint => 'Open a recent Claude Code conversation from this machine in a new tab, with its history.';
+
+	/// en: 'Resume a conversation'
+	String get resumeEmpty => 'Resume a conversation';
+
+	/// en: 'No conversations in the last 7 days.'
+	String get resumeNone => 'No conversations in the last 7 days.';
+
+	/// en: 'Is this conversation open somewhere else?'
+	String get resumeLiveTitle => 'Is this conversation open somewhere else?';
+
+	/// en: 'It changed ${ago}. If it is still open (Claude Desktop, a terminal), continuing here makes both write to the same conversation. Close it there first.'
+	String resumeLiveBody({required Object ago}) => 'It changed ${ago}. If it is still open (Claude Desktop, a terminal), continuing here makes both write to the same conversation. Close it there first.';
+
+	/// en: 'Open anyway'
+	String get resumeAnyway => 'Open anyway';
+
 	/// en: 'This conversation is already on Remote Control: continue on your phone or at ${url}'
 	String remoteControlActive({required Object url}) => 'This conversation is already on Remote Control: continue on your phone or at ${url}';
 
@@ -6568,6 +6589,13 @@ extension on Translations {
 			'gsh.chat.usageResetsToday' => ({required Object time}) => 'resets at ${time}',
 			'gsh.chat.usageResetsOn' => ({required Object date, required Object time}) => 'resets ${date} at ${time}',
 			'gsh.chat.usageUnavailable' => 'Plan usage unavailable right now.',
+			'gsh.chat.resume' => 'Resume conversation',
+			'gsh.chat.resumeHint' => 'Open a recent Claude Code conversation from this machine in a new tab, with its history.',
+			'gsh.chat.resumeEmpty' => 'Resume a conversation',
+			'gsh.chat.resumeNone' => 'No conversations in the last 7 days.',
+			'gsh.chat.resumeLiveTitle' => 'Is this conversation open somewhere else?',
+			'gsh.chat.resumeLiveBody' => ({required Object ago}) => 'It changed ${ago}. If it is still open (Claude Desktop, a terminal), continuing here makes both write to the same conversation. Close it there first.',
+			'gsh.chat.resumeAnyway' => 'Open anyway',
 			'gsh.chat.remoteControlActive' => ({required Object url}) => 'This conversation is already on Remote Control: continue on your phone or at ${url}',
 			'gsh.chat.remoteControlNoSession' => 'Send a message first: Remote Control continues an existing conversation.',
 			'gsh.chat.remoteControlBusy' => 'Wait for the agent to finish this turn, then try again.',
@@ -6761,6 +6789,8 @@ extension on Translations {
 			'settings.page.nav.privacy' => 'Privacy',
 			'settings.page.nav.usage' => 'Usage',
 			'settings.page.nav.resources' => 'Resources',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.nav.gshFeatures' => 'GSH features',
 			'settings.page.nav.memory' => 'Memory',
 			'settings.page.nav.designSystems' => 'Design systems',
@@ -6768,8 +6798,6 @@ extension on Translations {
 			'settings.page.nav.system' => 'System',
 			'settings.page.nav.extensions' => 'Extensions',
 			'settings.page.nav.developer' => 'Developer',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.nav.skills' => 'Skills',
 			'settings.page.nav.connectors' => 'Connectors',
 			'settings.page.nav.plugins' => 'Plugins',
@@ -7275,6 +7303,8 @@ extension on Translations {
 			'theme.error.missingField' => ({required Object field}) => 'Missing required field "${field}".',
 			'theme.error.badColor' => ({required Object value, required Object field}) => '"${value}" at "${field}" is not a color. Use #RGB, #RRGGBB or #RRGGBBAA.',
 			'theme.error.unknownBase' => ({required Object value}) => 'Unknown base theme "${value}" in "extends".',
+			_ => null,
+		} ?? switch (path) {
 			'theme.error.noVariants' => 'The theme declares no variant. Add "dark", "light" or both under "variants".',
 			_ => null,
 		};

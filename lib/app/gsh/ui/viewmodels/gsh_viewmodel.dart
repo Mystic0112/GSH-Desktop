@@ -2023,6 +2023,22 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
       _openBrowserTab(projectId, matches: (_) => false, make: _newChat)
           as ChatSession?;
 
+  /// Abre (ou foca, se já estiver aberta) uma aba de chat que continua a
+  /// conversa [sessionId] do Claude Code, na pasta original dela ([cwd]) —
+  /// o `--resume` só acha a sessão lá. Fica no workspace selecionado.
+  ChatSession? resumeChat({required String sessionId, required String cwd}) =>
+      _openBrowserTab(
+            null,
+            matches: (s) => s is ChatSession && s.sessionId == sessionId,
+            make: (id, pid, _) => ChatSession(
+              id: id,
+              projectId: pid,
+              workingDirectory: cwd,
+              sessionId: sessionId,
+            ),
+          )
+          as ChatSession?;
+
   /// Workspace de sistema (sem pasta): o claude roda na home.
   ChatSession _newChat(String id, String pid, String path) => ChatSession(
     id: id,

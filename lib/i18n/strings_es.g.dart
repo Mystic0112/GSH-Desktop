@@ -1371,6 +1371,13 @@ class _Translations$gsh$chat$es extends Translations$gsh$chat$en {
 	@override String usageResetsToday({required Object time}) => 'se reinicia a las ${time}';
 	@override String usageResetsOn({required Object date, required Object time}) => 'se reinicia el ${date} a las ${time}';
 	@override String get usageUnavailable => 'Uso del plan no disponible ahora.';
+	@override String get resume => 'Retomar conversación';
+	@override String get resumeHint => 'Abrir en una pestaña nueva una conversación reciente de Claude Code de esta máquina, con su historial.';
+	@override String get resumeEmpty => 'Retomar una conversación';
+	@override String get resumeNone => 'Ninguna conversación en los últimos 7 días.';
+	@override String get resumeLiveTitle => '¿Esta conversación está abierta en otro lugar?';
+	@override String resumeLiveBody({required Object ago}) => 'Cambió ${ago}. Si sigue abierta (Claude Desktop, una terminal), continuar aquí hace que ambos escriban en la misma conversación. Ciérrala allí antes.';
+	@override String get resumeAnyway => 'Abrir de todos modos';
 	@override String remoteControlActive({required Object url}) => 'Esta conversación ya está en Remote Control: continúa en el móvil o en ${url}';
 	@override String get remoteControlNoSession => 'Envía un mensaje primero: Remote Control continúa una conversación existente.';
 	@override String get remoteControlBusy => 'Espera a que el agente termine este turno e inténtalo de nuevo.';
@@ -3495,6 +3502,13 @@ extension on TranslationsEs {
 			'gsh.chat.usageResetsToday' => ({required Object time}) => 'se reinicia a las ${time}',
 			'gsh.chat.usageResetsOn' => ({required Object date, required Object time}) => 'se reinicia el ${date} a las ${time}',
 			'gsh.chat.usageUnavailable' => 'Uso del plan no disponible ahora.',
+			'gsh.chat.resume' => 'Retomar conversación',
+			'gsh.chat.resumeHint' => 'Abrir en una pestaña nueva una conversación reciente de Claude Code de esta máquina, con su historial.',
+			'gsh.chat.resumeEmpty' => 'Retomar una conversación',
+			'gsh.chat.resumeNone' => 'Ninguna conversación en los últimos 7 días.',
+			'gsh.chat.resumeLiveTitle' => '¿Esta conversación está abierta en otro lugar?',
+			'gsh.chat.resumeLiveBody' => ({required Object ago}) => 'Cambió ${ago}. Si sigue abierta (Claude Desktop, una terminal), continuar aquí hace que ambos escriban en la misma conversación. Ciérrala allí antes.',
+			'gsh.chat.resumeAnyway' => 'Abrir de todos modos',
 			'gsh.chat.remoteControlActive' => ({required Object url}) => 'Esta conversación ya está en Remote Control: continúa en el móvil o en ${url}',
 			'gsh.chat.remoteControlNoSession' => 'Envía un mensaje primero: Remote Control continúa una conversación existente.',
 			'gsh.chat.remoteControlBusy' => 'Espera a que el agente termine este turno e inténtalo de nuevo.',
@@ -3688,6 +3702,8 @@ extension on TranslationsEs {
 			'settings.page.nav.privacy' => 'Privacidad',
 			'settings.page.nav.usage' => 'Uso',
 			'settings.page.nav.resources' => 'Recursos',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.nav.gshFeatures' => 'Recursos de GSH',
 			'settings.page.nav.memory' => 'Memoria',
 			'settings.page.nav.designSystems' => 'Design systems',
@@ -3695,8 +3711,6 @@ extension on TranslationsEs {
 			'settings.page.nav.system' => 'Sistema',
 			'settings.page.nav.extensions' => 'Extensiones',
 			'settings.page.nav.developer' => 'Desarrollador',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.nav.skills' => 'Skills',
 			'settings.page.nav.connectors' => 'Conectores',
 			'settings.page.nav.plugins' => 'Plugins',
@@ -4202,6 +4216,8 @@ extension on TranslationsEs {
 			'theme.error.missingField' => ({required Object field}) => 'Falta el campo obligatorio "${field}".',
 			'theme.error.badColor' => ({required Object value, required Object field}) => '"${value}" en "${field}" no es un color. Usa #RGB, #RRGGBB o #RRGGBBAA.',
 			'theme.error.unknownBase' => ({required Object value}) => 'Tema base "${value}" desconocido en "extends".',
+			_ => null,
+		} ?? switch (path) {
 			'theme.error.noVariants' => 'El tema no declara ningún variant. Añade "dark", "light" o ambos en "variants".',
 			_ => null,
 		};

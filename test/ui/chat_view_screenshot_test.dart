@@ -215,6 +215,23 @@ void main() {
     expect(m('/esc', dismissed: true), isEmpty);
   });
 
+  testWidgets('retomar conversa: no cabeçalho e no chat vazio', (tester) async {
+    tester.view.physicalSize = const Size(1100, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final chat = ChatController(_Factory(), cwd: '/home/dev/GSH-Desktop');
+    var asked = 0;
+    await tester.pumpWidget(
+      shotHost(ChatPane(chat: chat, branch: 'helio', onResume: (_) => asked++)),
+    );
+    await tester.pump();
+    expect(find.text('Retomar conversa'), findsOneWidget);
+    await tester.tap(find.text('Retomar conversa'));
+    await tester.tap(find.text('Retomar uma conversa'));
+    expect(asked, 2);
+    chat.dispose();
+  });
+
   testWidgets('menu do /: digita, escolhe com seta e Enter completa', (
     tester,
   ) async {

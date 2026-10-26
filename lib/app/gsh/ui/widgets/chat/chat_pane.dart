@@ -20,6 +20,7 @@ class ChatPane extends StatefulWidget {
     required this.chat,
     this.branch,
     this.onRemoteControl,
+    this.onResume,
     this.showSessionState = false,
     this.columnWidth = 760,
     this.fontFamily,
@@ -32,6 +33,10 @@ class ChatPane extends StatefulWidget {
 
   /// "Continuar no Remote Control"; `null` = sem o botão.
   final VoidCallback? onRemoteControl;
+
+  /// "Retomar conversa" (recebe o widget âncora do menu); `null` = sem o
+  /// botão.
+  final ValueChanged<BuildContext>? onResume;
 
   /// Largura da coluna da conversa (preferência "Largura da transcrição").
   final double columnWidth;
@@ -130,11 +135,12 @@ class _ChatPaneState extends State<ChatPane> {
                 _Header(
                   chat: _chat,
                   onRemoteControl: widget.onRemoteControl,
+                  onResume: widget.onResume,
                   showSessionState: widget.showSessionState,
                 ),
                 Expanded(
                   child: rows.isEmpty
-                      ? _Empty(chat: _chat)
+                      ? _Empty(chat: _chat, onResume: widget.onResume)
                       : ListView.separated(
                           controller: _scroll,
                           padding: EdgeInsets.fromLTRB(side, 24, side, 32),
@@ -196,10 +202,12 @@ class _Header extends StatelessWidget {
   const _Header({
     required this.chat,
     this.onRemoteControl,
+    this.onResume,
     this.showSessionState = false,
   });
   final ChatController chat;
   final VoidCallback? onRemoteControl;
+  final ValueChanged<BuildContext>? onResume;
   final bool showSessionState;
 
   @override
@@ -260,6 +268,20 @@ class _Header extends StatelessWidget {
             ),
             const SizedBox(width: 8),
           ],
+          if (onResume case final resume?) ...[
+            AppTooltip(
+              message: context.t.gsh.chat.resumeHint,
+              child: Builder(
+                builder: (anchor) => GhostButton(
+                  size: ButtonSize.small,
+                  onPressed: () => resume(anchor),
+                  leading: Icon(Icons.history, size: 14, color: colors.text2),
+                  child: Text(context.t.gsh.chat.resume),
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+          ],
           if (onRemoteControl case final open?)
             AppTooltip(
               message: context.t.gsh.chat.remoteControlHint,
@@ -281,8 +303,9 @@ class _Header extends StatelessWidget {
 }
 
 class _Empty extends StatelessWidget {
-  const _Empty({required this.chat});
+  const _Empty({required this.chat, this.onResume});
   final ChatController chat;
+  final ValueChanged<BuildContext>? onResume;
 
   @override
   Widget build(BuildContext context) {
@@ -369,6 +392,19 @@ class _Empty extends StatelessWidget {
                     ],
                   ),
                 ),
+              if (onResume case final resume?) ...[
+                const SizedBox(height: 8),
+                Center(
+                  child: Builder(
+                    builder: (anchor) => OutlineButton(
+                      size: ButtonSize.small,
+                      onPressed: () => resume(anchor),
+                      leading: const Icon(Icons.history, size: 14),
+                      child: Text(tr.resumeEmpty),
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
