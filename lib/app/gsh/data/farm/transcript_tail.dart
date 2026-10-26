@@ -26,6 +26,9 @@ class TranscriptTail {
   int cacheReadTokens = 0;
   DateTime? lastTs;
 
+  /// `message.model` da última resposta real (sem as `<synthetic>`).
+  String? model;
+
   // O Claude grava uma linha por bloco de conteúdo da mesma mensagem, todas
   // com o mesmo `usage`. Conta o `output_tokens` uma vez por mensagem: segura
   // a mensagem corrente e só soma quando o id muda.
@@ -104,10 +107,14 @@ class TranscriptTail {
           _int(usage['input_tokens']) +
           _int(usage['cache_creation_input_tokens']);
       _msgCache = _int(usage['cache_read_input_tokens']);
-      contextTokens =
+      final ctx =
           _int(usage['input_tokens']) +
           _int(usage['cache_read_input_tokens']) +
           _int(usage['cache_creation_input_tokens']);
+      // uso zerado (erro de API, interrupção) não é notícia: não apaga a barra
+      if (ctx > 0) contextTokens = ctx;
+      final m = msg['model'];
+      if (m is String && m.isNotEmpty && !m.startsWith('<')) model = m;
     }
     final content = msg['content'];
     final last = content is List && content.isNotEmpty ? content.last : null;
@@ -156,6 +163,24 @@ class TranscriptTail {
     }
   }
 }
+
+/// Janela de contexto do modelo do Claude, pelo id (`message.model`). O
+/// transcript diz o uso, nunca o limite: `[1m]` no id ou a linha atual
+/// (Opus/Sonnet 4.6+, Opus/Sonnet 5.x, Fable, Mythos) têm 1M; Haiku, os
+/// antigos e o que não se reconhece ficam com 200k (o [FarmLoop.window]
+/// alarga se o contexto passar disso). ponytail: tabela fixa; atualizar
+/// quando sair modelo novo com outra janela.
+int claudeContextWindow(String? model) {
+  if (model == null) return 0;
+  final m = model.toLowerCase();
+  if (m.contains('[1m]')) return farmLongWindow;
+  if (m.contains('haiku')) return farmDefaultWindow;
+  return _longLine.hasMatch(m) ? farmLongWindow : farmDefaultWindow;
+}
+
+final _longLine = RegExp(
+  r'(opus|sonnet)-(4-[6-9]|[5-9])|fable|mythos|^(opus|sonnet)(\[|$)',
+);
 
 String? _str(Object? v) => v is String && v.trim().isNotEmpty ? v.trim() : null;
 

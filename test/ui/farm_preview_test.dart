@@ -28,6 +28,8 @@ FarmLoop _loop(
   String? parent,
   String? agentType,
   int tokens = 0,
+  int ctx = 0,
+  int window = 0,
 }) => FarmLoop(
   id: id,
   harness: harness,
@@ -38,12 +40,21 @@ FarmLoop _loop(
   parentId: parent,
   agentType: agentType,
   outputTokens: tokens,
+  contextTokens: ctx,
+  contextWindow: window,
 );
 
 /// Um canteiro com 6 minis do squad, um órfão, os principais do Codex e do
 /// Antigravity, um principal "kurama" e gente parada.
 List<FarmLoop> _loops() => [
-  _loop('m', FarmActivity.editing, title: 'Refatorar a fazenda', tokens: 60000),
+  _loop(
+    'm',
+    FarmActivity.editing,
+    title: 'Refatorar a fazenda',
+    tokens: 60000,
+    ctx: 63000,
+    window: 200000,
+  ),
   for (final (i, a) in const [
     'escanor',
     'bulma',
@@ -64,6 +75,8 @@ List<FarmLoop> _loops() => [
     harness: 'codex',
     project: '/home/dev/loja-api',
     title: 'Corrigir o build do Windows',
+    ctx: 150000,
+    window: 258400,
   ),
   _loop(
     'ag',
@@ -71,6 +84,7 @@ List<FarmLoop> _loops() => [
     harness: 'antigravity',
     project: '/home/dev/site',
     title: 'Landing nova',
+    ctx: 40000,
   ),
   _loop(
     'o1',
@@ -80,9 +94,16 @@ List<FarmLoop> _loops() => [
     agentType: 'saitama',
     title: 'Pipeline de deploy',
   ),
-  _loop('k', FarmActivity.thinking, title: 'kurama', tokens: 200000),
-  _loop('z', FarmActivity.sleeping, title: 'Spike de cache'),
-  _loop('i', FarmActivity.idle, title: 'Docs do hook'),
+  _loop(
+    'k',
+    FarmActivity.thinking,
+    title: 'kurama',
+    tokens: 200000,
+    ctx: 182000,
+    window: 200000,
+  ),
+  _loop('z', FarmActivity.sleeping, title: 'Spike de cache', ctx: 90000),
+  _loop('i', FarmActivity.idle, title: 'Docs do hook', ctx: 30000),
 ];
 
 void main() {

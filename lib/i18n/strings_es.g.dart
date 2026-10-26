@@ -1485,7 +1485,7 @@ class _Translations$gsh$farm$es extends Translations$gsh$farm$en {
 	@override String peerBanner({required Object name}) => 'Granja de ${name}';
 	@override String spent({required Object total}) => 'Gastó ${total} tokens';
 	@override String spentDetail({required Object input, required Object cache, required Object out}) => '${input} entrada · ${cache} caché · ${out} generados';
-	@override String context({required Object ctx}) => 'contexto ${ctx}';
+	@override String context({required Object ctx, required Object window, required Object pct}) => 'contexto ${ctx} de ${window} (${pct}%)';
 	@override String spentHud({required Object n}) => '${n} tokens gastados';
 	@override String get clickToOpen => 'Haz clic para abrir su terminal';
 	@override String get outsideGsh => 'Este agente se ejecuta fuera de GSH Desktop. Su terminal está en otra ventana.';
@@ -3584,7 +3584,7 @@ extension on TranslationsEs {
 			'gsh.farm.peerBanner' => ({required Object name}) => 'Granja de ${name}',
 			'gsh.farm.spent' => ({required Object total}) => 'Gastó ${total} tokens',
 			'gsh.farm.spentDetail' => ({required Object input, required Object cache, required Object out}) => '${input} entrada · ${cache} caché · ${out} generados',
-			'gsh.farm.context' => ({required Object ctx}) => 'contexto ${ctx}',
+			'gsh.farm.context' => ({required Object ctx, required Object window, required Object pct}) => 'contexto ${ctx} de ${window} (${pct}%)',
 			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens gastados',
 			'gsh.farm.clickToOpen' => 'Haz clic para abrir su terminal',
 			'gsh.farm.outsideGsh' => 'Este agente se ejecuta fuera de GSH Desktop. Su terminal está en otra ventana.',

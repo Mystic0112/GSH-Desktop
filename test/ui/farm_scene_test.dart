@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene_painter.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_squad_looks.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_world.dart';
@@ -227,5 +228,13 @@ void main() {
     // algo andando (faísca) suja o quadro
     scene.sparkle(10, 10, 1);
     expect(scene.update(1 / 12), isTrue);
+  });
+
+  test('barrinha do contexto: verde, amarelo e vermelho', () {
+    expect(contextBarColor(0.31), contextBarColor(0));
+    expect(contextBarColor(0.6), isNot(contextBarColor(0.59)));
+    expect(contextBarColor(0.84), contextBarColor(0.6));
+    expect(contextBarColor(0.85), isNot(contextBarColor(0.84)));
+    expect(contextBarColor(1), contextBarColor(0.85));
   });
 }

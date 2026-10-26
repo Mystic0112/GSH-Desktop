@@ -3226,8 +3226,8 @@ class Translations$gsh$farm$en {
 	/// en: '${input} input · ${cache} cache · ${out} out'
 	String spentDetail({required Object input, required Object cache, required Object out}) => '${input} input · ${cache} cache · ${out} out';
 
-	/// en: 'context ${ctx}'
-	String context({required Object ctx}) => 'context ${ctx}';
+	/// en: 'context ${ctx} of ${window} (${pct}%)'
+	String context({required Object ctx, required Object window, required Object pct}) => 'context ${ctx} of ${window} (${pct}%)';
 
 	/// en: '${n} tokens spent'
 	String spentHud({required Object n}) => '${n} tokens spent';
@@ -6649,7 +6649,7 @@ extension on Translations {
 			'gsh.farm.peerBanner' => ({required Object name}) => '${name}\'s farm',
 			'gsh.farm.spent' => ({required Object total}) => 'Spent ${total} tokens',
 			'gsh.farm.spentDetail' => ({required Object input, required Object cache, required Object out}) => '${input} input · ${cache} cache · ${out} out',
-			'gsh.farm.context' => ({required Object ctx}) => 'context ${ctx}',
+			'gsh.farm.context' => ({required Object ctx, required Object window, required Object pct}) => 'context ${ctx} of ${window} (${pct}%)',
 			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens spent',
 			'gsh.farm.clickToOpen' => 'Click to open its terminal',
 			'gsh.farm.outsideGsh' => 'This agent is running outside GSH Desktop. Its terminal is in another window.',

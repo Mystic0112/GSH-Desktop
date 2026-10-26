@@ -59,6 +59,10 @@ FarmActivity farmActivityForTool(String name) {
   };
 }
 
+/// Janela de contexto padrão (modelos antigos, Haiku, modelo desconhecido)
+/// e a longa (linha atual do Claude, `[1m]`).
+const farmDefaultWindow = 200000, farmLongWindow = 1000000;
+
 /// Um **loop de agente** na fazenda: uma sessão principal ou um subagente
 /// dela. Não é uma aba de terminal — o loop pode rodar fora do GSH (headless,
 /// outro terminal) e uma aba pode hospedar vários loops.
@@ -77,6 +81,7 @@ class FarmLoop {
     this.contextTokens = 0,
     this.inputTokens = 0,
     this.cacheReadTokens = 0,
+    this.contextWindow = 0,
   });
 
   /// `session_id` (principal) ou `agentId` (subagente).
@@ -106,6 +111,20 @@ class FarmLoop {
 
   /// Tamanho do contexto no último turno (input + cache).
   final int contextTokens;
+
+  /// Janela de contexto do modelo do loop, em tokens (`0` = não se sabe).
+  final int contextWindow;
+
+  /// Janela usada na barra: a do modelo, senão 200k; um contexto que não
+  /// cabe nela prova que a janela é a longa (1M), nunca o contrário.
+  int get window {
+    final w = contextWindow > 0 ? contextWindow : farmDefaultWindow;
+    return contextTokens > w ? farmLongWindow : w;
+  }
+
+  /// Quanto da janela o contexto ocupa (0..1).
+  double get contextFill =>
+      contextTokens <= 0 ? 0 : (contextTokens / window).clamp(0.0, 1.0);
 
   /// Entrada processada no loop todo (input + escrita de cache), somada por
   /// mensagem.

@@ -26,6 +26,14 @@ typedef _View = ({double x0, double y0, double x1, double y1});
 bool _seen(_View v, double x, double y, [double m = 24]) =>
     x > v.x0 - m && x < v.x1 + m && y > v.y0 - m && y < v.y1 + m + 20;
 
+/// Cor da barrinha do contexto: verde até 60% da janela, amarelo até 85%,
+/// vermelho daí em diante (perto de compactar).
+int contextBarColor(double fill) => fill < 0.6
+    ? 0xFF6cc24a
+    : fill < 0.85
+    ? 0xFFf2c84b
+    : 0xFFe0513c;
+
 /// Textos medidos uma vez (etiquetas dos canteiros).
 class FarmLabels {
   final _cache = <String, TextPainter>{};
@@ -108,8 +116,32 @@ class FarmScenePainter extends CustomPainter {
     );
   }
 
-  void _rect(Canvas c, double x, double y, double w, double h, int color) =>
-      c.drawRect(Rect.fromLTWH(x, y, w, h), _fill..color = Color(color));
+  void _rect(
+    Canvas c,
+    double x,
+    double y,
+    double w,
+    double h,
+    int color, [
+    double a = 1,
+  ]) => c.drawRect(
+    Rect.fromLTWH(x, y, w, h),
+    _fill..color = Color(color).withValues(alpha: Color(color).a * a),
+  );
+
+  /// A barrinha do contexto em cima da cabeça: borda escura, trilho e o
+  /// quanto da janela já foi, na cor de [contextBarColor].
+  void _gauge(Canvas c, double x, double y, double fill, double a) {
+    const w = 12.0;
+    final l = _hx(x - w / 2 - 0.5);
+    _rect(c, l, y, w + 1, 2, 0xFF14100c, a);
+    _rect(c, l + 0.5, y + 0.5, w, 1, 0xFF3a3f4a, a);
+    final f = (fill * w * 2).ceil() / 2;
+    if (f > 0) {
+      _rect(c, l + 0.5, y + 0.5, f, 1, contextBarColor(fill), a);
+      _rect(c, l + 0.5, y + 0.5, f, 0.5, 0x40ffffff, a);
+    }
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -302,6 +334,10 @@ class FarmScenePainter extends CustomPainter {
       // Codex e Antigravity levam um selo no peito (Claude é o padrão)
       final badge = _badge(c.loop.harness);
       if (badge != null) _draw(canvas, badge, x - 9, y - 7 + bob, 5, 7, fade);
+      // quem não dorme leva a barrinha do contexto em cima da cabeça
+      if (c.mode != CritterMode.sleep && c.loop.contextTokens > 0) {
+        _gauge(canvas, x, y - 22 + bob, c.loop.contextFill, fade);
+      }
       if (still && c.stroll == null && c.mode == CritterMode.work) {
         _draw(canvas, laptopHD[c.typingFrame(t)], x + 4, y - 6, 9, 7, fade);
       } else if (still && c.mode == CritterMode.wait) {

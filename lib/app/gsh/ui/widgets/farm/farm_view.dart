@@ -391,7 +391,11 @@ class _FarmViewState extends State<FarmView> {
         cache: _compact(l.cacheReadTokens),
         out: _compact(l.outputTokens),
       ),
-      tr.context(ctx: _compact(l.contextTokens)),
+      tr.context(
+        ctx: _compact(l.contextTokens),
+        window: _compact(l.window),
+        pct: (l.contextFill * 100).round(),
+      ),
       if (peer == null) tr.clickToOpen,
     ].join('\n');
     final right = at.dx > size.width - 280, below = at.dy < size.height - 140;
@@ -439,8 +443,10 @@ String _harnessLabel(FarmLoop l) =>
     l.harness;
 
 String _compact(int n) {
-  if (n >= 1000000) return '${(n / 1000000).toStringAsFixed(1)}M';
-  if (n >= 1000) return '${(n / 1000).toStringAsFixed(1)}k';
+  // 200.0k → 200k
+  String f(double v) => v.toStringAsFixed(1).replaceFirst(RegExp(r'\.0$'), '');
+  if (n >= 1000000) return '${f(n / 1000000)}M';
+  if (n >= 1000) return '${f(n / 1000)}k';
   return '$n';
 }
 

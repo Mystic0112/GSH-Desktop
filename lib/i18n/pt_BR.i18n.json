@@ -1066,7 +1066,7 @@
       "peerBanner": "Fazenda de ${name}",
       "spent": "Gastou ${total} tokens",
       "spentDetail": "${input} entrada · ${cache} cache · ${out} gerados",
-      "context": "contexto ${ctx}",
+      "context": "contexto ${ctx} de ${window} (${pct}%)",
       "spentHud": "${n} tokens gastos",
       "clickToOpen": "Clique para abrir o terminal",
       "outsideGsh": "Este agente está rodando fora do GSH Desktop. O terminal dele está em outra janela.",

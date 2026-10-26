@@ -109,6 +109,7 @@ class FarmViewModel extends ChangeNotifier {
           contextTokens: l.contextTokens,
           inputTokens: l.inputTokens,
           cacheReadTokens: l.cacheReadTokens,
+          contextWindow: l.contextWindow,
           lastSeen: l.lastSeen,
         ),
     ],

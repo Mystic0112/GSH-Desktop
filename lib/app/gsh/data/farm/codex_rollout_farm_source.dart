@@ -110,6 +110,7 @@ class CodexRolloutFarmSource implements FarmSource {
           contextTokens: tail.contextTokens,
           inputTokens: tail.inputTokens,
           cacheReadTokens: tail.cacheReadTokens,
+          contextWindow: tail.contextWindow,
           lastSeen: lastSeen,
         ),
       );
@@ -145,6 +146,7 @@ class CodexTail {
   String? tool;
   int outputTokens = 0;
   int contextTokens = 0;
+  int contextWindow = 0;
   int inputTokens = 0;
   int cacheReadTokens = 0;
   DateTime? lastTs;
@@ -192,7 +194,15 @@ class CodexTail {
               if (item['type'] == 'AgentMessage') activity = FarmActivity.idle;
             }
           case 'token_count':
-            final total = (pl['info'] as Map?)?['total_token_usage'];
+            final info = pl['info'] as Map?;
+            final total = info?['total_token_usage'];
+            // o contexto é o do último turno (o `input_tokens` já inclui o
+            // cache), contra a janela que o próprio Codex declara
+            final last = info?['last_token_usage'];
+            if (last is Map && _int(last['input_tokens']) > 0) {
+              contextTokens = _int(last['input_tokens']);
+            }
+            contextWindow = _int(info?['model_context_window']);
             if (total is Map) {
               outputTokens = _int(total['output_tokens']);
               // Total acumulado; o `input_tokens` do Codex já inclui o cache.
@@ -201,9 +211,6 @@ class CodexTail {
                 0,
                 _int(total['input_tokens']) - cacheReadTokens,
               );
-              contextTokens =
-                  _int(total['input_tokens']) +
-                  _int(total['cached_input_tokens']);
             }
         }
       case 'response_item':

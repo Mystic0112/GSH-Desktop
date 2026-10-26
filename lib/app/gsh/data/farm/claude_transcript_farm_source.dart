@@ -242,6 +242,7 @@ class ClaudeTranscriptFarmSource implements FarmSource {
       contextTokens: t.contextTokens,
       inputTokens: t.totalInputTokens,
       cacheReadTokens: t.totalCacheReadTokens,
+      contextWindow: claudeContextWindow(t.model),
       lastSeen: lastSeen,
     );
   }

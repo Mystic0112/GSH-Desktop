@@ -1066,7 +1066,7 @@
       "peerBanner": "${name}'s farm",
       "spent": "Spent ${total} tokens",
       "spentDetail": "${input} input · ${cache} cache · ${out} out",
-      "context": "context ${ctx}",
+      "context": "context ${ctx} of ${window} (${pct}%)",
       "spentHud": "${n} tokens spent",
       "clickToOpen": "Click to open its terminal",
       "outsideGsh": "This agent is running outside GSH Desktop. Its terminal is in another window.",

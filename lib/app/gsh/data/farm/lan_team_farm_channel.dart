@@ -224,6 +224,7 @@ Map<String, Object?> _loopToJson(FarmLoop l) => {
   'c': l.contextTokens,
   'i': l.inputTokens,
   'r': l.cacheReadTokens,
+  if (l.contextWindow > 0) 'cw': l.contextWindow,
   'ls': l.lastSeen.millisecondsSinceEpoch,
 };
 
@@ -245,6 +246,7 @@ FarmLoop? _loopFromJson(Map l) {
     contextTokens: n(l['c']),
     inputTokens: n(l['i']),
     cacheReadTokens: n(l['r']),
+    contextWindow: n(l['cw']),
     lastSeen: DateTime.fromMillisecondsSinceEpoch(n(l['ls'])),
   );
 }
