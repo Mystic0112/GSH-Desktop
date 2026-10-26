@@ -96,31 +96,37 @@ class ClaudeTranscriptFarmSource implements FarmSource {
     for (final (f, main) in recent) {
       final sid = p.basenameWithoutExtension(f.path);
       final project = main.cwd ?? p.basename(f.parent.path);
-      // teammate de sessão própria: liga no lead se o time dele é o atual
-      final mate = main.teamName == null
+      // teammate de sessão própria (marcado pelo time): liga no lead se o
+      // time dele é a geração atual. O lead não é colega de si mesmo.
+      final lead = leads[main.teamName];
+      final mate =
+          main.teamName == null || lead == sid || main.agentName == 'team-lead'
           ? null
           : main.agentName ?? main.teamName;
-      final lead = leads[main.teamName];
-      loops.add(
-        _loop(
-          main,
-          id: sid,
-          parentId: mate == null || lead == sid ? null : lead,
-          teammate: mate,
-          project: project,
-          now: now,
-          waitingAt: await _hook.waitingAt(sid),
-        ),
+      final loop = _loop(
+        main,
+        id: sid,
+        parentId: mate == null ? null : lead,
+        teammate: mate,
+        project: project,
+        now: now,
+        waitingAt: await _hook.waitingAt(sid),
       );
+      if (!_mateGone(loop, now)) loops.add(loop);
 
       for (final s in _subs[f.path] ??= await _listSubs(_subsDir(f))) {
         final tail = await _read(s, now, isSubagent: true);
         if (tail == null) continue;
         live.add(s.path);
         final meta = await _metaOf(s.path);
-        // spawn com nome (sidecar com `name`) é teammate: fica no canteiro
-        // do projeto do lead, não no worktree onde roda
-        final name = _nonEmpty(meta['name']);
+        // teammate é o spawn que voltou com time (`<nome>@<time>`): fica
+        // no canteiro do projeto do lead, não no worktree onde roda. Só ter
+        // `name` no sidecar não basta: o Claude também nomeia subagentes
+        // comuns (sem time, ou em sessão não interativa).
+        final named = _nonEmpty(meta['name']);
+        final name = named != null && main.mates.containsKey(named)
+            ? named
+            : null;
         final loop = _loop(
           tail,
           id: p.basenameWithoutExtension(s.path).substring('agent-'.length),
@@ -129,7 +135,7 @@ class ClaudeTranscriptFarmSource implements FarmSource {
           project: name != null ? project : tail.cwd ?? project,
           now: now,
           agentType: meta['agentType'] as String?,
-          title: name ?? meta['description'] as String?,
+          title: named ?? meta['description'] as String?,
         );
         if (loop.activity == FarmActivity.done &&
             now.difference(loop.lastSeen) > doneLinger) {
@@ -224,6 +230,17 @@ class ClaudeTranscriptFarmSource implements FarmSource {
       // Sem meta (versão antiga do Claude Code): só o transcript.
     }
     return _meta[jsonlPath] = meta;
+  }
+
+  /// Teammate de sessão própria que não tem mais time: o lead sumiu (ou
+  /// foi retomado com um time novo) e ele parou, ou terminou há mais que
+  /// [doneLinger]. O Claude Code não traz teammate de volta, então ele sai.
+  static bool _mateGone(FarmLoop l, DateTime now) {
+    if (!l.isTeammate) return false;
+    if (l.activity == FarmActivity.done) {
+      return now.difference(l.lastSeen) > doneLinger;
+    }
+    return l.parentId == null && l.activity.status == FarmStatus.idle;
   }
 
   FarmLoop _loop(
