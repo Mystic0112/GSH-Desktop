@@ -71,6 +71,9 @@ class FarmScene {
   FarmLayout? layout;
   final critters = <String, Critter>{};
   final sparks = <FarmSpark>[];
+
+  /// Poeirinhas de quem acabou de chegar ou de sair (ver [FarmPuff]).
+  final puffs = <FarmPuff>[];
   final _plotOf = <String, int>{};
   List<FarmPlotInfo?> plotInfo = const [];
 
@@ -240,7 +243,10 @@ class FarmScene {
         if (owner != null) pos = ui.Offset(owner.x, owner.y);
         if (_first && at != null) pos = at;
         c = Critter(loop, pos.dx, pos.dy, _first ? t - 5 : t, rnd);
-        if (!_first) sparkle(pos.dx, pos.dy - 8, loop.isSubagent ? 8 : 16);
+        if (!_first) {
+          _puff(pos.dx, pos.dy, born: true, mini: loop.isSubagent);
+          sparkle(pos.dx, pos.dy - 8, loop.isSubagent ? 3 : 6);
+        }
         critters[id] = c;
       } else if (c.mode != CritterMode.done && mode == CritterMode.done) {
         c.cheerUntil = t + 2.5;
@@ -272,7 +278,7 @@ class FarmScene {
     for (final c in critters.values) {
       if (!want.containsKey(c.loop.id) && c.gone == null) {
         c.gone = t;
-        sparkle(c.x, c.y - 8, 8, 0xFFd8e6c4);
+        _puff(c.x, c.y, born: false, mini: c.mini);
       }
     }
     if (want.isNotEmpty) _first = false;
@@ -338,6 +344,11 @@ class FarmScene {
     return l.door + const ui.Offset(0, 12);
   }
 
+  void _puff(double x, double y, {required bool born, required bool mini}) {
+    // aba escondida não anda o relógio: não deixa a fila crescer à toa
+    if (puffs.length < 40) puffs.add(FarmPuff(x, y, t, born: born, mini: mini));
+  }
+
   void sparkle(double x, double y, int n, [int? color]) {
     if (sparks.length > 400) return;
     for (var i = 0; i < n; i++) {
@@ -377,6 +388,7 @@ class FarmScene {
       }
     }
     sparks.removeWhere((s) => (s.life -= dt) <= 0);
+    puffs.removeWhere((p) => t - p.t0 > FarmPuff.life);
     for (final s in sparks) {
       s
         ..x += s.vx * dt
@@ -384,7 +396,8 @@ class FarmScene {
         ..vy += 40 * dt;
     }
     final key = _frameKey();
-    final dirty = _dirty || sparks.isNotEmpty || key != _key;
+    final dirty =
+        _dirty || sparks.isNotEmpty || puffs.isNotEmpty || key != _key;
     _key = key;
     _dirty = false;
     return dirty;
@@ -417,6 +430,16 @@ class FarmScene {
     }
     return best;
   }
+}
+
+/// O efeito de nascer ou sumir de um bicho, no chão onde ele está: uma
+/// coluna de luz (sobe ao nascer, apaga ao sumir) e um anel de poeirinha que
+/// se abre e some em [life] segundos.
+class FarmPuff {
+  FarmPuff(this.x, this.y, this.t0, {required this.born, required this.mini});
+  final double x, y, t0;
+  final bool born, mini;
+  static const life = 0.6;
 }
 
 /// Estrelinha que cai piscando.

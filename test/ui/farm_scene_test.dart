@@ -237,4 +237,23 @@ void main() {
     expect(contextBarColor(0.85), isNot(contextBarColor(0.84)));
     expect(contextBarColor(1), contextBarColor(0.85));
   });
+
+  test('quem chega ou sai deixa uma poeirinha que some em 0,6 s', () {
+    final scene = FarmScene(rnd: math.Random(1))..layout = _layout(8);
+    scene.sync(groupFarm([_loop('a', '/p/a')]));
+    // o primeiro sync é a fazenda abrindo: ninguém "chega"
+    expect(scene.puffs, isEmpty);
+    scene.sync(groupFarm([_loop('a', '/p/a'), _loop('b', '/p/a')]));
+    expect(scene.puffs.single.born, isTrue);
+    scene
+      ..update(0.3)
+      ..sync(groupFarm([_loop('b', '/p/a')]));
+    final gone = scene.puffs.where((p) => !p.born).single;
+    expect((gone.x, gone.y), (scene.critters['a']!.x, scene.critters['a']!.y));
+    expect(scene.update(0.35), isTrue);
+    expect(scene.puffs.single, same(gone));
+    scene.update(0.3);
+    expect(scene.puffs, isEmpty);
+    expect(scene.critters.keys, ['b']);
+  });
 }

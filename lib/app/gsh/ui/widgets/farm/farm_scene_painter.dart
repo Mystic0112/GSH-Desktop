@@ -129,6 +129,34 @@ class FarmScenePainter extends CustomPainter {
     _fill..color = Color(color).withValues(alpha: Color(color).a * a),
   );
 
+  /// A poeirinha de nascer/sumir (ver [FarmPuff]), em pixels de mundo.
+  void _puff(Canvas c, FarmPuff p, double t) {
+    final k = ((t - p.t0) / FarmPuff.life).clamp(0.0, 1.0);
+    final s = p.mini ? 0.6 : 1.0, a = 1 - k;
+    // a coluna de luz: ao nascer sobe do chão; ao sumir, encolhe e apaga
+    final ch = _hx(20 * s * (p.born ? math.min(1, k * 4) : 1 - k * 0.5));
+    final cw = math.max(0.5, _hx(3 * s * (1 - k)));
+    if (ch > 0) {
+      _rect(
+        c,
+        _hx(p.x - cw / 2),
+        _hx(p.y - ch),
+        cw,
+        ch,
+        p.born ? 0xFFfff3c4 : 0xFFdfe8f4,
+        a * 0.7,
+      );
+    }
+    // o anel de poeira no chão: abre, sobe um tico e os grãos encolhem
+    final r = (3 + k * 12) * s, g = math.max(0.5, _hx((2.5 - 2 * k) * s));
+    for (var i = 0; i < 8; i++) {
+      final ang = i * math.pi / 4 + 0.4;
+      final px = p.x + math.cos(ang) * r;
+      final py = p.y - 1 - k * 3 * s + math.sin(ang) * r * 0.45;
+      _rect(c, _hx(px - g / 2), _hx(py - g / 2), g, g, 0xFFeee4cc, a);
+    }
+  }
+
   /// A barrinha do contexto em cima da cabeça: borda escura, trilho e o
   /// quanto da janela já foi, na cor de [contextBarColor].
   void _gauge(Canvas c, double x, double y, double fill, double a) {
@@ -365,6 +393,9 @@ class FarmScenePainter extends CustomPainter {
           );
         }
       }
+    }
+    for (final p in scene.puffs) {
+      if (seen(p.x, p.y)) _puff(canvas, p, t);
     }
     // a fileira de árvores da frente passa por cima de todo mundo
     final fy0 = math.max(sy, w.fgY), fh = math.min(l.h, sy + sh) - fy0;
