@@ -18,6 +18,7 @@ import 'package:flutter/widgets.dart';
 
 export 'farm_camera.dart';
 
+part 'farm_scene_effects.dart';
 part 'farm_scene_overlay.dart';
 
 /// O pedaço do mundo à vista, nas coordenadas de um lote.
@@ -25,14 +26,6 @@ typedef _View = ({double x0, double y0, double x1, double y1});
 
 bool _seen(_View v, double x, double y, [double m = 24]) =>
     x > v.x0 - m && x < v.x1 + m && y > v.y0 - m && y < v.y1 + m + 20;
-
-/// Cor da barrinha do contexto: verde até 60% da janela, amarelo até 85%,
-/// vermelho daí em diante (perto de compactar).
-int contextBarColor(double fill) => fill < 0.6
-    ? 0xFF6cc24a
-    : fill < 0.85
-    ? 0xFFf2c84b
-    : 0xFFe0513c;
 
 /// Textos medidos uma vez (etiquetas dos canteiros).
 class FarmLabels {
@@ -128,58 +121,6 @@ class FarmScenePainter extends CustomPainter {
     Rect.fromLTWH(x, y, w, h),
     _fill..color = Color(color).withValues(alpha: Color(color).a * a),
   );
-
-  /// Contorno de 1 px (com sombra) em volta de [r].
-  void _outline(Canvas c, Rect r, int color) {
-    for (final (d, k) in [(0.5, 0x8014100c), (0.0, color)]) {
-      _rect(c, r.left + d, r.top + d, r.width, 1, k);
-      _rect(c, r.left + d, r.bottom - 1 + d, r.width, 1, k);
-      _rect(c, r.left + d, r.top + d, 1, r.height, k);
-      _rect(c, r.right - 1 + d, r.top + d, 1, r.height, k);
-    }
-  }
-
-  /// A poeirinha de nascer/sumir (ver [FarmPuff]), em pixels de mundo.
-  void _puff(Canvas c, FarmPuff p, double t) {
-    final k = ((t - p.t0) / FarmPuff.life).clamp(0.0, 1.0);
-    final s = p.mini ? 0.6 : 1.0, a = 1 - k;
-    // a coluna de luz: ao nascer sobe do chão; ao sumir, encolhe e apaga
-    final ch = _hx(20 * s * (p.born ? math.min(1, k * 4) : 1 - k * 0.5));
-    final cw = math.max(0.5, _hx(3 * s * (1 - k)));
-    if (ch > 0) {
-      _rect(
-        c,
-        _hx(p.x - cw / 2),
-        _hx(p.y - ch),
-        cw,
-        ch,
-        p.born ? 0xFFfff3c4 : 0xFFdfe8f4,
-        a * 0.7,
-      );
-    }
-    // o anel de poeira no chão: abre, sobe um tico e os grãos encolhem
-    final r = (3 + k * 12) * s, g = math.max(0.5, _hx((2.5 - 2 * k) * s));
-    for (var i = 0; i < 8; i++) {
-      final ang = i * math.pi / 4 + 0.4;
-      final px = p.x + math.cos(ang) * r;
-      final py = p.y - 1 - k * 3 * s + math.sin(ang) * r * 0.45;
-      _rect(c, _hx(px - g / 2), _hx(py - g / 2), g, g, 0xFFeee4cc, a);
-    }
-  }
-
-  /// A barrinha do contexto em cima da cabeça: borda escura, trilho e o
-  /// quanto da janela já foi, na cor de [contextBarColor].
-  void _gauge(Canvas c, double x, double y, double fill, double a) {
-    const w = 12.0;
-    final l = _hx(x - w / 2 - 0.5);
-    _rect(c, l, y, w + 1, 2, 0xFF14100c, a);
-    _rect(c, l + 0.5, y + 0.5, w, 1, 0xFF3a3f4a, a);
-    final f = (fill * w * 2).ceil() / 2;
-    if (f > 0) {
-      _rect(c, l + 0.5, y + 0.5, f, 1, contextBarColor(fill), a);
-      _rect(c, l + 0.5, y + 0.5, f, 0.5, 0x40ffffff, a);
-    }
-  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -349,6 +290,10 @@ class FarmScenePainter extends CustomPainter {
         16,
         22,
       );
+    }
+    // os bichinhos de estimação, no chão (antes dos gorilas)
+    for (final p in scene.pets) {
+      if (seen(p.x, p.y)) _pet(canvas, p, t, calm);
     }
     // bichos em ordem de profundidade; só os visíveis
     final list = scene.critters.values.toList()

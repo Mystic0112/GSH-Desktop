@@ -203,7 +203,9 @@ class _FarmViewState extends State<FarmView> {
       return;
     }
     final old = _world;
-    _scene.relayout(layout);
+    _scene
+      ..relayout(layout)
+      ..placePets(office: world.scenery == FarmScenery.office);
     if (_cam.auto || old == null) {
       _cam.fit(layout, view);
     } else {
@@ -305,6 +307,12 @@ class _FarmViewState extends State<FarmView> {
                                 // bicho de colega: o terminal está na máquina
                                 // dele, clique não faz nada
                                 final (c, lot) = _hitAt(d.localPosition);
+                                // bichinho só ganha carinho (um coração)
+                                final pt = _cam.toWorld(d.localPosition);
+                                if (c == null && _scene.petAt(pt) != null) {
+                                  _frame.tick();
+                                  return;
+                                }
                                 if (lot == null) _open(c);
                               },
                         onDoubleTap: world == null

@@ -325,4 +325,33 @@ void main() {
     expect(next.pins, isEmpty);
     expect(plotOf(next, 'a1'), 0);
   });
+
+  test('bichinhos passeiam sem entrar no celeiro e ganham coração', () {
+    final scene = FarmScene(rnd: math.Random(3))..layout = _layout(8);
+    final l = scene.layout!;
+    scene.placePets(office: false);
+    expect(scene.pets.map((p) => p.kind), [PetKind.dog, PetKind.chicken]);
+    final dog = scene.pets.first;
+    final start = Offset(dog.x, dog.y);
+    var moved = false;
+    for (var i = 0; i < 600; i++) {
+      scene.update(0.05);
+      expect(l.blocked(dog.x, dog.y), isFalse);
+      moved |= (Offset(dog.x, dog.y) - start).distance > 1;
+    }
+    expect(moved, isTrue);
+    // clique: só o coração, que some sozinho
+    expect(scene.petAt(Offset(dog.x, dog.y - 3)), same(dog));
+    expect(dog.heart(scene.t), 0);
+    scene.update(FarmPet.heartLife + 0.1);
+    expect(dog.heart(scene.t), isNull);
+    expect(scene.petAt(Offset(dog.x + 40, dog.y + 40)), isNull);
+
+    // escritório: um gato que não sai do lugar
+    scene.placePets(office: true);
+    final cat = scene.pets.single;
+    final at = Offset(cat.x, cat.y);
+    scene.update(5);
+    expect((cat.kind, Offset(cat.x, cat.y)), (PetKind.cat, at));
+  });
 }

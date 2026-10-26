@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_critter.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_pets.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_squad_looks.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_world.dart';
@@ -14,6 +15,7 @@ import 'package:gsh_desktop/app/core/ui/themes/agent_colors.dart';
 import 'package:path/path.dart' as p;
 
 export 'farm_critter.dart';
+export 'farm_pets.dart';
 
 part 'farm_scene_plots.dart';
 
@@ -38,6 +40,9 @@ class FarmScene {
 
   /// Poeirinhas de quem acabou de chegar ou de sair (ver [FarmPuff]).
   final puffs = <FarmPuff>[];
+
+  /// Os bichinhos de estimação (ver [placePets]).
+  final pets = <FarmPet>[];
   final _plotOf = <String, int>{};
   List<FarmPlotInfo?> plotInfo = const [];
 
@@ -378,6 +383,12 @@ class FarmScene {
     for (final c in critters.values) {
       c.update(dt, this);
     }
+    final lay = layout;
+    if (lay != null) {
+      for (final p in pets) {
+        p.update(dt, lay);
+      }
+    }
     critters.removeWhere((_, c) => c.gone != null && t - c.gone! > 0.52);
     // canteiro de quem trabalha brilha: uma faísca de vez em quando
     final l = layout;
@@ -415,7 +426,38 @@ class FarmScene {
     for (final b in critters.values) {
       h = Object.hash(h, b.frameKey(t, c));
     }
+    for (final p in pets) {
+      h = Object.hash(h, p.frameKey(t, c));
+    }
     return h;
+  }
+
+  /// Solta os bichinhos no mundo novo: cachorro e galinha passeando na
+  /// fazenda, o gato no sofá do escritório (sem sofá, no último pufe do
+  /// lounge: o layout sempre deixa vagas sobrando, ninguém senta nele).
+  void placePets({required bool office}) {
+    final l = layout;
+    pets.clear();
+    if (l == null) return;
+    if (office) {
+      final sofa = l.decor.where((d) => d.kind == 'sofa').firstOrNull;
+      final at = sofa == null
+          ? l.yardSpot(l.capYard - 1) + const ui.Offset(0, -1)
+          : ui.Offset(sofa.x - 3, sofa.y - 2);
+      pets.add(FarmPet(PetKind.cat, at.dx, at.dy, rnd));
+      return;
+    }
+    for (final k in const [PetKind.dog, PetKind.chicken]) {
+      final s = randomSpot();
+      pets.add(FarmPet(k, s.dx, s.dy, rnd));
+    }
+  }
+
+  /// O bichinho sob o ponto (pixels de mundo): leva um carinho.
+  FarmPet? petAt(ui.Offset p) {
+    final pet = pets.where((x) => x.hit(p)).firstOrNull;
+    pet?.petAt = t;
+    return pet;
   }
 
   /// O bicho sob o ponto (em pixels de mundo), o da frente primeiro.

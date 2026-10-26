@@ -134,6 +134,7 @@ void main() {
     }
     _preview(scenery, 5, puffs: true);
     _preview(scenery, 0, drag: true);
+    _preview(scenery, 5, pets: true);
     _teamPreview(scenery);
     _teamPreview(scenery, couriers: true);
   }
@@ -212,7 +213,9 @@ void _teamPreview(FarmScenery scenery, {bool couriers = false}) => testWidgets(
     final world = (await tester.runAsync(
       () => buildWorld(layout, scenery: scenery),
     ))!;
-    scene.relayout(layout);
+    scene
+      ..relayout(layout)
+      ..placePets(office: scenery == FarmScenery.office);
     final lots = <FarmLot>[];
     for (final (id, name, loops) in _peers()) {
       final lot = FarmLot(id, name)..scene.sync(groupFarm(loops));
@@ -283,10 +286,10 @@ void _preview(
   double zoom, {
   bool puffs = false,
   bool drag = false,
+  bool pets = false,
 }) => testWidgets('preview: ${scenery.name} no zoom $zoom'
-    '${puffs ? ' (poeira)' : ''}${drag ? ' (arrastando)' : ''}', (
-  tester,
-) async {
+    '${puffs ? ' (poeira)' : ''}${drag ? ' (arrastando)' : ''}'
+    '${pets ? ' (bichinhos)' : ''}', (tester) async {
   const size = Size(960, 600);
   tester.view
     ..physicalSize = size
@@ -303,7 +306,9 @@ void _preview(
   final world = (await tester.runAsync(
     () => buildWorld(layout, scenery: scenery),
   ))!;
-  scene.relayout(layout);
+  scene
+    ..relayout(layout)
+    ..placePets(office: scenery == FarmScenery.office);
   for (var i = 0; i < 40; i++) {
     scene.update(0.05);
   }
@@ -336,11 +341,24 @@ void _preview(
   // zoom 3: enquadra o canteiro dos minis
   final main =
       layout.plots[scene.plotInfo.indexWhere((p) => p?.main?.id == 'm')];
+  // bichinhos: a câmera no primeiro, com o coração do carinho subindo; na
+  // fazenda a galinha bica ao lado do cachorro
+  var focus = main.center;
+  if (pets) {
+    final p0 = scene.pets.first;
+    if (scene.pets.length > 1) {
+      scene.pets[1]
+        ..x = p0.x + 14
+        ..y = p0.y + 3;
+    }
+    p0.petAt = scene.t - 0.35;
+    focus = Offset(p0.x, p0.y);
+  }
   if (zoom > 0) {
     cam
       ..z = zoom
-      ..x = main.center.dx - size.width / 2 / zoom
-      ..y = main.center.dy - size.height / 2 / zoom
+      ..x = focus.dx - size.width / 2 / zoom
+      ..y = focus.dy - size.height / 2 / zoom
       ..clampTo(layout, size);
   }
   await tester.pumpWidget(
@@ -372,7 +390,7 @@ void _preview(
   final name = scenery == FarmScenery.farm ? 'farm2' : 'office';
   await takeShot(
     tester,
-    '${name}_${zoom.toInt()}${puffs ? '_puff' : ''}${drag ? '_drag' : ''}',
+    '${name}_${zoom.toInt()}${puffs ? '_puff' : ''}${drag ? '_drag' : ''}${pets ? '_pets' : ''}',
   );
 });
 
