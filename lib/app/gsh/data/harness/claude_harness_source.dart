@@ -120,6 +120,10 @@ class ClaudeHarnessSource implements HarnessSource {
         p.join(proj, 'commands', '$slug.md'),
         _commandMd,
       ),
+      HarnessKind.hooks when name != null => (
+        p.join(proj, 'hooks', '$slug.sh'),
+        _hookSh,
+      ),
       HarnessKind.hooks ||
       HarnessKind.permissions => (p.join(proj, 'settings.json'), '{\n}\n'),
       HarnessKind.mcp => (
@@ -131,8 +135,37 @@ class ClaudeHarnessSource implements HarnessSource {
     if (!await f.exists()) {
       await f.parent.create(recursive: true);
       await f.writeAsString(body);
+      if (kind == HarnessKind.hooks && name != null) {
+        await _wireHook(p.join(proj, 'settings.json'), slug);
+      }
     }
     return path;
+  }
+
+  /// Liga o script novo como `PreToolUse` de `Bash` no `settings.json` do
+  /// projeto. JSON quebrado não é tocado (o lint já avisa dele).
+  static Future<void> _wireHook(String settingsPath, String slug) async {
+    final f = File(settingsPath);
+    Object? o = <String, Object?>{};
+    if (await f.exists()) {
+      try {
+        o = jsonDecode(await f.readAsString());
+      } on FormatException {
+        return;
+      }
+    }
+    if (o is! Map) return;
+    final hooks = (o['hooks'] ??= <String, Object?>{});
+    if (hooks is! Map) return;
+    final pre = (hooks['PreToolUse'] ??= <Object?>[]);
+    if (pre is! List) return;
+    pre.add({
+      'matcher': 'Bash',
+      'hooks': [
+        {'type': 'command', 'command': '$hookCommandPrefix$slug.sh"'},
+      ],
+    });
+    await f.writeAsString('${const JsonEncoder.withIndent('  ').convert(o)}\n');
   }
 
   Future<List<HarnessEntry>> _memory(
@@ -370,38 +403,110 @@ String harnessSlug(String name) {
   return s.isEmpty ? 'novo' : s;
 }
 
-// Modelos: o mínimo que o Claude Code aceita, com o que preencher.
+// Modelos. Seguem duas lições do Harness² (google-research/harness2):
+// instrução separa **fatos** (o que é verdade no repo) de **procedimento**
+// (passos de uma tarefa, que rendem mais como skill), e hook que bloqueia
+// **ensina**: diz ao agente por que parou e o que fazer no lugar.
 const _claudeMd = """# Instruções do projeto
 
-Como rodar, testar e o que não fazer neste repositório.
+<!-- Este arquivo entra inteiro em TODA mensagem: fique no essencial.
+     Fatos aqui; procedimento longo vira skill (.claude/skills/). -->
+
+## Fatos
+
+- Stack: <linguagem, framework, versões que importam>
+- Comandos: `<instalar>` · `<testar>` · `<lint>` · `<rodar>`
+- Estrutura: <onde mora o quê; o que é gerado e não se edita à mão>
+
+## Regras
+
+- <o que nunca fazer aqui, e por quê>
+- <convenção que o agente erra se ninguém avisar>
+
+## Procedimentos
+
+<!-- Só o nome e quando usar; os passos ficam na skill. -->
+- Para <tarefa recorrente>, use a skill `<nome>`.
 """;
 
 String _skillMd(String name) =>
     """---
 name: $name
-description: Quando usar esta skill (o agente decide por esta frase).
+description: Use quando <situação concreta que o usuário descreve>. Faz <resultado>.
 ---
 
 # $name
 
-Passos que o agente segue quando a skill é acionada.
+<!-- A descrição acima é o que o agente vê sempre (custa em todo turno);
+     este corpo só carrega quando a skill é acionada. -->
+
+## Quando usar
+
+- <gatilho 1>
+- Não use para <caso parecido que é de outra skill>.
+
+## Passos
+
+1. <primeiro passo, com o comando exato>
+2. <...>
+
+## Como conferir
+
+- <o comando ou o sinal de que deu certo antes de dizer que terminou>
 """;
 
 String _agentMd(String name) =>
     """---
 name: $name
-description: Quando delegar para este subagente.
+description: Use para <tipo de tarefa>. Devolve <o que volta para quem chamou>.
 tools: Read, Grep, Glob
 ---
 
-Você é o subagente $name. Descreva o papel, o que ele faz e o que devolve.
+Você é o subagente $name.
+
+## Papel
+
+<o que ele faz e o que fica fora do escopo dele>
+
+## O que devolver
+
+<formato da resposta: só o que quem chamou precisa, sem despejar arquivos>
 """;
 
 const _commandMd = """---
 description: O que este comando faz.
+argument-hint: <argumento>
 ---
 
 Instruções do comando. Use \$ARGUMENTS para o que vier depois do nome.
+""";
+
+/// Comando que o `settings.json` usa para chamar um hook do projeto (fecha
+/// com `<slug>.sh"`). Aspas por causa de pasta com espaço.
+const hookCommandPrefix = r'bash "$CLAUDE_PROJECT_DIR/.claude/hooks/';
+
+/// Hook que ensina: bloqueia com `exit 2` e o stderr volta para o agente
+/// como instrução — por que parou e o que fazer no lugar.
+const _hookSh = r"""#!/usr/bin/env bash
+# Hook PreToolUse (Bash), ligado em .claude/settings.json.
+# Recebe o pedido da ferramenta em JSON no stdin.
+#   exit 0 = deixa passar
+#   exit 2 = bloqueia, e o que sair no stderr volta para o AGENTE.
+# Bloqueio bom ensina: diz por que parou e o que fazer no lugar, senão o
+# agente só tenta de novo de outro jeito.
+input=$(cat)
+
+# --force e -f, mas não --force-with-lease (que é o caminho certo).
+if printf '%s' "$input" | grep -Eq 'git push[^"]*( --force([^-]|$)| -f([ "]|$))'; then
+  cat >&2 <<'MSG'
+Bloqueado: `git push --force` reescreve o histórico do remoto e apaga o
+trabalho de quem já puxou.
+Faça no lugar: `git push --force-with-lease`, ou pergunte ao usuário.
+MSG
+  exit 2
+fi
+
+exit 0
 """;
 
 /// Acima disto o Claude Code avisa que o CLAUDE.md pesa na performance.
