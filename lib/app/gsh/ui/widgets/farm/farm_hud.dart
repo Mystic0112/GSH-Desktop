@@ -194,3 +194,48 @@ String _activityLabel(Translations$gsh$farm$en tr, FarmActivity a) {
     FarmActivity.done => t.done,
   };
 }
+
+/// Fazenda | Escritório no canto da cena, no mesmo estilo do HUD.
+class _SceneryToggle extends StatelessWidget {
+  const _SceneryToggle({required this.current, required this.onChanged});
+  final FarmScenery current;
+  final ValueChanged<FarmScenery> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final tr = context.t.settings.page.resources;
+    final mono = context.typo.mono.copyWith(
+      fontWeight: FontWeight.w700,
+      fontSize: 11,
+      height: 1.2,
+    );
+    Widget option(FarmScenery s, String label) {
+      final on = s == current;
+      return MouseRegion(
+        cursor: on ? MouseCursor.defer : SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: on ? null : () => onChanged(s),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            color: on ? _hudInk : null,
+            child: Text(
+              label.toUpperCase(),
+              style: mono.copyWith(color: on ? _hudText : _hudMuted),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return _HudBox(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          option(FarmScenery.farm, tr.sceneryFarm),
+          const SizedBox(width: 2),
+          option(FarmScenery.office, tr.sceneryOffice),
+        ],
+      ),
+    );
+  }
+}

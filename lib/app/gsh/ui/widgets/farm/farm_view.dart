@@ -378,6 +378,16 @@ class _FarmViewState extends State<FarmView> {
                   onResetPlots: _scene.pins.isEmpty ? null : _resetPlots,
                 ),
               ),
+              // Troca de cenário aqui mesmo (também em Configurações >
+              // Recursos): fazenda ↔ escritório.
+              Positioned(
+                right: 10,
+                top: 10,
+                child: _SceneryToggle(
+                  current: scenery,
+                  onChanged: context.read<SettingsController>().setFarmScenery,
+                ),
+              ),
               if (vm.plots.isEmpty && _team.isEmpty)
                 const Positioned.fill(child: _FarmEmpty()),
               Positioned.fill(
