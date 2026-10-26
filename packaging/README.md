@@ -8,7 +8,8 @@ referência: [`../../plan/43-gsh-packaging.md`](../../plan/43-gsh-packaging.md).
 
 - `git tag gsh-AAAA.MM.DD && git push origin gsh-AAAA.MM.DD`: o `release.yml` compila Windows, macOS e
   Linux (~30 min) e publica a release da tag como **pré-release**, com os 6 arquivos + `SHA256SUMS.txt`.
-- Sem tag local: Actions → release → Run workflow (input `tag`; a tag nasce no commit do branch escolhido).
+- Refazer uma release apagada: `gh workflow run release.yml --ref gsh-AAAA.MM.DD -f tag=gsh-AAAA.MM.DD`
+  (a tag precisa existir; o GITHUB_TOKEN não cria tag em commit que muda workflows).
 - Tag que já tem release falha no início, sem gastar build: apague a release ou use outra tag.
 - Notas: modelo em `.github/release-notes.md` + "Mudanças" (commits `feat`/`fix` desde a tag `gsh-*` anterior).
 - Marcar como estável: `gh release edit gsh-AAAA.MM.DD --prerelease=false --latest` (e tirar o aviso de

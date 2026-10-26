@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag da release (ex.: gsh-2026.11.02); criada no commit escolhido se não existir'
+        description: 'Tag já enviada (ex.: gsh-2026.11.02); em "Use workflow from" escolha a própria tag'
         required: true
         type: string
       prerelease:
@@ -34,7 +34,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Tag válida, sem release e no commit certo
+      # A tag precisa existir: o GITHUB_TOKEN não cria tag (nem release com
+      # --target) em commit que altera .github/workflows (HTTP 403).
+      - name: Tag válida, existente, sem release e no commit certo
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -48,8 +50,12 @@ jobs:
             echo "::error::A release $TAG já existe. Não sobrescrevo: apague-a ou use outra tag."
             exit 1
           fi
-          if tagged="$(git rev-parse -q --verify "refs/tags/$TAG^{commit}")" && [ "$tagged" != "$GITHUB_SHA" ]; then
-            echo "::error::A tag $TAG já existe em $tagged, mas esta run compila $GITHUB_SHA."
+          if ! tagged="$(git rev-parse -q --verify "refs/tags/$TAG^{commit}")"; then
+            echo "::error::A tag $TAG não existe. Envie antes: git tag $TAG && git push origin $TAG"
+            exit 1
+          fi
+          if [ "$tagged" != "$GITHUB_SHA" ]; then
+            echo "::error::A tag $TAG está em $tagged, mas esta run compila $GITHUB_SHA. Rode o workflow a partir da tag."
             exit 1
           fi
 
@@ -120,5 +126,5 @@ jobs:
           flags=()
           [ "$PRERELEASE" = true ] && flags+=(--prerelease)
           # Falha se a release já existir (corrida com outra run): não sobrescreve.
-          gh release create "$TAG" out/* --target "$GITHUB_SHA" \
+          gh release create "$TAG" out/* --verify-tag \
             --title "GSH Desktop — $TAG" --notes-file notes.md "${flags[@]}"
