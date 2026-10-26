@@ -790,6 +790,12 @@ class _GshPageState extends State<GshPage> {
     final showGraph = shows(AppFeature.agentGraph);
     final showFarm = shows(AppFeature.farm);
     final showChat = shows(AppFeature.chat);
+    final project = _vm.selectedProject;
+    final showHarness =
+        shows(AppFeature.harness) &&
+        project != null &&
+        !project.isPathless &&
+        project.path.isNotEmpty;
     final colors = context.colors;
 
     if (!shell.ready) {
@@ -847,6 +853,8 @@ class _GshPageState extends State<GshPage> {
                           : _vm.openFarm,
                       // Chat em todo workspace: sem pasta, o claude roda na home.
                       onOpenChat: showChat ? _vm.openChat : null,
+                      // Harness lê a pasta local: some no GSH e em host remoto.
+                      onOpenHarness: showHarness ? _vm.openHarness : null,
                     ),
                     // Host remoto fora do ar: faixa com o estado + botão de
                     // reconectar. Não ocupa espaço em workspace local.

@@ -69,6 +69,11 @@ class ResourcesPanel extends StatelessWidget {
                   },
                 ),
               ),
+            feature(
+              AppFeature.harness,
+              tr.harnessFeature,
+              tr.harnessFeatureDesc,
+            ),
             feature(AppFeature.agentGraph, tr.graph, tr.graphDesc),
             feature(AppFeature.browser, tr.browser, tr.browserDesc),
           ],

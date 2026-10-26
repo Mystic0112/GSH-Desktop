@@ -43,7 +43,7 @@ enum TranscriptWidth {
 }
 
 /// Recursos do shell que o usuário pode tirar da barra (aba Recursos).
-enum AppFeature { chat, farm, agentGraph, browser }
+enum AppFeature { chat, farm, agentGraph, browser, harness }
 
 /// Cenário da fazenda de agentes: o campo do clodfarm ou um escritório.
 enum FarmScenery { farm, office }

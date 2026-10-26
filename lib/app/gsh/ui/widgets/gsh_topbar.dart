@@ -28,6 +28,7 @@ class GshTopbar extends StatelessWidget {
     this.onVisualizeAgents,
     this.onOpenFarm,
     this.onOpenChat,
+    this.onOpenHarness,
   });
 
   final String projectName;
@@ -49,6 +50,10 @@ class GshTopbar extends StatelessWidget {
 
   /// Abre uma conversa nova com o Claude Code. `null` = botão oculto.
   final VoidCallback? onOpenChat;
+
+  /// Abre a aba Harness do workspace. `null` = escondido (workspace sem
+  /// pasta local, ou o usuário tirou o botão).
+  final VoidCallback? onOpenHarness;
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +104,14 @@ class GshTopbar extends StatelessWidget {
           _IconBtn(
             icon: Icons.grass_outlined,
             tooltip: context.t.gsh.topbar.openFarm,
+            onTap: onTap,
+          ),
+          const SizedBox(width: 4),
+        ],
+        if (onOpenHarness case final onTap?) ...[
+          _IconBtn(
+            icon: Icons.tune,
+            tooltip: context.t.gsh.topbar.openHarness,
             onTap: onTap,
           ),
           const SizedBox(width: 4),

@@ -140,6 +140,7 @@ class _Translations$gsh$pt_BR extends Translations$gsh$en {
 	@override late final _Translations$gsh$telemetry$pt_BR telemetry = _Translations$gsh$telemetry$pt_BR._(_root);
 	@override late final _Translations$gsh$panelView$pt_BR panelView = _Translations$gsh$panelView$pt_BR._(_root);
 	@override late final _Translations$gsh$chat$pt_BR chat = _Translations$gsh$chat$pt_BR._(_root);
+	@override late final _Translations$gsh$harness$pt_BR harness = _Translations$gsh$harness$pt_BR._(_root);
 	@override late final _Translations$gsh$farm$pt_BR farm = _Translations$gsh$farm$pt_BR._(_root);
 	@override late final _Translations$gsh$agentGraph$pt_BR agentGraph = _Translations$gsh$agentGraph$pt_BR._(_root);
 }
@@ -1026,6 +1027,7 @@ class _Translations$gsh$topbar$pt_BR extends Translations$gsh$topbar$en {
 	@override String get filesUnavailable => 'Arquivos indisponíveis no GSH Desktop';
 	@override String get hideKeyboard => 'Baixar teclado';
 	@override String get visualizeAgents => 'Visualizar agentes';
+	@override String get openHarness => 'Harness do workspace';
 	@override String get openFarm => 'Fazenda de agentes';
 	@override String get openChat => 'Chat com o Claude (beta)';
 }
@@ -1405,6 +1407,48 @@ class _Translations$gsh$chat$pt_BR extends Translations$gsh$chat$en {
 	@override String get stateReviewReady => 'Pronta para revisão';
 	@override String get stateBlocked => 'Bloqueada';
 	@override String get stateFailed => 'Falhou';
+}
+
+// Path: gsh.harness
+class _Translations$gsh$harness$pt_BR extends Translations$gsh$harness$en {
+	_Translations$gsh$harness$pt_BR._(TranslationsPtBr root) : this._root = root, super.internal(root);
+
+	final TranslationsPtBr _root; // ignore: unused_field
+
+	// Translations
+	@override String get tabTitle => 'Harness';
+	@override String subtitle({required Object path}) => 'O que o agente carrega ao rodar em ${path}';
+	@override String get refresh => 'Ler de novo';
+	@override String get memory => 'Instruções';
+	@override String get memoryDesc => 'CLAUDE.md lidos numa sessão aqui (da pasta para cima), o seu do usuário e o AGENTS.md (Codex).';
+	@override String get memoryNew => 'Criar CLAUDE.md';
+	@override String get skills => 'Skills';
+	@override String get skillsDesc => 'Capacidades que o agente aciona sozinho quando a descrição bate com a tarefa.';
+	@override String get agents => 'Subagentes';
+	@override String get agentsDesc => 'Especialistas para quem o agente delega (com ferramentas e modelo próprios).';
+	@override String get commands => 'Comandos';
+	@override String get commandsDesc => 'Atalhos /nome que você digita na sessão.';
+	@override String get hooks => 'Hooks';
+	@override String get hooksDesc => 'Comandos que rodam em eventos da sessão (antes de uma ferramenta, ao parar...).';
+	@override String get permissions => 'Permissões';
+	@override String get permissionsDesc => 'Regras de ferramenta: liberar, perguntar ou bloquear.';
+	@override String get mcp => 'MCP';
+	@override String get mcpDesc => 'Servidores de ferramentas extras. Os do usuário e os locais vêm do ~/.claude.json (mude com claude mcp).';
+	@override String get newItem => 'Novo';
+	@override String get editFile => 'Editar arquivo';
+	@override String newTitle({required Object section}) => 'Novo item em ${section}';
+	@override String get create => 'Criar';
+	@override String get namePlaceholder => 'nome (vira o nome do arquivo)';
+	@override String get empty => 'Nada aqui ainda.';
+	@override String get scopeUser => 'Usuário';
+	@override String get scopeProject => 'Projeto';
+	@override String get scopeLocal => 'Local';
+	@override String get allow => 'liberar';
+	@override String get ask => 'perguntar';
+	@override String get deny => 'bloquear';
+	@override String get readOnly => 'Só leitura aqui: use claude mcp add/remove';
+	@override String showAll({required Object n}) => 'Mostrar todos (${n})';
+	@override String get showLess => 'Mostrar menos';
 }
 
 // Path: gsh.farm
@@ -2481,6 +2525,8 @@ class _Translations$settings$page$resources$pt_BR extends Translations$settings$
 	@override String get chatDesc => 'Botão de chat na barra do workspace (Claude Code em stream-json).';
 	@override String get farm => 'Fazenda';
 	@override String get farmDesc => 'Loops de agente lidos dos transcripts do Claude Code.';
+	@override String get harnessFeature => 'Harness';
+	@override String get harnessFeatureDesc => 'Botão que abre o que o agente carrega no workspace: instruções, skills, subagentes, hooks, permissões e MCP.';
 	@override String get sectionTeamFarm => 'Fazenda do time';
 	@override String get teamFarm => 'Ver a fazenda dos colegas';
 	@override String get teamFarmDesc => 'Na mesma rede (ex.: no escritório), cada GSH anuncia a própria fazenda e mostra a dos colegas ao lado da sua — diminua o zoom para ver. Sem servidor: nada sai da rede local. Desligado, nada sai do seu GSH.';
@@ -3183,6 +3229,7 @@ extension on TranslationsPtBr {
 			'gsh.topbar.filesUnavailable' => 'Arquivos indisponíveis no GSH Desktop',
 			'gsh.topbar.hideKeyboard' => 'Baixar teclado',
 			'gsh.topbar.visualizeAgents' => 'Visualizar agentes',
+			'gsh.topbar.openHarness' => 'Harness do workspace',
 			'gsh.topbar.openFarm' => 'Fazenda de agentes',
 			'gsh.topbar.openChat' => 'Chat com o Claude (beta)',
 			'gsh.tasks.hotReload' => 'Hot reload',
@@ -3467,6 +3514,39 @@ extension on TranslationsPtBr {
 			'gsh.chat.stateReviewReady' => 'Pronta para revisão',
 			'gsh.chat.stateBlocked' => 'Bloqueada',
 			'gsh.chat.stateFailed' => 'Falhou',
+			'gsh.harness.tabTitle' => 'Harness',
+			'gsh.harness.subtitle' => ({required Object path}) => 'O que o agente carrega ao rodar em ${path}',
+			'gsh.harness.refresh' => 'Ler de novo',
+			'gsh.harness.memory' => 'Instruções',
+			'gsh.harness.memoryDesc' => 'CLAUDE.md lidos numa sessão aqui (da pasta para cima), o seu do usuário e o AGENTS.md (Codex).',
+			'gsh.harness.memoryNew' => 'Criar CLAUDE.md',
+			'gsh.harness.skills' => 'Skills',
+			'gsh.harness.skillsDesc' => 'Capacidades que o agente aciona sozinho quando a descrição bate com a tarefa.',
+			'gsh.harness.agents' => 'Subagentes',
+			'gsh.harness.agentsDesc' => 'Especialistas para quem o agente delega (com ferramentas e modelo próprios).',
+			'gsh.harness.commands' => 'Comandos',
+			'gsh.harness.commandsDesc' => 'Atalhos /nome que você digita na sessão.',
+			'gsh.harness.hooks' => 'Hooks',
+			'gsh.harness.hooksDesc' => 'Comandos que rodam em eventos da sessão (antes de uma ferramenta, ao parar...).',
+			'gsh.harness.permissions' => 'Permissões',
+			'gsh.harness.permissionsDesc' => 'Regras de ferramenta: liberar, perguntar ou bloquear.',
+			'gsh.harness.mcp' => 'MCP',
+			'gsh.harness.mcpDesc' => 'Servidores de ferramentas extras. Os do usuário e os locais vêm do ~/.claude.json (mude com claude mcp).',
+			'gsh.harness.newItem' => 'Novo',
+			'gsh.harness.editFile' => 'Editar arquivo',
+			'gsh.harness.newTitle' => ({required Object section}) => 'Novo item em ${section}',
+			'gsh.harness.create' => 'Criar',
+			'gsh.harness.namePlaceholder' => 'nome (vira o nome do arquivo)',
+			'gsh.harness.empty' => 'Nada aqui ainda.',
+			'gsh.harness.scopeUser' => 'Usuário',
+			'gsh.harness.scopeProject' => 'Projeto',
+			'gsh.harness.scopeLocal' => 'Local',
+			'gsh.harness.allow' => 'liberar',
+			'gsh.harness.ask' => 'perguntar',
+			'gsh.harness.deny' => 'bloquear',
+			'gsh.harness.readOnly' => 'Só leitura aqui: use claude mcp add/remove',
+			'gsh.harness.showAll' => ({required Object n}) => 'Mostrar todos (${n})',
+			'gsh.harness.showLess' => 'Mostrar menos',
 			'gsh.farm.tabTitle' => 'Fazenda',
 			'gsh.farm.title' => 'Fazenda de agentes',
 			'gsh.farm.emptyTitle' => 'Nenhum agente rodando',
@@ -3601,6 +3681,8 @@ extension on TranslationsPtBr {
 			'settings.page.general.editorEngineGsh' => 'GSH Desktop (padrão)',
 			'settings.page.general.editorEngineNeovim' => 'Neovim',
 			'settings.page.general.neovimChecking' => 'Procurando o Neovim…',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.general.neovimNotFound' => 'O Neovim não foi encontrado na PATH do seu shell.',
 			'settings.page.general.neovimRefresh' => 'Verificar novamente',
 			'settings.page.general.showGshTitle' => 'Mostrar terminal do GSH Desktop',
@@ -3635,8 +3717,6 @@ extension on TranslationsPtBr {
 			'settings.page.storage.change' => 'Alterar…',
 			'settings.page.storage.resetTitle' => 'Redefinir o GSH Desktop',
 			'settings.page.storage.resetDesc' => 'Exclui todos os dados locais — projetos, layouts, configurações e histórico do terminal — e volta ao local padrão.',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.storage.resetButton' => 'Redefinir…',
 			'settings.page.storage.resetConfirm' => 'Redefinir',
 			'settings.page.storage.resetDialogTitle' => 'Redefinir o GSH Desktop?',
@@ -3982,6 +4062,8 @@ extension on TranslationsPtBr {
 			'settings.page.resources.chatDesc' => 'Botão de chat na barra do workspace (Claude Code em stream-json).',
 			'settings.page.resources.farm' => 'Fazenda',
 			'settings.page.resources.farmDesc' => 'Loops de agente lidos dos transcripts do Claude Code.',
+			'settings.page.resources.harnessFeature' => 'Harness',
+			'settings.page.resources.harnessFeatureDesc' => 'Botão que abre o que o agente carrega no workspace: instruções, skills, subagentes, hooks, permissões e MCP.',
 			'settings.page.resources.sectionTeamFarm' => 'Fazenda do time',
 			'settings.page.resources.teamFarm' => 'Ver a fazenda dos colegas',
 			'settings.page.resources.teamFarmDesc' => 'Na mesma rede (ex.: no escritório), cada GSH anuncia a própria fazenda e mostra a dos colegas ao lado da sua — diminua o zoom para ver. Sem servidor: nada sai da rede local. Desligado, nada sai do seu GSH.',
