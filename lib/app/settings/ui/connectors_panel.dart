@@ -1,7 +1,7 @@
 import 'package:gsh_desktop/app/gsh/domain/contracts/url_opener.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/app_menu.dart';
-import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/core/domain/entities/claude_info.dart';
 import 'package:gsh_desktop/app/settings/ui/claude_info_viewmodel.dart';
 import 'package:gsh_desktop/app/settings/ui/settings_catalog.dart';
 import 'package:gsh_desktop/app/settings/ui/settings_widgets.dart';

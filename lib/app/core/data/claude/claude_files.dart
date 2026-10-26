@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:gsh_desktop/app/core/domain/result.dart';
-import 'package:gsh_desktop/app/settings/data/claude_info_parsers.dart';
-import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/core/data/claude/claude_info_parsers.dart';
+import 'package:gsh_desktop/app/core/domain/entities/claude_info.dart';
 import 'package:path/path.dart' as p;
 
 /// Leituras do `~/.claude` (e do `.claude` do projeto) que não passam pela

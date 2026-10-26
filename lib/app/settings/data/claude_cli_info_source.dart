@@ -5,9 +5,9 @@ import 'dart:io';
 import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:gsh_desktop/app/core/utils/executable_resolver.dart';
 import 'package:gsh_desktop/app/core/utils/user_home.dart';
-import 'package:gsh_desktop/app/settings/data/claude_files.dart';
-import 'package:gsh_desktop/app/settings/data/claude_info_parsers.dart';
-import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/core/data/claude/claude_files.dart';
+import 'package:gsh_desktop/app/core/data/claude/claude_info_parsers.dart';
+import 'package:gsh_desktop/app/core/domain/entities/claude_info.dart';
 
 /// [ClaudeInfoSource] sobre a CLI `claude` instalada e o `~/.claude`.
 class ClaudeCliInfoSource implements ClaudeInfoSource {

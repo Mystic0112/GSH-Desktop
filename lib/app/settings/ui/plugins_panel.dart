@@ -2,7 +2,7 @@ import 'package:gsh_desktop/app/gsh/ui/widgets/realm_dialogs.dart';
 import 'package:gsh_desktop/app/core/app_intents.dart' as intents;
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/app_menu.dart';
-import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/core/domain/entities/claude_info.dart';
 import 'package:gsh_desktop/app/settings/ui/claude_info_viewmodel.dart';
 import 'package:gsh_desktop/app/settings/ui/plugin_directory.dart';
 import 'package:gsh_desktop/app/settings/ui/settings_catalog.dart';
