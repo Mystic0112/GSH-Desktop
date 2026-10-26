@@ -22,6 +22,32 @@ List<ChatModelOption> parseClaudeModels(Object? init) {
   ];
 }
 
+/// Comandos da resposta do `initialize` (`commands: [{name, description,
+/// argumentHint, aliases}]`). A descrição traz o escopo no fim ("(user)",
+/// "(project)"), que fica de fora.
+List<ChatCommandOption> parseClaudeCommands(Object? init) {
+  final list = init is Map ? init['commands'] : null;
+  if (list is! List) return const [];
+  return [
+    for (final c in list.whereType<Map>())
+      if (c['name'] case final String name when name.isNotEmpty)
+        ChatCommandOption(
+          name: name,
+          description: (c['description'] as String? ?? '')
+              .replaceFirst(
+                RegExp(r'\s*\((user|project|local|plugin[^)]*)\)$'),
+                '',
+              )
+              .trim(),
+          argumentHint: c['argumentHint'] as String? ?? '',
+          aliases: [
+            for (final a in (c['aliases'] as List? ?? const []))
+              if (a is String) a,
+          ],
+        ),
+  ];
+}
+
 /// Limites da resposta do `get_usage` (`limits: [{kind, percent, severity,
 /// resets_at, scope}]`). Sem `limits`, cai nos `rate_limits` antigos.
 ChatPlanUsage? parseClaudePlanUsage(Object? usage) {
@@ -152,11 +178,15 @@ Future<ChatAccountProbe?> probeClaudeAccount(
     send('probe-init', 'initialize');
     send('probe-usage', 'get_usage');
     const wait = Duration(seconds: 15);
-    final models = parseClaudeModels(await init.future.timeout(wait));
+    final initBody = await init.future.timeout(wait);
     final plan = parseClaudePlanUsage(
       await usage.future.timeout(wait, onTimeout: () => null),
     );
-    return ChatAccountProbe(models: models, usage: plan);
+    return ChatAccountProbe(
+      models: parseClaudeModels(initBody),
+      usage: plan,
+      commands: parseClaudeCommands(initBody),
+    );
   } on TimeoutException {
     return null;
   } finally {

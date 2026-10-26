@@ -116,6 +116,7 @@ import 'package:gsh_desktop/app/gsh/ui/states/pane_node.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_file_activity.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/agent_graph_session.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/farm_session.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/harness_session.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/chat_session.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_graph_store.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/desktop_agent_apps.dart';
@@ -2022,6 +2023,22 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
       _openBrowserTab(projectId, matches: (_) => false, make: _newChat)
           as ChatSession?;
 
+  /// Abre (ou foca, se já estiver aberta) uma aba de chat que continua a
+  /// conversa [sessionId] do Claude Code, na pasta original dela ([cwd]) —
+  /// o `--resume` só acha a sessão lá. Fica no workspace selecionado.
+  ChatSession? resumeChat({required String sessionId, required String cwd}) =>
+      _openBrowserTab(
+            null,
+            matches: (s) => s is ChatSession && s.sessionId == sessionId,
+            make: (id, pid, _) => ChatSession(
+              id: id,
+              projectId: pid,
+              workingDirectory: cwd,
+              sessionId: sessionId,
+            ),
+          )
+          as ChatSession?;
+
   /// Workspace de sistema (sem pasta): o claude roda na home.
   ChatSession _newChat(String id, String pid, String path) => ChatSession(
     id: id,
@@ -2085,6 +2102,17 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
                 FarmSession(id: id, projectId: pid, workingDirectory: path),
           )
           as FarmSession?;
+
+  /// Abre (ou foca) a aba Harness do workspace: o que o agente carrega ao
+  /// rodar na pasta dele. Uma por workspace.
+  HarnessSession? openHarness({String? projectId}) =>
+      _openBrowserTab(
+            projectId,
+            matches: (s) => s is HarnessSession,
+            make: (id, pid, path) =>
+                HarnessSession(id: id, projectId: pid, workingDirectory: path),
+          )
+          as HarnessSession?;
 
   /// Texto de um arquivo (local ou host remoto) pra widgets que leem vários
   /// arquivos de uma pasta (caderno). `null` = binário/ilegível.
@@ -6734,6 +6762,13 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
           workingDirectory: project.path,
         );
         return true;
+      case 'harness':
+        _sessions[id] = HarnessSession(
+          id: id,
+          projectId: project.id,
+          workingDirectory: project.path,
+        );
+        return true;
       case 'browser':
         _sessions[id] = BrowserSession(
           id: id,
@@ -7038,6 +7073,7 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
     }
     if (s is AgentGraphSession) return <String, dynamic>{'type': 'agent_graph'};
     if (s is FarmSession) return <String, dynamic>{'type': 'farm'};
+    if (s is HarnessSession) return <String, dynamic>{'type': 'harness'};
     if (s is ChatSession) {
       return <String, dynamic>{'type': 'chat', 'sid': ?s.sessionId};
     }

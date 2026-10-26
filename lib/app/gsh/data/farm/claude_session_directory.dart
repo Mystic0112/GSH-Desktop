@@ -49,47 +49,68 @@ class ClaudeSessionDirectory implements SessionDirectory {
     return out;
   }
 
+  /// Começo (pasta, primeiro pedido) e fim (o título mais novo: o Claude
+  /// Code regrava `custom-title`/`ai-title` ao longo da conversa) do
+  /// transcript — ler inteiro levava segundos com conversas de dezenas de MB.
+  static const _head = 64 * 1024, _tail = 512 * 1024;
+
   Future<SessionEntry?> _read(File f, DateTime modified) async {
-    String? title;
-    String? firstPrompt;
-    String? cwd;
+    String? custom, agent, ai, firstPrompt, cwd;
+    void scan(String line) {
+      final Object? o;
+      try {
+        o = jsonDecode(line);
+      } on FormatException {
+        return; // linha cortada na borda do pedaço lido
+      }
+      if (o is! Map) return;
+      cwd ??= o['cwd'] as String?;
+      switch (o['type']) {
+        case 'custom-title':
+          custom = _str(o['customTitle']) ?? custom;
+        case 'agent-name':
+          agent ??= _str(o['agentName']);
+        case 'ai-title':
+          ai = _str(o['aiTitle']) ?? ai;
+        case 'user' when firstPrompt == null && o['isMeta'] != true:
+          final c = (o['message'] as Map?)?['content'];
+          if (c is String && !c.startsWith('<')) firstPrompt = c;
+      }
+    }
+
     try {
-      await for (final line
-          in f
-              .openRead()
-              .transform(utf8.decoder)
-              .transform(const LineSplitter())) {
-        // Filtro barato antes do JSON: a maioria das linhas não interessa.
-        final wantsTitle =
-            line.contains('"custom-title"') || line.contains('"agent-name"');
-        if (!wantsTitle && firstPrompt != null && cwd != null) continue;
-        final Object? o;
-        try {
-          o = jsonDecode(line);
-        } on FormatException {
-          continue;
+      final raf = await f.open();
+      try {
+        final len = await raf.length();
+        final head = await raf.read(len < _head ? len : _head);
+        const LineSplitter()
+            .convert(utf8.decode(head, allowMalformed: true))
+            .forEach(scan);
+        if (len > _head) {
+          final from = len - _tail > _head ? len - _tail : _head;
+          await raf.setPosition(from);
+          final tail = await raf.read(len - from);
+          const LineSplitter()
+              .convert(utf8.decode(tail, allowMalformed: true))
+              .forEach(scan);
         }
-        if (o is! Map) continue;
-        cwd ??= o['cwd'] as String?;
-        switch (o['type']) {
-          case 'custom-title':
-            title = _str(o['customTitle']) ?? title;
-          case 'agent-name':
-            title ??= _str(o['agentName']);
-          case 'user' when firstPrompt == null && o['isMeta'] != true:
-            final c = (o['message'] as Map?)?['content'];
-            if (c is String && !c.startsWith('<')) firstPrompt = c;
-        }
+      } finally {
+        await raf.close();
       }
     } on FileSystemException {
       return null;
     }
-    final label = title ?? _short(firstPrompt);
+    final label = custom ?? agent ?? ai ?? _short(firstPrompt);
     if (label == null) return null;
+    final project = cwd;
+    // Conversas de teste/rascunho em pasta temporária só poluem a lista.
+    if (project != null && p.isWithin(Directory.systemTemp.path, project)) {
+      return null;
+    }
     return SessionEntry(
       id: p.basenameWithoutExtension(f.path),
       title: label,
-      project: cwd ?? p.basename(f.parent.path),
+      project: project ?? p.basename(f.parent.path),
       lastSeen: modified,
       harness: 'claude',
     );

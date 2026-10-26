@@ -1,0 +1,131 @@
+# Release do GSH Desktop: tag `gsh-*` → builds de Windows, macOS e Linux →
+# release no GitHub com os 6 arquivos e as notas (.github/release-notes.md +
+# commits feat/fix desde a tag gsh-* anterior). Pré-release por padrão: a linha
+# "> **Pré-release.**" do modelo sai quando a release não é pré-release.
+# Como soltar uma versão: packaging/README.md.
+name: release
+
+on:
+  push:
+    tags: ['gsh-*', '!gsh-server-*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag já enviada (ex.: gsh-2026.11.02); em "Use workflow from" escolha a própria tag'
+        required: true
+        type: string
+      prerelease:
+        description: 'Pré-release'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+env:
+  TAG: ${{ inputs.tag || github.ref_name }}
+  # Push de tag: sempre pré-release; vira estável à mão (packaging/README.md).
+  PRERELEASE: ${{ github.event_name != 'workflow_dispatch' || inputs.prerelease }}
+
+jobs:
+  # Barato e antes dos builds: não gasta minuto de macOS numa release que não vai sair.
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      # A tag precisa existir: o GITHUB_TOKEN não cria tag (nem release com
+      # --target) em commit que altera .github/workflows (HTTP 403).
+      - name: Tag válida, existente, sem release e no commit certo
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          case "$TAG" in
+            gsh-server-*|gsh-) echo "::error::Tag inválida para release do app: $TAG"; exit 1 ;;
+            gsh-*) ;;
+            *) echo "::error::A tag precisa começar com gsh- (veio: $TAG)"; exit 1 ;;
+          esac
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "::error::A release $TAG já existe. Não sobrescrevo: apague-a ou use outra tag."
+            exit 1
+          fi
+          if ! tagged="$(git rev-parse -q --verify "refs/tags/$TAG^{commit}")"; then
+            echo "::error::A tag $TAG não existe. Envie antes: git tag $TAG && git push origin $TAG"
+            exit 1
+          fi
+          if [ "$tagged" != "$GITHUB_SHA" ]; then
+            echo "::error::A tag $TAG está em $tagged, mas esta run compila $GITHUB_SHA. Rode o workflow a partir da tag."
+            exit 1
+          fi
+
+  windows:
+    needs: check
+    uses: ./.github/workflows/windows.yml
+  macos:
+    needs: check
+    uses: ./.github/workflows/macos.yml
+  linux:
+    needs: check
+    uses: ./.github/workflows/linux.yml
+
+  publish:
+    needs: [windows, macos, linux]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Arquivos da release
+        run: |
+          set -euo pipefail
+          one() { # exatamente um arquivo casando com o padrão
+            local found; found="$(find artifacts/"$1" -type f -name "$2")"
+            [ "$(printf '%s\n' "$found" | grep -c .)" = 1 ] || { echo "::error::esperava 1 '$2' em $1, achei: ${found:-nada}" >&2; exit 1; }
+            printf '%s' "$found"
+          }
+          mkdir out
+          cp "$(one gsh-windows-x64-setup '*.exe')" out/GSH-Desktop-windows-x64-setup.exe
+          mv artifacts/gsh-windows-x64-portable artifacts/GSH-Desktop
+          (cd artifacts && zip -qr9 ../out/GSH-Desktop-windows-x64-portable.zip GSH-Desktop)
+          cp "$(one gsh-macos-dmg '*.dmg')" out/GSH-Desktop-macos.dmg
+          cp "$(one gsh-macos-app '*.zip')" out/GSH-Desktop-macos.zip
+          cp "$(one gsh-linux-x64 '*.tar.gz')" out/GSH-Desktop-linux-x64.tar.gz
+          (cd out && sha256sum GSH-Desktop-* > SHA256SUMS.txt && cat SHA256SUMS.txt)
+
+      - name: Notas
+        run: |
+          set -euo pipefail
+          previous="$(git tag --merged HEAD --list 'gsh-*' --sort=-creatordate \
+            | grep -v -e '^gsh-server-' | grep -vxF "$TAG" | head -n1 || true)"
+          if [ -n "$previous" ]; then
+            changes="$(git log --no-merges -E --grep='^(feat|fix)(\(.+\))?!?:' --format='- %s (%h)' "$previous..HEAD")"
+            since="Desde \`$previous\`."
+          else
+            changes="$(git log --no-merges -E --grep='^(feat|fix)(\(.+\))?!?:' --format='- %s (%h)' -n 30 HEAD)"
+            since="Últimos commits (não há tag gsh-* anterior)."
+          fi
+          {
+            if [ "$PRERELEASE" = true ]; then cat .github/release-notes.md
+            else grep -v '^> \*\*Pré-release\.\*\*' .github/release-notes.md; fi
+            printf '\n## Mudanças\n\n%s\n\n%s\n' "$since" "${changes:-Nenhum commit feat/fix.}"
+          } > notes.md
+          cat notes.md
+
+      - name: Publica
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          flags=()
+          [ "$PRERELEASE" = true ] && flags+=(--prerelease)
+          # Falha se a release já existir (corrida com outra run): não sobrescreve.
+          gh release create "$TAG" out/* --verify-tag \
+            --title "GSH Desktop — $TAG" --notes-file notes.md "${flags[@]}"

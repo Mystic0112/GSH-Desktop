@@ -23,8 +23,11 @@ class _HudBox extends StatelessWidget {
 }
 
 class _Hud extends StatelessWidget {
-  const _Hud({required this.vm});
+  const _Hud({required this.vm, this.onResetPlots});
   final FarmViewModel vm;
+
+  /// "Redefinir posições" dos canteiros; `null` = nada escolhido, some.
+  final VoidCallback? onResetPlots;
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +103,19 @@ class _Hud extends StatelessWidget {
             ],
           ),
         ),
+        if (onResetPlots case final reset?)
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: reset,
+              child: chip(
+                Text(
+                  tr.resetPlots.toUpperCase(),
+                  style: small.copyWith(color: _hudMuted, fontSize: 10),
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -140,6 +156,85 @@ class _FarmEmpty extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Nome do harness do loop (`claude` → "Claude Code"): nome próprio, não se
+/// traduz.
+String _harnessLabel(FarmLoop l) =>
+    HarnessCatalog.specs.values
+        .where((s) => s.allEntryPoints.contains(l.harness))
+        .firstOrNull
+        ?.label ??
+    l.harness;
+
+String _compact(int n) {
+  // 200.0k → 200k
+  String f(double v) => v.toStringAsFixed(1).replaceFirst(RegExp(r'\.0$'), '');
+  if (n >= 1000000) return '${f(n / 1000000)}M';
+  if (n >= 1000) return '${f(n / 1000)}k';
+  return '$n';
+}
+
+String _activityLabel(Translations$gsh$farm$en tr, FarmActivity a) {
+  final t = tr.activity;
+  return switch (a) {
+    FarmActivity.thinking => t.thinking,
+    FarmActivity.reading => t.reading,
+    FarmActivity.editing => t.editing,
+    FarmActivity.running => t.running,
+    FarmActivity.searching => t.searching,
+    FarmActivity.delegating => t.delegating,
+    FarmActivity.tooling => t.tooling,
+    FarmActivity.waiting => t.waiting,
+    FarmActivity.idle => t.idle,
+    FarmActivity.sleeping => t.sleeping,
+    FarmActivity.done => t.done,
+  };
+}
+
+/// Fazenda | Escritório no canto da cena, no mesmo estilo do HUD.
+class _SceneryToggle extends StatelessWidget {
+  const _SceneryToggle({required this.current, required this.onChanged});
+  final FarmScenery current;
+  final ValueChanged<FarmScenery> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final tr = context.t.settings.page.resources;
+    final mono = context.typo.mono.copyWith(
+      fontWeight: FontWeight.w700,
+      fontSize: 11,
+      height: 1.2,
+    );
+    Widget option(FarmScenery s, String label) {
+      final on = s == current;
+      return MouseRegion(
+        cursor: on ? MouseCursor.defer : SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: on ? null : () => onChanged(s),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            color: on ? _hudInk : null,
+            child: Text(
+              label.toUpperCase(),
+              style: mono.copyWith(color: on ? _hudText : _hudMuted),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return _HudBox(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          option(FarmScenery.farm, tr.sceneryFarm),
+          const SizedBox(width: 2),
+          option(FarmScenery.office, tr.sceneryOffice),
+        ],
       ),
     );
   }

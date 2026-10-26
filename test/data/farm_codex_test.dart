@@ -67,11 +67,17 @@ void main() {
               'cached_input_tokens': 100,
               'output_tokens': 200,
             },
+            'last_token_usage': {'input_tokens': 9000, 'output_tokens': 50},
+            'model_context_window': 258400,
           },
         }, t),
       );
     expect(tail.activity, FarmActivity.thinking);
-    expect((tail.outputTokens, tail.contextTokens), (200, 22811));
+    // contexto = o último turno (não o total), contra a janela do Codex
+    expect(
+      (tail.outputTokens, tail.contextTokens, tail.contextWindow),
+      (200, 9000, 258400),
+    );
 
     tail.apply(_ev('task_complete', {'last_agent_message': 'ok'}, t));
     expect((tail.activity, tail.tool), (FarmActivity.idle, null));

@@ -10,9 +10,13 @@ on:
       - '**.md'
       - 'docs/**'
   workflow_dispatch:
+  # Chamado pelo release.yml (releases por tag).
+  workflow_call:
 
+# Via workflow_call, github.workflow é o do chamador ("release"): o build da
+# release não cancela nem é cancelado pelo build avulso do mesmo ref.
 concurrency:
-  group: windows-${{ github.ref }}
+  group: ${{ github.workflow }}-windows-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:

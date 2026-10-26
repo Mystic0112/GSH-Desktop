@@ -1,8 +1,11 @@
 import 'dart:math' as math;
 
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene_painter.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_squad_looks.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_world.dart';
@@ -14,9 +17,11 @@ FarmLoop _loop(
   String? parent,
   String? agentType,
   String? title,
+  String? teammate,
   FarmActivity activity = FarmActivity.running,
 }) => FarmLoop(
   id: id,
+  teammate: teammate,
   harness: 'claude',
   project: project,
   title: title ?? id,
@@ -227,5 +232,126 @@ void main() {
     // algo andando (faísca) suja o quadro
     scene.sparkle(10, 10, 1);
     expect(scene.update(1 / 12), isTrue);
+  });
+
+  test('barrinha do contexto: verde, amarelo e vermelho', () {
+    expect(contextBarColor(0.31), contextBarColor(0));
+    expect(contextBarColor(0.6), isNot(contextBarColor(0.59)));
+    expect(contextBarColor(0.84), contextBarColor(0.6));
+    expect(contextBarColor(0.85), isNot(contextBarColor(0.84)));
+    expect(contextBarColor(1), contextBarColor(0.85));
+  });
+
+  test('quem chega ou sai deixa uma poeirinha que some em 0,6 s', () {
+    final scene = FarmScene(rnd: math.Random(1))..layout = _layout(8);
+    scene.sync(groupFarm([_loop('a', '/p/a')]));
+    // o primeiro sync é a fazenda abrindo: ninguém "chega"
+    expect(scene.puffs, isEmpty);
+    scene.sync(groupFarm([_loop('a', '/p/a'), _loop('b', '/p/a')]));
+    expect(scene.puffs.single.born, isTrue);
+    scene
+      ..update(0.3)
+      ..sync(groupFarm([_loop('b', '/p/a')]));
+    final gone = scene.puffs.where((p) => !p.born).single;
+    expect((gone.x, gone.y), (scene.critters['a']!.x, scene.critters['a']!.y));
+    expect(scene.update(0.35), isTrue);
+    expect(scene.puffs.single, same(gone));
+    scene.update(0.3);
+    expect(scene.puffs, isEmpty);
+    expect(scene.critters.keys, ['b']);
+  });
+
+  test('teammate tem canteiro próprio, tamanho cheio e a cor do lead', () {
+    final scene = FarmScene(rnd: math.Random(1))..layout = _layout(8);
+    scene.sync(
+      groupFarm([
+        _loop('lead', '/p/a'),
+        _loop('sub', '/p/a', parent: 'lead'),
+        _loop('t1', '/p/a', parent: 'lead', teammate: 'revisor'),
+        _loop('t2', '/p/a', parent: 'lead', teammate: 'testes'),
+        _loop('solo', '/p/a'),
+      ]),
+    );
+    FarmPlotInfo? plotOf(String id) =>
+        scene.plotInfo.where((i) => i?.main?.id == id).firstOrNull;
+    // o subagente segue mini no canteiro do lead; teammates não
+    expect(plotOf('lead')!.minis, 1);
+    expect(scene.critters['sub']!.mini, isTrue);
+    for (final id in ['t1', 't2']) {
+      expect(plotOf(id), isNotNull);
+      expect(scene.critters[id]!.mini, isFalse);
+      expect(plotOf(id)!.team, plotOf('lead')!.team);
+    }
+    expect(plotOf('lead')!.team, isNotNull);
+    expect(plotOf('solo')!.team, isNull);
+    expect(scene.need.plots, 4);
+  });
+
+  test('arrastar troca canteiros e a vaga escolhida volta na próxima vez', () {
+    final loops = groupFarm([
+      _loop('a1', '/p/a'),
+      _loop('a2', '/p/a'),
+      _loop('b1', '/p/b'),
+    ]);
+    final scene = FarmScene(rnd: math.Random(1))..layout = _layout(8);
+    scene.sync(loops);
+    int plotOf(FarmScene s, String id) =>
+        s.plotInfo.indexWhere((i) => i?.main?.id == id);
+    final b = plotOf(scene, 'b1');
+    // o projeto a vai para a vaga 5 (vazia): os dois canteiros dele juntos
+    expect(scene.movePlot(plotOf(scene, 'a1'), 5), {'/p/a': 5});
+    expect({plotOf(scene, 'a1'), plotOf(scene, 'a2')}, {5, 6});
+    expect(plotOf(scene, 'b1'), b);
+    // soltar em cima de b troca os dois
+    final moved = scene.movePlot(5, b);
+    expect(moved, {'/p/a': b, '/p/b': 5});
+    expect(plotOf(scene, 'b1'), 5);
+    expect(scene.plotProject[b], '/p/a');
+    // vazio não arrasta
+    expect(scene.movePlot(7, 0), isEmpty);
+
+    // a vaga é lembrada nas preferências e a fazenda nova abre igual
+    final saved = AppSettings.fromJson(
+      AppSettings(farmPlots: scene.pins).toJson(),
+    ).farmPlots;
+    expect(saved, {'/p/a': b, '/p/b': 5});
+    final next = FarmScene(rnd: math.Random(2))
+      ..pins = saved
+      ..layout = _layout(8);
+    next.sync(loops);
+    expect(plotOf(next, 'b1'), 5);
+    expect(next.plotProject[b], '/p/a');
+    next.resetPlots();
+    expect(next.pins, isEmpty);
+    expect(plotOf(next, 'a1'), 0);
+  });
+
+  test('bichinhos passeiam sem entrar no celeiro e ganham coração', () {
+    final scene = FarmScene(rnd: math.Random(3))..layout = _layout(8);
+    final l = scene.layout!;
+    scene.placePets(office: false);
+    expect(scene.pets.map((p) => p.kind), [PetKind.dog, PetKind.chicken]);
+    final dog = scene.pets.first;
+    final start = Offset(dog.x, dog.y);
+    var moved = false;
+    for (var i = 0; i < 600; i++) {
+      scene.update(0.05);
+      expect(l.blocked(dog.x, dog.y), isFalse);
+      moved |= (Offset(dog.x, dog.y) - start).distance > 1;
+    }
+    expect(moved, isTrue);
+    // clique: só o coração, que some sozinho
+    expect(scene.petAt(Offset(dog.x, dog.y - 3)), same(dog));
+    expect(dog.heart(scene.t), 0);
+    scene.update(FarmPet.heartLife + 0.1);
+    expect(dog.heart(scene.t), isNull);
+    expect(scene.petAt(Offset(dog.x + 40, dog.y + 40)), isNull);
+
+    // escritório: um gato que não sai do lugar
+    scene.placePets(office: true);
+    final cat = scene.pets.single;
+    final at = Offset(cat.x, cat.y);
+    scene.update(5);
+    expect((cat.kind, Offset(cat.x, cat.y)), (PetKind.cat, at));
   });
 }

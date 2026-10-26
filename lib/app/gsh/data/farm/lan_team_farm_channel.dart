@@ -214,6 +214,7 @@ TeamAgent? _agentFromJson(Map a) {
 Map<String, Object?> _loopToJson(FarmLoop l) => {
   'id': l.id,
   if (l.parentId != null) 'p': l.parentId,
+  if (l.teammate != null) 'tm': l.teammate,
   'h': l.harness,
   'pr': l.project,
   't': l.title,
@@ -224,6 +225,7 @@ Map<String, Object?> _loopToJson(FarmLoop l) => {
   'c': l.contextTokens,
   'i': l.inputTokens,
   'r': l.cacheReadTokens,
+  if (l.contextWindow > 0) 'cw': l.contextWindow,
   'ls': l.lastSeen.millisecondsSinceEpoch,
 };
 
@@ -235,6 +237,7 @@ FarmLoop? _loopFromJson(Map l) {
   return FarmLoop(
     id: id,
     parentId: l['p'] as String?,
+    teammate: l['tm'] as String?,
     harness: l['h'] as String? ?? 'claude',
     project: l['pr'] as String? ?? '',
     title: l['t'] as String? ?? '',
@@ -245,6 +248,7 @@ FarmLoop? _loopFromJson(Map l) {
     contextTokens: n(l['c']),
     inputTokens: n(l['i']),
     cacheReadTokens: n(l['r']),
+    contextWindow: n(l['cw']),
     lastSeen: DateTime.fromMillisecondsSinceEpoch(n(l['ls'])),
   );
 }

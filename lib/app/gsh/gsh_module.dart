@@ -44,6 +44,9 @@ import 'package:gsh_desktop/app/gsh/domain/contracts/session_directory.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/codex_rollout_farm_source.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/multi_farm_source.dart';
 import 'package:gsh_desktop/app/core/domain/contracts/settings_store.dart';
+import 'package:gsh_desktop/app/gsh/data/harness/claude_harness_source.dart';
+import 'package:gsh_desktop/app/gsh/domain/contracts/harness_source.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/harness_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/lan_team_mail.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_mail.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_post.dart';
@@ -275,6 +278,7 @@ Future<Module> buildGshModule({
         ..addLazySingleton<TerminalStatusServer>(TerminalStatusServerImpl.new)
         // Fazenda: loops de agente lidos dos transcripts do Claude Code.
         ..addInstance<SessionDirectory>(ClaudeSessionDirectory())
+        ..addInstance<HarnessSource>(ClaudeHarnessSource())
         // Fazenda do time: multicast na rede local, sem servidor.
         ..addInstance<TeamFarmChannel>(LanTeamFarmChannel())
         // Correio do time: TCP direto e assinado; o TeamPost é a mesma
@@ -357,6 +361,7 @@ Future<Module> buildGshModule({
             ..addChangeNotifier<TelemetryViewModel>(TelemetryViewModel.new)
             ..addChangeNotifier<HttpViewModel>(HttpViewModel.new)
             ..addChangeNotifier<FarmViewModel>(FarmViewModel.new)
+            ..addChangeNotifier<HarnessViewModel>(HarnessViewModel.new)
             ..addChangeNotifier<ChatViewModel>(ChatViewModel.new),
           child: (context, state) => const GshPage(),
         );

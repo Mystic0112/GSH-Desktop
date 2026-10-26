@@ -92,7 +92,11 @@ extension _Overlay on FarmScenePainter {
         sp.paint(canvas, Offset(box.left + 3, box.top + 1));
       }
     }
-    if (lot != null) _banner(canvas, lot, w, scr);
+    if (lot != null) {
+      _banner(canvas, banner?.call(lot.name) ?? lot.name, w, scr);
+    } else if (me != null && peers.isNotEmpty) {
+      _banner(canvas, me!, w, scr);
+    }
     final hov = hover.value;
     for (final c in list) {
       if (c.gone != null || !seen(c.x, c.y)) continue;
@@ -114,17 +118,16 @@ extension _Overlay on FarmScenePainter {
     }
   }
 
-  /// A faixa com o nome do colega, no alto da fazenda dele: tábua de
-  /// madeira na fazenda, placa na parede da sala no escritório. Tamanho fixo em
-  /// pixels de tela, para ler com o zoom afastado.
+  /// A faixa com o nome do dono, no alto da fazenda: tábua de madeira na
+  /// fazenda, placa na parede da sala no escritório. Tamanho fixo em pixels
+  /// de tela, para ler com o zoom afastado.
   void _banner(
     Canvas canvas,
-    FarmLot lot,
+    String text,
     FarmWorld w,
     Offset Function(double, double) scr,
   ) {
     final l = w.layout, office = w.scenery == FarmScenery.office;
-    final text = banner?.call(lot.name) ?? lot.name;
     final tp = labels.of(
       text,
       label.copyWith(

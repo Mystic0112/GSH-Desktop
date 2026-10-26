@@ -8,6 +8,8 @@ import 'package:gsh_desktop/app/gsh/ui/actions/tab_actions.dart';
 import 'package:gsh_desktop/app/gsh/ui/document/document_windows.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/agent_graph_session.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/farm_session.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/harness_session.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/harness_view.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/chat_session.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat_view.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/browser_session.dart';
@@ -225,6 +227,7 @@ IconData _tabIcon(PaneItem? item) {
   if (item is NotebookSession) return Icons.menu_book_outlined;
   if (item is AgentGraphSession) return Icons.hub_outlined;
   if (item is FarmSession) return Icons.grass_outlined;
+  if (item is HarnessSession) return Icons.tune;
   if (item is ChatSession) return Icons.chat_bubble_outline;
   if (item is EmptyTab) return Icons.edit_outlined;
   return Icons.auto_awesome;
@@ -1728,6 +1731,11 @@ class _PaneBodyState extends State<_PaneBody> {
     // aba não é a ativa (o `IndexedStack` mantém todas montadas).
     if (item is FarmSession) {
       return TickerMode(enabled: widget.active, child: const FarmView());
+    }
+
+    // Harness do workspace: instruções, skills, subagentes, hooks, MCP...
+    if (item is HarnessSession) {
+      return HarnessView(session: item, active: widget.active);
     }
 
     // Caderno `.notebook` (plano 62, passo 4): lista de notas | nota | tags.

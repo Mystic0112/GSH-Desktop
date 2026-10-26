@@ -26,6 +26,31 @@ class TranscriptTail {
   int cacheReadTokens = 0;
   DateTime? lastTs;
 
+  /// `message.model` da última resposta real (sem as `<synthetic>`).
+  String? model;
+
+  /// Time e nome do colega, se esta sessão é de um teammate: no time
+  /// implícito do Claude 5 o colega roda numa sessão própria e marca toda
+  /// linha com `teamName`/`agentName`.
+  String? teamName, agentName;
+
+  /// Time do último colega que esta sessão (o lead) criou, lido do
+  /// resultado do spawn (`agent_id: <nome>@<time>`). Cada execução da sessão
+  /// (retomada inclusive) cria um time novo: vale o último, e as gerações
+  /// antigas não ligam mais (o Claude Code não traz os teammates de volta
+  /// ao retomar).
+  String? spawnedTeam;
+
+  /// Colegas que esta sessão criou como teammate, nome → time. Só entra
+  /// quem voltou com `<nome>@<time>`: um subagente nomeado sem time (o
+  /// `Async agent launched… agentId: <hex>`) continua subagente.
+  final mates = <String, String>{};
+
+  /// Chamadas `Agent`/`Task` ainda sem resultado, id → `name` pedido. Só o
+  /// resultado delas é lido (um Read de arquivo com `agent_id:` no texto
+  /// não cria colega).
+  final _spawning = <String, String?>{};
+
   // O Claude grava uma linha por bloco de conteúdo da mesma mensagem, todas
   // com o mesmo `usage`. Conta o `output_tokens` uma vez por mensagem: segura
   // a mensagem corrente e só soma quando o id muda.
@@ -72,6 +97,13 @@ class TranscriptTail {
     if (ts != null && (lastTs == null || ts.isAfter(lastTs!))) lastTs = ts;
     final c = o['cwd'];
     if (c is String && c.isNotEmpty) cwd = c;
+    final team = type == 'assistant' || type == 'user'
+        ? _str(o['teamName'])
+        : null;
+    if (team != null) {
+      teamName = team;
+      agentName = _str(o['agentName']) ?? agentName;
+    }
 
     switch (o['type']) {
       case 'custom-title':
@@ -79,11 +111,12 @@ class TranscriptTail {
       case 'agent-name':
         title ??= _str(o['agentName']);
       case 'assistant':
-        // Transcript principal de versões antigas trazia o subagente inline.
-        if (!isSubagent && o['isSidechain'] == true) return;
+        // Transcript principal de versões antigas trazia o subagente
+        // inline; o do teammate é sidechain do começo ao fim (e marcado).
+        if (!isSubagent && o['isSidechain'] == true && team == null) return;
         _assistant(o['message']);
       case 'user':
-        if (!isSubagent && o['isSidechain'] == true) return;
+        if (!isSubagent && o['isSidechain'] == true && team == null) return;
         _user(o);
     }
   }
@@ -104,12 +137,26 @@ class TranscriptTail {
           _int(usage['input_tokens']) +
           _int(usage['cache_creation_input_tokens']);
       _msgCache = _int(usage['cache_read_input_tokens']);
-      contextTokens =
+      final ctx =
           _int(usage['input_tokens']) +
           _int(usage['cache_read_input_tokens']) +
           _int(usage['cache_creation_input_tokens']);
+      // uso zerado (erro de API, interrupção) não é notícia: não apaga a barra
+      if (ctx > 0) contextTokens = ctx;
+      final m = msg['model'];
+      if (m is String && m.isNotEmpty && !m.startsWith('<')) model = m;
     }
     final content = msg['content'];
+    if (content is List && !isSubagent) {
+      for (final b in content) {
+        if (b is Map &&
+            b['type'] == 'tool_use' &&
+            (b['name'] == 'Agent' || b['name'] == 'Task') &&
+            b['id'] is String) {
+          _spawning[b['id'] as String] = _str((b['input'] as Map?)?['name']);
+        }
+      }
+    }
     final last = content is List && content.isNotEmpty ? content.last : null;
     if (last is Map && last['type'] == 'tool_use') {
       tool = last['name'] as String? ?? '';
@@ -149,10 +196,60 @@ class TranscriptTail {
         activity = FarmActivity.idle;
         tool = null;
       } else if (content.any((b) => b is Map && b['type'] == 'tool_result')) {
+        if (_spawning.isNotEmpty) _spawns(content);
         // Ferramenta voltou: o modelo está processando o resultado.
         activity = FarmActivity.thinking;
         tool = null;
       }
+    }
+  }
+}
+
+/// Janela de contexto do modelo do Claude, pelo id (`message.model`). O
+/// transcript diz o uso, nunca o limite: `[1m]` no id ou a linha atual
+/// (Opus/Sonnet 4.6+, Opus/Sonnet 5.x, Fable, Mythos) têm 1M; Haiku, os
+/// antigos e o que não se reconhece ficam com 200k (o [FarmLoop.window]
+/// alarga se o contexto passar disso). ponytail: tabela fixa; atualizar
+/// quando sair modelo novo com outra janela.
+int claudeContextWindow(String? model) {
+  if (model == null) return 0;
+  final m = model.toLowerCase();
+  if (m.contains('[1m]')) return farmLongWindow;
+  if (m.contains('haiku')) return farmDefaultWindow;
+  return _longLine.hasMatch(m) ? farmLongWindow : farmDefaultWindow;
+}
+
+final _longLine = RegExp(
+  r'(opus|sonnet)-(4-[6-9]|[5-9])|fable|mythos|^(opus|sonnet)(\[|$)',
+);
+
+/// `agent_id: <nome>@<time>` no resultado do spawn de um teammate.
+final _spawnedRe = RegExp(r'agent_?id:\s*([^\s@]+)@([\w.-]+)');
+
+extension on TranscriptTail {
+  /// Lê o time no resultado de um spawn de teammate (só os das chamadas
+  /// `Agent` pendentes, e só o começo do texto).
+  void _spawns(List<Object?> content) {
+    for (final b in content) {
+      if (b is! Map || b['type'] != 'tool_result') continue;
+      final id = b['tool_use_id'];
+      if (id is! String || !_spawning.containsKey(id)) continue;
+      final asked = _spawning.remove(id);
+      final c = b['content'];
+      final text = c is String
+          ? c
+          : c is List
+          ? c
+                .whereType<Map>()
+                .map((x) => x['text'])
+                .whereType<String>()
+                .join('\n')
+          : '';
+      final head = text.length > 1200 ? text.substring(0, 1200) : text;
+      final m = _spawnedRe.firstMatch(head);
+      if (m == null) continue;
+      spawnedTeam = m.group(2);
+      mates[asked ?? m.group(1)!] = m.group(2)!;
     }
   }
 }

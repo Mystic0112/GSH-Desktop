@@ -1,6 +1,6 @@
 import 'package:gsh_desktop/app/gsh/ui/remote/remote_hosts_controller.dart';
 import 'package:gsh_desktop/app/settings/data/claude_cli_info_source.dart';
-import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/core/domain/entities/claude_info.dart';
 import 'package:gsh_desktop/app/settings/ui/claude_info_viewmodel.dart';
 import 'package:gsh_desktop/app/settings/ui/notifications_viewmodel.dart';
 import 'package:gsh_desktop/app/settings/ui/neovim_settings_viewmodel.dart';

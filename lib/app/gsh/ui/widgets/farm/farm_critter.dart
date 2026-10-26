@@ -68,6 +68,9 @@ class Critter {
   /// Largura livre embaixo do mini para o nome (pixels de mundo).
   double room = 20;
 
+  /// O caminho até o destino atual (desvia de cerca, parede e mesa).
+  final route = FarmRoute();
+
   bool get mini => loop.isSubagent;
 
   void update(double dt, FarmScene scene) {
@@ -91,10 +94,7 @@ class Critter {
           stroll = null;
           strollT = 6 + rnd.nextDouble() * 12;
         } else {
-          stroll = ui.Offset(
-            s.dx + 4 + rnd.nextDouble() * 30,
-            s.dy - 2 - rnd.nextDouble() * 24,
-          );
+          stroll = _strollSpot(s, scene);
           strollT = 2 + rnd.nextDouble() * 2.5;
         }
       }
@@ -126,7 +126,9 @@ class Critter {
         side = rnd.nextBool() ? 1 : -1;
       }
     }
-    final dx = tx - x, dy = ty - y;
+    final l = scene.layout;
+    final w = route.next(l?.nav, ui.Offset(x, y), ui.Offset(tx, ty));
+    final dx = w.dx - x, dy = w.dy - y;
     if (dx.abs() + dy.abs() < 1.2) {
       moving = false;
       phase = 0;
@@ -137,8 +139,7 @@ class Critter {
       moving = true;
       final sp = math.min((mode == CritterMode.work ? 34 : speed) * dt, dist);
       var (ux, uy) = (dx / dist, dy / dist);
-      final l = scene.layout;
-      if (goal == null && l != null && !l.blocked(x, y)) {
+      if (goal == null && l != null && !route.active && !l.blocked(x, y)) {
         // passeando, não atravessa lago nem celeiro: contorna
         roam += dt;
         final free = _steer(l, ux, uy, sp, dist);
@@ -162,6 +163,27 @@ class Critter {
       }
     }
     if (mode == CritterMode.wait) hop = (hop + dt * 4) % (math.pi * 2);
+  }
+
+  /// Onde dar a volta trabalhando: perto do canteiro, num lugar onde dá
+  /// para pisar (no escritório, o corredor em volta da ilha, nunca em cima
+  /// das mesas). Sem grade, o miolo do canteiro, como antes.
+  ui.Offset? _strollSpot(ui.Offset s, FarmScene scene) {
+    final rnd = scene.rnd, nav = scene.layout?.nav;
+    if (nav == null) {
+      return ui.Offset(
+        s.dx + 4 + rnd.nextDouble() * 30,
+        s.dy - 2 - rnd.nextDouble() * 24,
+      );
+    }
+    for (var i = 0; i < 8; i++) {
+      final p = ui.Offset(
+        s.dx - 4 + rnd.nextDouble() * 50,
+        s.dy - 30 + rnd.nextDouble() * 38,
+      );
+      if (nav.walkable(p.dx, p.dy)) return p;
+    }
+    return null;
   }
 
   /// O primeiro rumo livre perto de (ux, uy), olhando um pouco à frente

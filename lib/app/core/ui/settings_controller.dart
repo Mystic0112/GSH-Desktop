@@ -303,6 +303,10 @@ class SettingsController extends ChangeNotifier {
   void setFarmScenery(FarmScenery scenery) =>
       _apply(_settings.copyWith(farmScenery: scenery));
 
+  /// Vagas escolhidas para os canteiros da fazenda (`{}` = automáticas).
+  void setFarmPlots(Map<String, int> plots) =>
+      _apply(_settings.copyWith(farmPlots: plots));
+
   /// Fazenda do time: qualquer campo `null` fica como está.
   void setTeamFarm({
     bool? enabled,

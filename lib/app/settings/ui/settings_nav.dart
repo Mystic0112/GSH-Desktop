@@ -28,6 +28,7 @@ enum SettingsCategory {
   plugins,
   // GSH Desktop (abas próprias do app)
   gshGeneral,
+  gshFeatures,
   appearance,
   terminal,
   languages,
@@ -44,6 +45,7 @@ extension SettingsCategorySide on SettingsCategory {
   SettingsSide get side =>
       const {
         SettingsCategory.gshGeneral,
+        SettingsCategory.gshFeatures,
         SettingsCategory.appearance,
         SettingsCategory.terminal,
         SettingsCategory.languages,
@@ -128,6 +130,11 @@ class _SettingsNavState extends State<SettingsNav> {
               Icons.settings_outlined,
               nav.general,
               SettingsCategory.gshGeneral,
+            ),
+            _Entry(
+              Icons.widgets_outlined,
+              nav.gshFeatures,
+              SettingsCategory.gshFeatures,
             ),
             _Entry(
               Icons.brightness_6_outlined,

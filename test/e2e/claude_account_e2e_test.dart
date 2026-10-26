@@ -21,6 +21,9 @@ void main() {
         'limits: ${p.usage?.limits.map((l) => '${l.kind.name}=${l.percent}%').join(' ')}',
       );
       expect(p.models, isNotEmpty);
+      expect(p.commands.map((c) => c.name), contains('escanor'));
+      // ignore: avoid_print
+      print('commands: ${p.commands.length}');
 
       final dir = await Directory.systemTemp.createTemp('gsh-acct');
       final e = await f.start(cwd: dir.path, model: 'haiku');

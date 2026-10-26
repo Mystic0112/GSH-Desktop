@@ -4,7 +4,7 @@ import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/app_tooltip.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/hover_tap.dart';
 import 'package:gsh_desktop/app/settings/ui/font_picker_dialog.dart';
-import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/core/domain/entities/claude_info.dart';
 import 'package:gsh_desktop/app/settings/ui/claude_info_viewmodel.dart';
 import 'package:gsh_desktop/i18n/strings.g.dart';
 import 'package:flutter_modular/flutter_modular.dart';

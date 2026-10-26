@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_resume.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/chat_session.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_viewmodel.dart';
@@ -76,7 +77,16 @@ class _ChatViewState extends State<ChatView> {
       columnWidth: width,
       fontFamily: font,
       onRemoteControl: _continueInRemoteControl,
+      onResume: _resume,
     );
+  }
+
+  /// "Retomar conversa": abre numa aba de chat nova (ou foca, se já aberta)
+  /// uma conversa recente do Claude Code desta máquina, com o histórico.
+  Future<void> _resume(BuildContext anchor) async {
+    final s = await pickResumeSession(anchor, exceptId: _chat.sessionId);
+    if (s == null || !mounted) return;
+    _shell.resumeChat(sessionId: s.id, cwd: s.project);
   }
 
   /// Leva a conversa para um terminal com Remote Control: fecha o motor do

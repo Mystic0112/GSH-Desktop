@@ -1,5 +1,5 @@
-import 'package:gsh_desktop/app/settings/data/claude_info_parsers.dart';
-import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/core/data/claude/claude_info_parsers.dart';
+import 'package:gsh_desktop/app/core/domain/entities/claude_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // Fixtures copiadas da saída real do `claude` 2.1.309 (dados pessoais trocados).

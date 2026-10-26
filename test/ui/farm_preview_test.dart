@@ -27,7 +27,10 @@ FarmLoop _loop(
   String? title,
   String? parent,
   String? agentType,
+  String? teammate,
   int tokens = 0,
+  int ctx = 0,
+  int window = 0,
 }) => FarmLoop(
   id: id,
   harness: harness,
@@ -37,13 +40,23 @@ FarmLoop _loop(
   lastSeen: DateTime(2026, 10, 23),
   parentId: parent,
   agentType: agentType,
+  teammate: teammate,
   outputTokens: tokens,
+  contextTokens: ctx,
+  contextWindow: window,
 );
 
 /// Um canteiro com 6 minis do squad, um órfão, os principais do Codex e do
 /// Antigravity, um principal "kurama" e gente parada.
 List<FarmLoop> _loops() => [
-  _loop('m', FarmActivity.editing, title: 'Refatorar a fazenda', tokens: 60000),
+  _loop(
+    'm',
+    FarmActivity.editing,
+    title: 'Refatorar a fazenda',
+    tokens: 60000,
+    ctx: 63000,
+    window: 200000,
+  ),
   for (final (i, a) in const [
     'escanor',
     'bulma',
@@ -64,6 +77,8 @@ List<FarmLoop> _loops() => [
     harness: 'codex',
     project: '/home/dev/loja-api',
     title: 'Corrigir o build do Windows',
+    ctx: 150000,
+    window: 258400,
   ),
   _loop(
     'ag',
@@ -71,6 +86,7 @@ List<FarmLoop> _loops() => [
     harness: 'antigravity',
     project: '/home/dev/site',
     title: 'Landing nova',
+    ctx: 40000,
   ),
   _loop(
     'o1',
@@ -80,9 +96,32 @@ List<FarmLoop> _loops() => [
     agentType: 'saitama',
     title: 'Pipeline de deploy',
   ),
-  _loop('k', FarmActivity.thinking, title: 'kurama', tokens: 200000),
-  _loop('z', FarmActivity.sleeping, title: 'Spike de cache'),
-  _loop('i', FarmActivity.idle, title: 'Docs do hook'),
+  _loop(
+    'k',
+    FarmActivity.thinking,
+    title: 'kurama',
+    tokens: 200000,
+    ctx: 182000,
+    window: 200000,
+  ),
+  // o "kurama" lidera um time: dois teammates com canteiro próprio
+  for (final (i, (name, type)) in const [
+    ('revisor', 'levi'),
+    ('testes', 'Explore'),
+  ].indexed)
+    _loop(
+      't$i',
+      i == 0 ? FarmActivity.editing : FarmActivity.reading,
+      parent: 'k',
+      teammate: name,
+      title: name,
+      agentType: type,
+      tokens: 20000,
+      ctx: 50000 + i * 70000,
+      window: 200000,
+    ),
+  _loop('z', FarmActivity.sleeping, title: 'Spike de cache', ctx: 90000),
+  _loop('i', FarmActivity.idle, title: 'Docs do hook', ctx: 30000),
 ];
 
 void main() {
@@ -93,6 +132,9 @@ void main() {
     for (final zoom in [0.0, 1.0, 3.0, 5.0]) {
       _preview(scenery, zoom);
     }
+    _preview(scenery, 5, puffs: true);
+    _preview(scenery, 0, drag: true);
+    _preview(scenery, 5, pets: true);
     _teamPreview(scenery);
     _teamPreview(scenery, couriers: true);
   }
@@ -171,7 +213,9 @@ void _teamPreview(FarmScenery scenery, {bool couriers = false}) => testWidgets(
     final world = (await tester.runAsync(
       () => buildWorld(layout, scenery: scenery),
     ))!;
-    scene.relayout(layout);
+    scene
+      ..relayout(layout)
+      ..placePets(office: scenery == FarmScenery.office);
     final lots = <FarmLot>[];
     for (final (id, name, loops) in _peers()) {
       final lot = FarmLot(id, name)..scene.sync(groupFarm(loops));
@@ -217,6 +261,7 @@ void _teamPreview(FarmScenery scenery, {bool couriers = false}) => testWidgets(
                 hover: ValueNotifier(null),
                 repaint: ChangeNotifier(),
                 peers: lots,
+                me: context.t.gsh.farm.you,
                 couriers: couriers
                     ? _fakeCouriers(scene, world, lots)
                     : const [],
@@ -236,89 +281,152 @@ void _teamPreview(FarmScenery scenery, {bool couriers = false}) => testWidgets(
   },
 );
 
-void _preview(FarmScenery scenery, double zoom) =>
-    testWidgets('preview: ${scenery.name} no zoom $zoom', (tester) async {
-      const size = Size(960, 600);
-      tester.view
-        ..physicalSize = size
-        ..devicePixelRatio = 1;
-      addTearDown(tester.view.reset);
-      final plots = groupFarm(_loops());
-      final scene = FarmScene(rnd: math.Random(4))..sync(plots);
-      final layout = layoutFarm(
-        plots: scene.need.plots + 1,
-        yard: scene.need.yard + 2,
-        view: FarmViewport(w: size.width, h: size.height),
-        snap: (z) => z,
-      );
-      final world = (await tester.runAsync(
-        () => buildWorld(layout, scenery: scenery),
-      ))!;
-      scene.relayout(layout);
-      for (var i = 0; i < 40; i++) {
-        scene.update(0.05);
-      }
-      final cam = FarmCamera()..fit(layout, FarmViewport(w: 960, h: 600));
-      // zoom 3: enquadra o canteiro dos minis
-      final main =
-          layout.plots[scene.plotInfo.indexWhere((p) => p?.main?.id == 'm')];
-      if (zoom > 0) {
-        cam
-          ..z = zoom
-          ..x = main.center.dx - size.width / 2 / zoom
-          ..y = main.center.dy - size.height / 2 / zoom
-          ..clampTo(layout, size);
-      }
-      await tester.pumpWidget(
-        shotHost(
-          RepaintBoundary(
-            key: shotKey,
-            child: Builder(
-              builder: (context) => CustomPaint(
-                size: size,
-                painter: FarmScenePainter(
-                  scene: scene,
-                  world: world,
-                  cam: cam,
-                  labels: FarmLabels(),
-                  label: context.typo.mono.copyWith(
-                    fontSize: 10,
-                    height: 1.2,
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFFfff8e8),
-                  ),
-                  hover: ValueNotifier(null),
-                  repaint: ChangeNotifier(),
-                ),
+/// Com [puffs]: um mini acaba de sumir e um principal novo acaba de chegar.
+void _preview(
+  FarmScenery scenery,
+  double zoom, {
+  bool puffs = false,
+  bool drag = false,
+  bool pets = false,
+}) => testWidgets('preview: ${scenery.name} no zoom $zoom'
+    '${puffs ? ' (poeira)' : ''}${drag ? ' (arrastando)' : ''}'
+    '${pets ? ' (bichinhos)' : ''}', (tester) async {
+  const size = Size(960, 600);
+  tester.view
+    ..physicalSize = size
+    ..devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+  final plots = groupFarm(_loops());
+  final scene = FarmScene(rnd: math.Random(4))..sync(plots);
+  final layout = layoutFarm(
+    plots: scene.need.plots + 1,
+    yard: scene.need.yard + 2,
+    view: FarmViewport(w: size.width, h: size.height),
+    snap: (z) => z,
+  );
+  final world = (await tester.runAsync(
+    () => buildWorld(layout, scenery: scenery),
+  ))!;
+  scene
+    ..relayout(layout)
+    ..placePets(office: scenery == FarmScenery.office);
+  for (var i = 0; i < 40; i++) {
+    scene.update(0.05);
+  }
+  if (puffs) {
+    final m = scene.critters['m']!;
+    scene
+      ..sync(
+        groupFarm([
+          for (final l in _loops())
+            if (l.id != 's1') l,
+          _loop('n', FarmActivity.thinking, title: 'Novo'),
+        ]),
+      )
+      ..update(0.2);
+    // o novo surge ao lado do dono do canteiro, para caber no quadro
+    scene.puffs.firstWhere((p) => p.born);
+    scene.critters['n']!
+      ..x = m.x - 26
+      ..y = m.y;
+    scene.puffs
+      ..removeWhere((p) => p.born)
+      ..add(FarmPuff(m.x - 26, m.y, scene.t - 0.15, born: true, mini: false));
+  }
+  if (drag) {
+    scene
+      ..dragFrom = scene.plotInfo.indexWhere((p) => p?.main?.id == 'm')
+      ..dragTo = scene.plotInfo.lastIndexWhere((p) => p == null);
+  }
+  final cam = FarmCamera()..fit(layout, FarmViewport(w: 960, h: 600));
+  // zoom 3: enquadra o canteiro dos minis
+  final main =
+      layout.plots[scene.plotInfo.indexWhere((p) => p?.main?.id == 'm')];
+  // bichinhos: a câmera no primeiro, com o coração do carinho subindo; na
+  // fazenda a galinha bica ao lado do cachorro
+  var focus = main.center;
+  if (pets) {
+    final p0 = scene.pets.first;
+    if (scene.pets.length > 1) {
+      scene.pets[1]
+        ..x = p0.x + 14
+        ..y = p0.y + 3;
+    }
+    p0.petAt = scene.t - 0.35;
+    focus = Offset(p0.x, p0.y);
+  }
+  if (zoom > 0) {
+    cam
+      ..z = zoom
+      ..x = focus.dx - size.width / 2 / zoom
+      ..y = focus.dy - size.height / 2 / zoom
+      ..clampTo(layout, size);
+  }
+  await tester.pumpWidget(
+    shotHost(
+      RepaintBoundary(
+        key: shotKey,
+        child: Builder(
+          builder: (context) => CustomPaint(
+            size: size,
+            painter: FarmScenePainter(
+              scene: scene,
+              world: world,
+              cam: cam,
+              labels: FarmLabels(),
+              label: context.typo.mono.copyWith(
+                fontSize: 10,
+                height: 1.2,
+                fontWeight: FontWeight.w700,
+                color: const Color(0xFFfff8e8),
               ),
+              hover: ValueNotifier(null),
+              repaint: ChangeNotifier(),
             ),
           ),
         ),
-      );
-      final name = scenery == FarmScenery.farm ? 'farm2' : 'office';
-      await takeShot(tester, '${name}_${zoom.toInt()}');
-    });
+      ),
+    ),
+  );
+  final name = scenery == FarmScenery.farm ? 'farm2' : 'office';
+  await takeShot(
+    tester,
+    '${name}_${zoom.toInt()}${puffs ? '_puff' : ''}${drag ? '_drag' : ''}${pets ? '_pets' : ''}',
+  );
+});
 
 List<CourierRun> _fakeCouriers(
   FarmScene scene,
   FarmWorld world,
   List<FarmLot> lots,
 ) {
-  /// [at] em fração da caminhada; negativo = segundos já entregando.
+  /// [at] em fração da caminhada; negativo = segundos já entregando. O
+  /// caminho passa pelas portas ([courierRoute]).
   CourierRun run(
     (Offset, Critter?) a,
     (Offset, Critter?) b,
     double at,
     TeamKnockKind kind, {
     Offset targetAt = Offset.zero,
+    FarmLot? fromLot,
   }) {
-    final walk = ((b.$1 - a.$1).distance / courierSpeed).clamp(
-      0.6,
-      courierWalkMax,
+    final path = courierRoute(
+      fromLot?.world ?? world,
+      fromLot?.at ?? Offset.zero,
+      a.$1,
+      fromLot == null ? lots.first.world! : world,
+      fromLot == null ? targetAt : Offset.zero,
+      b.$1,
     );
+    var len = 0.0;
+    for (var i = 1; i < path.length; i++) {
+      len += (path[i] - path[i - 1]).distance;
+    }
+    final walk = (len / courierSpeed).clamp(0.6, courierWalkMax);
     return CourierRun(
       from: a.$1,
       to: b.$1,
+      path: path,
       age: at < 0 ? walk - at : walk * at,
       kind: kind,
       target: b.$2,
@@ -340,12 +448,14 @@ List<CourierRun> _fakeCouriers(
       courierEndpoint(scene, world, Offset.zero, 'k'),
       -0.8,
       TeamKnockKind.file,
+      fromLot: rafael,
     ),
     run(
       courierEndpoint(bianca.scene, bianca.world!, bianca.at, null),
       courierEndpoint(scene, world, Offset.zero, 'cx'),
       0.2,
       TeamKnockKind.file,
+      fromLot: bianca,
     ),
   ];
 }

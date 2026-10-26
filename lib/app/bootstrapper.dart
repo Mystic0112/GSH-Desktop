@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io' show Platform;
+import 'dart:io' show Platform, exit;
 import 'dart:ui' show AppExitResponse;
 
 import 'package:gsh_desktop/app/app_module.dart';
@@ -665,6 +665,13 @@ class WindowStateKeeperState extends State<WindowStateKeeper>
         'close',
         'até destroy: ${closeClock.elapsedMilliseconds}ms',
       );
+      // Windows 11 (26100+): depois do `destroy()` o processo caía na
+      // desmontagem nativa da janela (coremessaging.dll, 0xc0000005), com o
+      // Dart já encerrado limpo — sobrava um crash dump a cada fechamento.
+      // Tudo já foi gravado acima (log é síncrono, stores com flush), então
+      // no Windows o processo sai direto, sem passar por essa desmontagem.
+      // PTYs ficam num Job Object que o Windows encerra junto.
+      if (Platform.isWindows) exit(0);
       await windowManager.destroy();
     }
   }

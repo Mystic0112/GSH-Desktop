@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/core/domain/entities/claude_info.dart';
 import 'package:yaml/yaml.dart';
 
 // Parsers puros da saída da CLI `claude` (testados em

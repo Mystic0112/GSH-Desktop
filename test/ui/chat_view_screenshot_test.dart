@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/services.dart' show LogicalKeyboardKey;
+import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_slash_menu.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_usage.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/chat_engine.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_attachment.dart';
@@ -186,6 +188,80 @@ void main() {
     expect(shortModelName('claude-opus-4-6[1m]'), 'Opus 4.6');
     expect(shortModelName('opus'), 'opus');
     expect(shortModelName(null), 'Claude');
+  });
+
+  test('menu do /: ordem e quando some', () {
+    const cmds = [
+      ChatCommandOption(name: 'escanor', description: 'Backend PHP / Laravel'),
+      ChatCommandOption(name: 'agentes-escala', description: 'x'),
+      ChatCommandOption(
+        name: 'review',
+        description: 'Revisa o diff',
+        aliases: ['rev'],
+      ),
+      ChatCommandOption(
+        name: 'bulma',
+        description: 'Frontend React e escala de UI',
+      ),
+    ];
+    List<String> m(String t, {bool dismissed = false}) => [
+      for (final c in slashMatches(t, cmds, dismissed: dismissed)) c.name,
+    ];
+    expect(m('/esc'), ['escanor', 'agentes-escala', 'bulma']);
+    expect(m('/rev'), ['review']);
+    expect(m('/'), hasLength(4));
+    expect(m('/escanor faz a API'), isEmpty); // já nos argumentos
+    expect(m('oi /esc'), isEmpty);
+    expect(m('/esc', dismissed: true), isEmpty);
+  });
+
+  testWidgets('retomar conversa: no cabeçalho e no chat vazio', (tester) async {
+    tester.view.physicalSize = const Size(1100, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final chat = ChatController(_Factory(), cwd: '/home/dev/GSH-Desktop');
+    var asked = 0;
+    await tester.pumpWidget(
+      shotHost(ChatPane(chat: chat, branch: 'helio', onResume: (_) => asked++)),
+    );
+    await tester.pump();
+    expect(find.text('Retomar conversa'), findsOneWidget);
+    await tester.tap(find.text('Retomar conversa'));
+    await tester.tap(find.text('Retomar uma conversa'));
+    expect(asked, 2);
+    chat.dispose();
+  });
+
+  testWidgets('menu do /: digita, escolhe com seta e Enter completa', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1100, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final chat = ChatController(_Factory(), cwd: '/home/dev/GSH-Desktop')
+      ..commands = const [
+        ChatCommandOption(
+          name: 'escanor',
+          description: 'Backend PHP / Laravel',
+        ),
+        ChatCommandOption(name: 'bulma', description: 'Frontend React'),
+        ChatCommandOption(name: 'review', description: 'Revisa o diff'),
+      ];
+    await tester.pumpWidget(shotHost(ChatPane(chat: chat, branch: 'helio')));
+    await tester.pump();
+    await tester.tap(find.byType(TextField));
+    await tester.enterText(find.byType(TextField), '/');
+    await tester.pump();
+    expect(find.text('/escanor'), findsOneWidget);
+    expect(find.text('/bulma'), findsOneWidget);
+    await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.pump();
+    final field = tester.widget<TextField>(find.byType(TextField));
+    expect(field.controller!.text, '/bulma ');
+    expect(find.text('/escanor'), findsNothing); // menu fechou
+    expect(chat.items, isEmpty); // Enter escolheu, não enviou
+    chat.dispose();
   });
 
   testWidgets('conversa: edições agrupadas, ferramenta recolhida, modo', (

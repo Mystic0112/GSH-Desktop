@@ -80,6 +80,50 @@ void main() {
       expect(t.cwd, '/repo');
     });
 
+    test('janela do contexto vem do modelo; uso zerado não apaga', () {
+      final t = TranscriptTail(isSubagent: false)
+        ..apply({
+          ..._assistant('m1', [_toolUse('Read')]),
+          'message': {
+            'id': 'm1',
+            'model': 'claude-opus-5-5',
+            'content': const [],
+            'usage': {'input_tokens': 5, 'cache_read_input_tokens': 63000},
+          },
+        })
+        // resposta sintética (erro de API): zeros, modelo `<synthetic>`
+        ..apply({
+          ..._assistant('m2', const []),
+          'message': {
+            'id': 'm2',
+            'model': '<synthetic>',
+            'content': const [],
+            'usage': {'input_tokens': 0},
+          },
+        });
+      expect((t.model, t.contextTokens), ('claude-opus-5-5', 63005));
+      expect(claudeContextWindow(t.model), farmLongWindow);
+      expect(claudeContextWindow('claude-sonnet-4-6[1m]'), farmLongWindow);
+      expect(claudeContextWindow('claude-haiku-4-5'), farmDefaultWindow);
+      expect(claudeContextWindow('claude-sonnet-4-5'), farmDefaultWindow);
+      expect(claudeContextWindow(null), 0);
+      // sem modelo: 200k, alargada para 1M se o contexto não cabe
+      FarmLoop loop(int ctx, [int w = 0]) => FarmLoop(
+        id: 'x',
+        harness: 'claude',
+        project: '/p',
+        title: 'x',
+        activity: FarmActivity.thinking,
+        lastSeen: DateTime(2026),
+        contextTokens: ctx,
+        contextWindow: w,
+      );
+      expect(loop(63000).window, farmDefaultWindow);
+      expect(loop(63000).contextFill, closeTo(0.315, 1e-9));
+      expect(loop(250000).window, farmLongWindow);
+      expect(loop(9000, 258400).window, 258400);
+    });
+
     test('título: custom-title vence agent-name; prompt é fallback', () {
       final t = TranscriptTail(isSubagent: false)
         ..apply({
@@ -128,9 +172,9 @@ void main() {
         {'type': 'text'},
       ], stop: 'end_turn', ts: ts))}\n',
     );
-    File(
-      '${subs.path}/agent-a1.meta.json',
-    ).writeAsStringSync(jsonEncode({'agentType': 'escanor', 'name': 'api'}));
+    File('${subs.path}/agent-a1.meta.json').writeAsStringSync(
+      jsonEncode({'agentType': 'escanor', 'description': 'api'}),
+    );
 
     final loops = await ClaudeTranscriptFarmSource(
       root: root.path,

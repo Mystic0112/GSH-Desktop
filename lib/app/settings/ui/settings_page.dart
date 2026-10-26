@@ -29,6 +29,7 @@ import 'package:gsh_desktop/app/core/terminal/terminal_controller.dart'
 import 'package:gsh_desktop/app/core/ui/widgets/app_menu.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/code_highlight.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/window_controls.dart';
+import 'package:gsh_desktop/app/settings/ui/gsh_features_panel.dart';
 import 'package:gsh_desktop/app/settings/ui/notifications_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/url_opener.dart';
 import 'package:gsh_desktop/app/settings/ui/account_panel.dart';
@@ -118,6 +119,7 @@ class _SettingsPageState extends State<SettingsPage> {
       SettingsCategory.gshGeneral => const SettingsPanelBody(
         children: [_GeneralGshSections()],
       ),
+      SettingsCategory.gshFeatures => const GshFeaturesPanel(),
       SettingsCategory.account => const AccountPanel(),
       SettingsCategory.privacy => const PrivacyPanel(),
       SettingsCategory.usage => const UsagePanel(),

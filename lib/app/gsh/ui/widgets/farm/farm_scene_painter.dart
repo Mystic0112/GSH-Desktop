@@ -18,6 +18,7 @@ import 'package:flutter/widgets.dart';
 
 export 'farm_camera.dart';
 
+part 'farm_scene_effects.dart';
 part 'farm_scene_overlay.dart';
 
 /// O pedaço do mundo à vista, nas coordenadas de um lote.
@@ -63,6 +64,7 @@ class FarmScenePainter extends CustomPainter {
     required Listenable repaint,
     this.peers = const [],
     this.banner,
+    this.me,
     this.couriers = const [],
   }) : super(repaint: repaint);
 
@@ -75,6 +77,10 @@ class FarmScenePainter extends CustomPainter {
 
   /// O texto da faixa do colega (vem traduzido da view).
   final String Function(String name)? banner;
+
+  /// A placa da minha fazenda/sala ("Você" ou o meu nome no time), só
+  /// desenhada com colegas na tela.
+  final String? me;
   final FarmCamera cam;
   final FarmLabels labels;
   final TextStyle label;
@@ -108,8 +114,18 @@ class FarmScenePainter extends CustomPainter {
     );
   }
 
-  void _rect(Canvas c, double x, double y, double w, double h, int color) =>
-      c.drawRect(Rect.fromLTWH(x, y, w, h), _fill..color = Color(color));
+  void _rect(
+    Canvas c,
+    double x,
+    double y,
+    double w,
+    double h,
+    int color, [
+    double a = 1,
+  ]) => c.drawRect(
+    Rect.fromLTWH(x, y, w, h),
+    _fill..color = Color(color).withValues(alpha: Color(color).a * a),
+  );
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -198,14 +214,20 @@ class FarmScenePainter extends CustomPainter {
       final info = i < scene.plotInfo.length ? scene.plotInfo[i] : null;
       final stage = info?.stage ?? CropStage.seed;
       if (office) {
-        // a tela rola o código só com o dono trabalhando
-        final on = info?.main?.activity.status == FarmStatus.working;
+        // a tela acende e rola o código só com o dono trabalhando, pisca
+        // amarela quando ele espera você e descansa apagada no resto
+        final st = info?.main?.activity.status;
         final frames = monitors[stage]!;
         for (var row = 0; row < 2; row++) {
           for (var k = 0; k < 3; k++) {
-            final f = on ? (calm * 4 + k + row * 2).floor() % 3 : 1;
+            final img = switch (st) {
+              FarmStatus.working =>
+                frames[(calm * 4 + k + row * 2).floor() % 3],
+              FarmStatus.waiting => monitorWait[(t * 3).floor() % 2],
+              _ => monitorOff,
+            };
             final x = p.left + 1.5 + k * 10, y = p.top - 1.5 + row * 8;
-            _draw(canvas, frames[f], x, y, 7, 5);
+            _draw(canvas, img, x, y, 7, 5);
           }
         }
       } else {
@@ -218,6 +240,20 @@ class FarmScenePainter extends CustomPainter {
             _draw(canvas, frames[s], x - 2.5, y - 9, 5, 9);
           }
         }
+      }
+      // arrastando: o canteiro que sai e a vaga onde ele vai cair
+      if (i == scene.dragFrom || i == scene.dragTo) {
+        _outline(
+          canvas,
+          p.inflate(3),
+          i == scene.dragTo ? 0xFFffe08a : 0x99ffffff,
+        );
+      }
+      // a faixa do time embaixo do canteiro, na cor do lead
+      final team = info?.team;
+      if (team != null) {
+        _rect(canvas, p.left - 1, p.bottom + 1, p.width + 2, 2, 0xFF14100c);
+        _rect(canvas, p.left - 0.5, p.bottom + 1.5, p.width + 1, 1, team);
       }
       final more = info?.more ?? 0;
       if (more > 0) {
@@ -260,6 +296,10 @@ class FarmScenePainter extends CustomPainter {
         22,
       );
     }
+    // os bichinhos de estimação, no chão (antes dos gorilas)
+    for (final p in scene.pets) {
+      if (seen(p.x, p.y)) _pet(canvas, p, t, calm);
+    }
     // bichos em ordem de profundidade; só os visíveis
     final list = scene.critters.values.toList()
       ..sort((a, b) => a.y.compareTo(b.y));
@@ -283,7 +323,8 @@ class FarmScenePainter extends CustomPainter {
         // o mini do squad é mais alto (chapéu): os pés ficam no lugar
         final mw = s.width / hd, mh = s.height / hd;
         _draw(canvas, s, x - mw / 2, y - mh + bob, mw, mh, fade);
-        if (c.mode == CritterMode.work && still) {
+        // no escritório o mini usa o monitor da mesa (sem laptop na mão)
+        if (c.mode == CritterMode.work && still && !office) {
           _rect(canvas, x + 3, y - 4, 4.5, 3, 0xFF1b1f2a);
           _rect(
             canvas,
@@ -302,10 +343,18 @@ class FarmScenePainter extends CustomPainter {
       // Codex e Antigravity levam um selo no peito (Claude é o padrão)
       final badge = _badge(c.loop.harness);
       if (badge != null) _draw(canvas, badge, x - 9, y - 7 + bob, 5, 7, fade);
+      // quem não dorme leva a barrinha do contexto em cima da cabeça
+      if (c.mode != CritterMode.sleep && c.loop.contextTokens > 0) {
+        _gauge(canvas, x, y - 22 + bob, c.loop.contextFill, fade);
+      }
+      // no escritório o trabalho aparece no monitor da ilha: nada de
+      // laptop flutuando ao lado dela
       if (still && c.stroll == null && c.mode == CritterMode.work) {
-        _draw(canvas, laptopHD[c.typingFrame(t)], x + 4, y - 6, 9, 7, fade);
+        if (!office) {
+          _draw(canvas, laptopHD[c.typingFrame(t)], x + 4, y - 6, 9, 7, fade);
+        }
       } else if (still && c.mode == CritterMode.wait) {
-        _draw(canvas, laptopHD[2], x + 4, y - 6, 9, 7, fade);
+        if (!office) _draw(canvas, laptopHD[2], x + 4, y - 6, 9, 7, fade);
         _draw(
           canvas,
           flagHD[(t * 3).floor() % 2],
@@ -329,6 +378,9 @@ class FarmScenePainter extends CustomPainter {
           );
         }
       }
+    }
+    for (final p in scene.puffs) {
+      if (seen(p.x, p.y)) _puff(canvas, p, t);
     }
     // a fileira de árvores da frente passa por cima de todo mundo
     final fy0 = math.max(sy, w.fgY), fh = math.min(l.h, sy + sh) - fy0;

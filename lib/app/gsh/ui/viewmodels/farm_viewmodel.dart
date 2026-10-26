@@ -21,7 +21,7 @@ class FarmPlot {
   Iterable<FarmLoop> get mains => loops.where((l) => !l.isSubagent);
 
   Iterable<FarmLoop> subagentsOf(String id) =>
-      loops.where((l) => l.parentId == id);
+      loops.where((l) => l.isSubagent && l.parentId == id);
 
   DateTime get lastSeen =>
       loops.map((l) => l.lastSeen).reduce((a, b) => a.isAfter(b) ? a : b);
@@ -99,6 +99,7 @@ class FarmViewModel extends ChangeNotifier {
         FarmLoop(
           id: l.id,
           parentId: l.parentId,
+          teammate: l.teammate,
           harness: l.harness,
           project: p.basename(l.project),
           title: _teamConfig.showTitles ? l.title : p.basename(l.project),
@@ -109,6 +110,7 @@ class FarmViewModel extends ChangeNotifier {
           contextTokens: l.contextTokens,
           inputTokens: l.inputTokens,
           cacheReadTokens: l.cacheReadTokens,
+          contextWindow: l.contextWindow,
           lastSeen: l.lastSeen,
         ),
     ],
@@ -233,14 +235,14 @@ List<FarmWaiting> farmWaitingQueue(Iterable<FarmLoop> loops) {
             .reduce((a, b) => a.isBefore(b) ? a : b),
         subagents: [
           for (final l in group)
-            if (l.isSubagent) l.agentType ?? l.title,
+            if (l.parentId != null) l.teammate ?? l.agentType ?? l.title,
         ],
       ),
   ]..sort((a, b) => a.since.compareTo(b.since));
 }
 
 /// Agrupa por pasta, canteiro mais recente primeiro; dentro dele, cada
-/// principal seguido dos seus subagentes.
+/// principal seguido dos seus subagentes e dos seus teammates.
 @visibleForTesting
 List<FarmPlot> groupFarm(List<FarmLoop> loops) {
   final byProject = <String, List<FarmLoop>>{};
@@ -250,13 +252,32 @@ List<FarmPlot> groupFarm(List<FarmLoop> loops) {
   int recent(FarmLoop a, FarmLoop b) => b.lastSeen.compareTo(a.lastSeen);
   final plots = <FarmPlot>[];
   byProject.forEach((project, all) {
-    final mains = all.where((l) => !l.isSubagent).toList()..sort(recent);
+    final ids = {for (final l in all) l.id};
+    // teammate com o lead no canteiro vem logo depois dele
+    final mains =
+        all
+            .where(
+              (l) =>
+                  !l.isSubagent && !(l.isTeammate && ids.contains(l.parentId)),
+            )
+            .toList()
+          ..sort(recent);
     final ordered = <FarmLoop>[];
-    for (final m in mains) {
+    void put(FarmLoop m) {
+      if (ordered.contains(m)) return;
       ordered
         ..add(m)
-        ..addAll(all.where((l) => l.parentId == m.id).toList()..sort(recent));
+        ..addAll(
+          all.where((l) => l.isSubagent && l.parentId == m.id).toList()
+            ..sort(recent),
+        );
+      final mates =
+          all.where((l) => l.isTeammate && l.parentId == m.id).toList()
+            ..sort(recent);
+      mates.forEach(put);
     }
+
+    mains.forEach(put);
     // Subagente cujo pai saiu da janela: fica no canteiro mesmo assim.
     ordered.addAll(all.where((l) => !ordered.contains(l)));
     plots.add(FarmPlot(project: project, loops: ordered));

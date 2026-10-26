@@ -82,4 +82,25 @@ void main() {
     })!;
     expect((c.tokens, c.window), (37034, 1000000));
   });
+
+  test('comandos do initialize', () {
+    final c = parseClaudeCommands({
+      'commands': [
+        {
+          'name': 'escanor',
+          'description': 'Invoca o Escanor, backend PHP/Laravel (user)',
+          'argumentHint': '',
+        },
+        {
+          'name': 'review',
+          'description': 'Revisa',
+          'aliases': ['rev'],
+        },
+        {'description': 'sem nome'},
+      ],
+    });
+    expect(c.map((e) => e.name), ['escanor', 'review']);
+    expect(c.first.description, 'Invoca o Escanor, backend PHP/Laravel');
+    expect(c.last.aliases, ['rev']);
+  });
 }

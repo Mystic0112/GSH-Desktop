@@ -188,6 +188,7 @@ class Translations$gsh$en {
 	late final Translations$gsh$telemetry$en telemetry = Translations$gsh$telemetry$en.internal(_root);
 	late final Translations$gsh$panelView$en panelView = Translations$gsh$panelView$en.internal(_root);
 	late final Translations$gsh$chat$en chat = Translations$gsh$chat$en.internal(_root);
+	late final Translations$gsh$harness$en harness = Translations$gsh$harness$en.internal(_root);
 	late final Translations$gsh$farm$en farm = Translations$gsh$farm$en.internal(_root);
 	late final Translations$gsh$agentGraph$en agentGraph = Translations$gsh$agentGraph$en.internal(_root);
 }
@@ -2145,6 +2146,9 @@ class Translations$gsh$topbar$en {
 	/// en: 'Visualize agents'
 	String get visualizeAgents => 'Visualize agents';
 
+	/// en: 'Workspace harness'
+	String get openHarness => 'Workspace harness';
+
 	/// en: 'Agent farm'
 	String get openFarm => 'Agent farm';
 
@@ -2922,6 +2926,27 @@ class Translations$gsh$chat$en {
 	/// en: 'Plan usage unavailable right now.'
 	String get usageUnavailable => 'Plan usage unavailable right now.';
 
+	/// en: 'Resume conversation'
+	String get resume => 'Resume conversation';
+
+	/// en: 'Open a recent Claude Code conversation from this machine in a new tab, with its history.'
+	String get resumeHint => 'Open a recent Claude Code conversation from this machine in a new tab, with its history.';
+
+	/// en: 'Resume a conversation'
+	String get resumeEmpty => 'Resume a conversation';
+
+	/// en: 'No conversations in the last 7 days.'
+	String get resumeNone => 'No conversations in the last 7 days.';
+
+	/// en: 'Is this conversation open somewhere else?'
+	String get resumeLiveTitle => 'Is this conversation open somewhere else?';
+
+	/// en: 'It changed ${ago}. If it is still open (Claude Desktop, a terminal), continuing here makes both write to the same conversation. Close it there first.'
+	String resumeLiveBody({required Object ago}) => 'It changed ${ago}. If it is still open (Claude Desktop, a terminal), continuing here makes both write to the same conversation. Close it there first.';
+
+	/// en: 'Open anyway'
+	String get resumeAnyway => 'Open anyway';
+
 	/// en: 'This conversation is already on Remote Control: continue on your phone or at ${url}'
 	String remoteControlActive({required Object url}) => 'This conversation is already on Remote Control: continue on your phone or at ${url}';
 
@@ -3025,6 +3050,144 @@ class Translations$gsh$chat$en {
 	String get stateFailed => 'Failed';
 }
 
+// Path: gsh.harness
+class Translations$gsh$harness$en {
+	Translations$gsh$harness$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Harness'
+	String get tabTitle => 'Harness';
+
+	/// en: 'What the agent loads when it runs in ${path}'
+	String subtitle({required Object path}) => 'What the agent loads when it runs in ${path}';
+
+	/// en: 'Read again'
+	String get refresh => 'Read again';
+
+	/// en: 'Instructions'
+	String get memory => 'Instructions';
+
+	/// en: 'CLAUDE.md files a session here reads (from this folder up), your user one, and AGENTS.md (Codex).'
+	String get memoryDesc => 'CLAUDE.md files a session here reads (from this folder up), your user one, and AGENTS.md (Codex).';
+
+	/// en: 'Create CLAUDE.md'
+	String get memoryNew => 'Create CLAUDE.md';
+
+	/// en: 'Skills'
+	String get skills => 'Skills';
+
+	/// en: 'Capabilities the agent picks up on its own when the description matches the task.'
+	String get skillsDesc => 'Capabilities the agent picks up on its own when the description matches the task.';
+
+	/// en: 'Subagents'
+	String get agents => 'Subagents';
+
+	/// en: 'Specialists the agent delegates to (with their own tools and model).'
+	String get agentsDesc => 'Specialists the agent delegates to (with their own tools and model).';
+
+	/// en: 'Commands'
+	String get commands => 'Commands';
+
+	/// en: '/name shortcuts you type in the session.'
+	String get commandsDesc => '/name shortcuts you type in the session.';
+
+	/// en: 'Hooks'
+	String get hooks => 'Hooks';
+
+	/// en: 'Commands that run on session events (before a tool, on stop...).'
+	String get hooksDesc => 'Commands that run on session events (before a tool, on stop...).';
+
+	/// en: 'Permissions'
+	String get permissions => 'Permissions';
+
+	/// en: 'Tool rules: allow, ask or block.'
+	String get permissionsDesc => 'Tool rules: allow, ask or block.';
+
+	/// en: 'MCP'
+	String get mcp => 'MCP';
+
+	/// en: 'Extra tool servers. User and local ones come from ~/.claude.json (change them with claude mcp).'
+	String get mcpDesc => 'Extra tool servers. User and local ones come from ~/.claude.json (change them with claude mcp).';
+
+	/// en: 'New'
+	String get newItem => 'New';
+
+	/// en: 'Edit file'
+	String get editFile => 'Edit file';
+
+	/// en: 'New item in ${section}'
+	String newTitle({required Object section}) => 'New item in ${section}';
+
+	/// en: 'Create'
+	String get create => 'Create';
+
+	/// en: 'name (becomes the file name)'
+	String get namePlaceholder => 'name (becomes the file name)';
+
+	/// en: 'Nothing here yet.'
+	String get empty => 'Nothing here yet.';
+
+	/// en: 'User'
+	String get scopeUser => 'User';
+
+	/// en: 'Project'
+	String get scopeProject => 'Project';
+
+	/// en: 'Local'
+	String get scopeLocal => 'Local';
+
+	/// en: 'allow'
+	String get allow => 'allow';
+
+	/// en: 'ask'
+	String get ask => 'ask';
+
+	/// en: 'block'
+	String get deny => 'block';
+
+	/// en: 'Read-only here: use claude mcp add/remove'
+	String get readOnly => 'Read-only here: use claude mcp add/remove';
+
+	/// en: 'Fixed cost per turn'
+	String get costTitle => 'Fixed cost per turn';
+
+	/// en: '≈ ${tokens} tokens'
+	String costValue({required Object tokens}) => '≈ ${tokens} tokens';
+
+	/// en: 'What goes into the context on every message, before any work: the full instructions and each skill, subagent and command's name + description. MCP tools aren't counted.'
+	String get costHint => 'What goes into the context on every message, before any work: the full instructions and each skill, subagent and command\'s name + description. MCP tools aren\'t counted.';
+
+	/// en: 'To trim it: what only matters sometimes leaves CLAUDE.md and becomes a skill; delete skills and commands nobody uses.'
+	String get costTip => 'To trim it: what only matters sometimes leaves CLAUDE.md and becomes a skill; delete skills and commands nobody uses.';
+
+	/// en: '≈ ${tokens}/turn'
+	String perTurn({required Object tokens}) => '≈ ${tokens}/turn';
+
+	/// en: 'Warnings: ${n}'
+	String issues({required Object n}) => 'Warnings: ${n}';
+
+	/// en: 'No description: the agent doesn't know when to use it.'
+	String get issueNoDescription => 'No description: the agent doesn\'t know when to use it.';
+
+	/// en: 'The script this hook runs doesn't exist.'
+	String get issueMissingScript => 'The script this hook runs doesn\'t exist.';
+
+	/// en: 'Too large: it weighs on every message (Claude Code warns above 40k characters).'
+	String get issueTooLarge => 'Too large: it weighs on every message (Claude Code warns above 40k characters).';
+
+	/// en: '${file}: invalid JSON — Claude Code ignores this whole file.'
+	String invalidJson({required Object file}) => '${file}: invalid JSON — Claude Code ignores this whole file.';
+
+	/// en: 'Show all (${n})'
+	String showAll({required Object n}) => 'Show all (${n})';
+
+	/// en: 'Show less'
+	String get showLess => 'Show less';
+}
+
 // Path: gsh.farm
 class Translations$gsh$farm$en {
 	Translations$gsh$farm$en.internal(this._root);
@@ -3084,8 +3247,8 @@ class Translations$gsh$farm$en {
 	/// en: '${input} input · ${cache} cache · ${out} out'
 	String spentDetail({required Object input, required Object cache, required Object out}) => '${input} input · ${cache} cache · ${out} out';
 
-	/// en: 'context ${ctx}'
-	String context({required Object ctx}) => 'context ${ctx}';
+	/// en: 'context ${ctx} of ${window} (${pct}%)'
+	String context({required Object ctx, required Object window, required Object pct}) => 'context ${ctx} of ${window} (${pct}%)';
 
 	/// en: '${n} tokens spent'
 	String spentHud({required Object n}) => '${n} tokens spent';
@@ -3103,6 +3266,18 @@ class Translations$gsh$farm$en {
 	String subagents({required Object n}) => '${n} sub-agents';
 
 	late final Translations$gsh$farm$activity$en activity = Translations$gsh$farm$activity$en.internal(_root);
+
+	/// en: 'teammate of ${lead}'
+	String teammateOf({required Object lead}) => 'teammate of ${lead}';
+
+	/// en: 'leads a team of ${n}'
+	String teamLead({required Object n}) => 'leads a team of ${n}';
+
+	/// en: 'Reset plot positions'
+	String get resetPlots => 'Reset plot positions';
+
+	/// en: 'You'
+	String get you => 'You';
 }
 
 // Path: gsh.agentGraph
@@ -3943,8 +4118,8 @@ class Translations$settings$page$nav$en {
 	/// en: 'Notifications'
 	String get notifications => 'Notifications';
 
-	/// en: 'Automations'
-	String get automations => 'Automations';
+	/// en: 'AI Commits'
+	String get automations => 'AI Commits';
 
 	/// en: 'Remote hosts'
 	String get remoteHosts => 'Remote hosts';
@@ -3966,6 +4141,9 @@ class Translations$settings$page$nav$en {
 
 	/// en: 'Resources'
 	String get resources => 'Resources';
+
+	/// en: 'GSH features'
+	String get gshFeatures => 'GSH features';
 
 	/// en: 'Memory'
 	String get memory => 'Memory';
@@ -5327,6 +5505,12 @@ class Translations$settings$page$resources$en {
 	/// en: 'Agent loops read from Claude Code transcripts.'
 	String get farmDesc => 'Agent loops read from Claude Code transcripts.';
 
+	/// en: 'Harness'
+	String get harnessFeature => 'Harness';
+
+	/// en: 'Button that opens what the agent loads in the workspace: instructions, skills, subagents, hooks, permissions and MCP.'
+	String get harnessFeatureDesc => 'Button that opens what the agent loads in the workspace: instructions, skills, subagents, hooks, permissions and MCP.';
+
 	/// en: 'Team farm'
 	String get sectionTeamFarm => 'Team farm';
 
@@ -6156,6 +6340,7 @@ extension on Translations {
 			'gsh.topbar.filesUnavailable' => 'Files unavailable in GSH Desktop',
 			'gsh.topbar.hideKeyboard' => 'Hide keyboard',
 			'gsh.topbar.visualizeAgents' => 'Visualize agents',
+			'gsh.topbar.openHarness' => 'Workspace harness',
 			'gsh.topbar.openFarm' => 'Agent farm',
 			'gsh.topbar.openChat' => 'Chat with Claude (beta)',
 			'gsh.tasks.hotReload' => 'Hot reload',
@@ -6407,6 +6592,13 @@ extension on Translations {
 			'gsh.chat.usageResetsToday' => ({required Object time}) => 'resets at ${time}',
 			'gsh.chat.usageResetsOn' => ({required Object date, required Object time}) => 'resets ${date} at ${time}',
 			'gsh.chat.usageUnavailable' => 'Plan usage unavailable right now.',
+			'gsh.chat.resume' => 'Resume conversation',
+			'gsh.chat.resumeHint' => 'Open a recent Claude Code conversation from this machine in a new tab, with its history.',
+			'gsh.chat.resumeEmpty' => 'Resume a conversation',
+			'gsh.chat.resumeNone' => 'No conversations in the last 7 days.',
+			'gsh.chat.resumeLiveTitle' => 'Is this conversation open somewhere else?',
+			'gsh.chat.resumeLiveBody' => ({required Object ago}) => 'It changed ${ago}. If it is still open (Claude Desktop, a terminal), continuing here makes both write to the same conversation. Close it there first.',
+			'gsh.chat.resumeAnyway' => 'Open anyway',
 			'gsh.chat.remoteControlActive' => ({required Object url}) => 'This conversation is already on Remote Control: continue on your phone or at ${url}',
 			'gsh.chat.remoteControlNoSession' => 'Send a message first: Remote Control continues an existing conversation.',
 			'gsh.chat.remoteControlBusy' => 'Wait for the agent to finish this turn, then try again.',
@@ -6440,6 +6632,49 @@ extension on Translations {
 			'gsh.chat.stateReviewReady' => 'Ready for review',
 			'gsh.chat.stateBlocked' => 'Blocked',
 			'gsh.chat.stateFailed' => 'Failed',
+			'gsh.harness.tabTitle' => 'Harness',
+			'gsh.harness.subtitle' => ({required Object path}) => 'What the agent loads when it runs in ${path}',
+			'gsh.harness.refresh' => 'Read again',
+			'gsh.harness.memory' => 'Instructions',
+			'gsh.harness.memoryDesc' => 'CLAUDE.md files a session here reads (from this folder up), your user one, and AGENTS.md (Codex).',
+			'gsh.harness.memoryNew' => 'Create CLAUDE.md',
+			'gsh.harness.skills' => 'Skills',
+			'gsh.harness.skillsDesc' => 'Capabilities the agent picks up on its own when the description matches the task.',
+			'gsh.harness.agents' => 'Subagents',
+			'gsh.harness.agentsDesc' => 'Specialists the agent delegates to (with their own tools and model).',
+			'gsh.harness.commands' => 'Commands',
+			'gsh.harness.commandsDesc' => '/name shortcuts you type in the session.',
+			'gsh.harness.hooks' => 'Hooks',
+			'gsh.harness.hooksDesc' => 'Commands that run on session events (before a tool, on stop...).',
+			'gsh.harness.permissions' => 'Permissions',
+			'gsh.harness.permissionsDesc' => 'Tool rules: allow, ask or block.',
+			'gsh.harness.mcp' => 'MCP',
+			'gsh.harness.mcpDesc' => 'Extra tool servers. User and local ones come from ~/.claude.json (change them with claude mcp).',
+			'gsh.harness.newItem' => 'New',
+			'gsh.harness.editFile' => 'Edit file',
+			'gsh.harness.newTitle' => ({required Object section}) => 'New item in ${section}',
+			'gsh.harness.create' => 'Create',
+			'gsh.harness.namePlaceholder' => 'name (becomes the file name)',
+			'gsh.harness.empty' => 'Nothing here yet.',
+			'gsh.harness.scopeUser' => 'User',
+			'gsh.harness.scopeProject' => 'Project',
+			'gsh.harness.scopeLocal' => 'Local',
+			'gsh.harness.allow' => 'allow',
+			'gsh.harness.ask' => 'ask',
+			'gsh.harness.deny' => 'block',
+			'gsh.harness.readOnly' => 'Read-only here: use claude mcp add/remove',
+			'gsh.harness.costTitle' => 'Fixed cost per turn',
+			'gsh.harness.costValue' => ({required Object tokens}) => '≈ ${tokens} tokens',
+			'gsh.harness.costHint' => 'What goes into the context on every message, before any work: the full instructions and each skill, subagent and command\'s name + description. MCP tools aren\'t counted.',
+			'gsh.harness.costTip' => 'To trim it: what only matters sometimes leaves CLAUDE.md and becomes a skill; delete skills and commands nobody uses.',
+			'gsh.harness.perTurn' => ({required Object tokens}) => '≈ ${tokens}/turn',
+			'gsh.harness.issues' => ({required Object n}) => 'Warnings: ${n}',
+			'gsh.harness.issueNoDescription' => 'No description: the agent doesn\'t know when to use it.',
+			'gsh.harness.issueMissingScript' => 'The script this hook runs doesn\'t exist.',
+			'gsh.harness.issueTooLarge' => 'Too large: it weighs on every message (Claude Code warns above 40k characters).',
+			'gsh.harness.invalidJson' => ({required Object file}) => '${file}: invalid JSON — Claude Code ignores this whole file.',
+			'gsh.harness.showAll' => ({required Object n}) => 'Show all (${n})',
+			'gsh.harness.showLess' => 'Show less',
 			'gsh.farm.tabTitle' => 'Farm',
 			'gsh.farm.title' => 'Agent farm',
 			'gsh.farm.emptyTitle' => 'No agents running',
@@ -6457,7 +6692,7 @@ extension on Translations {
 			'gsh.farm.peerBanner' => ({required Object name}) => '${name}\'s farm',
 			'gsh.farm.spent' => ({required Object total}) => 'Spent ${total} tokens',
 			'gsh.farm.spentDetail' => ({required Object input, required Object cache, required Object out}) => '${input} input · ${cache} cache · ${out} out',
-			'gsh.farm.context' => ({required Object ctx}) => 'context ${ctx}',
+			'gsh.farm.context' => ({required Object ctx, required Object window, required Object pct}) => 'context ${ctx} of ${window} (${pct}%)',
 			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens spent',
 			'gsh.farm.clickToOpen' => 'Click to open its terminal',
 			'gsh.farm.outsideGsh' => 'This agent is running outside GSH Desktop. Its terminal is in another window.',
@@ -6474,6 +6709,10 @@ extension on Translations {
 			'gsh.farm.activity.idle' => 'idle',
 			'gsh.farm.activity.sleeping' => 'asleep',
 			'gsh.farm.activity.done' => 'done',
+			'gsh.farm.teammateOf' => ({required Object lead}) => 'teammate of ${lead}',
+			'gsh.farm.teamLead' => ({required Object n}) => 'leads a team of ${n}',
+			'gsh.farm.resetPlots' => 'Reset plot positions',
+			'gsh.farm.you' => 'You',
 			'gsh.agentGraph.tabTitle' => 'Agents',
 			'gsh.agentGraph.newAgent' => 'New agent',
 			'gsh.agentGraph.emptyTitle' => 'No agents in this workspace',
@@ -6546,14 +6785,17 @@ extension on Translations {
 			'settings.page.nav.language' => 'Language',
 			'settings.page.nav.shortcuts' => 'Shortcuts',
 			'settings.page.nav.notifications' => 'Notifications',
-			'settings.page.nav.automations' => 'Automations',
+			'settings.page.nav.automations' => 'AI Commits',
 			'settings.page.nav.remoteHosts' => 'Remote hosts',
 			'settings.page.nav.claudeCode' => 'Claude Code',
 			'settings.page.nav.search' => 'Search',
 			'settings.page.nav.account' => 'Account',
 			'settings.page.nav.privacy' => 'Privacy',
 			'settings.page.nav.usage' => 'Usage',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.nav.resources' => 'Resources',
+			'settings.page.nav.gshFeatures' => 'GSH features',
 			'settings.page.nav.memory' => 'Memory',
 			'settings.page.nav.designSystems' => 'Design systems',
 			'settings.page.nav.cowork' => 'Cowork',
@@ -6608,8 +6850,6 @@ extension on Translations {
 			'settings.page.storage.change' => 'Change…',
 			'settings.page.storage.resetTitle' => 'Reset GSH Desktop',
 			'settings.page.storage.resetDesc' => 'Delete all local data — projects, layouts, settings and terminal history — and return to the default location.',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.storage.resetButton' => 'Reset…',
 			'settings.page.storage.resetConfirm' => 'Reset',
 			'settings.page.storage.resetDialogTitle' => 'Reset GSH Desktop?',
@@ -6955,6 +7195,8 @@ extension on Translations {
 			'settings.page.resources.chatDesc' => 'Chat button in the workspace bar (Claude Code in stream-json).',
 			'settings.page.resources.farm' => 'Farm',
 			'settings.page.resources.farmDesc' => 'Agent loops read from Claude Code transcripts.',
+			'settings.page.resources.harnessFeature' => 'Harness',
+			'settings.page.resources.harnessFeatureDesc' => 'Button that opens what the agent loads in the workspace: instructions, skills, subagents, hooks, permissions and MCP.',
 			'settings.page.resources.sectionTeamFarm' => 'Team farm',
 			'settings.page.resources.teamFarm' => 'See your teammates\' farms',
 			'settings.page.resources.teamFarmDesc' => 'On the same network (e.g. at the office), each GSH announces its own farm and shows your teammates\' next to yours — zoom out to see them. No server: nothing leaves the local network. Off, nothing leaves your GSH.',
@@ -7064,6 +7306,8 @@ extension on Translations {
 			'theme.error.notAnObject' => ({required Object field}) => 'Expected an object at "${field}".',
 			'theme.error.missingField' => ({required Object field}) => 'Missing required field "${field}".',
 			'theme.error.badColor' => ({required Object value, required Object field}) => '"${value}" at "${field}" is not a color. Use #RGB, #RRGGBB or #RRGGBBAA.',
+			_ => null,
+		} ?? switch (path) {
 			'theme.error.unknownBase' => ({required Object value}) => 'Unknown base theme "${value}" in "extends".',
 			'theme.error.noVariants' => 'The theme declares no variant. Add "dark", "light" or both under "variants".',
 			_ => null,

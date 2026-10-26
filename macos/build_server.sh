@@ -53,8 +53,15 @@ chmod +x "$DEST/bin/gsh-server"
 # Target de bootstrap para os VMs Linux arm64 de workspaces remotos. Fica
 # isolado do sidecar macOS para o resolver nunca tentar executar um ELF local.
 # O helper também produz libgsh_pty.so e a CLI Rust para o host remoto.
-"$ROOT/tool/build-linux-arm64-server-bundle.sh" \
-  "$DEST/targets/linux-arm64"
+# O cross-compile exige `dart build cli --target-os`, ausente no Dart 3.12
+# (Flutter 3.44.x fixado): sem ele o target fica de fora e o resolver devolve
+# null para hosts Linux arm64, como no build do Windows.
+if "$DART" build cli --help 2>&1 | grep -q -- '--target-os'; then
+  "$ROOT/tool/build-linux-arm64-server-bundle.sh" \
+    "$DEST/targets/linux-arm64"
+else
+  echo "[build_server] aviso: Dart sem 'build cli --target-os'; target linux-arm64 não embarcado" >&2
+fi
 
 # CLI `gsh` embarcada AO LADO do server (plano 60, Wave G): o server instala
 # o hook do agente no ~/.claude do host apontando pra `gsh hook`, e a acha

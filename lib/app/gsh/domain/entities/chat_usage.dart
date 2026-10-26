@@ -50,9 +50,32 @@ class ChatPlanUsage {
   final String? plan;
 }
 
-/// O que dá para saber da conta sem conversa aberta: modelos e uso.
+/// Um comando `/nome` da sessão: comandos do usuário/projeto, skills e os
+/// embutidos do Claude Code (lista do `initialize`).
+class ChatCommandOption {
+  const ChatCommandOption({
+    required this.name,
+    this.description = '',
+    this.argumentHint = '',
+    this.aliases = const [],
+  });
+  final String name;
+  final String description;
+
+  /// O que vem depois do nome (`<arquivo>`, `[tarefa]`...).
+  final String argumentHint;
+  final List<String> aliases;
+}
+
+/// O que dá para saber da conta sem conversa aberta: modelos, comandos e
+/// uso.
 class ChatAccountProbe {
-  const ChatAccountProbe({required this.models, this.usage});
+  const ChatAccountProbe({
+    required this.models,
+    this.usage,
+    this.commands = const [],
+  });
   final List<ChatModelOption> models;
   final ChatPlanUsage? usage;
+  final List<ChatCommandOption> commands;
 }

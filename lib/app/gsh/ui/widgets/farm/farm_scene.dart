@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_critter.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_pets.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_squad_looks.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_world.dart';
@@ -14,44 +15,9 @@ import 'package:gsh_desktop/app/core/ui/themes/agent_colors.dart';
 import 'package:path/path.dart' as p;
 
 export 'farm_critter.dart';
+export 'farm_pets.dart';
 
-/// O que está plantado num canteiro.
-class FarmPlotInfo {
-  const FarmPlotInfo({
-    required this.main,
-    required this.title,
-    required this.project,
-    required this.stage,
-    required this.more,
-    required this.minis,
-  });
-
-  /// O dono do canteiro; `null` no canteiro dos órfãos (subagentes cujo pai
-  /// saiu da janela).
-  final FarmLoop? main;
-
-  /// A etiqueta embaixo do canteiro.
-  final String title;
-
-  /// Nome da pasta, só no primeiro canteiro de cada projeto.
-  final String? project;
-  final CropStage stage;
-
-  /// Subagentes além dos [subSpots] (a plaquinha "+N").
-  final int more;
-
-  /// Minis desenhados em volta (do 3º em diante há minis embaixo).
-  final int minis;
-
-  FarmPlotInfo get unlabeled => FarmPlotInfo(
-    main: main,
-    title: title,
-    project: null,
-    stage: stage,
-    more: more,
-    minis: minis,
-  );
-}
+part 'farm_scene_plots.dart';
 
 /// Dono de um canteiro: um loop principal com os subagentes dele, ou só os
 /// subagentes de um pai que saiu da janela ([main] `null`, [id] = o pai).
@@ -71,6 +37,12 @@ class FarmScene {
   FarmLayout? layout;
   final critters = <String, Critter>{};
   final sparks = <FarmSpark>[];
+
+  /// Poeirinhas de quem acabou de chegar ou de sair (ver [FarmPuff]).
+  final puffs = <FarmPuff>[];
+
+  /// Os bichinhos de estimação (ver [placePets]).
+  final pets = <FarmPet>[];
   final _plotOf = <String, int>{};
   List<FarmPlotInfo?> plotInfo = const [];
 
@@ -106,6 +78,16 @@ class FarmScene {
 
   List<FarmPlot> _last = const [];
 
+  /// Vaga escolhida para o primeiro canteiro de cada projeto (pela pasta),
+  /// vinda das preferências; quem não tem fica com a posição automática.
+  Map<String, int> pins = const {};
+
+  /// Projeto (pasta) dono de cada canteiro, `null` = vago.
+  List<String?> plotProject = const [];
+
+  /// Canteiro sendo arrastado e a vaga sob o mouse (o painter destaca).
+  int? dragFrom, dragTo;
+
   /// Põe a cena de acordo com os loops do ViewModel.
   void sync(List<FarmPlot> plots) {
     _last = plots;
@@ -134,21 +116,36 @@ class FarmScene {
             .map((m) => m.id)
             .toList()
           ..sort();
-    need = (plots: owners.length, yard: sleepers.length);
+    // a fazenda cresce até a vaga mais longe escolhida para quem está à vista
+    final pinned = [
+      for (final o in owners)
+        if (pins[o.project] case final i?) i + 1,
+    ];
+    need = (
+      plots: math.max(owners.length, pinned.fold(0, math.max)),
+      yard: sleepers.length,
+    );
     final l = layout;
     if (l == null) return;
     // canteiros ficam: um loop guarda o seu enquanto existe (e os órfãos
     // herdam o do pai); um novo pega o primeiro livre depois dos do mesmo
-    // projeto
+    // projeto, ou a partir da vaga escolhida para o projeto. Os projetos com
+    // vaga escolhida escolhem primeiro.
     final ids = owners.map((o) => o.id).toSet();
     _plotOf.removeWhere((id, i) => !ids.contains(id) || i >= l.plots.length);
     final taken = _plotOf.values.toSet();
-    for (final o in owners) {
+    int rank(_Owner o) => pins[o.project] ?? l.plots.length;
+    final order = [for (final (i, o) in owners.indexed) (i, o)]
+      ..sort((a, b) {
+        final c = rank(a.$2).compareTo(rank(b.$2));
+        return c != 0 ? c : a.$1.compareTo(b.$1);
+      });
+    for (final (_, o) in order) {
       if (_plotOf.containsKey(o.id)) continue;
       final sib = owners
           .where((x) => x.project == o.project && _plotOf.containsKey(x.id))
           .map((x) => _plotOf[x.id]!);
-      var free = sib.isEmpty ? 0 : sib.reduce(math.max) + 1;
+      var free = sib.isEmpty ? pins[o.project] ?? 0 : sib.reduce(math.max) + 1;
       while (taken.contains(free)) {
         free++;
       }
@@ -163,6 +160,7 @@ class FarmScene {
       taken.add(free);
     }
     final info = List<FarmPlotInfo?>.filled(l.plots.length, null);
+    plotProject = List<String?>.filled(l.plots.length, null);
     final want = <String, (CritterMode, ui.Offset?, ui.Offset?)>{};
     final loops = <String, FarmLoop>{};
     final room = <String, double>{};
@@ -170,9 +168,19 @@ class FarmScene {
       final pi = _plotOf[o.id];
       if (pi == null) continue;
       final plot = l.plots[pi];
+      plotProject[pi] = o.project;
       final m = o.main;
       final subs = [...o.subs]..sort((a, b) => _rank(a).compareTo(_rank(b)));
+      // time: o lead é quem tem teammate à vista; todos levam a cor dele
+      final lead = m == null
+          ? null
+          : m.isTeammate
+          ? mains.where((x) => x.id == m.parentId).firstOrNull
+          : mains.any((x) => x.isTeammate && x.parentId == m.id)
+          ? m
+          : null;
       info[pi] = FarmPlotInfo(
+        team: lead == null ? null : _colorOf(lead),
         main: m,
         title: m?.title ?? subs.first.title,
         project: p.basename(o.project),
@@ -240,7 +248,10 @@ class FarmScene {
         if (owner != null) pos = ui.Offset(owner.x, owner.y);
         if (_first && at != null) pos = at;
         c = Critter(loop, pos.dx, pos.dy, _first ? t - 5 : t, rnd);
-        if (!_first) sparkle(pos.dx, pos.dy - 8, loop.isSubagent ? 8 : 16);
+        if (!_first) {
+          _puff(pos.dx, pos.dy, born: true, mini: loop.isSubagent);
+          sparkle(pos.dx, pos.dy - 8, loop.isSubagent ? 3 : 6);
+        }
         critters[id] = c;
       } else if (c.mode != CritterMode.done && mode == CritterMode.done) {
         c.cheerUntil = t + 2.5;
@@ -255,7 +266,7 @@ class FarmScene {
         ..home = home
         ..squad = squad
         ..room = room[id] ?? 20
-        ..color = squad?.color ?? argbOf(agentColorFor(loop.agentType ?? id));
+        ..color = _colorOf(loop);
       if (!loop.isSubagent) {
         c.skin = squad == null
             ? FarmSkin.of(id, c.color)
@@ -272,7 +283,7 @@ class FarmScene {
     for (final c in critters.values) {
       if (!want.containsKey(c.loop.id) && c.gone == null) {
         c.gone = t;
-        sparkle(c.x, c.y - 8, 8, 0xFFd8e6c4);
+        _puff(c.x, c.y, born: false, mini: c.mini);
       }
     }
     if (want.isNotEmpty) _first = false;
@@ -306,6 +317,10 @@ class FarmScene {
     }
   }
 
+  /// A cor do bicho: a do agente do squad, senão a do tipo (ou do id).
+  static int _colorOf(FarmLoop l) =>
+      squadLookOf(l)?.color ?? argbOf(agentColorFor(l.agentType ?? l.id));
+
   static int _rank(FarmLoop l) => switch (l.activity.status) {
     FarmStatus.working => 0,
     FarmStatus.waiting => 1,
@@ -338,6 +353,11 @@ class FarmScene {
     return l.door + const ui.Offset(0, 12);
   }
 
+  void _puff(double x, double y, {required bool born, required bool mini}) {
+    // aba escondida não anda o relógio: não deixa a fila crescer à toa
+    if (puffs.length < 40) puffs.add(FarmPuff(x, y, t, born: born, mini: mini));
+  }
+
   void sparkle(double x, double y, int n, [int? color]) {
     if (sparks.length > 400) return;
     for (var i = 0; i < n; i++) {
@@ -363,6 +383,12 @@ class FarmScene {
     for (final c in critters.values) {
       c.update(dt, this);
     }
+    final lay = layout;
+    if (lay != null) {
+      for (final p in pets) {
+        p.update(dt, lay);
+      }
+    }
     critters.removeWhere((_, c) => c.gone != null && t - c.gone! > 0.52);
     // canteiro de quem trabalha brilha: uma faísca de vez em quando
     final l = layout;
@@ -377,6 +403,7 @@ class FarmScene {
       }
     }
     sparks.removeWhere((s) => (s.life -= dt) <= 0);
+    puffs.removeWhere((p) => t - p.t0 > FarmPuff.life);
     for (final s in sparks) {
       s
         ..x += s.vx * dt
@@ -384,7 +411,8 @@ class FarmScene {
         ..vy += 40 * dt;
     }
     final key = _frameKey();
-    final dirty = _dirty || sparks.isNotEmpty || key != _key;
+    final dirty =
+        _dirty || sparks.isNotEmpty || puffs.isNotEmpty || key != _key;
     _key = key;
     _dirty = false;
     return dirty;
@@ -398,7 +426,38 @@ class FarmScene {
     for (final b in critters.values) {
       h = Object.hash(h, b.frameKey(t, c));
     }
+    for (final p in pets) {
+      h = Object.hash(h, p.frameKey(t, c));
+    }
     return h;
+  }
+
+  /// Solta os bichinhos no mundo novo: cachorro e galinha passeando na
+  /// fazenda, o gato no sofá do escritório (sem sofá, no último pufe do
+  /// lounge: o layout sempre deixa vagas sobrando, ninguém senta nele).
+  void placePets({required bool office}) {
+    final l = layout;
+    pets.clear();
+    if (l == null) return;
+    if (office) {
+      final sofa = l.decor.where((d) => d.kind == 'sofa').firstOrNull;
+      final at = sofa == null
+          ? l.yardSpot(l.capYard - 1) + const ui.Offset(0, -1)
+          : ui.Offset(sofa.x - 3, sofa.y - 2);
+      pets.add(FarmPet(PetKind.cat, at.dx, at.dy, rnd));
+      return;
+    }
+    for (final k in const [PetKind.dog, PetKind.chicken]) {
+      final s = randomSpot();
+      pets.add(FarmPet(k, s.dx, s.dy, rnd));
+    }
+  }
+
+  /// O bichinho sob o ponto (pixels de mundo): leva um carinho.
+  FarmPet? petAt(ui.Offset p) {
+    final pet = pets.where((x) => x.hit(p)).firstOrNull;
+    pet?.petAt = t;
+    return pet;
   }
 
   /// O bicho sob o ponto (em pixels de mundo), o da frente primeiro.
@@ -417,6 +476,16 @@ class FarmScene {
     }
     return best;
   }
+}
+
+/// O efeito de nascer ou sumir de um bicho, no chão onde ele está: uma
+/// coluna de luz (sobe ao nascer, apaga ao sumir) e um anel de poeirinha que
+/// se abre e some em [life] segundos.
+class FarmPuff {
+  FarmPuff(this.x, this.y, this.t0, {required this.born, required this.mini});
+  final double x, y, t0;
+  final bool born, mini;
+  static const life = 0.6;
 }
 
 /// Estrelinha que cai piscando.

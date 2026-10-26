@@ -7,7 +7,7 @@ import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:gsh_desktop/app/core/ui/keep_awake_controller.dart';
 import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
-import 'package:gsh_desktop/app/settings/domain/claude_info.dart';
+import 'package:gsh_desktop/app/core/domain/entities/claude_info.dart';
 import 'package:gsh_desktop/app/settings/ui/claude_info_viewmodel.dart';
 import 'package:gsh_desktop/app/settings/ui/neovim_settings_viewmodel.dart';
 import 'package:gsh_desktop/app/settings/ui/settings_nav.dart';
