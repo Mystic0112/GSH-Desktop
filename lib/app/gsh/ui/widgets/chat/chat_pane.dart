@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_slash_menu.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/app_tooltip.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_composer.dart';
@@ -46,26 +47,38 @@ class _ChatPaneState extends State<ChatPane> {
   final _input = TextEditingController();
   final _scroll = ScrollController();
 
+  /// Menu do `/` (comandos da sessão: seus agentes, skills...).
+  late final _slash = ChatSlashState(_input, () => widget.chat.commands);
+
   ChatController get _chat => widget.chat;
 
   @override
   void initState() {
     super.initState();
     _chat.addListener(_changed);
+    // A lista de comandos chega depois (consulta da conta / initialize).
+    _chat.addListener(_slash.refresh);
   }
 
   @override
   void didUpdateWidget(ChatPane old) {
     super.didUpdateWidget(old);
     if (old.chat != _chat) {
-      old.chat.removeListener(_changed);
-      _chat.addListener(_changed);
+      old.chat
+        ..removeListener(_changed)
+        ..removeListener(_slash.refresh);
+      _chat
+        ..addListener(_changed)
+        ..addListener(_slash.refresh);
     }
   }
 
   @override
   void dispose() {
-    _chat.removeListener(_changed);
+    _chat
+      ..removeListener(_changed)
+      ..removeListener(_slash.refresh);
+    _slash.dispose();
     _input.dispose();
     _scroll.dispose();
     super.dispose();
@@ -144,6 +157,7 @@ class _ChatPaneState extends State<ChatPane> {
                   child: ChatComposer(
                     controller: _input,
                     chat: _chat,
+                    slash: _slash,
                     branch: widget.branch,
                     onSend: _send,
                   ),

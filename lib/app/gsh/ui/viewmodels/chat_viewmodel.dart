@@ -229,6 +229,10 @@ class ChatController extends ChangeNotifier {
   List<ChatModelOption> models = const [];
   String? modelChoice;
 
+  /// Comandos `/nome` (seus agentes, skills, comandos do projeto) para o
+  /// menu do composer.
+  List<ChatCommandOption> commands = const [];
+
   /// Limites do plano (sessão de 5 h, semana...) e o contexto da conversa.
   ChatPlanUsage? planUsage;
   int contextTokens = 0;
@@ -276,6 +280,7 @@ class ChatController extends ChangeNotifier {
         : null;
     if (_disposed) return;
     if (models.isEmpty && probe != null) models = probe.models;
+    if (commands.isEmpty && probe != null) commands = probe.commands;
     planUsage = fromEngine ?? probe?.usage ?? planUsage;
     notifyListeners();
   }
@@ -450,6 +455,8 @@ class ChatController extends ChangeNotifier {
         permissionMode = mode;
       case ChatModels(:final models):
         this.models = models;
+      case ChatCommands(:final commands):
+        this.commands = commands;
       case ChatModelChanged(:final model):
         this.model = model;
       case ChatContext(:final tokens, :final window):

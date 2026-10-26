@@ -218,6 +218,8 @@ class ClaudeStreamEngine implements ChatEngine {
     if (id == 'gsh-init') {
       final models = parseClaudeModels(body);
       if (models.isNotEmpty) _events.add(ChatModels(models));
+      final commands = parseClaudeCommands(body);
+      if (commands.isNotEmpty) _events.add(ChatCommands(commands));
     } else if (id.startsWith('gsh-model-')) {
       final m = body is Map ? body['model'] : null;
       if (m is String && m.isNotEmpty) _events.add(ChatModelChanged(m));

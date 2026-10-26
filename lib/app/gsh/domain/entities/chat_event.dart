@@ -181,3 +181,9 @@ class ChatContext extends ChatEvent {
   /// Janela do modelo (200k, 1M...). 0 = não veio.
   final int window;
 }
+
+/// Comandos `/nome` da sessão (resposta do `initialize`).
+class ChatCommands extends ChatEvent {
+  const ChatCommands(this.commands);
+  final List<ChatCommandOption> commands;
+}

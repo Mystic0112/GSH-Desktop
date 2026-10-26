@@ -4,6 +4,7 @@ import 'package:gsh_desktop/app/gsh/ui/widgets/telemetry_case_view.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat_attachments.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_model_usage.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_slash_menu.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/app_menu.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/app_tooltip.dart';
@@ -30,14 +31,25 @@ class ChatComposer extends StatelessWidget {
     required this.chat,
     required this.onSend,
     this.branch,
+    this.slash,
   });
   final TextEditingController controller;
   final ChatController chat;
   final VoidCallback onSend;
   final String? branch;
 
+  /// Menu do `/`; `null` = sem menu.
+  final ChatSlashState? slash;
+
   @override
   Widget build(BuildContext context) {
+    final s = slash;
+    return s == null
+        ? _build(context)
+        : ListenableBuilder(listenable: s, builder: (ctx, _) => _build(ctx));
+  }
+
+  Widget _build(BuildContext context) {
     final colors = context.colors;
     final tr = context.t.gsh.chat;
     final mono = context.typo.mono.copyWith(
@@ -67,6 +79,7 @@ class ChatComposer extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 6),
+        if (slash case final s? when s.visible) ChatSlashList(state: s),
         Container(
           padding: const EdgeInsets.fromLTRB(4, 4, 6, 4),
           decoration: BoxDecoration(
@@ -95,6 +108,8 @@ class ChatComposer extends StatelessWidget {
                     child: CallbackShortcuts(
                       bindings: {
                         const SingleActivator(LogicalKeyboardKey.enter): onSend,
+                        // Menu do `/` aberto: setas, Enter/Tab e Esc são dele.
+                        if (slash case final s? when s.visible) ...s.bindings,
                         const SingleActivator(
                           LogicalKeyboardKey.keyV,
                           control: true,
