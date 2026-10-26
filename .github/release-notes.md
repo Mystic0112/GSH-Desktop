@@ -1,6 +1,3 @@
-<!-- Modelo das notas das releases (release.yml). A seção "Mudanças" é anexada
-     pelo workflow; a linha "> **Pré-release.**" sai quando a release não é pré-release. -->
-
 Prévia do **GSH Desktop**, o harness/IDE da Gorila para agentes de código (fork do Cockpit). Usa o `claude` instalado na máquina com o login de cada um; nenhuma chave de API passa pelo app.
 
 > **Pré-release.** Windows e Linux já rodaram em máquinas do time; **macOS ainda não foi aberto num Mac de verdade**. Se algo der errado, mande o print para o Hélio.

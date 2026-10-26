@@ -1,6 +1,7 @@
 # Release do GSH Desktop: tag `gsh-*` → builds de Windows, macOS e Linux →
 # release no GitHub com os 6 arquivos e as notas (.github/release-notes.md +
-# commits feat/fix desde a tag gsh-* anterior). Pré-release por padrão.
+# commits feat/fix desde a tag gsh-* anterior). Pré-release por padrão: a linha
+# "> **Pré-release.**" do modelo sai quando a release não é pré-release.
 # Como soltar uma versão: packaging/README.md.
 name: release
 
