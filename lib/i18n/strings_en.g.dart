@@ -3251,6 +3251,9 @@ class Translations$gsh$farm$en {
 
 	/// en: 'leads a team of ${n}'
 	String teamLead({required Object n}) => 'leads a team of ${n}';
+
+	/// en: 'Reset plot positions'
+	String get resetPlots => 'Reset plot positions';
 }
 
 // Path: gsh.agentGraph
@@ -6674,6 +6677,7 @@ extension on Translations {
 			'gsh.farm.activity.done' => 'done',
 			'gsh.farm.teammateOf' => ({required Object lead}) => 'teammate of ${lead}',
 			'gsh.farm.teamLead' => ({required Object n}) => 'leads a team of ${n}',
+			'gsh.farm.resetPlots' => 'Reset plot positions',
 			'gsh.agentGraph.tabTitle' => 'Agents',
 			'gsh.agentGraph.newAgent' => 'New agent',
 			'gsh.agentGraph.emptyTitle' => 'No agents in this workspace',
@@ -6761,9 +6765,9 @@ extension on Translations {
 			'settings.page.nav.extensions' => 'Extensions',
 			'settings.page.nav.developer' => 'Developer',
 			'settings.page.nav.skills' => 'Skills',
-			'settings.page.nav.connectors' => 'Connectors',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.nav.connectors' => 'Connectors',
 			'settings.page.nav.plugins' => 'Plugins',
 			'settings.page.nav.apiKeys' => 'API keys',
 			'settings.page.nav.groups.settings' => 'Settings',

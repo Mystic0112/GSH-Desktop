@@ -129,6 +129,16 @@ class FarmScenePainter extends CustomPainter {
     _fill..color = Color(color).withValues(alpha: Color(color).a * a),
   );
 
+  /// Contorno de 1 px (com sombra) em volta de [r].
+  void _outline(Canvas c, Rect r, int color) {
+    for (final (d, k) in [(0.5, 0x8014100c), (0.0, color)]) {
+      _rect(c, r.left + d, r.top + d, r.width, 1, k);
+      _rect(c, r.left + d, r.bottom - 1 + d, r.width, 1, k);
+      _rect(c, r.left + d, r.top + d, 1, r.height, k);
+      _rect(c, r.right - 1 + d, r.top + d, 1, r.height, k);
+    }
+  }
+
   /// A poeirinha de nascer/sumir (ver [FarmPuff]), em pixels de mundo.
   void _puff(Canvas c, FarmPuff p, double t) {
     final k = ((t - p.t0) / FarmPuff.life).clamp(0.0, 1.0);
@@ -278,6 +288,14 @@ class FarmScenePainter extends CustomPainter {
             _draw(canvas, frames[s], x - 2.5, y - 9, 5, 9);
           }
         }
+      }
+      // arrastando: o canteiro que sai e a vaga onde ele vai cair
+      if (i == scene.dragFrom || i == scene.dragTo) {
+        _outline(
+          canvas,
+          p.inflate(3),
+          i == scene.dragTo ? 0xFFffe08a : 0x99ffffff,
+        );
       }
       // a faixa do time embaixo do canteiro, na cor do lead
       final team = info?.team;

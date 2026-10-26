@@ -1086,7 +1086,8 @@
         "done": "concluído"
       },
       "teammateOf": "colega de time de ${lead}",
-      "teamLead": "lidera um time de ${n}"
+      "teamLead": "lidera um time de ${n}",
+      "resetPlots": "Redefinir posições"
     },
     "agentGraph": {
       "tabTitle": "Agentes",

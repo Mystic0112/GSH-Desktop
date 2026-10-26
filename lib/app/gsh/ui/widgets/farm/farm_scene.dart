@@ -15,49 +15,7 @@ import 'package:path/path.dart' as p;
 
 export 'farm_critter.dart';
 
-/// O que está plantado num canteiro.
-class FarmPlotInfo {
-  const FarmPlotInfo({
-    required this.main,
-    required this.title,
-    required this.project,
-    required this.stage,
-    required this.more,
-    required this.minis,
-    this.team,
-  });
-
-  /// O dono do canteiro; `null` no canteiro dos órfãos (subagentes cujo pai
-  /// saiu da janela).
-  final FarmLoop? main;
-
-  /// A etiqueta embaixo do canteiro.
-  final String title;
-
-  /// Nome da pasta, só no primeiro canteiro de cada projeto.
-  final String? project;
-  final CropStage stage;
-
-  /// Subagentes além dos [subSpots] (a plaquinha "+N").
-  final int more;
-
-  /// Minis desenhados em volta (do 3º em diante há minis embaixo).
-  final int minis;
-
-  /// Cor do time (a do lead), no canteiro do lead e no de cada teammate;
-  /// `null` fora de time.
-  final int? team;
-
-  FarmPlotInfo get unlabeled => FarmPlotInfo(
-    main: main,
-    title: title,
-    project: null,
-    stage: stage,
-    more: more,
-    minis: minis,
-    team: team,
-  );
-}
+part 'farm_scene_plots.dart';
 
 /// Dono de um canteiro: um loop principal com os subagentes dele, ou só os
 /// subagentes de um pai que saiu da janela ([main] `null`, [id] = o pai).
@@ -115,6 +73,16 @@ class FarmScene {
 
   List<FarmPlot> _last = const [];
 
+  /// Vaga escolhida para o primeiro canteiro de cada projeto (pela pasta),
+  /// vinda das preferências; quem não tem fica com a posição automática.
+  Map<String, int> pins = const {};
+
+  /// Projeto (pasta) dono de cada canteiro, `null` = vago.
+  List<String?> plotProject = const [];
+
+  /// Canteiro sendo arrastado e a vaga sob o mouse (o painter destaca).
+  int? dragFrom, dragTo;
+
   /// Põe a cena de acordo com os loops do ViewModel.
   void sync(List<FarmPlot> plots) {
     _last = plots;
@@ -143,21 +111,36 @@ class FarmScene {
             .map((m) => m.id)
             .toList()
           ..sort();
-    need = (plots: owners.length, yard: sleepers.length);
+    // a fazenda cresce até a vaga mais longe escolhida para quem está à vista
+    final pinned = [
+      for (final o in owners)
+        if (pins[o.project] case final i?) i + 1,
+    ];
+    need = (
+      plots: math.max(owners.length, pinned.fold(0, math.max)),
+      yard: sleepers.length,
+    );
     final l = layout;
     if (l == null) return;
     // canteiros ficam: um loop guarda o seu enquanto existe (e os órfãos
     // herdam o do pai); um novo pega o primeiro livre depois dos do mesmo
-    // projeto
+    // projeto, ou a partir da vaga escolhida para o projeto. Os projetos com
+    // vaga escolhida escolhem primeiro.
     final ids = owners.map((o) => o.id).toSet();
     _plotOf.removeWhere((id, i) => !ids.contains(id) || i >= l.plots.length);
     final taken = _plotOf.values.toSet();
-    for (final o in owners) {
+    int rank(_Owner o) => pins[o.project] ?? l.plots.length;
+    final order = [for (final (i, o) in owners.indexed) (i, o)]
+      ..sort((a, b) {
+        final c = rank(a.$2).compareTo(rank(b.$2));
+        return c != 0 ? c : a.$1.compareTo(b.$1);
+      });
+    for (final (_, o) in order) {
       if (_plotOf.containsKey(o.id)) continue;
       final sib = owners
           .where((x) => x.project == o.project && _plotOf.containsKey(x.id))
           .map((x) => _plotOf[x.id]!);
-      var free = sib.isEmpty ? 0 : sib.reduce(math.max) + 1;
+      var free = sib.isEmpty ? pins[o.project] ?? 0 : sib.reduce(math.max) + 1;
       while (taken.contains(free)) {
         free++;
       }
@@ -172,6 +155,7 @@ class FarmScene {
       taken.add(free);
     }
     final info = List<FarmPlotInfo?>.filled(l.plots.length, null);
+    plotProject = List<String?>.filled(l.plots.length, null);
     final want = <String, (CritterMode, ui.Offset?, ui.Offset?)>{};
     final loops = <String, FarmLoop>{};
     final room = <String, double>{};
@@ -179,6 +163,7 @@ class FarmScene {
       final pi = _plotOf[o.id];
       if (pi == null) continue;
       final plot = l.plots[pi];
+      plotProject[pi] = o.project;
       final m = o.main;
       final subs = [...o.subs]..sort((a, b) => _rank(a).compareTo(_rank(b)));
       // time: o lead é quem tem teammate à vista; todos levam a cor dele

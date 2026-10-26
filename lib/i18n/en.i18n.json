@@ -1086,7 +1086,8 @@
         "done": "done"
       },
       "teammateOf": "teammate of ${lead}",
-      "teamLead": "leads a team of ${n}"
+      "teamLead": "leads a team of ${n}",
+      "resetPlots": "Reset plot positions"
     },
     "agentGraph": {
       "tabTitle": "Agents",

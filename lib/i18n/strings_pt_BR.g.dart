@@ -1494,6 +1494,7 @@ class _Translations$gsh$farm$pt_BR extends Translations$gsh$farm$en {
 	@override late final _Translations$gsh$farm$activity$pt_BR activity = _Translations$gsh$farm$activity$pt_BR._(_root);
 	@override String teammateOf({required Object lead}) => 'colega de time de ${lead}';
 	@override String teamLead({required Object n}) => 'lidera um time de ${n}';
+	@override String get resetPlots => 'Redefinir posições';
 }
 
 // Path: gsh.agentGraph
@@ -3605,6 +3606,7 @@ extension on TranslationsPtBr {
 			'gsh.farm.activity.done' => 'concluído',
 			'gsh.farm.teammateOf' => ({required Object lead}) => 'colega de time de ${lead}',
 			'gsh.farm.teamLead' => ({required Object n}) => 'lidera um time de ${n}',
+			'gsh.farm.resetPlots' => 'Redefinir posições',
 			'gsh.agentGraph.tabTitle' => 'Agentes',
 			'gsh.agentGraph.newAgent' => 'Novo agente',
 			'gsh.agentGraph.emptyTitle' => 'Nenhum agente neste workspace',
@@ -3692,9 +3694,9 @@ extension on TranslationsPtBr {
 			'settings.page.nav.extensions' => 'Extensões',
 			'settings.page.nav.developer' => 'Desenvolvedor',
 			'settings.page.nav.skills' => 'Skills',
-			'settings.page.nav.connectors' => 'Conectores',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.nav.connectors' => 'Conectores',
 			'settings.page.nav.plugins' => 'Plugins',
 			'settings.page.nav.apiKeys' => 'Chaves de API',
 			'settings.page.nav.groups.settings' => 'Configurações',

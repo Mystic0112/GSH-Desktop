@@ -23,8 +23,11 @@ class _HudBox extends StatelessWidget {
 }
 
 class _Hud extends StatelessWidget {
-  const _Hud({required this.vm});
+  const _Hud({required this.vm, this.onResetPlots});
   final FarmViewModel vm;
+
+  /// "Redefinir posições" dos canteiros; `null` = nada escolhido, some.
+  final VoidCallback? onResetPlots;
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +103,19 @@ class _Hud extends StatelessWidget {
             ],
           ),
         ),
+        if (onResetPlots case final reset?)
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: reset,
+              child: chip(
+                Text(
+                  tr.resetPlots.toUpperCase(),
+                  style: small.copyWith(color: _hudMuted, fontSize: 10),
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -143,4 +159,38 @@ class _FarmEmpty extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Nome do harness do loop (`claude` → "Claude Code"): nome próprio, não se
+/// traduz.
+String _harnessLabel(FarmLoop l) =>
+    HarnessCatalog.specs.values
+        .where((s) => s.allEntryPoints.contains(l.harness))
+        .firstOrNull
+        ?.label ??
+    l.harness;
+
+String _compact(int n) {
+  // 200.0k → 200k
+  String f(double v) => v.toStringAsFixed(1).replaceFirst(RegExp(r'\.0$'), '');
+  if (n >= 1000000) return '${f(n / 1000000)}M';
+  if (n >= 1000) return '${f(n / 1000)}k';
+  return '$n';
+}
+
+String _activityLabel(Translations$gsh$farm$en tr, FarmActivity a) {
+  final t = tr.activity;
+  return switch (a) {
+    FarmActivity.thinking => t.thinking,
+    FarmActivity.reading => t.reading,
+    FarmActivity.editing => t.editing,
+    FarmActivity.running => t.running,
+    FarmActivity.searching => t.searching,
+    FarmActivity.delegating => t.delegating,
+    FarmActivity.tooling => t.tooling,
+    FarmActivity.waiting => t.waiting,
+    FarmActivity.idle => t.idle,
+    FarmActivity.sleeping => t.sleeping,
+    FarmActivity.done => t.done,
+  };
 }

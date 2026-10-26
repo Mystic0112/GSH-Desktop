@@ -27,6 +27,7 @@ import 'package:path/path.dart' as p;
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 part 'farm_hud.dart';
+part 'farm_view_plots.dart';
 part 'farm_view_team.dart';
 
 /// A fazenda de agentes, no visual do clodfarm: celeiro, curral, lago e um
@@ -70,6 +71,11 @@ class _FarmViewState extends State<FarmView> {
   FarmScenery? _scenery;
   double _pinch = 1;
 
+  /// Canteiro sendo arrastado (ver `farm_view_plots.dart`) e se o mouse está
+  /// sobre um (cursor de mão).
+  int? _dragPlot;
+  final _overPlot = ValueNotifier(false);
+
   /// As fazendas dos colegas (ver `farm_view_team.dart`) e de quem é o bicho
   /// sob o mouse (`null` = meu).
   final _team = <FarmLot>[];
@@ -87,6 +93,7 @@ class _FarmViewState extends State<FarmView> {
       ..attach()
       ..addListener(_sync);
     _hover.addListener(_frame.tick);
+    _scene.pins = context.read<SettingsController>().settings.farmPlots;
     _sync();
   }
 
@@ -114,6 +121,7 @@ class _FarmViewState extends State<FarmView> {
     _frame.dispose();
     _hover.dispose();
     _mouse.dispose();
+    _overPlot.dispose();
     super.dispose();
   }
 
@@ -225,6 +233,7 @@ class _FarmViewState extends State<FarmView> {
     final (c, lot) = _hitAt(local);
     _hoverLot = lot;
     _hover.value = c;
+    _overPlot.value = c == null && _scene.plotAt(_cam.toWorld(local)) != null;
   }
 
   @override
@@ -240,6 +249,7 @@ class _FarmViewState extends State<FarmView> {
       if (!first) unawaited(_rebuild());
     }
     _cam.dpr = MediaQuery.devicePixelRatioOf(context);
+    _watchPins(context);
     final label = context.typo.mono.copyWith(
       fontSize: 10,
       height: 1.2,
@@ -279,57 +289,72 @@ class _FarmViewState extends State<FarmView> {
                       _hover.value = null;
                       _mouse.value = null;
                     },
-                    child: GestureDetector(
-                      onTapUp: world == null
-                          ? null
-                          : (d) {
-                              // bicho de colega: o terminal está na máquina
-                              // dele, clique não faz nada
-                              final (c, lot) = _hitAt(d.localPosition);
-                              if (lot == null) _open(c);
-                            },
-                      onDoubleTap: world == null
-                          ? null
-                          : () {
-                              _cam.fit(world.layout, _viewport(size));
-                              _frame.tick();
-                            },
-                      onScaleStart: (_) => _pinch = 1,
-                      onScaleUpdate: (d) {
-                        if (world == null) return;
-                        if (d.scale != 1 && d.pointerCount != 1) {
-                          _cam.zoomAt(
-                            d.localFocalPoint,
-                            d.scale / _pinch,
-                            world.layout,
-                            size,
-                          );
-                          _pinch = d.scale;
-                        }
-                        _cam.pan(d.focalPointDelta, world.layout, size);
-                        // arrastar é imediato, não espera o Timer
-                        _frame.tick();
-                      },
-                      // camada própria: o quadro da fazenda não repinta o
-                      // resto da janela
-                      child: RepaintBoundary(
-                        child: CustomPaint(
-                          isComplex: true,
-                          willChange: true,
-                          size: size,
-                          painter: FarmScenePainter(
-                            scene: _scene,
-                            world: world,
-                            cam: _cam,
-                            labels: _labels,
-                            label: label,
-                            hover: _hover,
-                            repaint: _frame,
-                            peers: _team,
-                            couriers: _runs,
-                            banner: scenery == FarmScenery.office
-                                ? null
-                                : (n) => context.t.gsh.farm.peerBanner(name: n),
+                    // mão aberta sobre um canteiro: dá para arrastá-lo
+                    child: ValueListenableBuilder(
+                      valueListenable: _overPlot,
+                      builder: (context, over, child) => MouseRegion(
+                        cursor: over || _dragPlot != null
+                            ? SystemMouseCursors.grab
+                            : MouseCursor.defer,
+                        child: child,
+                      ),
+                      child: GestureDetector(
+                        onTapUp: world == null
+                            ? null
+                            : (d) {
+                                // bicho de colega: o terminal está na máquina
+                                // dele, clique não faz nada
+                                final (c, lot) = _hitAt(d.localPosition);
+                                if (lot == null) _open(c);
+                              },
+                        onDoubleTap: world == null
+                            ? null
+                            : () {
+                                _cam.fit(world.layout, _viewport(size));
+                                _frame.tick();
+                              },
+                        onScaleStart: (d) {
+                          _pinch = 1;
+                          _startPlotDrag(d);
+                        },
+                        onScaleEnd: (_) => _endPlotDrag(),
+                        onScaleUpdate: (d) {
+                          if (world == null || _dragPlotTo(d)) return;
+                          if (d.scale != 1 && d.pointerCount != 1) {
+                            _cam.zoomAt(
+                              d.localFocalPoint,
+                              d.scale / _pinch,
+                              world.layout,
+                              size,
+                            );
+                            _pinch = d.scale;
+                          }
+                          _cam.pan(d.focalPointDelta, world.layout, size);
+                          // arrastar é imediato, não espera o Timer
+                          _frame.tick();
+                        },
+                        // camada própria: o quadro da fazenda não repinta o
+                        // resto da janela
+                        child: RepaintBoundary(
+                          child: CustomPaint(
+                            isComplex: true,
+                            willChange: true,
+                            size: size,
+                            painter: FarmScenePainter(
+                              scene: _scene,
+                              world: world,
+                              cam: _cam,
+                              labels: _labels,
+                              label: label,
+                              hover: _hover,
+                              repaint: _frame,
+                              peers: _team,
+                              couriers: _runs,
+                              banner: scenery == FarmScenery.office
+                                  ? null
+                                  : (n) =>
+                                        context.t.gsh.farm.peerBanner(name: n),
+                            ),
                           ),
                         ),
                       ),
@@ -337,7 +362,14 @@ class _FarmViewState extends State<FarmView> {
                   ),
                 ),
               ),
-              Positioned(left: 10, top: 10, child: _Hud(vm: vm)),
+              Positioned(
+                left: 10,
+                top: 10,
+                child: _Hud(
+                  vm: vm,
+                  onResetPlots: _scene.pins.isEmpty ? null : _resetPlots,
+                ),
+              ),
               if (vm.plots.isEmpty && _team.isEmpty)
                 const Positioned.fill(child: _FarmEmpty()),
               Positioned.fill(
@@ -444,38 +476,4 @@ void showOutsideGshToast(BuildContext context) => showToast(
 /// Avisa o painter que há um quadro novo.
 class _Frame extends ChangeNotifier {
   void tick() => notifyListeners();
-}
-
-/// Nome do harness do loop (`claude` → "Claude Code"): nome próprio, não se
-/// traduz.
-String _harnessLabel(FarmLoop l) =>
-    HarnessCatalog.specs.values
-        .where((s) => s.allEntryPoints.contains(l.harness))
-        .firstOrNull
-        ?.label ??
-    l.harness;
-
-String _compact(int n) {
-  // 200.0k → 200k
-  String f(double v) => v.toStringAsFixed(1).replaceFirst(RegExp(r'\.0$'), '');
-  if (n >= 1000000) return '${f(n / 1000000)}M';
-  if (n >= 1000) return '${f(n / 1000)}k';
-  return '$n';
-}
-
-String _activityLabel(Translations$gsh$farm$en tr, FarmActivity a) {
-  final t = tr.activity;
-  return switch (a) {
-    FarmActivity.thinking => t.thinking,
-    FarmActivity.reading => t.reading,
-    FarmActivity.editing => t.editing,
-    FarmActivity.running => t.running,
-    FarmActivity.searching => t.searching,
-    FarmActivity.delegating => t.delegating,
-    FarmActivity.tooling => t.tooling,
-    FarmActivity.waiting => t.waiting,
-    FarmActivity.idle => t.idle,
-    FarmActivity.sleeping => t.sleeping,
-    FarmActivity.done => t.done,
-  };
 }

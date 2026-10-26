@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
+
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_scene.dart';
@@ -283,5 +285,44 @@ void main() {
     expect(plotOf('lead')!.team, isNotNull);
     expect(plotOf('solo')!.team, isNull);
     expect(scene.need.plots, 4);
+  });
+
+  test('arrastar troca canteiros e a vaga escolhida volta na próxima vez', () {
+    final loops = groupFarm([
+      _loop('a1', '/p/a'),
+      _loop('a2', '/p/a'),
+      _loop('b1', '/p/b'),
+    ]);
+    final scene = FarmScene(rnd: math.Random(1))..layout = _layout(8);
+    scene.sync(loops);
+    int plotOf(FarmScene s, String id) =>
+        s.plotInfo.indexWhere((i) => i?.main?.id == id);
+    final b = plotOf(scene, 'b1');
+    // o projeto a vai para a vaga 5 (vazia): os dois canteiros dele juntos
+    expect(scene.movePlot(plotOf(scene, 'a1'), 5), {'/p/a': 5});
+    expect({plotOf(scene, 'a1'), plotOf(scene, 'a2')}, {5, 6});
+    expect(plotOf(scene, 'b1'), b);
+    // soltar em cima de b troca os dois
+    final moved = scene.movePlot(5, b);
+    expect(moved, {'/p/a': b, '/p/b': 5});
+    expect(plotOf(scene, 'b1'), 5);
+    expect(scene.plotProject[b], '/p/a');
+    // vazio não arrasta
+    expect(scene.movePlot(7, 0), isEmpty);
+
+    // a vaga é lembrada nas preferências e a fazenda nova abre igual
+    final saved = AppSettings.fromJson(
+      AppSettings(farmPlots: scene.pins).toJson(),
+    ).farmPlots;
+    expect(saved, {'/p/a': b, '/p/b': 5});
+    final next = FarmScene(rnd: math.Random(2))
+      ..pins = saved
+      ..layout = _layout(8);
+    next.sync(loops);
+    expect(plotOf(next, 'b1'), 5);
+    expect(next.plotProject[b], '/p/a');
+    next.resetPlots();
+    expect(next.pins, isEmpty);
+    expect(plotOf(next, 'a1'), 0);
   });
 }

@@ -133,6 +133,7 @@ void main() {
       _preview(scenery, zoom);
     }
     _preview(scenery, 5, puffs: true);
+    _preview(scenery, 0, drag: true);
     _teamPreview(scenery);
     _teamPreview(scenery, couriers: true);
   }
@@ -281,90 +282,99 @@ void _preview(
   FarmScenery scenery,
   double zoom, {
   bool puffs = false,
-}) => testWidgets(
-  'preview: ${scenery.name} no zoom $zoom${puffs ? ' (poeira)' : ''}',
-  (tester) async {
-    const size = Size(960, 600);
-    tester.view
-      ..physicalSize = size
-      ..devicePixelRatio = 1;
-    addTearDown(tester.view.reset);
-    final plots = groupFarm(_loops());
-    final scene = FarmScene(rnd: math.Random(4))..sync(plots);
-    final layout = layoutFarm(
-      plots: scene.need.plots + 1,
-      yard: scene.need.yard + 2,
-      view: FarmViewport(w: size.width, h: size.height),
-      snap: (z) => z,
-    );
-    final world = (await tester.runAsync(
-      () => buildWorld(layout, scenery: scenery),
-    ))!;
-    scene.relayout(layout);
-    for (var i = 0; i < 40; i++) {
-      scene.update(0.05);
-    }
-    if (puffs) {
-      final m = scene.critters['m']!;
-      scene
-        ..sync(
-          groupFarm([
-            for (final l in _loops())
-              if (l.id != 's1') l,
-            _loop('n', FarmActivity.thinking, title: 'Novo'),
-          ]),
-        )
-        ..update(0.2);
-      // o novo surge ao lado do dono do canteiro, para caber no quadro
-      scene.puffs.firstWhere((p) => p.born);
-      scene.critters['n']!
-        ..x = m.x - 26
-        ..y = m.y;
-      scene.puffs
-        ..removeWhere((p) => p.born)
-        ..add(FarmPuff(m.x - 26, m.y, scene.t - 0.15, born: true, mini: false));
-    }
-    final cam = FarmCamera()..fit(layout, FarmViewport(w: 960, h: 600));
-    // zoom 3: enquadra o canteiro dos minis
-    final main =
-        layout.plots[scene.plotInfo.indexWhere((p) => p?.main?.id == 'm')];
-    if (zoom > 0) {
-      cam
-        ..z = zoom
-        ..x = main.center.dx - size.width / 2 / zoom
-        ..y = main.center.dy - size.height / 2 / zoom
-        ..clampTo(layout, size);
-    }
-    await tester.pumpWidget(
-      shotHost(
-        RepaintBoundary(
-          key: shotKey,
-          child: Builder(
-            builder: (context) => CustomPaint(
-              size: size,
-              painter: FarmScenePainter(
-                scene: scene,
-                world: world,
-                cam: cam,
-                labels: FarmLabels(),
-                label: context.typo.mono.copyWith(
-                  fontSize: 10,
-                  height: 1.2,
-                  fontWeight: FontWeight.w700,
-                  color: const Color(0xFFfff8e8),
-                ),
-                hover: ValueNotifier(null),
-                repaint: ChangeNotifier(),
+  bool drag = false,
+}) => testWidgets('preview: ${scenery.name} no zoom $zoom'
+    '${puffs ? ' (poeira)' : ''}${drag ? ' (arrastando)' : ''}', (
+  tester,
+) async {
+  const size = Size(960, 600);
+  tester.view
+    ..physicalSize = size
+    ..devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+  final plots = groupFarm(_loops());
+  final scene = FarmScene(rnd: math.Random(4))..sync(plots);
+  final layout = layoutFarm(
+    plots: scene.need.plots + 1,
+    yard: scene.need.yard + 2,
+    view: FarmViewport(w: size.width, h: size.height),
+    snap: (z) => z,
+  );
+  final world = (await tester.runAsync(
+    () => buildWorld(layout, scenery: scenery),
+  ))!;
+  scene.relayout(layout);
+  for (var i = 0; i < 40; i++) {
+    scene.update(0.05);
+  }
+  if (puffs) {
+    final m = scene.critters['m']!;
+    scene
+      ..sync(
+        groupFarm([
+          for (final l in _loops())
+            if (l.id != 's1') l,
+          _loop('n', FarmActivity.thinking, title: 'Novo'),
+        ]),
+      )
+      ..update(0.2);
+    // o novo surge ao lado do dono do canteiro, para caber no quadro
+    scene.puffs.firstWhere((p) => p.born);
+    scene.critters['n']!
+      ..x = m.x - 26
+      ..y = m.y;
+    scene.puffs
+      ..removeWhere((p) => p.born)
+      ..add(FarmPuff(m.x - 26, m.y, scene.t - 0.15, born: true, mini: false));
+  }
+  if (drag) {
+    scene
+      ..dragFrom = scene.plotInfo.indexWhere((p) => p?.main?.id == 'm')
+      ..dragTo = scene.plotInfo.lastIndexWhere((p) => p == null);
+  }
+  final cam = FarmCamera()..fit(layout, FarmViewport(w: 960, h: 600));
+  // zoom 3: enquadra o canteiro dos minis
+  final main =
+      layout.plots[scene.plotInfo.indexWhere((p) => p?.main?.id == 'm')];
+  if (zoom > 0) {
+    cam
+      ..z = zoom
+      ..x = main.center.dx - size.width / 2 / zoom
+      ..y = main.center.dy - size.height / 2 / zoom
+      ..clampTo(layout, size);
+  }
+  await tester.pumpWidget(
+    shotHost(
+      RepaintBoundary(
+        key: shotKey,
+        child: Builder(
+          builder: (context) => CustomPaint(
+            size: size,
+            painter: FarmScenePainter(
+              scene: scene,
+              world: world,
+              cam: cam,
+              labels: FarmLabels(),
+              label: context.typo.mono.copyWith(
+                fontSize: 10,
+                height: 1.2,
+                fontWeight: FontWeight.w700,
+                color: const Color(0xFFfff8e8),
               ),
+              hover: ValueNotifier(null),
+              repaint: ChangeNotifier(),
             ),
           ),
         ),
       ),
-    );
-    final name = scenery == FarmScenery.farm ? 'farm2' : 'office';
-    await takeShot(tester, '${name}_${zoom.toInt()}${puffs ? '_puff' : ''}');
-  },
-);
+    ),
+  );
+  final name = scenery == FarmScenery.farm ? 'farm2' : 'office';
+  await takeShot(
+    tester,
+    '${name}_${zoom.toInt()}${puffs ? '_puff' : ''}${drag ? '_drag' : ''}',
+  );
+});
 
 List<CourierRun> _fakeCouriers(
   FarmScene scene,

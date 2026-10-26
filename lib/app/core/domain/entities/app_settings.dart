@@ -107,6 +107,7 @@ class AppSettings {
     this.teamFarmSecret = '',
     this.teamDoorAsk = false,
     this.teamDoorAllow = '',
+    this.farmPlots = const {},
   });
 
   final AppThemeMode themeMode;
@@ -343,6 +344,10 @@ class AppSettings {
   /// Quem pode bater na porta (nomes, vírgula). Vazio = todo o time.
   final String teamDoorAllow;
 
+  /// Vaga escolhida (arrastando) para o canteiro de cada projeto da
+  /// fazenda, pela pasta. Vazio = posições automáticas.
+  final Map<String, int> farmPlots;
+
   bool showsFeature(AppFeature f) => !hiddenFeatures.contains(f);
 
   AppSettings copyWith({
@@ -413,6 +418,7 @@ class AppSettings {
     String? teamFarmSecret,
     bool? teamDoorAsk,
     String? teamDoorAllow,
+    Map<String, int>? farmPlots,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -490,6 +496,7 @@ class AppSettings {
       teamFarmSecret: teamFarmSecret ?? this.teamFarmSecret,
       teamDoorAsk: teamDoorAsk ?? this.teamDoorAsk,
       teamDoorAllow: teamDoorAllow ?? this.teamDoorAllow,
+      farmPlots: farmPlots ?? this.farmPlots,
     );
   }
 
@@ -570,6 +577,7 @@ class AppSettings {
     if (teamFarmSecret.isNotEmpty) 'farm.team.secret': teamFarmSecret,
     if (teamDoorAsk) 'farm.team.doorAsk': true,
     if (teamDoorAllow.isNotEmpty) 'farm.team.doorAllow': teamDoorAllow,
+    if (farmPlots.isNotEmpty) 'farm.plots': farmPlots,
   };
 
   factory AppSettings.fromJson(Map<dynamic, dynamic> json) {
@@ -691,6 +699,11 @@ class AppSettings {
       teamFarmSecret: json['farm.team.secret'] as String? ?? '',
       teamDoorAsk: json['farm.team.doorAsk'] as bool? ?? false,
       teamDoorAllow: json['farm.team.doorAllow'] as String? ?? '',
+      farmPlots: {
+        if (json['farm.plots'] case final Map<dynamic, dynamic> m)
+          for (final MapEntry(:key, :value) in m.entries)
+            if (key is String && value is int && value >= 0) key: value,
+      },
     );
   }
 }
