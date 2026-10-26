@@ -4085,8 +4085,8 @@ class Translations$settings$page$nav$en {
 	/// en: 'Notifications'
 	String get notifications => 'Notifications';
 
-	/// en: 'Automations'
-	String get automations => 'Automations';
+	/// en: 'AI Commits'
+	String get automations => 'AI Commits';
 
 	/// en: 'Remote hosts'
 	String get remoteHosts => 'Remote hosts';
@@ -6738,7 +6738,7 @@ extension on Translations {
 			'settings.page.nav.language' => 'Language',
 			'settings.page.nav.shortcuts' => 'Shortcuts',
 			'settings.page.nav.notifications' => 'Notifications',
-			'settings.page.nav.automations' => 'Automations',
+			'settings.page.nav.automations' => 'AI Commits',
 			'settings.page.nav.remoteHosts' => 'Remote hosts',
 			'settings.page.nav.claudeCode' => 'Claude Code',
 			'settings.page.nav.search' => 'Search',

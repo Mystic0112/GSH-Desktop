@@ -1928,7 +1928,7 @@ class _Translations$settings$page$nav$es extends Translations$settings$page$nav$
 	@override String get language => 'Lenguaje';
 	@override String get shortcuts => 'Atajos';
 	@override String get notifications => 'Notificaciones';
-	@override String get automations => 'Automatizaciones';
+	@override String get automations => 'Commits con IA';
 	@override String get remoteHosts => 'Hosts remotos';
 	@override String get claudeCode => 'Claude Code';
 	@override String get search => 'Buscar';
@@ -3673,7 +3673,7 @@ extension on TranslationsEs {
 			'settings.page.nav.language' => 'Lenguaje',
 			'settings.page.nav.shortcuts' => 'Atajos',
 			'settings.page.nav.notifications' => 'Notificaciones',
-			'settings.page.nav.automations' => 'Automatizaciones',
+			'settings.page.nav.automations' => 'Commits con IA',
 			'settings.page.nav.remoteHosts' => 'Hosts remotos',
 			'settings.page.nav.claudeCode' => 'Claude Code',
 			'settings.page.nav.search' => 'Buscar',
