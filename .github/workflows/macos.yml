@@ -50,7 +50,17 @@ jobs:
           version: 0.16.0
 
       - run: flutter pub get
-      - run: flutter build macos --release
+      # O build baixa dependências do Ghostty pela rede (zig fetch): uma queda
+      # de conexão derrubava a release inteira. Tenta de novo até 3 vezes.
+      - name: flutter build macos --release
+        shell: bash
+        run: |
+          for i in 1 2 3; do
+            flutter build macos --release && exit 0
+            echo "::warning::build falhou na tentativa $i; tentando de novo em 30 s"
+            sleep 30
+          done
+          exit 1
 
       - name: Empacota (.zip + .dmg)
         run: |
