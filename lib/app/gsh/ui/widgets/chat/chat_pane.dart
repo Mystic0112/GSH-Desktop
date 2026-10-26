@@ -21,6 +21,7 @@ class ChatPane extends StatefulWidget {
     this.branch,
     this.onRemoteControl,
     this.onResume,
+    this.onImproveHarness,
     this.showSessionState = false,
     this.columnWidth = 760,
     this.fontFamily,
@@ -37,6 +38,10 @@ class ChatPane extends StatefulWidget {
   /// "Retomar conversa" (recebe o widget âncora do menu); `null` = sem o
   /// botão.
   final ValueChanged<BuildContext>? onResume;
+
+  /// "Melhorar harness": um chat novo que lê esta conversa e propõe
+  /// mudanças no harness do projeto; `null` = sem o botão.
+  final VoidCallback? onImproveHarness;
 
   /// Largura da coluna da conversa (preferência "Largura da transcrição").
   final double columnWidth;
@@ -136,6 +141,7 @@ class _ChatPaneState extends State<ChatPane> {
                   chat: _chat,
                   onRemoteControl: widget.onRemoteControl,
                   onResume: widget.onResume,
+                  onImproveHarness: widget.onImproveHarness,
                   showSessionState: widget.showSessionState,
                 ),
                 Expanded(
@@ -204,11 +210,13 @@ class _Header extends StatelessWidget {
     required this.chat,
     this.onRemoteControl,
     this.onResume,
+    this.onImproveHarness,
     this.showSessionState = false,
   });
   final ChatController chat;
   final VoidCallback? onRemoteControl;
   final ValueChanged<BuildContext>? onResume;
+  final VoidCallback? onImproveHarness;
   final bool showSessionState;
 
   @override
@@ -268,6 +276,24 @@ class _Header extends StatelessWidget {
               detail: chat.sessionStateDetail,
             ),
             const SizedBox(width: 8),
+          ],
+          // Só com conversa gravada (há o que ler) e fora de um turno.
+          if (onImproveHarness case final improve?
+              when chat.sessionId != null && !chat.busy) ...[
+            AppTooltip(
+              message:
+                  '${context.t.gsh.chat.improveHarness}\n'
+                  '${context.t.gsh.chat.improveHarnessHint}',
+              // ponytail: só ícone — o cabeçalho já tem dois botões com texto
+              // e a pane pode ser estreita.
+              child: GhostButton(
+                size: ButtonSize.small,
+                density: ButtonDensity.icon,
+                onPressed: improve,
+                child: Icon(Icons.auto_fix_high, size: 15, color: colors.text2),
+              ),
+            ),
+            const SizedBox(width: 4),
           ],
           if (onResume case final resume?) ...[
             AppTooltip(

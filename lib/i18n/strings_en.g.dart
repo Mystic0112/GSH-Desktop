@@ -3056,6 +3056,15 @@ class Translations$gsh$chat$en {
 	String get copiedMessage => 'Copied';
 
 	late final Translations$gsh$chat$effort$en effort = Translations$gsh$chat$effort$en.internal(_root);
+
+	/// en: 'Improve harness'
+	String get improveHarness => 'Improve harness';
+
+	/// en: 'Opens a chat that reads this conversation and proposes changes to the project's CLAUDE.md, skills and hooks, each with the evidence. You approve every edit.'
+	String get improveHarnessHint => 'Opens a chat that reads this conversation and proposes changes to the project\'s CLAUDE.md, skills and hooks, each with the evidence. You approve every edit.';
+
+	/// en: 'Improve this project's harness based on a previous conversation (session ${sessionId}). 1. Find the transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. It is JSONL and can be large: use grep/jq/head, don't read it whole. Focus on the user's messages, the corrections they made, tool errors and rework. 2. Read the harness that applied there: CLAUDE.md (project and global), .claude/skills, .claude/agents, .claude/commands and the hooks in .claude/settings.json. 3. Find what cost time: a missing instruction, an ignored rule, a repeated step, a wrong command, something the user had to correct. 4. For each finding, propose ONE small change to the project's harness (the global one only if I ask): - stable fact about the repository → CLAUDE.md - multi-step procedure → skill - something that must be prevented → a hook that blocks and explains why it stopped and what to do instead 5. Before editing, show a table: what, where and the evidence (the moment in the conversation that justifies it). No evidence, no proposal. If nothing is worth it, say so. 6. Then apply one change at a time with Edit/Write; I review each diff and approve or deny it. CLAUDE.md goes into every message: keep it short.'
+	String improveHarnessPrompt({required Object sessionId}) => 'Improve this project\'s harness based on a previous conversation (session ${sessionId}).\n\n1. Find the transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. It is JSONL and can be large: use grep/jq/head, don\'t read it whole. Focus on the user\'s messages, the corrections they made, tool errors and rework.\n2. Read the harness that applied there: CLAUDE.md (project and global), .claude/skills, .claude/agents, .claude/commands and the hooks in .claude/settings.json.\n3. Find what cost time: a missing instruction, an ignored rule, a repeated step, a wrong command, something the user had to correct.\n4. For each finding, propose ONE small change to the project\'s harness (the global one only if I ask):\n   - stable fact about the repository → CLAUDE.md\n   - multi-step procedure → skill\n   - something that must be prevented → a hook that blocks and explains why it stopped and what to do instead\n5. Before editing, show a table: what, where and the evidence (the moment in the conversation that justifies it). No evidence, no proposal. If nothing is worth it, say so.\n6. Then apply one change at a time with Edit/Write; I review each diff and approve or deny it.\n\nCLAUDE.md goes into every message: keep it short.';
 }
 
 // Path: gsh.harness
@@ -6687,6 +6696,9 @@ extension on Translations {
 			'gsh.chat.effort.xhigh' => 'Extra high',
 			'gsh.chat.effort.max' => 'Max',
 			'gsh.chat.effort.hint' => 'How much the model thinks before answering. More effort = better on hard tasks, slower and more tokens.',
+			'gsh.chat.improveHarness' => 'Improve harness',
+			'gsh.chat.improveHarnessHint' => 'Opens a chat that reads this conversation and proposes changes to the project\'s CLAUDE.md, skills and hooks, each with the evidence. You approve every edit.',
+			'gsh.chat.improveHarnessPrompt' => ({required Object sessionId}) => 'Improve this project\'s harness based on a previous conversation (session ${sessionId}).\n\n1. Find the transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. It is JSONL and can be large: use grep/jq/head, don\'t read it whole. Focus on the user\'s messages, the corrections they made, tool errors and rework.\n2. Read the harness that applied there: CLAUDE.md (project and global), .claude/skills, .claude/agents, .claude/commands and the hooks in .claude/settings.json.\n3. Find what cost time: a missing instruction, an ignored rule, a repeated step, a wrong command, something the user had to correct.\n4. For each finding, propose ONE small change to the project\'s harness (the global one only if I ask):\n   - stable fact about the repository → CLAUDE.md\n   - multi-step procedure → skill\n   - something that must be prevented → a hook that blocks and explains why it stopped and what to do instead\n5. Before editing, show a table: what, where and the evidence (the moment in the conversation that justifies it). No evidence, no proposal. If nothing is worth it, say so.\n6. Then apply one change at a time with Edit/Write; I review each diff and approve or deny it.\n\nCLAUDE.md goes into every message: keep it short.',
 			'gsh.harness.tabTitle' => 'Harness',
 			'gsh.harness.subtitle' => ({required Object path}) => 'What the agent loads when it runs in ${path}',
 			'gsh.harness.refresh' => 'Read again',
@@ -6833,11 +6845,11 @@ extension on Translations {
 			'settings.page.header.back' => 'Back',
 			'settings.page.header.title' => 'Settings',
 			'settings.page.nav.sideGsh' => 'GSH Desktop',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.nav.sideClaude' => 'Claude',
 			'settings.page.nav.general' => 'General',
 			'settings.page.nav.appearance' => 'Appearance',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.nav.terminal' => 'Terminal',
 			'settings.page.nav.language' => 'Language',
 			'settings.page.nav.shortcuts' => 'Shortcuts',
@@ -7347,11 +7359,11 @@ extension on Translations {
 			'fileOperation.error.formatterEmptyCommand' => 'Empty formatter command.',
 			'fileOperation.error.formatterMissingPlaceholder' => 'Formatter command must include the %FILE% placeholder.',
 			'fileOperation.error.formatterTimeout' => 'Formatter timed out.',
+			_ => null,
+		} ?? switch (path) {
 			'fileOperation.error.formatterExitCode' => ({required Object code}) => 'Formatter exited with ${code}.',
 			'fileOperation.error.formatterFailed' => 'The formatter could not run.',
 			'fileOperation.error.osFailure' => ({required Object detail}) => '${detail}',
-			_ => null,
-		} ?? switch (path) {
 			'fileOperation.error.nameHasSlash' => 'Name cannot contain “/”.',
 			'fileOperation.error.invalidName' => 'Invalid name.',
 			'fileOperation.error.remoteDropUnsupported' => 'Dropping files into a remote workspace is not supported yet.',

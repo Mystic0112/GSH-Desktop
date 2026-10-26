@@ -236,6 +236,36 @@ void main() {
     chat.dispose();
   });
 
+  testWidgets('melhorar harness: só com conversa gravada e parada', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1100, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final f = _Factory();
+    final chat = ChatController(f, cwd: '/home/dev/GSH-Desktop');
+    var asked = 0;
+    await tester.pumpWidget(
+      shotHost(ChatPane(chat: chat, onImproveHarness: () => asked++)),
+    );
+    expect(find.byIcon(Icons.auto_fix_high), findsNothing); // sem sessão
+    await chat.send('oi');
+    f.engine.ctrl
+      ..add(const ChatReady(sessionId: 's-1', model: 'opus'))
+      ..add(
+        const ChatTurnEnd(
+          isError: false,
+          text: '',
+          sessionId: 's-1',
+          costUsd: 0,
+        ),
+      );
+    await tester.pump();
+    await tester.tap(find.byIcon(Icons.auto_fix_high));
+    expect(asked, 1);
+    chat.dispose();
+  });
+
   testWidgets('menu do /: digita, escolhe com seta e Enter completa', (
     tester,
   ) async {
