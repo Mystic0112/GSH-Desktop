@@ -6,6 +6,10 @@ name: macos
 
 on:
   workflow_dispatch:
+  # TEMPORÁRIO: registra o workflow sem estar no master; sai ao ficar verde.
+  push:
+    branches: [helio]
+    paths: ['.github/workflows/macos.yml']
 
 concurrency:
   group: macos-${{ github.ref }}
