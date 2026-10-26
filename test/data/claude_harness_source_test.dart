@@ -108,6 +108,12 @@ void main() {
         ('db', HarnessScope.local),
       ]),
     );
+    // Lint: settings.local.json quebrado aparece; skill com descrição não
+    // tem aviso; custo fixo conta CLAUDE.md inteiro + descrições.
+    expect(h.invalidFiles.single, endsWith('settings.local.json'));
+    expect(h.of(HarnessKind.skills).single.issues, isEmpty);
+    expect(h.alwaysOnTokens(HarnessKind.memory), greaterThan(0));
+    expect(h.issueCount, 1);
     // ~/.claude.json é só leitura.
     expect(
       h.of(HarnessKind.mcp).firstWhere((e) => e.name == 'iris').path,
@@ -125,5 +131,61 @@ void main() {
     final md = await src.create(ws, HarnessKind.memory);
     expect(File(md).readAsStringSync(), '# repo'); // já existia
     expect(harnessSlug('../../etc'), 'etc');
+  });
+
+  test('lint: sem descrição, script sumido, arquivo grande', () {
+    expect(
+      hookScriptPath('"/opt/x y/gsh" hook', workspace: '/w', home: '/h'),
+      '/opt/x y/gsh',
+    );
+    expect(hookScriptPath('gsh hook', workspace: '/w', home: '/h'), isNull);
+    expect(
+      hookScriptPath('bash ./scripts/n.sh', workspace: '/w', home: '/h'),
+      '/w/scripts/n.sh',
+    );
+    expect(
+      hookScriptPath(
+        r'$CLAUDE_PROJECT_DIR/.claude/hooks/a.sh',
+        workspace: '/w',
+        home: '/h',
+      ),
+      '/w/.claude/hooks/a.sh',
+    );
+    expect(hookScriptPath('~/bin/x', workspace: '/w', home: '/h'), '/h/bin/x');
+    final hooks = settingsEntries(
+      {
+        'hooks': {
+          'Stop': [
+            {
+              'hooks': [
+                {'type': 'command', 'command': './nao-existe.sh'},
+              ],
+            },
+          ],
+        },
+      },
+      '/w/.claude/settings.json',
+      HarnessScope.project,
+      workspace: '/w',
+      home: '/h',
+    );
+    expect(hooks.single.issues, [HarnessIssue.missingScript]);
+  });
+
+  test('instrução grande e subagente sem descrição', () async {
+    File(
+      p.join(ws, 'CLAUDE.md'),
+    ).writeAsStringSync('x' * (maxInstructionChars + 1));
+    File(p.join(ws, '.claude', 'agents', 'mudo.md'))
+      ..createSync(recursive: true)
+      ..writeAsStringSync('sem frontmatter');
+    final h = await ClaudeHarnessSource(home: home).read(ws);
+    final md = h
+        .of(HarnessKind.memory)
+        .firstWhere((e) => e.name == 'CLAUDE.md');
+    expect(md.issues, [HarnessIssue.tooLarge]);
+    final mudo = h.of(HarnessKind.agents).firstWhere((e) => e.name == 'mudo');
+    expect(mudo.issues, [HarnessIssue.noDescription]);
+    expect(h.alwaysOnTokens(), greaterThan(maxInstructionChars ~/ 4));
   });
 }

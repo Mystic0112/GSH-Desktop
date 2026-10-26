@@ -1447,6 +1447,16 @@ class _Translations$gsh$harness$pt_BR extends Translations$gsh$harness$en {
 	@override String get ask => 'perguntar';
 	@override String get deny => 'bloquear';
 	@override String get readOnly => 'Só leitura aqui: use claude mcp add/remove';
+	@override String get costTitle => 'Custo fixo por turno';
+	@override String costValue({required Object tokens}) => '≈ ${tokens} tokens';
+	@override String get costHint => 'O que vai para o contexto em toda mensagem, antes de qualquer trabalho: as instruções inteiras e o nome + descrição de cada skill, subagente e comando. Ferramentas MCP não entram na conta.';
+	@override String get costTip => 'Para enxugar: o que só vale às vezes sai do CLAUDE.md e vira skill; skills e comandos que ninguém usa, apague.';
+	@override String perTurn({required Object tokens}) => '≈ ${tokens}/turno';
+	@override String issues({required Object n}) => 'Avisos: ${n}';
+	@override String get issueNoDescription => 'Sem descrição: o agente não sabe quando usar.';
+	@override String get issueMissingScript => 'O script que este hook chama não existe.';
+	@override String get issueTooLarge => 'Grande demais: pesa em toda mensagem (o Claude Code avisa acima de 40 mil caracteres).';
+	@override String invalidJson({required Object file}) => '${file}: JSON inválido — o Claude Code ignora este arquivo inteiro.';
 	@override String showAll({required Object n}) => 'Mostrar todos (${n})';
 	@override String get showLess => 'Mostrar menos';
 }
@@ -3545,6 +3555,16 @@ extension on TranslationsPtBr {
 			'gsh.harness.ask' => 'perguntar',
 			'gsh.harness.deny' => 'bloquear',
 			'gsh.harness.readOnly' => 'Só leitura aqui: use claude mcp add/remove',
+			'gsh.harness.costTitle' => 'Custo fixo por turno',
+			'gsh.harness.costValue' => ({required Object tokens}) => '≈ ${tokens} tokens',
+			'gsh.harness.costHint' => 'O que vai para o contexto em toda mensagem, antes de qualquer trabalho: as instruções inteiras e o nome + descrição de cada skill, subagente e comando. Ferramentas MCP não entram na conta.',
+			'gsh.harness.costTip' => 'Para enxugar: o que só vale às vezes sai do CLAUDE.md e vira skill; skills e comandos que ninguém usa, apague.',
+			'gsh.harness.perTurn' => ({required Object tokens}) => '≈ ${tokens}/turno',
+			'gsh.harness.issues' => ({required Object n}) => 'Avisos: ${n}',
+			'gsh.harness.issueNoDescription' => 'Sem descrição: o agente não sabe quando usar.',
+			'gsh.harness.issueMissingScript' => 'O script que este hook chama não existe.',
+			'gsh.harness.issueTooLarge' => 'Grande demais: pesa em toda mensagem (o Claude Code avisa acima de 40 mil caracteres).',
+			'gsh.harness.invalidJson' => ({required Object file}) => '${file}: JSON inválido — o Claude Code ignora este arquivo inteiro.',
 			'gsh.harness.showAll' => ({required Object n}) => 'Mostrar todos (${n})',
 			'gsh.harness.showLess' => 'Mostrar menos',
 			'gsh.farm.tabTitle' => 'Fazenda',
@@ -3671,6 +3691,8 @@ extension on TranslationsPtBr {
 			'settings.page.nav.connectors' => 'Conectores',
 			'settings.page.nav.plugins' => 'Plugins',
 			'settings.page.nav.apiKeys' => 'Chaves de API',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.nav.groups.settings' => 'Configurações',
 			'settings.page.nav.groups.thisComputer' => 'Este computador',
 			'settings.page.nav.groups.personalization' => 'Personalização',
@@ -3681,8 +3703,6 @@ extension on TranslationsPtBr {
 			'settings.page.general.editorEngineGsh' => 'GSH Desktop (padrão)',
 			'settings.page.general.editorEngineNeovim' => 'Neovim',
 			'settings.page.general.neovimChecking' => 'Procurando o Neovim…',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.general.neovimNotFound' => 'O Neovim não foi encontrado na PATH do seu shell.',
 			'settings.page.general.neovimRefresh' => 'Verificar novamente',
 			'settings.page.general.showGshTitle' => 'Mostrar terminal do GSH Desktop',

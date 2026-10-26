@@ -123,7 +123,9 @@ class _HarnessViewState extends State<HarnessView> {
             const SizedBox(height: 18),
             if (harness == null)
               const Center(child: CircularProgressIndicator(size: 20))
-            else
+            else ...[
+              _CostCard(harness: harness),
+              const SizedBox(height: 16),
               LayoutBuilder(
                 builder: (context, box) {
                   final cols = box.maxWidth >= 980 ? 2 : 1;
@@ -138,6 +140,11 @@ class _HarnessViewState extends State<HarnessView> {
                           child: _SectionCard(
                             kind: k,
                             entries: harness.of(k).toList(),
+                            perTurnTokens: harness.alwaysOnTokens(k),
+                            invalidFiles: [
+                              for (final f in harness.invalidFiles)
+                                if (_sectionOfFile(f) == k) f,
+                            ],
                             onOpen: _open,
                             onCreate: () => _create(k),
                           ),
@@ -146,8 +153,94 @@ class _HarnessViewState extends State<HarnessView> {
                   );
                 },
               ),
+            ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Onde avisar de um JSON inválido: `.mcp.json` no MCP; `settings*.json`
+/// em Hooks (o arquivo também tem as permissões).
+HarnessKind _sectionOfFile(String path) =>
+    path.endsWith('.mcp.json') ? HarnessKind.mcp : HarnessKind.hooks;
+
+/// `9.4k` / `820`.
+String _tokens(int n) =>
+    n >= 1000 ? '${(n / 1000).toStringAsFixed(n >= 10000 ? 0 : 1)}k' : '$n';
+
+/// Resumo do topo: quanto o harness custa em toda mensagem e quantos avisos.
+class _CostCard extends StatelessWidget {
+  const _CostCard({required this.harness});
+  final ProjectHarness harness;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final typo = context.typo;
+    final tr = context.t.gsh.harness;
+    final total = harness.alwaysOnTokens();
+    final issues = harness.issueCount;
+    final parts = [
+      for (final k in const [
+        HarnessKind.memory,
+        HarnessKind.skills,
+        HarnessKind.agents,
+        HarnessKind.commands,
+      ])
+        if (harness.alwaysOnTokens(k) > 0)
+          '${_title(tr, k)} ${_tokens(harness.alwaysOnTokens(k))}',
+    ];
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: colors.panel2,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: colors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(tr.costTitle, style: typo.title),
+              const SizedBox(width: 10),
+              Text(
+                tr.costValue(tokens: _tokens(total)),
+                style: typo.display.copyWith(fontSize: 20),
+              ),
+              const Spacer(),
+              if (issues > 0)
+                Row(
+                  children: [
+                    Icon(
+                      Icons.warning_amber_rounded,
+                      size: 16,
+                      color: colors.warn,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      tr.issues(n: issues),
+                      style: typo.label.copyWith(color: colors.warn),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+          if (parts.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Text(
+              parts.join('  ·  '),
+              style: typo.label.copyWith(color: colors.text2),
+            ),
+          ],
+          const SizedBox(height: 6),
+          Text(tr.costHint, style: typo.label.copyWith(color: colors.text3)),
+          const SizedBox(height: 2),
+          Text(tr.costTip, style: typo.label.copyWith(color: colors.text3)),
+        ],
       ),
     );
   }
@@ -167,12 +260,16 @@ class _SectionCard extends StatefulWidget {
   const _SectionCard({
     required this.kind,
     required this.entries,
+    required this.perTurnTokens,
+    required this.invalidFiles,
     required this.onOpen,
     required this.onCreate,
   });
 
   final HarnessKind kind;
   final List<HarnessEntry> entries;
+  final int perTurnTokens;
+  final List<String> invalidFiles;
   final ValueChanged<String> onOpen;
   final VoidCallback onCreate;
 
@@ -239,6 +336,16 @@ class _SectionCardState extends State<_SectionCard> {
                 '${entries.length}',
                 style: typo.label.copyWith(color: colors.text3),
               ),
+              if (widget.perTurnTokens > 0) ...[
+                const SizedBox(width: 8),
+                Text(
+                  tr.perTurn(tokens: _tokens(widget.perTurnTokens)),
+                  style: typo.label.copyWith(
+                    fontSize: 11.5,
+                    color: colors.text4,
+                  ),
+                ),
+              ],
               const Spacer(),
               GhostButton(
                 size: ButtonSize.small,
@@ -254,6 +361,24 @@ class _SectionCardState extends State<_SectionCard> {
           const SizedBox(height: 2),
           Text(desc, style: typo.label.copyWith(color: colors.text3)),
           const SizedBox(height: 8),
+          for (final f in widget.invalidFiles)
+            HoverTap(
+              onTap: () => widget.onOpen(f),
+              borderRadius: BorderRadius.circular(6),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 6),
+              child: Row(
+                children: [
+                  Icon(Icons.error_outline, size: 14, color: colors.error),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      tr.invalidJson(file: f.split(RegExp(r'[/\\]')).last),
+                      style: typo.label.copyWith(color: colors.error),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           if (entries.isEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -346,6 +471,24 @@ class _EntryRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
+          if (entry.issues.isNotEmpty) ...[
+            AppTooltip(
+              message: [
+                for (final i in entry.issues)
+                  switch (i) {
+                    HarnessIssue.noDescription => tr.issueNoDescription,
+                    HarnessIssue.missingScript => tr.issueMissingScript,
+                    HarnessIssue.tooLarge => tr.issueTooLarge,
+                  },
+              ].join('\n'),
+              child: Icon(
+                Icons.warning_amber_rounded,
+                size: 15,
+                color: colors.warn,
+              ),
+            ),
+            const SizedBox(width: 6),
+          ],
           _ScopeChip(scope: entry.scope),
           if (path == null) ...[
             const SizedBox(width: 6),

@@ -3130,6 +3130,36 @@ class Translations$gsh$harness$en {
 	/// en: 'Read-only here: use claude mcp add/remove'
 	String get readOnly => 'Read-only here: use claude mcp add/remove';
 
+	/// en: 'Fixed cost per turn'
+	String get costTitle => 'Fixed cost per turn';
+
+	/// en: '≈ ${tokens} tokens'
+	String costValue({required Object tokens}) => '≈ ${tokens} tokens';
+
+	/// en: 'What goes into the context on every message, before any work: the full instructions and each skill, subagent and command's name + description. MCP tools aren't counted.'
+	String get costHint => 'What goes into the context on every message, before any work: the full instructions and each skill, subagent and command\'s name + description. MCP tools aren\'t counted.';
+
+	/// en: 'To trim it: what only matters sometimes leaves CLAUDE.md and becomes a skill; delete skills and commands nobody uses.'
+	String get costTip => 'To trim it: what only matters sometimes leaves CLAUDE.md and becomes a skill; delete skills and commands nobody uses.';
+
+	/// en: '≈ ${tokens}/turn'
+	String perTurn({required Object tokens}) => '≈ ${tokens}/turn';
+
+	/// en: 'Warnings: ${n}'
+	String issues({required Object n}) => 'Warnings: ${n}';
+
+	/// en: 'No description: the agent doesn't know when to use it.'
+	String get issueNoDescription => 'No description: the agent doesn\'t know when to use it.';
+
+	/// en: 'The script this hook runs doesn't exist.'
+	String get issueMissingScript => 'The script this hook runs doesn\'t exist.';
+
+	/// en: 'Too large: it weighs on every message (Claude Code warns above 40k characters).'
+	String get issueTooLarge => 'Too large: it weighs on every message (Claude Code warns above 40k characters).';
+
+	/// en: '${file}: invalid JSON — Claude Code ignores this whole file.'
+	String invalidJson({required Object file}) => '${file}: invalid JSON — Claude Code ignores this whole file.';
+
 	/// en: 'Show all (${n})'
 	String showAll({required Object n}) => 'Show all (${n})';
 
@@ -6590,6 +6620,16 @@ extension on Translations {
 			'gsh.harness.ask' => 'ask',
 			'gsh.harness.deny' => 'block',
 			'gsh.harness.readOnly' => 'Read-only here: use claude mcp add/remove',
+			'gsh.harness.costTitle' => 'Fixed cost per turn',
+			'gsh.harness.costValue' => ({required Object tokens}) => '≈ ${tokens} tokens',
+			'gsh.harness.costHint' => 'What goes into the context on every message, before any work: the full instructions and each skill, subagent and command\'s name + description. MCP tools aren\'t counted.',
+			'gsh.harness.costTip' => 'To trim it: what only matters sometimes leaves CLAUDE.md and becomes a skill; delete skills and commands nobody uses.',
+			'gsh.harness.perTurn' => ({required Object tokens}) => '≈ ${tokens}/turn',
+			'gsh.harness.issues' => ({required Object n}) => 'Warnings: ${n}',
+			'gsh.harness.issueNoDescription' => 'No description: the agent doesn\'t know when to use it.',
+			'gsh.harness.issueMissingScript' => 'The script this hook runs doesn\'t exist.',
+			'gsh.harness.issueTooLarge' => 'Too large: it weighs on every message (Claude Code warns above 40k characters).',
+			'gsh.harness.invalidJson' => ({required Object file}) => '${file}: invalid JSON — Claude Code ignores this whole file.',
 			'gsh.harness.showAll' => ({required Object n}) => 'Show all (${n})',
 			'gsh.harness.showLess' => 'Show less',
 			'gsh.farm.tabTitle' => 'Farm',
@@ -6716,6 +6756,8 @@ extension on Translations {
 			'settings.page.nav.connectors' => 'Connectors',
 			'settings.page.nav.plugins' => 'Plugins',
 			'settings.page.nav.apiKeys' => 'API keys',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.nav.groups.settings' => 'Settings',
 			'settings.page.nav.groups.thisComputer' => 'This computer',
 			'settings.page.nav.groups.personalization' => 'Personalization',
@@ -6726,8 +6768,6 @@ extension on Translations {
 			'settings.page.general.editorEngineGsh' => 'GSH Desktop (default)',
 			'settings.page.general.editorEngineNeovim' => 'Neovim',
 			'settings.page.general.neovimChecking' => 'Looking for Neovim…',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.general.neovimNotFound' => 'Neovim was not found in your shell PATH.',
 			'settings.page.general.neovimRefresh' => 'Check again',
 			'settings.page.general.showGshTitle' => 'Show GSH Desktop terminal',

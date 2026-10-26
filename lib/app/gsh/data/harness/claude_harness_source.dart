@@ -33,7 +33,9 @@ class ClaudeHarnessSource implements HarnessSource {
   Future<ProjectHarness> read(String workspace) async {
     final files = ClaudeFiles(_home);
     final proj = p.join(workspace, '.claude');
-    return ProjectHarness([
+    final invalid = <String>[];
+    Future<Object?> json(String path) => _json(path, invalid);
+    final entries = [
       ...await _memory(files, workspace),
       for (final s in await files.skills(const [], workspace))
         if (s.source != SkillSource.plugin)
@@ -45,6 +47,11 @@ class ClaudeHarnessSource implements HarnessSource {
                 ? HarnessScope.user
                 : HarnessScope.project,
             path: s.path,
+            issues: [
+              if ((s.description ?? '').trim().isEmpty)
+                HarnessIssue.noDescription,
+            ],
+            alwaysOnChars: listingChars(s.name, s.description),
           ),
       ...await _markdowns(
         HarnessKind.agents,
@@ -74,14 +81,21 @@ class ClaudeHarnessSource implements HarnessSource {
         if (_home.isNotEmpty)
           (p.join(_userClaude, 'settings.json'), HarnessScope.user),
       ])
-        ...settingsEntries(await _json(path), path, scope),
+        ...settingsEntries(
+          await json(path),
+          path,
+          scope,
+          workspace: workspace,
+          home: _home,
+        ),
       ...mcpEntries(
-        await _json(p.join(workspace, '.mcp.json')),
+        await json(p.join(workspace, '.mcp.json')),
         p.join(workspace, '.mcp.json'),
         HarnessScope.project,
       ),
       if (_home.isNotEmpty) ...await _claudeJsonMcp(workspace),
-    ]);
+    ];
+    return ProjectHarness(entries, invalidFiles: invalid);
   }
 
   @override
@@ -125,8 +139,10 @@ class ClaudeHarnessSource implements HarnessSource {
     ClaudeFiles files,
     String workspace,
   ) async {
-    final out = [
-      for (final m in await files.memoryFiles(workspace))
+    final out = <HarnessEntry>[];
+    for (final m in await files.memoryFiles(workspace)) {
+      final size = await _length(m.path);
+      out.add(
         HarnessEntry(
           kind: HarnessKind.memory,
           name: _memoryName(m.path, workspace),
@@ -137,10 +153,15 @@ class ClaudeHarnessSource implements HarnessSource {
               ? HarnessScope.local
               : HarnessScope.project,
           path: m.path,
+          issues: [if (size > maxInstructionChars) HarnessIssue.tooLarge],
+          // A instrução inteira entra em todo turno.
+          alwaysOnChars: size,
         ),
-    ];
+      );
+    }
     final agents = File(p.join(workspace, 'AGENTS.md'));
     if (await agents.exists()) {
+      final size = await _length(agents.path);
       out.add(
         HarnessEntry(
           kind: HarnessKind.memory,
@@ -148,10 +169,21 @@ class ClaudeHarnessSource implements HarnessSource {
           detail: agents.path,
           scope: HarnessScope.project,
           path: agents.path,
+          issues: [if (size > maxInstructionChars) HarnessIssue.tooLarge],
+          // O Claude Code não lê o AGENTS.md (é do Codex e outros): não
+          // pesa no turno dele.
         ),
       );
     }
     return out;
+  }
+
+  static Future<int> _length(String path) async {
+    try {
+      return await File(path).length();
+    } on FileSystemException {
+      return 0;
+    }
   }
 
   /// `CLAUDE.md` do próprio workspace aparece só pelo nome; os de pastas
@@ -184,13 +216,19 @@ class ClaudeHarnessSource implements HarnessSource {
         final name = kind == HarnessKind.commands
             ? '/$base'
             : (fm['name'] as String?)?.trim() ?? base;
+        final desc = (fm['description'] as String?)?.trim() ?? '';
         out.add(
           HarnessEntry(
             kind: kind,
             name: name,
-            detail: (fm['description'] as String?)?.trim() ?? '',
+            detail: desc,
             scope: scope,
             path: e.path,
+            issues: [
+              if (kind == HarnessKind.agents && desc.isEmpty)
+                HarnessIssue.noDescription,
+            ],
+            alwaysOnChars: listingChars(name, desc),
           ),
         );
       }
@@ -215,20 +253,31 @@ class ClaudeHarnessSource implements HarnessSource {
     ];
   }
 
-  static Future<Object?> _json(String path) async {
+  /// JSON de [path]; inválido entra em [invalid] (o Claude Code ignora o
+  /// arquivo inteiro sem avisar — o painel avisa).
+  static Future<Object?> _json(String path, [List<String>? invalid]) async {
+    final f = File(path);
     try {
-      final f = File(path);
       if (!await f.exists()) return null;
       return jsonDecode(await f.readAsString());
-    } on Object {
-      return null; // JSON inválido ou ilegível: a seção só fica sem ele
+    } on FormatException {
+      invalid?.add(path);
+      return null;
+    } on FileSystemException {
+      return null;
     }
   }
 }
 
 /// Hooks (`hooks.<Evento>[].hooks[].command`) e permissões
 /// (`permissions.allow|ask|deny`) de um `settings.json`.
-List<HarnessEntry> settingsEntries(Object? o, String path, HarnessScope scope) {
+List<HarnessEntry> settingsEntries(
+  Object? o,
+  String path,
+  HarnessScope scope, {
+  String workspace = '',
+  String home = '',
+}) {
   if (o is! Map) return const [];
   final out = <HarnessEntry>[];
   final hooks = o['hooks'];
@@ -238,6 +287,10 @@ List<HarnessEntry> settingsEntries(Object? o, String path, HarnessScope scope) {
       for (final g in groups.whereType<Map>()) {
         final matcher = (g['matcher'] as String?)?.trim() ?? '';
         for (final h in (g['hooks'] as List? ?? const []).whereType<Map>()) {
+          final command = h['command'];
+          final script = command is String
+              ? hookScriptPath(command, workspace: workspace, home: home)
+              : null;
           out.add(
             HarnessEntry(
               kind: HarnessKind.hooks,
@@ -247,6 +300,10 @@ List<HarnessEntry> settingsEntries(Object? o, String path, HarnessScope scope) {
               detail: (h['command'] ?? h['url'] ?? h['type'] ?? '').toString(),
               scope: scope,
               path: path,
+              issues: [
+                if (script != null && !File(script).existsSync())
+                  HarnessIssue.missingScript,
+              ],
             ),
           );
         }
@@ -346,3 +403,58 @@ description: O que este comando faz.
 
 Instruções do comando. Use \$ARGUMENTS para o que vier depois do nome.
 """;
+
+/// Acima disto o Claude Code avisa que o CLAUDE.md pesa na performance.
+const maxInstructionChars = 40000;
+
+/// O que um item listado (skill, subagente, comando) põe no contexto de
+/// todo turno: nome + descrição, mais a moldura da lista.
+int listingChars(String name, String? description) =>
+    name.length + (description?.length ?? 0) + 12;
+
+/// Arquivo de script que um hook chama, para conferir se existe. `null` =
+/// é um programa do PATH (`gsh`, `npx`...) ou não dá para dizer.
+String? hookScriptPath(
+  String command, {
+  required String workspace,
+  required String home,
+}) {
+  var c = command
+      .replaceAll(r'${CLAUDE_PROJECT_DIR}', workspace)
+      .replaceAll(r'$CLAUDE_PROJECT_DIR', workspace)
+      .trim();
+  String take() {
+    if (c.isEmpty) return '';
+    final q = c[0];
+    if (q == '"' || q == "'") {
+      final end = c.indexOf(q, 1);
+      final t = end < 0 ? c.substring(1) : c.substring(1, end);
+      c = end < 0 ? '' : c.substring(end + 1).trim();
+      return t;
+    }
+    final sp = c.indexOf(' ');
+    final t = sp < 0 ? c : c.substring(0, sp);
+    c = sp < 0 ? '' : c.substring(sp + 1).trim();
+    return t;
+  }
+
+  var token = take();
+  // `bash x.sh`, `node x.js`...: o script é o argumento.
+  const interpreters = {
+    'bash',
+    'sh',
+    'zsh',
+    'node',
+    'python',
+    'python3',
+    'bun',
+    'deno',
+  };
+  if (interpreters.contains(token)) token = take();
+  if (token.isEmpty || token.startsWith('-')) return null;
+  if (token.startsWith('~/')) return p.join(home, token.substring(2));
+  if (p.isAbsolute(token)) return token;
+  // Sem barra é comando do PATH; com barra, relativo à pasta do projeto.
+  if (!token.contains('/')) return null;
+  return p.normalize(p.join(workspace, token));
+}

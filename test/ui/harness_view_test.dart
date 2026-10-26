@@ -13,112 +13,119 @@ import 'shot_harness.dart';
 
 class _Source implements HarnessSource {
   @override
-  Future<ProjectHarness> read(String workspace) async => const ProjectHarness([
-    HarnessEntry(
-      kind: HarnessKind.memory,
-      name: '~/.claude/CLAUDE.md',
-      detail: '/home/helio/.claude/CLAUDE.md',
-      scope: HarnessScope.user,
-      path: '/a',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.memory,
-      name: 'CLAUDE.md',
-      detail: '/repo/CLAUDE.md',
-      scope: HarnessScope.project,
-      path: '/b',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.memory,
-      name: 'CLAUDE.local.md',
-      detail: '/repo/CLAUDE.local.md',
-      scope: HarnessScope.local,
-      path: '/c',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.skills,
-      name: 'deploy',
-      detail: 'Sobe a versão para homologação e confere o health check',
-      scope: HarnessScope.project,
-      path: '/d',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.skills,
-      name: 'graphify',
-      detail: 'Transforma qualquer entrada num grafo de conhecimento',
-      scope: HarnessScope.user,
-      path: '/e',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.agents,
-      name: 'levi',
-      detail: 'QA e testes, perfeccionista',
-      scope: HarnessScope.user,
-      path: '/f',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.agents,
-      name: 'escanor',
-      detail: 'Backend PHP / Laravel',
-      scope: HarnessScope.user,
-      path: '/g',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.commands,
-      name: '/git:pr',
-      detail: 'Abre um PR com o resumo do diff',
-      scope: HarnessScope.project,
-      path: '/h',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.hooks,
-      name: 'PreToolUse · Bash',
-      detail: 'gsh hook',
-      scope: HarnessScope.user,
-      path: '/i',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.hooks,
-      name: 'Stop',
-      detail: './scripts/notify.sh',
-      scope: HarnessScope.project,
-      path: '/j',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.permissions,
-      name: 'Bash(npm test *)',
-      detail: 'allow',
-      scope: HarnessScope.project,
-      path: '/k',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.permissions,
-      name: 'Bash(git push *)',
-      detail: 'ask',
-      scope: HarnessScope.local,
-      path: '/l',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.permissions,
-      name: 'Read(.env)',
-      detail: 'deny',
-      scope: HarnessScope.project,
-      path: '/m',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.mcp,
-      name: 'postgres',
-      detail: 'npx @mcp/postgres',
-      scope: HarnessScope.project,
-      path: '/n',
-    ),
-    HarnessEntry(
-      kind: HarnessKind.mcp,
-      name: 'clickup',
-      detail: 'http · https://mcp.clickup.com',
-      scope: HarnessScope.user,
-    ),
-  ]);
+  Future<ProjectHarness> read(String workspace) async => const ProjectHarness(
+    [
+      HarnessEntry(
+        kind: HarnessKind.memory,
+        name: '~/.claude/CLAUDE.md',
+        detail: '/home/helio/.claude/CLAUDE.md',
+        scope: HarnessScope.user,
+        path: '/a',
+      ),
+      HarnessEntry(
+        kind: HarnessKind.memory,
+        name: 'CLAUDE.md',
+        detail: '/repo/CLAUDE.md',
+        scope: HarnessScope.project,
+        path: '/b',
+        alwaysOnChars: 12000,
+      ),
+      HarnessEntry(
+        kind: HarnessKind.memory,
+        name: 'CLAUDE.local.md',
+        detail: '/repo/CLAUDE.local.md',
+        scope: HarnessScope.local,
+        path: '/c',
+      ),
+      HarnessEntry(
+        kind: HarnessKind.skills,
+        name: 'deploy',
+        detail: 'Sobe a versão para homologação e confere o health check',
+        scope: HarnessScope.project,
+        path: '/d',
+      ),
+      HarnessEntry(
+        kind: HarnessKind.skills,
+        name: 'graphify',
+        detail: 'Transforma qualquer entrada num grafo de conhecimento',
+        scope: HarnessScope.user,
+        path: '/e',
+        alwaysOnChars: 9000,
+      ),
+      HarnessEntry(
+        kind: HarnessKind.agents,
+        name: 'levi',
+        detail: 'QA e testes, perfeccionista',
+        scope: HarnessScope.user,
+        path: '/f',
+        alwaysOnChars: 400,
+      ),
+      HarnessEntry(
+        kind: HarnessKind.agents,
+        name: 'escanor',
+        detail: 'Backend PHP / Laravel',
+        scope: HarnessScope.user,
+        path: '/g',
+      ),
+      HarnessEntry(
+        kind: HarnessKind.commands,
+        name: '/git:pr',
+        detail: 'Abre um PR com o resumo do diff',
+        scope: HarnessScope.project,
+        path: '/h',
+      ),
+      HarnessEntry(
+        kind: HarnessKind.hooks,
+        name: 'PreToolUse · Bash',
+        detail: 'gsh hook',
+        scope: HarnessScope.user,
+        path: '/i',
+      ),
+      HarnessEntry(
+        kind: HarnessKind.hooks,
+        name: 'Stop',
+        detail: './scripts/notify.sh',
+        scope: HarnessScope.project,
+        path: '/j',
+        issues: [HarnessIssue.missingScript],
+      ),
+      HarnessEntry(
+        kind: HarnessKind.permissions,
+        name: 'Bash(npm test *)',
+        detail: 'allow',
+        scope: HarnessScope.project,
+        path: '/k',
+      ),
+      HarnessEntry(
+        kind: HarnessKind.permissions,
+        name: 'Bash(git push *)',
+        detail: 'ask',
+        scope: HarnessScope.local,
+        path: '/l',
+      ),
+      HarnessEntry(
+        kind: HarnessKind.permissions,
+        name: 'Read(.env)',
+        detail: 'deny',
+        scope: HarnessScope.project,
+        path: '/m',
+      ),
+      HarnessEntry(
+        kind: HarnessKind.mcp,
+        name: 'postgres',
+        detail: 'npx @mcp/postgres',
+        scope: HarnessScope.project,
+        path: '/n',
+      ),
+      HarnessEntry(
+        kind: HarnessKind.mcp,
+        name: 'clickup',
+        detail: 'http · https://mcp.clickup.com',
+        scope: HarnessScope.user,
+      ),
+    ],
+    invalidFiles: ['/repo/.claude/settings.local.json'],
+  );
 
   @override
   Future<String> create(
@@ -191,6 +198,8 @@ void main() {
       expect(find.text(s), findsOneWidget);
     }
     expect(find.text('bloquear'), findsOneWidget);
+    expect(find.text('Custo fixo por turno'), findsOneWidget);
+    expect(find.text('Avisos: 2'), findsOneWidget);
     expect(find.text('Usuário'), findsWidgets);
     await takeShot(tester, 'harness_view');
   });
