@@ -110,16 +110,27 @@ ChatPlanUsage? parseClaudePlanUsage(Object? usage) {
   );
 }
 
-/// Contexto ao fim do turno (`result`): tokens de entrada da última chamada
-/// (input + cache) e a janela do modelo (`modelUsage[*].contextWindow`).
-ChatContext? parseClaudeContext(Map<String, dynamic> result) {
-  final u = result['usage'];
+/// Tamanho do contexto numa mensagem `assistant`: o `usage` dela é de UMA
+/// chamada à API (input + cache = tudo que o modelo leu). O `usage` do
+/// `result` não serve: soma as chamadas do turno inteiro (um turno com 10
+/// ferramentas contava o contexto 10 vezes).
+ChatContext? parseClaudeMessageContext(Map<String, dynamic> assistant) {
+  // Subagente tem o próprio contexto.
+  if (assistant['parent_tool_use_id'] != null) return null;
+  final u = (assistant['message'] as Map?)?['usage'];
   if (u is! Map) return null;
   int n(Object? v) => v is num ? v.toInt() : 0;
   final tokens =
       n(u['input_tokens']) +
       n(u['cache_creation_input_tokens']) +
       n(u['cache_read_input_tokens']);
+  return tokens == 0 ? null : ChatContext(tokens: tokens, window: 0);
+}
+
+/// Janela do modelo ao fim do turno (`result.modelUsage[*].contextWindow`).
+/// Os tokens vêm das mensagens ([parseClaudeMessageContext]).
+ChatContext? parseClaudeContext(Map<String, dynamic> result) {
+  int n(Object? v) => v is num ? v.toInt() : 0;
   var window = 0;
   final mu = result['modelUsage'];
   if (mu is Map) {
@@ -127,7 +138,7 @@ ChatContext? parseClaudeContext(Map<String, dynamic> result) {
       window = window < n(m['contextWindow']) ? n(m['contextWindow']) : window;
     }
   }
-  return tokens == 0 ? null : ChatContext(tokens: tokens, window: window);
+  return window == 0 ? null : ChatContext(tokens: 0, window: window);
 }
 
 /// Pergunta à conta, num `claude -p` de vida curta, os modelos e o uso

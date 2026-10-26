@@ -487,7 +487,7 @@ class ChatController extends ChangeNotifier {
       case ChatModelChanged(:final model):
         this.model = model;
       case ChatContext(:final tokens, :final window):
-        contextTokens = tokens;
+        if (tokens > 0) contextTokens = tokens;
         if (window > 0) contextWindow = window;
       case ChatUserText(:final text, :final at):
         items.add(ChatUserItem(text, at: at));

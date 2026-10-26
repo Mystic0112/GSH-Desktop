@@ -431,6 +431,7 @@ List<ChatEvent> parseClaudeStreamLine(Map<String, dynamic> o) {
       final content = (o['message'] as Map?)?['content'];
       if (content is! List) return const [];
       return [
+        ?parseClaudeMessageContext(o),
         for (final c in content.whereType<Map>())
           if (c['type'] == 'text' && (c['text'] as String? ?? '').isNotEmpty)
             ChatText(c['text'] as String)
