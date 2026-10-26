@@ -1502,6 +1502,7 @@ class _Translations$gsh$farm$es extends Translations$gsh$farm$en {
 	@override String teammateOf({required Object lead}) => 'compañero de equipo de ${lead}';
 	@override String teamLead({required Object n}) => 'lidera un equipo de ${n}';
 	@override String get resetPlots => 'Restablecer posiciones';
+	@override String get you => 'Tú';
 }
 
 // Path: gsh.agentGraph
@@ -3622,6 +3623,7 @@ extension on TranslationsEs {
 			'gsh.farm.teammateOf' => ({required Object lead}) => 'compañero de equipo de ${lead}',
 			'gsh.farm.teamLead' => ({required Object n}) => 'lidera un equipo de ${n}',
 			'gsh.farm.resetPlots' => 'Restablecer posiciones',
+			'gsh.farm.you' => 'Tú',
 			'gsh.agentGraph.tabTitle' => 'Agentes',
 			'gsh.agentGraph.newAgent' => 'Nuevo agente',
 			'gsh.agentGraph.emptyTitle' => 'No hay agentes en este workspace',
@@ -3701,9 +3703,9 @@ extension on TranslationsEs {
 			'settings.page.nav.account' => 'Cuenta',
 			'settings.page.nav.privacy' => 'Privacidad',
 			'settings.page.nav.usage' => 'Uso',
-			'settings.page.nav.resources' => 'Recursos',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.nav.resources' => 'Recursos',
 			'settings.page.nav.gshFeatures' => 'Recursos de GSH',
 			'settings.page.nav.memory' => 'Memoria',
 			'settings.page.nav.designSystems' => 'Design systems',
@@ -4215,9 +4217,9 @@ extension on TranslationsEs {
 			'theme.error.notAnObject' => ({required Object field}) => 'Se esperaba un objeto en "${field}".',
 			'theme.error.missingField' => ({required Object field}) => 'Falta el campo obligatorio "${field}".',
 			'theme.error.badColor' => ({required Object value, required Object field}) => '"${value}" en "${field}" no es un color. Usa #RGB, #RRGGBB o #RRGGBBAA.',
-			'theme.error.unknownBase' => ({required Object value}) => 'Tema base "${value}" desconocido en "extends".',
 			_ => null,
 		} ?? switch (path) {
+			'theme.error.unknownBase' => ({required Object value}) => 'Tema base "${value}" desconocido en "extends".',
 			'theme.error.noVariants' => 'El tema no declara ningún variant. Añade "dark", "light" o ambos en "variants".',
 			_ => null,
 		};

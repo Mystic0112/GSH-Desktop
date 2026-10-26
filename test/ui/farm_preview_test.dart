@@ -261,6 +261,7 @@ void _teamPreview(FarmScenery scenery, {bool couriers = false}) => testWidgets(
                 hover: ValueNotifier(null),
                 repaint: ChangeNotifier(),
                 peers: lots,
+                me: context.t.gsh.farm.you,
                 couriers: couriers
                     ? _fakeCouriers(scene, world, lots)
                     : const [],

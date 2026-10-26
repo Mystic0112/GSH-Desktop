@@ -250,6 +250,10 @@ class _FarmViewState extends State<FarmView> {
       _scenery = scenery;
       if (!first) unawaited(_rebuild());
     }
+    // a minha placa, com colegas na tela: o meu nome no time, senão "Você"
+    final me = context.select<SettingsController, String>(
+      (c) => c.settings.teamFarmName.trim(),
+    );
     _cam.dpr = MediaQuery.devicePixelRatioOf(context);
     _watchPins(context);
     final label = context.typo.mono.copyWith(
@@ -358,6 +362,11 @@ class _FarmViewState extends State<FarmView> {
                               repaint: _frame,
                               peers: _team,
                               couriers: _runs,
+                              me: _team.isEmpty
+                                  ? null
+                                  : me.isEmpty
+                                  ? context.t.gsh.farm.you
+                                  : me,
                               banner: scenery == FarmScenery.office
                                   ? null
                                   : (n) =>

@@ -3275,6 +3275,9 @@ class Translations$gsh$farm$en {
 
 	/// en: 'Reset plot positions'
 	String get resetPlots => 'Reset plot positions';
+
+	/// en: 'You'
+	String get you => 'You';
 }
 
 // Path: gsh.agentGraph
@@ -6709,6 +6712,7 @@ extension on Translations {
 			'gsh.farm.teammateOf' => ({required Object lead}) => 'teammate of ${lead}',
 			'gsh.farm.teamLead' => ({required Object n}) => 'leads a team of ${n}',
 			'gsh.farm.resetPlots' => 'Reset plot positions',
+			'gsh.farm.you' => 'You',
 			'gsh.agentGraph.tabTitle' => 'Agents',
 			'gsh.agentGraph.newAgent' => 'New agent',
 			'gsh.agentGraph.emptyTitle' => 'No agents in this workspace',
@@ -6788,9 +6792,9 @@ extension on Translations {
 			'settings.page.nav.account' => 'Account',
 			'settings.page.nav.privacy' => 'Privacy',
 			'settings.page.nav.usage' => 'Usage',
-			'settings.page.nav.resources' => 'Resources',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.nav.resources' => 'Resources',
 			'settings.page.nav.gshFeatures' => 'GSH features',
 			'settings.page.nav.memory' => 'Memory',
 			'settings.page.nav.designSystems' => 'Design systems',
@@ -7302,9 +7306,9 @@ extension on Translations {
 			'theme.error.notAnObject' => ({required Object field}) => 'Expected an object at "${field}".',
 			'theme.error.missingField' => ({required Object field}) => 'Missing required field "${field}".',
 			'theme.error.badColor' => ({required Object value, required Object field}) => '"${value}" at "${field}" is not a color. Use #RGB, #RRGGBB or #RRGGBBAA.',
-			'theme.error.unknownBase' => ({required Object value}) => 'Unknown base theme "${value}" in "extends".',
 			_ => null,
 		} ?? switch (path) {
+			'theme.error.unknownBase' => ({required Object value}) => 'Unknown base theme "${value}" in "extends".',
 			'theme.error.noVariants' => 'The theme declares no variant. Add "dark", "light" or both under "variants".',
 			_ => null,
 		};

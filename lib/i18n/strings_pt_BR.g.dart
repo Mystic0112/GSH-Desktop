@@ -1502,6 +1502,7 @@ class _Translations$gsh$farm$pt_BR extends Translations$gsh$farm$en {
 	@override String teammateOf({required Object lead}) => 'colega de time de ${lead}';
 	@override String teamLead({required Object n}) => 'lidera um time de ${n}';
 	@override String get resetPlots => 'Redefinir posições';
+	@override String get you => 'Você';
 }
 
 // Path: gsh.agentGraph
@@ -3622,6 +3623,7 @@ extension on TranslationsPtBr {
 			'gsh.farm.teammateOf' => ({required Object lead}) => 'colega de time de ${lead}',
 			'gsh.farm.teamLead' => ({required Object n}) => 'lidera um time de ${n}',
 			'gsh.farm.resetPlots' => 'Redefinir posições',
+			'gsh.farm.you' => 'Você',
 			'gsh.agentGraph.tabTitle' => 'Agentes',
 			'gsh.agentGraph.newAgent' => 'Novo agente',
 			'gsh.agentGraph.emptyTitle' => 'Nenhum agente neste workspace',
@@ -3701,9 +3703,9 @@ extension on TranslationsPtBr {
 			'settings.page.nav.account' => 'Conta',
 			'settings.page.nav.privacy' => 'Privacidade',
 			'settings.page.nav.usage' => 'Uso',
-			'settings.page.nav.resources' => 'Recursos',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.nav.resources' => 'Recursos',
 			'settings.page.nav.gshFeatures' => 'Recursos do GSH',
 			'settings.page.nav.memory' => 'Memória',
 			'settings.page.nav.designSystems' => 'Design systems',
@@ -4215,9 +4217,9 @@ extension on TranslationsPtBr {
 			'theme.error.notAnObject' => ({required Object field}) => 'Esperava um objeto em "${field}".',
 			'theme.error.missingField' => ({required Object field}) => 'Falta o campo obrigatório "${field}".',
 			'theme.error.badColor' => ({required Object value, required Object field}) => '"${value}" em "${field}" não é uma cor. Use #RGB, #RRGGBB ou #RRGGBBAA.',
-			'theme.error.unknownBase' => ({required Object value}) => 'Tema base "${value}" desconhecido em "extends".',
 			_ => null,
 		} ?? switch (path) {
+			'theme.error.unknownBase' => ({required Object value}) => 'Tema base "${value}" desconhecido em "extends".',
 			'theme.error.noVariants' => 'O tema não declara nenhum variant. Adicione "dark", "light" ou os dois em "variants".',
 			_ => null,
 		};

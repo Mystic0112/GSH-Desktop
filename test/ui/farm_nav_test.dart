@@ -104,10 +104,19 @@ void main() {
       ];
       scene.sync(groupFarm(loops));
       final watch = Stopwatch()..start();
+      var onDesks = 0;
       for (var i = 0; i < 600; i++) {
         scene.update(0.05);
+        // o passeio do gorila trabalhando é pelo corredor, nunca pela mesa
+        for (final c in scene.critters.values) {
+          if (c.mini) continue;
+          if (l.plots.any((p) => p.deflate(2).contains(Offset(c.x, c.y)))) {
+            onDesks++;
+          }
+        }
       }
       watch.stop();
+      expect(onDesks, 0);
       // 30 s de cena: as buscas são poucas por bicho, não uma por quadro
       expect(l.nav!.searches, lessThan(45 * 12));
       expect(watch.elapsedMilliseconds, lessThan(3000));

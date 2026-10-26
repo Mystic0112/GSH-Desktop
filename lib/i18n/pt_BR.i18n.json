@@ -1094,7 +1094,8 @@
       },
       "teammateOf": "colega de time de ${lead}",
       "teamLead": "lidera um time de ${n}",
-      "resetPlots": "Redefinir posições"
+      "resetPlots": "Redefinir posições",
+      "you": "Você"
     },
     "agentGraph": {
       "tabTitle": "Agentes",

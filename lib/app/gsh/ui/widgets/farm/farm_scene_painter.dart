@@ -64,6 +64,7 @@ class FarmScenePainter extends CustomPainter {
     required Listenable repaint,
     this.peers = const [],
     this.banner,
+    this.me,
     this.couriers = const [],
   }) : super(repaint: repaint);
 
@@ -76,6 +77,10 @@ class FarmScenePainter extends CustomPainter {
 
   /// O texto da faixa do colega (vem traduzido da view).
   final String Function(String name)? banner;
+
+  /// A placa da minha fazenda/sala ("Você" ou o meu nome no time), só
+  /// desenhada com colegas na tela.
+  final String? me;
   final FarmCamera cam;
   final FarmLabels labels;
   final TextStyle label;
@@ -318,7 +323,8 @@ class FarmScenePainter extends CustomPainter {
         // o mini do squad é mais alto (chapéu): os pés ficam no lugar
         final mw = s.width / hd, mh = s.height / hd;
         _draw(canvas, s, x - mw / 2, y - mh + bob, mw, mh, fade);
-        if (c.mode == CritterMode.work && still) {
+        // no escritório o mini usa o monitor da mesa (sem laptop na mão)
+        if (c.mode == CritterMode.work && still && !office) {
           _rect(canvas, x + 3, y - 4, 4.5, 3, 0xFF1b1f2a);
           _rect(
             canvas,
@@ -341,10 +347,14 @@ class FarmScenePainter extends CustomPainter {
       if (c.mode != CritterMode.sleep && c.loop.contextTokens > 0) {
         _gauge(canvas, x, y - 22 + bob, c.loop.contextFill, fade);
       }
+      // no escritório o trabalho aparece no monitor da ilha: nada de
+      // laptop flutuando ao lado dela
       if (still && c.stroll == null && c.mode == CritterMode.work) {
-        _draw(canvas, laptopHD[c.typingFrame(t)], x + 4, y - 6, 9, 7, fade);
+        if (!office) {
+          _draw(canvas, laptopHD[c.typingFrame(t)], x + 4, y - 6, 9, 7, fade);
+        }
       } else if (still && c.mode == CritterMode.wait) {
-        _draw(canvas, laptopHD[2], x + 4, y - 6, 9, 7, fade);
+        if (!office) _draw(canvas, laptopHD[2], x + 4, y - 6, 9, 7, fade);
         _draw(
           canvas,
           flagHD[(t * 3).floor() % 2],

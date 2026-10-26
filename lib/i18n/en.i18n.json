@@ -1094,7 +1094,8 @@
       },
       "teammateOf": "teammate of ${lead}",
       "teamLead": "leads a team of ${n}",
-      "resetPlots": "Reset plot positions"
+      "resetPlots": "Reset plot positions",
+      "you": "You"
     },
     "agentGraph": {
       "tabTitle": "Agents",
