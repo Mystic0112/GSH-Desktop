@@ -11,6 +11,7 @@ import 'package:gsh_desktop/app/gsh/domain/entities/chat_event.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
 import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_items.dart';
 
 // Formatos reais do `claude -p --output-format stream-json` (2.1.309),
 // enxugados.
@@ -117,6 +118,9 @@ class _FakeEngine implements ChatEngine {
 
   @override
   void setModel(String model) => models.add(model);
+  final efforts = <String>[];
+  @override
+  void setEffort(String level) => efforts.add(level);
 
   @override
   Future<ChatPlanUsage?> planUsage() async => null;
@@ -137,6 +141,7 @@ class _FakeFactory implements ChatEngineFactory {
   final engine = _FakeEngine();
   String? resumed;
   bool? thinking;
+  String? effort;
   List<ChatEvent> past = const [];
   @override
   Future<List<ChatEvent>> history({
@@ -152,9 +157,11 @@ class _FakeFactory implements ChatEngineFactory {
     String? resumeSessionId,
     bool showThinking = false,
     String? model,
+    String? effort,
   }) async {
     resumed = resumeSessionId;
     thinking = showThinking;
+    this.effort = effort;
     return engine;
   }
 }
@@ -396,6 +403,30 @@ void main() {
     ]);
     await chat.send('depois');
     expect(f.resumed, 's-1');
+  });
+
+  test('esforço: antes do motor vai no start; depois, ao vivo', () async {
+    final f = _FakeFactory();
+    final chat = ChatController(f, cwd: '/repo')..setEffort('high');
+    await chat.send('oi');
+    expect(f.effort, 'high');
+    chat.setEffort('max');
+    expect(f.engine.efforts, ['max']);
+  });
+
+  test('barra de copiar: usuário e fim de resposta, não o meio', () {
+    final rows = <Object>[
+      ChatUserItem('a'),
+      ChatAssistantItem('vou olhar'),
+      ChatInfoItem('x', warning: false),
+      ChatAssistantItem('pronto'),
+    ];
+    ChatRowActions at(int i, {bool busy = false}) =>
+        chatRowActions(rows, i, busy: busy);
+    expect(at(0), ChatRowActions.hover);
+    expect(at(1), ChatRowActions.none);
+    expect(at(3), ChatRowActions.always);
+    expect(at(3, busy: true), ChatRowActions.none);
   });
 
   test('pergunta do agente: opções escolhidas voltam em answers', () async {

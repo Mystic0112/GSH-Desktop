@@ -100,6 +100,82 @@ class ChatModelButton extends StatelessWidget {
   }
 }
 
+/// Botão de esforço ao lado do modelo (o medidor do Claude Desktop): quanto
+/// o modelo pensa antes de responder. Some quando o modelo não tem esforço.
+class ChatEffortButton extends StatelessWidget {
+  const ChatEffortButton({super.key, required this.chat});
+  final ChatController chat;
+
+  /// Antes da lista de modelos chegar, os níveis de sempre.
+  static const _fallback = ['low', 'medium', 'high', 'xhigh', 'max'];
+
+  List<String> get _levels => chat.models.isEmpty ? _fallback : chat.efforts;
+
+  static String label(BuildContext context, String? level) {
+    final tr = context.t.gsh.chat.effort;
+    return switch (level) {
+      'low' => tr.low,
+      'medium' => tr.medium,
+      'high' => tr.high,
+      'xhigh' => tr.xhigh,
+      'max' => tr.max,
+      null => tr.auto,
+      _ => level,
+    };
+  }
+
+  Future<void> _pick(BuildContext anchor) async {
+    await chat.refreshAccount();
+    if (!anchor.mounted || _levels.isEmpty) return;
+    final value = await showAppMenu<String>(
+      anchor,
+      items: [
+        for (final l in _levels)
+          AppMenuItem(
+            value: l,
+            label: label(anchor, l),
+            selected: l == chat.effortChoice,
+          ),
+      ],
+    );
+    if (value != null) chat.setEffort(value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_levels.isEmpty) return const SizedBox.shrink();
+    final colors = context.colors;
+    final tr = context.t.gsh.chat.effort;
+    final chosen = chat.effortChoice;
+    return AppTooltip(
+      message: '${tr.tooltip(level: label(context, chosen))}\n${tr.hint}',
+      child: Builder(
+        builder: (anchor) => HoverTap(
+          onTap: () => _pick(anchor),
+          borderRadius: BorderRadius.circular(6),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.speed, size: 15, color: colors.text3),
+              if (chosen != null) ...[
+                const SizedBox(width: 4),
+                Text(
+                  label(context, chosen),
+                  style: context.typo.label.copyWith(
+                    fontSize: 12.5,
+                    color: colors.text3,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Anel de uso: quanto do contexto a conversa ocupa (ou, antes da primeira
 /// resposta, a sessão de 5 h do plano). Clique abre os limites do plano.
 class ChatUsageRing extends StatelessWidget {

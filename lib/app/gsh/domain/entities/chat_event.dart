@@ -84,14 +84,20 @@ class ChatInfo extends ChatEvent {
 
 /// Mensagem do usuário lida do histórico (retomar conversa).
 class ChatUserText extends ChatEvent {
-  const ChatUserText(this.text);
+  const ChatUserText(this.text, {this.at});
   final String text;
+
+  /// Quando foi escrita (do transcript); `null` = agora.
+  final DateTime? at;
 }
 
 /// Texto do assistente (um bloco `text`).
 class ChatText extends ChatEvent {
-  const ChatText(this.text);
+  const ChatText(this.text, {this.at});
   final String text;
+
+  /// Quando chegou (do transcript); `null` = agora.
+  final DateTime? at;
 }
 
 /// O assistente chamou uma ferramenta.

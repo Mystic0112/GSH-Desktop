@@ -3048,6 +3048,23 @@ class Translations$gsh$chat$en {
 
 	/// en: 'Failed'
 	String get stateFailed => 'Failed';
+
+	/// en: 'Copy'
+	String get copyMessage => 'Copy';
+
+	/// en: 'Copied'
+	String get copiedMessage => 'Copied';
+
+	late final Translations$gsh$chat$effort$en effort = Translations$gsh$chat$effort$en.internal(_root);
+
+	/// en: 'Improve harness'
+	String get improveHarness => 'Improve harness';
+
+	/// en: 'Opens a chat that reads this conversation and proposes changes to the project's CLAUDE.md, skills and hooks, each with the evidence. You approve every edit.'
+	String get improveHarnessHint => 'Opens a chat that reads this conversation and proposes changes to the project\'s CLAUDE.md, skills and hooks, each with the evidence. You approve every edit.';
+
+	/// en: 'Improve this project's harness based on a previous conversation (session ${sessionId}). 1. Find the transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. It is JSONL and can be large: use grep/jq/head, don't read it whole. Focus on the user's messages, the corrections they made, tool errors and rework. 2. Read the harness that applied there: CLAUDE.md (project and global), .claude/skills, .claude/agents, .claude/commands and the hooks in .claude/settings.json. 3. Find what cost time: a missing instruction, an ignored rule, a repeated step, a wrong command, something the user had to correct. 4. For each finding, propose ONE small change to the project's harness (the global one only if I ask): - stable fact about the repository → CLAUDE.md - multi-step procedure → skill - something that must be prevented → a hook that blocks and explains why it stopped and what to do instead 5. Before editing, show a table: what, where and the evidence (the moment in the conversation that justifies it). No evidence, no proposal. If nothing is worth it, say so. 6. Then apply one change at a time with Edit/Write; I review each diff and approve or deny it. CLAUDE.md goes into every message: keep it short.'
+	String improveHarnessPrompt({required Object sessionId}) => 'Improve this project\'s harness based on a previous conversation (session ${sessionId}).\n\n1. Find the transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. It is JSONL and can be large: use grep/jq/head, don\'t read it whole. Focus on the user\'s messages, the corrections they made, tool errors and rework.\n2. Read the harness that applied there: CLAUDE.md (project and global), .claude/skills, .claude/agents, .claude/commands and the hooks in .claude/settings.json.\n3. Find what cost time: a missing instruction, an ignored rule, a repeated step, a wrong command, something the user had to correct.\n4. For each finding, propose ONE small change to the project\'s harness (the global one only if I ask):\n   - stable fact about the repository → CLAUDE.md\n   - multi-step procedure → skill\n   - something that must be prevented → a hook that blocks and explains why it stopped and what to do instead\n5. Before editing, show a table: what, where and the evidence (the moment in the conversation that justifies it). No evidence, no proposal. If nothing is worth it, say so.\n6. Then apply one change at a time with Edit/Write; I review each diff and approve or deny it.\n\nCLAUDE.md goes into every message: keep it short.';
 }
 
 // Path: gsh.harness
@@ -4009,6 +4026,42 @@ class Translations$gsh$notebook$format$en {
 
 	/// en: 'Insert image…'
 	String get image => 'Insert image…';
+}
+
+// Path: gsh.chat.effort
+class Translations$gsh$chat$effort$en {
+	Translations$gsh$chat$effort$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Effort'
+	String get title => 'Effort';
+
+	/// en: 'Effort: ${level}'
+	String tooltip({required Object level}) => 'Effort: ${level}';
+
+	/// en: 'Default'
+	String get auto => 'Default';
+
+	/// en: 'Low'
+	String get low => 'Low';
+
+	/// en: 'Medium'
+	String get medium => 'Medium';
+
+	/// en: 'High'
+	String get high => 'High';
+
+	/// en: 'Extra high'
+	String get xhigh => 'Extra high';
+
+	/// en: 'Max'
+	String get max => 'Max';
+
+	/// en: 'How much the model thinks before answering. More effort = better on hard tasks, slower and more tokens.'
+	String get hint => 'How much the model thinks before answering. More effort = better on hard tasks, slower and more tokens.';
 }
 
 // Path: gsh.farm.activity
@@ -6632,6 +6685,20 @@ extension on Translations {
 			'gsh.chat.stateReviewReady' => 'Ready for review',
 			'gsh.chat.stateBlocked' => 'Blocked',
 			'gsh.chat.stateFailed' => 'Failed',
+			'gsh.chat.copyMessage' => 'Copy',
+			'gsh.chat.copiedMessage' => 'Copied',
+			'gsh.chat.effort.title' => 'Effort',
+			'gsh.chat.effort.tooltip' => ({required Object level}) => 'Effort: ${level}',
+			'gsh.chat.effort.auto' => 'Default',
+			'gsh.chat.effort.low' => 'Low',
+			'gsh.chat.effort.medium' => 'Medium',
+			'gsh.chat.effort.high' => 'High',
+			'gsh.chat.effort.xhigh' => 'Extra high',
+			'gsh.chat.effort.max' => 'Max',
+			'gsh.chat.effort.hint' => 'How much the model thinks before answering. More effort = better on hard tasks, slower and more tokens.',
+			'gsh.chat.improveHarness' => 'Improve harness',
+			'gsh.chat.improveHarnessHint' => 'Opens a chat that reads this conversation and proposes changes to the project\'s CLAUDE.md, skills and hooks, each with the evidence. You approve every edit.',
+			'gsh.chat.improveHarnessPrompt' => ({required Object sessionId}) => 'Improve this project\'s harness based on a previous conversation (session ${sessionId}).\n\n1. Find the transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. It is JSONL and can be large: use grep/jq/head, don\'t read it whole. Focus on the user\'s messages, the corrections they made, tool errors and rework.\n2. Read the harness that applied there: CLAUDE.md (project and global), .claude/skills, .claude/agents, .claude/commands and the hooks in .claude/settings.json.\n3. Find what cost time: a missing instruction, an ignored rule, a repeated step, a wrong command, something the user had to correct.\n4. For each finding, propose ONE small change to the project\'s harness (the global one only if I ask):\n   - stable fact about the repository → CLAUDE.md\n   - multi-step procedure → skill\n   - something that must be prevented → a hook that blocks and explains why it stopped and what to do instead\n5. Before editing, show a table: what, where and the evidence (the moment in the conversation that justifies it). No evidence, no proposal. If nothing is worth it, say so.\n6. Then apply one change at a time with Edit/Write; I review each diff and approve or deny it.\n\nCLAUDE.md goes into every message: keep it short.',
 			'gsh.harness.tabTitle' => 'Harness',
 			'gsh.harness.subtitle' => ({required Object path}) => 'What the agent loads when it runs in ${path}',
 			'gsh.harness.refresh' => 'Read again',
@@ -6778,6 +6845,8 @@ extension on Translations {
 			'settings.page.header.back' => 'Back',
 			'settings.page.header.title' => 'Settings',
 			'settings.page.nav.sideGsh' => 'GSH Desktop',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.nav.sideClaude' => 'Claude',
 			'settings.page.nav.general' => 'General',
 			'settings.page.nav.appearance' => 'Appearance',
@@ -6792,8 +6861,6 @@ extension on Translations {
 			'settings.page.nav.account' => 'Account',
 			'settings.page.nav.privacy' => 'Privacy',
 			'settings.page.nav.usage' => 'Usage',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.nav.resources' => 'Resources',
 			'settings.page.nav.gshFeatures' => 'GSH features',
 			'settings.page.nav.memory' => 'Memory',
@@ -7292,6 +7359,8 @@ extension on Translations {
 			'fileOperation.error.formatterEmptyCommand' => 'Empty formatter command.',
 			'fileOperation.error.formatterMissingPlaceholder' => 'Formatter command must include the %FILE% placeholder.',
 			'fileOperation.error.formatterTimeout' => 'Formatter timed out.',
+			_ => null,
+		} ?? switch (path) {
 			'fileOperation.error.formatterExitCode' => ({required Object code}) => 'Formatter exited with ${code}.',
 			'fileOperation.error.formatterFailed' => 'The formatter could not run.',
 			'fileOperation.error.osFailure' => ({required Object detail}) => '${detail}',
@@ -7306,8 +7375,6 @@ extension on Translations {
 			'theme.error.notAnObject' => ({required Object field}) => 'Expected an object at "${field}".',
 			'theme.error.missingField' => ({required Object field}) => 'Missing required field "${field}".',
 			'theme.error.badColor' => ({required Object value, required Object field}) => '"${value}" at "${field}" is not a color. Use #RGB, #RRGGBB or #RRGGBBAA.',
-			_ => null,
-		} ?? switch (path) {
 			'theme.error.unknownBase' => ({required Object value}) => 'Unknown base theme "${value}" in "extends".',
 			'theme.error.noVariants' => 'The theme declares no variant. Add "dark", "light" or both under "variants".',
 			_ => null,

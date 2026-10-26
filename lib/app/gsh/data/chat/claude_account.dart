@@ -18,6 +18,12 @@ List<ChatModelOption> parseClaudeModels(Object? init) {
           displayName: m['displayName'] as String? ?? value,
           description: m['description'] as String? ?? '',
           resolved: m['resolvedModel'] as String?,
+          efforts: m['supportsEffort'] == true
+              ? [
+                  ...(m['supportedEffortLevels'] as List? ?? const [])
+                      .whereType<String>(),
+                ]
+              : const [],
         ),
   ];
 }

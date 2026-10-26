@@ -28,6 +28,7 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
     String? resumeSessionId,
     bool showThinking = false,
     String? model,
+    String? effort,
   }) async {
     final exe = await resolveExecutable('claude');
     // Sem escolha explícita em ~/.claude/settings.json, o Claude Code segura a
@@ -67,6 +68,7 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
         if (showThinking) ...['--thinking-display', 'summarized'],
         if (resumeSessionId != null) ...['--resume', resumeSessionId],
         if (model != null) ...['--model', model],
+        if (effort != null) ...['--effort', effort],
       ],
       workingDirectory: cwd,
       environment: claudeEnvWithDirOnPath(exe),
@@ -137,16 +139,23 @@ Future<List<ChatEvent>> readClaudeHistory({
     if (o['type'] == 'user' && o['isMeta'] != true) {
       final content = (o['message'] as Map?)?['content'];
       if (content is String && !content.startsWith('<')) {
-        out.add(ChatUserText(content));
+        out.add(ChatUserText(content, at: _at(o)));
         continue;
       }
     }
     if (o['type'] == 'user' || o['type'] == 'assistant') {
-      out.addAll(parseClaudeStreamLine(o));
+      final at = _at(o);
+      out.addAll([
+        for (final e in parseClaudeStreamLine(o))
+          e is ChatText && at != null ? ChatText(e.text, at: at) : e,
+      ]);
     }
   }
   return out;
 }
+
+DateTime? _at(Map<String, dynamic> o) =>
+    DateTime.tryParse(o['timestamp'] as String? ?? '')?.toLocal();
 
 /// O `claude` do npm é um script `#!/usr/bin/env node`. Aberto pelo launcher
 /// (sem o PATH do shell, ex.: nvm), o `env` não acha o `node`: põe a pasta do
@@ -235,6 +244,16 @@ class ClaudeStreamEngine implements ChatEngine {
     'type': 'control_request',
     'request_id': 'gsh-model-${++_seq}',
     'request': {'subtype': 'set_model', 'model': model},
+  });
+
+  @override
+  void setEffort(String level) => _write({
+    'type': 'control_request',
+    'request_id': 'gsh-effort-${++_seq}',
+    'request': {
+      'subtype': 'apply_flag_settings',
+      'settings': {'effortLevel': level},
+    },
   });
 
   @override

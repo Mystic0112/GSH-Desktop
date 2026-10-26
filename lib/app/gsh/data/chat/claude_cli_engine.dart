@@ -34,6 +34,7 @@ class ClaudeCliEngineFactory implements ChatEngineFactory {
     String? resumeSessionId,
     bool showThinking = false,
     String? model,
+    String? effort,
   }) async {
     final exe = await resolveExecutable('claude');
     final sid = resumeSessionId ?? _uuidV4();
@@ -78,6 +79,7 @@ class ClaudeCliEngineFactory implements ChatEngineFactory {
           sid,
         ],
         if (model != null) ...['--model', model],
+        if (effort != null) ...['--effort', effort],
         '--settings',
         // Sem `--allow-dangerously-skip-permissions`: no interativo ela abre
         // um aviso de consentimento que não cabe ao GSH aceitar sozinho.
@@ -443,6 +445,14 @@ class ClaudeCliEngine implements ChatEngine {
   void setModel(String model) => unawaited(() async {
     await _ready.future;
     await _paste('/model $model');
+    _write('\r');
+  }());
+
+  /// `/effort <nível>` digitado no TUI, como o [setModel].
+  @override
+  void setEffort(String level) => unawaited(() async {
+    await _ready.future;
+    await _paste('/effort $level');
     _write('\r');
   }());
 

@@ -43,6 +43,9 @@ class _Engine implements ChatEngine {
 
   @override
   void setModel(String model) => models.add(model);
+  final efforts = <String>[];
+  @override
+  void setEffort(String level) => efforts.add(level);
 
   @override
   Future<ChatPlanUsage?> planUsage() async => null;
@@ -63,6 +66,7 @@ class _Factory implements ChatEngineFactory {
     String? resumeSessionId,
     bool showThinking = false,
     String? model,
+    String? effort,
   }) async => engine;
   @override
   Future<List<ChatEvent>> history({
@@ -229,6 +233,36 @@ void main() {
     await tester.tap(find.text('Retomar conversa'));
     await tester.tap(find.text('Retomar uma conversa'));
     expect(asked, 2);
+    chat.dispose();
+  });
+
+  testWidgets('melhorar harness: só com conversa gravada e parada', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1100, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final f = _Factory();
+    final chat = ChatController(f, cwd: '/home/dev/GSH-Desktop');
+    var asked = 0;
+    await tester.pumpWidget(
+      shotHost(ChatPane(chat: chat, onImproveHarness: () => asked++)),
+    );
+    expect(find.byIcon(Icons.auto_fix_high), findsNothing); // sem sessão
+    await chat.send('oi');
+    f.engine.ctrl
+      ..add(const ChatReady(sessionId: 's-1', model: 'opus'))
+      ..add(
+        const ChatTurnEnd(
+          isError: false,
+          text: '',
+          sessionId: 's-1',
+          costUsd: 0,
+        ),
+      );
+    await tester.pump();
+    await tester.tap(find.byIcon(Icons.auto_fix_high));
+    expect(asked, 1);
     chat.dispose();
   });
 

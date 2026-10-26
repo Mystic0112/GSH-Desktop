@@ -1414,6 +1414,12 @@ class _Translations$gsh$chat$es extends Translations$gsh$chat$en {
 	@override String get stateReviewReady => 'Lista para revisión';
 	@override String get stateBlocked => 'Bloqueada';
 	@override String get stateFailed => 'Falló';
+	@override String get copyMessage => 'Copiar';
+	@override String get copiedMessage => 'Copiado';
+	@override late final _Translations$gsh$chat$effort$es effort = _Translations$gsh$chat$effort$es._(_root);
+	@override String get improveHarness => 'Mejorar harness';
+	@override String get improveHarnessHint => 'Abre un chat que lee esta conversación y propone cambios en el CLAUDE.md, las skills y los hooks del proyecto, cada uno con la evidencia. Tú apruebas cada edición.';
+	@override String improveHarnessPrompt({required Object sessionId}) => 'Mejora el harness de este proyecto a partir de una conversación anterior (sesión ${sessionId}).\n\n1. Encuentra el transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. Es JSONL y puede ser grande: usa grep/jq/head, no lo leas entero. Céntrate en los mensajes del usuario, las correcciones que hizo, los errores de herramientas y el retrabajo.\n2. Lee el harness que aplicaba allí: CLAUDE.md (del proyecto y el global), .claude/skills, .claude/agents, .claude/commands y los hooks de .claude/settings.json.\n3. Encuentra lo que costó tiempo: una instrucción que faltó, una regla ignorada, un paso repetido, un comando equivocado, algo que el usuario tuvo que corregir.\n4. Para cada hallazgo, propone UN cambio pequeño en el harness del proyecto (en el global solo si lo pido):\n   - hecho estable del repositorio → CLAUDE.md\n   - procedimiento de varios pasos → skill\n   - algo que debe impedirse → hook que bloquea y explica por qué se detuvo y qué hacer en su lugar\n5. Antes de editar, muestra una tabla: qué, dónde y la evidencia (el momento de la conversación que lo justifica). Sin evidencia, sin propuesta. Si nada vale la pena, dilo.\n6. Después aplica un cambio a la vez con Edit/Write; yo reviso cada diff y lo apruebo o lo niego.\n\nEl CLAUDE.md entra en cada mensaje: mantenlo corto.';
 }
 
 // Path: gsh.harness
@@ -1879,6 +1885,24 @@ class _Translations$gsh$notebook$format$es extends Translations$gsh$notebook$for
 	@override String get noteLink => 'Enlace a una nota ([[…]])';
 	@override String get noteLinkSearch => 'Buscar notas';
 	@override String get image => 'Insertar imagen…';
+}
+
+// Path: gsh.chat.effort
+class _Translations$gsh$chat$effort$es extends Translations$gsh$chat$effort$en {
+	_Translations$gsh$chat$effort$es._(TranslationsEs root) : this._root = root, super.internal(root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Esfuerzo';
+	@override String tooltip({required Object level}) => 'Esfuerzo: ${level}';
+	@override String get auto => 'Predeterminado';
+	@override String get low => 'Bajo';
+	@override String get medium => 'Medio';
+	@override String get high => 'Alto';
+	@override String get xhigh => 'Muy alto';
+	@override String get max => 'Máximo';
+	@override String get hint => 'Cuánto piensa el modelo antes de responder. Más esfuerzo = mejor en tareas difíciles, más lento y más tokens.';
 }
 
 // Path: gsh.farm.activity
@@ -3543,6 +3567,20 @@ extension on TranslationsEs {
 			'gsh.chat.stateReviewReady' => 'Lista para revisión',
 			'gsh.chat.stateBlocked' => 'Bloqueada',
 			'gsh.chat.stateFailed' => 'Falló',
+			'gsh.chat.copyMessage' => 'Copiar',
+			'gsh.chat.copiedMessage' => 'Copiado',
+			'gsh.chat.effort.title' => 'Esfuerzo',
+			'gsh.chat.effort.tooltip' => ({required Object level}) => 'Esfuerzo: ${level}',
+			'gsh.chat.effort.auto' => 'Predeterminado',
+			'gsh.chat.effort.low' => 'Bajo',
+			'gsh.chat.effort.medium' => 'Medio',
+			'gsh.chat.effort.high' => 'Alto',
+			'gsh.chat.effort.xhigh' => 'Muy alto',
+			'gsh.chat.effort.max' => 'Máximo',
+			'gsh.chat.effort.hint' => 'Cuánto piensa el modelo antes de responder. Más esfuerzo = mejor en tareas difíciles, más lento y más tokens.',
+			'gsh.chat.improveHarness' => 'Mejorar harness',
+			'gsh.chat.improveHarnessHint' => 'Abre un chat que lee esta conversación y propone cambios en el CLAUDE.md, las skills y los hooks del proyecto, cada uno con la evidencia. Tú apruebas cada edición.',
+			'gsh.chat.improveHarnessPrompt' => ({required Object sessionId}) => 'Mejora el harness de este proyecto a partir de una conversación anterior (sesión ${sessionId}).\n\n1. Encuentra el transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. Es JSONL y puede ser grande: usa grep/jq/head, no lo leas entero. Céntrate en los mensajes del usuario, las correcciones que hizo, los errores de herramientas y el retrabajo.\n2. Lee el harness que aplicaba allí: CLAUDE.md (del proyecto y el global), .claude/skills, .claude/agents, .claude/commands y los hooks de .claude/settings.json.\n3. Encuentra lo que costó tiempo: una instrucción que faltó, una regla ignorada, un paso repetido, un comando equivocado, algo que el usuario tuvo que corregir.\n4. Para cada hallazgo, propone UN cambio pequeño en el harness del proyecto (en el global solo si lo pido):\n   - hecho estable del repositorio → CLAUDE.md\n   - procedimiento de varios pasos → skill\n   - algo que debe impedirse → hook que bloquea y explica por qué se detuvo y qué hacer en su lugar\n5. Antes de editar, muestra una tabla: qué, dónde y la evidencia (el momento de la conversación que lo justifica). Sin evidencia, sin propuesta. Si nada vale la pena, dilo.\n6. Después aplica un cambio a la vez con Edit/Write; yo reviso cada diff y lo apruebo o lo niego.\n\nEl CLAUDE.md entra en cada mensaje: mantenlo corto.',
 			'gsh.harness.tabTitle' => 'Harness',
 			'gsh.harness.subtitle' => ({required Object path}) => 'Lo que el agente carga al ejecutarse en ${path}',
 			'gsh.harness.refresh' => 'Leer de nuevo',
@@ -3689,6 +3727,8 @@ extension on TranslationsEs {
 			'settings.page.header.back' => 'Atrás',
 			'settings.page.header.title' => 'Configuración',
 			'settings.page.nav.sideGsh' => 'GSH Desktop',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.nav.sideClaude' => 'Claude',
 			'settings.page.nav.general' => 'General',
 			'settings.page.nav.appearance' => 'Apariencia',
@@ -3703,8 +3743,6 @@ extension on TranslationsEs {
 			'settings.page.nav.account' => 'Cuenta',
 			'settings.page.nav.privacy' => 'Privacidad',
 			'settings.page.nav.usage' => 'Uso',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.nav.resources' => 'Recursos',
 			'settings.page.nav.gshFeatures' => 'Recursos de GSH',
 			'settings.page.nav.memory' => 'Memoria',
@@ -4203,6 +4241,8 @@ extension on TranslationsEs {
 			'fileOperation.error.formatterEmptyCommand' => 'Comando de formato vacío.',
 			'fileOperation.error.formatterMissingPlaceholder' => 'El comando de formato debe incluir el marcador %FILE%.',
 			'fileOperation.error.formatterTimeout' => 'El formateador agotó el tiempo de espera.',
+			_ => null,
+		} ?? switch (path) {
 			'fileOperation.error.formatterExitCode' => ({required Object code}) => 'El formateador terminó con el código ${code}.',
 			'fileOperation.error.formatterFailed' => 'No se pudo ejecutar el formateador.',
 			'fileOperation.error.osFailure' => ({required Object detail}) => '${detail}',
@@ -4217,8 +4257,6 @@ extension on TranslationsEs {
 			'theme.error.notAnObject' => ({required Object field}) => 'Se esperaba un objeto en "${field}".',
 			'theme.error.missingField' => ({required Object field}) => 'Falta el campo obligatorio "${field}".',
 			'theme.error.badColor' => ({required Object value, required Object field}) => '"${value}" en "${field}" no es un color. Usa #RGB, #RRGGBB o #RRGGBBAA.',
-			_ => null,
-		} ?? switch (path) {
 			'theme.error.unknownBase' => ({required Object value}) => 'Tema base "${value}" desconocido en "extends".',
 			'theme.error.noVariants' => 'El tema no declara ningún variant. Añade "dark", "light" o ambos en "variants".',
 			_ => null,

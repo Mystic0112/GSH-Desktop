@@ -57,6 +57,7 @@ class _HarnessViewState extends State<HarnessView> {
       HarnessKind.skills,
       HarnessKind.agents,
       HarnessKind.commands,
+      HarnessKind.hooks,
     }.contains(kind)) {
       final taken = {
         for (final e in _vm.of(_ws)?.of(kind) ?? const <HarnessEntry>[])
@@ -308,7 +309,7 @@ class _SectionCardState extends State<_SectionCard> {
         tr.newItem,
       ),
       HarnessKind.commands => (Icons.terminal, tr.commandsDesc, tr.newItem),
-      HarnessKind.hooks => (Icons.bolt_outlined, tr.hooksDesc, tr.editFile),
+      HarnessKind.hooks => (Icons.bolt_outlined, tr.hooksDesc, tr.newItem),
       HarnessKind.permissions => (
         Icons.shield_outlined,
         tr.permissionsDesc,

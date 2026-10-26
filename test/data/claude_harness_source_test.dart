@@ -133,6 +133,35 @@ void main() {
     expect(harnessSlug('../../etc'), 'etc');
   });
 
+  test('hook novo: script que ensina, ligado no settings.json', () async {
+    final src = ClaudeHarnessSource(home: home);
+    final settings = File(p.join(ws, '.claude', 'settings.json'));
+    final before = settings.existsSync() ? settings.readAsStringSync() : null;
+    final sh = await src.create(ws, HarnessKind.hooks, name: 'Sem force');
+    expect(sh, p.join(ws, '.claude', 'hooks', 'sem-force.sh'));
+    expect(File(sh).readAsStringSync(), contains('exit 2'));
+    final h = await src.read(ws);
+    final hook = h
+        .of(HarnessKind.hooks)
+        .firstWhere((e) => e.detail.contains('sem-force.sh'));
+    expect(hook.name, 'PreToolUse · Bash');
+    expect(hook.issues, isEmpty); // o script existe
+    // O que já havia no settings.json continua lá.
+    if (before != null) {
+      final o = jsonDecode(settings.readAsStringSync()) as Map;
+      for (final k in (jsonDecode(before) as Map).keys) {
+        expect(o.containsKey(k), isTrue);
+      }
+    }
+    // De novo com o mesmo nome: não duplica o hook.
+    await src.create(ws, HarnessKind.hooks, name: 'Sem force');
+    final again = await src.read(ws);
+    expect(
+      again.of(HarnessKind.hooks).where((e) => e.detail.contains('sem-force')),
+      hasLength(1),
+    );
+  });
+
   test('lint: sem descrição, script sumido, arquivo grande', () {
     expect(
       hookScriptPath('"/opt/x y/gsh" hook', workspace: '/w', home: '/h'),

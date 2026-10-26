@@ -78,6 +78,29 @@ class _ChatViewState extends State<ChatView> {
       fontFamily: font,
       onRemoteControl: _continueInRemoteControl,
       onResume: _resume,
+      onImproveHarness: _improveHarness,
+    );
+  }
+
+  /// "Melhorar harness" (ideia do Harness²): abre um chat novo no mesmo
+  /// workspace que lê o transcript desta conversa e propõe mudanças no
+  /// CLAUDE.md, skills e hooks, com a evidência. Começa pedindo permissão,
+  /// então cada edição chega como diff para aprovar ou negar.
+  void _improveHarness() {
+    final sid = _chat.sessionId;
+    if (sid == null) return;
+    final prompt = context.t.gsh.chat.improveHarnessPrompt(sessionId: sid);
+    final tab = _shell.openChat(projectId: widget.session.projectId);
+    if (tab == null) return;
+    unawaited(
+      context
+          .read<ChatViewModel>()
+          .chatFor(
+            tab.id,
+            cwd: tab.workingDirectory,
+            view: context.read<SettingsController>().settings.transcriptView,
+          )
+          .send(prompt),
     );
   }
 

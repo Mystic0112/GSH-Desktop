@@ -1008,7 +1008,23 @@
       "stateCompleted": "Completada",
       "stateReviewReady": "Lista para revisión",
       "stateBlocked": "Bloqueada",
-      "stateFailed": "Falló"
+      "stateFailed": "Falló",
+      "copyMessage": "Copiar",
+      "copiedMessage": "Copiado",
+      "effort": {
+        "title": "Esfuerzo",
+        "tooltip": "Esfuerzo: ${level}",
+        "auto": "Predeterminado",
+        "low": "Bajo",
+        "medium": "Medio",
+        "high": "Alto",
+        "xhigh": "Muy alto",
+        "max": "Máximo",
+        "hint": "Cuánto piensa el modelo antes de responder. Más esfuerzo = mejor en tareas difíciles, más lento y más tokens."
+      },
+      "improveHarness": "Mejorar harness",
+      "improveHarnessHint": "Abre un chat que lee esta conversación y propone cambios en el CLAUDE.md, las skills y los hooks del proyecto, cada uno con la evidencia. Tú apruebas cada edición.",
+      "improveHarnessPrompt": "Mejora el harness de este proyecto a partir de una conversación anterior (sesión ${sessionId}).\n\n1. Encuentra el transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. Es JSONL y puede ser grande: usa grep/jq/head, no lo leas entero. Céntrate en los mensajes del usuario, las correcciones que hizo, los errores de herramientas y el retrabajo.\n2. Lee el harness que aplicaba allí: CLAUDE.md (del proyecto y el global), .claude/skills, .claude/agents, .claude/commands y los hooks de .claude/settings.json.\n3. Encuentra lo que costó tiempo: una instrucción que faltó, una regla ignorada, un paso repetido, un comando equivocado, algo que el usuario tuvo que corregir.\n4. Para cada hallazgo, propone UN cambio pequeño en el harness del proyecto (en el global solo si lo pido):\n   - hecho estable del repositorio → CLAUDE.md\n   - procedimiento de varios pasos → skill\n   - algo que debe impedirse → hook que bloquea y explica por qué se detuvo y qué hacer en su lugar\n5. Antes de editar, muestra una tabla: qué, dónde y la evidencia (el momento de la conversación que lo justifica). Sin evidencia, sin propuesta. Si nada vale la pena, dilo.\n6. Después aplica un cambio a la vez con Edit/Write; yo reviso cada diff y lo apruebo o lo niego.\n\nEl CLAUDE.md entra en cada mensaje: mantenlo corto."
     },
     "harness": {
       "tabTitle": "Harness",

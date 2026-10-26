@@ -1008,7 +1008,23 @@
       "stateCompleted": "Concluída",
       "stateReviewReady": "Pronta para revisão",
       "stateBlocked": "Bloqueada",
-      "stateFailed": "Falhou"
+      "stateFailed": "Falhou",
+      "copyMessage": "Copiar",
+      "copiedMessage": "Copiado",
+      "effort": {
+        "title": "Esforço",
+        "tooltip": "Esforço: ${level}",
+        "auto": "Padrão",
+        "low": "Baixo",
+        "medium": "Médio",
+        "high": "Alto",
+        "xhigh": "Muito alto",
+        "max": "Máximo",
+        "hint": "Quanto o modelo pensa antes de responder. Mais esforço = melhor em tarefa difícil, mais lento e mais tokens."
+      },
+      "improveHarness": "Melhorar harness",
+      "improveHarnessHint": "Abre um chat que lê esta conversa e propõe mudanças no CLAUDE.md, nas skills e nos hooks do projeto, cada uma com a evidência. Você aprova cada edição.",
+      "improveHarnessPrompt": "Melhore o harness deste projeto a partir de uma conversa anterior (sessão ${sessionId}).\n\n1. Ache o transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. É JSONL e pode ser grande: use grep/jq/head, não leia inteiro. Foque nas mensagens do usuário, nas correções que ele fez, nos erros de ferramenta e no retrabalho.\n2. Leia o harness que valia ali: CLAUDE.md (do projeto e o global), .claude/skills, .claude/agents, .claude/commands e os hooks do .claude/settings.json.\n3. Ache o que custou tempo: instrução que faltou, regra ignorada, passo repetido, comando errado, algo que o usuário precisou corrigir.\n4. Para cada achado, proponha UMA mudança pequena no harness do projeto (no global só se eu pedir):\n   - fato estável do repositório → CLAUDE.md\n   - procedimento de vários passos → skill\n   - algo que deve ser impedido → hook que bloqueia e explica por que parou e o que fazer no lugar\n5. Antes de editar, mostre uma tabela: o quê, onde e a evidência (o momento da conversa que justifica). Sem evidência, sem proposta. Se nada valer a pena, diga isso.\n6. Depois aplique uma mudança por vez com Edit/Write; eu reviso cada diff e aprovo ou nego.\n\nO CLAUDE.md entra em toda mensagem: mantenha-o curto."
     },
     "harness": {
       "tabTitle": "Harness",
