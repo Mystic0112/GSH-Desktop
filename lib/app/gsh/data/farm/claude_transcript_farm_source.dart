@@ -78,20 +78,35 @@ class ClaudeTranscriptFarmSource implements FarmSource {
       ];
       _subs.clear();
     }
-    final recent = <File>[];
-
+    final recent = <(File, TranscriptTail)>[];
     for (final f
         in full ? _mains : _mains.where((f) => _recent.contains(f.path))) {
       final main = await _read(f, now, isSubagent: false);
       if (main == null) continue;
       live.add(f.path);
-      recent.add(f);
+      recent.add((f, main));
+    }
+    // o lead de cada time à vista (o último time que ele criou)
+    final leads = {
+      for (final (f, t) in recent)
+        if (t.spawnedTeam != null)
+          t.spawnedTeam!: p.basenameWithoutExtension(f.path),
+    };
+
+    for (final (f, main) in recent) {
       final sid = p.basenameWithoutExtension(f.path);
       final project = main.cwd ?? p.basename(f.parent.path);
+      // teammate de sessão própria: liga no lead se o time dele é o atual
+      final mate = main.teamName == null
+          ? null
+          : main.agentName ?? main.teamName;
+      final lead = leads[main.teamName];
       loops.add(
         _loop(
           main,
           id: sid,
+          parentId: mate == null || lead == sid ? null : lead,
+          teammate: mate,
           project: project,
           now: now,
           waitingAt: await _hook.waitingAt(sid),
@@ -103,14 +118,18 @@ class ClaudeTranscriptFarmSource implements FarmSource {
         if (tail == null) continue;
         live.add(s.path);
         final meta = await _metaOf(s.path);
+        // spawn com nome (sidecar com `name`) é teammate: fica no canteiro
+        // do projeto do lead, não no worktree onde roda
+        final name = _nonEmpty(meta['name']);
         final loop = _loop(
           tail,
           id: p.basenameWithoutExtension(s.path).substring('agent-'.length),
           parentId: sid,
-          project: tail.cwd ?? project,
+          teammate: name,
+          project: name != null ? project : tail.cwd ?? project,
           now: now,
           agentType: meta['agentType'] as String?,
-          title: (meta['name'] ?? meta['description']) as String?,
+          title: name ?? meta['description'] as String?,
         );
         if (loop.activity == FarmActivity.done &&
             now.difference(loop.lastSeen) > doneLinger) {
@@ -119,13 +138,13 @@ class ClaudeTranscriptFarmSource implements FarmSource {
         loops.add(loop);
       }
     }
-    _recent = {for (final f in recent) f.path};
+    _recent = {for (final (f, _) in recent) f.path};
     // Sessão nova numa pasta ativa, ou subagente novo de uma sessão ativa,
     // muda o mtime de uma destas e força a próxima listagem.
     if (full) {
       await _cache.watch([
         _root,
-        for (final f in recent) ...[f.parent.path, _subsDir(f)],
+        for (final (f, _) in recent) ...[f.parent.path, _subsDir(f)],
       ]);
     }
     await _hook.sweep(now);
@@ -213,6 +232,7 @@ class ClaudeTranscriptFarmSource implements FarmSource {
     required String project,
     required DateTime now,
     String? parentId,
+    String? teammate,
     String? agentType,
     String? title,
     DateTime? waitingAt,
@@ -232,6 +252,7 @@ class ClaudeTranscriptFarmSource implements FarmSource {
     return FarmLoop(
       id: id,
       parentId: parentId,
+      teammate: teammate,
       harness: 'claude',
       project: project,
       title: title ?? t.title ?? _short(t.firstPrompt) ?? p.basename(project),
@@ -252,6 +273,9 @@ TranscriptTail _consumed(TranscriptTail t, Uint8List bytes) {
   t.consume(bytes);
   return t;
 }
+
+String? _nonEmpty(Object? v) =>
+    v is String && v.trim().isNotEmpty ? v.trim() : null;
 
 String? _short(String? s) {
   if (s == null || s.isEmpty) return null;

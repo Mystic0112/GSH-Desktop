@@ -15,9 +15,11 @@ FarmLoop _loop(
   String? parent,
   String? agentType,
   String? title,
+  String? teammate,
   FarmActivity activity = FarmActivity.running,
 }) => FarmLoop(
   id: id,
+  teammate: teammate,
   harness: 'claude',
   project: project,
   title: title ?? id,
@@ -255,5 +257,31 @@ void main() {
     scene.update(0.3);
     expect(scene.puffs, isEmpty);
     expect(scene.critters.keys, ['b']);
+  });
+
+  test('teammate tem canteiro próprio, tamanho cheio e a cor do lead', () {
+    final scene = FarmScene(rnd: math.Random(1))..layout = _layout(8);
+    scene.sync(
+      groupFarm([
+        _loop('lead', '/p/a'),
+        _loop('sub', '/p/a', parent: 'lead'),
+        _loop('t1', '/p/a', parent: 'lead', teammate: 'revisor'),
+        _loop('t2', '/p/a', parent: 'lead', teammate: 'testes'),
+        _loop('solo', '/p/a'),
+      ]),
+    );
+    FarmPlotInfo? plotOf(String id) =>
+        scene.plotInfo.where((i) => i?.main?.id == id).firstOrNull;
+    // o subagente segue mini no canteiro do lead; teammates não
+    expect(plotOf('lead')!.minis, 1);
+    expect(scene.critters['sub']!.mini, isTrue);
+    for (final id in ['t1', 't2']) {
+      expect(plotOf(id), isNotNull);
+      expect(scene.critters[id]!.mini, isFalse);
+      expect(plotOf(id)!.team, plotOf('lead')!.team);
+    }
+    expect(plotOf('lead')!.team, isNotNull);
+    expect(plotOf('solo')!.team, isNull);
+    expect(scene.need.plots, 4);
   });
 }

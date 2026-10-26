@@ -279,6 +279,12 @@ class FarmScenePainter extends CustomPainter {
           }
         }
       }
+      // a faixa do time embaixo do canteiro, na cor do lead
+      final team = info?.team;
+      if (team != null) {
+        _rect(canvas, p.left - 1, p.bottom + 1, p.width + 2, 2, 0xFF14100c);
+        _rect(canvas, p.left - 0.5, p.bottom + 1.5, p.width + 1, 1, team);
+      }
       final more = info?.more ?? 0;
       if (more > 0) {
         final s = signSprite('+$more');

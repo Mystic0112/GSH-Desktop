@@ -1084,7 +1084,9 @@
         "idle": "idle",
         "sleeping": "asleep",
         "done": "done"
-      }
+      },
+      "teammateOf": "teammate of ${lead}",
+      "teamLead": "leads a team of ${n}"
     },
     "agentGraph": {
       "tabTitle": "Agents",

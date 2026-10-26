@@ -24,6 +24,7 @@ class FarmPlotInfo {
     required this.stage,
     required this.more,
     required this.minis,
+    this.team,
   });
 
   /// O dono do canteiro; `null` no canteiro dos órfãos (subagentes cujo pai
@@ -43,6 +44,10 @@ class FarmPlotInfo {
   /// Minis desenhados em volta (do 3º em diante há minis embaixo).
   final int minis;
 
+  /// Cor do time (a do lead), no canteiro do lead e no de cada teammate;
+  /// `null` fora de time.
+  final int? team;
+
   FarmPlotInfo get unlabeled => FarmPlotInfo(
     main: main,
     title: title,
@@ -50,6 +55,7 @@ class FarmPlotInfo {
     stage: stage,
     more: more,
     minis: minis,
+    team: team,
   );
 }
 
@@ -175,7 +181,16 @@ class FarmScene {
       final plot = l.plots[pi];
       final m = o.main;
       final subs = [...o.subs]..sort((a, b) => _rank(a).compareTo(_rank(b)));
+      // time: o lead é quem tem teammate à vista; todos levam a cor dele
+      final lead = m == null
+          ? null
+          : m.isTeammate
+          ? mains.where((x) => x.id == m.parentId).firstOrNull
+          : mains.any((x) => x.isTeammate && x.parentId == m.id)
+          ? m
+          : null;
       info[pi] = FarmPlotInfo(
+        team: lead == null ? null : _colorOf(lead),
         main: m,
         title: m?.title ?? subs.first.title,
         project: p.basename(o.project),
@@ -261,7 +276,7 @@ class FarmScene {
         ..home = home
         ..squad = squad
         ..room = room[id] ?? 20
-        ..color = squad?.color ?? argbOf(agentColorFor(loop.agentType ?? id));
+        ..color = _colorOf(loop);
       if (!loop.isSubagent) {
         c.skin = squad == null
             ? FarmSkin.of(id, c.color)
@@ -311,6 +326,10 @@ class FarmScene {
       }
     }
   }
+
+  /// A cor do bicho: a do agente do squad, senão a do tipo (ou do id).
+  static int _colorOf(FarmLoop l) =>
+      squadLookOf(l)?.color ?? argbOf(agentColorFor(l.agentType ?? l.id));
 
   static int _rank(FarmLoop l) => switch (l.activity.status) {
     FarmStatus.working => 0,

@@ -1492,6 +1492,8 @@ class _Translations$gsh$farm$pt_BR extends Translations$gsh$farm$en {
 	@override String agents({required Object n}) => '${n} agentes';
 	@override String subagents({required Object n}) => '${n} subagentes';
 	@override late final _Translations$gsh$farm$activity$pt_BR activity = _Translations$gsh$farm$activity$pt_BR._(_root);
+	@override String teammateOf({required Object lead}) => 'colega de time de ${lead}';
+	@override String teamLead({required Object n}) => 'lidera um time de ${n}';
 }
 
 // Path: gsh.agentGraph
@@ -3601,6 +3603,8 @@ extension on TranslationsPtBr {
 			'gsh.farm.activity.idle' => 'ocioso',
 			'gsh.farm.activity.sleeping' => 'dormindo',
 			'gsh.farm.activity.done' => 'concluído',
+			'gsh.farm.teammateOf' => ({required Object lead}) => 'colega de time de ${lead}',
+			'gsh.farm.teamLead' => ({required Object n}) => 'lidera um time de ${n}',
 			'gsh.agentGraph.tabTitle' => 'Agentes',
 			'gsh.agentGraph.newAgent' => 'Novo agente',
 			'gsh.agentGraph.emptyTitle' => 'Nenhum agente neste workspace',
@@ -3689,10 +3693,10 @@ extension on TranslationsPtBr {
 			'settings.page.nav.developer' => 'Desenvolvedor',
 			'settings.page.nav.skills' => 'Skills',
 			'settings.page.nav.connectors' => 'Conectores',
-			'settings.page.nav.plugins' => 'Plugins',
-			'settings.page.nav.apiKeys' => 'Chaves de API',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.nav.plugins' => 'Plugins',
+			'settings.page.nav.apiKeys' => 'Chaves de API',
 			'settings.page.nav.groups.settings' => 'Configurações',
 			'settings.page.nav.groups.thisComputer' => 'Este computador',
 			'settings.page.nav.groups.personalization' => 'Personalização',

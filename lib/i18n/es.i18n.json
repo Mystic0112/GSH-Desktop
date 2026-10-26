@@ -1084,7 +1084,9 @@
         "idle": "inactivo",
         "sleeping": "dormido",
         "done": "terminado"
-      }
+      },
+      "teammateOf": "compañero de equipo de ${lead}",
+      "teamLead": "lidera un equipo de ${n}"
     },
     "agentGraph": {
       "tabTitle": "Agentes",

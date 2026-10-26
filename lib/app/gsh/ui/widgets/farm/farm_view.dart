@@ -372,6 +372,18 @@ class _FarmViewState extends State<FarmView> {
     if (!ok) showOutsideGshToast(context);
   }
 
+  /// "colega de time de X" no teammate, "lidera um time de N" no lead.
+  String? _teamLine(Translations$gsh$farm$en tr, FarmLoop l) {
+    if (_hoverLot != null) return null;
+    final loops = _vm.loops;
+    if (l.isTeammate) {
+      final lead = loops.where((x) => x.id == l.parentId).firstOrNull;
+      return lead == null ? null : tr.teammateOf(lead: lead.title);
+    }
+    final n = loops.where((x) => x.isTeammate && x.parentId == l.id).length;
+    return n == 0 ? null : tr.teamLead(n: n);
+  }
+
   Widget _tip(BuildContext context, Size size, Critter? c, Offset? at) {
     if (c == null || at == null) return const SizedBox.shrink();
     final tr = context.t.gsh.farm;
@@ -384,6 +396,7 @@ class _FarmViewState extends State<FarmView> {
       if (!l.isSubagent) '${p.basename(l.project)} · ${_harnessLabel(l)}$of',
       if (l.isSubagent && peer != null) tr.peerOf(name: peer),
       if (l.agentType != null) l.agentType!,
+      ?_teamLine(tr, l),
       if (l.tool != null) '$activity · ${l.tool}' else activity,
       tr.spent(total: _compact(l.spentTokens)),
       tr.spentDetail(

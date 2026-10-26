@@ -27,6 +27,7 @@ FarmLoop _loop(
   String? title,
   String? parent,
   String? agentType,
+  String? teammate,
   int tokens = 0,
   int ctx = 0,
   int window = 0,
@@ -39,6 +40,7 @@ FarmLoop _loop(
   lastSeen: DateTime(2026, 10, 23),
   parentId: parent,
   agentType: agentType,
+  teammate: teammate,
   outputTokens: tokens,
   contextTokens: ctx,
   contextWindow: window,
@@ -102,6 +104,22 @@ List<FarmLoop> _loops() => [
     ctx: 182000,
     window: 200000,
   ),
+  // o "kurama" lidera um time: dois teammates com canteiro próprio
+  for (final (i, (name, type)) in const [
+    ('revisor', 'levi'),
+    ('testes', 'Explore'),
+  ].indexed)
+    _loop(
+      't$i',
+      i == 0 ? FarmActivity.editing : FarmActivity.reading,
+      parent: 'k',
+      teammate: name,
+      title: name,
+      agentType: type,
+      tokens: 20000,
+      ctx: 50000 + i * 70000,
+      window: 200000,
+    ),
   _loop('z', FarmActivity.sleeping, title: 'Spike de cache', ctx: 90000),
   _loop('i', FarmActivity.idle, title: 'Docs do hook', ctx: 30000),
 ];

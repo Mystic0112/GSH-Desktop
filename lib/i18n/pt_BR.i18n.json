@@ -1084,7 +1084,9 @@
         "idle": "ocioso",
         "sleeping": "dormindo",
         "done": "concluído"
-      }
+      },
+      "teammateOf": "colega de time de ${lead}",
+      "teamLead": "lidera um time de ${n}"
     },
     "agentGraph": {
       "tabTitle": "Agentes",

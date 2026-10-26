@@ -75,6 +75,7 @@ class FarmLoop {
     required this.activity,
     required this.lastSeen,
     this.parentId,
+    this.teammate,
     this.agentType,
     this.tool,
     this.outputTokens = 0,
@@ -87,8 +88,15 @@ class FarmLoop {
   /// `session_id` (principal) ou `agentId` (subagente).
   final String id;
 
-  /// Sessão dona, para subagentes. `null` = loop principal.
+  /// Sessão dona, para subagentes; o lead, para teammates (quando ele está
+  /// à vista). `null` = loop principal.
   final String? parentId;
+
+  /// Nome do colega de time, se o loop é um **teammate** (Claude Code agent
+  /// teams): um agente com nome, criado por outro (o lead), com transcript
+  /// próprio. Ter nome é o que separa teammate de subagente (glossário do
+  /// pixel-agents). Teammate tem lugar próprio na fazenda, não é mini.
+  final String? teammate;
 
   /// `claude` (Codex fica para depois).
   final String harness;
@@ -138,5 +146,8 @@ class FarmLoop {
 
   final DateTime lastSeen;
 
-  bool get isSubagent => parentId != null;
+  /// Subagente: tem dono e não tem nome (teammate não é subagente).
+  bool get isSubagent => parentId != null && teammate == null;
+
+  bool get isTeammate => teammate != null;
 }

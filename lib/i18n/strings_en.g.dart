@@ -3245,6 +3245,12 @@ class Translations$gsh$farm$en {
 	String subagents({required Object n}) => '${n} sub-agents';
 
 	late final Translations$gsh$farm$activity$en activity = Translations$gsh$farm$activity$en.internal(_root);
+
+	/// en: 'teammate of ${lead}'
+	String teammateOf({required Object lead}) => 'teammate of ${lead}';
+
+	/// en: 'leads a team of ${n}'
+	String teamLead({required Object n}) => 'leads a team of ${n}';
 }
 
 // Path: gsh.agentGraph
@@ -6666,6 +6672,8 @@ extension on Translations {
 			'gsh.farm.activity.idle' => 'idle',
 			'gsh.farm.activity.sleeping' => 'asleep',
 			'gsh.farm.activity.done' => 'done',
+			'gsh.farm.teammateOf' => ({required Object lead}) => 'teammate of ${lead}',
+			'gsh.farm.teamLead' => ({required Object n}) => 'leads a team of ${n}',
 			'gsh.agentGraph.tabTitle' => 'Agents',
 			'gsh.agentGraph.newAgent' => 'New agent',
 			'gsh.agentGraph.emptyTitle' => 'No agents in this workspace',
@@ -6754,10 +6762,10 @@ extension on Translations {
 			'settings.page.nav.developer' => 'Developer',
 			'settings.page.nav.skills' => 'Skills',
 			'settings.page.nav.connectors' => 'Connectors',
-			'settings.page.nav.plugins' => 'Plugins',
-			'settings.page.nav.apiKeys' => 'API keys',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.nav.plugins' => 'Plugins',
+			'settings.page.nav.apiKeys' => 'API keys',
 			'settings.page.nav.groups.settings' => 'Settings',
 			'settings.page.nav.groups.thisComputer' => 'This computer',
 			'settings.page.nav.groups.personalization' => 'Personalization',
