@@ -4,10 +4,6 @@
 name: linux
 
 on:
-  # TEMPORÁRIO: registra o workflow para o primeiro teste; sai no próximo commit.
-  push:
-    branches: [helio]
-    paths: ['.github/workflows/linux.yml']
   workflow_dispatch:
   # Chamado pelo release.yml (releases por tag).
   workflow_call:

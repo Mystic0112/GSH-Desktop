@@ -7,10 +7,6 @@ name: release
 on:
   push:
     tags: ['gsh-*', '!gsh-server-*']
-    # TEMPORÁRIO: registra o workflow (o check falha na hora: "helio" não é
-    # gsh-*); sai no próximo commit. paths não se aplica a push de tag.
-    branches: [helio]
-    paths: ['.github/workflows/release.yml']
   workflow_dispatch:
     inputs:
       tag:
