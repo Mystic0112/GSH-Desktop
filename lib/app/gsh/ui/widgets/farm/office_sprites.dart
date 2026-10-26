@@ -1,33 +1,51 @@
 part of 'farm_sprites.dart';
 
 /// Monitores das ilhas do escritório, 14 x 10 HD: o equivalente da
-/// plantação. O estágio (tokens gerados) é o quanto a tela tem de código; os
-/// três quadros rolam as linhas (só animam com o dono trabalhando).
+/// plantação, aceso só com o dono trabalhando. O estágio (tokens gerados) é
+/// o quanto a tela tem de código; os três quadros rolam as linhas.
 final Map<CropStage, List<ui.Image>> monitors = {
   for (final stage in CropStage.values)
     stage: [for (var f = 0; f < 3; f++) _monitor(stage, f)],
 };
 
+/// Tela em descanso (dono parado, dormindo ou canteiro vago): apagada, com
+/// o reflexo e o led âmbar de standby.
+final ui.Image monitorOff =
+    (_bezel()
+          ..rect(1, 1, 12, 6, 0xFF1b1f28)
+          ..set(9, 2, 0xFF323846)
+          ..set(10, 2, 0xFF323846)
+          ..set(11, 3, 0xFF323846)
+          ..set(12, 7, 0xFFb07a2a))
+        .toImage();
+
+/// Esperando você: a tela pisca amarela com o "!" (quadros 0 e 1).
+final List<ui.Image> monitorWait = [
+  for (var f = 0; f < 2; f++)
+    (_bezel()
+          ..rect(1, 1, 12, 6, f == 0 ? 0xFFffd75e : 0xFF6b5418)
+          ..rect(6, 2, 2, 2, f == 0 ? 0xFF3a2616 : 0xFFffd75e)
+          ..rect(6, 5, 2, 1, f == 0 ? 0xFF3a2616 : 0xFFffd75e))
+        .toImage(),
+];
+
+/// A moldura e o pé do monitor.
+Pix _bezel() => Pix(14, 10)
+  ..rect(0, 0, 14, 8, 0xFF2a2f3a)
+  ..rect(6, 8, 2, 1, 0xFF5a606c)
+  ..rect(4, 9, 6, 1, 0xFF7c828e);
+
 ui.Image _monitor(CropStage stage, int f) {
-  final p = Pix(14, 10)
-    ..rect(0, 0, 14, 8, 0xFF2a2f3a)
-    ..rect(6, 8, 2, 1, 0xFF5a606c)
-    ..rect(4, 9, 6, 1, 0xFF7c828e);
-  final off = stage == CropStage.seed || stage == CropStage.wilt;
-  p.rect(1, 1, 12, 6, off ? 0xFF1b1f28 : 0xFF1e2b3d);
-  if (off) {
-    p
-      ..set(9, 2, 0xFF323846)
-      ..set(10, 2, 0xFF323846)
-      ..set(11, 3, 0xFF323846);
-    return p.toImage();
-  }
+  final p = _bezel()..rect(1, 1, 12, 6, 0xFF1e2b3d);
   const ink = [0xFF7fb4ff, 0xFF6fcf8b, 0xFFf2b43a, 0xFFc99bf0, 0xFF9fd0ee];
   final lines = switch (stage) {
+    CropStage.seed || CropStage.wilt => 1,
     CropStage.sprout => 2,
     CropStage.grow => 4,
     _ => 5,
   };
+  // o cursor piscando no fim do código
+  if (f != 1) p.rect(2, 1 + lines, 1, 1, 0xFFe8edf5);
   for (var i = 0; i < lines && i < 5; i++) {
     final k = i + f;
     final indent = (k * 3) % 4 == 0 ? 0 : 1 + (k % 2);

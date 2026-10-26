@@ -268,14 +268,20 @@ class FarmScenePainter extends CustomPainter {
       final info = i < scene.plotInfo.length ? scene.plotInfo[i] : null;
       final stage = info?.stage ?? CropStage.seed;
       if (office) {
-        // a tela rola o código só com o dono trabalhando
-        final on = info?.main?.activity.status == FarmStatus.working;
+        // a tela acende e rola o código só com o dono trabalhando, pisca
+        // amarela quando ele espera você e descansa apagada no resto
+        final st = info?.main?.activity.status;
         final frames = monitors[stage]!;
         for (var row = 0; row < 2; row++) {
           for (var k = 0; k < 3; k++) {
-            final f = on ? (calm * 4 + k + row * 2).floor() % 3 : 1;
+            final img = switch (st) {
+              FarmStatus.working =>
+                frames[(calm * 4 + k + row * 2).floor() % 3],
+              FarmStatus.waiting => monitorWait[(t * 3).floor() % 2],
+              _ => monitorOff,
+            };
             final x = p.left + 1.5 + k * 10, y = p.top - 1.5 + row * 8;
-            _draw(canvas, frames[f], x, y, 7, 5);
+            _draw(canvas, img, x, y, 7, 5);
           }
         }
       } else {
