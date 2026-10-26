@@ -155,6 +155,7 @@ class _ChatPaneState extends State<ChatPane> {
                             ),
                             row: rows[i],
                             chat: _chat,
+                            actions: chatRowActions(rows, i, busy: _chat.busy),
                           ),
                         ),
                 ),

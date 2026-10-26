@@ -30,6 +30,10 @@ abstract interface class ChatEngine {
   /// Troca o modelo da conversa (um [ChatModelOption.value]).
   void setModel(String model);
 
+  /// Troca o esforço da conversa (`low`...`max`, de
+  /// [ChatModelOption.efforts]).
+  void setEffort(String level);
+
   /// Limites do plano agora. `null` = este motor não sabe dizer (quem chama
   /// cai no [ChatEngineFactory.probe]).
   Future<ChatPlanUsage?> planUsage();
@@ -48,6 +52,7 @@ abstract interface class ChatEngineFactory {
     String? resumeSessionId,
     bool showThinking = false,
     String? model,
+    String? effort,
   });
 
   /// Modelos e uso da conta sem conversa aberta (o seletor de modelo e o

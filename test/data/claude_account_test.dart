@@ -11,6 +11,8 @@ void main() {
           'resolvedModel': 'claude-opus-5-5',
           'displayName': 'Default (recommended)',
           'description': 'Opus 5.5 · Best for everyday, complex tasks',
+          'supportsEffort': true,
+          'supportedEffortLevels': ['low', 'high', 'max'],
         },
         {'value': 'haiku', 'displayName': 'Haiku 5.5'},
         {'displayName': 'sem value'},
@@ -18,6 +20,8 @@ void main() {
     });
     expect(m.map((e) => e.value), ['default', 'haiku']);
     expect(m.first.resolved, 'claude-opus-5-5');
+    expect(m.first.efforts, ['low', 'high', 'max']);
+    expect(m.last.efforts, isEmpty);
     expect(parseClaudeModels(null), isEmpty);
   });
 

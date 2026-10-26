@@ -1008,7 +1008,20 @@
       "stateCompleted": "Completada",
       "stateReviewReady": "Lista para revisión",
       "stateBlocked": "Bloqueada",
-      "stateFailed": "Falló"
+      "stateFailed": "Falló",
+      "copyMessage": "Copiar",
+      "copiedMessage": "Copiado",
+      "effort": {
+        "title": "Esfuerzo",
+        "tooltip": "Esfuerzo: ${level}",
+        "auto": "Predeterminado",
+        "low": "Bajo",
+        "medium": "Medio",
+        "high": "Alto",
+        "xhigh": "Muy alto",
+        "max": "Máximo",
+        "hint": "Cuánto piensa el modelo antes de responder. Más esfuerzo = mejor en tareas difíciles, más lento y más tokens."
+      }
     },
     "harness": {
       "tabTitle": "Harness",

@@ -234,6 +234,7 @@ class _BottomBar extends StatelessWidget {
         const Spacer(),
         ChatUsageRing(chat: chat),
         const SizedBox(width: 2),
+        ChatEffortButton(chat: chat),
         if (chat.costUsd > 0)
           AppTooltip(
             message: tr.cost(v: chat.costUsd.toStringAsFixed(2)),

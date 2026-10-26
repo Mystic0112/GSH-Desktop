@@ -3048,6 +3048,14 @@ class Translations$gsh$chat$en {
 
 	/// en: 'Failed'
 	String get stateFailed => 'Failed';
+
+	/// en: 'Copy'
+	String get copyMessage => 'Copy';
+
+	/// en: 'Copied'
+	String get copiedMessage => 'Copied';
+
+	late final Translations$gsh$chat$effort$en effort = Translations$gsh$chat$effort$en.internal(_root);
 }
 
 // Path: gsh.harness
@@ -4009,6 +4017,42 @@ class Translations$gsh$notebook$format$en {
 
 	/// en: 'Insert image…'
 	String get image => 'Insert image…';
+}
+
+// Path: gsh.chat.effort
+class Translations$gsh$chat$effort$en {
+	Translations$gsh$chat$effort$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Effort'
+	String get title => 'Effort';
+
+	/// en: 'Effort: ${level}'
+	String tooltip({required Object level}) => 'Effort: ${level}';
+
+	/// en: 'Default'
+	String get auto => 'Default';
+
+	/// en: 'Low'
+	String get low => 'Low';
+
+	/// en: 'Medium'
+	String get medium => 'Medium';
+
+	/// en: 'High'
+	String get high => 'High';
+
+	/// en: 'Extra high'
+	String get xhigh => 'Extra high';
+
+	/// en: 'Max'
+	String get max => 'Max';
+
+	/// en: 'How much the model thinks before answering. More effort = better on hard tasks, slower and more tokens.'
+	String get hint => 'How much the model thinks before answering. More effort = better on hard tasks, slower and more tokens.';
 }
 
 // Path: gsh.farm.activity
@@ -6632,6 +6676,17 @@ extension on Translations {
 			'gsh.chat.stateReviewReady' => 'Ready for review',
 			'gsh.chat.stateBlocked' => 'Blocked',
 			'gsh.chat.stateFailed' => 'Failed',
+			'gsh.chat.copyMessage' => 'Copy',
+			'gsh.chat.copiedMessage' => 'Copied',
+			'gsh.chat.effort.title' => 'Effort',
+			'gsh.chat.effort.tooltip' => ({required Object level}) => 'Effort: ${level}',
+			'gsh.chat.effort.auto' => 'Default',
+			'gsh.chat.effort.low' => 'Low',
+			'gsh.chat.effort.medium' => 'Medium',
+			'gsh.chat.effort.high' => 'High',
+			'gsh.chat.effort.xhigh' => 'Extra high',
+			'gsh.chat.effort.max' => 'Max',
+			'gsh.chat.effort.hint' => 'How much the model thinks before answering. More effort = better on hard tasks, slower and more tokens.',
 			'gsh.harness.tabTitle' => 'Harness',
 			'gsh.harness.subtitle' => ({required Object path}) => 'What the agent loads when it runs in ${path}',
 			'gsh.harness.refresh' => 'Read again',
@@ -6781,6 +6836,8 @@ extension on Translations {
 			'settings.page.nav.sideClaude' => 'Claude',
 			'settings.page.nav.general' => 'General',
 			'settings.page.nav.appearance' => 'Appearance',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.nav.terminal' => 'Terminal',
 			'settings.page.nav.language' => 'Language',
 			'settings.page.nav.shortcuts' => 'Shortcuts',
@@ -6792,8 +6849,6 @@ extension on Translations {
 			'settings.page.nav.account' => 'Account',
 			'settings.page.nav.privacy' => 'Privacy',
 			'settings.page.nav.usage' => 'Usage',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.nav.resources' => 'Resources',
 			'settings.page.nav.gshFeatures' => 'GSH features',
 			'settings.page.nav.memory' => 'Memory',
@@ -7295,6 +7350,8 @@ extension on Translations {
 			'fileOperation.error.formatterExitCode' => ({required Object code}) => 'Formatter exited with ${code}.',
 			'fileOperation.error.formatterFailed' => 'The formatter could not run.',
 			'fileOperation.error.osFailure' => ({required Object detail}) => '${detail}',
+			_ => null,
+		} ?? switch (path) {
 			'fileOperation.error.nameHasSlash' => 'Name cannot contain “/”.',
 			'fileOperation.error.invalidName' => 'Invalid name.',
 			'fileOperation.error.remoteDropUnsupported' => 'Dropping files into a remote workspace is not supported yet.',
@@ -7306,8 +7363,6 @@ extension on Translations {
 			'theme.error.notAnObject' => ({required Object field}) => 'Expected an object at "${field}".',
 			'theme.error.missingField' => ({required Object field}) => 'Missing required field "${field}".',
 			'theme.error.badColor' => ({required Object value, required Object field}) => '"${value}" at "${field}" is not a color. Use #RGB, #RRGGBB or #RRGGBBAA.',
-			_ => null,
-		} ?? switch (path) {
 			'theme.error.unknownBase' => ({required Object value}) => 'Unknown base theme "${value}" in "extends".',
 			'theme.error.noVariants' => 'The theme declares no variant. Add "dark", "light" or both under "variants".',
 			_ => null,

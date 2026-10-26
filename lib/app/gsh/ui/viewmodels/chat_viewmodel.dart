@@ -12,14 +12,18 @@ import 'package:flutter/foundation.dart';
 sealed class ChatItem {}
 
 class ChatUserItem extends ChatItem {
-  ChatUserItem(this.text, {this.attachments = const []});
+  ChatUserItem(this.text, {this.attachments = const [], DateTime? at})
+    : at = at ?? DateTime.now();
   final String text;
+  final DateTime at;
   final List<ChatAttachment> attachments;
 }
 
 class ChatAssistantItem extends ChatItem {
-  ChatAssistantItem(this.text, {this.streaming = false});
+  ChatAssistantItem(this.text, {this.streaming = false, DateTime? at})
+    : at = at ?? DateTime.now();
   String text;
+  final DateTime at;
 
   /// Ainda chegando pedaço a pedaço; o bloco completo fecha.
   bool streaming;
@@ -229,6 +233,28 @@ class ChatController extends ChangeNotifier {
   List<ChatModelOption> models = const [];
   String? modelChoice;
 
+  /// Esforço escolhido (`low`...`max`); `null` = o padrão do Claude Code.
+  /// Sem motor no ar, vale para o primeiro envio (`--effort`).
+  String? effortChoice;
+
+  /// Níveis que o modelo da conversa aceita (vazio = o modelo não tem).
+  List<String> get efforts {
+    final want = modelChoice;
+    for (final m in models) {
+      if (want != null ? m.value == want : m.resolved == model) {
+        return m.efforts;
+      }
+    }
+    return models.firstOrNull?.efforts ?? const [];
+  }
+
+  void setEffort(String level) {
+    if (level == effortChoice) return;
+    effortChoice = level;
+    _engine?.setEffort(level);
+    notifyListeners();
+  }
+
   /// Comandos `/nome` (seus agentes, skills, comandos do projeto) para o
   /// menu do composer.
   List<ChatCommandOption> commands = const [];
@@ -383,6 +409,7 @@ class ChatController extends ChangeNotifier {
       resumeSessionId: sessionId,
       showThinking: showsThinking,
       model: modelChoice,
+      effort: effortChoice,
     );
     _sub = engine.events.listen(_onEvent);
     return engine;
@@ -462,8 +489,8 @@ class ChatController extends ChangeNotifier {
       case ChatContext(:final tokens, :final window):
         contextTokens = tokens;
         if (window > 0) contextWindow = window;
-      case ChatUserText(:final text):
-        items.add(ChatUserItem(text));
+      case ChatUserText(:final text, :final at):
+        items.add(ChatUserItem(text, at: at));
       case ChatPeerMessage(:final fromName, :final text):
         // A outra sessão abriu um turno: o agente vai responder a ela.
         busy = true;
@@ -481,14 +508,14 @@ class ChatController extends ChangeNotifier {
         } else {
           items.add(ChatAssistantItem(text, streaming: true));
         }
-      case ChatText(:final text):
+      case ChatText(:final text, :final at):
         final live = _streaming;
         if (live != null) {
           live
             ..text = text
             ..streaming = false;
         } else {
-          items.add(ChatAssistantItem(text));
+          items.add(ChatAssistantItem(text, at: at));
         }
       case ChatToolCall(:final id, :final name, :final input):
         items.add(

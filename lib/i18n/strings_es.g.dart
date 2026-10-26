@@ -1414,6 +1414,9 @@ class _Translations$gsh$chat$es extends Translations$gsh$chat$en {
 	@override String get stateReviewReady => 'Lista para revisión';
 	@override String get stateBlocked => 'Bloqueada';
 	@override String get stateFailed => 'Falló';
+	@override String get copyMessage => 'Copiar';
+	@override String get copiedMessage => 'Copiado';
+	@override late final _Translations$gsh$chat$effort$es effort = _Translations$gsh$chat$effort$es._(_root);
 }
 
 // Path: gsh.harness
@@ -1879,6 +1882,24 @@ class _Translations$gsh$notebook$format$es extends Translations$gsh$notebook$for
 	@override String get noteLink => 'Enlace a una nota ([[…]])';
 	@override String get noteLinkSearch => 'Buscar notas';
 	@override String get image => 'Insertar imagen…';
+}
+
+// Path: gsh.chat.effort
+class _Translations$gsh$chat$effort$es extends Translations$gsh$chat$effort$en {
+	_Translations$gsh$chat$effort$es._(TranslationsEs root) : this._root = root, super.internal(root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Esfuerzo';
+	@override String tooltip({required Object level}) => 'Esfuerzo: ${level}';
+	@override String get auto => 'Predeterminado';
+	@override String get low => 'Bajo';
+	@override String get medium => 'Medio';
+	@override String get high => 'Alto';
+	@override String get xhigh => 'Muy alto';
+	@override String get max => 'Máximo';
+	@override String get hint => 'Cuánto piensa el modelo antes de responder. Más esfuerzo = mejor en tareas difíciles, más lento y más tokens.';
 }
 
 // Path: gsh.farm.activity
@@ -3543,6 +3564,17 @@ extension on TranslationsEs {
 			'gsh.chat.stateReviewReady' => 'Lista para revisión',
 			'gsh.chat.stateBlocked' => 'Bloqueada',
 			'gsh.chat.stateFailed' => 'Falló',
+			'gsh.chat.copyMessage' => 'Copiar',
+			'gsh.chat.copiedMessage' => 'Copiado',
+			'gsh.chat.effort.title' => 'Esfuerzo',
+			'gsh.chat.effort.tooltip' => ({required Object level}) => 'Esfuerzo: ${level}',
+			'gsh.chat.effort.auto' => 'Predeterminado',
+			'gsh.chat.effort.low' => 'Bajo',
+			'gsh.chat.effort.medium' => 'Medio',
+			'gsh.chat.effort.high' => 'Alto',
+			'gsh.chat.effort.xhigh' => 'Muy alto',
+			'gsh.chat.effort.max' => 'Máximo',
+			'gsh.chat.effort.hint' => 'Cuánto piensa el modelo antes de responder. Más esfuerzo = mejor en tareas difíciles, más lento y más tokens.',
 			'gsh.harness.tabTitle' => 'Harness',
 			'gsh.harness.subtitle' => ({required Object path}) => 'Lo que el agente carga al ejecutarse en ${path}',
 			'gsh.harness.refresh' => 'Leer de nuevo',
@@ -3692,6 +3724,8 @@ extension on TranslationsEs {
 			'settings.page.nav.sideClaude' => 'Claude',
 			'settings.page.nav.general' => 'General',
 			'settings.page.nav.appearance' => 'Apariencia',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.nav.terminal' => 'Terminal',
 			'settings.page.nav.language' => 'Lenguaje',
 			'settings.page.nav.shortcuts' => 'Atajos',
@@ -3703,8 +3737,6 @@ extension on TranslationsEs {
 			'settings.page.nav.account' => 'Cuenta',
 			'settings.page.nav.privacy' => 'Privacidad',
 			'settings.page.nav.usage' => 'Uso',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.nav.resources' => 'Recursos',
 			'settings.page.nav.gshFeatures' => 'Recursos de GSH',
 			'settings.page.nav.memory' => 'Memoria',
@@ -4206,6 +4238,8 @@ extension on TranslationsEs {
 			'fileOperation.error.formatterExitCode' => ({required Object code}) => 'El formateador terminó con el código ${code}.',
 			'fileOperation.error.formatterFailed' => 'No se pudo ejecutar el formateador.',
 			'fileOperation.error.osFailure' => ({required Object detail}) => '${detail}',
+			_ => null,
+		} ?? switch (path) {
 			'fileOperation.error.nameHasSlash' => 'El nombre no puede contener “/”.',
 			'fileOperation.error.invalidName' => 'Nombre inválido.',
 			'fileOperation.error.remoteDropUnsupported' => 'Soltar archivos en un workspace remoto todavía no está soportado.',
@@ -4217,8 +4251,6 @@ extension on TranslationsEs {
 			'theme.error.notAnObject' => ({required Object field}) => 'Se esperaba un objeto en "${field}".',
 			'theme.error.missingField' => ({required Object field}) => 'Falta el campo obligatorio "${field}".',
 			'theme.error.badColor' => ({required Object value, required Object field}) => '"${value}" en "${field}" no es un color. Usa #RGB, #RRGGBB o #RRGGBBAA.',
-			_ => null,
-		} ?? switch (path) {
 			'theme.error.unknownBase' => ({required Object value}) => 'Tema base "${value}" desconocido en "extends".',
 			'theme.error.noVariants' => 'El tema no declara ningún variant. Añade "dark", "light" o ambos en "variants".',
 			_ => null,

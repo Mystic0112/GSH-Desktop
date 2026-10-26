@@ -5,6 +5,7 @@ class ChatModelOption {
     required this.displayName,
     this.description = '',
     this.resolved,
+    this.efforts = const [],
   });
 
   /// O que vai no `--model` / `set_model` (`opus`, `sonnet`, um id...).
@@ -14,6 +15,9 @@ class ChatModelOption {
 
   /// Id real que o alias vira (`claude-opus-5-5`).
   final String? resolved;
+
+  /// Níveis de esforço que o modelo aceita (`low`...`max`); vazio = não tem.
+  final List<String> efforts;
 }
 
 enum ChatLimitKind { session, weekly, weeklyModel, other }

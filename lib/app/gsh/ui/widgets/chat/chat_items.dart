@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_attachment.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/chat_event.dart';
 import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
@@ -7,6 +8,7 @@ import 'package:gsh_desktop/app/gsh/ui/widgets/agent_markdown.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_edits_card.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat_attachments.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat_prompt_cards.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/telemetry_case_view.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
 import 'package:gsh_desktop/app/core/ui/widgets/hover_tap.dart';
 import 'package:gsh_desktop/i18n/strings.g.dart';
@@ -35,12 +37,39 @@ List<Object> groupChatItems(List<ChatItem> items) {
 
 /// Uma linha da conversa (item ou grupo de edições).
 class ChatRowView extends StatelessWidget {
-  const ChatRowView({super.key, required this.row, required this.chat});
+  const ChatRowView({
+    super.key,
+    required this.row,
+    required this.chat,
+    this.actions = ChatRowActions.none,
+  });
   final Object row;
   final ChatController chat;
 
+  /// Barra de copiar + horário embaixo da mensagem.
+  final ChatRowActions actions;
+
   @override
   Widget build(BuildContext context) {
+    final body = _body(context);
+    return switch ((actions, row)) {
+      (ChatRowActions.none, _) => body,
+      (_, ChatUserItem(:final text, :final at)) ||
+      (
+        _,
+        ChatAssistantItem(:final text, :final at, streaming: false),
+      ) => _MessageActions(
+        text: text,
+        at: at,
+        end: row is ChatUserItem,
+        always: actions == ChatRowActions.always,
+        child: body,
+      ),
+      _ => body,
+    };
+  }
+
+  Widget _body(BuildContext context) {
     final colors = context.colors;
     final tr = context.t.gsh.chat;
     return switch (row) {
@@ -88,6 +117,114 @@ class ChatRowView extends StatelessWidget {
         }, style: context.typo.label.copyWith(color: colors.error)),
       _ => const SizedBox.shrink(),
     };
+  }
+}
+
+enum ChatRowActions { none, hover, always }
+
+/// Quais linhas ganham a barra: mensagem do usuário e a última resposta do
+/// assistente antes da próxima mensagem (ou do fim). A última linha da
+/// conversa mostra sempre; as outras, ao passar o mouse.
+ChatRowActions chatRowActions(List<Object> rows, int i, {required bool busy}) {
+  final row = rows[i];
+  final last = i == rows.length - 1;
+  final ends = switch (row) {
+    ChatUserItem() => true,
+    ChatAssistantItem(:final streaming) =>
+      !streaming && (last ? !busy : rows[i + 1] is ChatUserItem),
+    _ => false,
+  };
+  if (!ends) return ChatRowActions.none;
+  return last && row is ChatAssistantItem
+      ? ChatRowActions.always
+      : ChatRowActions.hover;
+}
+
+/// Copiar + "há 5 min" embaixo da mensagem, como no Claude Desktop. O
+/// espaço fica reservado para a conversa não pular ao passar o mouse.
+class _MessageActions extends StatefulWidget {
+  const _MessageActions({
+    required this.text,
+    required this.at,
+    required this.end,
+    required this.always,
+    required this.child,
+  });
+  final String text;
+  final DateTime at;
+
+  /// Alinha à direita (mensagem do usuário).
+  final bool end;
+  final bool always;
+  final Widget child;
+
+  @override
+  State<_MessageActions> createState() => _MessageActionsState();
+}
+
+class _MessageActionsState extends State<_MessageActions> {
+  bool _hover = false;
+  bool _copied = false;
+
+  Future<void> _copy() async {
+    await Clipboard.setData(ClipboardData(text: widget.text));
+    if (!mounted) return;
+    setState(() => _copied = true);
+    await Future<void>.delayed(const Duration(milliseconds: 1500));
+    if (mounted) setState(() => _copied = false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final tr = context.t.gsh.chat;
+    final shown = widget.always || _hover;
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: Column(
+        crossAxisAlignment: widget.end
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
+        children: [
+          widget.child,
+          const SizedBox(height: 4),
+          Visibility.maintain(
+            visible: shown,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AppTooltip(
+                  message: _copied ? tr.copiedMessage : tr.copyMessage,
+                  child: HoverTap(
+                    onTap: _copy,
+                    borderRadius: BorderRadius.circular(5),
+                    padding: const EdgeInsets.all(3),
+                    child: Icon(
+                      _copied ? Icons.check : Icons.copy_outlined,
+                      size: 14,
+                      color: colors.text3,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 6),
+                AppTooltip(
+                  // ponytail: data neutra (2026-10-26 18:40), sem intl.
+                  message: widget.at.toString().substring(0, 16),
+                  child: Text(
+                    telemetryRelative(context, widget.at),
+                    style: context.typo.label.copyWith(
+                      fontSize: 11.5,
+                      color: colors.text4,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

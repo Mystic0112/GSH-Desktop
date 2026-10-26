@@ -43,6 +43,9 @@ class _Engine implements ChatEngine {
 
   @override
   void setModel(String model) => models.add(model);
+  final efforts = <String>[];
+  @override
+  void setEffort(String level) => efforts.add(level);
 
   @override
   Future<ChatPlanUsage?> planUsage() async => null;
@@ -63,6 +66,7 @@ class _Factory implements ChatEngineFactory {
     String? resumeSessionId,
     bool showThinking = false,
     String? model,
+    String? effort,
   }) async => engine;
   @override
   Future<List<ChatEvent>> history({
