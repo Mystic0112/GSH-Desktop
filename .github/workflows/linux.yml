@@ -28,6 +28,11 @@ jobs:
       # mpv/epoxy (media_kit_video), jsoncpp (bundle Flutter).
       - name: Dependências de build
         run: |
+          # O mirror da Azure (1º do mirrorlist do runner) às vezes cai para KB/s
+          # e o apt passa de 30 min; sem ele, o apt usa o archive.ubuntu.com.
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            sudo sed -i '/azure\.archive\.ubuntu\.com/d' /etc/apt/apt-mirrors.txt
+          fi
           sudo apt-get update -q
           sudo apt-get install -y --no-install-recommends \
             clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev \
