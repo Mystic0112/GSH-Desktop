@@ -4,6 +4,17 @@ Runbook de build/empacotamento das 3 plataformas. Base pro job de CI
 (`.github/workflows/gsh-release.yml`, plano 43 passo 3). Plano de
 referência: [`../../plan/43-gsh-packaging.md`](../../plan/43-gsh-packaging.md).
 
+## Soltar uma versão (GitHub Releases)
+
+- `git tag gsh-AAAA.MM.DD && git push origin gsh-AAAA.MM.DD`: o `release.yml` compila Windows, macOS e
+  Linux (~30 min) e publica a release da tag como **pré-release**, com os 6 arquivos + `SHA256SUMS.txt`.
+- Sem tag local: Actions → release → Run workflow (input `tag`; a tag nasce no commit do branch escolhido).
+- Tag que já tem release falha no início, sem gastar build: apague a release ou use outra tag.
+- Notas: modelo em `.github/release-notes.md` + "Mudanças" (commits `feat`/`fix` desde a tag `gsh-*` anterior).
+- Marcar como estável: `gh release edit gsh-AAAA.MM.DD --prerelease=false --latest` (e tirar o aviso de
+  pré-release das notas no GitHub).
+- Tarball Linux local: `flutter build linux --release && tool/package_linux_tarball.sh`.
+
 ## Identidade (passo 1 — feito)
 
 | Item | Valor |
