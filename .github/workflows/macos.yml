@@ -1,0 +1,84 @@
+# Build do GSH Desktop para macOS (não assinado: ad-hoc, sem notarização).
+# Só manual: minuto de macOS custa ~10x o de Linux.
+# Gera o GSH.app zipado (ditto) e um .dmg. O Release do Xcode já assina ad-hoc
+# (CODE_SIGN_IDENTITY "-", sem DEVELOPMENT_TEAM), o mínimo que o Apple Silicon exige.
+name: macos
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: macos-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      # Fixado: o projeto não compila na 3.47 (pins como sqlite3 ^3.5.2).
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.44.1
+          channel: stable
+          cache: true
+
+      # cli/ (crate Rust) vira gsh-cli (universal) no build_cli.sh; o
+      # build_server.sh embarca ainda o gsh-server + CLI para hosts Linux arm64.
+      - name: Rust
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup default stable
+          rustup target add aarch64-apple-darwin x86_64-apple-darwin aarch64-unknown-linux-gnu
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: cli
+
+      # libghostty com `source: compile` exige exatamente Zig 0.16.0; o
+      # cross-link do bundle Linux arm64 também usa o Zig.
+      - uses: mlugg/setup-zig@v2
+        with:
+          version: 0.16.0
+
+      - run: flutter pub get
+      - run: flutter build macos --release
+
+      - name: Empacota (.zip + .dmg)
+        run: |
+          set -euo pipefail
+          version="$(sed -n 's/^version: *\([^+]*\).*/\1/p' pubspec.yaml)"
+          app="build/macos/Build/Products/Release/GSH.app"
+          codesign --verify --deep --strict --verbose=2 "$app"
+          mkdir -p dist
+          ditto -c -k --keepParent "$app" "dist/GSH-Desktop-$version-macos.zip"
+          stage="$(mktemp -d)"
+          ditto "$app" "$stage/GSH.app"
+          ln -s /Applications "$stage/Applications"
+          # ponytail: hdiutil no runner às vezes falha com "Resource busy"; 3 tentativas bastam.
+          for attempt in 1 2 3; do
+            hdiutil create -volname "GSH Desktop" -srcfolder "$stage" -ov -format UDZO \
+              "dist/GSH-Desktop-$version-macos.dmg" && break
+            [ "$attempt" = 3 ] && exit 1
+            sleep 5
+          done
+
+      - name: Upload (.app zipado)
+        uses: actions/upload-artifact@v4
+        with:
+          name: gsh-macos-app
+          path: dist/*.zip
+          retention-days: 14
+          if-no-files-found: error
+
+      - name: Upload (.dmg)
+        uses: actions/upload-artifact@v4
+        with:
+          name: gsh-macos-dmg
+          path: dist/*.dmg
+          retention-days: 14
+          if-no-files-found: error
