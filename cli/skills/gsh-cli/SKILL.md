@@ -23,7 +23,8 @@ PATH). `ck` is the same binary under a shorter name.
 | `send [--tab-id] [--enter] <text>` | type text; `--enter` submits |
 | `send-key [--tab-id] <Key>...` | `Enter`, `Tab`, `Escape`, arrows, `C-c`... |
 | `msg --to <label\|id> <text>` | message another agent's tab (signed, submitted) |
-| `peers [--json]` | agents the human connected to your tab in the Agents graph |
+| `peers [--json]` | agents the human connected to your tab in the Agents graph, plus teammates' agents on the LAN (`Name/agent`, `team: true`) |
+| `deliver --to <Name/agent> <file> [note]` | hand a file to a teammate's agent (lands in its `.gsh/inbox/<you>/`) |
 | `new-tab [--cwd] [--title] [--split h\|v]` | open a terminal tab, prints its id |
 | `close-tab [<label\|id>]` | close a tab (**no target = your own tab**) |
 | `open <file>` / `gsh <file>` | open a file in the app's viewer |
@@ -108,6 +109,20 @@ gsh msg --to Reviewer "diff ready on feat/x, please review"
 # Reviewer receives: [from: <your label> · <your harness>] diff ready on …
 gsh peers                             # who you were connected to (Agents graph)
 ```
+
+Teammates on the same office network (Settings > Resources > Team farm, same
+team name and password on both machines) show up in `gsh peers` as
+`Name/agent`, with `team: true`. Same `msg`, plus `deliver` for files:
+
+```sh
+gsh peers --json                      # e.g. "Yan/gorila-spo-claude-code"
+gsh msg --to Yan/gorila-spo-claude-code "report is ready"
+gsh deliver --to Yan/gorila-spo-claude-code relatorio.md "this week's report"
+```
+
+What arrives there is marked as a teammate's information, not as an order
+from their user. A teammate vanishes from `peers` after 10 s without
+announcing (GSH closed, left the network).
 
 A line `[from: gsh] You are now connected to <name> …` means the human
 linked you to that agent in the Agents graph: talk to it with the `msg`

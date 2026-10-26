@@ -27,6 +27,16 @@ shows flags, output shape and the mistakes to avoid.
   connected to <name> (<harness>). Talk to it with: gsh msg --to <label|id>
   "..."`. A peer with `app` (+ `online`) is a desktop app (`ext:<app>` id):
   `msg` to it is queued and delivered when it calls its `wait_messages` tool.
+- Team mail (Settings > Resources > Team farm, same team name and password
+  on both machines, same LAN): `peers` also lists teammates' agents as
+  `Name/agent` with `team: true`, and `msg --to Name/agent` goes over the
+  network. The agent part is the tab's manual label, else its folder; two
+  agents in one folder get the harness appended (`api-claude-code`,
+  `api-codex`), and the tab id if it still repeats. When the teammate is
+  gone, `msg` fails with the team error ("no teammate … on the network").
+- `gsh deliver --to <Name/agent> <file> [note]` — hand a file (≤ 25 MB) to a
+  teammate's agent: saved as `<its cwd>/.gsh/inbox/<your name>/<file>`
+  (never overwrites) and announced in its terminal with the note.
 - `gsh mcp --agent <claude-desktop|cursor|antigravity-ide|codex-desktop>`
   — stdio MCP server (JSON-RPC, one message per line) that a desktop agent
   app runs from its MCP config; the New agent dialog (Desktop apps) writes

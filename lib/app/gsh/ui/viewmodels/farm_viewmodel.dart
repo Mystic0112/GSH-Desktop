@@ -1,6 +1,5 @@
 import 'dart:async';
-import 'dart:io' show SocketException;
-
+import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/farm_source.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
@@ -38,8 +37,10 @@ class FarmPeer {
   Iterable<FarmLoop> get loops => plots.expand((p) => p.loops);
 }
 
-/// Estado da fazenda. Faz polling do [FarmSource] só enquanto alguém está
-/// olhando ([attach]/[detach] por contagem), para não ler disco à toa.
+/// Estado da fazenda. Faz polling do [FarmSource] enquanto alguém está
+/// olhando ([attach]/[detach] por contagem) **ou** a fazenda do time está
+/// ligada: sem tela aberta, o GSH ainda precisa anunciar, senão some da rede
+/// dos colegas e o correio para (o contato expira em 10 s sem pacote).
 ///
 /// Com a fazenda do time ligada ([configureTeam]), a cada varredura anuncia
 /// os loops locais no [TeamFarmChannel] e guarda os dos colegas em [peers].
@@ -70,12 +71,21 @@ class FarmViewModel extends ChangeNotifier {
   /// Aplica as preferências do time (chamado pela página quando mudam).
   Future<void> configureTeam(TeamFarmConfig config) async {
     _teamConfig = config;
-    await _post.configure(config);
+    // Erro aqui não pode sumir: a página chama sem `await`, e no app aberto
+    // pelo Dock o `debugPrint` não aparece em lugar nenhum.
     try {
+      await _post.configure(config);
       await _team.open(config);
-    } on SocketException catch (e) {
-      debugPrint('[farm] time: rede indisponível: $e');
+    } on Object catch (e, st) {
+      DiagnosticsLog.instance.warn(
+        'farm',
+        'fazenda do time não abriu a rede',
+        error: e,
+        stack: st,
+      );
     }
+    if (_disposed) return;
+    _syncPolling();
     if (!config.active && _peers.isNotEmpty) {
       _peers.clear();
       if (!_disposed) notifyListeners();
@@ -143,15 +153,27 @@ class FarmViewModel extends ChangeNotifier {
   List<FarmWaiting> get waiting => farmWaitingQueue(loops);
 
   void attach() {
-    if (_viewers++ > 0) return;
-    unawaited(_tick());
-    _timer = Timer.periodic(interval, (_) => unawaited(_tick()));
+    _viewers++;
+    _syncPolling();
   }
 
   void detach() {
-    if (_viewers == 0 || --_viewers > 0) return;
-    _timer?.cancel();
-    _timer = null;
+    if (_viewers == 0) return;
+    _viewers--;
+    _syncPolling();
+  }
+
+  /// Liga o polling se alguém olha ou o time precisa do anúncio; desliga
+  /// quando nenhum dos dois.
+  void _syncPolling() {
+    final want = _viewers > 0 || _teamConfig.active;
+    if (want && _timer == null) {
+      unawaited(_tick());
+      _timer = Timer.periodic(interval, (_) => unawaited(_tick()));
+    } else if (!want) {
+      _timer?.cancel();
+      _timer = null;
+    }
   }
 
   /// Uma varredura avulsa, sem ligar o polling (o seletor de sessões do

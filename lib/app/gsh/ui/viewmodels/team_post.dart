@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
+import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
 import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_mail.dart';
@@ -115,8 +116,13 @@ class TeamPost extends ChangeNotifier {
     _config = config;
     try {
       await _mail.configure(config);
-    } on SocketException catch (e) {
-      debugPrint('[team] correio indisponível: $e');
+    } on SocketException catch (e, st) {
+      DiagnosticsLog.instance.warn(
+        'team',
+        'correio do time indisponível',
+        error: e,
+        stack: st,
+      );
     }
     if (!config.active) _peers.clear();
     notifyListeners();

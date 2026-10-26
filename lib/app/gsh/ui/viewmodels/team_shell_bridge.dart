@@ -16,7 +16,7 @@ void wireTeamPost(
   required Iterable<PaneItem> Function() sessions,
   required PaneItem? Function(String id) session,
 }) {
-  post.localAgents = () => [
+  post.localAgents = () => uniqueTeamLabels([
     for (final s in sessions())
       if (s is TerminalSession && s.activeHarness != null)
         TeamAgent(
@@ -26,7 +26,7 @@ void wireTeamPost(
           project: p.basename(s.workingDirectory),
           sessionId: s.claudeSessionId,
         ),
-  ];
+  ]);
   post.deliver = (knock) async {
     final tab = session(knock.toTabId);
     if (tab is! TerminalSession) return 'tab ${knock.toTabId} is gone';
@@ -55,6 +55,35 @@ String teamAgentLabel(TerminalSession s) {
   return manual != null && manual.isNotEmpty
       ? manual
       : p.basename(s.workingDirectory);
+}
+
+/// Endereço único por agente: dois agentes na mesma pasta (Claude Code e
+/// Codex em `api`) viram `api-claude-code` e `api-codex`; se ainda repetir
+/// (dois Claude na mesma pasta), entra o id da aba. Sem isso o colega só
+/// alcança o primeiro da lista.
+List<TeamAgent> uniqueTeamLabels(List<TeamAgent> agents) {
+  String key(String s) => s.toLowerCase();
+  int count(Iterable<String> labels, String l) =>
+      labels.where((x) => key(x) == key(l)).length;
+  final base = agents.map((a) => a.label).toList();
+  final byHarness = [
+    for (final a in agents)
+      count(base, a.label) < 2 || a.harness.isEmpty
+          ? a.label
+          : '${a.label}-${a.harness.toLowerCase().replaceAll(RegExp(r'\s+'), '-')}',
+  ];
+  return [
+    for (final (i, a) in agents.indexed)
+      TeamAgent(
+        tabId: a.tabId,
+        label: count(byHarness, byHarness[i]) < 2
+            ? byHarness[i]
+            : '${byHarness[i]}-${a.tabId}',
+        harness: a.harness,
+        project: a.project,
+        sessionId: a.sessionId,
+      ),
+  ];
 }
 
 /// Grava o arquivo entregue em `<pasta>/.gsh/inbox/<quem mandou>/<nome>`,

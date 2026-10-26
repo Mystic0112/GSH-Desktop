@@ -1707,9 +1707,8 @@ class GshCliHandler {
     if (to.isEmpty) return const GshCommandResult.fail('missing --to');
     if (text.isEmpty) return const GshCommandResult.fail('missing text');
     // `Fulano/aba` de um colega do time: vai pelo correio da rede local.
-    if (to.contains('/') && _vm.teamPost.resolve(to) is Success) {
-      return _teamSend(sender, to, text);
-    }
+    final team = to.contains('/') ? _vm.teamPost.resolve(to) : null;
+    if (team is Success) return _teamSend(sender, to, text);
     final reachable = [..._vm.allSessions, ..._vm.agentGraph.externals];
     final PaneItem target;
     switch (resolveTabTarget(to, reachable)) {
@@ -1719,8 +1718,12 @@ class GshCliHandler {
         target = value;
       case Success(:final value):
         return GshCommandResult.fail('tab "${value.id}" is not a terminal');
+      // Nem aba local nem colega: o erro do time explica (saiu da rede,
+      // nome errado) melhor que "no tab".
       case Failure(:final error):
-        return GshCommandResult.fail(error);
+        return GshCommandResult.fail(
+          team is Failure<TeamContact, String> ? team.error : error,
+        );
     }
     if (target.id == sender.id) {
       return const GshCommandResult.fail('cannot message your own tab');
