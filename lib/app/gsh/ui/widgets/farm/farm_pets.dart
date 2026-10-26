@@ -29,6 +29,9 @@ class FarmPet {
   double _stepT = 0;
   bool moving = false;
 
+  /// O caminho até o lugar do passeio (contorna cerca, lago e celeiro).
+  final route = FarmRoute();
+
   /// Quando levou o último carinho (o coração sobe por [heartLife] s).
   double? petAt;
   static const heartLife = 1.2;
@@ -47,7 +50,8 @@ class FarmPet {
       if (wait <= 0) _pick(l);
       return;
     }
-    final dx = tx - x, dy = ty - y, d = math.sqrt(dx * dx + dy * dy);
+    final w = route.next(l.nav, ui.Offset(x, y), ui.Offset(tx, ty));
+    final dx = w.dx - x, dy = w.dy - y, d = math.sqrt(dx * dx + dy * dy);
     if (d < 0.5) {
       moving = false;
       wait = 3 + rnd.nextDouble() * 9;
@@ -65,16 +69,16 @@ class FarmPet {
     }
   }
 
-  /// Um passeio curto: um lugar livre perto, com o meio do caminho livre
-  /// também (não atravessa celeiro nem lago). ponytail: reta e não
-  /// pathfinding; se o caminho bate, ele só fica onde está.
+  /// Um passeio curto: um lugar livre perto. Com a grade do mundo, a rota
+  /// contorna o que houver no meio; sem ela, o meio do caminho também tem
+  /// de estar livre (anda reto).
   void _pick(FarmLayout l) {
     for (var i = 0; i < 20; i++) {
       final nx = x + rnd.nextDouble() * 60 - 30;
       final ny = y + rnd.nextDouble() * 30 - 15;
       if (!l.play.deflate(8).contains(ui.Offset(nx, ny)) ||
           l.blocked(nx, ny) ||
-          l.blocked((x + nx) / 2, (y + ny) / 2)) {
+          (l.nav == null && l.blocked((x + nx) / 2, (y + ny) / 2))) {
         continue;
       }
       tx = nx;

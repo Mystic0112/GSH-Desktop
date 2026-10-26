@@ -11,6 +11,7 @@ import 'package:gsh_desktop/app/gsh/ui/widgets/farm/farm_sprites.dart'
     show hd, spark;
 import 'package:gsh_desktop/app/gsh/ui/widgets/farm/pix.dart';
 
+part 'farm_nav.dart';
 part 'farm_world_paint.dart';
 part 'farm_world_props.dart';
 part 'office_world_paint.dart';
@@ -136,6 +137,10 @@ class FarmLayout {
 
   List<ui.Rect> rocks = const [];
   List<FarmDecor> decor = const [];
+
+  /// A grade de caminhar, montada com o mundo (ver [FarmNav]); `null` antes
+  /// disso: quem anda vai reto.
+  FarmNav? nav;
 
   /// Centro do lago e raios: [pond] guarda (cx, cy) no topo-esquerdo e
   /// (rx, ry) no tamanho.

@@ -167,9 +167,14 @@ extension _TeamLots on _FarmViewState {
         lot.at,
         c.remoteSessionId,
       );
+      final (from, to) = c.outgoing ? (a, b) : (b, a);
+      final (wf, af, wt, at) = c.outgoing
+          ? (mine, Offset.zero, lot.world!, lot.at)
+          : (lot.world!, lot.at, mine, Offset.zero);
       final run = CourierRun(
-        from: c.outgoing ? a : b,
-        to: c.outgoing ? b : a,
+        from: from,
+        to: to,
+        path: courierRoute(wf, af, from, wt, at, to),
         age: now.difference(c.startedAt).inMicroseconds / 1e6,
         kind: c.kind,
         target: c.outgoing ? cb : ca,

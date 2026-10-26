@@ -399,21 +399,33 @@ List<CourierRun> _fakeCouriers(
   FarmWorld world,
   List<FarmLot> lots,
 ) {
-  /// [at] em fração da caminhada; negativo = segundos já entregando.
+  /// [at] em fração da caminhada; negativo = segundos já entregando. O
+  /// caminho passa pelas portas ([courierRoute]).
   CourierRun run(
     (Offset, Critter?) a,
     (Offset, Critter?) b,
     double at,
     TeamKnockKind kind, {
     Offset targetAt = Offset.zero,
+    FarmLot? fromLot,
   }) {
-    final walk = ((b.$1 - a.$1).distance / courierSpeed).clamp(
-      0.6,
-      courierWalkMax,
+    final path = courierRoute(
+      fromLot?.world ?? world,
+      fromLot?.at ?? Offset.zero,
+      a.$1,
+      fromLot == null ? lots.first.world! : world,
+      fromLot == null ? targetAt : Offset.zero,
+      b.$1,
     );
+    var len = 0.0;
+    for (var i = 1; i < path.length; i++) {
+      len += (path[i] - path[i - 1]).distance;
+    }
+    final walk = (len / courierSpeed).clamp(0.6, courierWalkMax);
     return CourierRun(
       from: a.$1,
       to: b.$1,
+      path: path,
       age: at < 0 ? walk - at : walk * at,
       kind: kind,
       target: b.$2,
@@ -435,12 +447,14 @@ List<CourierRun> _fakeCouriers(
       courierEndpoint(scene, world, Offset.zero, 'k'),
       -0.8,
       TeamKnockKind.file,
+      fromLot: rafael,
     ),
     run(
       courierEndpoint(bianca.scene, bianca.world!, bianca.at, null),
       courierEndpoint(scene, world, Offset.zero, 'cx'),
       0.2,
       TeamKnockKind.file,
+      fromLot: bianca,
     ),
   ];
 }

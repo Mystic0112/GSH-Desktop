@@ -40,7 +40,8 @@ Future<FarmWorld> buildWorld(
   final built = await Isolate.run(() => _paintWorld(l, seed, scenery));
   l
     ..rocks = built.rocks
-    ..decor = built.decor;
+    ..decor = built.decor
+    ..nav = FarmNav(l, office: scenery == FarmScenery.office);
   final bg = await imageFromRgba(built.bg, l.w * hd, l.h * hd);
   final fg = await imageFromRgba(built.fg, l.w * hd, (l.h - built.fgY) * hd);
   return FarmWorld(l, bg, fg, built.fgY, scenery);
