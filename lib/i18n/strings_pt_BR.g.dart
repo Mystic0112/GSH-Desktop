@@ -1939,6 +1939,7 @@ class _Translations$settings$page$nav$pt_BR extends Translations$settings$page$n
 	@override String get privacy => 'Privacidade';
 	@override String get usage => 'Uso';
 	@override String get resources => 'Recursos';
+	@override String get gshFeatures => 'Recursos do GSH';
 	@override String get memory => 'Memória';
 	@override String get designSystems => 'Design systems';
 	@override String get cowork => 'Cowork';
@@ -3687,15 +3688,16 @@ extension on TranslationsPtBr {
 			'settings.page.nav.privacy' => 'Privacidade',
 			'settings.page.nav.usage' => 'Uso',
 			'settings.page.nav.resources' => 'Recursos',
+			'settings.page.nav.gshFeatures' => 'Recursos do GSH',
 			'settings.page.nav.memory' => 'Memória',
 			'settings.page.nav.designSystems' => 'Design systems',
 			'settings.page.nav.cowork' => 'Cowork',
 			'settings.page.nav.system' => 'Sistema',
 			'settings.page.nav.extensions' => 'Extensões',
 			'settings.page.nav.developer' => 'Desenvolvedor',
-			'settings.page.nav.skills' => 'Skills',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.nav.skills' => 'Skills',
 			'settings.page.nav.connectors' => 'Conectores',
 			'settings.page.nav.plugins' => 'Plugins',
 			'settings.page.nav.apiKeys' => 'Chaves de API',

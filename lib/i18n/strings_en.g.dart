@@ -4118,6 +4118,9 @@ class Translations$settings$page$nav$en {
 	/// en: 'Resources'
 	String get resources => 'Resources';
 
+	/// en: 'GSH features'
+	String get gshFeatures => 'GSH features';
+
 	/// en: 'Memory'
 	String get memory => 'Memory';
 
@@ -6758,15 +6761,16 @@ extension on Translations {
 			'settings.page.nav.privacy' => 'Privacy',
 			'settings.page.nav.usage' => 'Usage',
 			'settings.page.nav.resources' => 'Resources',
+			'settings.page.nav.gshFeatures' => 'GSH features',
 			'settings.page.nav.memory' => 'Memory',
 			'settings.page.nav.designSystems' => 'Design systems',
 			'settings.page.nav.cowork' => 'Cowork',
 			'settings.page.nav.system' => 'System',
 			'settings.page.nav.extensions' => 'Extensions',
 			'settings.page.nav.developer' => 'Developer',
-			'settings.page.nav.skills' => 'Skills',
 			_ => null,
 		} ?? switch (path) {
+			'settings.page.nav.skills' => 'Skills',
 			'settings.page.nav.connectors' => 'Connectors',
 			'settings.page.nav.plugins' => 'Plugins',
 			'settings.page.nav.apiKeys' => 'API keys',
