@@ -52,15 +52,19 @@ jobs:
           version: 0.16.0
 
       - run: flutter pub get
-      # O build baixa dependências do Ghostty pela rede (zig fetch): uma queda
-      # de conexão derrubava a release inteira. Tenta de novo até 3 vezes.
+      # O build baixa dependências do Ghostty pela rede (zig fetch), e o
+      # cliente HTTP do Zig falha neste runner em deps.files.ghostty.org.
+      # Depois de uma falha, o prefetch baixa tudo com o curl direto no cache
+      # que o hook do libghostty passa ao Zig, e o build tenta de novo.
       - name: flutter build windows --release
         shell: bash
+        env:
+          ZIG_GLOBAL_CACHE_DIR: ${{ runner.temp }}/zig-cache
         run: |
           for i in 1 2 3; do
             flutter build windows --release && exit 0
-            echo "::warning::build falhou na tentativa $i; tentando de novo em 30 s"
-            sleep 30
+            echo "::warning::build falhou na tentativa $i; baixando as dependências do Ghostty e tentando de novo"
+            bash tool/prefetch_zig_deps.sh
           done
           exit 1
 
