@@ -21,6 +21,16 @@ class ChatSession extends PaneItem {
   /// Sessão do Claude Code desta aba (persistida no layout para retomar).
   String? sessionId;
 
+  /// Um turno rodando (o nó do grafo de agentes mostra "Trabalhando").
+  bool _working = false;
+  @override
+  bool get isWorking => _working;
+  set working(bool v) {
+    if (v == _working) return;
+    _working = v;
+    notifyListeners();
+  }
+
   // ponytail: `t` global, mesmo motivo do AgentGraphSession.
   @override
   String get title => t.gsh.chat.tabTitle;

@@ -1,3 +1,5 @@
+import 'package:gsh_desktop/app/gsh/ui/session/chat_session.dart';
+import 'package:gsh_desktop/app/core/domain/entities/harness.dart';
 import 'dart:ui' show Offset;
 
 import 'package:gsh_desktop/app/gsh/domain/entities/agent_message.dart';
@@ -345,7 +347,11 @@ Map<String, Object?> agentInfo(AgentGraphStore graph, String ws, PaneItem p) =>
       'id': p.id,
       'label': p.manualLabel,
       'title': p.title,
-      'harness': p is TerminalSession ? p.activeHarness?.name : null,
+      'harness': switch (p) {
+        TerminalSession(:final activeHarness) => activeHarness?.name,
+        ChatSession() => HarnessKind.claudeCode.name,
+        _ => null,
+      },
       'working': p.isWorking,
       'maestro': graph.maestroOf(ws) == p.id,
       if (p is ExternalAgent) ...{'app': p.app.id, 'online': p.online},
@@ -367,14 +373,17 @@ List<Map<String, Object?>> agentPeers(
   ];
 }
 
-/// Nós do canvas de [ws]: abas com agente detectado + nós externos.
+/// Nós do canvas de [ws]: abas com agente detectado, abas de chat (o
+/// `claude` delas fala `gsh msg`) + nós externos.
 List<PaneItem> workspaceAgentNodes(
   AgentGraphStore graph,
   String ws,
   Iterable<PaneItem> sessions,
 ) => [
   for (final s in sessions)
-    if (s is TerminalSession && s.projectId == ws && s.activeHarness != null) s,
+    if (s.projectId == ws &&
+        (s is ChatSession || (s is TerminalSession && s.activeHarness != null)))
+      s,
   ...graph.externalsOf(ws),
 ];
 

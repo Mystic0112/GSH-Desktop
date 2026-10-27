@@ -1,3 +1,4 @@
+import 'package:gsh_desktop/app/gsh/ui/session/chat_session.dart';
 import 'dart:async' show Timer;
 
 import 'package:gsh_desktop/app/gsh/domain/entities/agent_message.dart';
@@ -18,6 +19,12 @@ const Duration kAgentMessageSubmitDelay = Duration(milliseconds: 400);
 /// como colagem (bracketed paste, se o TUI pediu): texto multilinha não
 /// submete no meio. Nó externo ([ExternalAgent]): vai pra fila dele (sai no
 /// `wait_messages` do MCP). Registra [text] no [log] como [from] → [target].
+/// Põe uma mensagem de agente como turno numa aba de chat. A página pluga
+/// (as conversas vivem no `ChatViewModel`); sem ela, a mensagem se perde.
+// ponytail: gancho global, como o `toChat` do correio do time; vira campo do
+// GshViewModel se aparecer um segundo consumidor.
+void Function(ChatSession tab, String text) chatInbox = (_, _) {};
+
 void deliverAgentMessage({
   required AgentMessageLog log,
   required PaneItem from,
@@ -42,6 +49,16 @@ void deliverAgentMessage({
         // A aba pode ter fechado na janela do delay: PTY morto não recebe.
         if (targetAlive()) target.insertText('\r');
       });
+    case ChatSession():
+      // Vira turno do chat (espera o turno em andamento acabar).
+      chatInbox(
+        target,
+        AgentMessage.formatLine(
+          senderName: senderName,
+          senderHarness: senderHarness,
+          text: text,
+        ),
+      );
     default:
       return;
   }
@@ -61,6 +78,8 @@ String? agentKindLabel(PaneItem p) => switch (p) {
   TerminalSession(:final activeHarness?) =>
     HarnessCatalog.getSpec(activeHarness)?.label ?? activeHarness.name,
   ExternalAgent(:final app) => app.label,
+  ChatSession() =>
+    HarnessCatalog.getSpec(HarnessKind.claudeCode)?.label ?? 'Claude Code',
   _ => null,
 };
 

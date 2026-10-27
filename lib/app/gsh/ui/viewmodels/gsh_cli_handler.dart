@@ -1722,8 +1722,13 @@ class GshCliHandler {
         target = value;
       case Success(:final value) when value is ExternalAgent:
         target = value;
+      // Aba de chat: a mensagem vira turno da conversa.
+      case Success(:final value) when value is ChatSession:
+        target = value;
       case Success(:final value):
-        return GshCommandResult.fail('tab "${value.id}" is not a terminal');
+        return GshCommandResult.fail(
+          'tab "${value.id}" is not an agent (terminal or chat)',
+        );
       // Nem aba local nem colega: o erro do time explica (saiu da rede,
       // nome errado) melhor que "no tab".
       case Failure(:final error):

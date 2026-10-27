@@ -727,15 +727,21 @@ class ChatViewModel extends ChangeNotifier {
     TranscriptView view = TranscriptView.normal,
     String permissionMode = 'default',
     String? effort,
-  }) => _chats[tabId] ??= ChatController(
-    _factory,
-    cwd: cwd,
-    resumeSessionId: resumeSessionId,
-    view: view,
-    environment: envFor(tabId),
-    permissionMode: permissionMode,
-    effortChoice: effort,
-  );
+    ValueChanged<bool>? onBusy,
+  }) => _chats[tabId] ??= () {
+    final c = ChatController(
+      _factory,
+      cwd: cwd,
+      resumeSessionId: resumeSessionId,
+      view: view,
+      environment: envFor(tabId),
+      permissionMode: permissionMode,
+      effortChoice: effort,
+    );
+    // Quem cria diz onde espelhar o "turno rodando" (o nó do grafo).
+    if (onBusy != null) c.addListener(() => onBusy(c.busy));
+    return c;
+  }();
 
   void close(String tabId) => _chats.remove(tabId)?.dispose();
 

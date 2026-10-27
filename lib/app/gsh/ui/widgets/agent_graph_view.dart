@@ -1,3 +1,4 @@
+import 'package:gsh_desktop/app/gsh/ui/session/chat_session.dart';
 import 'dart:async' show unawaited;
 
 import 'package:gsh_desktop/app/gsh/domain/entities/agent_message.dart';
@@ -210,8 +211,10 @@ class _AgentGraphViewState extends State<AgentGraphView>
   Widget build(BuildContext context) {
     final vm = context.watch<GshViewModel>();
     final terms = vm.allSessions
-        .whereType<TerminalSession>()
-        .where((s) => s.projectId == _ws)
+        .where(
+          (s) =>
+              (s is TerminalSession || s is ChatSession) && s.projectId == _ws,
+        )
         .toList();
     return ListenableBuilder(
       listenable: Listenable.merge([vm.agentGraph, ...terms]),

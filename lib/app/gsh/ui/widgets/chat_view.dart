@@ -33,6 +33,7 @@ class _ChatViewState extends State<ChatView> {
       view: s.transcriptView,
       permissionMode: s.chatPermissionMode,
       effort: s.chatEffort,
+      onBusy: (b) => widget.session.working = b,
     );
   }();
   late final GshViewModel _shell = context.read<GshViewModel>();
@@ -106,6 +107,7 @@ class _ChatViewState extends State<ChatView> {
             cwd: tab.workingDirectory,
             view: context.read<SettingsController>().settings.transcriptView,
             effort: context.read<SettingsController>().settings.chatEffort,
+            onBusy: (b) => tab.working = b,
             // Modo de propósito o padrão (pedir permissão), mesmo que o
             // usuário use outro: cada edição do harness chega como diff.
           )
