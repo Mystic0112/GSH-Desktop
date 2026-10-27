@@ -23,12 +23,18 @@ class ChatView extends StatefulWidget {
 }
 
 class _ChatViewState extends State<ChatView> {
-  late final ChatController _chat = context.read<ChatViewModel>().chatFor(
-    widget.session.id,
-    cwd: widget.session.workingDirectory,
-    resumeSessionId: widget.session.sessionId,
-    view: context.read<SettingsController>().settings.transcriptView,
-  );
+  // Modo e esforço: os últimos escolhidos no composer (só ao criar).
+  late final ChatController _chat = () {
+    final s = context.read<SettingsController>().settings;
+    return context.read<ChatViewModel>().chatFor(
+      widget.session.id,
+      cwd: widget.session.workingDirectory,
+      resumeSessionId: widget.session.sessionId,
+      view: s.transcriptView,
+      permissionMode: s.chatPermissionMode,
+      effort: s.chatEffort,
+    );
+  }();
   late final GshViewModel _shell = context.read<GshViewModel>();
 
   @override
@@ -99,6 +105,9 @@ class _ChatViewState extends State<ChatView> {
             tab.id,
             cwd: tab.workingDirectory,
             view: context.read<SettingsController>().settings.transcriptView,
+            effort: context.read<SettingsController>().settings.chatEffort,
+            // Modo de propósito o padrão (pedir permissão), mesmo que o
+            // usuário use outro: cada edição do harness chega como diff.
           )
           .send(prompt),
     );

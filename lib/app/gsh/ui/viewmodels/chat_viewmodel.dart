@@ -177,6 +177,8 @@ class ChatController extends ChangeNotifier {
     String? resumeSessionId,
     this.view = TranscriptView.normal,
     this.environment = const {},
+    this.permissionMode = 'default',
+    this.effortChoice,
   }) : sessionId = resumeSessionId {
     if (resumeSessionId != null) unawaited(_loadHistory(resumeSessionId));
   }
@@ -205,7 +207,7 @@ class ChatController extends ChangeNotifier {
   /// Modo de permissão da sessão (os do Claude Code): `default` pede
   /// permissão, `acceptEdits` aceita edições, `plan` só investiga e planeja,
   /// `bypassPermissions` não pergunta nada.
-  String permissionMode = 'default';
+  String permissionMode;
 
   /// Anexos esperando o próximo envio.
   final attachments = <ChatAttachment>[];
@@ -690,12 +692,16 @@ class ChatViewModel extends ChangeNotifier {
     required String cwd,
     String? resumeSessionId,
     TranscriptView view = TranscriptView.normal,
+    String permissionMode = 'default',
+    String? effort,
   }) => _chats[tabId] ??= ChatController(
     _factory,
     cwd: cwd,
     resumeSessionId: resumeSessionId,
     view: view,
     environment: envFor(tabId),
+    permissionMode: permissionMode,
+    effortChoice: effort,
   );
 
   void close(String tabId) => _chats.remove(tabId)?.dispose();
