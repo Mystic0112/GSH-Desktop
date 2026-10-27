@@ -179,9 +179,12 @@ class ChatModelChanged extends ChatEvent {
   final String model;
 }
 
-/// Quanto do contexto a conversa ocupa, ao fim de um turno.
+/// Quanto do contexto a conversa ocupa (a cada resposta do modelo) e a
+/// janela do modelo (ao fim do turno).
 class ChatContext extends ChatEvent {
   const ChatContext({required this.tokens, required this.window});
+
+  /// 0 = não veio.
   final int tokens;
 
   /// Janela do modelo (200k, 1M...). 0 = não veio.

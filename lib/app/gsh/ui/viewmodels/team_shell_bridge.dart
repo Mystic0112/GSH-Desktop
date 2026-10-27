@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/chat_session.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/pane_item.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/terminal_session.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_message_delivery.dart';
@@ -25,21 +26,32 @@ void wireTeamPost(
           harness: agentKindLabel(s) ?? '',
           project: p.basename(s.workingDirectory),
           sessionId: s.claudeSessionId,
+        )
+      // Aba de chat é um Claude Code também: o colega precisa conseguir
+      // responder a quem mandou de lá.
+      else if (s is ChatSession)
+        TeamAgent(
+          tabId: s.id,
+          label: teamAgentLabel(s),
+          harness: 'Claude Code',
+          project: p.basename(s.workingDirectory),
+          sessionId: s.sessionId,
         ),
   ]);
   post.deliver = (knock) async {
     final tab = session(knock.toTabId);
+    if (tab is ChatSession) {
+      final saved = await _saveIfFile(tab.workingDirectory, knock);
+      if (saved case (final String err, _)) return err;
+      return post.toChat(tab, teamKnockLine(knock, savedAs: saved?.$2));
+    }
     if (tab is! TerminalSession) return 'tab ${knock.toTabId} is gone';
     // Só aba com agente rodando: num shell puro, texto + Enter vindo de
     // outra máquina viraria comando executado.
     if (tab.activeHarness == null) return 'tab ${tab.id} has no agent';
-    String? saved;
-    if (knock.kind == TeamKnockKind.file) {
-      final r = await saveTeamDelivery(tab.workingDirectory, knock);
-      if (r == null) return 'could not save ${knock.fileName}';
-      saved = p.relative(r, from: tab.workingDirectory);
-    }
-    tab.terminal.paste(teamKnockLine(knock, savedAs: saved));
+    final saved = await _saveIfFile(tab.workingDirectory, knock);
+    if (saved case (final String err, _)) return err;
+    tab.terminal.paste(teamKnockLine(knock, savedAs: saved?.$2));
     Timer(kAgentMessageSubmitDelay, () {
       if (identical(session(tab.id), tab)) tab.insertText('\r');
     });
@@ -47,10 +59,19 @@ void wireTeamPost(
   };
 }
 
+/// Arquivo da batida salvo na caixa de entrada: `null` se não é arquivo,
+/// `(erro, null)` se falhou, `(null, caminho relativo)` se gravou.
+Future<(String?, String?)?> _saveIfFile(String cwd, TeamKnock knock) async {
+  if (knock.kind != TeamKnockKind.file) return null;
+  final r = await saveTeamDelivery(cwd, knock);
+  if (r == null) return ('could not save ${knock.fileName}', null);
+  return (null, p.relative(r, from: cwd));
+}
+
 /// Como o agente é chamado pelos colegas (`Fulano/<isto>`): o nome manual
 /// da aba, senão a pasta. O título automático muda o tempo todo (spinner),
 /// não serve de endereço.
-String teamAgentLabel(TerminalSession s) {
+String teamAgentLabel(PaneItem s) {
   final manual = s.manualLabel?.trim();
   return manual != null && manual.isNotEmpty
       ? manual

@@ -176,12 +176,16 @@ class ChatController extends ChangeNotifier {
     required this.cwd,
     String? resumeSessionId,
     this.view = TranscriptView.normal,
+    this.environment = const {},
   }) : sessionId = resumeSessionId {
     if (resumeSessionId != null) unawaited(_loadHistory(resumeSessionId));
   }
 
   final ChatEngineFactory _factory;
   final String cwd;
+
+  /// Ambiente extra do `claude` desta aba (CLI `gsh`), ver [ChatViewModel.envFor].
+  final Map<String, String> environment;
 
   /// Visualização da conversa, fixada ao abrir: decide se o motor pede os
   /// resumos de raciocínio e se as ferramentas já abrem expandidas.
@@ -385,6 +389,23 @@ class ChatController extends ChangeNotifier {
     }
   }
 
+  /// Texto vindo de fora (agente de um colega do time) entra como turno
+  /// assim que a conversa ficar livre: [send] descarta o que chega com um
+  /// turno rodando.
+  void sendWhenIdle(String text) {
+    if (!busy) {
+      unawaited(send(text));
+      return;
+    }
+    void check() {
+      if (busy || _disposed) return;
+      removeListener(check);
+      unawaited(send(text));
+    }
+
+    addListener(check);
+  }
+
   Future<void> _loadHistory(String sid) async {
     loadingHistory = true;
     notifyListeners();
@@ -410,6 +431,7 @@ class ChatController extends ChangeNotifier {
       showThinking: showsThinking,
       model: modelChoice,
       effort: effortChoice,
+      environment: environment,
     );
     _sub = engine.events.listen(_onEvent);
     return engine;
@@ -487,7 +509,7 @@ class ChatController extends ChangeNotifier {
       case ChatModelChanged(:final model):
         this.model = model;
       case ChatContext(:final tokens, :final window):
-        contextTokens = tokens;
+        if (tokens > 0) contextTokens = tokens;
         if (window > 0) contextWindow = window;
       case ChatUserText(:final text, :final at):
         items.add(ChatUserItem(text, at: at));
@@ -658,6 +680,10 @@ class ChatViewModel extends ChangeNotifier {
   final ChatEngineFactory _factory;
   final _chats = <String, ChatController>{};
 
+  /// Ambiente da CLI `gsh` para a aba (o shell pluga): com ele o agente do
+  /// chat usa `gsh msg`/`peers` como o de um terminal.
+  Map<String, String> Function(String tabId) envFor = (_) => const {};
+
   /// [view] só vale ao criar: a conversa já aberta mantém a dela.
   ChatController chatFor(
     String tabId, {
@@ -669,6 +695,7 @@ class ChatViewModel extends ChangeNotifier {
     cwd: cwd,
     resumeSessionId: resumeSessionId,
     view: view,
+    environment: envFor(tabId),
   );
 
   void close(String tabId) => _chats.remove(tabId)?.dispose();

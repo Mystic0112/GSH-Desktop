@@ -73,7 +73,31 @@ void main() {
     expect(parseClaudePlanUsage({'limits': []}), isNull);
   });
 
-  test('contexto do result', () {
+  test('contexto: tokens da mensagem, janela do result', () {
+    final m = parseClaudeMessageContext({
+      'type': 'assistant',
+      'parent_tool_use_id': null,
+      'message': {
+        'usage': {
+          'input_tokens': 2,
+          'cache_creation_input_tokens': 300,
+          'cache_read_input_tokens': 36700,
+          'output_tokens': 50,
+        },
+      },
+    })!;
+    expect(m.tokens, 37002);
+    // Subagente não conta.
+    expect(
+      parseClaudeMessageContext({
+        'parent_tool_use_id': 'toolu_1',
+        'message': {
+          'usage': {'input_tokens': 9},
+        },
+      }),
+      isNull,
+    );
+    // O usage do result soma o turno: só a janela vale.
     final c = parseClaudeContext({
       'usage': {
         'input_tokens': 2,
@@ -84,7 +108,7 @@ void main() {
         'claude-haiku-5-5': {'contextWindow': 1000000},
       },
     })!;
-    expect((c.tokens, c.window), (37034, 1000000));
+    expect((c.tokens, c.window), (0, 1000000));
   });
 
   test('comandos do initialize', () {

@@ -7,6 +7,7 @@ import 'package:gsh_desktop/app/gsh/domain/contracts/team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_mail.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/chat_session.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_post.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_shell_bridge.dart';
@@ -78,5 +79,43 @@ void main() {
       'gorila-spo-claude-code-t3',
       'api',
     ]);
+  });
+
+  test('aba de chat é agente do time e recebe a batida como turno', () async {
+    final channel = _Channel();
+    final post = TeamPost(channel, _Mail());
+    final chat = ChatSession(
+      id: 'v11',
+      projectId: 'p',
+      workingDirectory: '/home/helio/gorila-spo',
+    );
+    wireTeamPost(
+      post,
+      sessions: () => [chat],
+      session: (id) => id == chat.id ? chat : null,
+    );
+    final turns = <String>[];
+    post.toChat = (tab, text) {
+      turns.add('${tab.id}: $text');
+      return null;
+    };
+    final agent = post.localAgents().single;
+    expect(
+      (agent.tabId, agent.label, agent.harness),
+      ('v11', 'gorila-spo', 'Claude Code'),
+    );
+    final err = await post.deliver(
+      const TeamKnock(
+        id: 'k1',
+        kind: TeamKnockKind.message,
+        fromMachine: 'm',
+        fromName: 'Yan',
+        fromAgent: 'gorila-spo',
+        toTabId: 'v11',
+        text: 'recebido',
+      ),
+    );
+    expect(err, isNull);
+    expect(turns.single, startsWith('v11: [team knock · from Yan'));
   });
 }
