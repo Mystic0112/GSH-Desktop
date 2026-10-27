@@ -67,6 +67,7 @@ class _Factory implements ChatEngineFactory {
     bool showThinking = false,
     String? model,
     String? effort,
+    Map<String, String> environment = const {},
   }) async => engine;
   @override
   Future<List<ChatEvent>> history({

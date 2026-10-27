@@ -300,6 +300,18 @@ class SettingsController extends ChangeNotifier {
   void setChatRemoteControl(bool value) =>
       _apply(_settings.copyWith(chatRemoteControl: value));
 
+  void setChatPermissionMode(String mode) {
+    if (mode != _settings.chatPermissionMode) {
+      _apply(_settings.copyWith(chatPermissionMode: mode));
+    }
+  }
+
+  void setChatEffort(String level) {
+    if (level != _settings.chatEffort) {
+      _apply(_settings.copyWith(chatEffort: level));
+    }
+  }
+
   void setFarmScenery(FarmScenery scenery) =>
       _apply(_settings.copyWith(farmScenery: scenery));
 

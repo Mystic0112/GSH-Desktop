@@ -24,6 +24,7 @@ class ChatEngineRouter implements ChatEngineFactory {
     bool showThinking = false,
     String? model,
     String? effort,
+    Map<String, String> environment = const {},
   }) async {
     // O motor CLI usa `/usr/bin/env` e um hook em sh: só macOS/Linux. No
     // Windows fica o stream-json mesmo com a preferência ligada.
@@ -35,6 +36,7 @@ class ChatEngineRouter implements ChatEngineFactory {
       showThinking: showThinking,
       model: model,
       effort: effort,
+      environment: environment,
     );
   }
 

@@ -142,6 +142,7 @@ class _FakeFactory implements ChatEngineFactory {
   String? resumed;
   bool? thinking;
   String? effort;
+  Map<String, String> env = const {};
   List<ChatEvent> past = const [];
   @override
   Future<List<ChatEvent>> history({
@@ -158,10 +159,12 @@ class _FakeFactory implements ChatEngineFactory {
     bool showThinking = false,
     String? model,
     String? effort,
+    Map<String, String> environment = const {},
   }) async {
     resumed = resumeSessionId;
     thinking = showThinking;
     this.effort = effort;
+    env = environment;
     return engine;
   }
 }
@@ -403,6 +406,25 @@ void main() {
     ]);
     await chat.send('depois');
     expect(f.resumed, 's-1');
+  });
+
+  test('batida de colega espera o turno acabar e leva o env da CLI', () async {
+    final f = _FakeFactory();
+    final chat = ChatController(
+      f,
+      cwd: '/repo',
+      environment: const {'GSH_TAB_ID': 'v11'},
+    );
+    await chat.send('oi');
+    expect(f.env['GSH_TAB_ID'], 'v11');
+    chat.sendWhenIdle('[team knock · from Yan] recebido');
+    await Future<void>.delayed(Duration.zero);
+    expect(f.engine.sent, ['oi'], reason: 'turno rodando: espera');
+    f.engine.ctrl.add(
+      const ChatTurnEnd(isError: false, text: '', sessionId: 's'),
+    );
+    await Future<void>.delayed(Duration.zero);
+    expect(f.engine.sent, ['oi', '[team knock · from Yan] recebido']);
   });
 
   test('esforço: antes do motor vai no start; depois, ao vivo', () async {

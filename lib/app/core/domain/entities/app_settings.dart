@@ -91,6 +91,8 @@ class AppSettings {
     this.lastUpdateCheckTime,
     this.classifySessionStates = true,
     this.chatRemoteControl = false,
+    this.chatPermissionMode = 'default',
+    this.chatEffort = 'high',
     this.codeThemeLight,
     this.codeThemeDark,
     this.transcriptView = TranscriptView.normal,
@@ -295,6 +297,11 @@ class AppSettings {
   /// terminal escondido; `false` (padrão) usa o `stream-json`.
   final bool chatRemoteControl;
 
+  /// Modo de permissão e esforço com que conversas novas do chat abrem: o
+  /// último escolhido no composer (o Claude Code não guarda entre sessões).
+  final String chatPermissionMode;
+  final String chatEffort;
+
   /// Paleta de syntax no modo claro / escuro (nome do `SyntaxPalette` da UI).
   /// `null` = a paleta do tema ativo.
   final String? codeThemeLight;
@@ -399,6 +406,8 @@ class AppSettings {
     DateTime? lastUpdateCheckTime,
     bool? classifySessionStates,
     bool? chatRemoteControl,
+    String? chatPermissionMode,
+    String? chatEffort,
     String? codeThemeLight,
     bool clearCodeThemeLight = false,
     String? codeThemeDark,
@@ -476,6 +485,8 @@ class AppSettings {
       classifySessionStates:
           classifySessionStates ?? this.classifySessionStates,
       chatRemoteControl: chatRemoteControl ?? this.chatRemoteControl,
+      chatPermissionMode: chatPermissionMode ?? this.chatPermissionMode,
+      chatEffort: chatEffort ?? this.chatEffort,
       codeThemeLight: clearCodeThemeLight
           ? null
           : (codeThemeLight ?? this.codeThemeLight),
@@ -560,6 +571,9 @@ class AppSettings {
       'lastUpdateCheckTime': lastUpdateCheckTime!.toIso8601String(),
     if (!classifySessionStates) 'chat.classifySessionStates': false,
     if (chatRemoteControl) 'chat.remoteControl': true,
+    if (chatPermissionMode != 'default')
+      'chat.permissionMode': chatPermissionMode,
+    if (chatEffort != 'high') 'chat.effort': chatEffort,
     if (codeThemeLight != null) 'code.themeLight': codeThemeLight,
     if (codeThemeDark != null) 'code.themeDark': codeThemeDark,
     'chat.transcriptView': transcriptView.name,
@@ -668,6 +682,8 @@ class AppSettings {
       classifySessionStates:
           json['chat.classifySessionStates'] as bool? ?? true,
       chatRemoteControl: json['chat.remoteControl'] as bool? ?? false,
+      chatPermissionMode: str(json['chat.permissionMode']) ?? 'default',
+      chatEffort: str(json['chat.effort']) ?? 'high',
       codeThemeLight: str(json['code.themeLight']),
       codeThemeDark: str(json['code.themeDark']),
       transcriptView: _enumByName(

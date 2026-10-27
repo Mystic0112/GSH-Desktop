@@ -29,6 +29,7 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
     bool showThinking = false,
     String? model,
     String? effort,
+    Map<String, String> environment = const {},
   }) async {
     final exe = await resolveExecutable('claude');
     // Sem escolha explícita em ~/.claude/settings.json, o Claude Code segura a
@@ -71,7 +72,7 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
         if (effort != null) ...['--effort', effort],
       ],
       workingDirectory: cwd,
-      environment: claudeEnvWithDirOnPath(exe),
+      environment: claudeEnvWithDirOnPath(exe, environment),
     );
     return ClaudeStreamEngine(proc);
   }
@@ -159,12 +160,16 @@ DateTime? _at(Map<String, dynamic> o) =>
 
 /// O `claude` do npm é um script `#!/usr/bin/env node`. Aberto pelo launcher
 /// (sem o PATH do shell, ex.: nvm), o `env` não acha o `node`: põe a pasta do
-/// executável — onde o nvm/npm deixa os dois — na frente do PATH.
-Map<String, String> claudeEnvWithDirOnPath(String exe) {
+/// executável — onde o nvm/npm deixa os dois — na frente do PATH. [extra]
+/// entra junto; o PATH dele (ex.: o da CLI `gsh`) vira a base.
+Map<String, String> claudeEnvWithDirOnPath(
+  String exe, [
+  Map<String, String> extra = const {},
+]) {
   final sep = Platform.isWindows ? ';' : ':';
   final dir = File(exe).parent.path;
-  final path = Platform.environment['PATH'] ?? '';
-  return {'PATH': path.isEmpty ? dir : '$dir$sep$path'};
+  final path = extra['PATH'] ?? Platform.environment['PATH'] ?? '';
+  return {...extra, 'PATH': path.isEmpty ? dir : '$dir$sep$path'};
 }
 
 class ClaudeStreamEngine implements ChatEngine {

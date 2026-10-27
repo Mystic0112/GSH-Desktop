@@ -8,6 +8,7 @@ import 'package:gsh_desktop/app/core/domain/result.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_mail.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
+import 'package:gsh_desktop/app/gsh/ui/session/chat_session.dart';
 import 'package:path/path.dart' as p;
 
 /// Um agente de colega que se pode chamar: `Fulano/aba`.
@@ -87,6 +88,11 @@ class TeamPost extends ChangeNotifier {
   /// (aba fechada...) ou `null`. O shell pluga.
   Future<String?> Function(TeamKnock knock) deliver = (_) async =>
       'no shell attached';
+
+  /// Põe a batida como turno numa aba de chat (a página pluga, porque as
+  /// conversas vivem no `ChatViewModel`). Devolve o erro ou `null`.
+  String? Function(ChatSession tab, String text) toChat = (_, _) =>
+      'no chat attached';
 
   TeamFarmConfig get config => _config;
   int? get mailPort => _mail.port;

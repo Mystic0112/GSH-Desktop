@@ -53,6 +53,10 @@ abstract interface class ChatEngineFactory {
     bool showThinking = false,
     String? model,
     String? effort,
+
+    /// Somado ao ambiente do `claude` (o shell passa o da CLI `gsh`: aba,
+    /// socket e PATH), para o agente do chat usar `gsh msg`/`peers`.
+    Map<String, String> environment = const {},
   });
 
   /// Modelos e uso da conta sem conversa aberta (o seletor de modelo e o

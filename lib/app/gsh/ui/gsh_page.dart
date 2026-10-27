@@ -34,6 +34,7 @@ import 'package:gsh_desktop/app/gsh/ui/widgets/telemetry_panel.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/db_connection.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/gallery_template.dart';
 import 'package:gsh_desktop/app/core/ui/file_operation_error_message.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/gsh_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/update_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/layout_preview_tab.dart';
@@ -250,6 +251,21 @@ class _GshPageState extends State<GshPage> {
     _syncGsh();
     _syncAutomationSelection();
     _syncFileEditorEngine();
+    // Chat como agente de verdade: o `claude` da aba recebe o ambiente da
+    // CLI `gsh` (responde com `gsh msg`), e batida de colega vira turno.
+    final chats = context.read<ChatViewModel>()
+      ..envFor = (id) => _vm.cliEnvironment(tabId: id);
+    _vm.teamPost.toChat = (tab, text) {
+      chats
+          .chatFor(
+            tab.id,
+            cwd: tab.workingDirectory,
+            resumeSessionId: tab.sessionId,
+            view: _settings!.settings.transcriptView,
+          )
+          .sendWhenIdle(text);
+      return null;
+    };
     // Restaura a visibilidade dos painéis (rail/árvore) salva na sessão anterior
     // e persiste de volta a cada toggle. A VM é a fonte de verdade em runtime.
     final vm = context.read<GshViewModel>();

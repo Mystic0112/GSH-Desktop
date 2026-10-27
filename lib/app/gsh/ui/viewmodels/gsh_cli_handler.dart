@@ -1680,9 +1680,15 @@ class GshCliHandler {
     final r = await _vm.teamPost.send(
       from: TeamSender(
         tabId: sender.id,
-        label: sender is TerminalSession
-            ? teamAgentLabel(sender)
-            : (sender.manualLabel ?? sender.id),
+        // O endereço que os colegas veem (já sem repetição), para a
+        // resposta voltar a esta aba.
+        label:
+            _vm.teamPost
+                .localAgents()
+                .where((a) => a.tabId == sender.id)
+                .firstOrNull
+                ?.label ??
+            teamAgentLabel(sender),
         sessionId: sender is TerminalSession ? sender.claudeSessionId : null,
       ),
       target: to,

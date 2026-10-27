@@ -35,6 +35,7 @@ class ClaudeCliEngineFactory implements ChatEngineFactory {
     bool showThinking = false,
     String? model,
     String? effort,
+    Map<String, String> environment = const {},
   }) async {
     final exe = await resolveExecutable('claude');
     final sid = resumeSessionId ?? _uuidV4();
@@ -86,7 +87,7 @@ class ClaudeCliEngineFactory implements ChatEngineFactory {
         jsonEncode(settings),
       ],
       workingDirectory: cwd,
-      environment: claudeEnvWithDirOnPath(exe),
+      environment: claudeEnvWithDirOnPath(exe, environment),
       rows: 50,
       columns: 160,
     );
