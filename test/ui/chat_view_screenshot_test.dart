@@ -56,6 +56,13 @@ class _Engine implements ChatEngine {
 }
 
 class _Factory implements ChatEngineFactory {
+  final renames = <String>[];
+  @override
+  Future<void> rename({
+    required String cwd,
+    required String sessionId,
+    required String title,
+  }) async => renames.add(title);
   final engine = _Engine();
   @override
   Future<ChatAccountProbe?> probe({bool fresh = false}) async => null;

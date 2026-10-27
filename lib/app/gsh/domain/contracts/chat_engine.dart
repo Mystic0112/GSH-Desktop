@@ -68,4 +68,12 @@ abstract interface class ChatEngineFactory {
     required String cwd,
     required String sessionId,
   });
+
+  /// Dá um nome à sessão [sessionId], o mesmo que o `/rename` do Claude
+  /// Code: vale no retomar conversa, na fazenda e no `claude --resume`.
+  Future<void> rename({
+    required String cwd,
+    required String sessionId,
+    required String title,
+  });
 }

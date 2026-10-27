@@ -49,4 +49,11 @@ class ChatEngineRouter implements ChatEngineFactory {
     required String cwd,
     required String sessionId,
   }) => readClaudeHistory(cwd: cwd, sessionId: sessionId);
+
+  @override
+  Future<void> rename({
+    required String cwd,
+    required String sessionId,
+    required String title,
+  }) => writeClaudeTitle(cwd: cwd, sessionId: sessionId, title: title);
 }

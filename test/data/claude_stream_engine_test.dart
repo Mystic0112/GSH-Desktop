@@ -138,6 +138,13 @@ class _FakeEngine implements ChatEngine {
 }
 
 class _FakeFactory implements ChatEngineFactory {
+  final renames = <String>[];
+  @override
+  Future<void> rename({
+    required String cwd,
+    required String sessionId,
+    required String title,
+  }) async => renames.add(title);
   final engine = _FakeEngine();
   String? resumed;
   bool? thinking;
@@ -426,6 +433,34 @@ void main() {
     await Future<void>.delayed(Duration.zero);
     expect(f.engine.sent, ['oi', '[team knock · from Yan] recebido']);
   });
+
+  test(
+    'renomear: grava já, ou no fim do turno; volta pelo histórico',
+    () async {
+      final f = _FakeFactory();
+      final chat = ChatController(f, cwd: '/repo')..rename('antes de existir');
+      expect(f.renames, isEmpty); // sem sessão ainda
+      await chat.send('oi'); // turno rodando
+      f.engine.ctrl.add(const ChatReady(sessionId: 's-9', model: 'opus'));
+      await Future<void>.delayed(Duration.zero);
+      expect(f.renames, isEmpty);
+      f.engine.ctrl.add(
+        const ChatTurnEnd(isError: false, text: '', sessionId: 's-9'),
+      );
+      await Future<void>.delayed(Duration.zero);
+      expect(f.renames, ['antes de existir']);
+      chat.rename('  Refatorar login  ');
+      expect(
+        (chat.title, f.renames.last),
+        ('Refatorar login', 'Refatorar login'),
+      );
+
+      final g = _FakeFactory()..past = const [ChatRenamed('do disco')];
+      final resumed = ChatController(g, cwd: '/repo', resumeSessionId: 's-1');
+      await Future<void>.delayed(Duration.zero);
+      expect(resumed.title, 'do disco');
+    },
+  );
 
   test('esforço: antes do motor vai no start; depois, ao vivo', () async {
     final f = _FakeFactory();

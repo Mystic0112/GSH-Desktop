@@ -83,6 +83,13 @@ class ClaudeStreamEngineFactory implements ChatEngineFactory {
     required String sessionId,
   }) => readClaudeHistory(cwd: cwd, sessionId: sessionId);
 
+  @override
+  Future<void> rename({
+    required String cwd,
+    required String sessionId,
+    required String title,
+  }) => writeClaudeTitle(cwd: cwd, sessionId: sessionId, title: title);
+
   static ChatAccountProbe? _probe;
   static DateTime? _probeAt;
 
@@ -137,6 +144,10 @@ Future<List<ChatEvent>> readClaudeHistory({
       continue;
     }
     if (o is! Map<String, dynamic> || o['isSidechain'] == true) continue;
+    if (o['type'] == 'custom-title' && o['customTitle'] is String) {
+      out.add(ChatRenamed(o['customTitle'] as String));
+      continue;
+    }
     if (o['type'] == 'user' && o['isMeta'] != true) {
       final content = (o['message'] as Map?)?['content'];
       if (content is String && !content.startsWith('<')) {
@@ -153,6 +164,23 @@ Future<List<ChatEvent>> readClaudeHistory({
     }
   }
   return out;
+}
+
+/// Grava o nome da sessão como o `/rename` do Claude Code: uma linha
+/// `custom-title` no fim do transcript (vale a última).
+Future<void> writeClaudeTitle({
+  required String cwd,
+  required String sessionId,
+  required String title,
+}) async {
+  final file = claudeTranscriptFile(cwd, sessionId);
+  if (file == null || !await file.exists()) return;
+  final line = jsonEncode({
+    'type': 'custom-title',
+    'customTitle': title,
+    'sessionId': sessionId,
+  });
+  await file.writeAsString('$line\n', mode: FileMode.append, flush: true);
 }
 
 DateTime? _at(Map<String, dynamic> o) =>

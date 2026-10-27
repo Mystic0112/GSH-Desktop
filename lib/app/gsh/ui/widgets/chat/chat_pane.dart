@@ -1,3 +1,5 @@
+import 'package:gsh_desktop/app/gsh/ui/widgets/realm_dialogs.dart';
+import 'package:gsh_desktop/app/core/ui/widgets/hover_tap.dart';
 import 'dart:math' as math;
 
 import 'package:gsh_desktop/app/gsh/ui/widgets/chat/chat_slash_menu.dart';
@@ -219,13 +221,27 @@ class _Header extends StatelessWidget {
   final VoidCallback? onImproveHarness;
   final bool showSessionState;
 
+  Future<void> _rename(BuildContext context, String current) async {
+    final tr = context.t.gsh.chat;
+    final name = await showRealmNameDialog(
+      context,
+      title: tr.rename,
+      confirmLabel: tr.renameConfirm,
+      takenNames: const {},
+      initial: current,
+    );
+    if (name != null) chat.rename(name);
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final first = chat.items.whereType<ChatUserItem>().firstOrNull?.text;
-    final title = first == null || first.trim().isEmpty
-        ? context.t.gsh.chat.newChat
-        : first.trim().split('\n').first;
+    final title =
+        chat.title ??
+        (first == null || first.trim().isEmpty
+            ? context.t.gsh.chat.newChat
+            : first.trim().split('\n').first);
     return Container(
       height: 38,
       padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -241,14 +257,25 @@ class _Header extends StatelessWidget {
             child: Row(
               children: [
                 Flexible(
-                  child: Text(
-                    title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.typo.body.copyWith(
-                      fontSize: 13.5,
-                      fontWeight: FontWeight.w500,
-                      color: colors.text,
+                  child: AppTooltip(
+                    message: context.t.gsh.chat.renameHint,
+                    child: HoverTap(
+                      onTap: () => _rename(context, title),
+                      borderRadius: BorderRadius.circular(5),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 2,
+                      ),
+                      child: Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.typo.body.copyWith(
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w500,
+                          color: colors.text,
+                        ),
+                      ),
                     ),
                   ),
                 ),

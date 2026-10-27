@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:gsh_desktop/app/core/domain/result.dart';
-import 'package:gsh_desktop/app/gsh/data/farm/team_signing.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/team_crypto.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_mail.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
 
@@ -12,9 +12,10 @@ import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
 /// livre (anunciada no pacote da fazenda do time) e quem manda abre uma
 /// conexão, escreve uma linha JSON e lê uma linha de resposta.
 ///
-/// Linha: `{"b": <corpo JSON em texto>, "m": <HMAC do corpo>}`. O corpo leva
-/// o time, a hora e o id da batida: hora fora de ±5 min ou id repetido não
-/// entram (reenvio de pacote capturado na rede).
+/// Linha: `{"e": <corpo JSON cifrado com a senha do time, base64>}` (texto e
+/// arquivo não passam abertos pela rede). O corpo leva o time, a hora e o id
+/// da batida: hora fora de ±5 min ou id repetido não entram (reenvio de
+/// pacote capturado na rede).
 class LanTeamMail implements TeamMail {
   LanTeamMail({this.maxBytes = 25 * 1024 * 1024});
 
@@ -79,19 +80,16 @@ class LanTeamMail implements TeamMail {
 
   String _accept(String line) {
     final o = jsonDecode(line);
-    if (o is! Map || o['b'] is! String) {
+    if (o is! Map || o['e'] is! String) {
       return jsonEncode({'ok': false, 'error': 'bad request'});
     }
-    final body = o['b'] as String;
-    if (!_config.mailActive ||
-        !teamMacOk(
-          _config.team,
-          _config.secret,
-          utf8.encode(body),
-          o['m'] as String?,
-        )) {
+    final plain = _config.mailActive
+        ? teamOpen(_config.team, _config.secret, base64Decode(o['e'] as String))
+        : null;
+    if (plain == null) {
       return jsonEncode({'ok': false, 'error': 'wrong team password'});
     }
+    final body = utf8.decode(plain);
     final knock = decodeKnock(body, now: DateTime.now(), skew: _skew);
     if (knock == null) {
       return jsonEncode({'ok': false, 'error': 'stale or invalid knock'});
@@ -115,8 +113,9 @@ class LanTeamMail implements TeamMail {
     }
     final body = encodeKnock(knock, team: _config.team, at: DateTime.now());
     final line = jsonEncode({
-      'b': body,
-      'm': teamMac(_config.team, _config.secret, utf8.encode(body)),
+      'e': base64Encode(
+        teamSeal(_config.team, _config.secret, utf8.encode(body)),
+      ),
     });
     if (line.length > maxBytes) return const Failure('file too large');
     Socket? s;

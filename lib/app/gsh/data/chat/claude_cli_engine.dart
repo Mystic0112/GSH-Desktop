@@ -100,6 +100,13 @@ class ClaudeCliEngineFactory implements ChatEngineFactory {
     required String sessionId,
   }) => readClaudeHistory(cwd: cwd, sessionId: sessionId);
 
+  @override
+  Future<void> rename({
+    required String cwd,
+    required String sessionId,
+    required String title,
+  }) => writeClaudeTitle(cwd: cwd, sessionId: sessionId, title: title);
+
   /// Sem protocolo de controle no TUI: quem consulta a conta é o roteador
   /// (pelo `stream-json`).
   @override

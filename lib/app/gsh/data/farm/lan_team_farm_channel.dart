@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:gsh_desktop/app/gsh/data/farm/team_signing.dart';
+import 'package:gsh_desktop/app/gsh/data/farm/team_crypto.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/team_farm_channel.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/farm_loop.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
@@ -126,8 +126,9 @@ String _randomId() {
 /// Teto do datagrama: o resto dos loops (os mais antigos) fica de fora.
 const _maxLoops = 80;
 
-/// Com [secret], o corpo vai assinado (`{"b": corpo, "m": hmac}`); sem,
-/// vai o corpo puro.
+/// Com [secret], o pacote vai cifrado com a senha do time ([teamSeal]):
+/// quem está na rede sem a senha não lê nomes, pastas nem títulos. Sem
+/// senha, vai o corpo puro (gzip).
 Uint8List encodeTeamPacket(TeamFarmPacket p, {String secret = ''}) {
   final loops = [...p.loops]..sort((a, b) => b.lastSeen.compareTo(a.lastSeen));
   final body = jsonEncode({
@@ -139,19 +140,15 @@ Uint8List encodeTeamPacket(TeamFarmPacket p, {String secret = ''}) {
     if (p.agents.isNotEmpty) 'ag': [for (final a in p.agents) _agentToJson(a)],
     if (p.mailPort != null) 'mp': p.mailPort,
   });
-  final wire = secret.isEmpty
-      ? body
-      : jsonEncode({
-          'b': body,
-          'm': teamMac(p.team, secret, utf8.encode(body)),
-        });
-  return Uint8List.fromList(gzip.encode(utf8.encode(wire)));
+  final packed = gzip.encode(utf8.encode(body));
+  return secret.isEmpty
+      ? Uint8List.fromList(packed)
+      : teamSeal(p.team, secret, packed);
 }
 
 /// `null` para lixo, versão desconhecida, pacote de outro programa ou
-/// assinatura que não bate. Com [secret], só aceita pacote assinado com ela;
-/// sem, só aceita pacote sem assinatura (times com e sem senha não se
-/// misturam).
+/// cifra que não abre. Com [secret], só aceita pacote cifrado com ela; sem,
+/// só aceita pacote aberto (times com e sem senha não se misturam).
 TeamFarmPacket? decodeTeamPacket(
   List<int> bytes, {
   String team = '',
@@ -159,17 +156,9 @@ TeamFarmPacket? decodeTeamPacket(
   String? address,
 }) {
   try {
-    var o = jsonDecode(utf8.decode(gzip.decode(bytes)));
-    if (o is Map && o.containsKey('m')) {
-      final body = o['b'] as String;
-      if (secret.isEmpty ||
-          !teamMacOk(team, secret, utf8.encode(body), o['m'] as String?)) {
-        return null;
-      }
-      o = jsonDecode(body);
-    } else if (secret.isNotEmpty) {
-      return null;
-    }
+    final packed = secret.isEmpty ? bytes : teamOpen(team, secret, bytes);
+    if (packed == null) return null;
+    final o = jsonDecode(utf8.decode(gzip.decode(packed)));
     if (o is! Map || o['v'] != 1) return null;
     return TeamFarmPacket(
       machineId: o['id'] as String,

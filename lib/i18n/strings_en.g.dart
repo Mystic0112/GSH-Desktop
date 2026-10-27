@@ -3065,6 +3065,15 @@ class Translations$gsh$chat$en {
 
 	/// en: 'Improve this project's harness based on a previous conversation (session ${sessionId}). 1. Find the transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. It is JSONL and can be large: use grep/jq/head, don't read it whole. Focus on the user's messages, the corrections they made, tool errors and rework. 2. Read the harness that applied there: CLAUDE.md (project and global), .claude/skills, .claude/agents, .claude/commands and the hooks in .claude/settings.json. 3. Find what cost time: a missing instruction, an ignored rule, a repeated step, a wrong command, something the user had to correct. 4. For each finding, propose ONE small change to the project's harness (the global one only if I ask): - stable fact about the repository → CLAUDE.md - multi-step procedure → skill - something that must be prevented → a hook that blocks and explains why it stopped and what to do instead 5. Before editing, show a table: what, where and the evidence (the moment in the conversation that justifies it). No evidence, no proposal. If nothing is worth it, say so. 6. Then apply one change at a time with Edit/Write; I review each diff and approve or deny it. CLAUDE.md goes into every message: keep it short.'
 	String improveHarnessPrompt({required Object sessionId}) => 'Improve this project\'s harness based on a previous conversation (session ${sessionId}).\n\n1. Find the transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. It is JSONL and can be large: use grep/jq/head, don\'t read it whole. Focus on the user\'s messages, the corrections they made, tool errors and rework.\n2. Read the harness that applied there: CLAUDE.md (project and global), .claude/skills, .claude/agents, .claude/commands and the hooks in .claude/settings.json.\n3. Find what cost time: a missing instruction, an ignored rule, a repeated step, a wrong command, something the user had to correct.\n4. For each finding, propose ONE small change to the project\'s harness (the global one only if I ask):\n   - stable fact about the repository → CLAUDE.md\n   - multi-step procedure → skill\n   - something that must be prevented → a hook that blocks and explains why it stopped and what to do instead\n5. Before editing, show a table: what, where and the evidence (the moment in the conversation that justifies it). No evidence, no proposal. If nothing is worth it, say so.\n6. Then apply one change at a time with Edit/Write; I review each diff and approve or deny it.\n\nCLAUDE.md goes into every message: keep it short.';
+
+	/// en: 'Rename conversation'
+	String get rename => 'Rename conversation';
+
+	/// en: 'Click to rename. The name also shows in Resume conversation, on the farm and in claude --resume.'
+	String get renameHint => 'Click to rename. The name also shows in Resume conversation, on the farm and in claude --resume.';
+
+	/// en: 'Rename'
+	String get renameConfirm => 'Rename';
 }
 
 // Path: gsh.harness
@@ -6699,6 +6708,9 @@ extension on Translations {
 			'gsh.chat.improveHarness' => 'Improve harness',
 			'gsh.chat.improveHarnessHint' => 'Opens a chat that reads this conversation and proposes changes to the project\'s CLAUDE.md, skills and hooks, each with the evidence. You approve every edit.',
 			'gsh.chat.improveHarnessPrompt' => ({required Object sessionId}) => 'Improve this project\'s harness based on a previous conversation (session ${sessionId}).\n\n1. Find the transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. It is JSONL and can be large: use grep/jq/head, don\'t read it whole. Focus on the user\'s messages, the corrections they made, tool errors and rework.\n2. Read the harness that applied there: CLAUDE.md (project and global), .claude/skills, .claude/agents, .claude/commands and the hooks in .claude/settings.json.\n3. Find what cost time: a missing instruction, an ignored rule, a repeated step, a wrong command, something the user had to correct.\n4. For each finding, propose ONE small change to the project\'s harness (the global one only if I ask):\n   - stable fact about the repository → CLAUDE.md\n   - multi-step procedure → skill\n   - something that must be prevented → a hook that blocks and explains why it stopped and what to do instead\n5. Before editing, show a table: what, where and the evidence (the moment in the conversation that justifies it). No evidence, no proposal. If nothing is worth it, say so.\n6. Then apply one change at a time with Edit/Write; I review each diff and approve or deny it.\n\nCLAUDE.md goes into every message: keep it short.',
+			'gsh.chat.rename' => 'Rename conversation',
+			'gsh.chat.renameHint' => 'Click to rename. The name also shows in Resume conversation, on the farm and in claude --resume.',
+			'gsh.chat.renameConfirm' => 'Rename',
 			'gsh.harness.tabTitle' => 'Harness',
 			'gsh.harness.subtitle' => ({required Object path}) => 'What the agent loads when it runs in ${path}',
 			'gsh.harness.refresh' => 'Read again',
@@ -6842,11 +6854,11 @@ extension on Translations {
 			'settings.language.english' => 'English',
 			'settings.language.portugueseBr' => 'Português (BR)',
 			'settings.language.spanish' => 'Español',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.header.back' => 'Back',
 			'settings.page.header.title' => 'Settings',
 			'settings.page.nav.sideGsh' => 'GSH Desktop',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.nav.sideClaude' => 'Claude',
 			'settings.page.nav.general' => 'General',
 			'settings.page.nav.appearance' => 'Appearance',
@@ -7356,11 +7368,11 @@ extension on Translations {
 			'fileOperation.error.clipboardEmpty' => 'Clipboard is empty.',
 			'fileOperation.error.notScratchTab' => 'This tab is not a scratch file.',
 			'fileOperation.error.writeFailed' => 'Could not write the file.',
+			_ => null,
+		} ?? switch (path) {
 			'fileOperation.error.formatterEmptyCommand' => 'Empty formatter command.',
 			'fileOperation.error.formatterMissingPlaceholder' => 'Formatter command must include the %FILE% placeholder.',
 			'fileOperation.error.formatterTimeout' => 'Formatter timed out.',
-			_ => null,
-		} ?? switch (path) {
 			'fileOperation.error.formatterExitCode' => ({required Object code}) => 'Formatter exited with ${code}.',
 			'fileOperation.error.formatterFailed' => 'The formatter could not run.',
 			'fileOperation.error.osFailure' => ({required Object detail}) => '${detail}',
