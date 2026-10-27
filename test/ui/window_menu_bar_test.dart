@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:gsh_desktop/app/core/ui/menu/app_menu_bar.dart';
 import 'package:gsh_desktop/app/core/ui/menu/menu_model.dart';
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
@@ -91,11 +93,14 @@ void main() {
     expect(find.text('New Terminal'), findsNothing);
   });
 
-  testWidgets('no macOS não desenha nada (a barra é a nativa do SO)', (
-    tester,
-  ) async {
-    await tester.pumpWidget(_host(WindowMenuBar(menus: menus())));
+  testWidgets(
+    'no macOS não desenha nada (a barra é a nativa do SO)',
+    // O widget olha o SO de verdade (`Platform.isMacOS`): só vale num Mac.
+    skip: !Platform.isMacOS,
+    (tester) async {
+      await tester.pumpWidget(_host(WindowMenuBar(menus: menus())));
 
-    expect(find.byIcon(Icons.menu), findsNothing);
-  });
+      expect(find.byIcon(Icons.menu), findsNothing);
+    },
+  );
 }

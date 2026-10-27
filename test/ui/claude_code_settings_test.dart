@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:gsh_desktop/app/core/domain/contracts/claude_code_settings.dart';
+import 'package:gsh_desktop/app/core/domain/contracts/protected_hosts.dart';
 import 'package:gsh_desktop/app/core/domain/contracts/settings_store.dart';
 import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:gsh_desktop/app/core/domain/result.dart';
@@ -71,6 +74,7 @@ Future<(SettingsController, _ClaudeSettings)> _mount(
     register: (c) => c
       ..addInstance<ClaudeCodeSettings>(claude)
       ..addInstance<ClaudeInfoSource>(_NoClaude())
+      ..addInstance<ProtectedHosts>(_NoHosts())
       ..route(
         '/',
         provide: (s) =>
@@ -122,9 +126,11 @@ void main() {
     expect(settings.settings.transcriptView, TranscriptView.thinking);
 
     final switches = find.byType(Switch);
-    // Geral (2) + Remote Control + Sessões (sugestões, sandbox, estrito) +
+    // Geral (2) + Remote Control (motor CLI do chat, fora do Windows, e
+    // Remote Control ao iniciar) + Sessões (sugestões, sandbox, estrito) +
     // Navegador.
-    expect(switches, findsNWidgets(7));
+    final cliEngine = Platform.isWindows ? 0 : 1;
+    expect(switches, findsNWidgets(7 + cliEngine));
     // Classificar: GSH, padrão ligado.
     await tester.tap(switches.at(0));
     await tester.pump();
@@ -134,34 +140,44 @@ void main() {
     await tester.pumpAndSettle();
     expect(claude.values, {ClaudeCodeKeys.switchModelsOnFlag: false});
     // Remote Control: liga grava true, desliga remove a chave.
-    await tester.tap(switches.at(2));
+    // Com o motor CLI na lista, o Remote Control cai abaixo da dobra.
+    await tester.ensureVisible(switches.at(2 + cliEngine));
+    await tester.pumpAndSettle();
+    await tester.tap(switches.at(2 + cliEngine));
     await tester.pumpAndSettle();
     expect(claude.values[ClaudeCodeKeys.remoteControlAtStartup], isTrue);
-    await tester.tap(switches.at(2));
+    await tester.tap(switches.at(2 + cliEngine));
     await tester.pumpAndSettle();
     expect(
       claude.values.containsKey(ClaudeCodeKeys.remoteControlAtStartup),
       isFalse,
     );
 
-    await tester.enterText(find.byType(TextField), '  Fira Code ');
+    // O primeiro campo é a fonte de código (o outro, hosts protegidos).
+    await tester.enterText(find.byType(TextField).first, '  Fira Code ');
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pump();
     expect(settings.settings.codeFont, 'Fira Code');
   });
 
   test('paleta escolhida vence a do tema e mantém o fundo do tema', () {
-    final base = buildTokens(brightness: Brightness.dark).syntax;
+    // Fontes de teste: com as padrão o google_fonts tenta baixar a
+    // Montserrat, e a rede do teste devolve 400 (falha depois de acabar).
+    const fonts = AppSettings(interfaceFont: 'ChatUi', codeFont: 'ChatMono');
+    final base = buildTokens(
+      brightness: Brightness.dark,
+      settings: fonts,
+    ).syntax;
     final picked = buildTokens(
       brightness: Brightness.dark,
-      settings: const AppSettings(codeThemeDark: 'draculaDark'),
+      settings: fonts.copyWith(codeThemeDark: 'draculaDark'),
     ).syntax;
     expect(picked.keyword, SyntaxColors.draculaDark.keyword);
     expect(picked.background, base.background);
     // A do outro modo não vaza.
     final light = buildTokens(
       brightness: Brightness.light,
-      settings: const AppSettings(codeThemeDark: 'draculaDark'),
+      settings: fonts.copyWith(codeThemeDark: 'draculaDark'),
     ).syntax;
     expect(light.keyword, isNot(SyntaxColors.draculaDark.keyword));
     final json = const AppSettings(
@@ -192,4 +208,13 @@ void main() {
     await tester.pumpAndSettle();
     await takeShot(tester, 'settings_cc_2');
   });
+}
+
+/// Hosts protegidos em memória (a seção Segurança da aba precisa de um).
+class _NoHosts implements ProtectedHosts {
+  var _hosts = <String>[];
+  @override
+  Future<List<String>> read() async => _hosts;
+  @override
+  Future<void> write(List<String> hosts) async => _hosts = hosts;
 }
