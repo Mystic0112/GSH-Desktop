@@ -1420,6 +1420,9 @@ class _Translations$gsh$chat$es extends Translations$gsh$chat$en {
 	@override String get improveHarness => 'Mejorar harness';
 	@override String get improveHarnessHint => 'Abre un chat que lee esta conversación y propone cambios en el CLAUDE.md, las skills y los hooks del proyecto, cada uno con la evidencia. Tú apruebas cada edición.';
 	@override String improveHarnessPrompt({required Object sessionId}) => 'Mejora el harness de este proyecto a partir de una conversación anterior (sesión ${sessionId}).\n\n1. Encuentra el transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. Es JSONL y puede ser grande: usa grep/jq/head, no lo leas entero. Céntrate en los mensajes del usuario, las correcciones que hizo, los errores de herramientas y el retrabajo.\n2. Lee el harness que aplicaba allí: CLAUDE.md (del proyecto y el global), .claude/skills, .claude/agents, .claude/commands y los hooks de .claude/settings.json.\n3. Encuentra lo que costó tiempo: una instrucción que faltó, una regla ignorada, un paso repetido, un comando equivocado, algo que el usuario tuvo que corregir.\n4. Para cada hallazgo, propone UN cambio pequeño en el harness del proyecto (en el global solo si lo pido):\n   - hecho estable del repositorio → CLAUDE.md\n   - procedimiento de varios pasos → skill\n   - algo que debe impedirse → hook que bloquea y explica por qué se detuvo y qué hacer en su lugar\n5. Antes de editar, muestra una tabla: qué, dónde y la evidencia (el momento de la conversación que lo justifica). Sin evidencia, sin propuesta. Si nada vale la pena, dilo.\n6. Después aplica un cambio a la vez con Edit/Write; yo reviso cada diff y lo apruebo o lo niego.\n\nEl CLAUDE.md entra en cada mensaje: mantenlo corto.';
+	@override String get rename => 'Renombrar conversación';
+	@override String get renameHint => 'Haz clic para renombrar. El nombre también aparece en Retomar conversación, en la granja y en claude --resume.';
+	@override String get renameConfirm => 'Renombrar';
 }
 
 // Path: gsh.harness
@@ -3581,6 +3584,9 @@ extension on TranslationsEs {
 			'gsh.chat.improveHarness' => 'Mejorar harness',
 			'gsh.chat.improveHarnessHint' => 'Abre un chat que lee esta conversación y propone cambios en el CLAUDE.md, las skills y los hooks del proyecto, cada uno con la evidencia. Tú apruebas cada edición.',
 			'gsh.chat.improveHarnessPrompt' => ({required Object sessionId}) => 'Mejora el harness de este proyecto a partir de una conversación anterior (sesión ${sessionId}).\n\n1. Encuentra el transcript: `ls ~/.claude/projects/*/${sessionId}.jsonl`. Es JSONL y puede ser grande: usa grep/jq/head, no lo leas entero. Céntrate en los mensajes del usuario, las correcciones que hizo, los errores de herramientas y el retrabajo.\n2. Lee el harness que aplicaba allí: CLAUDE.md (del proyecto y el global), .claude/skills, .claude/agents, .claude/commands y los hooks de .claude/settings.json.\n3. Encuentra lo que costó tiempo: una instrucción que faltó, una regla ignorada, un paso repetido, un comando equivocado, algo que el usuario tuvo que corregir.\n4. Para cada hallazgo, propone UN cambio pequeño en el harness del proyecto (en el global solo si lo pido):\n   - hecho estable del repositorio → CLAUDE.md\n   - procedimiento de varios pasos → skill\n   - algo que debe impedirse → hook que bloquea y explica por qué se detuvo y qué hacer en su lugar\n5. Antes de editar, muestra una tabla: qué, dónde y la evidencia (el momento de la conversación que lo justifica). Sin evidencia, sin propuesta. Si nada vale la pena, dilo.\n6. Después aplica un cambio a la vez con Edit/Write; yo reviso cada diff y lo apruebo o lo niego.\n\nEl CLAUDE.md entra en cada mensaje: mantenlo corto.',
+			'gsh.chat.rename' => 'Renombrar conversación',
+			'gsh.chat.renameHint' => 'Haz clic para renombrar. El nombre también aparece en Retomar conversación, en la granja y en claude --resume.',
+			'gsh.chat.renameConfirm' => 'Renombrar',
 			'gsh.harness.tabTitle' => 'Harness',
 			'gsh.harness.subtitle' => ({required Object path}) => 'Lo que el agente carga al ejecutarse en ${path}',
 			'gsh.harness.refresh' => 'Leer de nuevo',
@@ -3724,11 +3730,11 @@ extension on TranslationsEs {
 			'settings.language.english' => 'Inglés',
 			'settings.language.portugueseBr' => 'Portugués (BR)',
 			'settings.language.spanish' => 'Español',
+			_ => null,
+		} ?? switch (path) {
 			'settings.page.header.back' => 'Atrás',
 			'settings.page.header.title' => 'Configuración',
 			'settings.page.nav.sideGsh' => 'GSH Desktop',
-			_ => null,
-		} ?? switch (path) {
 			'settings.page.nav.sideClaude' => 'Claude',
 			'settings.page.nav.general' => 'General',
 			'settings.page.nav.appearance' => 'Apariencia',
@@ -4238,11 +4244,11 @@ extension on TranslationsEs {
 			'fileOperation.error.clipboardEmpty' => 'El portapapeles está vacío.',
 			'fileOperation.error.notScratchTab' => 'Esta pestaña no es un archivo temporal.',
 			'fileOperation.error.writeFailed' => 'No se pudo escribir el archivo.',
+			_ => null,
+		} ?? switch (path) {
 			'fileOperation.error.formatterEmptyCommand' => 'Comando de formato vacío.',
 			'fileOperation.error.formatterMissingPlaceholder' => 'El comando de formato debe incluir el marcador %FILE%.',
 			'fileOperation.error.formatterTimeout' => 'El formateador agotó el tiempo de espera.',
-			_ => null,
-		} ?? switch (path) {
 			'fileOperation.error.formatterExitCode' => ({required Object code}) => 'El formateador terminó con el código ${code}.',
 			'fileOperation.error.formatterFailed' => 'No se pudo ejecutar el formateador.',
 			'fileOperation.error.osFailure' => ({required Object detail}) => '${detail}',

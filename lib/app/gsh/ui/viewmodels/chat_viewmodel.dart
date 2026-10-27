@@ -202,6 +202,35 @@ class ChatController extends ChangeNotifier {
 
   final items = <ChatItem>[];
   String? sessionId;
+
+  /// Nome dado à conversa; `null` = o cabeçalho usa a primeira mensagem.
+  String? title;
+
+  /// Renomeada antes de a sessão existir em disco: grava no fim do turno.
+  bool _titlePending = false;
+
+  /// Renomeia a conversa (o mesmo que o `/rename` do Claude Code).
+  void rename(String value) {
+    final v = value.trim();
+    if (v.isEmpty || v == title) return;
+    title = v;
+    _titlePending = true;
+    notifyListeners();
+    unawaited(_writeTitle());
+  }
+
+  Future<void> _writeTitle() async {
+    final sid = sessionId;
+    final t = title;
+    if (!_titlePending || sid == null || t == null || busy) return;
+    _titlePending = false;
+    try {
+      await _factory.rename(cwd: cwd, sessionId: sid, title: t);
+    } on Object catch (e) {
+      debugPrint('[chat] renomear $sid: $e');
+    }
+  }
+
   bool loadingHistory = false;
 
   /// Modo de permissão da sessão (os do Claude Code): `default` pede
@@ -504,6 +533,8 @@ class ChatController extends ChangeNotifier {
         if (permissionMode != null) this.permissionMode = permissionMode;
       case ChatModeChanged(:final mode):
         permissionMode = mode;
+      case ChatRenamed(:final title):
+        this.title = title;
       case ChatModels(:final models):
         this.models = models;
       case ChatCommands(:final commands):
@@ -606,6 +637,8 @@ class ChatController extends ChangeNotifier {
       ):
         busy = false;
         this.sessionId = sessionId;
+        // O transcript já existe: grava o nome dado antes (ou durante o turno).
+        unawaited(_writeTitle());
         if (costUsd != null) this.costUsd += costUsd;
         // O turno gastou do plano: atualiza o indicador (com o cache de 30 s).
         unawaited(refreshAccount());

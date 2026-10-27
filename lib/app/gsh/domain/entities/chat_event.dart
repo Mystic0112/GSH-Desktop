@@ -91,6 +91,12 @@ class ChatUserText extends ChatEvent {
   final DateTime? at;
 }
 
+/// Nome dado à sessão (`/rename`), lido do histórico.
+class ChatRenamed extends ChatEvent {
+  const ChatRenamed(this.title);
+  final String title;
+}
+
 /// Texto do assistente (um bloco `text`).
 class ChatText extends ChatEvent {
   const ChatText(this.text, {this.at});
