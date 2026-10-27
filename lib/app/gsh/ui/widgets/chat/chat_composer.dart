@@ -1,3 +1,4 @@
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/domain/contracts/session_directory.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/telemetry_case_view.dart';
@@ -189,7 +190,13 @@ class _BottomBar extends StatelessWidget {
             ),
         ],
       );
-      if (mode != null) chat.setPermissionMode(mode);
+      if (mode == null) return;
+      chat.setPermissionMode(mode);
+      // Vale também para as próximas conversas (planejar é de uma conversa
+      // só, não vira padrão).
+      if (mode != 'plan' && anchor.mounted) {
+        anchor.read<SettingsController>().setChatPermissionMode(mode);
+      }
     }
 
     final model = ChatModelButton(chat: chat);

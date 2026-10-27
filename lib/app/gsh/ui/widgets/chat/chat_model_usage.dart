@@ -1,3 +1,5 @@
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:gsh_desktop/app/core/ui/settings_controller.dart';
 import 'dart:math' as math;
 
 import 'package:gsh_desktop/app/core/ui/themes/themes.dart';
@@ -138,7 +140,12 @@ class ChatEffortButton extends StatelessWidget {
           ),
       ],
     );
-    if (value != null) chat.setEffort(value);
+    if (value == null) return;
+    chat.setEffort(value);
+    // Vale também para as próximas conversas.
+    if (anchor.mounted) {
+      anchor.read<SettingsController>().setChatEffort(value);
+    }
   }
 
   @override
