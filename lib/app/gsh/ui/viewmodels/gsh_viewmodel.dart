@@ -1,3 +1,8 @@
+import 'package:gsh_desktop/app/gsh/domain/entities/agent_permission.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/chat_viewmodel.dart'
+    show toolSummary;
+import 'package:gsh_desktop/app/gsh/domain/contracts/notifier.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_permission_broker.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io'
@@ -230,8 +235,11 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
       ..onTreeChanged = _bumpFileTree;
     notifications
       ..focusedTabId = (() => _focusedAgentId)
-      ..workspaceName = ((projectId) => _projectById(projectId)?.name ?? '');
+      ..workspaceName = ((projectId) => _projectById(projectId)?.name ?? '')
+      ..hasPendingAsk = ((tabId) => permissions.forTab(tabId) != null);
     notifications.addListener(_onNotificationsChanged);
+    permissions.addListener(_onPermissionsChanged);
+    _notificationActions = notifications.actions.listen(_onNotificationAction);
     files.addListener(notifyListeners);
     remote.addListener(notifyListeners);
     _lastGitRevision = git.revision;
@@ -757,6 +765,9 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
   /// Mensagens entre agentes (`gsh msg`) por workspace. Listener próprio:
   /// uma mensagem não reconstrói o shell inteiro.
   final AgentMessageLog agentMessages = AgentMessageLog();
+
+  /// Permissões dos agentes de terminal esperando decisão (ilha/notificação).
+  final AgentPermissionBroker permissions = AgentPermissionBroker();
 
   /// Aba cuja árvore de processos contém o processo de [pids] (`[pid, ppid,
   /// …]` do `gsh mcp` do Codex de uma aba). Ver
@@ -5183,6 +5194,22 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
   /// fechamento das abas. O VM não abre diálogo — só guarda o pedido.
   String? _pendingLayoutApply;
 
+  /// Leva o usuário até a aba [tabId], de qualquer workspace (ilha de
+  /// agentes, clique na notificação): seleciona o workspace e a aba, e traz a
+  /// janela para a frente. Focar a aba já devolve ao terminal o pedido de
+  /// permissão que esperava nela.
+  void revealTab(String tabId) {
+    final s = _sessions[tabId];
+    if (s == null) return;
+    if (_selectedProjectId != s.projectId) selectProject(s.projectId);
+    final leaf = leafOfTab(s.projectId, tabId);
+    if (leaf != null) selectTab(leaf, tabId);
+    if (!isMobilePlatform) {
+      unawaited(windowManager.show());
+      unawaited(windowManager.focus());
+    }
+  }
+
   /// Registra o pedido e acorda a UI. Traz a janela principal para a frente:
   /// o clique foi noutra janela, e o que vem a seguir é um diálogo.
   void requestLayoutApply(String ckpPath) {
@@ -6309,11 +6336,17 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
     };
   }
 
-  /// Limpa a notificação do agente que acabou de virar o focado.
+  /// Limpa a notificação do agente que acabou de virar o focado, e devolve
+  /// ao terminal dele o pedido de permissão que esperava na ilha (o prompt
+  /// do Claude só aparece quando o hook solta).
   void _clearFocusedNotification() {
     final id = _focusedAgentId;
     final s = id == null ? null : _sessions[id];
     if (s != null && s.unseenFinish) s.clearUnseen();
+    if (id != null) {
+      permissions.releaseTab(id);
+      unawaited(notifications.tabSeen(id));
+    }
   }
 
   EmptyTab _makeEmpty(String projectId) =>
@@ -6368,6 +6401,7 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
     _fileWatchSeq.remove(id);
     final s = _sessions.remove(id);
     agentFiles.forgetTab(id);
+    permissions.releaseTab(id);
     _outputTurnFiles.forget(id);
     // Aba fechada explicitamente → descarta o scrollback persistido (só abas de
     // terminal têm). O app-quit NÃO passa por aqui (chama `s.dispose()` direto em
@@ -7301,6 +7335,56 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
   /// o timer de serialização do workspace a cada notificação simultânea.
   void _onNotificationsChanged() => super.notifyListeners();
 
+  StreamSubscription<NotifierAction>? _notificationActions;
+
+  /// Pedidos de permissão que já viraram notificação (para apagar quando
+  /// forem decididos em outro lugar).
+  final _notifiedAsks = <String>{};
+
+  void _onPermissionsChanged() {
+    final now = {for (final a in permissions.pending) a.id: a};
+    for (final a in now.values) {
+      final tab = _sessions[a.tabId];
+      if (tab == null || !_notifiedAsks.add(a.id)) continue;
+      unawaited(
+        notifications.permissionAsked(
+          askId: a.id,
+          tab: tab,
+          detail: '${a.toolName} · ${toolSummary(a.toolName, a.input)}',
+          canAlways: a.alwaysRule != null,
+        ),
+      );
+    }
+    for (final id in [..._notifiedAsks]) {
+      if (now.containsKey(id)) continue;
+      _notifiedAsks.remove(id);
+      unawaited(notifications.permissionSettled(id));
+    }
+    notifyListeners();
+  }
+
+  /// Clique na notificação (abre a aba) ou num botão do pedido.
+  void _onNotificationAction(NotifierAction a) {
+    final (kind, id) = switch (a.key.split(':')) {
+      [final k, final v] => (k, v),
+      _ => ('', ''),
+    };
+    if (kind == 'tab') return revealTab(id);
+    if (kind != 'ask') return;
+    final ask = permissions.pending.where((p) => p.id == id).firstOrNull;
+    if (ask == null) return;
+    switch (a.kind) {
+      case NotifierActionKind.open:
+        revealTab(ask.tabId); // devolve o pedido ao terminal
+      case NotifierActionKind.allow:
+        permissions.decide(id, AgentPermissionDecision.allow);
+      case NotifierActionKind.allowAlways:
+        permissions.decide(id, AgentPermissionDecision.allowAlways);
+      case NotifierActionKind.deny:
+        permissions.decide(id, AgentPermissionDecision.deny);
+    }
+  }
+
   /// Re-sincroniza os workspaces remotos quando o [RemoteHostsController] muda
   /// por fora (aba "Remote hosts" das Configurações). Idempotente.
   void _onRemoteHostsChanged() {
@@ -7321,6 +7405,10 @@ class GshViewModel extends ChangeNotifier implements DocumentHost {
     agentMessages.dispose();
     agentFiles.dispose();
     agentGraph.dispose();
+    unawaited(_notificationActions?.cancel());
+    permissions
+      ..removeListener(_onPermissionsChanged)
+      ..dispose();
     unawaited(_statusServer.stop());
     unawaited(_previewSub?.cancel());
     unawaited(_remoteTurnSub?.cancel());

@@ -135,21 +135,62 @@ fn try_run(harness: String) -> Option<()> {
 
     let mut line = payload.to_string();
     line.push('\n');
+    send_status(&line, sock.as_deref(), port);
 
+    // Pedido de permissão do Claude: pergunta ao app (ilha/notificação) e
+    // espera a decisão. Sem resposta, "pass" ou app fora do ar, não imprime
+    // nada e o Claude mostra o prompt de sempre no terminal.
+    if event == "PermissionRequest" && harness == "claude" {
+        if let Some(out) = ask_permission(&pane_id, &decoded) {
+            println!("{out}");
+        }
+    }
+    Some(())
+}
+
+fn send_status(line: &str, sock: Option<&str>, port: Option<u16>) -> Option<()> {
     #[cfg(unix)]
-    if let Some(path) = sock.as_deref() {
+    if let Some(path) = sock {
         let mut s = std::os::unix::net::UnixStream::connect(path).ok()?;
         s.write_all(line.as_bytes()).ok()?;
         let _ = s.flush();
         return Some(());
     }
     #[cfg(not(unix))]
-    let _ = sock.as_deref();
+    let _ = sock;
 
     let mut s = std::net::TcpStream::connect(("127.0.0.1", port?)).ok()?;
     s.write_all(line.as_bytes()).ok()?;
     let _ = s.flush();
     Some(())
+}
+
+/// Manda o pedido ao app (`permission-ask`) e devolve a saída do hook que
+/// ele montou (`data.output`), ou `None` = deixar o terminal perguntar.
+fn ask_permission(pane_id: &str, ev: &Value) -> Option<String> {
+    let req = json!({
+        "cmd": "permission-ask",
+        "tabId": pane_id,
+        "args": {
+            "tool_name": ev.get("tool_name").cloned().unwrap_or(Value::Null),
+            "tool_input": ev.get("tool_input").cloned().unwrap_or(Value::Null),
+            "permission_suggestions": ev
+                .get("permission_suggestions")
+                .cloned()
+                .unwrap_or(Value::Null),
+        },
+    });
+    // O app segura a resposta até alguém decidir (o hook tem timeout longo
+    // no settings.json); 24 h é só o teto do socket.
+    let resp = crate::transport::try_request(req, std::time::Duration::from_secs(86_400)).ok()?;
+    if resp.get("ok") != Some(&Value::Bool(true)) {
+        return None;
+    }
+    let out = resp.get("data")?.get("output")?;
+    if out.is_null() {
+        return None;
+    }
+    Some(out.to_string())
 }
 
 /// Lista de hosts protegidos (`~/.gsh/protected-hosts.json`, array de

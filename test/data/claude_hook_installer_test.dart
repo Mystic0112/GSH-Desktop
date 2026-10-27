@@ -61,5 +61,10 @@ void main() {
     );
     groups = await stopGroups();
     expect(groups, hasLength(2));
+
+    // PermissionRequest espera o humano decidir na ilha: timeout longo.
+    final root = jsonDecode(await config.readAsString()) as Map;
+    final ask = ((root['hooks'] as Map)['PermissionRequest'] as List).single;
+    expect(((ask as Map)['hooks'] as List).single['timeout'], 86400);
   });
 }

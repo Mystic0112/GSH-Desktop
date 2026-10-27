@@ -719,6 +719,9 @@ class ChatViewModel extends ChangeNotifier {
   /// chat usa `gsh msg`/`peers` como o de um terminal.
   Map<String, String> Function(String tabId) envFor = (_) => const {};
 
+  /// A conversa da aba, sem criar (a ilha de agentes só observa).
+  ChatController? existing(String tabId) => _chats[tabId];
+
   /// [view] só vale ao criar: a conversa já aberta mantém a dela.
   ChatController chatFor(
     String tabId, {

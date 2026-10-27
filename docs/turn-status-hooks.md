@@ -46,10 +46,27 @@ reescrever a lista (hooks do usuário, de plugins ou do iTerm2 sobrevivem).
 | `PreToolUse` | ✓ | ✓ | `working` — exceto ferramenta bloqueante do Claude (ver abaixo) |
 | `PostToolUse` | ✓ | ✓ | `working` |
 | `Notification` | ✓ | — | `waiting` / `idle` (heurística sobre o texto) |
-| `PermissionRequest` | — | ✓ | `waiting` |
+| `PermissionRequest` | ✓ | ✓ | `waiting` (no Claude, também pergunta na ilha; ver abaixo) |
 | `Stop` | ✓ | ✓ | `idle` |
 | `SessionStart` / `SessionEnd` | ✓ | ✓ | `idle` |
 | `SubagentStart` / `SubagentStop`, `PreCompact` / `PostCompact` | — | ✓ | **ignorados**: não são o turno da aba |
+
+### Permissão pela ilha (Claude)
+
+No `PermissionRequest` do Claude, depois de reportar `waiting`, o `gsh hook`
+manda o comando `permission-ask` pelo socket e **espera a resposta** (o entry
+no `settings.json` tem `timeout: 86400`). O app segura o pedido no
+`AgentPermissionBroker` até alguém decidir na ilha ou na notificação do SO
+(Permitir / Sempre / Negar) e devolve a saída pronta do hook
+(`hookSpecificOutput.decision`), que o helper imprime. Enquanto espera, o TUI
+do Claude não mostra o prompt; por isso o pedido **volta para o terminal**
+(resposta vazia = o Claude pergunta como sempre) quando:
+
+- a aba já é a focada com a janela na frente (resposta imediata);
+- o usuário foca a aba depois (`releaseTab`);
+- a aba fecha, o app sai, ou o socket não responde.
+
+Sessão fora do GSH (sem `GSH_PANE_ID`) não pergunta nada: o hook não imprime.
 
 Duas assimetrias que importam:
 

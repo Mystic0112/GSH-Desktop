@@ -35,8 +35,16 @@ class _FakeNotifier implements Notifier {
   @override
   Future<void> init() async {}
 
+  final asked = <String>[];
+  final dismissed = <String>[];
+  int needsAction = 0;
+
+  @override
+  Stream<NotifierAction> get actions => const Stream.empty();
+
   @override
   Future<void> agentFinished({
+    required String key,
     required String agentName,
     required String workspace,
   }) async {
@@ -45,9 +53,24 @@ class _FakeNotifier implements Notifier {
 
   @override
   Future<void> agentNeedsAction({
+    required String key,
     required String agentName,
     required String workspace,
-  }) async {}
+  }) async {
+    needsAction++;
+  }
+
+  @override
+  Future<void> permissionAsk({
+    required String key,
+    required String agentName,
+    required String workspace,
+    required String detail,
+    required bool canAlways,
+  }) async => asked.add(key);
+
+  @override
+  Future<void> dismiss(String key) async => dismissed.add(key);
 
   @override
   Future<void> play(
@@ -102,4 +125,40 @@ void main() {
     activity.dispose();
     tab.dispose();
   });
+
+  test(
+    'pedido de permissão: botões só com a janela fora; some ao decidir',
+    () async {
+      final activity = WindowActivityController()..blur();
+      final notifier = _FakeNotifier();
+      final controller = SessionNotificationsController(notifier, activity)
+        ..focusedTabId = (() => 'focused')
+        ..workspaceName = ((_) => 'ws');
+      final tab = _FakePane('t1');
+
+      await controller.permissionAsked(
+        askId: 'p1',
+        tab: tab,
+        detail: 'Bash · npm test',
+        canAlways: true,
+      );
+      expect(notifier.asked, ['ask:p1']);
+      await controller.permissionSettled('p1');
+      await controller.tabSeen('t1');
+      expect(notifier.dismissed, ['ask:p1', 'tab:t1']);
+
+      activity.focus(); // janela na frente: a ilha mostra, só toca o som
+      await controller.permissionAsked(
+        askId: 'p2',
+        tab: tab,
+        detail: 'Bash · ls',
+        canAlways: false,
+      );
+      expect(notifier.asked, ['ask:p1']);
+      expect(notifier.played, 1);
+      controller.dispose();
+      activity.dispose();
+      tab.dispose();
+    },
+  );
 }

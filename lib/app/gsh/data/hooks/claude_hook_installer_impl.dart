@@ -37,7 +37,14 @@ class ClaudeHookInstallerImpl extends HookInstallerBase {
     'Stop',
     'SessionStart',
     'SessionEnd',
+    // Pedido de permissão: o `gsh hook` pergunta na ilha do GSH e espera a
+    // decisão (fora de uma aba do GSH, ou sem resposta, o terminal pergunta).
+    'PermissionRequest',
   ];
+
+  /// O hook do PermissionRequest espera o humano: sem teto longo, o Claude
+  /// mata o hook no timeout padrão e cai no prompt do terminal.
+  static const int _permissionTimeoutSeconds = 86400;
 
   @override
   Future<void> writeConfig({
@@ -81,7 +88,19 @@ class ClaudeHookInstallerImpl extends HookInstallerBase {
           : <dynamic>[];
       final before = list.length;
       list.removeWhere(_isOurs); // tira entries antigos nossos
-      list.add(Map<String, dynamic>.from(ourGroup));
+      list.add(
+        event == 'PermissionRequest'
+            ? {
+                ...ourGroup,
+                'hooks': [
+                  {
+                    ...(ourGroup['hooks'] as List).first as Map,
+                    'timeout': _permissionTimeoutSeconds,
+                  },
+                ],
+              }
+            : Map<String, dynamic>.from(ourGroup),
+      );
       // mudou se removeu algo diferente do que readicionamos ou se cresceu
       if (list.length != before || before == 0) changed = true;
       hooks[event] = list;

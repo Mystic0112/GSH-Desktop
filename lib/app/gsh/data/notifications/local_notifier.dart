@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:gsh_desktop/app/gsh/domain/contracts/notifier.dart';
@@ -23,7 +24,30 @@ class LocalNotifier implements Notifier {
 
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
-  int _id = 0;
+
+  /// Uma notificação por chave (aba ou pedido): a nova da mesma aba
+  /// substitui a anterior em vez de empilhar.
+  final _ids = <String, int>{};
+  int _idFor(String key) => _ids.putIfAbsent(key, () => _ids.length + 1);
+
+  final _actions = StreamController<NotifierAction>.broadcast();
+
+  @override
+  Stream<NotifierAction> get actions => _actions.stream;
+
+  static const _askCategory = 'gsh-permission';
+
+  void _onResponse(NotificationResponse r) {
+    final key = r.payload;
+    if (key == null || key.isEmpty) return;
+    final kind = switch (r.actionId) {
+      'allow' => NotifierActionKind.allow,
+      'always' => NotifierActionKind.allowAlways,
+      'deny' => NotifierActionKind.deny,
+      _ => NotifierActionKind.open,
+    };
+    _actions.add(NotifierAction(key, kind));
+  }
 
   /// Player dedicado ao chime curto, reusado a cada toque (re-`open` reinicia).
   Player? _chime;
@@ -34,7 +58,7 @@ class LocalNotifier implements Notifier {
     // é o player do som de turno. Criar SEMPRE, antes de qualquer coisa que
     // possa lançar, senão `play()` fica mudo no mobile (plano 60, Wave G).
     _chime = Player();
-    const darwin = DarwinInitializationSettings(
+    final darwin = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
@@ -43,6 +67,24 @@ class LocalNotifier implements Notifier {
       defaultPresentAlert: true,
       defaultPresentBadge: true,
       defaultPresentSound: true,
+      // Os botões do pedido de permissão (no macOS vêm da categoria).
+      notificationCategories: [
+        DarwinNotificationCategory(
+          _askCategory,
+          actions: [
+            DarwinNotificationAction.plain('allow', t.gsh.notifications.allow),
+            DarwinNotificationAction.plain(
+              'always',
+              t.gsh.notifications.allowAlways,
+            ),
+            DarwinNotificationAction.plain(
+              'deny',
+              t.gsh.notifications.deny,
+              options: {DarwinNotificationActionOption.destructive},
+            ),
+          ],
+        ),
+      ],
     );
     final settings = InitializationSettings(
       // Sem o bloco `iOS` o `initialize` lança "iOS settings must be set" —
@@ -63,7 +105,10 @@ class LocalNotifier implements Notifier {
     // O init do plugin de notificações do SO é best-effort — se falhar (ex.:
     // Android sem o bloco android:), não pode derrubar o chime já criado.
     try {
-      await _plugin.initialize(settings: settings);
+      await _plugin.initialize(
+        settings: settings,
+        onDidReceiveNotificationResponse: _onResponse,
+      );
     } catch (_) {
       // notificação do SO indisponível; o chime segue funcionando.
     }
@@ -71,30 +116,95 @@ class LocalNotifier implements Notifier {
 
   @override
   Future<void> agentFinished({
+    required String key,
     required String agentName,
     required String workspace,
-  }) => _show(t.gsh.notifications.agentFinished, agentName, workspace);
+  }) =>
+      _show(key, t.gsh.notifications.agentFinished, _who(agentName, workspace));
 
   @override
   Future<void> agentNeedsAction({
+    required String key,
     required String agentName,
     required String workspace,
-  }) => _show(t.gsh.notifications.agentNeedsAction, agentName, workspace);
+  }) => _show(
+    key,
+    t.gsh.notifications.agentNeedsAction,
+    _who(agentName, workspace),
+  );
 
-  Future<void> _show(String title, String agentName, String workspace) async {
-    final subtitle = workspace.isEmpty ? agentName : '$agentName · $workspace';
+  @override
+  Future<void> permissionAsk({
+    required String key,
+    required String agentName,
+    required String workspace,
+    required String detail,
+    required bool canAlways,
+  }) {
+    final tr = t.gsh.notifications;
+    final buttons = [
+      ('allow', tr.allow),
+      if (canAlways) ('always', tr.allowAlways),
+      ('deny', tr.deny),
+    ];
+    return _show(
+      key,
+      tr.permissionTitle(agent: _who(agentName, workspace)),
+      detail,
+      linux: LinuxNotificationDetails(
+        actions: [
+          for (final (k, label) in buttons)
+            LinuxNotificationAction(key: k, label: label),
+        ],
+        urgency: LinuxNotificationUrgency.critical,
+      ),
+      windows: WindowsNotificationDetails(
+        actions: [
+          for (final (k, label) in buttons)
+            WindowsAction(content: label, arguments: k),
+        ],
+      ),
+      darwinCategory: _askCategory,
+    );
+  }
+
+  @override
+  Future<void> dismiss(String key) async {
+    final id = _ids[key];
+    if (id == null) return;
+    try {
+      await _plugin.cancel(id: id);
+    } catch (_) {
+      // o servidor de notificação pode já ter fechado
+    }
+  }
+
+  static String _who(String agentName, String workspace) =>
+      workspace.isEmpty ? agentName : '$agentName · $workspace';
+
+  Future<void> _show(
+    String key,
+    String title,
+    String body, {
+    LinuxNotificationDetails linux = const LinuxNotificationDetails(),
+    WindowsNotificationDetails windows = const WindowsNotificationDetails(),
+    String? darwinCategory,
+  }) async {
+    final darwin = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+      categoryIdentifier: darwinCategory,
+    );
     await _plugin.show(
-      id: _id++,
+      id: _idFor(key),
       title: title,
-      body: subtitle,
-      notificationDetails: const NotificationDetails(
-        macOS: DarwinNotificationDetails(
-          presentAlert: true,
-          presentBadge: true,
-          presentSound: true,
-        ),
-        linux: LinuxNotificationDetails(),
-        windows: WindowsNotificationDetails(),
+      body: body,
+      payload: key,
+      notificationDetails: NotificationDetails(
+        macOS: darwin,
+        linux: linux,
+        windows: windows,
       ),
     );
   }
