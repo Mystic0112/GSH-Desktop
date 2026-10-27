@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gsh_desktop/app/gsh/data/farm/lan_team_farm_channel.dart';
@@ -35,6 +36,34 @@ void main() {
       ('s1', FarmActivity.waiting, 'Bash', 115),
     );
     expect(decodeTeamPacket([1, 2, 3]), isNull);
+  });
+
+  test('com senha: pacote cifrado, só abre com o mesmo time e senha', () {
+    final bytes = encodeTeamPacket(
+      TeamFarmPacket(
+        machineId: 'a1',
+        name: 'Hélio',
+        team: 'gorila',
+        loops: [_loop('s1')],
+      ),
+      secret: 's3nha',
+    );
+    // Nada legível na rede (nem depois de descomprimir, se fosse gzip).
+    expect(bytes.first, 2);
+    expect(latin1.decode(bytes, allowInvalid: true), isNot(contains('gorila')));
+    TeamFarmPacket? open(String team, String secret, [List<int>? b]) =>
+        decodeTeamPacket(b ?? bytes, team: team, secret: secret);
+    expect(open('gorila', 's3nha')!.loops.single.title, 'Landing nova');
+    expect(open('gorila', 'outra'), isNull);
+    expect(open('outro-time', 's3nha'), isNull);
+    expect(open('gorila', ''), isNull); // sem senha não lê cifrado
+    final tampered = [...bytes]..[bytes.length - 1] ^= 1;
+    expect(open('gorila', 's3nha', tampered), isNull);
+    // Com senha, pacote aberto (sem cifra) não entra.
+    final plain = encodeTeamPacket(
+      TeamFarmPacket(machineId: 'b2', name: 'X', team: 'gorila', loops: []),
+    );
+    expect(open('gorila', 's3nha', plain), isNull);
   });
 
   test('faixa de rede', () {
