@@ -1,3 +1,5 @@
+import 'package:gsh_desktop/app/gsh/ui/session/chat_session.dart';
+import 'package:gsh_desktop/app/gsh/ui/viewmodels/agent_message_delivery.dart';
 import 'package:gsh_core/gsh_core.dart';
 
 import 'dart:async' show StreamSubscription, unawaited;
@@ -255,17 +257,28 @@ class _GshPageState extends State<GshPage> {
     // CLI `gsh` (responde com `gsh msg`), e batida de colega vira turno.
     final chats = context.read<ChatViewModel>()
       ..envFor = (id) => _vm.cliEnvironment(tabId: id);
-    _vm.teamPost.toChat = (tab, text) {
+    // Mensagem de colega do time ou de agente desta máquina (`gsh msg`):
+    // vira turno no chat, mesmo com a aba ainda não aberta na tela.
+    void toChat(ChatSession tab, String text) {
+      final s = _settings!.settings;
       chats
           .chatFor(
             tab.id,
             cwd: tab.workingDirectory,
             resumeSessionId: tab.sessionId,
-            view: _settings!.settings.transcriptView,
+            view: s.transcriptView,
+            permissionMode: s.chatPermissionMode,
+            effort: s.chatEffort,
+            onBusy: (b) => tab.working = b,
           )
           .sendWhenIdle(text);
+    }
+
+    _vm.teamPost.toChat = (tab, text) {
+      toChat(tab, text);
       return null;
     };
+    chatInbox = toChat;
     // Restaura a visibilidade dos painéis (rail/árvore) salva na sessão anterior
     // e persiste de volta a cada toggle. A VM é a fonte de verdade em runtime.
     final vm = context.read<GshViewModel>();

@@ -1,3 +1,4 @@
+import 'package:gsh_desktop/app/gsh/ui/session/chat_session.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/external_agent.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/pane_item.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/terminal_session.dart';
@@ -74,6 +75,7 @@ class AgentNodeCard extends StatelessWidget {
     final harness = switch (s) {
       ExternalAgent(:final app) => app.icon,
       TerminalSession(:final activeHarness) => activeHarness,
+      ChatSession() => HarnessKind.claudeCode,
       _ => null,
     };
     final spec = harness == null ? null : HarnessCatalog.getSpec(harness);
@@ -237,6 +239,7 @@ class _StatusChip extends StatelessWidget {
         online ? colors.online : colors.text4,
         false,
       ),
+      ChatSession() when s.isWorking => (tr.statusWorking, colors.accent, true),
       TerminalSession(:final status) => switch (status) {
         TerminalStatus.working => (tr.statusWorking, colors.accent, true),
         TerminalStatus.waiting => (tr.statusWaiting, colors.warn, false),
