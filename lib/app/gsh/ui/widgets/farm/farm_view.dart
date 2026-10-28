@@ -319,6 +319,15 @@ class _FarmViewState extends State<FarmView> {
                                 }
                                 if (lot == null) _open(c);
                               },
+                        onSecondaryTapUp: world == null
+                            ? null
+                            : (d) {
+                                // só o meu: o bicho de colega não é meu pra ocultar
+                                final (c, lot) = _hitAt(d.localPosition);
+                                if (c == null || lot != null) return;
+                                _hover.value = null;
+                                _vm.hide(c.loop);
+                              },
                         onDoubleTap: world == null
                             ? null
                             : () {
@@ -385,6 +394,7 @@ class _FarmViewState extends State<FarmView> {
                 child: _Hud(
                   vm: vm,
                   onResetPlots: _scene.pins.isEmpty ? null : _resetPlots,
+                  onShowHidden: vm.hiddenCount == 0 ? null : vm.showHidden,
                 ),
               ),
               // Troca de cenário aqui mesmo (também em Configurações >
@@ -469,6 +479,7 @@ class _FarmViewState extends State<FarmView> {
         pct: (l.contextFill * 100).round(),
       ),
       if (peer == null) tr.clickToOpen,
+      if (peer == null) tr.rightClickToHide,
     ].join('\n');
     final right = at.dx > size.width - 280, below = at.dy < size.height - 140;
     return Stack(

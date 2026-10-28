@@ -1504,6 +1504,8 @@ class _Translations$gsh$farm$pt_BR extends Translations$gsh$farm$en {
 	@override String context({required Object ctx, required Object window, required Object pct}) => 'contexto ${ctx} de ${window} (${pct}%)';
 	@override String spentHud({required Object n}) => '${n} tokens gastos';
 	@override String get clickToOpen => 'Clique para abrir o terminal';
+	@override String get rightClickToHide => 'Botão direito para ocultar';
+	@override String hiddenCount({required Object n}) => '${n} ocultos · mostrar';
 	@override String get outsideGsh => 'Este agente está rodando fora do GSH Desktop. O terminal dele está em outra janela.';
 	@override String agents({required Object n}) => '${n} agentes';
 	@override String subagents({required Object n}) => '${n} subagentes';
@@ -3650,6 +3652,8 @@ extension on TranslationsPtBr {
 			'gsh.farm.context' => ({required Object ctx, required Object window, required Object pct}) => 'contexto ${ctx} de ${window} (${pct}%)',
 			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens gastos',
 			'gsh.farm.clickToOpen' => 'Clique para abrir o terminal',
+			'gsh.farm.rightClickToHide' => 'Botão direito para ocultar',
+			'gsh.farm.hiddenCount' => ({required Object n}) => '${n} ocultos · mostrar',
 			'gsh.farm.outsideGsh' => 'Este agente está rodando fora do GSH Desktop. O terminal dele está em outra janela.',
 			'gsh.farm.agents' => ({required Object n}) => '${n} agentes',
 			'gsh.farm.subagents' => ({required Object n}) => '${n} subagentes',
@@ -3728,10 +3732,10 @@ extension on TranslationsPtBr {
 			'settings.language.title' => 'Idioma',
 			'settings.language.system' => 'Sistema',
 			'settings.language.english' => 'Inglês',
-			'settings.language.portugueseBr' => 'Português (BR)',
-			'settings.language.spanish' => 'Espanhol',
 			_ => null,
 		} ?? switch (path) {
+			'settings.language.portugueseBr' => 'Português (BR)',
+			'settings.language.spanish' => 'Espanhol',
 			'settings.page.header.back' => 'Voltar',
 			'settings.page.header.title' => 'Configurações',
 			'settings.page.nav.sideGsh' => 'GSH Desktop',
@@ -4242,10 +4246,10 @@ extension on TranslationsPtBr {
 			'fileOperation.error.noWorkspace' => 'Nenhum workspace selecionado.',
 			'fileOperation.error.cannotMoveIntoItself' => 'Não é possível mover uma pasta para dentro dela mesma.',
 			'fileOperation.error.clipboardEmpty' => 'A área de transferência está vazia.',
-			'fileOperation.error.notScratchTab' => 'Esta aba não é um arquivo temporário.',
-			'fileOperation.error.writeFailed' => 'Não foi possível gravar o arquivo.',
 			_ => null,
 		} ?? switch (path) {
+			'fileOperation.error.notScratchTab' => 'Esta aba não é um arquivo temporário.',
+			'fileOperation.error.writeFailed' => 'Não foi possível gravar o arquivo.',
 			'fileOperation.error.formatterEmptyCommand' => 'Comando de formatação vazio.',
 			'fileOperation.error.formatterMissingPlaceholder' => 'O comando de formatação precisa incluir o placeholder %FILE%.',
 			'fileOperation.error.formatterTimeout' => 'O formatador excedeu o tempo limite.',

@@ -1504,6 +1504,8 @@ class _Translations$gsh$farm$es extends Translations$gsh$farm$en {
 	@override String context({required Object ctx, required Object window, required Object pct}) => 'contexto ${ctx} de ${window} (${pct}%)';
 	@override String spentHud({required Object n}) => '${n} tokens gastados';
 	@override String get clickToOpen => 'Haz clic para abrir su terminal';
+	@override String get rightClickToHide => 'Clic derecho para ocultar';
+	@override String hiddenCount({required Object n}) => '${n} ocultos · mostrar';
 	@override String get outsideGsh => 'Este agente se ejecuta fuera de GSH Desktop. Su terminal está en otra ventana.';
 	@override String agents({required Object n}) => '${n} agentes';
 	@override String subagents({required Object n}) => '${n} subagentes';
@@ -3650,6 +3652,8 @@ extension on TranslationsEs {
 			'gsh.farm.context' => ({required Object ctx, required Object window, required Object pct}) => 'contexto ${ctx} de ${window} (${pct}%)',
 			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens gastados',
 			'gsh.farm.clickToOpen' => 'Haz clic para abrir su terminal',
+			'gsh.farm.rightClickToHide' => 'Clic derecho para ocultar',
+			'gsh.farm.hiddenCount' => ({required Object n}) => '${n} ocultos · mostrar',
 			'gsh.farm.outsideGsh' => 'Este agente se ejecuta fuera de GSH Desktop. Su terminal está en otra ventana.',
 			'gsh.farm.agents' => ({required Object n}) => '${n} agentes',
 			'gsh.farm.subagents' => ({required Object n}) => '${n} subagentes',
@@ -3728,10 +3732,10 @@ extension on TranslationsEs {
 			'settings.language.title' => 'Idioma',
 			'settings.language.system' => 'Sistema',
 			'settings.language.english' => 'Inglés',
-			'settings.language.portugueseBr' => 'Portugués (BR)',
-			'settings.language.spanish' => 'Español',
 			_ => null,
 		} ?? switch (path) {
+			'settings.language.portugueseBr' => 'Portugués (BR)',
+			'settings.language.spanish' => 'Español',
 			'settings.page.header.back' => 'Atrás',
 			'settings.page.header.title' => 'Configuración',
 			'settings.page.nav.sideGsh' => 'GSH Desktop',
@@ -4242,10 +4246,10 @@ extension on TranslationsEs {
 			'fileOperation.error.noWorkspace' => 'Ningún workspace seleccionado.',
 			'fileOperation.error.cannotMoveIntoItself' => 'No se puede mover una carpeta dentro de sí misma.',
 			'fileOperation.error.clipboardEmpty' => 'El portapapeles está vacío.',
-			'fileOperation.error.notScratchTab' => 'Esta pestaña no es un archivo temporal.',
-			'fileOperation.error.writeFailed' => 'No se pudo escribir el archivo.',
 			_ => null,
 		} ?? switch (path) {
+			'fileOperation.error.notScratchTab' => 'Esta pestaña no es un archivo temporal.',
+			'fileOperation.error.writeFailed' => 'No se pudo escribir el archivo.',
 			'fileOperation.error.formatterEmptyCommand' => 'Comando de formato vacío.',
 			'fileOperation.error.formatterMissingPlaceholder' => 'El comando de formato debe incluir el marcador %FILE%.',
 			'fileOperation.error.formatterTimeout' => 'El formateador agotó el tiempo de espera.',

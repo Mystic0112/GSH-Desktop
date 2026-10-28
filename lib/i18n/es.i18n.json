@@ -1095,6 +1095,8 @@
       "context": "contexto ${ctx} de ${window} (${pct}%)",
       "spentHud": "${n} tokens gastados",
       "clickToOpen": "Haz clic para abrir su terminal",
+      "rightClickToHide": "Clic derecho para ocultar",
+      "hiddenCount": "${n} ocultos · mostrar",
       "outsideGsh": "Este agente se ejecuta fuera de GSH Desktop. Su terminal está en otra ventana.",
       "agents": "${n} agentes",
       "subagents": "${n} subagentes",

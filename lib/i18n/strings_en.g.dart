@@ -3282,6 +3282,12 @@ class Translations$gsh$farm$en {
 	/// en: 'Click to open its terminal'
 	String get clickToOpen => 'Click to open its terminal';
 
+	/// en: 'Right-click to hide'
+	String get rightClickToHide => 'Right-click to hide';
+
+	/// en: '${n} hidden · show'
+	String hiddenCount({required Object n}) => '${n} hidden · show';
+
 	/// en: 'This agent is running outside GSH Desktop. Its terminal is in another window.'
 	String get outsideGsh => 'This agent is running outside GSH Desktop. Its terminal is in another window.';
 
@@ -6774,6 +6780,8 @@ extension on Translations {
 			'gsh.farm.context' => ({required Object ctx, required Object window, required Object pct}) => 'context ${ctx} of ${window} (${pct}%)',
 			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens spent',
 			'gsh.farm.clickToOpen' => 'Click to open its terminal',
+			'gsh.farm.rightClickToHide' => 'Right-click to hide',
+			'gsh.farm.hiddenCount' => ({required Object n}) => '${n} hidden · show',
 			'gsh.farm.outsideGsh' => 'This agent is running outside GSH Desktop. Its terminal is in another window.',
 			'gsh.farm.agents' => ({required Object n}) => '${n} agents',
 			'gsh.farm.subagents' => ({required Object n}) => '${n} sub-agents',
@@ -6852,10 +6860,10 @@ extension on Translations {
 			'settings.language.title' => 'Language',
 			'settings.language.system' => 'System',
 			'settings.language.english' => 'English',
-			'settings.language.portugueseBr' => 'Português (BR)',
-			'settings.language.spanish' => 'Español',
 			_ => null,
 		} ?? switch (path) {
+			'settings.language.portugueseBr' => 'Português (BR)',
+			'settings.language.spanish' => 'Español',
 			'settings.page.header.back' => 'Back',
 			'settings.page.header.title' => 'Settings',
 			'settings.page.nav.sideGsh' => 'GSH Desktop',
@@ -7366,10 +7374,10 @@ extension on Translations {
 			'fileOperation.error.noWorkspace' => 'No workspace selected.',
 			'fileOperation.error.cannotMoveIntoItself' => 'Cannot move a folder into itself.',
 			'fileOperation.error.clipboardEmpty' => 'Clipboard is empty.',
-			'fileOperation.error.notScratchTab' => 'This tab is not a scratch file.',
-			'fileOperation.error.writeFailed' => 'Could not write the file.',
 			_ => null,
 		} ?? switch (path) {
+			'fileOperation.error.notScratchTab' => 'This tab is not a scratch file.',
+			'fileOperation.error.writeFailed' => 'Could not write the file.',
 			'fileOperation.error.formatterEmptyCommand' => 'Empty formatter command.',
 			'fileOperation.error.formatterMissingPlaceholder' => 'Formatter command must include the %FILE% placeholder.',
 			'fileOperation.error.formatterTimeout' => 'Formatter timed out.',
