@@ -29,6 +29,7 @@ class GshTopbar extends StatelessWidget {
     this.onOpenFarm,
     this.onOpenChat,
     this.onOpenHarness,
+    this.center,
   });
 
   final String projectName;
@@ -54,6 +55,10 @@ class GshTopbar extends StatelessWidget {
   /// Abre a aba Harness do workspace. `null` = escondido (workspace sem
   /// pasta local, ou o usuário tirou o botão).
   final VoidCallback? onOpenHarness;
+
+  /// Centro da barra (a ilha de agentes). Some quando o vão entre o título e
+  /// os botões fica estreito demais, em vez de cobrir algum deles.
+  final Widget? center;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +94,13 @@ class GshTopbar extends StatelessWidget {
           projectName,
           style: context.typo.title.copyWith(fontSize: 14, color: colors.text),
         ),
-        const Spacer(),
+        Expanded(
+          child: LayoutBuilder(
+            builder: (context, c) => center == null || c.maxWidth < 160
+                ? const SizedBox.shrink()
+                : Center(child: center),
+          ),
+        ),
         // Mini-fazenda: status dos agentes sem abrir a aba da fazenda.
         if (onOpenFarm case final onTap?) FarmStrip(onOpenFarm: onTap),
         if (onOpenChat case final onTap?) ...[

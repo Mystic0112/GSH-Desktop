@@ -156,7 +156,7 @@ void main() {
     await tester.tap(find.text('Create'));
     await tester.pumpAndSettle();
     expect(draft, isNull, reason: 'sem o aceite não cria');
-    await tester.tap(find.textContaining('Add the GSH MCP server'));
+    await tester.tap(find.textContaining('Add the GSH Desktop MCP server'));
     await tester.pump();
     await tester.tap(find.text('Create'));
     await tester.pumpAndSettle();

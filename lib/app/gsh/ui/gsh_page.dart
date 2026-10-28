@@ -7,6 +7,7 @@ import 'dart:io';
 
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/team_shell_bridge.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/team_door_cards.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/agent_island.dart';
 import 'package:gsh_desktop/app/gsh/ui/viewmodels/farm_viewmodel.dart';
 import 'package:gsh_desktop/app/gsh/domain/entities/team_farm.dart';
 import 'package:gsh_desktop/app/gsh/ui/actions/remote_workspace_actions.dart';
@@ -884,6 +885,9 @@ class _GshPageState extends State<GshPage> {
                       onOpenChat: showChat ? _vm.openChat : null,
                       // Harness lê a pasta local: some no GSH e em host remoto.
                       onOpenHarness: showHarness ? _vm.openHarness : null,
+                      center: shows(AppFeature.agentIsland)
+                          ? const AgentIsland()
+                          : null,
                     ),
                     // Host remoto fora do ar: faixa com o estado + botão de
                     // reconectar. Não ocupa espaço em workspace local.

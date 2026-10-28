@@ -107,6 +107,7 @@ class _Translations$gsh$es extends Translations$gsh$en {
 	@override late final _Translations$gsh$neovim$es neovim = _Translations$gsh$neovim$es._(_root);
 	@override late final _Translations$gsh$worktreeCreateDialog$es worktreeCreateDialog = _Translations$gsh$worktreeCreateDialog$es._(_root);
 	@override late final _Translations$gsh$commitMessageDialog$es commitMessageDialog = _Translations$gsh$commitMessageDialog$es._(_root);
+	@override late final _Translations$gsh$agentIsland$es agentIsland = _Translations$gsh$agentIsland$es._(_root);
 	@override late final _Translations$gsh$tasksPanel$es tasksPanel = _Translations$gsh$tasksPanel$es._(_root);
 	@override late final _Translations$gsh$gshPage$es gshPage = _Translations$gsh$gshPage$es._(_root);
 	@override late final _Translations$gsh$welcomeView$es welcomeView = _Translations$gsh$welcomeView$es._(_root);
@@ -392,6 +393,28 @@ class _Translations$gsh$commitMessageDialog$es extends Translations$gsh$commitMe
 	@override String generateWith({required Object harness}) => 'Generar con ${harness}';
 	@override String get generating => 'Generando…';
 	@override String get cancelGeneration => 'Cancelar generación';
+}
+
+// Path: gsh.agentIsland
+class _Translations$gsh$agentIsland$es extends Translations$gsh$agentIsland$en {
+	_Translations$gsh$agentIsland$es._(TranslationsEs root) : this._root = root, super.internal(root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get asks => 'Piden permiso';
+	@override String get waiting => 'Esperándote';
+	@override String get finished => 'Terminaron';
+	@override String get working => 'Trabajando';
+	@override String get allow => 'Permitir';
+	@override String get always => 'Siempre';
+	@override String alwaysTooltip({required Object rule}) => 'Permitir siempre ${rule}';
+	@override String get deny => 'Denegar';
+	@override String get inTerminal => 'En la terminal';
+	@override String get inTerminalTooltip => 'Responder en la terminal del agente';
+	@override String get goToTab => 'Ir a la pestaña';
+	@override String get empty => 'Ningún agente en marcha ahora.';
+	@override String summary({required Object working, required Object waiting, required Object finished}) => '${working} trabajando · ${waiting} esperándote · ${finished} terminaron';
 }
 
 // Path: gsh.tasksPanel
@@ -1056,6 +1079,10 @@ class _Translations$gsh$notifications$es extends Translations$gsh$notifications$
 	@override String get agentFinished => 'El agente terminó';
 	@override String get open => 'Abrir';
 	@override String get agentNeedsAction => 'El agente necesita tu acción';
+	@override String permissionTitle({required Object agent}) => '${agent} quiere ejecutar';
+	@override String get allow => 'Permitir';
+	@override String get allowAlways => 'Siempre';
+	@override String get deny => 'Denegar';
 }
 
 // Path: gsh.terminalLink
@@ -2607,6 +2634,8 @@ class _Translations$settings$page$resources$es extends Translations$settings$pag
 	@override String get graphDesc => 'Visualiza los agentes del workspace y quién habla con quién.';
 	@override String get browser => 'Navegador integrado';
 	@override String get browserDesc => 'Pestaña "Navegador" en el menú del panel (donde la plataforma tiene webview integrada).';
+	@override String get agentIsland => 'Isla de agentes';
+	@override String get agentIslandDesc => 'Píldora en la parte superior de la ventana con el gorila: quién trabaja, quién te espera y las solicitudes de permiso, que puedes responder ahí mismo.';
 	@override String get skillsMoved => 'Las Skills se movieron a ';
 }
 
@@ -2837,6 +2866,19 @@ extension on TranslationsEs {
 			'gsh.commitMessageDialog.generateWith' => ({required Object harness}) => 'Generar con ${harness}',
 			'gsh.commitMessageDialog.generating' => 'Generando…',
 			'gsh.commitMessageDialog.cancelGeneration' => 'Cancelar generación',
+			'gsh.agentIsland.asks' => 'Piden permiso',
+			'gsh.agentIsland.waiting' => 'Esperándote',
+			'gsh.agentIsland.finished' => 'Terminaron',
+			'gsh.agentIsland.working' => 'Trabajando',
+			'gsh.agentIsland.allow' => 'Permitir',
+			'gsh.agentIsland.always' => 'Siempre',
+			'gsh.agentIsland.alwaysTooltip' => ({required Object rule}) => 'Permitir siempre ${rule}',
+			'gsh.agentIsland.deny' => 'Denegar',
+			'gsh.agentIsland.inTerminal' => 'En la terminal',
+			'gsh.agentIsland.inTerminalTooltip' => 'Responder en la terminal del agente',
+			'gsh.agentIsland.goToTab' => 'Ir a la pestaña',
+			'gsh.agentIsland.empty' => 'Ningún agente en marcha ahora.',
+			'gsh.agentIsland.summary' => ({required Object working, required Object waiting, required Object finished}) => '${working} trabajando · ${waiting} esperándote · ${finished} terminaron',
 			'gsh.tasksPanel.reloadTasksTooltip' => 'Recargar tasks',
 			'gsh.tasksPanel.restartTooltip' => 'Reiniciar',
 			'gsh.tasksPanel.stopTooltip' => 'Detener',
@@ -3205,6 +3247,8 @@ extension on TranslationsEs {
 			'gsh.dbConnectionDialog.visibleToAgents' => 'Visible para agentes',
 			'gsh.dbConnectionDialog.visibleToAgentsHint' => 'desactivado = oculto en la CLI, solo en la GUI',
 			'gsh.dbConnectionDialog.testing' => 'Probando conexión…',
+			_ => null,
+		} ?? switch (path) {
 			'gsh.dbConnectionDialog.connectionOk' => 'Conexión OK',
 			'gsh.dbConnectionDialog.connectionFailed' => 'Fallo en la conexión',
 			'gsh.dbConnectionDialog.editTitle' => 'Editar conexión',
@@ -3218,8 +3262,6 @@ extension on TranslationsEs {
 			'gsh.dbConnectionDialog.privateKey' => 'Clave privada',
 			'gsh.dbConnectionDialog.choosePrivateKeyPlaceholder' => 'Elige una clave privada…',
 			'gsh.dbConnectionDialog.choosePrivateKeyDialogTitle' => 'Elegir clave privada SSH',
-			_ => null,
-		} ?? switch (path) {
 			'gsh.dbConnectionDialog.keyPassphrase' => 'Frase de contraseña de la clave',
 			'gsh.dbConnectionDialog.savePassphrase' => 'Guardar frase de contraseña',
 			'gsh.dbConnectionDialog.passwordOnHost' => 'La contraseña se guarda en el host, no en esta máquina.',
@@ -3291,6 +3333,10 @@ extension on TranslationsEs {
 			'gsh.notifications.agentFinished' => 'El agente terminó',
 			'gsh.notifications.open' => 'Abrir',
 			'gsh.notifications.agentNeedsAction' => 'El agente necesita tu acción',
+			'gsh.notifications.permissionTitle' => ({required Object agent}) => '${agent} quiere ejecutar',
+			'gsh.notifications.allow' => 'Permitir',
+			'gsh.notifications.allowAlways' => 'Siempre',
+			'gsh.notifications.deny' => 'Denegar',
 			'gsh.terminalLink.open' => 'Abrir',
 			'gsh.terminalLink.revealFinder' => 'Mostrar en Finder',
 			'gsh.terminalLink.revealExplorer' => 'Mostrar en el Explorador',
@@ -3715,6 +3761,8 @@ extension on TranslationsEs {
 			'gsh.agentGraph.makeMaestro' => 'Hacer maestro',
 			'gsh.agentGraph.removeMaestro' => 'Quitar maestro',
 			'gsh.agentGraph.closeTab' => 'Cerrar pestaña',
+			_ => null,
+		} ?? switch (path) {
 			'gsh.agentGraph.removeFromCanvas' => 'Quitar del lienzo',
 			'gsh.agentGraph.desktopApps' => 'Apps de escritorio',
 			'gsh.agentGraph.desktopBadge' => 'escritorio',
@@ -3732,8 +3780,6 @@ extension on TranslationsEs {
 			'settings.language.title' => 'Idioma',
 			'settings.language.system' => 'Sistema',
 			'settings.language.english' => 'Inglés',
-			_ => null,
-		} ?? switch (path) {
 			'settings.language.portugueseBr' => 'Portugués (BR)',
 			'settings.language.spanish' => 'Español',
 			'settings.page.header.back' => 'Atrás',
@@ -4185,6 +4231,8 @@ extension on TranslationsEs {
 			'settings.page.resources.graphDesc' => 'Visualiza los agentes del workspace y quién habla con quién.',
 			'settings.page.resources.browser' => 'Navegador integrado',
 			'settings.page.resources.browserDesc' => 'Pestaña "Navegador" en el menú del panel (donde la plataforma tiene webview integrada).',
+			'settings.page.resources.agentIsland' => 'Isla de agentes',
+			'settings.page.resources.agentIslandDesc' => 'Píldora en la parte superior de la ventana con el gorila: quién trabaja, quién te espera y las solicitudes de permiso, que puedes responder ahí mismo.',
 			'settings.page.resources.skillsMoved' => 'Las Skills se movieron a ',
 			'settings.page.designSystems.title' => 'Design systems',
 			'settings.page.designSystems.desc' => 'En GSH son los temas: colores de la interfaz, la terminal y el código en un solo paquete.',
@@ -4227,6 +4275,8 @@ extension on TranslationsEs {
 			'automation.error.cancelled' => 'Se canceló la generación del mensaje de commit.',
 			'automation.error.process' => ({required Object harness, required Object detail}) => '${harness}: ${detail}',
 			'automation.error.processNoDetail' => ({required Object harness}) => '${harness} no pudo generar un mensaje de commit.',
+			_ => null,
+		} ?? switch (path) {
 			'automation.error.invalidResponse' => 'La automatización devolvió un mensaje de commit vacío.',
 			'automation.error.busy' => 'Ya se está generando otro mensaje de commit.',
 			'automation.error.unknown' => 'La automatización no pudo generar un mensaje de commit.',
@@ -4246,8 +4296,6 @@ extension on TranslationsEs {
 			'fileOperation.error.noWorkspace' => 'Ningún workspace seleccionado.',
 			'fileOperation.error.cannotMoveIntoItself' => 'No se puede mover una carpeta dentro de sí misma.',
 			'fileOperation.error.clipboardEmpty' => 'El portapapeles está vacío.',
-			_ => null,
-		} ?? switch (path) {
 			'fileOperation.error.notScratchTab' => 'Esta pestaña no es un archivo temporal.',
 			'fileOperation.error.writeFailed' => 'No se pudo escribir el archivo.',
 			'fileOperation.error.formatterEmptyCommand' => 'Comando de formato vacío.',

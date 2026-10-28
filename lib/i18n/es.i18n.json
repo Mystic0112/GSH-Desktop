@@ -157,6 +157,21 @@
       "generating": "Generando…",
       "cancelGeneration": "Cancelar generación"
     },
+    "agentIsland": {
+      "asks": "Piden permiso",
+      "waiting": "Esperándote",
+      "finished": "Terminaron",
+      "working": "Trabajando",
+      "allow": "Permitir",
+      "always": "Siempre",
+      "alwaysTooltip": "Permitir siempre ${rule}",
+      "deny": "Denegar",
+      "inTerminal": "En la terminal",
+      "inTerminalTooltip": "Responder en la terminal del agente",
+      "goToTab": "Ir a la pestaña",
+      "empty": "Ningún agente en marcha ahora.",
+      "summary": "${working} trabajando · ${waiting} esperándote · ${finished} terminaron"
+    },
     "tasksPanel": {
       "reloadTasksTooltip": "Recargar tasks",
       "restartTooltip": "Reiniciar",
@@ -682,7 +697,11 @@
     "notifications": {
       "agentFinished": "El agente terminó",
       "open": "Abrir",
-      "agentNeedsAction": "El agente necesita tu acción"
+      "agentNeedsAction": "El agente necesita tu acción",
+      "permissionTitle": "${agent} quiere ejecutar",
+      "allow": "Permitir",
+      "allowAlways": "Siempre",
+      "deny": "Denegar"
     },
     "terminalLink": {
       "open": "Abrir",
@@ -1699,6 +1718,8 @@
         "graphDesc": "Visualiza los agentes del workspace y quién habla con quién.",
         "browser": "Navegador integrado",
         "browserDesc": "Pestaña \"Navegador\" en el menú del panel (donde la plataforma tiene webview integrada).",
+        "agentIsland": "Isla de agentes",
+        "agentIslandDesc": "Píldora en la parte superior de la ventana con el gorila: quién trabaja, quién te espera y las solicitudes de permiso, que puedes responder ahí mismo.",
         "skillsMoved": "Las Skills se movieron a "
       },
       "designSystems": {

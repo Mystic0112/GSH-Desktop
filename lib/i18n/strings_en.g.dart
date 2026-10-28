@@ -155,6 +155,7 @@ class Translations$gsh$en {
 	late final Translations$gsh$neovim$en neovim = Translations$gsh$neovim$en.internal(_root);
 	late final Translations$gsh$worktreeCreateDialog$en worktreeCreateDialog = Translations$gsh$worktreeCreateDialog$en.internal(_root);
 	late final Translations$gsh$commitMessageDialog$en commitMessageDialog = Translations$gsh$commitMessageDialog$en.internal(_root);
+	late final Translations$gsh$agentIsland$en agentIsland = Translations$gsh$agentIsland$en.internal(_root);
 	late final Translations$gsh$tasksPanel$en tasksPanel = Translations$gsh$tasksPanel$en.internal(_root);
 	late final Translations$gsh$gshPage$en gshPage = Translations$gsh$gshPage$en.internal(_root);
 	late final Translations$gsh$welcomeView$en welcomeView = Translations$gsh$welcomeView$en.internal(_root);
@@ -656,6 +657,54 @@ class Translations$gsh$commitMessageDialog$en {
 
 	/// en: 'Cancel generation'
 	String get cancelGeneration => 'Cancel generation';
+}
+
+// Path: gsh.agentIsland
+class Translations$gsh$agentIsland$en {
+	Translations$gsh$agentIsland$en.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Asking permission'
+	String get asks => 'Asking permission';
+
+	/// en: 'Waiting for you'
+	String get waiting => 'Waiting for you';
+
+	/// en: 'Finished'
+	String get finished => 'Finished';
+
+	/// en: 'Working'
+	String get working => 'Working';
+
+	/// en: 'Allow'
+	String get allow => 'Allow';
+
+	/// en: 'Always'
+	String get always => 'Always';
+
+	/// en: 'Always allow ${rule}'
+	String alwaysTooltip({required Object rule}) => 'Always allow ${rule}';
+
+	/// en: 'Deny'
+	String get deny => 'Deny';
+
+	/// en: 'In terminal'
+	String get inTerminal => 'In terminal';
+
+	/// en: 'Answer in the agent's terminal'
+	String get inTerminalTooltip => 'Answer in the agent\'s terminal';
+
+	/// en: 'Go to tab'
+	String get goToTab => 'Go to tab';
+
+	/// en: 'No agent running right now.'
+	String get empty => 'No agent running right now.';
+
+	/// en: '${working} working · ${waiting} waiting for you · ${finished} finished'
+	String summary({required Object working, required Object waiting, required Object finished}) => '${working} working · ${waiting} waiting for you · ${finished} finished';
 }
 
 // Path: gsh.tasksPanel
@@ -2196,6 +2245,18 @@ class Translations$gsh$notifications$en {
 
 	/// en: 'Agent needs your input'
 	String get agentNeedsAction => 'Agent needs your input';
+
+	/// en: '${agent} wants to run'
+	String permissionTitle({required Object agent}) => '${agent} wants to run';
+
+	/// en: 'Allow'
+	String get allow => 'Allow';
+
+	/// en: 'Always'
+	String get allowAlways => 'Always';
+
+	/// en: 'Deny'
+	String get deny => 'Deny';
 }
 
 // Path: gsh.terminalLink
@@ -5666,6 +5727,12 @@ class Translations$settings$page$resources$en {
 	/// en: '"Browser" tab in the pane menu (where the platform has an inline webview).'
 	String get browserDesc => '"Browser" tab in the pane menu (where the platform has an inline webview).';
 
+	/// en: 'Agent island'
+	String get agentIsland => 'Agent island';
+
+	/// en: 'Pill at the top of the window with the gorilla: who is working, who is waiting for you, and permission requests you can answer right there.'
+	String get agentIslandDesc => 'Pill at the top of the window with the gorilla: who is working, who is waiting for you, and permission requests you can answer right there.';
+
 	/// en: 'Skills moved to '
 	String get skillsMoved => 'Skills moved to ';
 }
@@ -5965,6 +6032,19 @@ extension on Translations {
 			'gsh.commitMessageDialog.generateWith' => ({required Object harness}) => 'Generate with ${harness}',
 			'gsh.commitMessageDialog.generating' => 'Generating…',
 			'gsh.commitMessageDialog.cancelGeneration' => 'Cancel generation',
+			'gsh.agentIsland.asks' => 'Asking permission',
+			'gsh.agentIsland.waiting' => 'Waiting for you',
+			'gsh.agentIsland.finished' => 'Finished',
+			'gsh.agentIsland.working' => 'Working',
+			'gsh.agentIsland.allow' => 'Allow',
+			'gsh.agentIsland.always' => 'Always',
+			'gsh.agentIsland.alwaysTooltip' => ({required Object rule}) => 'Always allow ${rule}',
+			'gsh.agentIsland.deny' => 'Deny',
+			'gsh.agentIsland.inTerminal' => 'In terminal',
+			'gsh.agentIsland.inTerminalTooltip' => 'Answer in the agent\'s terminal',
+			'gsh.agentIsland.goToTab' => 'Go to tab',
+			'gsh.agentIsland.empty' => 'No agent running right now.',
+			'gsh.agentIsland.summary' => ({required Object working, required Object waiting, required Object finished}) => '${working} working · ${waiting} waiting for you · ${finished} finished',
 			'gsh.tasksPanel.reloadTasksTooltip' => 'Reload tasks',
 			'gsh.tasksPanel.restartTooltip' => 'Restart',
 			'gsh.tasksPanel.stopTooltip' => 'Stop',
@@ -6333,6 +6413,8 @@ extension on Translations {
 			'gsh.dbConnectionDialog.visibleToAgents' => 'Visible to agents',
 			'gsh.dbConnectionDialog.visibleToAgentsHint' => 'off = hidden from the CLI, GUI only',
 			'gsh.dbConnectionDialog.testing' => 'Testing connection…',
+			_ => null,
+		} ?? switch (path) {
 			'gsh.dbConnectionDialog.connectionOk' => 'Connection OK',
 			'gsh.dbConnectionDialog.connectionFailed' => 'Connection failed',
 			'gsh.dbConnectionDialog.editTitle' => 'Edit connection',
@@ -6346,8 +6428,6 @@ extension on Translations {
 			'gsh.dbConnectionDialog.privateKey' => 'Private key',
 			'gsh.dbConnectionDialog.choosePrivateKeyPlaceholder' => 'Choose a private key…',
 			'gsh.dbConnectionDialog.choosePrivateKeyDialogTitle' => 'Choose SSH private key',
-			_ => null,
-		} ?? switch (path) {
 			'gsh.dbConnectionDialog.keyPassphrase' => 'Key passphrase',
 			'gsh.dbConnectionDialog.savePassphrase' => 'Save passphrase',
 			'gsh.dbConnectionDialog.passwordOnHost' => 'The password is stored on the host, not on this machine.',
@@ -6419,6 +6499,10 @@ extension on Translations {
 			'gsh.notifications.agentFinished' => 'Agent finished',
 			'gsh.notifications.open' => 'Open',
 			'gsh.notifications.agentNeedsAction' => 'Agent needs your input',
+			'gsh.notifications.permissionTitle' => ({required Object agent}) => '${agent} wants to run',
+			'gsh.notifications.allow' => 'Allow',
+			'gsh.notifications.allowAlways' => 'Always',
+			'gsh.notifications.deny' => 'Deny',
 			'gsh.terminalLink.open' => 'Open',
 			'gsh.terminalLink.revealFinder' => 'Reveal in Finder',
 			'gsh.terminalLink.revealExplorer' => 'Show in Explorer',
@@ -6843,6 +6927,8 @@ extension on Translations {
 			'gsh.agentGraph.makeMaestro' => 'Make maestro',
 			'gsh.agentGraph.removeMaestro' => 'Remove maestro',
 			'gsh.agentGraph.closeTab' => 'Close tab',
+			_ => null,
+		} ?? switch (path) {
 			'gsh.agentGraph.removeFromCanvas' => 'Remove from canvas',
 			'gsh.agentGraph.desktopApps' => 'Desktop apps',
 			'gsh.agentGraph.desktopBadge' => 'desktop',
@@ -6860,8 +6946,6 @@ extension on Translations {
 			'settings.language.title' => 'Language',
 			'settings.language.system' => 'System',
 			'settings.language.english' => 'English',
-			_ => null,
-		} ?? switch (path) {
 			'settings.language.portugueseBr' => 'Português (BR)',
 			'settings.language.spanish' => 'Español',
 			'settings.page.header.back' => 'Back',
@@ -7313,6 +7397,8 @@ extension on Translations {
 			'settings.page.resources.graphDesc' => 'Visualize the agents of the workspace and who talks to whom.',
 			'settings.page.resources.browser' => 'Built-in browser',
 			'settings.page.resources.browserDesc' => '"Browser" tab in the pane menu (where the platform has an inline webview).',
+			'settings.page.resources.agentIsland' => 'Agent island',
+			'settings.page.resources.agentIslandDesc' => 'Pill at the top of the window with the gorilla: who is working, who is waiting for you, and permission requests you can answer right there.',
 			'settings.page.resources.skillsMoved' => 'Skills moved to ',
 			'settings.page.designSystems.title' => 'Design systems',
 			'settings.page.designSystems.desc' => 'In GSH these are the themes: interface, terminal and code colors in one package.',
@@ -7355,6 +7441,8 @@ extension on Translations {
 			'automation.error.cancelled' => 'Commit message generation was cancelled.',
 			'automation.error.process' => ({required Object harness, required Object detail}) => '${harness}: ${detail}',
 			'automation.error.processNoDetail' => ({required Object harness}) => '${harness} could not generate a commit message.',
+			_ => null,
+		} ?? switch (path) {
 			'automation.error.invalidResponse' => 'The automation returned an empty commit message.',
 			'automation.error.busy' => 'Another commit message is already being generated.',
 			'automation.error.unknown' => 'The automation could not generate a commit message.',
@@ -7374,8 +7462,6 @@ extension on Translations {
 			'fileOperation.error.noWorkspace' => 'No workspace selected.',
 			'fileOperation.error.cannotMoveIntoItself' => 'Cannot move a folder into itself.',
 			'fileOperation.error.clipboardEmpty' => 'Clipboard is empty.',
-			_ => null,
-		} ?? switch (path) {
 			'fileOperation.error.notScratchTab' => 'This tab is not a scratch file.',
 			'fileOperation.error.writeFailed' => 'Could not write the file.',
 			'fileOperation.error.formatterEmptyCommand' => 'Empty formatter command.',

@@ -541,10 +541,18 @@ class _KeepAwakeButton extends StatefulWidget {
 
 class _KeepAwakeButtonState extends State<_KeepAwakeButton>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _shake = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 420),
-  );
+  // Criado no initState, não `late` preguiçoso: sem suporte o build nunca
+  // toca nele, e o dispose criaria o controller com o widget já desmontado.
+  late final AnimationController _shake;
+
+  @override
+  void initState() {
+    super.initState();
+    _shake = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 420),
+    );
+  }
 
   @override
   void dispose() {

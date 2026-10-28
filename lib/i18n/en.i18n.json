@@ -157,6 +157,21 @@
       "generating": "Generating…",
       "cancelGeneration": "Cancel generation"
     },
+    "agentIsland": {
+      "asks": "Asking permission",
+      "waiting": "Waiting for you",
+      "finished": "Finished",
+      "working": "Working",
+      "allow": "Allow",
+      "always": "Always",
+      "alwaysTooltip": "Always allow ${rule}",
+      "deny": "Deny",
+      "inTerminal": "In terminal",
+      "inTerminalTooltip": "Answer in the agent's terminal",
+      "goToTab": "Go to tab",
+      "empty": "No agent running right now.",
+      "summary": "${working} working · ${waiting} waiting for you · ${finished} finished"
+    },
     "tasksPanel": {
       "reloadTasksTooltip": "Reload tasks",
       "restartTooltip": "Restart",
@@ -682,7 +697,11 @@
     "notifications": {
       "agentFinished": "Agent finished",
       "open": "Open",
-      "agentNeedsAction": "Agent needs your input"
+      "agentNeedsAction": "Agent needs your input",
+      "permissionTitle": "${agent} wants to run",
+      "allow": "Allow",
+      "allowAlways": "Always",
+      "deny": "Deny"
     },
     "terminalLink": {
       "open": "Open",
@@ -1699,6 +1718,8 @@
         "graphDesc": "Visualize the agents of the workspace and who talks to whom.",
         "browser": "Built-in browser",
         "browserDesc": "\"Browser\" tab in the pane menu (where the platform has an inline webview).",
+        "agentIsland": "Agent island",
+        "agentIslandDesc": "Pill at the top of the window with the gorilla: who is working, who is waiting for you, and permission requests you can answer right there.",
         "skillsMoved": "Skills moved to "
       },
       "designSystems": {

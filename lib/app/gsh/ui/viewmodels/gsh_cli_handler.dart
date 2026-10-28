@@ -1,3 +1,4 @@
+import 'package:gsh_desktop/app/gsh/data/hooks/claude_permission_hook.dart';
 import 'dart:async' show unawaited;
 import 'dart:convert';
 import 'dart:io' show Directory, File, FileSystemException, Platform;
@@ -225,6 +226,26 @@ class GshCliHandler {
             )
             .toList();
         return GshCommandResult.ok(panes);
+
+      // `gsh hook` no PermissionRequest do Claude: segura até a decisão na
+      // ilha/notificação e devolve a saída do hook (`null` = o terminal
+      // pergunta). Quem está olhando a aba responde no próprio terminal.
+      case 'permission-ask':
+        final id = c.tabId;
+        final tab = id == null ? null : _vm.session(id);
+        if (tab is! TerminalSession) return const GshCommandResult.ok({});
+        if (_vm.notifications.windowFocused && _vm.focusedTabId == tab.id) {
+          return const GshCommandResult.ok({});
+        }
+        final ask = parseClaudePermissionAsk(
+          c.args,
+          id: 'p${++_permissionSeq}',
+          tabId: tab.id,
+        );
+        final decision = await _vm.permissions.ask(ask);
+        return GshCommandResult.ok({
+          'output': claudePermissionHookOutput(ask, decision),
+        });
 
       // `gsh msg --to <label|tab-id> <texto>` — agente fala com agente.
       // `tabId` é o EMISSOR (a CLI exige `$GSH_TAB_ID`), `to` o alvo.
@@ -1634,6 +1655,8 @@ class GshCliHandler {
 
   /// Emissor de um verbo de agente: aba, ou nó externo (`ext:<app>`, o
   /// servidor MCP) — que conta como atividade (status "working" do nó).
+  var _permissionSeq = 0;
+
   PaneItem? _agentCaller(String? id) {
     if (id == null) return null;
     final ext = _vm.agentGraph.externalById(id);

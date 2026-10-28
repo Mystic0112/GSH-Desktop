@@ -7,6 +7,7 @@ project(runner LANGUAGES CXX)
 #
 # Any new source files that you add to the application should be added here.
 add_executable(${BINARY_NAME}
+  "agent_island_window.cc"
   "gpu_environment.cc"
   "main.cc"
   "my_application.cc"
@@ -23,5 +24,6 @@ add_definitions(-DAPPLICATION_ID="${APPLICATION_ID}")
 # Add dependency libraries. Add any application-specific dependencies here.
 target_link_libraries(${BINARY_NAME} PRIVATE flutter)
 target_link_libraries(${BINARY_NAME} PRIVATE PkgConfig::GTK)
+target_link_libraries(${BINARY_NAME} PRIVATE PkgConfig::GTK_LAYER_SHELL)
 
 target_include_directories(${BINARY_NAME} PRIVATE "${CMAKE_SOURCE_DIR}")

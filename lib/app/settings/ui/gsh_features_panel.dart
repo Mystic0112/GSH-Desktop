@@ -54,6 +54,7 @@ class GshFeaturesPanel extends StatelessWidget {
             ),
             feature(AppFeature.agentGraph, tr.graph, tr.graphDesc),
             feature(AppFeature.browser, tr.browser, tr.browserDesc),
+            feature(AppFeature.agentIsland, tr.agentIsland, tr.agentIslandDesc),
           ],
         ),
         if (s.showsFeature(AppFeature.farm))

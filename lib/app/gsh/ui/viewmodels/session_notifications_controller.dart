@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:gsh_desktop/app/gsh/domain/contracts/notifier.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/pane_item.dart';
 import 'package:gsh_desktop/app/gsh/ui/session/terminal_session.dart';
@@ -24,6 +26,13 @@ class SessionNotificationsController extends ChangeNotifier {
 
   /// Nome do workspace de uma sessão (vai no corpo da notificação do SO).
   String Function(String projectId)? workspaceName;
+
+  /// A aba tem um pedido de permissão esperando (a notificação com botões
+  /// já cobre: a genérica "precisa de você" seria repetida).
+  bool Function(String tabId)? hasPendingAsk;
+
+  /// Cliques nas notificações e nos botões delas.
+  Stream<NotifierAction> get actions => _notifier.actions;
 
   // ---- preferências (espelham AppSettings) ---------------------------------
 
@@ -54,6 +63,9 @@ class SessionNotificationsController extends ChangeNotifier {
   /// por terminal quando vários agentes terminavam juntos.
   bool get _windowFocused => isMobilePlatform || _windowActivity.isActive;
 
+  /// A janela do GSH está na frente (o usuário está olhando o app).
+  bool get windowFocused => _windowFocused;
+
   /// Badge (ponto na aba) → só se a sessão NÃO for a aba ativa.
   /// Notificação do SO → só se a janela não estiver focada.
   /// Separar as duas responsabilidades evita badge preso: se o usuário já está
@@ -73,14 +85,20 @@ class SessionNotificationsController extends ChangeNotifier {
     if (!_windowFocused) {
       // Janela em outro app → notificação do SO (tem som próprio).
       if (!_enabled) return;
+      if (actionRequired && (hasPendingAsk?.call(s.id) ?? false)) return;
       final workspace = workspaceName?.call(s.projectId) ?? '';
       if (actionRequired) {
         await _notifier.agentNeedsAction(
-          agentName: s.title,
+          key: 'tab:${s.id}',
+          agentName: s.displayTitle,
           workspace: workspace,
         );
       } else {
-        await _notifier.agentFinished(agentName: s.title, workspace: workspace);
+        await _notifier.agentFinished(
+          key: 'tab:${s.id}',
+          agentName: s.displayTitle,
+          workspace: workspace,
+        );
       }
       return;
     }
@@ -91,6 +109,33 @@ class SessionNotificationsController extends ChangeNotifier {
     if (isActiveTab && !(_onActiveTab[event] ?? false)) return;
     await _play(event);
   }
+
+  /// Pedido de permissão de um agente de terminal. Janela em outro app →
+  /// notificação com Permitir/Sempre/Negar; focada → só o som (a ilha
+  /// mostra os botões).
+  Future<void> permissionAsked({
+    required String askId,
+    required PaneItem tab,
+    required String detail,
+    required bool canAlways,
+  }) async {
+    if (_windowFocused) return _play(SoundEvent.actionRequired);
+    if (!_enabled) return;
+    await _notifier.permissionAsk(
+      key: 'ask:$askId',
+      agentName: tab.displayTitle,
+      workspace: workspaceName?.call(tab.projectId) ?? '',
+      detail: detail,
+      canAlways: canAlways,
+    );
+  }
+
+  /// O pedido foi decidido (na ilha, no terminal, ou a aba fechou).
+  Future<void> permissionSettled(String askId) =>
+      _notifier.dismiss('ask:$askId');
+
+  /// O usuário viu a aba: a notificação dela já não serve.
+  Future<void> tabSeen(String tabId) => _notifier.dismiss('tab:$tabId');
 
   /// Marca a sessão como "não vista" se ela não é a aba ativa. Devolve `true`
   /// quando **é** a ativa (o chamador decide o som).
