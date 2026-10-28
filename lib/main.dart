@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:gsh_desktop/app/bootstrapper.dart';
 import 'package:gsh_desktop/app/gsh/ui/document/document_window_app.dart';
 import 'package:gsh_desktop/app/gsh/ui/document/document_windows.dart';
+import 'package:gsh_desktop/app/gsh/ui/widgets/floating_agent_island.dart';
 import 'package:gsh_desktop/app/gsh/ui/document/open_files_channel.dart';
 import 'package:gsh_desktop/app/gsh/ui/document/running_instance.dart';
 import 'package:gsh_desktop/app/core/data/diagnostics/diagnostics_log.dart';
@@ -25,6 +26,10 @@ import 'package:shadcn_flutter/shadcn_flutter.dart';
 /// GUI não tem stdout visível, então sem isso qualquer falha em produção some
 /// sem deixar rastro — inclusive as que fecham o app sozinho.
 Future<void> main(List<String> args) async {
+  if (Platform.isLinux && args.length == 1 && args.first == 'agent_island') {
+    await runFloatingAgentIsland();
+    return;
+  }
   // Engine criado pelo desktop_multi_window pra uma janela de documento:
   // sobe só o viewer (ver DocumentWindows), nunca o app inteiro.
   if (DocumentWindows.pathFromArguments(args) != null) {

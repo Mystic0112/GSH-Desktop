@@ -53,6 +53,7 @@ add_subdirectory(${FLUTTER_MANAGED_DIR})
 # System-level dependencies.
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK REQUIRED IMPORTED_TARGET gtk+-3.0)
+pkg_check_modules(GTK_LAYER_SHELL REQUIRED IMPORTED_TARGET gtk-layer-shell-0)
 
 # Application build; see runner/CMakeLists.txt.
 add_subdirectory("runner")
@@ -130,6 +131,27 @@ install(CODE "
   " COMPONENT Runtime)
 install(DIRECTORY "${PROJECT_BUILD_DIR}/${FLUTTER_ASSET_DIR_NAME}"
   DESTINATION "${INSTALL_BUNDLE_DATA_DIR}" COMPONENT Runtime)
+
+# O plugin Linux de notificações lê app_name do version.json do Flutter,
+# que vem do nome do pacote Dart. Preserve package_name e só ajuste o nome
+# mostrado no COSMIC/GNOME.
+install(CODE "
+  file(READ \"${INSTALL_BUNDLE_DATA_DIR}/${FLUTTER_ASSET_DIR_NAME}/version.json\" GSH_VERSION_JSON)
+  string(REPLACE \"\\\"app_name\\\":\\\"gsh_desktop\\\"\"
+                 \"\\\"app_name\\\":\\\"GSH Desktop\\\"\"
+                 GSH_VERSION_JSON \"\${GSH_VERSION_JSON}\")
+  file(WRITE \"${INSTALL_BUNDLE_DATA_DIR}/${FLUTTER_ASSET_DIR_NAME}/version.json\"
+       \"\${GSH_VERSION_JSON}\")
+  " COMPONENT Runtime)
+
+# O tarball é relocável: inclua a biblioteca de layer-shell ao lado do app
+# para que a ilha funcione mesmo sem o pacote instalado no host.
+find_library(GTK_LAYER_SHELL_RUNTIME NAMES gtk-layer-shell REQUIRED)
+get_filename_component(GTK_LAYER_SHELL_REAL "${GTK_LAYER_SHELL_RUNTIME}" REALPATH)
+install(FILES "${GTK_LAYER_SHELL_REAL}"
+  DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
+  RENAME "libgtk-layer-shell.so.0"
+  COMPONENT Runtime)
 
 # Install the AOT library on non-Debug builds only.
 if(NOT CMAKE_BUILD_TYPE MATCHES "Debug")

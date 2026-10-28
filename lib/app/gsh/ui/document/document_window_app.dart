@@ -16,11 +16,8 @@ import 'package:gsh_desktop/app/gsh/ui/widgets/kanban_board_view.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/layout_preview_view.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/notebook_view.dart';
 import 'package:gsh_desktop/app/gsh/ui/widgets/panel_view.dart';
-import 'package:gsh_desktop/app/core/data/repositories/json_settings_store.dart';
-import 'package:gsh_desktop/app/core/data/setup/json_state_store.dart';
-import 'package:gsh_desktop/app/core/data/setup/storage_location.dart';
 import 'package:gsh_desktop/app/core/data/terminal/terminal_profile_resolver_impl.dart';
-import 'package:gsh_desktop/app/core/data/theme_store.dart';
+import 'package:gsh_desktop/app/gsh/ui/document/standalone_settings.dart';
 import 'package:gsh_desktop/app/core/domain/contracts/terminal_profile_resolver.dart';
 import 'package:gsh_desktop/app/core/domain/entities/app_settings.dart';
 import 'package:gsh_desktop/app/core/ui/app_zoom.dart';
@@ -64,17 +61,7 @@ Future<void> _boot(String path) async {
   // de documento (ver [DocumentScreen]).
 
   await LocaleSettings.useDeviceLocale();
-  final stateDir = await StorageLocation.stateDir();
-  final store = await JsonStateStore.open(
-    stateDir,
-    JsonSettingsStore.storeName,
-  );
-  final settings = SettingsController(
-    JsonSettingsStore(store),
-    const ThemeStore(),
-  );
-  await settings.load();
-  _followSettingsFile(store, settings);
+  final settings = await loadStandaloneSettings();
   // Perfis de terminal: o `.panel` na janela solta roda `gsh <line>` no
   // perfil padrão das configurações, como na aba. A descoberta (pwsh? WSL?)
   // aquece em paralelo; até lá o `effectiveDefault` cai no fallback da
@@ -101,27 +88,6 @@ Future<void> _boot(String path) async {
       ),
     ),
   );
-}
-
-/// A janela HERDA tema, fontes e zoom do app principal e os acompanha ao
-/// vivo: observa a pasta do JSON de settings e relê quando o app grava
-/// (⌘= na janela principal escala esta também). No sentido inverso o app
-/// principal não relê; um ⌘= aqui vale pra esta janela e fica gravado.
-void _followSettingsFile(JsonStateStore store, SettingsController settings) {
-  final file = File(store.path);
-  Timer? debounce;
-  try {
-    file.parent.watch().listen((event) {
-      if (event.path != file.path) return;
-      debounce?.cancel();
-      debounce = Timer(const Duration(milliseconds: 200), () async {
-        await store.reload();
-        await settings.load();
-      });
-    });
-  } on FileSystemException {
-    // sem watcher: fica com o que leu ao abrir
-  }
 }
 
 /// Tela de erro da janela de documento (boot falhou): texto cru, sem tema,
