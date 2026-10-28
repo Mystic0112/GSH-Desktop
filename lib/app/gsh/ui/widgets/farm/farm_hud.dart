@@ -23,8 +23,11 @@ class _HudBox extends StatelessWidget {
 }
 
 class _Hud extends StatelessWidget {
-  const _Hud({required this.vm, this.onResetPlots});
+  const _Hud({required this.vm, this.onResetPlots, this.onShowHidden});
   final FarmViewModel vm;
+
+  /// "N ocultos · mostrar"; `null` = nenhum oculto, some.
+  final VoidCallback? onShowHidden;
 
   /// "Redefinir posições" dos canteiros; `null` = nada escolhido, some.
   final VoidCallback? onResetPlots;
@@ -103,6 +106,19 @@ class _Hud extends StatelessWidget {
             ],
           ),
         ),
+        if (onShowHidden case final show?)
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: show,
+              child: chip(
+                Text(
+                  tr.hiddenCount(n: vm.hiddenCount).toUpperCase(),
+                  style: small.copyWith(color: _hudMuted, fontSize: 10),
+                ),
+              ),
+            ),
+          ),
         if (onResetPlots case final reset?)
           MouseRegion(
             cursor: SystemMouseCursors.click,

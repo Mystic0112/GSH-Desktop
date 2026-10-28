@@ -1531,6 +1531,8 @@ class _Translations$gsh$farm$es extends Translations$gsh$farm$en {
 	@override String context({required Object ctx, required Object window, required Object pct}) => 'contexto ${ctx} de ${window} (${pct}%)';
 	@override String spentHud({required Object n}) => '${n} tokens gastados';
 	@override String get clickToOpen => 'Haz clic para abrir su terminal';
+	@override String get rightClickToHide => 'Clic derecho para ocultar';
+	@override String hiddenCount({required Object n}) => '${n} ocultos · mostrar';
 	@override String get outsideGsh => 'Este agente se ejecuta fuera de GSH Desktop. Su terminal está en otra ventana.';
 	@override String agents({required Object n}) => '${n} agentes';
 	@override String subagents({required Object n}) => '${n} subagentes';
@@ -3696,6 +3698,8 @@ extension on TranslationsEs {
 			'gsh.farm.context' => ({required Object ctx, required Object window, required Object pct}) => 'contexto ${ctx} de ${window} (${pct}%)',
 			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens gastados',
 			'gsh.farm.clickToOpen' => 'Haz clic para abrir su terminal',
+			'gsh.farm.rightClickToHide' => 'Clic derecho para ocultar',
+			'gsh.farm.hiddenCount' => ({required Object n}) => '${n} ocultos · mostrar',
 			'gsh.farm.outsideGsh' => 'Este agente se ejecuta fuera de GSH Desktop. Su terminal está en otra ventana.',
 			'gsh.farm.agents' => ({required Object n}) => '${n} agentes',
 			'gsh.farm.subagents' => ({required Object n}) => '${n} subagentes',
@@ -3757,10 +3761,10 @@ extension on TranslationsEs {
 			'gsh.agentGraph.makeMaestro' => 'Hacer maestro',
 			'gsh.agentGraph.removeMaestro' => 'Quitar maestro',
 			'gsh.agentGraph.closeTab' => 'Cerrar pestaña',
-			'gsh.agentGraph.removeFromCanvas' => 'Quitar del lienzo',
-			'gsh.agentGraph.desktopApps' => 'Apps de escritorio',
 			_ => null,
 		} ?? switch (path) {
+			'gsh.agentGraph.removeFromCanvas' => 'Quitar del lienzo',
+			'gsh.agentGraph.desktopApps' => 'Apps de escritorio',
 			'gsh.agentGraph.desktopBadge' => 'escritorio',
 			'gsh.agentGraph.statusOnline' => 'En línea',
 			'gsh.agentGraph.statusOffline' => 'Desconectado',
@@ -4271,10 +4275,10 @@ extension on TranslationsEs {
 			'automation.error.cancelled' => 'Se canceló la generación del mensaje de commit.',
 			'automation.error.process' => ({required Object harness, required Object detail}) => '${harness}: ${detail}',
 			'automation.error.processNoDetail' => ({required Object harness}) => '${harness} no pudo generar un mensaje de commit.',
-			'automation.error.invalidResponse' => 'La automatización devolvió un mensaje de commit vacío.',
-			'automation.error.busy' => 'Ya se está generando otro mensaje de commit.',
 			_ => null,
 		} ?? switch (path) {
+			'automation.error.invalidResponse' => 'La automatización devolvió un mensaje de commit vacío.',
+			'automation.error.busy' => 'Ya se está generando otro mensaje de commit.',
 			'automation.error.unknown' => 'La automatización no pudo generar un mensaje de commit.',
 			'automation.error.noWorkspace' => 'Ningún workspace seleccionado.',
 			'automation.error.fileOutsideWorkspace' => 'El archivo está fuera de las raíces del workspace.',

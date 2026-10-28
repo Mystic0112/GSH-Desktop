@@ -134,6 +134,47 @@ class FarmViewModel extends ChangeNotifier {
   List<FarmPlot> _plots = const [];
   List<FarmPlot> get plots => _plots;
 
+  /// Última varredura, antes de tirar os ocultos (para ocultar já, sem esperar
+  /// o próximo tick).
+  List<FarmLoop> _scanned = const [];
+
+  /// Loops que o usuário ocultou: id → `lastSeen` na hora de ocultar. Voltam
+  /// sozinhos se o loop escrever de novo; saem daqui quando deixam a janela do
+  /// scan. Só vale enquanto o GSH está aberto.
+  final _hidden = <String, DateTime>{};
+
+  int get hiddenCount => _hidden.length;
+
+  /// Tira da fazenda (e do anúncio ao time) o loop e os subagentes dele.
+  void hide(FarmLoop loop) {
+    _hidden[loop.id] = loop.lastSeen;
+    _applyScan();
+  }
+
+  void showHidden() {
+    if (_hidden.isEmpty) return;
+    _hidden.clear();
+    _applyScan();
+  }
+
+  List<FarmLoop> _unhidden(List<FarmLoop> loops) {
+    if (_hidden.isEmpty) return loops;
+    final byId = {for (final l in loops) l.id: l};
+    _hidden.removeWhere((id, seen) {
+      final l = byId[id];
+      return l == null || l.lastSeen.isAfter(seen);
+    });
+    return [
+      for (final l in loops)
+        if (!_hidden.containsKey(l.id) && !_hidden.containsKey(l.parentId)) l,
+    ];
+  }
+
+  void _applyScan() {
+    _plots = groupFarm(_unhidden(_scanned));
+    if (!_disposed) notifyListeners();
+  }
+
   int _viewers = 0;
   Timer? _timer;
   bool _scanning = false;
@@ -184,8 +225,9 @@ class FarmViewModel extends ChangeNotifier {
     if (_scanning) return;
     _scanning = true;
     try {
-      final loops = await _source.scan(DateTime.now());
+      _scanned = await _source.scan(DateTime.now());
       if (_disposed) return;
+      final loops = _unhidden(_scanned);
       _plots = groupFarm(loops);
       if (_teamConfig.active) {
         await _team.publish(_outgoing(loops));

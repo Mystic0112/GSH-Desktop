@@ -3343,6 +3343,12 @@ class Translations$gsh$farm$en {
 	/// en: 'Click to open its terminal'
 	String get clickToOpen => 'Click to open its terminal';
 
+	/// en: 'Right-click to hide'
+	String get rightClickToHide => 'Right-click to hide';
+
+	/// en: '${n} hidden · show'
+	String hiddenCount({required Object n}) => '${n} hidden · show';
+
 	/// en: 'This agent is running outside GSH Desktop. Its terminal is in another window.'
 	String get outsideGsh => 'This agent is running outside GSH Desktop. Its terminal is in another window.';
 
@@ -6858,6 +6864,8 @@ extension on Translations {
 			'gsh.farm.context' => ({required Object ctx, required Object window, required Object pct}) => 'context ${ctx} of ${window} (${pct}%)',
 			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens spent',
 			'gsh.farm.clickToOpen' => 'Click to open its terminal',
+			'gsh.farm.rightClickToHide' => 'Right-click to hide',
+			'gsh.farm.hiddenCount' => ({required Object n}) => '${n} hidden · show',
 			'gsh.farm.outsideGsh' => 'This agent is running outside GSH Desktop. Its terminal is in another window.',
 			'gsh.farm.agents' => ({required Object n}) => '${n} agents',
 			'gsh.farm.subagents' => ({required Object n}) => '${n} sub-agents',
@@ -6919,10 +6927,10 @@ extension on Translations {
 			'gsh.agentGraph.makeMaestro' => 'Make maestro',
 			'gsh.agentGraph.removeMaestro' => 'Remove maestro',
 			'gsh.agentGraph.closeTab' => 'Close tab',
-			'gsh.agentGraph.removeFromCanvas' => 'Remove from canvas',
-			'gsh.agentGraph.desktopApps' => 'Desktop apps',
 			_ => null,
 		} ?? switch (path) {
+			'gsh.agentGraph.removeFromCanvas' => 'Remove from canvas',
+			'gsh.agentGraph.desktopApps' => 'Desktop apps',
 			'gsh.agentGraph.desktopBadge' => 'desktop',
 			'gsh.agentGraph.statusOnline' => 'Online',
 			'gsh.agentGraph.statusOffline' => 'Offline',
@@ -7433,10 +7441,10 @@ extension on Translations {
 			'automation.error.cancelled' => 'Commit message generation was cancelled.',
 			'automation.error.process' => ({required Object harness, required Object detail}) => '${harness}: ${detail}',
 			'automation.error.processNoDetail' => ({required Object harness}) => '${harness} could not generate a commit message.',
-			'automation.error.invalidResponse' => 'The automation returned an empty commit message.',
-			'automation.error.busy' => 'Another commit message is already being generated.',
 			_ => null,
 		} ?? switch (path) {
+			'automation.error.invalidResponse' => 'The automation returned an empty commit message.',
+			'automation.error.busy' => 'Another commit message is already being generated.',
 			'automation.error.unknown' => 'The automation could not generate a commit message.',
 			'automation.error.noWorkspace' => 'No workspace selected.',
 			'automation.error.fileOutsideWorkspace' => 'File is outside the workspace roots.',

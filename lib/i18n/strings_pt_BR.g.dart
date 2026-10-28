@@ -1531,6 +1531,8 @@ class _Translations$gsh$farm$pt_BR extends Translations$gsh$farm$en {
 	@override String context({required Object ctx, required Object window, required Object pct}) => 'contexto ${ctx} de ${window} (${pct}%)';
 	@override String spentHud({required Object n}) => '${n} tokens gastos';
 	@override String get clickToOpen => 'Clique para abrir o terminal';
+	@override String get rightClickToHide => 'Botão direito para ocultar';
+	@override String hiddenCount({required Object n}) => '${n} ocultos · mostrar';
 	@override String get outsideGsh => 'Este agente está rodando fora do GSH Desktop. O terminal dele está em outra janela.';
 	@override String agents({required Object n}) => '${n} agentes';
 	@override String subagents({required Object n}) => '${n} subagentes';
@@ -3696,6 +3698,8 @@ extension on TranslationsPtBr {
 			'gsh.farm.context' => ({required Object ctx, required Object window, required Object pct}) => 'contexto ${ctx} de ${window} (${pct}%)',
 			'gsh.farm.spentHud' => ({required Object n}) => '${n} tokens gastos',
 			'gsh.farm.clickToOpen' => 'Clique para abrir o terminal',
+			'gsh.farm.rightClickToHide' => 'Botão direito para ocultar',
+			'gsh.farm.hiddenCount' => ({required Object n}) => '${n} ocultos · mostrar',
 			'gsh.farm.outsideGsh' => 'Este agente está rodando fora do GSH Desktop. O terminal dele está em outra janela.',
 			'gsh.farm.agents' => ({required Object n}) => '${n} agentes',
 			'gsh.farm.subagents' => ({required Object n}) => '${n} subagentes',
@@ -3757,10 +3761,10 @@ extension on TranslationsPtBr {
 			'gsh.agentGraph.makeMaestro' => 'Tornar maestro',
 			'gsh.agentGraph.removeMaestro' => 'Remover maestro',
 			'gsh.agentGraph.closeTab' => 'Fechar aba',
-			'gsh.agentGraph.removeFromCanvas' => 'Remover do canvas',
-			'gsh.agentGraph.desktopApps' => 'Apps desktop',
 			_ => null,
 		} ?? switch (path) {
+			'gsh.agentGraph.removeFromCanvas' => 'Remover do canvas',
+			'gsh.agentGraph.desktopApps' => 'Apps desktop',
 			'gsh.agentGraph.desktopBadge' => 'desktop',
 			'gsh.agentGraph.statusOnline' => 'Online',
 			'gsh.agentGraph.statusOffline' => 'Offline',
@@ -4271,10 +4275,10 @@ extension on TranslationsPtBr {
 			'automation.error.cancelled' => 'A geração da mensagem de commit foi cancelada.',
 			'automation.error.process' => ({required Object harness, required Object detail}) => '${harness}: ${detail}',
 			'automation.error.processNoDetail' => ({required Object harness}) => '${harness} não conseguiu gerar uma mensagem de commit.',
-			'automation.error.invalidResponse' => 'A automação devolveu uma mensagem de commit vazia.',
-			'automation.error.busy' => 'Já há uma mensagem de commit sendo gerada.',
 			_ => null,
 		} ?? switch (path) {
+			'automation.error.invalidResponse' => 'A automação devolveu uma mensagem de commit vazia.',
+			'automation.error.busy' => 'Já há uma mensagem de commit sendo gerada.',
 			'automation.error.unknown' => 'A automação não conseguiu gerar uma mensagem de commit.',
 			'automation.error.noWorkspace' => 'Nenhum workspace selecionado.',
 			'automation.error.fileOutsideWorkspace' => 'O arquivo está fora das raízes do workspace.',
